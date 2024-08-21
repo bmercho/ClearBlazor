@@ -4,6 +4,18 @@
 //    console.log("X is " + x + " and Y is " + y);
 //};
 
+var cssId = 'ClearBlazorCss'; 
+if (!document.getElementById(cssId)) {
+    var head = document.getElementsByTagName('head')[0];
+    var link = document.createElement('link');
+    link.id = cssId;
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = '_content/ClearBlazor/ClearBlazor.css';
+    link.media = 'all';
+    head.appendChild(link);
+}
+
 window.clearBlazor = {
     numberInput: {
         initialize: (elementId, isFloat, allowNegativeNumbers, numberDecimalSeparator) => {
