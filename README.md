@@ -18,4 +18,4 @@ WPF like layout controls that have been implemented are:
 * UniformGrid
 * ScrollViewer
 
-Many other controls have also been implemented. See the [DEMO](https://gentle-pebble-0c6b74f10.5.azurestaticapps.net/)
+Many other controls have also been implemented. See the [DEMO](https://brave-sky-0982bfc10.5.azurestaticapps.net)
