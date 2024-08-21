@@ -4,11 +4,13 @@
 @inject BrowserSizeService BrowserSizeService
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 
-<div style=@GetStyle()>
-    <div style="height: 100%; width:100%; display: grid;">
-        <div @ref="Element" style="display:grid;overflow:hidden;">
-            @ChildContent
+@if (LoadingComplete)
+{
+    <div style=@GetStyle()>
+        <div style="height: 100%; width:100%; display: grid;">
+            <div @ref="Element" style="display:grid;overflow:hidden;">
+                @ChildContent
+            </div>
         </div>
     </div>
-</div>
-
+}

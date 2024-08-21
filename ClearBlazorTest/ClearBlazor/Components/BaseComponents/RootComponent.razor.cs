@@ -16,7 +16,8 @@ namespace ClearBlazor
         private double? Height = null;
         private double? Width = null;
         private IDisposable? unsubscriber;
-        
+        private bool LoadingComplete = false;
+
         public RootComponent()
         {
             ThemeManager = new ThemeManager(this, false);
@@ -24,11 +25,32 @@ namespace ClearBlazor
 
         protected override async Task OnInitializedAsync()
         {
+            // Load all javascript
+            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                             "./_content/ClearBlazor/ClearBlazor.js");
+            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                             "./_content/ClearBlazor/MouseCapture.js");
+            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                             "./_content/ClearBlazor/ResizeCanvas.js");
+            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                             "./_content/ClearBlazor/ResizeListener.js");
+            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                             "./_content/ClearBlazor/ScrollManager.js");
+            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                             "./_content/ClearBlazor/SizeInfo.js");
+            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                             "./_content/ClearBlazor/SetClasses.js");
+            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                             "./_content/ClearBlazor/SetStyleProperty.js");
+
+            await ThemeManager.UpdateTheme(JSRuntime);
+            BrowserSizeService.Init(JSRuntime);
+
+            LoadingComplete = true;
 
             await base.OnInitializedAsync();
-
-            BrowserSizeService.Init(JSRuntime);
             Subscribe(BrowserSizeService);
+
         }
 
         private string GetStyle()
