@@ -19,5 +19,3 @@ WPF like layout controls that have been implemented are:
 * ScrollViewer
 
 Many other controls have also been implemented. See the [DEMO](https://gentle-pebble-0c6b74f10.5.azurestaticapps.net/)
-
-
