@@ -1,0 +1,14 @@
+﻿@page "/TimePickerInput"
+@using ClearBlazorTestCore.Pages.Inputs.TimePickerInput.Examples
+<ScrollViewer>
+    <StackPanel Orientation="Orientation.Portrait">
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Time Picker Input</TextBlock>
+        <StackPanel Padding="20" Spacing="30">
+            <CodeSnippet Title="Basic" Code=@(typeof(TimePickerInputSimpleExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <TimePickerInputSimpleExample />
+                </WrapPanel>
+            </CodeSnippet>
+          </StackPanel>
+     </StackPanel>
+</ScrollViewer>

@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<RazorLangVersion>3.0</RazorLangVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Remove="Tests\Test10-old.razor" />
+	  <Content Remove="Tests\Test10.razor" />
+	  <Content Remove="Tests\Test11-old.razor" />
+	  <Content Remove="Tests\Test11.razor" />
+	  <Content Remove="Tests\Test2-old.razor" />
+	  <Content Remove="Tests\Test20-old.razor" />
+	  <Content Remove="Tests\Test3-old.razor" />
+	  <Content Remove="Tests\Test30-old.razor" />
+	  <Content Remove="Tests\Test30.razor" />
+	  <Content Remove="Tests\Test4-old.razor" />
+	  <Content Remove="Tests\Test50-old.razor" />
+	  <Content Remove="Tests\Test51-old.razor" />
+	  <Content Remove="Tests\Test52-old.razor" />
+	  <Content Remove="Tests\Test53-old.razor" />
+	  <Content Remove="Tests\Test54-old.razor" />
+	  <Content Remove="Tests\Test6-old.razor" />
+	  <Content Remove="Tests\Test7.razor" />
+	  <Content Remove="Tests\Test8.razor" />
+	  <Content Remove="Tests\Test9.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\ClearBlazor\ClearBlazor.csproj" />
+	</ItemGroup>
+
+</Project>

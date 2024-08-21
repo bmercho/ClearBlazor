@@ -1,0 +1,118 @@
+﻿@namespace ClearBlazor
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@inherits InputBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <StackPanel Orientation=@Orientation>
+            <Grid BackgroundColour=@Colour >
+                <StackPanel Margin="10" Orientation=Orientation.Portrait BackgroundColour=@Colour>
+                    <Button ButtonStyle=TextEditFillMode.None
+                            HorizontalAlignment=Alignment.Center Size=Size.Large
+                            OnClicked=@OnDateClicked>
+                        @Date?.Year
+                    </Button>
+                    @if (Orientation == Orientation.Portrait)
+                    {
+                        <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>@Date?.ToString("ddd, dd MMM", Culture) </TextBlock>
+                    }
+                    else
+                    {
+                        <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>@Date?.ToString("ddd, dd", Culture) </TextBlock>
+                        <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>@Date?.ToString("MMM", Culture) </TextBlock>
+                    }
+                </StackPanel>
+            </Grid>
+            <Grid Width=@GetBodyWidth() Height=@GetBodyHeight()>
+                @switch (Mode)
+                {
+                    case DatePickerMode.Year:
+                        <ScrollViewer>
+                            @* <Virtualize Context="item" Items=@YearList> *@
+                            @foreach (var item in YearList)
+                            {
+                                <div style=@GetYearStyle()
+                                     id="@(Id + item.Value)" @onclick="(() => OnYearClicked(item.Value))" @onclick:stopPropagation="true">
+                                    <TextBlock FontSize=@GetYearSize(item.Value) Colour=@GetYearColour(item.Value)>@item.Name</TextBlock>
+                                </div>
+                            }
+                            @* </Virtualize> *@
+                        </ScrollViewer>
+                        break;
+                    case DatePickerMode.Month:
+                        <DockPanel>
+                            <DockPanel Margin="0,10,0,0" Dock=ClearBlazor.Dock.Top>
+                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Left Colour=@Color.Dark
+                                            Icon=@Icons.Material.Filled.ArrowLeft OnClicked=@OnSubtractYear />
+                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Right Colour=@Color.Dark
+                                            Icon =@Icons.Material.Filled.ArrowRight OnClicked=@OnAddYear />
+                                <Button ButtonStyle=TextEditFillMode.None Colour=@Color.Dark
+                                        HorizontalAlignment=Alignment.Center Size=Size.VeryLarge
+                                        OnClicked=@OnDateClicked>
+                                    @SelectedDate.Year
+                                </Button>
+                            </DockPanel>
+                            <UniformGrid NumRows=4 NumColumns=3>
+                                @for (int i = 1; i <= 12; i++)
+                                {
+                                    int month = i;
+                                    <div style=@GetMonthStyle(month)
+                                         @onmouseenter="(() => OnMouseEnterMonth(month))" @onmouseleave=OnMouseLeaveMonth
+                                         @onclick="(() => OnMonthClicked(month))" @onclick:stopPropagation="true">
+                                        <TextBlock FontSize=@GetMonthSize(month) Colour=@GetMonthColour(month)>
+                                            @GetMonthName(month)
+                                        </TextBlock>
+                                    </div>
+                                }
+                            </UniformGrid>
+                        </DockPanel>
+                        break;
+                    case DatePickerMode.Day:
+                        <DockPanel Margin=5>
+                            <DockPanel Dock=ClearBlazor.Dock.Top>
+                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Left Colour=@Color.Dark
+                                            Icon=@Icons.Material.Filled.ArrowLeft OnClicked=@OnSubtractMonth />
+                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Right Colour=@Color.Dark
+                                            Icon=@Icons.Material.Filled.ArrowRight OnClicked=@OnAddMonth />
+                                <Button ButtonStyle=TextEditFillMode.None Colour=@Color.Dark
+                                        HorizontalAlignment=Alignment.Center Size=Size.VeryLarge
+                                        OnClicked=@OnGotoMonths>
+                                    @GetMonthYear()
+                                </Button>
+                            </DockPanel>
+                            <UniformGrid Dock=ClearBlazor.Dock.Top NumRows=1 NumColumns=7>
+                                @for (int i = 0; i < 7; i++)
+                                {
+                                    int day = i;
+                                    <TextBlock HorizontalAlignment=Alignment.Center Colour=@Color.Dark.Lighten(.4)>
+                                        @GetDayName(day)
+                                    </TextBlock>
+                                }
+                            </UniformGrid>
+                            <UniformGrid NumRows=6 NumColumns=7>
+                                @for (int i=1;i<=42;i++)
+                                {
+                                    int dayIndex = i;
+                                    @if (IsDayIndexValid(dayIndex))
+                                    {
+                                        <Button ButtonStyle=@GetDayButtonStyle(dayIndex) HorizontalAlignment=Alignment.Stretch
+                                                VerticalAlignment=Alignment.Stretch DisableBoxShadow=true Shape=ContainerShape.Circle
+                                                Colour=@GetDayColour(dayIndex) OnClicked=@(() => OnDayClicked(dayIndex))>
+                                            @GetDay(dayIndex)
+                                        </Button>
+                                    }
+                                    else
+                                    {
+                                        <div/>
+                                    }
+                                }
+                            </UniformGrid>
+                        </DockPanel>
+                        break;
+                }
+            </Grid>
+        </StackPanel>
+    </div>
+</CascadingValue>
+
+

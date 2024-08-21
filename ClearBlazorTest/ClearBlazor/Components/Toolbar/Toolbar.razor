@@ -1,0 +1,21 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" style=@ComputeStyle() class="@Classes">
+        <StackPanel Name="StackPanel in Toolbar" Orientation=@Orientation>
+            @if (@IsInToolbarTray)
+            {
+                <Border Name="Border in Toolbar" IsDraggable="true" BorderThickness="0" Margin="0,12,0,12" BackgroundColour=@Color.Transparent>
+                    <IconButton Style="cursor: move; " IconColour=@Color.Dark Icon="@Icons.Material.Filled.DragIndicator" />
+                </Border>
+            }
+            @ChildContent
+        </StackPanel>
+    </div>
+    @if (NewLine)
+    {
+        <div style="flex-basis:100%; order:@(Order+1);"></div>
+    }
+
+</CascadingValue>

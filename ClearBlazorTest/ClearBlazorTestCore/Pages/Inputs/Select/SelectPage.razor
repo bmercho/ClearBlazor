@@ -1,0 +1,49 @@
+﻿@page "/Select"
+@using ClearBlazorTestCore.Pages.Inputs.Select.Examples
+<ScrollViewer>
+    <StackPanel Orientation="Orientation.Portrait">
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Select</TextBlock>
+        <StackPanel Padding="20" Spacing="30">
+            <CodeSnippet Title="Basic" Code=@(typeof(SelectSimpleExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <SelectSimpleExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Type" Code=@(typeof(SelectTypeExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <SelectTypeExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Data" Code=@(typeof(SelectDataExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <SelectDataExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Icon/Avatar" Code=@(typeof(SelectIconAvatarExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <SelectIconAvatarExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Size Colour" Code=@(typeof(SelectSizeColourExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <SelectSizeColourExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Placement" Code=@(typeof(SelectPlacementExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <SelectPlacementExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Stretch" Code=@(typeof(SelectStretchExample).Name)>
+                <Grid Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <SelectStretchExample />
+                </Grid>
+            </CodeSnippet>
+            <CodeSnippet Title="Multiselect" Code=@(typeof(SelectMultiselectStringExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <SelectMultiselectStringExample />
+                </WrapPanel>
+            </CodeSnippet>
+        </StackPanel>
+     </StackPanel>
+</ScrollViewer>

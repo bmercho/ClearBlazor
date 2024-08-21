@@ -1,0 +1,36 @@
+﻿<Select Label="String" @bind-Value=Value>
+    <SelectItem Value=@("String1") />
+    <SelectItem Value=@("String2") />
+    <SelectItem Text="Item3" Value=@("String3") />
+    <SelectItem Value=@("String4") />
+</Select>
+
+<Select Label="Double" @bind-Value=DoubleValue>
+    <SelectItem Value=1.4 />
+    <SelectItem Value=3.6 />
+    <SelectItem Value=5.8 />
+    <SelectItem Value=2.3 />
+</Select>
+
+<Select Label="Boolean" @bind-Value=BoolValue>
+    <SelectItem Text="False" Value=false />
+    <SelectItem Text="True" Value=true />
+</Select>
+
+<Select Label="Enumeration" @bind-Value=EnumValue>
+    @foreach (TestEnum item in Enum.GetValues(typeof(TestEnum)))
+    {
+        <SelectItem Text=@item.ToString() Value="@item" />
+    }
+</Select>
+@code {
+    public string Value { get; set; } = "String3";
+    public double DoubleValue { get; set; } = 1.4;
+    public bool BoolValue { get; set; } = true;
+    public TestEnum EnumValue { get; set; } = TestEnum.Enum2;
+
+    public enum TestEnum
+    {
+        Enum1, Enum2, Enum3, Enum4
+    }
+}

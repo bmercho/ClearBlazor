@@ -1,0 +1,59 @@
+﻿@page "/TextInput"
+@using ClearBlazorTestCore.Pages.Inputs.TextInput.Examples
+<ScrollViewer>
+    <StackPanel Orientation="Orientation.Portrait">
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Text Input</TextBlock>
+        <StackPanel Padding="20" Spacing="30">
+            <CodeSnippet Title="Basic" Description="This is an example of basic usage" Code="TextInputSimpleExample">
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <TextInputSimpleExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Size" Code="TextInputSizeExample">
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <TextInputSizeExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Disabled" Code="TextInputDisabledExample">
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <TextInputDisabledExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Read Only" Code="TextInputReadOnlyExample">
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <TextInputReadOnlyExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Immediate/Debounced" Code="TextInputImmediateExample">
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <TextInputImmediateExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Max Length" Code="TextInputMaxLengthExample">
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <TextInputMaxLengthExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Password" Code="TextInputPasswordExample">
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <TextInputPasswordExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Label" Code="TextInputLabelExample">
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <TextInputLabelExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Clear Button" Code=@(typeof(TextInputClearButtonExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <TextInputClearButtonExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Multiline" Code=@(typeof(TextInputMultilineExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <TextInputMultilineExample />
+                </WrapPanel>
+            </CodeSnippet>
+        </StackPanel>
+     </StackPanel>
+</ScrollViewer>

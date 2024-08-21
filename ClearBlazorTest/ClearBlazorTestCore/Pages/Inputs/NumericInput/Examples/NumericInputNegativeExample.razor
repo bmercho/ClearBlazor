@@ -1,0 +1,9 @@
+﻿<NumericInput Label="Allow Negative Numbers(default)" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="DoubleValue1" 
+              Immediate="true" />
+<NumericInput Label="Disallow Negative Numbers" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="DoubleValue2" 
+              Immediate="true" AllowNegativeNumbers="false"/>
+
+@code {
+    public double DoubleValue1 { get; set; }
+    public double DoubleValue2 { get; set; }
+}

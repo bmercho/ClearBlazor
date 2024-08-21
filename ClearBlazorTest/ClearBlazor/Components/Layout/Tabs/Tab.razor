@@ -1,0 +1,13 @@
+﻿@using System.Text
+@namespace ClearBlazor
+@inherits ClearComponentBase
+
+@if (_parent != null && _parent.ActivePage == this)
+{
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        @ChildContent
+    </div>
+}
+
+
+

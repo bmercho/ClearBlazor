@@ -1,0 +1,138 @@
+<div>
+<div class="html"><pre>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">*,*,*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RadioGroup</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">0</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Popup Position</span><span class="quot">&quot;</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Value</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Position</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="atSign">&#64;</span>foreach (PopupPosition item in Enum.GetValues(typeof(PopupPosition)))
+        {
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>item.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>item</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+        }
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Border</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">100</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">100</span><span class="quot">&quot;</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">1</span><span class="quot">&quot;</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Popup</span> <span class="htmlAttributeName">Position</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Position</span> <span class="htmlAttributeName">Transform</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Transform</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Open</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Open</span> <span class="htmlAttributeName">AllowHorizontalFlip</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="keyword">false</span><span class="quot">&quot;</span> <span class="htmlAttributeName">AllowVerticalFlip</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="keyword">false</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">1</span><span class="quot">&quot;</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">4</span><span class="quot">&quot;</span> <span class="htmlAttributeName">BackgroundColour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.BackgroundGrey</span> <span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span>
+                           <span class="htmlAttributeName">Margin</span> <span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">30</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>Popup content<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">MaterialIcon</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>GetHorizontalAlignment()</span> 
+                              <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>GetVerticalAlignment()</span>
+                              <span class="htmlAttributeName">Icon</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>GetIcon()</span> <span class="htmlAttributeName">Colour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Secondary</span> <span class="htmlTagDelimiter">/&gt;</span>
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Popup</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Border</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RadioGroup</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">2</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Popup Transform</span><span class="quot">&quot;</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Value</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Transform</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="atSign">&#64;</span>foreach (PopupTransform item in Enum.GetValues(typeof(PopupTransform)))
+        {
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>item.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>item</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+        }
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
+</pre></div>
+<div class="csharp"><pre>
+<span class="atSign">&#64;</span>code {
+    <span class="keyword">private</span> PopupPosition _popupPosition = PopupPosition.BottomCentre;
+    <span class="keyword">private</span> PopupTransform _popupTransform = PopupTransform.BottomCentre;
+    <span class="keyword">public</span> PopupPosition Position
+    {
+        <span class="keyword">get</span> =&gt; _popupPosition;
+        <span class="keyword">set</span>
+        {
+            _popupPosition = value;
+            Open = <span class="keyword">true</span>;
+        }
+    }
+    <span class="keyword">public</span> PopupTransform Transform
+    {
+        <span class="keyword">get</span> =&gt; _popupTransform;
+        <span class="keyword">set</span>
+        {
+            _popupTransform = value;
+            Open = <span class="keyword">true</span>;
+        }
+    }
+
+    <span class="keyword">private</span> <span class="keyword">bool</span> Open = <span class="keyword">false</span>;
+    <span class="keyword">public</span> <span class="keyword">string</span> GetIcon()
+    {
+        <span class="keyword">string</span> icon = <span class="string">&quot;&quot;</span>;
+
+        <span class="keyword">switch</span> (Transform)
+        {
+            <span class="keyword">case</span> PopupTransform.TopLeft:
+                icon = Icons.Material.Filled.SouthEast;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.TopCentre:
+                icon = Icons.Material.Filled.South;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.TopRight:
+                icon = Icons.Material.Filled.SouthWest;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.CentreLeft:
+                icon = Icons.Material.Filled.East;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.CentreCentre:
+                icon = Icons.Material.Filled.ZoomOutMap;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.CentreRight:
+                icon = Icons.Material.Filled.West;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.BottomLeft:
+                icon = Icons.Material.Filled.NorthEast;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.BottomCentre:
+                icon = Icons.Material.Filled.North;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.BottomRight:
+                icon = Icons.Material.Filled.NorthWest;
+                <span class="keyword">break</span>;
+        }
+        <span class="keyword">return</span> icon;
+    }
+    <span class="keyword">public</span> Alignment GetHorizontalAlignment()
+    {
+        Alignment alignment = Alignment.Start;
+
+        <span class="keyword">switch</span> (Transform)
+        {
+            <span class="keyword">case</span> PopupTransform.TopLeft:
+            <span class="keyword">case</span> PopupTransform.CentreLeft:
+            <span class="keyword">case</span> PopupTransform.BottomLeft:
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.TopCentre:
+            <span class="keyword">case</span> PopupTransform.CentreCentre:
+            <span class="keyword">case</span> PopupTransform.BottomCentre:
+                alignment = Alignment.Center;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.TopRight:
+            <span class="keyword">case</span> PopupTransform.CentreRight:
+            <span class="keyword">case</span> PopupTransform.BottomRight:
+                alignment = Alignment.End;
+                <span class="keyword">break</span>;
+        }
+        <span class="keyword">return</span> alignment;
+    }
+    <span class="keyword">public</span> Alignment GetVerticalAlignment()
+    {
+        Alignment alignment = Alignment.Start;
+
+        <span class="keyword">switch</span> (Transform)
+        {
+            <span class="keyword">case</span> PopupTransform.TopLeft:
+            <span class="keyword">case</span> PopupTransform.TopCentre:
+            <span class="keyword">case</span> PopupTransform.TopRight:
+                alignment = Alignment.Start;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.CentreLeft:
+            <span class="keyword">case</span> PopupTransform.CentreCentre:
+            <span class="keyword">case</span> PopupTransform.CentreRight:
+                alignment = Alignment.Center;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> PopupTransform.BottomLeft:
+            <span class="keyword">case</span> PopupTransform.BottomCentre:
+            <span class="keyword">case</span> PopupTransform.BottomRight:
+                alignment = Alignment.End;
+                <span class="keyword">break</span>;
+        }
+        <span class="keyword">return</span> alignment;
+    }
+}
+</pre></div>
+</div>

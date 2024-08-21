@@ -1,0 +1,169 @@
+﻿@page "/"
+
+@* <Grid BoxShadow=true Width="500" Margin="20" HorizontalAlignment="Alignment.Center">
+    <Grid>
+        <TabsOld>
+            <Tab Text="Tab1" />
+            <Tab Text="Tab2" />
+            <Tab Text="Tab3" />
+        </TabsOld>
+    </Grid>
+ *@
+@*     <DockManager HorizontalAlignment="Alignment.Center">
+    </DockManager>
+    *@
+
+ @* <ScrollViewer  Padding=20 HorizontalScrollMode="ScrollMode.Auto" VerticalScrollMode="ScrollMode.Auto">  *@
+    <StackPanel Padding="40,40,0,0" Orientation="Orientation.Portrait" >
+        <Button HorizontalAlignment="Alignment.Start" VerticalAlignment=Alignment.Start   Width=150 ToolTipPosition=ToolTipPosition.Bottom ToolTip="Tooltip" >Enter</Button>
+@*         <Button Size=Size.VeryLarge ToolTipPosition=ToolTipPosition.Top ToolTip="Tooltip">Enter</Button>
+        <Button ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Bottom>Enter</Button>
+        <Button Size=Size.VeryLarge ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Bottom>Enter</Button>
+        <Button ToolTipPosition=ToolTipPosition.Left ToolTip="Tooltip">Enter</Button>
+        <Button Size=Size.VeryLarge HorizontalAlignment="Alignment.Center" ToolTipPosition=ToolTipPosition.Left ToolTip="Tooltip">Enter</Button>
+        <Button ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Right>Enter</Button>
+        <Button Size=Size.VeryLarge HorizontalAlignment="Alignment.Center" ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Right>Enter</Button>
+ *@  
+</StackPanel>
+@* </ScrollViewer> *@
+    
+ 
+@* </Grid> *@
+@*<Grid Columns="*,*" Rows="*,*">
+    <Grid Row="0" Column="1" BackgroundColor="blue"/>
+    <Grid Row="1" Column="0" BackgroundColor="red"/>
+</Grid>
+*@@*<Border Width="200" BorderThickness="1" BorderColor="Black">
+    <StackPanel>
+        <Grid Margin="20">
+            <MudTextField T="string" Label="Filled" Variant="Variant.Filled" />
+        </Grid>
+        <Grid Margin="20">
+            <MudTextField T="string" Label="Filled" Variant="Variant.Filled" />
+        </Grid> 
+        <Grid Margin="20">
+            <MudTextField T="string" Label="Filled" Variant="Variant.Filled" />
+        </Grid>
+        <TextInput Margin="20" />
+        <TextInput Margin="20" />
+        <TextInput Margin="20" />
+
+        <Grid Margin="20">
+        <MudSelect T="double" Label="Price" Variant="Variant.Outlined">
+            <MudSelectItem T="double" Value="4.50" />
+            <MudSelectItem T="double" Value="4.99" />
+            <MudSelectItem T="double" Value="3.60" />
+        </MudSelect>
+        </Grid>
+    </StackPanel>
+</Border>
+*@
+
+@*<MudPaper Width="300px">
+    <MudList Clickable="true">
+        <MudListItem Text="Inbox" Icon="@Icons.Material.Filled.Inbox" />
+        <MudListItem Text="Sent" Icon="@Icons.Material.Filled.Send" />
+        <MudDivider />
+        <MudListItem Text="Trash" />
+        <MudListItem Text="Spam" />
+    </MudList>
+</MudPaper>*@
+
+@*<NavigationLayout/>
+*@
+@*<Grid BackgroundColor="yellow" Margin="20">
+    <Grid Rows="*,*" Columns="*,*" BackgroundColor="red">
+        <Grid Row="0" Column="0" VerticalAlignment="Alignment.Start">
+            <MudAppBar Color="Color.Primary" Fixed="false">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" />
+            </MudAppBar>
+        </Grid>
+        <Grid Row="1" Column="1">
+            <MudTreeView T="string">
+                <MudTreeViewItem Value="@("Getting Started")">
+                    <MudTreeViewItem Value="@("Installation")" />
+                </MudTreeViewItem>
+                <MudTreeViewItem Value="@("Components")">
+                    <MudTreeViewItem Value="@("Avatar")" />
+                    <MudTreeViewItem Value="@("Button")" />
+                </MudTreeViewItem>
+            </MudTreeView>
+        </Grid>
+    </Grid>
+</Grid>
+*@
+@*<Grid Class="card" HorizontalAlignment="BlazorComponents.Alignment.Center" Margin="20" MinWidth="500">
+        <Grid Rows="auto,*,auto">
+            <h2 class="card-header">Client Modules</h2>
+
+            <ScrollViewer Row="1" VerticalScrollMode="ScrollMode.Auto">
+                <StackPanel Orientation="BlazorComponents.Orientation.Vertical" Margin="20">
+                    <Grid Columns="2*,*,2*" Margin="0,0,0,20">
+                        <TextBlock Column="0" Text="Name" FontWeight="FontWeight.Bold" Margin="0,0,20,0" />
+                        <TextBlock Column="1" Text="Version" FontWeight="FontWeight.Bold" Margin="0,0,10,0" />
+                        <TextBlock Column="2" Text="Views" FontWeight="FontWeight.Bold" Margin="0,0,10,0" />
+                    </Grid>
+                    @foreach (var module in AdminViewModel.ClientModules)
+                    {
+                        <Grid Columns="2*,*,2*">
+                            <TextBlock Column="0" Text="@module.DisplayName" Margin="0,0,20,0" />
+                            <TextBlock Column="1" Text="@module.CurrentVersion" Margin="0,0,10,0" />
+                            <TextBlock Column="2" Text="@string.Join('\n',module.Views)" Margin="0,0,10,0" />
+                        </Grid>
+                    }
+                </StackPanel>
+            </ScrollViewer>
+
+            <Border Row="2" BorderThickness="0, 0.5, 0, 0" BorderColor="#0000001F">
+                <Grid>
+                    <StackPanel Orientation="BlazorComponents.Orientation.Horizontal" HorizontalAlignment="Alignment.Center" Margin="10">
+                        <button class="btn btn-primary" style="margin-left: 10px;" >Close</button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+        </Grid>
+</Grid>*@
+
+@code {
+
+    //ListItem SelectedItem = null;
+    //List<ListItem> items = new List<ListItem>();
+
+    private bool? isChecked;
+
+    public bool? Checked
+    {
+        get { return isChecked; }
+        set
+        {
+            isChecked = value;
+        }
+    }
+
+    private bool IsChecked1;
+
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        // items.Add(new ListItem { Id = 1, IsChecked = false, ItemText = "Item1", ItemData = 1 });
+        // items.Add(new ListItem { Id = 2, IsChecked = false, ItemText = "Item2", ItemData = 2 });
+        // items.Add(new ListItem { Id = 3, IsChecked = false, ItemText = "Item3", ItemData = 3 });
+        //SelectedItem = items.First();
+    }
+
+    private void OnChanged(ChangeEventArgs args)
+    {
+
+    }
+
+    private async Task OnClick()
+    {
+    }
+
+
+}

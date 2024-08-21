@@ -1,0 +1,61 @@
+﻿@namespace ClearBlazor
+@typeparam TItem
+@inherits ContainerInputBase<TItem>
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id class=@Classes style=@ComputeStyle()
+         @onmouseenter="OnMouseEnter" @onmouseleave="OnMouseLeave">
+        <StackPanel Style=@SelectWidth Orientation="Orientation.Portrait">
+            @if (!string.IsNullOrEmpty(Label))
+            {
+                <TextBlock Style=@GetLabelStyle()>@Label</TextBlock>
+            }
+            <Grid BackgroundColour=@GetBackgroundColour() BorderThickness=@GetBorderThickness()
+                  BorderColour=@GetBorderColour() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
+                <div @ref="SelectElement" style="display:grid; ">
+                    <Grid Columns="*,auto" OnClicked=@ToggleDropdown>
+                        <TextBlock Style=@ComputeInputStyle() VerticalAlignment=Alignment.Center>@SelectionText</TextBlock>
+                        <IconButton Column=1 Icon=@Icons.Material.Filled.KeyboardArrowDown />
+                    </Grid>
+                    <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="-20,1,-20,-20"
+                           Position=Position Transform=Transform
+                           AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
+                           @bind-Open=DropdownOpen Width=@GetPopupWidth()>
+                        <ListBox TListBox=TItem @bind-Value=Value @bind-Values=Values
+                                 MultiSelect=@MultiSelect RowSize=Size
+                                 Colour=Colour Margin="20,0,20,20" Padding="0,10,0,10"
+                                 BackgroundColour=Color.Background BoxShadow="2" CornerRadius="4"
+                                 OnSelectionChanged=@OnListSelectionChanged
+                                 OnSelectionsChanged=@OnListSelectionsChanged>
+                            @if (SelectData == null)
+                            {
+                                @ChildContent
+                            }
+                            else
+                            {
+                                @foreach (var item in SelectData!)
+                                {
+                                    <SelectItem Value=@item.Value Text=@item.Name Icon=@item.Icon Avatar=@item.Avatar />
+                                }
+                            }
+                        </ListBox>
+                    </Popup>
+
+                    @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
+                    {
+                        <MaterialIcon Name="MaterialIcon in TextInputBase" Column=2 Icon="@Icons.Material.Filled.FmdBad"
+                                      Size=@Size ToolTip=@ValidationMessage Colour=@Color.Error />
+                    }
+                </div>
+            </Grid>
+            @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)
+            {
+                <TextBlock TextWrapping="TextWrap.WrapOnNewLines"
+                           Colour=@Color.Error>@ValidationMessage</TextBlock>
+            }
+        </StackPanel>
+    </div>
+</CascadingValue>
+
+
+

@@ -1,0 +1,30 @@
+<div>
+<div class="html"><pre>
+<span class="atSign">&#64;</span>using System.ComponentModel.DataAnnotations
+<span class="atSign">&#64;</span>using System.Globalization
+
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>Local Culture<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DatePicker</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">2</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Date</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Date1</span> <span class="htmlTagDelimiter">/&gt;</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>Date1<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>Local Culture - First day of week overridden to Monday<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DatePicker</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">2</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Date</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Date1</span> <span class="htmlAttributeName">FirstDayOfTheWeek</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">ClearBlazor.FirstDayOfTheWeek.Monday</span> <span class="htmlTagDelimiter">/&gt;</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>Date1<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>Local Culture - US<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+&lt;DatePicker BorderThickness=1 CornerRadius=4 <span class="atSign">&#64;</span>bind-Date=Date2 Culture=<span class="atSign">&#64;</span>(new CultureInfo(&quot;en-US&quot;)) /&gt;
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>Date2<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>Local Culture - France<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+&lt;DatePicker BorderThickness=1 CornerRadius=4 <span class="atSign">&#64;</span>bind-Date=Date3 Culture=<span class="atSign">&#64;</span>(new CultureInfo(&quot;fr-FR&quot;)) /&gt;
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>Date4<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+</pre></div>
+<div class="csharp"><pre>
+<span class="atSign">&#64;</span>code {
+    DateOnly? Date1 { <span class="keyword">get</span>; <span class="keyword">set</span>; } = DateOnly.FromDateTime(DateTime.Now.AddDays(<span class="number">5</span>));
+    DateOnly? Date2 { <span class="keyword">get</span>; <span class="keyword">set</span>; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-<span class="number">5</span>));
+    DateOnly? Date3 { <span class="keyword">get</span>; <span class="keyword">set</span>; } = DateOnly.FromDateTime(DateTime.Now.AddDays(<span class="number">5</span>));
+    DateOnly? Date4 { <span class="keyword">get</span>; <span class="keyword">set</span>; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-<span class="number">5</span>));
+}
+</pre></div>
+</div>

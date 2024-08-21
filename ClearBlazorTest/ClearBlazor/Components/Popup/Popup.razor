@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<div id=@Id @ref="PopupElement" style=@ComputeStyle()
+     @onmouseenter="OnMouseEnter"
+     @onmouseleave="OnMouseLeave">
+     @if (Open)
+     {
+        @ChildContent
+     }
+</div>
+

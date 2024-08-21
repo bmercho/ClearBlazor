@@ -1,0 +1,178 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ClearBlazorTestCore</RootNamespace>
+    <AssemblyName>ClearBlazorTestCore</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\Canvas\Code\CanvasSimpleExampleCode.html" />
+    <None Remove="Pages\Forms\AutoForm\Code\AutoFormSimpleExampleCode.html" />
+    <None Remove="Pages\Inputs\DatePickerInput\Code\DatePickerInputSimpleExampleCode.html" />
+    <None Remove="Pages\Inputs\TimePickerInput\Code\TimePickerInputSimpleExampleCode.html" />
+    <None Remove="Pages\Pickers\DatePicker\Code\DatePickerColourExampleCode.html" />
+    <None Remove="Pages\Pickers\DatePicker\Code\DatePickerCultureExampleCode.html" />
+    <None Remove="Pages\Pickers\DatePicker\Code\DatePickerReadOnlyDisabledExampleCode.html" />
+    <None Remove="Pages\Pickers\DatePicker\Code\DatePickerSimpleExampleCode.html" />
+    <None Remove="Pages\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />
+    <None Remove="Pages\TextBlock\Code\TextBlockClickableExampleCode.html" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClearBlazor\ClearBlazor.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <EmbeddedResource Include="Pages\Border\Code\BorderGradientBackgroundExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Canvas\Code\CanvasSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Forms\AutoForm\Code\AutoFormSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\DatePickerInput\Code\DatePickerInputSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\TimePickerInput\Code\TimePickerInputSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Pickers\ColourPicker\Code\ColourPickerSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Forms\Form\Code\FormLabelColumnExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Forms\Form\Code\FormSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Forms\Form\Code\FormSizeExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\CheckBox\Code\CheckBoxDisabledExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\CheckBox\Code\CheckBoxIconsExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\CheckBox\Code\CheckBoxLabelExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\CheckBox\Code\CheckBoxReadonlyExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\CheckBox\Code\CheckBoxSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\CheckBox\Code\CheckBoxSizeExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\ColourPickerInput\Code\ColourPickerInputSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\NumericInput\Code\NumericInputCultureExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\NumericInput\Code\NumericInputImmediateExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\NumericInput\Code\NumericInputNegativeExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\NumericInput\Code\NumericInputSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\NumericInput\Code\NumericInputSpinButtonsExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Inputs\NumericInput\Code\NumericInputTypeExampleCode.html" />
+	  <EmbeddedResource Include="Pages\AppBar\Code\AppBarSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Avatar\Code\AvatarIconExampleCode.html" />
+    <EmbeddedResource Include="Pages\Avatar\Code\AvatarImageExampleCode.html" />
+    <EmbeddedResource Include="Pages\Avatar\Code\AvatarTextExampleCode.html" />
+    <EmbeddedResource Include="Pages\Border\Code\BorderBoxShadowExampleCode.html" />
+    <EmbeddedResource Include="Pages\Border\Code\BorderColorExampleCode.html" />
+    <EmbeddedResource Include="Pages\Border\Code\BorderContentExampleCode.html" />
+    <EmbeddedResource Include="Pages\Border\Code\BorderSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\ButtonGroup\Code\ButtonGroupHorizontalExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\ButtonGroup\Code\ButtonGroupIconsExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\ButtonGroup\Code\ButtonGroupVerticalExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\Buttons\Code\ButtonsFilledExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\Buttons\Code\ButtonsIconExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\Buttons\Code\ButtonsNoShadowExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\Buttons\Code\ButtonsOutlineExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\Buttons\Code\ButtonsSizeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\Buttons\Code\ButtonsTextExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\Buttons\Code\ButtonsToggleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\IconButtons\Code\IconButtonsSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\IconButtons\Code\IconButtonsSquareShapeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\IconButtons\Code\IconButtonsToggleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\IconButtons\Code\IconButtonsVariantExampleCode.html" />
+    <EmbeddedResource Include="Pages\Buttons\ToggleIconButtons\Code\ToggleIconButtonsExampleCode.html" />
+    <EmbeddedResource Include="Pages\DockPanel\Code\DockPanelSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Drawer\Code\DrawerSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Grid\Code\GridRowsColsExampleCode.html" />
+    <EmbeddedResource Include="Pages\Grid\Code\GridSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Icon\Code\IconColorExampleCode.html" />
+    <EmbeddedResource Include="Pages\Icon\Code\IconCustomExampleCode.html" />
+    <EmbeddedResource Include="Pages\Icon\Code\IconSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Icon\Code\IconSizeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Icon\Code\IconStyleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Image\Code\ImagePeopleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Image\Code\ImageSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioColourExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioDataExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioDisabledExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioNullableTypeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioOrientationExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioReadonlyExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioSizeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioSpacingExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Radio\Code\RadioTypeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Select\Code\SelectDataExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Select\Code\SelectIconAvatarExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Select\Code\SelectMultiselectStringExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Select\Code\SelectPlacementExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Select\Code\SelectSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Select\Code\SelectSizeColourExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Select\Code\SelectStretchExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Select\Code\SelectTypeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderBackgroundGradientExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderColourExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderCustomTickMarkLabelExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderDisabledExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderReadonlyExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderSizeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderStepExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderTickMarkExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderTickMarkLabelExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderTickMarkLabelFormatExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Slider\Code\SliderValueLabelExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Switch\Code\SwitchDisabledExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Switch\Code\SwitchLabelExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Switch\Code\SwitchReadonlyExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Switch\Code\SwitchSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\Switch\Code\SwitchSizeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputClearButtonExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputDisabledExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputImmediateExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputLabelExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputMaxLengthExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputMultilineExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputPasswordExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputReadOnlyExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Inputs\TextInput\Code\TextInputSizeExampleCode.html" />
+    <EmbeddedResource Include="Pages\ListBox\Code\ListBindExampleCode.html" />
+    <EmbeddedResource Include="Pages\ListBox\Code\ListColoursExampleCode.html" />
+    <EmbeddedResource Include="Pages\ListBox\Code\ListDataExampleCode.html" />
+    <EmbeddedResource Include="Pages\ListBox\Code\ListIconAvatarExampleCode.html" />
+    <EmbeddedResource Include="Pages\ListBox\Code\ListMultiSelectExampleCode.html" />
+    <EmbeddedResource Include="Pages\ListBox\Code\ListSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\ListBox\Code\ListSizeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Pickers\DatePicker\Code\DatePickerColourExampleCode.html" />
+    <EmbeddedResource Include="Pages\Pickers\DatePicker\Code\DatePickerCultureExampleCode.html" />
+    <EmbeddedResource Include="Pages\Pickers\DatePicker\Code\DatePickerReadOnlyDisabledExampleCode.html" />
+    <EmbeddedResource Include="Pages\Pickers\DatePicker\Code\DatePickerSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Popup\Code\PopupHorizontalFlipExampleCode.html" />
+    <EmbeddedResource Include="Pages\Popup\Code\PopupLocationExampleCode.html" />
+    <EmbeddedResource Include="Pages\Popup\Code\PopupSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Popup\Code\PopupVerticalFlipExampleCode.html" />
+    <EmbeddedResource Include="Pages\StackPanel\Code\StackPanelHorizontalExampleCode.html" />
+    <EmbeddedResource Include="Pages\StackPanel\Code\StackPanelVerticalExampleCode.html" />
+    <EmbeddedResource Include="Pages\TabPanel\Code\TabPanelSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\TextBlock\Code\TextBlockAlignmentExampleCode.html" />
+    <EmbeddedResource Include="Pages\TextBlock\Code\TextBlockClickableExampleCode.html" />
+    <EmbeddedResource Include="Pages\TextBlock\Code\TextBlockOptionsExampleCode.html" />
+    <EmbeddedResource Include="Pages\TextBlock\Code\TextBlockSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Toolbar\Code\ToolbarPortraitExampleCode.html" />
+    <EmbeddedResource Include="Pages\Toolbar\Code\ToolbarSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Toolbar\Code\ToolbarTrayExampleCode.html" />
+    <EmbeddedResource Include="Pages\ToolTip\Code\ToolTipSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\UniformGrid\Code\UniformGridSetRowsAndColumnsExampleCode.html" />
+    <EmbeddedResource Include="Pages\UniformGrid\Code\UniformGridSetRowsExampleCode.html" />
+    <EmbeddedResource Include="Pages\UniformGrid\Code\UniformGridSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\WrapPanel\Code\WrapPanelColumnExampleCode.html" />
+    <EmbeddedResource Include="Pages\WrapPanel\Code\WrapPanelColumnReverseExampleCode.html" />
+    <EmbeddedResource Include="Pages\WrapPanel\Code\WrapPanelRowExampleCode.html" />
+    <EmbeddedResource Include="Pages\WrapPanel\Code\WrapPanelRowReverseExampleCode.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Layout\" />
+  </ItemGroup>
+</Project>

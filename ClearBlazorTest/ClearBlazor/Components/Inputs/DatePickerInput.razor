@@ -1,0 +1,40 @@
+﻿@namespace ClearBlazor
+@inherits ContainerInputBase<DateOnly?>
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id class=@Classes style=@ComputeStyle() @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
+        <StackPanel Orientation="Orientation.Portrait">
+            @if (!string.IsNullOrEmpty(Label))
+            {
+                <div style=@GetLabelStyle()>@Label</div>
+            }
+            <Grid BackgroundColour=@GetBackgroundColour() BorderThickness=@GetBorderThickness()
+                  BorderColour=@GetBorderColour() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
+                <div @ref="PickerElement" style="display:grid; ">
+                    <Grid MinWidth=200 Columns="*,auto" Margin=5 OnClicked=@TogglePopup>
+                        <TextBlock VerticalAlignment=Alignment.Center>@DateString</TextBlock>
+                        <IconButton Size=Size.Small Colour=Color.Dark Column=1 Icon=@Icons.Material.Outlined.CalendarMonth/>
+                    </Grid>
+                     <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="0,1,-20,-20"
+                           Position=Position Transform=Transform
+                           AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
+                           @bind-Open=PopupOpen>
+                        <DatePicker Margin="0,0,0,0" Orientation=@Orientation BorderThickness=1 CornerRadius=4 
+                                    @bind-Date=CurrentDate DateSelected=@DateSelected/>
+                    </Popup>
+                     @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
+                    {
+                        <MaterialIcon Name="MaterialIcon in TextInputBase" Column=2 Icon="@Icons.Material.Filled.FmdBad"
+                                      Size=@Size ToolTip=@ValidationMessage Colour=@Color.Error />
+                    }
+                </div>
+            </Grid>
+            @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)
+            {
+                <TextBlock TextWrapping="TextWrap.WrapOnNewLines"
+                           Colour=@Color.Error>@ValidationMessage</TextBlock>
+            }
+        </StackPanel>
+    </div>
+</CascadingValue>
+

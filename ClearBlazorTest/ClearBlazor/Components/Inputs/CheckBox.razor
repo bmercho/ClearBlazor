@@ -1,0 +1,23 @@
+﻿@namespace ClearBlazor
+@typeparam TItem
+@inherits InputBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <StackPanel Orientation="Orientation.Landscape"
+                    HorizontalAlignment=Alignment.Start 
+                    VerticalAlignment=Alignment.Start>
+            @if (Label != null && LabelLocation == LabelLocation.Start)
+            {
+                <TextBlock VerticalAlignment=Alignment.Center>@Label</TextBlock>
+            }
+            <IconButton Disabled=@IsDisabled IconColour="@Colour" Icon=@GetIcon() Size="@Size" OnClicked=@OnIconClicked />
+            @if (Label != null && LabelLocation == LabelLocation.End)
+            {
+                <TextBlock VerticalAlignment=Alignment.Center>@Label</TextBlock>
+            }
+        </StackPanel>
+    </div>
+</CascadingValue>
+
+

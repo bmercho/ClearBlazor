@@ -1,0 +1,9 @@
+﻿@page "/"
+@namespace ComponentsTest.Pages
+@using ComponentsTest.Web
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_Layout";
+}
+
+<component type="typeof(App)" render-mode="Server" />

@@ -1,0 +1,17 @@
+﻿<RadioGroup @bind-Value=Value Colour=Color.Error>
+    <Radio Label="Item1" Value=@("Item1")/>
+    <Radio Label="Item2" Value=@("Item2") />
+    <Radio Label="Item3" Value=@("Item3") />
+    <Radio Label="Item4" Value=@("Item4") />
+</RadioGroup>
+
+<RadioGroup @bind-Value=Value Colour=Color.Error>
+    <Radio Label="Item1" Value=@("Item1") Colour=Color.Primary />
+    <Radio Label="Item2" Value=@("Item2") />
+    <Radio Label="Item3" Value=@("Item3") />
+    <Radio Label="Item4" Value=@("Item4") />
+</RadioGroup>
+
+@code {
+    public string Value { get; set; } = "Item3";
+}

@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="ComponentsTest.Wpf.Pages.Test084"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="yellow" Margin="20" MinWidth="500">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel Background="aqua" Orientation="Vertical" Margin="20">
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Name" FontWeight="Bold" Margin="0,0,20,0" />
+                        <TextBlock Grid.Column="1" Text="Version" FontWeight="Bold" Margin="0,0,10,0" />
+                        <TextBlock Grid.Column="2" Text="Views" FontWeight="Bold" Margin="0,0,10,0" />
+                    </Grid>
+                    <TextBlock Text="Views" FontWeight="Bold" Margin="0,0,10,0" FontSize="17" />
+                    <TextBlock Text="Views" FontWeight="Bold" Margin="0,0,10,0" FontSize="17" />
+                    <TextBlock Text="Views" FontWeight="Bold" Margin="0,0,10,0" FontSize="17" />
+                    <TextBlock Text="Views" FontWeight="Bold" Margin="0,0,10,0" FontSize="17" />
+                    <TextBlock Text="Views" FontWeight="Bold" Margin="0,0,10,0" FontSize="17" />
+                    <TextBlock Text="Views" FontWeight="Bold" Margin="0,0,10,0" FontSize="17" />
+                    <TextBlock Text="Views" FontWeight="Bold" Margin="0,0,10,0" FontSize="17" />
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

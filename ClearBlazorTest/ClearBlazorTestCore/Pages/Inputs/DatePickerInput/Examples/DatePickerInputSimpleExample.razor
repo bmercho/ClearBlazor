@@ -1,0 +1,10 @@
+﻿<DatePickerInput  @bind-Value=Date @bind-Value:after=OnChange/>
+
+
+@code {
+    public DateOnly? Date { get; set; } = new DateOnly(2024,11,24);
+
+    private void OnChange()
+    {
+    }
+}

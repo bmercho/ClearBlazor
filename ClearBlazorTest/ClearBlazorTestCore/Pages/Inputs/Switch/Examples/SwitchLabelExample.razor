@@ -1,0 +1,15 @@
+﻿<Switch @bind-Checked=BoolValue1 Label="Normal" />
+<Switch @bind-Checked=BoolValue2 Label="Normal" LabelLocation=@LabelLocation.Start />
+<Switch Size=Size.VerySmall @bind-Checked=BoolValue3 Label="Very Small" />
+<Switch Size=Size.VerySmall @bind-Checked=BoolValue4 Label="Very Small" LabelLocation=@LabelLocation.Start />
+<Switch Size=Size.VeryLarge @bind-Checked=BoolValue5 Label="Very Large" />
+<Switch Size=Size.VeryLarge @bind-Checked=BoolValue6 Label="Very Large" LabelLocation=@LabelLocation.Start />
+
+@code {
+    public bool BoolValue1 { get; set; } = true;
+    public bool BoolValue2 { get; set; } = false;
+    public bool BoolValue3 { get; set; } = false;
+    public bool BoolValue4 { get; set; } = false;
+    public bool BoolValue5 { get; set; } = false;
+    public bool BoolValue6 { get; set; } = false;
+}

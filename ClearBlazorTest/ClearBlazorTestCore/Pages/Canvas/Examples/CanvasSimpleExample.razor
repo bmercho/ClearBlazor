@@ -1,0 +1,99 @@
+﻿@using Excubo.Blazor.Canvas.Contexts
+@using System.Timers
+
+
+<DrawingCanvas @ref="MyCanvas" Width="500" Height="500" BorderThickness=1
+             OnCanvasSizeChange=CanvasSizeChange OnPaint=PaintCanvas
+             OnCanvasClick=Clicked/>
+
+
+@code {
+    CanvasSize? CanvasSize;
+
+    DrawingCanvas? MyCanvas;
+    System.Timers.Timer Timer = new System.Timers.Timer(100);
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Timer.Elapsed += async (source, eventArgs) => 
+        {
+            if (MyCanvas == null)
+                return;
+            await MyCanvas.RefreshCanvas(); 
+        };
+    }
+
+    private void CanvasSizeChange(CanvasSize size)
+    {
+        CanvasSize = size;
+    }
+
+    public async Task PaintCanvas(Batch2D context)
+    {
+        if (CanvasSize == null)
+            return;
+
+        await context.ClearRectAsync(0, 0, CanvasSize.Width, CanvasSize.Height);
+
+        int tick = System.Environment.TickCount; 
+        Random random = new Random(tick);
+
+        for (int i = 0; i < 100; i++)
+        {
+            await context.SaveAsync();
+            await context.StrokeStyleAsync(Color.Custom(GetRandomColour(random)).Value);
+            await context.FillStyleAsync(Color.Custom(GetRandomColour(random)).Value);
+
+            double start = random.NextDouble();
+            double span = (1.0 - start) * random.NextDouble() + start;
+            double end = (start + span) * Math.PI * 2;
+            start *= Math.PI * 2;
+            bool anticlocksize = random.Next(0, 1) == 0;
+            int cx = random.Next(0, (int)CanvasSize.Width);
+            int cy = random.Next(0, (int)CanvasSize.Height);
+            int rx = Math.Min(cx, (int)CanvasSize.Width - cx);
+            int ry = Math.Min(cy, (int)CanvasSize.Height - cy);
+            await context.Paths.BeginPathAsync();
+            int lt = random.Next(0, 3);
+            if (lt == 1)
+            {
+                await context.ArcAsync(cx, cy, Math.Min(rx, ry) * random.NextDouble(), start, end, anticlocksize);
+            }
+            else
+            {
+                await context.EllipseAsync(cx, cy, rx * random.NextDouble(), ry * random.NextDouble(), 0, start, end, anticlocksize);
+            }
+            await context.Paths.ClosePathAsync();
+            await context.StrokeAsync();
+            await context.FillAsync(Excubo.Blazor.Canvas.FillRule.NonZero);
+            await context.RestoreAsync();
+        }
+    }
+
+    private string GetRandomColour(Random random)
+    {
+        return $"rgba({random.Next(0, 255)}, {random.Next(0, 255)}, {random.Next(0, 255)}, 1)";
+    }
+
+    public async Task Clicked(MouseEventArgs position)
+    {
+        if (Timer.Enabled)
+            Timer.Enabled = false;
+        else
+        {
+            if (MyCanvas != null)
+                await MyCanvas.RefreshCanvas();
+            Timer.AutoReset = true;
+            Timer.Enabled = true;
+        }
+    }
+
+    private async Task OnTimedEvent(Object source, ElapsedEventArgs e)
+    {
+        if (MyCanvas == null)
+            return;
+        await MyCanvas.RefreshCanvas();
+    }
+}
+ 

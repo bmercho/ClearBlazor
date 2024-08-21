@@ -1,0 +1,15 @@
+﻿@page "/ColourPicker"
+@using ClearBlazorTestCore.Pages.Pickers.ColourPicker.Examples
+<ScrollViewer>
+    <StackPanel Orientation="Orientation.Portrait">
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Colour Picker</TextBlock>
+        <StackPanel Padding="20" Spacing="30">
+            <CodeSnippet Title="Basic" Description="This is an example of basic usage" Code=@(typeof(ColourPickerSimpleExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20" RowSpacing="20">
+                    <ColourPickerSimpleExample />
+                </WrapPanel>
+            </CodeSnippet>
+        </StackPanel>
+     </StackPanel>
+</ScrollViewer>
+

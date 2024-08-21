@@ -1,0 +1,21 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <Grid Columns=@Columns Rows=@Rows BorderThickness="0" BackgroundColour=Color.Transparent>
+            <Grid Column=@DrawerContentColumn Row=@DrawerContentRow @ref=Content
+                  Class="drawer-transition" Margin=@DrawerMargin Style="z-index:3; ">
+                @DrawerContent
+            </Grid>
+            <Grid Column=@DrawerBodyColumn Row=@DrawerBodyRow ColumnSpan=@DrawerBodyColumnSpan>
+                @DrawerBody
+                @if (ShowOverlay)
+                {
+                    <Grid BackgroundColour=Color.Dark.SetAlpha(0.4) Style="z-index:2; " OnClicked=@OverlayClicked />
+                }
+            </Grid>
+        </Grid>
+    </div>
+</CascadingValue>
+

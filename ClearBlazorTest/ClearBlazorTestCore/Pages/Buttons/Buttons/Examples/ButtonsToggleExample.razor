@@ -1,0 +1,17 @@
+﻿<Button Icon=@Icon OnClicked=@Clicked Colour=@Colour>
+    @Content
+</Button>
+@code {
+    public string Icon { get; set; } = Icons.Material.Filled.AlarmOff;
+    public string Content { get; set; } = "Alarm off";
+    public Color Colour { get; set; } = Color.Primary;
+    private bool toggled = false;
+
+    private void Clicked()
+    {
+        toggled = !toggled;
+        Icon = toggled == true ? Icons.Material.Filled.AlarmOn : Icons.Material.Filled.AlarmOff;
+        Content = toggled == true ? "Alarm on" : "alarm off";
+        Colour = toggled == true ? Color.Error : Color.Primary;
+    }
+}

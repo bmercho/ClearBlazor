@@ -1,0 +1,102 @@
+<div>
+<div class="html"><pre>
+<span class="atSign">&#64;</span>using Excubo.Blazor.Canvas.Contexts
+<span class="atSign">&#64;</span>using System.Timers
+
+
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DrawingCanvas</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">MyCanvas</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">500</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">500</span><span class="quot">&quot;</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span>
+             <span class="htmlAttributeName">OnCanvasSizeChange</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">CanvasSizeChange</span> <span class="htmlAttributeName">OnPaint</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">PaintCanvas</span>
+             <span class="htmlAttributeName">OnCanvasClick</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Clicked</span><span class="htmlTagDelimiter">/&gt;</span>
+</pre></div>
+<div class="csharp"><pre>
+<span class="atSign">&#64;</span>code {
+    CanvasSize? CanvasSize;
+
+    DrawingCanvas? MyCanvas;
+    System.Timers.Timer Timer = <span class="keyword">new</span> System.Timers.Timer(<span class="number">100</span>);
+
+    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
+    {
+        <span class="keyword">base</span>.OnInitialized();
+        Timer.Elapsed += <span class="keyword">async</span> (source, eventArgs) =&gt; 
+        {
+            <span class="keyword">if</span> (MyCanvas == <span class="keyword">null</span>)
+                <span class="keyword">return</span>;
+            <span class="keyword">await</span> MyCanvas.RefreshCanvas(); 
+        };
+    }
+
+    <span class="keyword">private</span> <span class="keyword">void</span> CanvasSizeChange(CanvasSize size)
+    {
+        CanvasSize = size;
+    }
+
+    <span class="keyword">public</span> <span class="keyword">async</span> Task PaintCanvas(Batch2D context)
+    {
+        <span class="keyword">if</span> (CanvasSize == <span class="keyword">null</span>)
+            <span class="keyword">return</span>;
+
+        <span class="keyword">await</span> context.ClearRectAsync(<span class="number">0</span>, <span class="number">0</span>, CanvasSize.Width, CanvasSize.Height);
+
+        <span class="keyword">int</span> tick = System.Environment.TickCount; 
+        Random random = <span class="keyword">new</span> Random(tick);
+
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)
+        {
+            <span class="keyword">await</span> context.SaveAsync();
+            <span class="keyword">await</span> context.StrokeStyleAsync(Color.Custom(GetRandomColour(random)).Value);
+            <span class="keyword">await</span> context.FillStyleAsync(Color.Custom(GetRandomColour(random)).Value);
+
+            <span class="keyword">double</span> start = random.NextDouble();
+            <span class="keyword">double</span> span = (<span class="number">1</span>.<span class="number">0</span> - start) * random.NextDouble() + start;
+            <span class="keyword">double</span> end = (start + span) * Math.PI * <span class="number">2</span>;
+            start *= Math.PI * <span class="number">2</span>;
+            <span class="keyword">bool</span> anticlocksize = random.Next(<span class="number">0</span>, <span class="number">1</span>) == <span class="number">0</span>;
+            <span class="keyword">int</span> cx = random.Next(<span class="number">0</span>, (<span class="keyword">int</span>)CanvasSize.Width);
+            <span class="keyword">int</span> cy = random.Next(<span class="number">0</span>, (<span class="keyword">int</span>)CanvasSize.Height);
+            <span class="keyword">int</span> rx = Math.Min(cx, (<span class="keyword">int</span>)CanvasSize.Width - cx);
+            <span class="keyword">int</span> ry = Math.Min(cy, (<span class="keyword">int</span>)CanvasSize.Height - cy);
+            <span class="keyword">await</span> context.Paths.BeginPathAsync();
+            <span class="keyword">int</span> lt = random.Next(<span class="number">0</span>, <span class="number">3</span>);
+            <span class="keyword">if</span> (lt == <span class="number">1</span>)
+            {
+                <span class="keyword">await</span> context.ArcAsync(cx, cy, Math.Min(rx, ry) * random.NextDouble(), start, end, anticlocksize);
+            }
+            <span class="keyword">else</span>
+            {
+                <span class="keyword">await</span> context.EllipseAsync(cx, cy, rx * random.NextDouble(), ry * random.NextDouble(), <span class="number">0</span>, start, end, anticlocksize);
+            }
+            <span class="keyword">await</span> context.Paths.ClosePathAsync();
+            <span class="keyword">await</span> context.StrokeAsync();
+            <span class="keyword">await</span> context.FillAsync(Excubo.Blazor.Canvas.FillRule.NonZero);
+            <span class="keyword">await</span> context.RestoreAsync();
+        }
+    }
+
+    <span class="keyword">private</span> <span class="keyword">string</span> GetRandomColour(Random random)
+    {
+        <span class="keyword">return</span> $<span class="string">&quot;rgba({random.Next(0, 255)}, {random.Next(0, 255)}, {random.Next(0, 255)}, 1)&quot;</span>;
+    }
+
+    <span class="keyword">public</span> <span class="keyword">async</span> Task Clicked(MouseEventArgs position)
+    {
+        <span class="keyword">if</span> (Timer.Enabled)
+            Timer.Enabled = <span class="keyword">false</span>;
+        <span class="keyword">else</span>
+        {
+            <span class="keyword">if</span> (MyCanvas != <span class="keyword">null</span>)
+                <span class="keyword">await</span> MyCanvas.RefreshCanvas();
+            Timer.AutoReset = <span class="keyword">true</span>;
+            Timer.Enabled = <span class="keyword">true</span>;
+        }
+    }
+
+    <span class="keyword">private</span> <span class="keyword">async</span> Task OnTimedEvent(Object source, ElapsedEventArgs e)
+    {
+        <span class="keyword">if</span> (MyCanvas == <span class="keyword">null</span>)
+            <span class="keyword">return</span>;
+        <span class="keyword">await</span> MyCanvas.RefreshCanvas();
+    }
+}
+</pre></div>
+</div>

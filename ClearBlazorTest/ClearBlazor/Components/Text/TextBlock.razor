@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Components
+@inherits ClearComponentBase
+@namespace ClearBlazor
+
+<CascadingValue Value="this" IsFixed="false">
+    @if (Clickable)
+    {
+        <div id="@Id" class="@Classes" style="@ComputeStyle()" @onclick="OnElementClicked"
+             data-toggle="tooltip" title="@ToolTip" data-data-placement="auto">
+            @ChildContent
+        </div>
+    }
+    else
+    {
+        <div id="@Id" class="@Classes" style="@ComputeStyle()"
+             data-toggle="tooltip" title="@ToolTip" data-data-placement="auto">
+            @ChildContent
+        </div>
+    }
+</CascadingValue>
+

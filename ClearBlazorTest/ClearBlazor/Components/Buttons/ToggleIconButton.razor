@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@inherits Button
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation="Orientation.Landscape">
+        <IconButton Name="IconButton in ToggleIconButton" Icon=@(toggled ? ToggledIcon : Icon)
+                    IconColour=@(toggled ? ToggledIconColour : IconColour)
+                    Colour=@(toggled ? ToggledIconColour : IconColour) 
+                    OnClicked=@Clicked Size=@Size />
+        <TextBlock Name="TextBlock in ToggleIconButton" VerticalAlignment="Alignment.Center" Margin="10,0,0,0" Size=@Size
+                   Colour=@(toggled ? ToggledIconColour : IconColour )>
+            @(toggled ? ToggledText : Text)
+        </TextBlock>
+    </StackPanel>
+
+</CascadingValue>
+

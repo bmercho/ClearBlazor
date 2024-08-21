@@ -1,0 +1,26 @@
+﻿<UserControl x:Class="ComponentsTest.Wpf.Pages.Test042"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <Grid Background="yellow" Height="30" />
+            <Grid Background="blue" Height="30" HorizontalAlignment="Center"/>
+            <Grid Background="red" Height="30" Width="200" HorizontalAlignment="Center"/>
+            <Grid Background="green" Height="30" Width="200" HorizontalAlignment="Left"/>
+            <Grid Background="pink" Height="30" Width="200" HorizontalAlignment="Right"/>
+            <Grid Background="orange" Height="30" HorizontalAlignment="Stretch"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Grid Background="yellow" Width="30" />
+            <Grid Background="blue" Width="30" VerticalAlignment="Center"/>
+            <Grid Background="red" Width="30" Height="200" VerticalAlignment="Center"/>
+            <Grid Background="green" Width="30" Height="200" VerticalAlignment="Top"/>
+            <Grid Background="pink" Width="30" Height="200" VerticalAlignment="Bottom"/>
+            <Grid Background="orange" Width="30" VerticalAlignment="Stretch"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

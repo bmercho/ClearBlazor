@@ -1,0 +1,67 @@
+﻿@namespace ClearBlazor
+@inherits InputBase
+@typeparam TItem
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <StackPanel Orientation="Orientation.Portrait">
+            @if (!string.IsNullOrEmpty(Label))
+            {
+                <div style="@GetLabelStyle() margin-bottom: 20px; ">@Label</div>
+            }
+            <div @ref="InputElement"></div>
+            <Grid Rows="auto,auto">
+                @if (BackgroundGradient1 == null && BackgroundGradient2 == null)
+                {
+                    <Border Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=BackgroundTrackColour
+                            OnClicked=@OnTrackClicked />
+                    <Border Height=@TrackHeight Width=@TrackWidth HorizontalAlignment=Alignment.Start CornerRadius=@CornerRadius
+                            BackgroundColour=TrackColour OnClicked=@OnTrackClicked />
+                }
+                @if (BackgroundGradient1 != null)
+                {
+                    <Border Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=@Color.Transparent
+                            BackgroundGradient1=@BackgroundGradient1 OnClicked=@OnTrackClicked />
+                }
+                @if (BackgroundGradient2 != null)
+                {
+                    <Border Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=@Color.Transparent
+                            BackgroundGradient2=@BackgroundGradient2 OnClicked=@OnTrackClicked />
+                }
+                @if (ShowTickMarks && Step != null)
+                {
+                    <Grid Row=1 Margin="0,-5,0,0" Rows="auto,auto" HorizontalAlignment=Alignment.Start>
+                        @foreach (var info in TickInfo)
+                        {
+                            <Border Height=@GetTickHeight() BorderColour=@TrackColour BorderThickness="2,0,0,0"
+                                    Margin=@info.TickMargin />
+                            @if (ShowTickMarkLabels)
+                            {
+                                <TextBlock Typography=@GetTypograghy() Margin=@info.TextMargin
+                                           Row=1 HorizontalAlignment=Alignment.Start>@info.Text</TextBlock>
+                            }
+                        }
+                    </Grid>
+                }
+                @if (!Initialising)
+                {
+                    <div @ref="ThumbElement" style=@GetThumbStyle() @onmousedown=OnMouseDown
+                         @onmouseup=OnMouseUp @onmousemove=OnMouseMove />
+                }
+                @if (ShowValueLabels)
+                {
+                    <Popup Position=PopupPosition.TopLeft Transform=PopupTransform.TopLeft Margin=@GetValueMargin()
+                           @bind-Open=DropdownOpen CloseOnOutsideClick=false>
+                        <Grid BorderThickness=1 BackgroundColour=Color.BackgroundGrey CornerRadius=2>
+                            <TextBlock Typography=@GetTypograghy() VerticalAlignment=Alignment.Center 
+                                       Margin="5,0,5,0" >@ValueLabel</TextBlock>
+                        </Grid>
+                    </Popup>
+                }
+            </Grid>
+        </StackPanel>
+    </div>
+</CascadingValue>
+
+
+

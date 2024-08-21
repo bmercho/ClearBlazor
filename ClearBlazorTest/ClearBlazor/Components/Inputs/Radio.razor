@@ -1,0 +1,23 @@
+﻿@namespace ClearBlazor
+@typeparam TItem
+@inherits InputBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <StackPanel Name="StackPanel in CheckBox" Orientation="Orientation.Landscape"
+                    HorizontalAlignment=Alignment.Start 
+                    VerticalAlignment=Alignment.Start>
+            @if (Label != null && LabelLocation == LabelLocation.Start)
+            {
+                <TextBlock Name="TextBlock in CheckBox" Colour=@GetColour() VerticalAlignment=Alignment.Center>@Label</TextBlock>
+            }
+            <IconButton Name="IconButton in CheckBox" Disabled=@IsDisabled IconColour=@GetColour() Icon=@GetIcon() Size="@Size" OnClicked=@OnIconClicked />
+            @if (Label != null && LabelLocation == LabelLocation.End)
+            {
+                <TextBlock Name="TextBlock in CheckBox" Colour=@GetColour() VerticalAlignment=Alignment.Center>@Label</TextBlock>
+            }
+        </StackPanel>
+    </div>
+</CascadingValue>
+
+

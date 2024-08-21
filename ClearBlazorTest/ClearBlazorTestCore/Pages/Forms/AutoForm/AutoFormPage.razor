@@ -1,0 +1,12 @@
+﻿@page "/AutoForm"
+@using ClearBlazorTestCore.Pages.Forms.AutoForm.Examples
+<ScrollViewer>
+    <StackPanel Orientation="Orientation.Portrait">
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Auto Forms</TextBlock>
+        <StackPanel Padding="20" Spacing="30">
+            <CodeSnippet Title="Basic" Code=@(typeof(AutoFormSimpleExample).Name)>
+                <AutoFormSimpleExample />
+            </CodeSnippet>
+        </StackPanel>
+     </StackPanel>
+</ScrollViewer>

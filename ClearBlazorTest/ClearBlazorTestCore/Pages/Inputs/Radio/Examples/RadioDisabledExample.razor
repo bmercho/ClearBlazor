@@ -1,0 +1,8 @@
+﻿<RadioGroup IsDisabled=true @bind-Value=Value>
+    <Radio Label="Item1" Value=@("Item1")/>
+    <Radio Label="Item2" Value=@("Item2") />
+    <Radio Label="Item3" Value=@("Item3") />
+</RadioGroup>
+@code {
+    public string Value { get; set; } = "Item2";
+}

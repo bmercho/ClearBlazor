@@ -1,0 +1,33 @@
+﻿<RadioGroup Size=Size.VeryLarge @bind-Value=Value>
+    <Radio Label="Item1" Value=@("Item1")/>
+    <Radio Label="Item2" Value=@("Item2") />
+    <Radio Label="Item3" Value=@("Item3") />
+</RadioGroup>
+
+<RadioGroup Size=Size.Large @bind-Value=Value>
+    <Radio Label="Item1" Value=@("Item1") />
+    <Radio Label="Item2" Value=@("Item2") />
+    <Radio Label="Item3" Value=@("Item3") />
+</RadioGroup>
+
+<RadioGroup Size=Size.Normal @bind-Value=Value>
+    <Radio Label="Item1" Value=@("Item1") />
+    <Radio Label="Item2" Value=@("Item2") />
+    <Radio Label="Item3" Value=@("Item3") />
+</RadioGroup>
+
+<RadioGroup Size=Size.Small @bind-Value=Value>
+    <Radio Label="Item1" Value=@("Item1") />
+    <Radio Label="Item2" Value=@("Item2") />
+    <Radio Label="Item3" Value=@("Item3") />
+</RadioGroup>
+
+<RadioGroup Size=Size.VerySmall @bind-Value=Value>
+    <Radio Label="Item1" Value=@("Item1") />
+    <Radio Label="Item2" Value=@("Item2") />
+    <Radio Label="Item3" Value=@("Item3") />
+</RadioGroup>
+
+@code {
+    public string Value { get; set; } = "Item2";
+}

@@ -1,0 +1,7 @@
+﻿<CheckBox @bind-Checked=BoolValue1 Label="Primary" />
+<CheckBox @bind-Checked=BoolValue2 Colour=@Color.Error Label="Error" LabelLocation=@LabelLocation.Start />
+
+@code {
+    public bool BoolValue1 { get; set; } = true;
+    public bool BoolValue2 { get; set; } = false;
+}

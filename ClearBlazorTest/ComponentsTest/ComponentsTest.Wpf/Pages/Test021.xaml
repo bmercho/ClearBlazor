@@ -1,0 +1,6 @@
+﻿<UserControl x:Class="ComponentsTest.Wpf.Pages.Test021"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid Background="blue" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center">
+    </Grid>
+</UserControl>

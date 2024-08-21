@@ -1,0 +1,29 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@inherits ClearComponentBase
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()"
+        @onclick="OnElementClicked"
+        @onmouseenter="OnMouseEnter"
+        @onmouseleave="OnMouseLeave">
+        @if (ToolTip != null && ToolTip != string.Empty)
+        {
+            <ToolTip @ref="ToolTipElement" Text=@ToolTip Position=@ToolTipPosition Delay=@ToolTipDelay />
+        }
+        <StackPanel Name="StackPanel in Button" Orientation="Orientation.Landscape" 
+                    Spacing="@Spacing" VerticalAlignment="Alignment.Center" 
+                    BackgroundColour=@Color.Transparent>
+            @if (Icon != null && IconLocation == IconLocation.Start)
+            {
+                <MaterialIcon Name="MaterialIcon in Button" Colour="@IconColour" Size="@Size" Icon="@Icon" />
+            }
+            <span style="@LabelStyle">
+                @ChildContent
+            </span>
+            @if (Icon != null && IconLocation == IconLocation.End)
+            {
+                <MaterialIcon Name="MaterialIcon in Button" Colour="@IconColour" Size="@Size" Icon="@Icon" />
+            }
+        </StackPanel>
+    </div>
+</CascadingValue>

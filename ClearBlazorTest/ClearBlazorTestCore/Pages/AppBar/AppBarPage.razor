@@ -1,0 +1,11 @@
+﻿@page "/AppBar"
+
+@using ClearBlazorTestCore.Pages.AppBar.Examples
+
+<ScrollViewer>
+    <StackPanel Orientation=Orientation.Portrait Padding="20" Spacing="20">
+        <CodeSnippet Code=@(typeof(AppBarSimpleExample).Name)>
+            <AppBarSimpleExample/>
+        </CodeSnippet>
+    </StackPanel>
+</ScrollViewer>

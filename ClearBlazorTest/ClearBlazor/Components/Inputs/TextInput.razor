@@ -1,0 +1,60 @@
+﻿@namespace ClearBlazor
+@inherits ContainerInputBase<string>
+
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <StackPanel Orientation="Orientation.Portrait">
+            @if (!string.IsNullOrEmpty(Label))
+            {
+                <div style=@GetLabelStyle()>@Label</div>
+            }
+            <Grid Name="Grid in TextInputBase" BackgroundColour=@GetBackgroundColour() BorderThickness=@GetBorderThickness()
+                  BorderColour=@GetBorderColour() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
+                @if (Lines > 1)
+                {
+                    <textarea id="@id" @ref="TextInput" style=@ComputeInputStyle() placeholder=@Placeholder type=@GetInputType()
+                              readonly=@IsReadOnly disabled=@IsDisabled value=@StringValue
+                              rows=@Lines
+                              @onmouseenter="OnMouseEnter"
+                              @onmouseleave="OnMouseLeave"
+                              @onfocusin="OnFocusIn"
+                              @onfocusout="OnFocusOut"
+                              @oninput="OnInput"
+                              @onchange="OnChange" />
+
+                }
+                else
+                {
+                    <input id="@id" @ref="TextInput" style=@ComputeInputStyle() placeholder=@Placeholder type=@GetInputType()
+                           readonly=@IsReadOnly disabled=@IsDisabled value=@StringValue
+                           @onmouseenter="OnMouseEnter"
+                           @onmouseleave="OnMouseLeave"
+                           @onfocusin="OnFocusIn"
+                           @onfocusout="OnFocusOut"
+                           @oninput="OnInput"
+                           @onchange="OnChange" />
+                }
+
+                @if (Clearable && StringValue?.Length > 0)
+                {
+                    <IconButton Name="IconButton in TextInputBase" Column=1 Icon="@Icons.Material.Filled.Close" 
+                                Size=@Size Colour=@Color.Dark  OnClicked="ClearEntry" />
+                }
+                @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
+                {
+                    <MaterialIcon Name="MaterialIcon in TextInputBase" Column=2 Icon="@Icons.Material.Filled.FmdBad" 
+                                  Size=@Size ToolTip=@ValidationMessage Colour=@Color.Error />
+                }
+            </Grid>
+            @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)
+            {
+                <TextBlock TextWrapping="TextWrap.WrapOnNewLines" 
+                           Colour=@Color.Error>@ValidationMessage</TextBlock>
+            }
+        </StackPanel>
+    </div>
+</CascadingValue>
+
+
+

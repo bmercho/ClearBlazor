@@ -1,0 +1,21 @@
+﻿<CheckBox @bind-Checked=BoolValue2 TriState=true Colour=@Color.Error 
+          CheckedIcon=@Icons.Material.Filled.FavoriteBorder
+          UncheckedIcon=@Icons.Material.Filled.BookmarkBorder 
+          IndeterminateIcon=@Icons.Material.Filled.StarOutline 
+          Label="@Label"/>
+
+@code {
+    public bool? BoolValue2 { get; set; } = false;
+    public string Label
+    {
+        get
+        {
+            if (BoolValue2 == null)
+                return "Indeterminate";
+            else if (BoolValue2 == false) 
+                return "Unchecked";
+            else
+                return "Checked";
+        }
+    }
+}

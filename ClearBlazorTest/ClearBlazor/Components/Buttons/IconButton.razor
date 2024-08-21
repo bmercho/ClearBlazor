@@ -1,0 +1,17 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@inherits Button
+<CascadingValue Value="this" IsFixed="false">
+    <button id="@Id" class="@Classes" style="@ComputeStyle()" disabled="@GetDisabledState()"
+            @onclick=@OnElementClicked
+            @onmouseenter=@OnMouseEnter 
+            @onmouseleave=@OnMouseLeave>
+        @if (ToolTip != null && ToolTip != string.Empty)
+        {
+            <ToolTip @ref="ToolTipElement" Text=@ToolTip Position=@ToolTipPosition Delay=@ToolTipDelay />
+        }
+        <MaterialIcon Colour=@IconColour Size="@IconSize" Icon="@Icon"/>
+    </button>
+</CascadingValue>
+
+

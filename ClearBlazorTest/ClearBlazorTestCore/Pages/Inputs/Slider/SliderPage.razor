@@ -1,0 +1,70 @@
+﻿@page "/Slider"
+@using ClearBlazorTestCore.Pages.Inputs.Slider.Examples
+<ScrollViewer>
+    <StackPanel Orientation="Orientation.Portrait">
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Slider</TextBlock>
+        <StackPanel Padding="20" Spacing="30">
+            <CodeSnippet Title="Basic" Code=@(typeof(SliderSimpleExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderSimpleExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Size" Code=@(typeof(SliderSizeExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderSizeExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Colour" Code=@(typeof(SliderColourExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderColourExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Disabled" Code=@(typeof(SliderDisabledExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderDisabledExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Readonly" Code=@(typeof(SliderReadonlyExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderReadonlyExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Step,Min,Max" Code=@(typeof(SliderStepExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderStepExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Tick Marks" Code=@(typeof(SliderTickMarkExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderTickMarkExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Tick Mark Labels" Code=@(typeof(SliderTickMarkLabelExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderTickMarkLabelExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Custom Tick Mark Labels" Code=@(typeof(SliderCustomTickMarkLabelExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderCustomTickMarkLabelExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Tick Mark Label Format" Code=@(typeof(SliderTickMarkLabelFormatExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderTickMarkLabelFormatExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Value Label" Code=@(typeof(SliderValueLabelExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderValueLabelExample />
+                </StackPanel>
+            </CodeSnippet>
+          
+            <CodeSnippet Title="Slider - background gradient" Code=@(typeof(SliderBackgroundGradientExample).Name)>
+                <StackPanel Orientation=Orientation.Portrait Margin="10" Spacing="20">
+                    <SliderBackgroundGradientExample />
+                </StackPanel>
+            </CodeSnippet>
+        </StackPanel>
+     </StackPanel>
+</ScrollViewer>

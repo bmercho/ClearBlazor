@@ -1,0 +1,25 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Globalization
+
+<TextBlock>Local Culture</TextBlock>
+<DatePicker BorderThickness=2 CornerRadius=4 @bind-Date=Date1 />
+<TextBlock>@Date1</TextBlock>
+
+<TextBlock>Local Culture - First day of week overridden to Monday</TextBlock>
+<DatePicker BorderThickness=2 CornerRadius=4 @bind-Date=Date1 FirstDayOfTheWeek=ClearBlazor.FirstDayOfTheWeek.Monday />
+<TextBlock>@Date1</TextBlock>
+
+<TextBlock>Local Culture - US</TextBlock>
+<DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date2 Culture=@(new CultureInfo("en-US")) />
+<TextBlock>@Date2</TextBlock>
+
+<TextBlock>Local Culture - France</TextBlock>
+<DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date3 Culture=@(new CultureInfo("fr-FR")) />
+<TextBlock>@Date4</TextBlock>
+
+@code {
+    DateOnly? Date1 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(5));
+    DateOnly? Date2 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
+    DateOnly? Date3 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(5));
+    DateOnly? Date4 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
+}

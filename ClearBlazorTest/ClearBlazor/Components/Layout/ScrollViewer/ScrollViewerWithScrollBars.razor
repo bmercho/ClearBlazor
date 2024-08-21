@@ -1,0 +1,34 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()"
+         @onmousewheel=OnMouseWheel @onmousewheel:stopPropagation=@StopPropogation>
+        <div style="overflow:hidden; display:grid;">
+            <div @ref="ScrollViewerElement" style="display: grid; overflow:hidden; ">
+                <div id="@ScrollId" @ref="ScrollElement" class="scrolling-transition">
+                    @ChildContent
+                </div>
+            </div>
+        </div>
+
+        @if (ShowVerticalScrollBar())
+        {
+            <div style="grid: 1/2; ">
+                <div style=@GetVerticalBackgroundStyle()>
+                    <div id="@VerticalThumbId" @ref="VerticalThumbElement" style=@GetVerticalThumbStyle() @onmousedown=OnVerticalMouseDown
+                         @onmouseup=OnVerticalMouseUp @onmousemove=OnVerticalMouseMove />
+                </div>
+            </div>
+        }
+        @if (ShowHorizontalScrollBar())
+        {
+            <div style="grid-area: 2/1; ">
+                <div style=@GetHorizontalBackgroundStyle()>
+                    <div id="@HorizontalThumbId" @ref="HorizontalThumbElement" style=@GetHorizontalThumbStyle() />
+                </div>
+            </div>
+        }
+    </div>
+</CascadingValue>
+

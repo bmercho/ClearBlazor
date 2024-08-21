@@ -1,0 +1,35 @@
+﻿@using ComponentsTest.Shared.Tests
+
+@page "/"
+
+<DynamicComponent Type=@TestType Parameters=@Params />
+
+@code {
+
+    ThemeManager ThemeManager { get; set; } = new ThemeManager(false);
+
+    private static MainView _instance;
+
+    public Type TestType { get; set; }
+
+    private static Type _type;
+
+    public Dictionary<string, object> Params { get; set; } = new Dictionary<string, object>();
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        _instance = this;
+        SetTest(_type);
+    }
+
+    public static void SetTest(Type type)
+    {
+        _type = type;
+        if (_instance != null)
+        {
+            _instance.TestType = type;
+            _instance.StateHasChanged();
+        }
+    }
+}

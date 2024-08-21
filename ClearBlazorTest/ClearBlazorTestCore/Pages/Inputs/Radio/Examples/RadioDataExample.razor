@@ -1,0 +1,21 @@
+﻿<RadioGroup @bind-Value=EnumValue RadioGroupData=@RadioGroupData />
+
+@code {
+    public enum TestEnum
+    {
+        Enum1, Enum2, Enum3, Enum4
+    }
+
+    public TestEnum EnumValue { get; set; } = TestEnum.Enum2;
+
+    List<RadioGroupDataItem<TestEnum>> RadioGroupData = new List<RadioGroupDataItem<TestEnum>>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        @foreach (TestEnum item in Enum.GetValues(typeof(TestEnum)))
+        {
+           RadioGroupData.Add(new RadioGroupDataItem<TestEnum>(item.ToString(), item));
+        }
+    }
+}

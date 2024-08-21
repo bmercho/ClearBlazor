@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@namespace ClearBlazor
+@typeparam TListBox
+@attribute [CascadingTypeParameter(nameof(TListBox))]
+@inherits InputBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <StackPanel Orientation="Orientation.Portrait"  Spacing=@Spacing>
+            @if (ListData == null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @foreach (var item in ListData!)
+                {
+                    <SelectItem ContentAlignment=@ContentAlignment Value=@item.Value Text=@item.Name Icon=@item.Icon Avatar=@item.Avatar />
+                }
+
+@*                  <Virtualize Items=@ListData>
+                  <SelectItem ContentAlignment=@ContentAlignment Value=@context.Value Text=@context.Name Icon=@context.Icon Avatar=@context.Avatar />
+                </Virtualize> 
+ *@            }
+        </StackPanel>
+    </div>
+</CascadingValue>
