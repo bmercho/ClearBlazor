@@ -10,7 +10,6 @@ Moving to Blazor I found the HTML/CSS Layout was tricky and inconsistent so henc
 
 WPF like layout controls that have been implemented are:
 
-* Border
 * Grid
 * WrapPanel
 * DockPanel
