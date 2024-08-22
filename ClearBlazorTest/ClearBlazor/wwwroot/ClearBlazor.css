@@ -232,3 +232,19 @@ textarea {
     -ms-transition: 200ms linear;
     transition: 200ms linear;
 }
+.slider-transition {
+    -webkit-transition: 100ms linear;
+    -moz-transition: 100ms linear;
+    -o-transition: 100ms linear;
+    -ms-transition: 100ms linear;
+    transition: 100ms linear;
+}
+.colourpicker-transition {
+    -webkit-transition: 50ms linear;
+    -moz-transition: 50ms linear;
+    -o-transition: 50ms linear;
+    -ms-transition: 50ms linear;
+    transition: 50ms linear;
+}
+
+

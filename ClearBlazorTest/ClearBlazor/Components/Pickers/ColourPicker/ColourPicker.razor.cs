@@ -28,7 +28,7 @@ namespace ClearBlazor
         private byte bValue;
         private int aValue;
         private bool hlsMode = true;
-        private ElementReference DragElement;
+        private string DragElementId = Guid.NewGuid().ToString();
         private ElementReference GridElement;
         private bool MouseDown = false;
         private Color BaseColour = new Color(0, 0, 0, 0);
@@ -320,13 +320,13 @@ namespace ClearBlazor
 
         private async Task OnMouseDown(MouseEventArgs e)
         {
-            await JSRuntime.InvokeVoidAsync("CaptureMouse", DragElement, 1);
+            await JSRuntime.InvokeVoidAsync("CaptureMouse", DragElementId, 1);
             MouseDown = true;
         }
         private async Task OnMouseUp(MouseEventArgs e)
         {
             MouseDown = false;
-            await JSRuntime.InvokeVoidAsync("ReleaseMouseCapture", DragElement, 1);
+            await JSRuntime.InvokeVoidAsync("ReleaseMouseCapture", DragElementId, 1);
         }
 
         private async Task OnMouseMove(MouseEventArgs e)

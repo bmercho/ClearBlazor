@@ -346,6 +346,5 @@ namespace ClearBlazor
 
             return Color.Dark;
         }
-
     }
 }

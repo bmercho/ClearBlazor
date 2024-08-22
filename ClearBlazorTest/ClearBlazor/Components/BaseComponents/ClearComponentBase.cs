@@ -647,50 +647,6 @@ namespace ClearBlazor
             return $"box-shadow: none; ";
         }
 
-        //public Thickness GetBoxShadowThickness(int? boxShadow)
-        //{
-        //    if (boxShadow == null)
-        //        return Thickness.Zero;
-
-        //    switch (boxShadow)
-        //    {
-        //        case 0:
-        //            return Thickness.Zero;
-        //        case 1:
-        //            return new Thickness(0,0,0,3);
-        //            //$"box-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12); ";
-        //        case 2:
-        //            return new Thickness(0, 1, 0, 3);
-        //            //return $"box-shadow: 0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12); ";
-        //        case 3:
-        //            return new Thickness(0, 4, 0, 8);
-        //            //return $"box-shadow: 0px 7px 8px -4px rgba(0,0,0,0.2),0px 13px 19px 2px rgba(0,0,0,0.14),0px 5px 24px 4px rgba(0,0,0,0.12); ";
-        //        case 4:
-        //            return new Thickness(0, 6, 0, 12);
-        //            //return $"box-shadow: 0px 9px 12px -6px rgba(0,0,0,0.2),0px 19px 29px 2px rgba(0,0,0,0.14),0px 7px 36px 6px rgba(0,0,0,0.12); ";
-        //        case 5:
-        //            return new Thickness(0, 7, 0, 15);
-        //            //return $"box-shadow: 0px 11px 15px -7px rgba(0,0,0,0.2),0px 24px 38px 3px rgba(0,0,0,0.14),0px 9px 46px 8px rgba(0,0,0,0.12); ";
-        //    }
-        //    return Thickness.Zero;
-        //}
-
-        //public Thickness MergeThicknesses(Thickness margin, Thickness boxShadow)
-        //{
-        //    if (boxShadow == Thickness.Zero)
-        //        if (margin == Thickness.Zero)
-        //            return Thickness.Zero;
-        //        else
-        //            return margin;
-        //    else if (margin == Thickness.Zero)
-        //        return boxShadow;
-        //    else
-        //        return new Thickness(Math.Max(margin.Left, boxShadow.Left),
-        //                             Math.Max(margin.Top, boxShadow.Top),
-        //                             Math.Max(margin.Right, boxShadow.Right),
-        //                             Math.Max(margin.Bottom, boxShadow.Bottom));
-        //}
-
         Task IHandleEvent.HandleEventAsync(
                   EventCallbackWorkItem callback, object? arg) => callback.InvokeAsync(arg);
 

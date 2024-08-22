@@ -57,7 +57,7 @@ namespace ClearBlazor
         private string ThumbMargin = "0";
         private SizeInfo? SizeInfo = null;
         private ElementReference InputElement;
-        private ElementReference ThumbElement;
+        private string ThumbElementId = Guid.NewGuid().ToString();
         private int NoOfTickMarks = 0;
         private double TickMarkSpacing = 10;
         private List<TickData> TickInfo = new List<TickData>();
@@ -300,7 +300,7 @@ namespace ClearBlazor
             if (IsDisabled || IsReadOnly)
                 return;
 
-            await JSRuntime.InvokeVoidAsync("CaptureMouse", ThumbElement, 1);
+            await JSRuntime.InvokeVoidAsync("CaptureMouse", ThumbElementId, 1);
 
             MouseDown = true;
             Offset = e.ClientX;
@@ -310,7 +310,7 @@ namespace ClearBlazor
         private async Task OnMouseUp(MouseEventArgs e)
         {
             MouseDown = false;
-            await JSRuntime.InvokeVoidAsync("ReleaseMouseCapture", ThumbElement, 1);
+            await JSRuntime.InvokeVoidAsync("ReleaseMouseCapture", ThumbElementId, 1);
             DropdownOpen = false;
             StateHasChanged();
 
@@ -333,6 +333,7 @@ namespace ClearBlazor
                     value = MaxDouble;
 
                 Value = (TItem)Convert.ChangeType(value, typeof(TItem));
+                Console.WriteLine($"Offset={offset} value={value} Value={Value}");
 
                 HandleValueChange();
 

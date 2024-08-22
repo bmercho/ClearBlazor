@@ -201,6 +201,8 @@ namespace ClearBlazor
                                                      selectedItem.Icon, selectedItem.Avatar));
             return dataItems;
         }
+        //Task IHandleEvent.HandleEventAsync(
+        //            EventCallbackWorkItem callback, object? arg) => callback.InvokeAsync(arg);
     }
 
 
@@ -235,5 +237,4 @@ namespace ClearBlazor
             Value = value;
         }
     }
-
 }

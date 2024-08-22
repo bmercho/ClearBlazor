@@ -2,12 +2,10 @@
 @namespace ClearBlazor
 @typeparam TListBox
 @inherits ClearComponentBase
-@implements IHandleEvent
 <CascadingValue Value=this IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         <StackPanel Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch BackgroundColour=@Color.Transparent>
             <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=@ContentAlignment Spacing=20
-                        BackgroundColour=@Color.Transparent
                         Padding=@LinePadding Class=@RowClasses
                         Style=@RowStyle
                         OnElementMouseEnter=@OnMouseEnter

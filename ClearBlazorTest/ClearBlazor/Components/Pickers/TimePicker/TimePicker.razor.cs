@@ -387,7 +387,7 @@ namespace ClearBlazor
                 return;
 
             Moving = true;
-            await JSRuntime.InvokeVoidAsync("CaptureMouse", CanvasId, 1);
+            await JSRuntime.InvokeVoidAsync("CaptureMouse", MyCanvas?.Id, 1);
         }
 
         private async Task OnMouseUp(MouseEventArgs e)
@@ -396,7 +396,7 @@ namespace ClearBlazor
                 return;
 
             Moving = false;
-            await JSRuntime.InvokeVoidAsync("ReleaseMouseCapture", CanvasId, 1);
+            await JSRuntime.InvokeVoidAsync("ReleaseMouseCapture", MyCanvas?.Id, 1);
             HandleNewPointerPosition(e.OffsetX - PickerRadius, e.OffsetY - PickerRadius);
             if (PickerMode == PickerMode.Hour12 || PickerMode == PickerMode.Hour24)
                 PickerMode = PickerMode.Minute;

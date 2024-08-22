@@ -45,7 +45,7 @@
                 }
                 @if (!Initialising)
                 {
-                    <div @ref="ThumbElement" style=@GetThumbStyle() @onmousedown=OnMouseDown
+                    <div id=@ThumbElementId style=@GetThumbStyle() class="slider-transition" @onmousedown=OnMouseDown
                          @onmouseup=OnMouseUp @onmousemove=OnMouseMove />
                 }
                 @if (ShowValueLabels)

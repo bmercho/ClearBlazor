@@ -45,5 +45,7 @@ namespace ClearBlazor
         {
             return IsDraggable ? "true" : "false";
         }
+
+
     }
 }
