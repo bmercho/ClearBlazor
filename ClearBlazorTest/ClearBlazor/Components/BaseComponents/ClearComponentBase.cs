@@ -443,7 +443,7 @@ namespace ClearBlazor
         {
             var css = string.Empty;
 
-            if (border.BorderThickness != null && border.BorderThickness != "0" && border.BoxShadow == null)
+            if (border.BorderThickness != null && border.BorderThickness != "0")
             {
                 if (border.BorderColour != null)
                     css += $"border-color: {border.BorderColour.Value}; ";
@@ -470,16 +470,6 @@ namespace ClearBlazor
             }
             else
                 css += $"border-radius: {ThicknessToCss(new Thickness(ThemeManager.CurrentTheme.DefaultCornerRadius))}; ";
-
-            if (border.BoxShadow != null)
-            {
-                if (border.BoxShadow < 0)
-                    border.BoxShadow = 0;
-                if (border.BoxShadow > 5)
-                    border.BoxShadow = 5;
-
-                css += GetBoxShadowCss(border.BoxShadow);
-            }
 
             return css;
         }

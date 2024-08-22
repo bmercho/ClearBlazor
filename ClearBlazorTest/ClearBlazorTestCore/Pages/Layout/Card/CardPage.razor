@@ -1,0 +1,9 @@
+﻿@page "/Card"
+@using ClearBlazorTestCore.Pages.Layout.Card.Examples
+<ScrollViewer>
+    <StackPanel Padding="20" Spacing="20">
+        <CodeSnippet Code=@(typeof(CardSimpleExample).Name)>
+            <CardSimpleExample />
+        </CodeSnippet>
+    </StackPanel>
+</ScrollViewer>

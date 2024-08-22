@@ -9,20 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Pages\Canvas\Code\CanvasSimpleExampleCode.html" />
-    <None Remove="Pages\Forms\AutoForm\Code\AutoFormSimpleExampleCode.html" />
-    <None Remove="Pages\Inputs\DatePickerInput\Code\DatePickerInputSimpleExampleCode.html" />
-    <None Remove="Pages\Inputs\TimePickerInput\Code\TimePickerInputSimpleExampleCode.html" />
-    <None Remove="Pages\Pickers\DatePicker\Code\DatePickerColourExampleCode.html" />
-    <None Remove="Pages\Pickers\DatePicker\Code\DatePickerCultureExampleCode.html" />
-    <None Remove="Pages\Pickers\DatePicker\Code\DatePickerReadOnlyDisabledExampleCode.html" />
-    <None Remove="Pages\Pickers\DatePicker\Code\DatePickerSimpleExampleCode.html" />
-    <None Remove="Pages\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />
-    <None Remove="Pages\TextBlock\Code\TextBlockClickableExampleCode.html" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
@@ -170,9 +156,5 @@
     <EmbeddedResource Include="Pages\WrapPanel\Code\WrapPanelColumnReverseExampleCode.html" />
     <EmbeddedResource Include="Pages\WrapPanel\Code\WrapPanelRowExampleCode.html" />
     <EmbeddedResource Include="Pages\WrapPanel\Code\WrapPanelRowReverseExampleCode.html" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Layout\" />
   </ItemGroup>
 </Project>

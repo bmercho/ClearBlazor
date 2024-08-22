@@ -1,0 +1,10 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <div >
+            @ChildContent
+        </div>
+    </div>
+</CascadingValue>

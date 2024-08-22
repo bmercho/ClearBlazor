@@ -2,7 +2,7 @@ using global::Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class Border : ClearComponentBase, IContent, IBorder, IBackground,IBackgroundGradient, IDraggable
+    public partial class Border : ClearComponentBase, IContent, IBorder, IBackground,IBoxShadow, IBackgroundGradient, IDraggable
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
@@ -37,7 +37,7 @@ namespace ClearBlazor
         }
         protected override string UpdateStyle(string css)
         {
-            css += $"display : grid; overflow:visible; ";
+            css += $"display : grid; ";
             return css;
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace ClearBlazor
 {
-    public interface IBorder:IBoxShadow
+    public interface IBorder
     {
         public string? BorderThickness { get; set; }
 
