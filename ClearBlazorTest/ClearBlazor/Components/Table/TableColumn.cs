@@ -15,5 +15,8 @@ namespace ClearBlazor
 
         [Parameter]
         public RenderFragment<string>? HeaderTemplate { get; set; }
+
+        [Parameter]
+        public RenderFragment<TItem>? RowTemplate { get; set; }
     }
 }
