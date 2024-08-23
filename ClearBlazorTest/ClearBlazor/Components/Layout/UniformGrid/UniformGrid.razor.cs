@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class UniformGrid:ClearComponentBase,IContent,IBackground,IBorder
+    public partial class UniformGrid:ClearComponentBase,IContent,IBackground,IBorder,IBoxShadow
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;

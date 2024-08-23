@@ -3,8 +3,16 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <div >
-            @ChildContent
-        </div>
+        <StackPanel>
+            <Grid Height=20 BackgroundColour=Color.Error>
+                @CardHeader
+            </Grid>
+            <Grid Height=20 BackgroundColour=Color.Secondary>
+                @CardSection
+            </Grid>
+            <Grid Height=20 BackgroundColour=Color.Tertiary>
+                @CardFooter
+            </Grid>
+        </StackPanel>
     </div>
 </CascadingValue>

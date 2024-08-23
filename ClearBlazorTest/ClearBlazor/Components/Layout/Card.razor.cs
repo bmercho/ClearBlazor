@@ -3,8 +3,15 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class Card: ClearComponentBase,IContent
+    public partial class Card: ClearComponentBase
     {
-        public RenderFragment? ChildContent { get; set; }
+        [Parameter]
+        public RenderFragment? CardHeader { get; set; }
+
+        [Parameter]
+        public RenderFragment? CardSection { get; set; }
+
+        [Parameter]
+        public RenderFragment? CardFooter { get; set; }
     }
 }

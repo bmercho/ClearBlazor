@@ -1,0 +1,47 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+@typeparam TItem
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" style="@ComputeStyle()" class="@Classes">
+        <Grid Columns=@ColumnDefs>
+            @for(int col=0;col<Columns.Count;col++)
+            {
+                var colIndex = col;
+                <div style=@GetHeaderStyle(colIndex+1)>
+                    @if (@Columns[colIndex] == null || @Columns[colIndex].HeaderTemplate == null)
+                    {
+                        <TextBlock FontWeight=@((int)FontWeight.Bold)>@Columns[colIndex].Label</TextBlock>
+                    }
+                    else
+                    {
+                        @Columns[colIndex].HeaderTemplate(@Columns[colIndex].Label);
+                    }
+                </div>
+             }
+            @for(int row = 0;row < Items.Count;row++)
+            {
+                var rowIndex = row;
+                @for (int col=0;col<Columns.Count;col++)
+                {
+                    var colIndex = col;
+                    <div style=@GetRowStyle(rowIndex+2, colIndex+1)>
+                        @if (@Columns[colIndex] == null || @Columns[colIndex].RowTemplate == null)
+                        {
+                            <TextBlock>@Columns[colIndex].Field.Invoke(Items[rowIndex])</TextBlock>
+                        }
+                        else
+                        {
+                            @Columns[colIndex].RowTemplate(@Items[rowIndex]);
+                            ;
+                        }
+
+                    </div>
+                }
+            }
+        </Grid>
+    </div>
+    @ChildContent
+</CascadingValue>
+
+

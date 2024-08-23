@@ -150,15 +150,6 @@ namespace ClearBlazor
 
         protected override bool ShouldRender() => PerformRender;
 
-        protected override void OnAfterRender(bool firstRender)
-        {
-            base.OnAfterRender(firstRender);
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-        }
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
