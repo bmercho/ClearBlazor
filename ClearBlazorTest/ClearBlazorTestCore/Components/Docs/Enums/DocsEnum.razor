@@ -4,12 +4,14 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <StackPanel Spacing=20>
-            <TextBlock Typo=Typo.H3 FontWeight=(int)FontWeight.Bold>@EnumName</TextBlock>
-            <TextBlock>@EnumDescription</TextBlock>
-            <ApiEnum FieldApi=@FieldApi>
-            </ApiEnum>
-        </StackPanel>
+        <ScrollViewer>
+            <StackPanel Spacing=20>
+                <TextBlock Typo=Typo.H4>@EnumName</TextBlock>
+                <TextBlock>@EnumDescription</TextBlock>
+                <ApiEnum FieldApi=@FieldApi>
+                </ApiEnum>
+            </StackPanel>
+        </ScrollViewer>
     </div>
 </CascadingValue>
 

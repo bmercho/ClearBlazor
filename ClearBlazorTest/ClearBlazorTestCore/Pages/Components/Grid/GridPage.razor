@@ -3,12 +3,13 @@
 
 <ScrollViewer>
     <StackPanel Padding="20" Spacing="20">
-        <ApiComponent ParameterApi=@GridApi.ParameterApi 
-             PropertyApi=@GridApi.PropertyApi
-             MethodApi=@GridApi.MethodApi
-             EventApi=@GridApi.EventApi>
+        <DocsComponent ComponentName="Grid" ComponentDescription="Defines a flexible grid area that consists of columns and rows."
+                       ParameterApi=@GridApi.ParameterApi
+                       PropertyApi=@GridApi.PropertyApi
+                       MethodApi=@GridApi.MethodApi
+                       EventApi=@GridApi.EventApi>
 
-        </ApiComponent>
+        </DocsComponent>
         <CodeSnippet Code="GridSimpleExample">
             <GridSimpleExample/>
         </CodeSnippet>

@@ -1,10 +1,5 @@
 ﻿@page "/Alignment"
 @using ClearBlazorTest
 
-<ScrollViewer>
-    <StackPanel Padding="20" Spacing="20">
-        <DocsEnum></DocsEnum> 
-        <ApiEnum FieldApi=@AlignmentApi.FieldApi>
-        </ApiEnum>
-    </StackPanel>
-</ScrollViewer>D
+<DocsEnum EnumName="Alignment" EnumDescription="The alignment of a component within its parent container."
+          FieldApi=@AlignmentApi.FieldApi/>

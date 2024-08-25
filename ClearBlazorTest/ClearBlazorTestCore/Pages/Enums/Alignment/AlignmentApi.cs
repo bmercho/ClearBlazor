@@ -4,10 +4,12 @@
     {
         public static List<ApiFieldInfo> FieldApi = new List<ApiFieldInfo>
         {
-            new ApiFieldInfo("Start", "Alignment", "Child elements are aligned to the top or left of the parent element's allocated layout space."),
-            new ApiFieldInfo("End", "Alignment", "Child elements are aligned to the bottom or right of the parent element's allocated layout space."),
-            new ApiFieldInfo("Center", "Alignment", "Child elements are aligned to the center of the parent element's allocated layout space."),
-            new ApiFieldInfo("Stretch", "Alignment", "Child elements are stretched to fill the parent element's allocated layout space. Explicit Width and Height values take precedence.")
+            new ApiFieldInfo("Start", "Alignment", "Aligns the component to the top or left within the parent's container."),
+            new ApiFieldInfo("End", "Alignment", "Aligns the component to the bottom or right within the parent's container."),
+            new ApiFieldInfo("Center", "Alignment", "Aligns the component to the center within the parent's container" +
+                             " in the direction of the alignment."),
+            new ApiFieldInfo("Stretch", "Alignment", "Aligns the component to fill the parent's container in the direction" +
+                             " of the alignment. Explicit Width and Height values take precedence.")
         };
     }
 }
