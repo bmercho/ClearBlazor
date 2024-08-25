@@ -1,0 +1,68 @@
+﻿@namespace ClearBlazorTest
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Spacing=20>
+        <TextBlock Typo=Typo.H5 FontWeight=(int)FontWeight.Bold>Parameters</TextBlock>
+        @if (ParameterApi == null)
+        {
+            <TextBlock>There are no parameters defined</TextBlock>
+        }
+        else
+        {
+            <Table Items=@ParameterApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
+                <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
+                <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center>
+                    <RowTemplate Context=Item>
+                        <TextBlock>@(new MarkupString(Item.Type))</TextBlock>
+                    </RowTemplate>
+                </TableColumn>
+                <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
+                <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description) />
+            </Table>
+        }
+        <TextBlock Typo=Typo.H5 FontWeight=(int)FontWeight.Bold>Properties   </TextBlock>
+        <TextBlock VerticalAlignment=Alignment.Center Margin="0,-20,0,0" >(other than parameters)</TextBlock>
+        @if (PropertyApi == null)
+        {
+            <TextBlock>There are no properties defined</TextBlock>
+        }
+        else
+        {
+            <Table Items=@PropertyApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
+                <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
+                <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
+                <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
+                <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description) />
+            </Table>
+        }
+        <TextBlock Typo=Typo.H5 FontWeight=(int)FontWeight.Bold>Methods</TextBlock>
+        @if (MethodApi == null)
+        {
+            <TextBlock>There are no methods defined</TextBlock>
+        }
+        else
+        {
+            <Table Items=@MethodApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
+                <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
+                <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
+                <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
+                <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description) />
+            </Table>
+        }
+        <TextBlock Typo=Typo.H5 FontWeight=(int)FontWeight.Bold>Events</TextBlock>
+        @if (EventApi == null)
+        {
+            <TextBlock>There are no events defined</TextBlock>
+        }
+        else
+        {
+            <Table Items=@EventApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
+                <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
+                <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
+                <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
+                <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description) />
+            </Table>
+        }
+    </StackPanel>
+</CascadingValue>

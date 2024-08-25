@@ -1,0 +1,10 @@
+﻿@namespace ClearBlazorTest
+<Slider Label="Very Small" Size=Size.VerySmall @bind-Value=Value />
+<Slider Label="Small" Size=Size.Small @bind-Value=Value />
+<Slider Label="Normal" Size=Size.Normal @bind-Value=Value />
+<Slider Label="Large" Size=Size.Large @bind-Value=Value />
+<Slider Label="Very Large" Size=Size.VeryLarge @bind-Value=Value />
+<div>@Value</div>
+@code {
+    public double Value { get; set; } = 50;
+}

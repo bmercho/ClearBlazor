@@ -1,0 +1,24 @@
+﻿@namespace ClearBlazorTest
+<Border Width="200" Height="200" BorderThickness="1">
+    <Button OnClicked=@OpenPopup HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center>Open</Button>
+    <Popup Position=PopupPosition.TopLeft Transform=PopupTransform.BottomRight @bind-Open=@Open 
+           AllowHorizontalFlip="false" AllowVerticalFlip="false">
+        <StackPanel Orientation=@Orientation.Portrait BorderThickness="1" CornerRadius="4" BackgroundColour=Color.BackgroundGrey>
+            <TextBlock Margin="20">Popup content can contain anything</TextBlock>
+            <Button Margin=20 OnClicked=@ClosePopup HorizontalAlignment=Alignment.Center>Close</Button>
+        </StackPanel>
+    </Popup>
+</Border>
+
+@code {
+    private bool Open = false;
+
+    private void OpenPopup()
+    {
+        Open = true;
+    }
+    private void ClosePopup()
+    {
+        Open = false;
+    }
+}

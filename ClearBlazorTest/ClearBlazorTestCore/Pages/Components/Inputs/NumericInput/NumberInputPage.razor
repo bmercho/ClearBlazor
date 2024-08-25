@@ -1,0 +1,39 @@
+﻿@page "/NumericInput"
+@using ClearBlazorTest
+<ScrollViewer>
+    <StackPanel Orientation="Orientation.Portrait">
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Numeric Input</TextBlock>
+        <StackPanel Padding="20" Spacing="30">
+            <CodeSnippet Title="Basic" Code="NumericInputSimpleExample">
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <NumericInputSimpleExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Immediate/Debounced" Code="NumericInputImmediateExample">
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <NumericInputImmediateExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Type" Code="NumericInputTypeExample">
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <NumericInputTypeExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Negative" Code=@(typeof(NumericInputNegativeExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <NumericInputNegativeExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Culture" Code=@(typeof(NumericInputCultureExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <NumericInputCultureExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Spin Buttons" Code=@(typeof(NumericInputSpinButtonsExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <NumericInputSpinButtonsExample />
+                </WrapPanel>
+            </CodeSnippet>
+        </StackPanel>
+     </StackPanel>
+</ScrollViewer>

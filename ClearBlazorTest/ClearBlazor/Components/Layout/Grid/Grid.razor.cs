@@ -7,6 +7,18 @@ namespace ClearBlazor
     public partial class Grid:ClearComponentBase,IContent,IBackground,IBorder
     {
         [Parameter]
+        public string Rows { get; set; } = null!;
+
+        [Parameter]
+        public string Columns { get; set; } = null!;
+
+        [Parameter]
+        public double RowSpacing { get; set; } = 0;
+
+        [Parameter]
+        public double ColumnSpacing { get; set; } = 0;
+
+        [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
         [Parameter]
@@ -25,24 +37,11 @@ namespace ClearBlazor
         public Color? BackgroundColour { get; set; } = null;
 
         [Parameter]
-        public bool PreventContextMenuDefault { get; set; } = false;
-
-        [Parameter]
-        public string Rows { get; set; } = null !;
-
-        [Parameter]
-        public string Columns { get; set; } = null !;
-
-        [Parameter]
-        public double RowSpacing { get; set; } = 0;
-
-        [Parameter]
-        public double ColumnSpacing { get; set; } = 0;
-        [Parameter]
         public virtual EventCallback<MouseEventArgs> OnElementMouseEnter { get; set; }
 
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnElementMouseLeave { get; set; }
+
 
         private readonly Regex _proportionPattern = new Regex("^[0-9]*\\*$");
         private readonly Regex _fixedSizePattern = new Regex("^[0-9]*$");

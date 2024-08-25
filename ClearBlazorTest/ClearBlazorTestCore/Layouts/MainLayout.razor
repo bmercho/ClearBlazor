@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using System.ComponentModel
 @using System.ComponentModel.DataAnnotations
+@namespace ClearBlazorTest
 @inherits LayoutComponentBase
 @inject NavigationManager NavManager
 @implements IHandleEvent
@@ -42,9 +43,6 @@
  *@  
  
  
-
-
-
 <RootComponent>
     <Grid Rows="auto,*">
          <AppBar Row="0" Padding="10" BackgroundColour="Color.BackgroundGrey">
@@ -59,7 +57,7 @@
                         <ListBox TListBox="string" Margin="10,0,10,0">
                             <ListBoxItem Text="Home" HRef="/" OnClicked=@Close />
                             <ListBoxItem Text="Components">
-                                <ListBoxItem Text="Layout" InitiallyExpanded=false>
+                                <ListBoxItem Text="Layout" InitiallyExpanded=true>
                                     <ListBoxItem Text="Border" HRef="/Border" OnClicked=@Close />
                                     <ListBoxItem Text="Grid" HRef="/Grid" OnClicked=@Close />
                                     <ListBoxItem Text="Stack Panel" HRef="/StackPanel" OnClicked=@Close />
@@ -104,7 +102,7 @@
                                     <ListBoxItem Text="Date Picker" HRef="/DatePickerInput" OnClicked=@Close />
                                     <ListBoxItem Text="Time Picker" HRef="/TimePickerInput" OnClicked=@Close />
                                 </ListBoxItem>
-                                <ListBoxItem Text="Forms" InitiallyExpanded=true>
+                                <ListBoxItem Text="Forms" InitiallyExpanded=false>
                                     <ListBoxItem Text="Form" HRef="/Form" OnClicked=@Close />
                                     <ListBoxItem Text="Auto Form" HRef="/AutoForm" OnClicked=@Close />
                                 </ListBoxItem>

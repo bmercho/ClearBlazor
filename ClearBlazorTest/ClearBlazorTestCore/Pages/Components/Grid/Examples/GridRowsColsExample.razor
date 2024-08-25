@@ -1,0 +1,30 @@
+﻿@namespace ClearBlazorTest
+<Grid Rows="auto,*,30,3*,auto" Columns="auto,3*,2*,200,auto">
+    <Border BorderThickness="0" Row=0 Column=0 CornerRadius="0" BackgroundColour="@Color.Custom("lightblue")">
+        <TextBlock HorizontalAlignment="Alignment.Center" VerticalAlignment="Alignment.Center">Row0 Col0</TextBlock>
+    </Border>
+    <Border BorderThickness="0" Row=0 Column=1 CornerRadius="0" BackgroundColour="@Color.Custom("pink")">
+        <TextBlock HorizontalAlignment="Alignment.Center" VerticalAlignment="Alignment.Center">Row0 Col1</TextBlock>
+    </Border>
+    <Border BorderThickness="0" Row=0 Column=2 CornerRadius="0" BackgroundColour="@Color.Custom("white")">
+        <TextBlock HorizontalAlignment="Alignment.Center" VerticalAlignment="Alignment.Center">Row0 Col2</TextBlock>
+    </Border>
+    <Border BorderThickness="0" Row=0 Column=3 CornerRadius="0" BackgroundColour="@Color.Custom("lightgreen")">
+        <TextBlock HorizontalAlignment="Alignment.Center" VerticalAlignment="Alignment.Center">Row0 Col3</TextBlock>
+    </Border>
+    <Border BorderThickness="0" Row=0 Column=4 CornerRadius="0" BackgroundColour="@Color.Custom("aqua")">
+        <TextBlock HorizontalAlignment="Alignment.Center" VerticalAlignment="Alignment.Center">Row0 Col4</TextBlock>
+    </Border>
+    <Border BorderThickness="0" Row=1 Column=1 ColumnSpan=4 CornerRadius="0" BackgroundColour="@Color.Custom("red")">
+        <TextBlock HorizontalAlignment="Alignment.Center" VerticalAlignment="Alignment.Center">Row1 Col1Span4</TextBlock>
+    </Border>
+    <Border BorderThickness="0" Row=2 Column=3 RowSpan=3 CornerRadius="0" BackgroundColour="@Color.Custom("yellow")">
+        <TextBlock HorizontalAlignment="Alignment.Center" VerticalAlignment="Alignment.Center">Row2Span3 Col3</TextBlock>
+    </Border>
+    <Border BorderThickness="0" Row=2 Column=0 RowSpan=3 ColumnSpan=3 CornerRadius="0" BackgroundColour="@Color.Custom("green")">
+        <TextBlock HorizontalAlignment="Alignment.Center" VerticalAlignment="Alignment.Center">Row2Span3 Col0Span3</TextBlock>
+    </Border>
+    <Border BorderThickness="0" Row=2 Column=4 CornerRadius="0" BackgroundColour="@Color.Custom("orange")">
+        <TextBlock HorizontalAlignment="Alignment.Center" VerticalAlignment="Alignment.Center">Row2 Col4</TextBlock>
+    </Border>
+</Grid>

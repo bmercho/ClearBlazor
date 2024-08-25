@@ -17,6 +17,9 @@ namespace ClearBlazor
         public int RowSpacing { get; set; } = 5;
 
         [Parameter]
+        public int ColumnSpacing { get; set; } = 5;
+
+        [Parameter]
         public string? BorderThickness { get; set; } = null;
 
         [Parameter]
@@ -32,6 +35,11 @@ namespace ClearBlazor
         public Color? BackgroundColour { get; set; } = null;
 
         private List<TableColumn<TItem>> Columns { get; } = new List<TableColumn<TItem>>();
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+        }
 
         protected override string UpdateStyle(string css)
         {
@@ -52,12 +60,44 @@ namespace ClearBlazor
 
         private string GetHeaderStyle(int column)
         {
-            return $"display:grid; grid-area: 0 / {column} /span 1 /span 1; margin: {RowSpacing}px 0 0 0; ";
+            string justify = "start";
+            switch (Columns[column-1].HeaderAlignment)
+            {
+                case Alignment.Stretch:
+                    justify = "stretch";
+                    break;
+                case Alignment.Start:
+                    justify = "start";
+                    break;
+                case Alignment.Center:
+                    justify = "center";
+                    break;
+                case Alignment.End:
+                    justify = "end";
+                    break;
+            }
+            return $"display:grid; grid-area: 0 / {column} /span 1 /span 1; justify-self: {justify};";
         }
 
         private string GetRowStyle(int row, int column)
         {
-            return $"display:grid; grid-area: {row} / {column} /span 1 /span 1; margin: {RowSpacing}px 0 0 0; ";
+            string justify = "start";
+            switch (Columns[column-1].ContentAlignment)
+            {
+                case Alignment.Stretch:
+                    justify = "stretch";
+                    break;
+                case Alignment.Start:
+                    justify = "start";
+                    break;
+                case Alignment.Center:
+                    justify = "center";
+                    break;
+                case Alignment.End:
+                    justify = "end";
+                    break;
+            }
+            return $"display:grid; grid-area: {row} / {column} /span 1 /span 1; justify-self: {justify};";
         }
     }
 }

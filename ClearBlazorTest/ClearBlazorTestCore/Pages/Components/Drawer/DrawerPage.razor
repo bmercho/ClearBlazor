@@ -1,0 +1,11 @@
+﻿@page "/Drawer"
+@using ClearBlazorTest
+<ScrollViewer>
+    <StackPanel Padding=20 Spacing="20">
+        <CodeSnippet Title="Basic" Code=@(typeof(DrawerSimpleExample).Name) BackgroundColour="@Color.BackgroundGrey">
+            <StackPanel Spacing="20" Orientation="Orientation.Portrait">
+                <DrawerSimpleExample />
+            </StackPanel>
+        </CodeSnippet>
+    </StackPanel>
+</ScrollViewer>

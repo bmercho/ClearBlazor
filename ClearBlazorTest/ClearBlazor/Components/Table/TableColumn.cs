@@ -18,5 +18,11 @@ namespace ClearBlazor
 
         [Parameter]
         public RenderFragment<TItem>? RowTemplate { get; set; }
+
+        [Parameter]
+        public Alignment HeaderAlignment { get; set; } = Alignment.Start;
+
+        [Parameter]
+        public Alignment ContentAlignment { get; set; } = Alignment.Start;
     }
 }

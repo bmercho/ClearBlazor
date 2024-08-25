@@ -1,0 +1,15 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Globalization
+
+@namespace ClearBlazorTest
+<DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date1 IsDisabled=true />
+<TextBlock>@Date1</TextBlock>
+
+<DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date2 IsReadOnly=true/>
+<TextBlock>@Date2</TextBlock>
+
+@code {
+        DateOnly? Date1 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(5));
+        DateOnly? Date2 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
+}
+        

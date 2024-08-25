@@ -4,7 +4,7 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" style="@ComputeStyle()" class="@Classes">
-        <Grid Columns=@ColumnDefs>
+        <Grid Columns=@ColumnDefs ColumnSpacing=@ColumnSpacing RowSpacing=@RowSpacing>
             @for(int col=0;col<Columns.Count;col++)
             {
                 var colIndex = col;

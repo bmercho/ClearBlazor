@@ -1,0 +1,36 @@
+﻿@namespace ClearBlazorTest
+<Drawer @ref=Drawer @bind-Open=Open DrawerLocation=DrawerLocation.Left DrawerMode="DrawerMode.Responsive" OverlayEnabled="true">
+    <DrawerContent>
+        <Grid  BorderThickness=1 CornerRadius=4>
+            <ListBox TListBox=string>
+                <ListBoxItem Text="Item1" Icon=@Icons.Material.Filled.AddHome OnClicked=@Close />
+                <ListBoxItem Text="Item2" Icon=@Icons.Material.Filled.DeleteForever InitiallyExpanded="true">
+                    <ListBoxItem Text="Item3" Icon=@Icons.Material.Filled.Delete OnClicked=@Close />
+                    <ListBoxItem Text="Item4" Icon=@Icons.Material.Filled.AccessAlarm InitiallyExpanded="true">
+                        <ListBoxItem Text="Item5" Icon=@Icons.Material.Filled.AddCircle OnClicked=@Close />
+                        <ListBoxItem Text="Item6" Icon=@Icons.Material.Filled.Send OnClicked=@Close />
+                    </ListBoxItem>
+                </ListBoxItem>
+            </ListBox>
+        </Grid>
+    </DrawerContent>
+    <DrawerBody>
+        <Button HorizontalAlignment="Alignment.Center" OnClicked=@Toggle>Toggle</Button>
+    </DrawerBody>
+</Drawer>
+
+@code {
+    Drawer Drawer;
+
+    bool Open { get; set; } = true;
+
+    private void Toggle()
+    {
+        Open = !Open;
+    }
+    private void Close()
+    {
+        Open = false;
+    }
+}
+

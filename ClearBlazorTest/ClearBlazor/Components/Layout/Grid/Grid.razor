@@ -6,23 +6,11 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    @if (PreventContextMenuDefault)
-    {
-        <div id="@Id" class="@Classes" style="@ComputeStyle()" @oncontextmenu:preventDefault="true"
-             @onclick="OnElementClicked"
-             @onmouseenter=OnElementMouseEnter
-             @onmouseleave=OnElementMouseLeave>
-            @ChildContent
-        </div>
-    }
-    else
-    {
-        <div id="@Id" class="@Classes" style="@ComputeStyle()" 
-             @onclick="OnElementClicked"
-             @onmouseenter=OnElementMouseEnter
-             @onmouseleave=OnElementMouseLeave>
+    <div id="@Id" class="@Classes" style="@ComputeStyle()"
+         @onclick="OnElementClicked"
+         @onmouseenter=OnElementMouseEnter
+         @onmouseleave=OnElementMouseLeave>
 
-            @ChildContent
-        </div>
-    }
+        @ChildContent
+    </div>
 </CascadingValue>

@@ -1,9 +1,0 @@
-﻿<Slider Label="Slider - value label" ContrastTrackBackground=true @bind-Value=Value Min=20 Max=100 Step=10 
-        TickMarkLabelFormat="C" ShowTickMarks=true ShowValueLabels=true ShowTickMarkLabels=true />
-<div>@Value</div>
-<Slider Label="Slider - value label" @bind-Value=Value1 TickMarkLabelFormat="C" ShowValueLabels=true />
-<div>@Value1</div>
-@code {
-    public double Value { get; set; } = 100;
-    public double Value1 { get; set; } = 100;
-}

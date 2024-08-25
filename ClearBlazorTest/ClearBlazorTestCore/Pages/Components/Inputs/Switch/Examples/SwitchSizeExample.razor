@@ -1,0 +1,14 @@
+﻿@namespace ClearBlazorTest
+<Switch @bind-Checked=BoolValue1 Size=Size.VerySmall />
+<Switch @bind-Checked=BoolValue2 Size=Size.Small />
+<Switch @bind-Checked=BoolValue3 Size=Size.Normal />
+<Switch @bind-Checked=BoolValue4 Size=Size.Large />
+<Switch @bind-Checked=BoolValue5 Size=Size.VeryLarge />
+
+@code {
+    public bool BoolValue1 { get; set; } = false;
+    public bool BoolValue2 { get; set; } = false;
+    public bool BoolValue3 { get; set; } = false;
+    public bool BoolValue4 { get; set; } = false;
+    public bool BoolValue5 { get; set; } = false;
+}

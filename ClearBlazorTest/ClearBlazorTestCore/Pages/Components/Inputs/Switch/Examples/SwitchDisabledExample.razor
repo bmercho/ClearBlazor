@@ -1,0 +1,8 @@
+﻿@namespace ClearBlazorTest
+<Switch @bind-Checked=BoolValue1 IsDisabled=true />
+<Switch @bind-Checked=BoolValue2 IsDisabled=true />
+
+@code {
+    public bool BoolValue1 { get; set; } = false;
+    public bool BoolValue2 { get; set; } = true;
+}

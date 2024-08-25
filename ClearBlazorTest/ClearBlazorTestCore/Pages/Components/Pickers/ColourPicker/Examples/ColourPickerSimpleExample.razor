@@ -1,0 +1,9 @@
+﻿@using System.ComponentModel.DataAnnotations
+
+@namespace ClearBlazorTest
+<ColourPicker @bind-Colour=Colour />
+<div style="width:200px;height:200px;background:@Colour.Value"></div>
+
+@code {
+    Color Colour { get; set; } = Color.Secondary;
+}

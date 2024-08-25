@@ -1,0 +1,15 @@
+﻿@namespace ClearBlazorTest
+<TextInput Placeholder="None" Label="Label" TextEditFillMode="TextEditFillMode.None" @bind-Value="TextValue" />
+<TextInput Placeholder="Underlined" Label="Label" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="TextValue" />
+<TextInput Placeholder="Outlined" Label="Label" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" />
+<TextInput Placeholder="Filled" Label="Label" TextEditFillMode="TextEditFillMode.Filled" @bind-Value="TextValue" />
+
+<TextInput Placeholder="Very Small" Label="Label" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" Size="Size.VerySmall" />
+<TextInput Placeholder="Small" Label="Label" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" Size="Size.Small" />
+<TextInput Placeholder="Normal" Label="Label" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" Size="Size.Normal" />
+<TextInput Placeholder="Large" Label="Label" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" Size="Size.Large" />
+<TextInput Placeholder="Very Large" Label="Label" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" Size="Size.VeryLarge" />
+
+@code {
+    public string TextValue { get; set; } = string.Empty;
+}

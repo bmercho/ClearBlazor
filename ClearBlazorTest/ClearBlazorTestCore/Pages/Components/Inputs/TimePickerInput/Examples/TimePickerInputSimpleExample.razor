@@ -1,0 +1,12 @@
+﻿@namespace ClearBlazorTest
+<TimePickerInput Hours24=true MinuteStep=MinuteStep.Five
+                 TimeFormat="HH:mm" @bind-Value=Time @bind-Value:after=OnChange/>
+
+
+@code {
+    public TimeOnly? Time { get; set; } = new TimeOnly(11, 25);
+
+    private void OnChange()
+    {
+    }
+}

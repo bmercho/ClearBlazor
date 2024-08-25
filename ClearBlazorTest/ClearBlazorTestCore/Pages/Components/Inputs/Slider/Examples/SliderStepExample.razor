@@ -1,0 +1,19 @@
+﻿@namespace ClearBlazorTest
+<Slider Size=Size.VerySmall Label="Step 10" Step=10 @bind-Value=Value1 />
+<Slider Size=Size.Small Label="Step 10" Step=10 @bind-Value=Value1/>
+<Slider Size=Size.Normal Label="Step 10" Step=10 @bind-Value=Value1/>
+<Slider Size=Size.Large Label="Step 10" Step=10 @bind-Value=Value1/>
+<Slider Size=Size.VeryLarge Label="Step 10" Step=10 @bind-Value=Value1/>
+<div>@Value1</div>
+
+<Slider Size=Size.VerySmall Label="Step 0.5" Step=0.5 Min=10 Max=20 @bind-Value=Value2/>
+<Slider Size=Size.Small Label="Step 0.5" Step=0.5 Min=10 Max=20 @bind-Value=Value2/>
+<Slider Size=Size.Normal Label="Step 0.5" Step=0.5 Min=10 Max=20 @bind-Value=Value2/>
+<Slider Size=Size.Large Label="Step 0.5" Step=0.5 Min=10 Max=20 @bind-Value=Value2/>
+<Slider Size=Size.VeryLarge Label="Step 0.5" Step=0.5 Min=10 Max=20 @bind-Value=Value2/>
+<div>@Value2</div>
+ 
+@code {
+    public double Value1 { get; set; } = 50;
+    public double Value2 { get; set; } = 25;
+}

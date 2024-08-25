@@ -1,0 +1,11 @@
+﻿ @namespace ClearBlazorTest
+<Slider Label="Step 10" Step=10 @bind-Value=Value1 ShowTickMarks=true
+        ShowTickMarkLabels=true TickMarkLabels=@TickMarkLabels />
+ <div>@Value1</div>
+
+@code {
+    private double Value1 { get; set; } = 50;
+
+    private List<string> TickMarkLabels { get; set; } = new List<string> 
+     { "Label1", "Label2", "Label3", "Label4","Label5","Label6","Label7","Label8","Label9","Label10","Label11"};
+}

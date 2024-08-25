@@ -1,0 +1,11 @@
+﻿@page "/DrawingCanvas"
+@using ClearBlazorTest
+<ScrollViewer>
+    <StackPanel Padding=20 Spacing="20">
+        <CodeSnippet Title="Basic (click on canvas)" Code=@(typeof(CanvasSimpleExample).Name) BackgroundColour="@Color.BackgroundGrey">
+            <WrapPanel  ColumnSpacing="20" RowSpacing="20">
+                <CanvasSimpleExample />
+            </WrapPanel>
+        </CodeSnippet>
+    </StackPanel>
+</ScrollViewer>

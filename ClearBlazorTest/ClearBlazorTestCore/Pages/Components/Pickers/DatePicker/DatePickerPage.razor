@@ -1,0 +1,30 @@
+﻿@page "/DatePicker"
+@namespace ClearBlazorTest
+<ScrollViewer>
+    <StackPanel Orientation="Orientation.Portrait">
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Date Picker</TextBlock>
+        <StackPanel Padding="5" Spacing="30">
+            <CodeSnippet Title="Basic" Description="This is an example of basic usage" Code=@(typeof(DatePickerSimpleExample).Name)>
+                <StackPanel Margin="5" Spacing="20" Orientation=Orientation.Portrait>
+                    <DatePickerSimpleExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Culture" Code=@(typeof(DatePickerCultureExample).Name)>
+                <StackPanel Margin="5" Spacing="20" Orientation=Orientation.Portrait>
+                    <DatePickerCultureExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Colour" Code=@(typeof(DatePickerColourExample).Name)>
+                <StackPanel Margin="5" Spacing="20" Orientation=Orientation.Portrait>
+                    <DatePickerColourExample />
+                </StackPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Readonly/Disabled" Code=@(typeof(DatePickerReadOnlyDisabledExample).Name)>
+                <StackPanel Margin="5" Spacing="20" Orientation=Orientation.Portrait>
+                    <DatePickerReadOnlyDisabledExample />
+                </StackPanel>
+            </CodeSnippet>
+        </StackPanel>
+     </StackPanel>
+</ScrollViewer>
+
