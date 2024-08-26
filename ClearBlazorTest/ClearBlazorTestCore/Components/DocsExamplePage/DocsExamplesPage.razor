@@ -1,0 +1,17 @@
+﻿@using ClearBlazorTest
+@namespace ClearBlazorTest
+@inherits ClearComponentBase
+<div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <ScrollViewer>
+        <StackPanel Padding="20" Spacing="20">
+            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>Examples</TextBlock>
+            <DocsHeader DocsName=@DocsInfo?.DocsName DocsDescription=@DocsInfo?.DocsDescription ForApi=false />
+            <TextBlock>@GetApiLink()</TextBlock>
+            @ChildContent
+        </StackPanel>
+    </ScrollViewer>
+</div>
+
+@code {
+
+}

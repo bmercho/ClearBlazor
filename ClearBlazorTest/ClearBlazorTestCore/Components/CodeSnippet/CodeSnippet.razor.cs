@@ -4,14 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace ClearBlazorTest
 {
-    public partial class CodeSnippet:IBackground
+    public partial class CodeSnippet: ClearComponentBase, IBackground
     {
 
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
-
-        [Parameter]
-        public string? Name { get; set; } = null;
 
         [Parameter]
         public Color? BackgroundColour { get; set; } = Color.Transparent;
@@ -38,9 +35,10 @@ namespace ClearBlazorTest
             else
                 ShowCode = true;
         }
-        protected override void OnAfterRender(bool firstRender)
+
+        protected override string UpdateStyle(string css)
         {
-            base.OnAfterRender(firstRender);
+            return css + "display:grid; ";
         }
 
         RenderFragment CodeComponent(string code) => builder =>

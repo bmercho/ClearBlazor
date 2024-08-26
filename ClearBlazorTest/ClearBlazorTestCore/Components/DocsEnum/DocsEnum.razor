@@ -6,8 +6,8 @@
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         <ScrollViewer>
             <StackPanel Spacing=20>
-                <TextBlock Typo=Typo.H4>@EnumName</TextBlock>
-                <TextBlock>@EnumDescription</TextBlock>
+                <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>API</TextBlock>
+                <DocsHeader DocsName=@(EnumName + " Enumeration") DocsDescription=@EnumDescription ForApi=true />
                 <ApiEnum FieldApi=@FieldApi>
                 </ApiEnum>
             </StackPanel>

@@ -1,0 +1,18 @@
+﻿@namespace ClearBlazorTest
+@using ClearBlazorTest
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <ScrollViewer>
+            <StackPanel Spacing=20>
+                <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>API</TextBlock>
+                <DocsHeader DocsName=@(InterfaceName + " Interface") DocsDescription=@InterfaceDescription ForApi=true />
+                <ApiEnum FieldApi=@FieldApi>
+                </ApiEnum>
+            </StackPanel>
+        </ScrollViewer>
+    </div>
+</CascadingValue>
+
+

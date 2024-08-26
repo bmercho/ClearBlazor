@@ -14,7 +14,9 @@ namespace ClearBlazorTest
         [Parameter]
         public List<ApiFieldInfo>? FieldApi { get; set; }
 
-
-
+        protected override string UpdateStyle(string css)
+        {
+            return css + "display:grid; ";
+        }
     }
 }

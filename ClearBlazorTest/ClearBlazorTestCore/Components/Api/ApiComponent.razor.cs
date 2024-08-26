@@ -31,5 +31,11 @@ namespace ClearBlazorTest
 
         [Parameter]
         public Color? BackgroundColour { get; set; } = null;
+
+        protected override string UpdateStyle(string css)
+        {
+            return css + "display:grid; ";
+        }
+
     }
 }

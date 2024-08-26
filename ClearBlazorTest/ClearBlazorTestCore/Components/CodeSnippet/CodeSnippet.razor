@@ -1,28 +1,31 @@
 ﻿@using Microsoft.AspNetCore.Components
+@inherits ClearComponentBase
 @namespace ClearBlazorTest
 
 
-<StackPanel Name="StackPanel in CodeSnippet" Orientation="Orientation.Portrait">
-    @if(!string.IsNullOrEmpty(Title))
-    {
-        <TextBlock Name="TextBlock in CodeSnippet" FontSize="22px" FontWeight=@((int)FontWeight.Bold) Margin="0,10,0,10">@Title</TextBlock>
-    }
-    @if (!string.IsNullOrEmpty(Description))
-    {
-        <TextBlock Name="TextBlock in CodeSnippet" FontSize="16px" Margin="0,10,0,10">@Description</TextBlock>
-    }
-    <Border Name="Border int CodeSnippet" Padding="20" BorderThickness="1,1,1,0" CornerRadius="0,8,8,0" BackgroundColour=@BackgroundColour>
-        @ChildContent
-    </Border>
-    @if (ShowCode)
-    {
-        <Border Name="Border in CodeSnippet" CornerRadius="8,0,0,8" BorderThickness="1" BackgroundColour="@Color.BackgroundGrey" Padding="20">
-            <ScrollViewer Name="ScrollViewer in CodeSnippet" HorizontalScrollMode="ScrollMode.Auto" VerticalScrollMode="ScrollMode.Disabled">
-                @CodeComponent(Code)
-            </ScrollViewer>
+<div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <StackPanel Name="StackPanel in CodeSnippet" Orientation="Orientation.Portrait">
+        @if (!string.IsNullOrEmpty(Title))
+        {
+            <TextBlock Name="TextBlock in CodeSnippet" FontSize="22px" FontWeight=@((int)FontWeight.Bold) Margin="0,10,0,10">@Title</TextBlock>
+        }
+        @if (!string.IsNullOrEmpty(Description))
+        {
+            <TextBlock Name="TextBlock in CodeSnippet" FontSize="16px" Margin="0,10,0,10">@Description</TextBlock>
+        }
+        <Border Name="Border int CodeSnippet" Padding="20" BorderThickness="1,1,1,0" CornerRadius="0,8,8,0" BackgroundColour=@BackgroundColour>
+            @ChildContent
         </Border>
-    }
-</StackPanel>
+        @if (ShowCode)
+        {
+            <Border Name="Border in CodeSnippet" CornerRadius="8,0,0,8" BorderThickness="1" BackgroundColour="@Color.BackgroundGrey" Padding="20">
+                <ScrollViewer Name="ScrollViewer in CodeSnippet" HorizontalScrollMode="ScrollMode.Auto" VerticalScrollMode="ScrollMode.Disabled">
+                    @CodeComponent(Code)
+                </ScrollViewer>
+            </Border>
+        }
+    </StackPanel>
+</div>
 
 
 
