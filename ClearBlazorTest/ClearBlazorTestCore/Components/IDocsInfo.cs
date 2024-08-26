@@ -2,8 +2,8 @@
 {
     public interface IDocsInfo
     {
-        public string DocsName { get; }
-        public string DocsDescription { get; }
+        public string Name { get; }
+        public string Description { get; }
         public (string, string) ApiLink { get; }
         public (string, string) ExamplesLink { get; }
         public (string, string) InheritsLink { get; }

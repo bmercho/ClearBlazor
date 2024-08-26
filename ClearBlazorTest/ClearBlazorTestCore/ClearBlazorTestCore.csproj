@@ -161,7 +161,7 @@
   <ItemGroup>
     <None Include="Pages\Components\ClearComponentBase\ClearComponentBaseDocsInfo.cs" />
     <None Include="Pages\Components\Grid\GridDocsInfo.cs" />
-    <None Include="Pages\Enums\Alignment\AlignmentApi.cs" />
-    <None Include="Pages\Interfaces\IBackground\BackgroundApi.cs" />
+    <None Include="Pages\Enums\Alignment\AlignmentDocsInfo.cs" />
+    <None Include="Pages\Interfaces\IBackground\BackgroundDocsInfo.cs" />
   </ItemGroup>
 </Project>

@@ -2,9 +2,9 @@
 {
     public record ClearComponentBaseDocsInfo : IDocsInfo
     {
-        public string DocsName => "ClearComponentBase";
+        public string Name => "ClearComponentBase";
 
-        public string DocsDescription => "Defines the base component of all Clear components.";
+        public string Description => "Defines the base component of all Clear components.";
 
         public (string,string) ApiLink => ("","");
 

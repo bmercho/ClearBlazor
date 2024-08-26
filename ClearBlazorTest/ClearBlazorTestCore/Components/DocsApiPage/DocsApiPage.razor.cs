@@ -21,6 +21,9 @@ namespace ClearBlazorTest
 
         private MarkupString GetInheritLink()
         {
+            if (DocsInfo == null || DocsInfo?.InheritsLink.Item1 == string.Empty)
+                return new MarkupString(string.Empty);
+
             return new MarkupString($"Inherits from: <a href={(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item2)}>" +
                                     $" {(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item1)}</a>");
         }

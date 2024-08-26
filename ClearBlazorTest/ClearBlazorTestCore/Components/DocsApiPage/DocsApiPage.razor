@@ -5,7 +5,7 @@
     <ScrollViewer>
         <StackPanel Padding="20" Spacing="20">
             <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>API</TextBlock>
-            <DocsHeader DocsName=@DocsInfo?.DocsName DocsDescription=@DocsInfo?.DocsDescription ForApi=true />
+            <DocsHeader DocsName=@DocsInfo?.Name DocsDescription=@DocsInfo?.Description ForApi=true />
             <TextBlock>@GetExamplesLink()</TextBlock>
             <ApiComponent ParameterApi=@DocsInfo?.ParameterApi
                           PropertyApi=@DocsInfo?.PropertyApi

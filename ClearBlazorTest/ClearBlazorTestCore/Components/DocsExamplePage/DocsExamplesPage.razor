@@ -5,7 +5,7 @@
     <ScrollViewer>
         <StackPanel Padding="20" Spacing="20">
             <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>Examples</TextBlock>
-            <DocsHeader DocsName=@DocsInfo?.DocsName DocsDescription=@DocsInfo?.DocsDescription ForApi=false />
+            <DocsHeader DocsName=@DocsInfo?.Name DocsDescription=@DocsInfo?.Description ForApi=false />
             <TextBlock>@GetApiLink()</TextBlock>
             @ChildContent
         </StackPanel>

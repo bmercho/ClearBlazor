@@ -2,9 +2,9 @@
 {
     public record GridDocsInfo:IDocsInfo
     {
-        public string DocsName => "Grid";
+        public string Name => "Grid";
 
-        public string DocsDescription => "Defines a flexible grid area that consists of columns and rows.";
+        public string Description => "Defines a flexible grid area that consists of columns and rows.";
 
         public (string,string) ApiLink => ("API", "GridApi");
 

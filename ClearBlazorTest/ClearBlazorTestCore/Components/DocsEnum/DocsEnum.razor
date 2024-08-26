@@ -7,9 +7,9 @@
         <ScrollViewer>
             <StackPanel Spacing=20>
                 <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>API</TextBlock>
-                <DocsHeader DocsName=@(EnumName + " Enumeration") DocsDescription=@EnumDescription ForApi=true />
-                <ApiEnum FieldApi=@FieldApi>
-                </ApiEnum>
+                <DocsHeader DocsName=@(DocsInfo?.Name + " Enumeration") DocsDescription=@DocsInfo?.Description ForApi=true />
+                <ApiFields FieldApi=@DocsInfo?.FieldApi>
+                </ApiFields>
             </StackPanel>
         </ScrollViewer>
     </div>

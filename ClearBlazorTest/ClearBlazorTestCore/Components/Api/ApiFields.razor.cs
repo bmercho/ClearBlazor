@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazorTest
 {
-    public partial class ApiEnum : ClearComponentBase, IBackground, IBorder
+    public partial class ApiFields : ClearComponentBase, IBackground, IBorder
     {
         [Parameter]
         public List<ApiFieldInfo>? FieldApi { get; set; }
