@@ -18,7 +18,12 @@
                         @Columns[colIndex].HeaderTemplate(@Columns[colIndex].Label);
                     }
                 </div>
-             }
+            }
+            @if(HorizontalGridLines == GridLines.HeaderOnly || 
+                HorizontalGridLines == GridLines.All)
+            {
+                <div style=@GetHorizontalGridLineStyle(2, Columns.Count)/>
+            }
             @for(int row = 0;row < Items.Count;row++)
             {
                 var rowIndex = row;
@@ -33,10 +38,28 @@
                         else
                         {
                             @Columns[colIndex].RowTemplate(@Items[rowIndex]);
-                            ;
                         }
-
                     </div>
+                }
+                @if (HorizontalGridLines == GridLines.All && rowIndex + 1 < Items.Count)
+                {
+                    <div style=@GetHorizontalGridLineStyle(rowIndex+3, Columns.Count)/>
+                }
+            }
+            @if(VerticalGridLines == GridLines.HeaderOnly || 
+                VerticalGridLines == GridLines.All)
+            {
+                @for (int col=0;col<Columns.Count-1;col++)
+                {
+                    var colIndex = col;
+                    @if (VerticalGridLines == GridLines.HeaderOnly) 
+                    {
+                        <div style=@GetVerticalGridLineStyle(colIndex+2, 1)/>
+                    }
+                    else
+                    {
+                        <div style=@GetVerticalGridLineStyle(colIndex+2, Items.Count+1)/>
+                    }
                 }
             }
         </Grid>

@@ -10,7 +10,8 @@
         }
         else
         {
-            <Table Items=@ParameterApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
+            <Table BorderThickness=1 CornerRadius=4 HorizontalGridLines=GridLines.All
+                   Items=@ParameterApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
                 <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
                 <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center>
                     <RowTemplate Context=Item>
@@ -29,7 +30,8 @@
         }
         else
         {
-            <Table Items=@PropertyApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
+            <Table BorderThickness=1 CornerRadius=4  HorizontalGridLines=GridLines.All
+                   Items=@PropertyApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
                 <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
                 <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
                 <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
@@ -43,7 +45,8 @@
         }
         else
         {
-            <Table Items=@MethodApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
+            <Table BorderThickness=1 CornerRadius=4  HorizontalGridLines=GridLines.All
+                   Items=@MethodApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
                 <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
                 <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
                 <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
@@ -57,7 +60,8 @@
         }
         else
         {
-            <Table Items=@EventApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
+            <Table BorderThickness=1 CornerRadius=4  HorizontalGridLines=GridLines.All
+                   Items=@EventApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
                 <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
                 <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
                 <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />

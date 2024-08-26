@@ -1,5 +1,6 @@
 ﻿@namespace ClearBlazorTest
-<Table BorderThickness=1 Items=@People Padding=5 RowSpacing=10 ColumnDefs="*,*,2*">
+<Table BorderThickness=1 CornerRadius=4 VerticalGridLines=GridLines.All HorizontalGridLines=GridLines.All
+       Items=@People Padding=5 RowSpacing=10 ColumnSpacing=20 ColumnDefs="*,*,2*">
     <TableColumn Label="PersonId" TItem=Person Field=@(x =>x.PersonId)>
         <HeaderTemplate Context=Header>
             <TextBlock FontWeight=@((int)FontWeight.Bold)>@(Header + " !!")</TextBlock>

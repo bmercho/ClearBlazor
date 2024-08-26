@@ -1,3 +1,4 @@
+using ClearBlazor.Components.Common;
 using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
@@ -18,6 +19,12 @@ namespace ClearBlazor
 
         [Parameter]
         public int ColumnSpacing { get; set; } = 5;
+
+        [Parameter]
+        public GridLines HorizontalGridLines { get; set; } = GridLines.None;
+
+        [Parameter]
+        public GridLines VerticalGridLines { get; set; } = GridLines.None;
 
         [Parameter]
         public string? BorderThickness { get; set; } = null;
@@ -76,7 +83,7 @@ namespace ClearBlazor
                     justify = "end";
                     break;
             }
-            return $"display:grid; grid-area: 0 / {column} /span 1 /span 1; justify-self: {justify};";
+            return $"display:grid; grid-area: 1 / {column} /span 1 /span 1; justify-self: {justify};";
         }
 
         private string GetRowStyle(int row, int column)
@@ -98,6 +105,18 @@ namespace ClearBlazor
                     break;
             }
             return $"display:grid; grid-area: {row} / {column} /span 1 /span 1; justify-self: {justify};";
+        }
+
+        private string GetHorizontalGridLineStyle(int row, int columnCount)
+        {
+            return $"align-self:start; border-width:1px 0 0 0; border-style:solid; margin:{-RowSpacing/2}px 0 0 0; " +
+                   $"grid-area: {row} / 1 / span 1 / span {columnCount}; border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+        }
+
+        private string GetVerticalGridLineStyle(int column, int rowCount)
+        {
+            return $"justify-self:start; border-width:0 0 0 1px; border-style:solid; margin:0 0 0 {-ColumnSpacing / 2}px; " +
+                   $"grid-area: 1 / {column} / span {rowCount} / span 1; border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
         }
     }
 }
