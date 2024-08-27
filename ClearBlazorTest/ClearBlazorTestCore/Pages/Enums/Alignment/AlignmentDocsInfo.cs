@@ -2,9 +2,9 @@
 {
     public record AlignmentDocsInfo:IDocsEnumInfo
     {
-        public string Name => "IBackground";
+        public string Name => "Alignment";
 
-        public string Description => "Defines the background of a component.";
+        public string Description => "The alignment of a component within its parent container.";
 
         public List<ApiFieldInfo> FieldApi => new List<ApiFieldInfo>
         {
