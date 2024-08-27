@@ -64,7 +64,7 @@ namespace ClearBlazor
         public string GetMargin(AutoFormField field)
         {
             var margin = 24 * (field.Depth - 1);// + 25;
-            return $"{margin},10,0,0";
+            return $"10,0,0,{margin}";
         }
 
         public int GetFieldIndex(AutoFormField field)

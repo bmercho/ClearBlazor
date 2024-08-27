@@ -173,7 +173,7 @@ namespace ClearBlazor
             if (!HasChildren && IsExpanded)
                 topBottomPadding = 0;
 
-            string padding = $"{20 * (Level - 1) + 10},{topBottomPadding},5,{topBottomPadding}";
+            string padding = $"{topBottomPadding},5,{topBottomPadding},{20 * (Level - 1) + 10}";
             if (LinePadding != padding)
             {
                 LinePadding = padding;

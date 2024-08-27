@@ -7,6 +7,14 @@
     <RootNamespace>ClearBlazorTest</RootNamespace>
     <AssemblyName>ClearBlazorTestCore</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\Components\Layout\Grid\Code\GridBorderExampleCode.html" />
+    <None Remove="Pages\Components\Layout\Grid\Code\GridBoxShadowExampleCode.html" />
+    <None Remove="Pages\Components\Layout\Grid\Code\GridColourExampleCode.html" />
+    <None Remove="Pages\Components\Layout\Grid\Code\GridContentAlignmentExampleCode.html" />
+    <None Remove="Pages\Components\Layout\Grid\Code\GridGradientBackgroundExampleCode.html" />
+  </ItemGroup>
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
@@ -22,15 +30,13 @@
   <ItemGroup>
 	  <EmbeddedResource Include="Pages\Components\Layout\Canvas\Code\CanvasSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Forms\AutoForm\Code\AutoFormSimpleExampleCode.html" />
-	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridBorderExample.razor" />
-	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridBoxShadowExample.razor" />
-	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridColourExample.razor" />
-	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridContentAlignmentExample.razor" />
-	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridGradientBackgroundExample.razor" />
-	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridRowsColsExample.razor" />
-	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridSimpleExample.razor" />
 	  <EmbeddedResource Include="Pages\Components\Inputs\DatePickerInput\Code\DatePickerInputSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Inputs\TimePickerInput\Code\TimePickerInputSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridBorderExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridBoxShadowExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridColourExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridContentAlignmentExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridGradientBackgroundExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Pickers\ColourPicker\Code\ColourPickerSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Forms\Form\Code\FormLabelColumnExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Forms\Form\Code\FormSimpleExampleCode.html" />

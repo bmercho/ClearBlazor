@@ -172,9 +172,9 @@ namespace ClearBlazor
             }
 
             if (LabelLocation == LabelLocation.Start)
-                return $"0,0,{margin},0";
+                return $"0,{margin},0,0";
             else
-                return $"{margin},0,0,0";
+                return $"0,0,0,{margin}";
 
         }
 

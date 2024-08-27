@@ -20,12 +20,12 @@
                         }
                         <IconButton Size=Size.Small Colour=Color.Dark Column=1 Icon=@Icons.Material.Outlined.Palette />
                     </Grid>
-                     <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="-20,1,-20,-20"
+                     <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="1,-20,-20,-20"
                            Position=Position Transform=Transform
                            AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
                            
                            @bind-Open=PopupOpen>
-                        <Grid Margin=20,0,20,20 BoxShadow=2>
+                        <Grid Margin=0,20,20,20 BoxShadow=2>
                                <ColourPicker @bind-Colour=Value @bind-Colour:after=OnColourChanged />
                            </Grid>
                     </Popup>

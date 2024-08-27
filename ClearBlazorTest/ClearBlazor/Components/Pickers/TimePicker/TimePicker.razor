@@ -21,18 +21,18 @@
                             </TextBlock>
                             @if (!Hours24 && Orientation == Orientation.Portrait)
                             {
-                                <StackPanel Margin="20,0,0,0" Orientation=@Orientation VerticalAlignment=Alignment.Center
+                                <StackPanel Margin="0,0,0,20" Orientation=@Orientation VerticalAlignment=Alignment.Center
                                             BackgroundColour=Color.Transparent>
-                                    <TextBlock Colour=@GetAMColour() Typo=Typo.H6 Margin="0,0,0,10" Clickable=true OnClicked=@OnAMClicked>AM</TextBlock>
+                                    <TextBlock Colour=@GetAMColour() Typo=Typo.H6 Margin="0,0,10,0" Clickable=true OnClicked=@OnAMClicked>AM</TextBlock>
                                     <TextBlock Colour=@GetPMColour() Typo=Typo.H6 Clickable=true OnClicked=@OnPMClicked>PM</TextBlock>
                                 </StackPanel>
                             }
                         </StackPanel>
                         @if (!Hours24 && Orientation == Orientation.Landscape)
                         {
-                            <StackPanel Margin="20,0,0,0" Orientation=@Orientation HorizontalAlignment=Alignment.Center
+                            <StackPanel Margin="0,0,0,10" Orientation=@Orientation HorizontalAlignment=Alignment.Center
                                         BackgroundColour=Color.Transparent>
-                                <TextBlock Colour=@GetAMColour() Typo=Typo.H6 Margin="0,0,10,0" Clickable=true OnClicked=@OnAMClicked>AM</TextBlock>
+                                <TextBlock Colour=@GetAMColour() Typo=Typo.H6 Margin="0,10,0,0" Clickable=true OnClicked=@OnAMClicked>AM</TextBlock>
                                 <TextBlock Colour=@GetPMColour() Typo=Typo.H6 Clickable=true OnClicked=@OnPMClicked>PM</TextBlock>
                             </StackPanel>
                         }

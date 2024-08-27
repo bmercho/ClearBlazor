@@ -7,7 +7,7 @@
                     IconColour=@(toggled ? ToggledIconColour : IconColour)
                     Colour=@(toggled ? ToggledIconColour : IconColour) 
                     OnClicked=@Clicked Size=@Size />
-        <TextBlock VerticalAlignment="Alignment.Center" Margin="10,0,0,0" Size=@Size
+        <TextBlock VerticalAlignment="Alignment.Center" Margin="0,0,0,10" Size=@Size
                    Colour=@(toggled ? ToggledIconColour : IconColour )>
             @(toggled ? ToggledText : Text)
         </TextBlock>

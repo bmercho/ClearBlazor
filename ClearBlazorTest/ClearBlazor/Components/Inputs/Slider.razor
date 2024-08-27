@@ -30,7 +30,7 @@
                 }
                 @if (ShowTickMarks && Step != null)
                 {
-                    <Grid Row=1 Margin="0,-5,0,0" Rows="auto,auto" HorizontalAlignment=Alignment.Start>
+                    <Grid Row=1 Margin="-5,0,0,0" Rows="auto,auto" HorizontalAlignment=Alignment.Start>
                         @foreach (var info in TickInfo)
                         {
                             <Grid Height=@GetTickHeight() BorderColour=@TrackColour BorderThickness="2,0,0,0"
@@ -54,7 +54,7 @@
                            @bind-Open=DropdownOpen CloseOnOutsideClick=false>
                         <Grid BorderThickness=1 BackgroundColour=Color.BackgroundGrey CornerRadius=2>
                             <TextBlock Typography=@GetTypograghy() VerticalAlignment=Alignment.Center 
-                                       Margin="5,0,5,0" >@ValueLabel</TextBlock>
+                                       Margin="0,5,0,5" >@ValueLabel</TextBlock>
                         </Grid>
                     </Popup>
                 }

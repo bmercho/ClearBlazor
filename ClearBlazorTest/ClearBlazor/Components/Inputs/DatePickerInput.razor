@@ -15,11 +15,11 @@
                         <TextBlock VerticalAlignment=Alignment.Center>@DateString</TextBlock>
                         <IconButton Size=Size.Small Colour=Color.Dark Column=1 Icon=@Icons.Material.Outlined.CalendarMonth/>
                     </Grid>
-                     <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="0,1,-20,-20"
+                     <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="1,-20,-20,0"
                            Position=Position Transform=Transform
                            AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
                            @bind-Open=PopupOpen>
-                        <DatePicker Margin="0,0,0,0" Orientation=@Orientation BorderThickness=1 CornerRadius=4 
+                        <DatePicker Orientation=@Orientation BorderThickness=1 CornerRadius=4 
                                     @bind-Date=CurrentDate DateSelected=@DateSelected/>
                     </Popup>
                      @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)

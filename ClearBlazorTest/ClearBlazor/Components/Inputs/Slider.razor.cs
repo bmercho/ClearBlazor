@@ -276,7 +276,7 @@ namespace ClearBlazor
         private string GetValueMargin()
         {
             var offset = GetOffset(ValueLabel.Length, false, false);
-            return $"{double.Parse(ThumbMargin) - offset},-21,0,0";
+            return $"-21,0,0,{double.Parse(ThumbMargin) - offset}";
         }
 
         private async Task OnTrackClicked(MouseEventArgs e)

@@ -122,9 +122,9 @@ namespace ClearBlazor
                     return "0";
                 case TextEditFillMode.Underline:
                     if (HasFocus && !IsDisabled)
-                        return "0,0,0,2";
+                        return "0,0,2,0";
                     else
-                        return "0,0,0,1";
+                        return "0,0,1,0";
                 default:
                 case TextEditFillMode.Filled:
                     if (HasFocus && !IsDisabled)

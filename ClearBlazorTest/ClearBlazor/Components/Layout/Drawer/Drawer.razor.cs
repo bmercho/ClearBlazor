@@ -217,16 +217,16 @@ namespace ClearBlazor
                 case DrawerLocation.Left:
                     // The -5 used below is to fix an issue where the calculated element width (in OnAfterRenderAsync)
                     // is a couple of pixels less than what the actual width comes out as. Not sure why.
-                    DrawerMargin = $"{-ElementSize.ElementWidth-5},0,0,0";
+                    DrawerMargin = $"0,0,0,{-ElementSize.ElementWidth - 5}";
                     break;
                 case DrawerLocation.Right:
-                    DrawerMargin = $"0,0,{-ElementSize.ElementWidth-5},0";
+                    DrawerMargin = $"0,{-ElementSize.ElementWidth-5},0,0";
                     break;
                 case DrawerLocation.Top:
-                    DrawerMargin = $"0,{-ElementSize.ElementHeight-5},0,0";
+                    DrawerMargin = $"{-ElementSize.ElementHeight-5},0,0,0";
                     break;
                 case DrawerLocation.Bottom:
-                    DrawerMargin = $"0,0,0,{-ElementSize.ElementHeight-5}";
+                    DrawerMargin = $"0,0,{-ElementSize.ElementHeight-5},0";
                     break;
             }
         }

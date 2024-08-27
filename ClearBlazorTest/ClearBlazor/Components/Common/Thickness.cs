@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace ClearBlazor
+﻿namespace ClearBlazor
 {
     public struct Thickness : IEquatable<Thickness>
     {
@@ -28,11 +26,11 @@ namespace ClearBlazor
         {
         }
 
-        public Thickness(double horizontalSize, double verticalSize) : this(horizontalSize, verticalSize, horizontalSize, verticalSize)
+        public Thickness(double verticalSize, double horizontalSize)  : this(verticalSize, horizontalSize, verticalSize, horizontalSize)
         {
         }
 
-        public Thickness(double left, double top, double right, double bottom) : this()
+        public Thickness(double top, double right, double bottom, double left) : this()
         {
             Left = left;
             Top = top;
@@ -83,17 +81,17 @@ namespace ClearBlazor
         public static implicit operator Thickness(double uniformSize) =>
             new Thickness(uniformSize);
 
-        public static implicit operator Thickness((double horizontalSize, double verticalSize) t) =>
-            new Thickness(t.horizontalSize, t.verticalSize);
+        public static implicit operator Thickness((double verticalSize, double horizontalSize) t) =>
+            new Thickness(t.verticalSize, t.horizontalSize);
 
-        public static implicit operator Thickness((double left, double top, double right, double bottom) t) =>
-            new Thickness(t.left, t.top, t.right, t.bottom);
+        public static implicit operator Thickness((double top, double right, double bottom, double left) t) =>
+            new Thickness(t.top, t.right, t.bottom, t.left);
 
         public static bool operator ==(Thickness a, Thickness b) => a.Equals(b);
 
         public static bool operator !=(Thickness a, Thickness b) => !(a == b);
 
-        public override string ToString() => $"[{Left}, {Top}, {Right}, {Bottom}]";
+        public override string ToString() => $"[{Top}, {Right}, {Bottom}, {Left}]";
 
         public override bool Equals(object? obj) => obj is Thickness t && Equals(t);
 

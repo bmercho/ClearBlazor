@@ -78,6 +78,12 @@ namespace ClearBlazor
             return $"min-width: {MaximumWidth * 1.2}ch; ";
         }
 
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            if (Value != null)
+                SelectionText = Value.ToString();
+        }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
