@@ -141,7 +141,7 @@
     <EmbeddedResource Include="Pages\Components\Popup\Code\PopupVerticalFlipExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Layout\StackPanel\Code\StackPanelHorizontalExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Layout\StackPanel\Code\StackPanelVerticalExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\TabPanel\Code\TabPanelSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\TabPanel\Code\TabPanelSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockAlignmentExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockClickableExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockOptionsExampleCode.html" />
