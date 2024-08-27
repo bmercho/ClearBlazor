@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace ClearBlazor
 {
-    public partial class Grid:ClearComponentBase,IContent,IBackground,IBorder
+    public partial class Grid:ClearComponentBase,IContent,IBackground,IBoxShadow, IBorder, IBackgroundGradient, IDraggable
     {
         [Parameter]
         public string Rows { get; set; } = null!;
@@ -35,6 +35,14 @@ namespace ClearBlazor
 
         [Parameter]
         public Color? BackgroundColour { get; set; } = null;
+
+        [Parameter]
+        public string? BackgroundGradient1 { get; set; } = null;
+        [Parameter]
+        public string? BackgroundGradient2 { get; set; } = null;
+
+        [Parameter]
+        public bool IsDraggable { get; set; } = false;
 
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnElementMouseEnter { get; set; }

@@ -4,11 +4,11 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class="@Classes" style="@ComputeStyle()">
-        <Grid Name="Grid in Tabs" Rows="auto,*" CornerRadius=@GridCornerRadius BackgroundColour=@BackgroundColour>
-            <WrapPanel Name="WrapPanel in Tabs" CornerRadius=@GridCornerRadius VerticalAlignment="Alignment.Start">
+        <Grid Rows="auto,*" CornerRadius=@GridCornerRadius BackgroundColour=@BackgroundColour>
+            <WrapPanel CornerRadius=@GridCornerRadius VerticalAlignment="Alignment.Start">
                 @foreach (Tab tabPage in Pages)
                 {
-                    <TabButton Name="TabButton in Tabs" Size=@Size ButtonStyle="TextEditFillMode.None" IsFirstTab=@(Pages.First()==tabPage)
+                    <TabButton Size=@Size ButtonStyle="TextEditFillMode.None" IsFirstTab=@(Pages.First()==tabPage)
                                IsLastTab=@(Pages.Last()==tabPage)
                                Icon=@tabPage.Icon
                                IconColour=@GetButtonColour(tabPage)
@@ -20,7 +20,7 @@
                     </TabButton>
                 }
             </WrapPanel>
-            <Grid Name="Grid in Tabs" Row=1>
+            <Grid ow=1>
                 @ChildContent
             </Grid>
         </Grid>

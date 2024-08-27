@@ -13,19 +13,19 @@
             <Grid Rows="auto,auto">
                 @if (BackgroundGradient1 == null && BackgroundGradient2 == null)
                 {
-                    <Border Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=BackgroundTrackColour
+                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=BackgroundTrackColour
                             OnClicked=@OnTrackClicked />
-                    <Border Height=@TrackHeight Width=@TrackWidth HorizontalAlignment=Alignment.Start CornerRadius=@CornerRadius
+                    <Grid Height=@TrackHeight Width=@TrackWidth HorizontalAlignment=Alignment.Start CornerRadius=@CornerRadius
                             BackgroundColour=TrackColour OnClicked=@OnTrackClicked />
                 }
                 @if (BackgroundGradient1 != null)
                 {
-                    <Border Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=@Color.Transparent
+                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=@Color.Transparent
                             BackgroundGradient1=@BackgroundGradient1 OnClicked=@OnTrackClicked />
                 }
                 @if (BackgroundGradient2 != null)
                 {
-                    <Border Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=@Color.Transparent
+                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=@Color.Transparent
                             BackgroundGradient2=@BackgroundGradient2 OnClicked=@OnTrackClicked />
                 }
                 @if (ShowTickMarks && Step != null)
@@ -33,7 +33,7 @@
                     <Grid Row=1 Margin="0,-5,0,0" Rows="auto,auto" HorizontalAlignment=Alignment.Start>
                         @foreach (var info in TickInfo)
                         {
-                            <Border Height=@GetTickHeight() BorderColour=@TrackColour BorderThickness="2,0,0,0"
+                            <Grid Height=@GetTickHeight() BorderColour=@TrackColour BorderThickness="2,0,0,0"
                                     Margin=@info.TickMargin />
                             @if (ShowTickMarkLabels)
                             {

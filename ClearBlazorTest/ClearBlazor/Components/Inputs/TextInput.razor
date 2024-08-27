@@ -9,7 +9,7 @@
             {
                 <div style=@GetLabelStyle()>@Label</div>
             }
-            <Grid Name="Grid in TextInputBase" BackgroundColour=@GetBackgroundColour() BorderThickness=@GetBorderThickness()
+            <Grid BackgroundColour=@GetBackgroundColour() BorderThickness=@GetBorderThickness()
                   BorderColour=@GetBorderColour() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
                 @if (Lines > 1)
                 {
@@ -38,12 +38,12 @@
 
                 @if (Clearable && StringValue?.Length > 0)
                 {
-                    <IconButton Name="IconButton in TextInputBase" Column=1 Icon="@Icons.Material.Filled.Close" 
+                    <IconButton Column=1 Icon="@Icons.Material.Filled.Close" 
                                 Size=@Size Colour=@Color.Dark  OnClicked="ClearEntry" />
                 }
                 @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                 {
-                    <MaterialIcon Name="MaterialIcon in TextInputBase" Column=2 Icon="@Icons.Material.Filled.FmdBad" 
+                    <MaterialIcon Column=2 Icon="@Icons.Material.Filled.FmdBad" 
                                   Size=@Size ToolTip=@ValidationMessage Colour=@Color.Error />
                 }
             </Grid>

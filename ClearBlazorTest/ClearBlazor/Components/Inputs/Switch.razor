@@ -13,10 +13,10 @@
                 <TextBlock VerticalAlignment=Alignment.Center Margin=@GetLabelMargin()>@Label</TextBlock>
             }
             <Grid OnClicked=@OnSwitchClicked Style=@GetSwitchStyle()>
-                <Border Style=@GetTrackStyle()/>
-                <Border Class="clear-ripple clear-ripple-icon switch-transition" Style=@GetHoverStyle() VerticalAlignment=Alignment.Center>
-                    <Border Style=@GetThumbStyle() VerticalAlignment=Alignment.Center HorizontalAlignment=Alignment.Center />
-                </Border>
+                <Grid Style=@GetTrackStyle() />
+                <Grid Class="clear-ripple clear-ripple-icon switch-transition" Style=@GetHoverStyle() VerticalAlignment=Alignment.Center>
+                    <Grid Style=@GetThumbStyle() VerticalAlignment=Alignment.Center HorizontalAlignment=Alignment.Center />
+                </Grid>
             </Grid>
 
             @if (Label != null && LabelLocation == LabelLocation.End)

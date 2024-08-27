@@ -6,8 +6,7 @@
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         @if (!string.IsNullOrEmpty(Text))
         {
-            <TextBlock Name="TextBlock in Avatar"
-                       HorizontalAlignment=Alignment.Center 
+            <TextBlock HorizontalAlignment=Alignment.Center 
                        VerticalAlignment=Alignment.Center 
                        FontSize=@FontSize 
                        FontFamily="@FontFamily"
@@ -17,11 +16,11 @@
         }
         else if (!string.IsNullOrEmpty(Icon))
         {
-            <MaterialIcon Name="MaterialIcon in Avatar" Size=@Size Icon=@Icon Colour=@IconColour HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center/>
+            <MaterialIcon Size=@Size Icon=@Icon Colour=@IconColour HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center/>
         }
         else if (!string.IsNullOrEmpty(Image))
         {
-            <Image Name="Image in Avatar" VerticalAlignment="Alignment.Center" HorizontalAlignment="Alignment.Center" Stretch="ImageStretch.UniformToFill" Source="@Image" />
+            <Image VerticalAlignment="Alignment.Center" HorizontalAlignment="Alignment.Center" Stretch="ImageStretch.UniformToFill" Source="@Image" />
         }
     </div>
 

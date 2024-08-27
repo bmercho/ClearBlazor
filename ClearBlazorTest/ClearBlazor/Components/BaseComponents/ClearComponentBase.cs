@@ -487,7 +487,7 @@ namespace ClearBlazor
 
             if (background.BackgroundColour != null)
                 css += $"background-color: {background.BackgroundColour.Value}; ";
-            else if (this is Border || this is Grid || this is StackPanel ||
+            else if (this is Grid || this is StackPanel ||
                      this is DockPanel || this is UniformGrid || this is WrapPanel || this is Tabs ||
                      this is Drawer)
                 css += $"background-color: {ThemeManager.CurrentPalette.Background.Value}; ";

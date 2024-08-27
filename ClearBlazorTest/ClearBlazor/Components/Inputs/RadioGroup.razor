@@ -4,7 +4,7 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <StackPanel Name="StackPanel in TextInputBase" Orientation="Orientation.Portrait">
+        <StackPanel Orientation="Orientation.Portrait">
             @if (!string.IsNullOrEmpty(Label))
             {
                 <div style=@GetLabelStyle()>@Label</div>
@@ -22,14 +22,14 @@
                 </StackPanel>
                 @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                 {
-                    <MaterialIcon Name="MaterialIcon in TextInputBase" Column=1 Icon="@Icons.Material.Filled.FmdBad" Size=@Size ToolTip=@ValidationMessage
+                    <MaterialIcon Column=1 Icon="@Icons.Material.Filled.FmdBad" Size=@Size ToolTip=@ValidationMessage
                                   Colour=@Color.Error />
                 }
 
             </Grid>
             @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)
             {
-                <TextBlock Name="TextBlock in TextInputBase" TextWrapping="TextWrap.WrapOnNewLines" Colour=@Color.Error>@ValidationMessage</TextBlock>
+                <TextBlock TextWrapping="TextWrap.WrapOnNewLines" Colour=@Color.Error>@ValidationMessage</TextBlock>
             }
         </StackPanel>
     </div>

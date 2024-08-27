@@ -1,0 +1,46 @@
+﻿@page "/Grid"
+@using ClearBlazorTest
+@namespace ClearBlazorTest
+
+<DocsExamplesPage DocsInfo=@(new GridDocsInfo())>
+    <CodeSnippet Title="Basic example" Code=@(typeof(GridSimpleExample).Name)>
+        <WrapPanel ColumnSpacing="20" RowSpacing="20">
+            <GridSimpleExample />
+        </WrapPanel>
+    </CodeSnippet>
+    <CodeSnippet Title="Borders" Code=@(typeof(GridBorderExample).Name)>
+        <WrapPanel ColumnSpacing="20" RowSpacing="20">
+            <GridBorderExample />
+        </WrapPanel>
+    </CodeSnippet>
+    <CodeSnippet Title="Box shadows" Code=@(typeof(GridBoxShadowExample).Name)>
+        <WrapPanel ColumnSpacing="20" RowSpacing="20" Padding="50">
+            <GridBoxShadowExample />
+        </WrapPanel>
+    </CodeSnippet>
+    <CodeSnippet Title="Coloured background and borders" Code=@(typeof(GridColourExample).Name)>
+        <WrapPanel ColumnSpacing="20" RowSpacing="20">
+            <GridColourExample />
+        </WrapPanel>
+    </CodeSnippet>
+    <CodeSnippet Title="Content alignment" Code=@(typeof(GridContentAlignmentExample).Name)>
+        <WrapPanel ColumnSpacing="20" RowSpacing="20">
+            <GridContentAlignmentExample />
+        </WrapPanel>
+    </CodeSnippet>
+    <CodeSnippet Title="Gradient background" Code=@(typeof(GridGradientBackgroundExample).Name)>
+        <WrapPanel ColumnSpacing="20" RowSpacing="20">
+            <GridGradientBackgroundExample />
+        </WrapPanel>
+    </CodeSnippet>
+    <CodeSnippet Title="Example of use of Rows and Columns" Code=@(typeof(GridRowsColsExample).Name)>
+        <WrapPanel ColumnSpacing="20" RowSpacing="20">
+            <Grid Height="700">
+                <GridRowsColsExample />
+            </Grid>
+        </WrapPanel>
+    </CodeSnippet>
+</DocsExamplesPage>
+
+
+

@@ -3,7 +3,7 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <Grid Name="Grid in AutoForm" Columns=@_cols RowSpacing="10">
+        <Grid Columns=@_cols RowSpacing="10">
             @foreach (var field in Fields)
             {
                 @if (field.IsVisible)
@@ -17,7 +17,7 @@
                             case ItemType.CollectionClassHeader:
                             case ItemType.CollectionHeader:
                             case ItemType.ClassHeader:
-                                <StackPanel Name="StackPanel in AutoForm" Column="0" Row="GetFieldIndex(field)" Orientation="Orientation.Landscape" VerticalAlignment="Alignment.Center" Margin="0,10,0,0">
+                                <StackPanel Column="0" Row="GetFieldIndex(field)" Orientation="Orientation.Landscape" VerticalAlignment="Alignment.Center" Margin="0,10,0,0">
                                     <TextBlock Margin=@GetMargin(field) />
                                     @if (field.IsExpandVisible)
                                     {
@@ -30,14 +30,14 @@
                 @onclick="@(e => AutoFormViewModel.ToggleExpand(field))" />
                 *@
                                     }
-                                    <TextBlock Name="TextBlock1 in AutoForm" Typography=@GetLabelTypography() ToolTip=@field.TooltipForName>@field.DisplayName</TextBlock>
+                                    <TextBlock Typography=@GetLabelTypography() ToolTip=@field.TooltipForName>@field.DisplayName</TextBlock>
                                 </StackPanel>
                                 break;
                             case ItemType.ClassItem:
                             case ItemType.ListItem:
-                                <StackPanel Name="StackPanel in AutoForm" Column="0" Row="Fields.IndexOf(field)" Orientation="Orientation.Landscape" VerticalAlignment="Alignment.Center">
-                                    <TextBlock Name="TextBlock2 in AutoForm" Margin=@GetMargin(field) />
-                                    <TextBlock Name="TextBlock3 in AutoForm" Typography=@GetLabelTypography() ToolTip=@field.TooltipForName>@field.DisplayName</TextBlock>
+                                <StackPanel Column="0" Row="Fields.IndexOf(field)" Orientation="Orientation.Landscape" VerticalAlignment="Alignment.Center">
+                                    <TextBlock Margin=@GetMargin(field) />
+                                    <TextBlock Typography=@GetLabelTypography() ToolTip=@field.TooltipForName>@field.DisplayName</TextBlock>
                                 </StackPanel>
                                 break;
                             default:
@@ -49,7 +49,7 @@
                         case ItemType.CategoryHeader:
                             break;
                         case ItemType.CollectionHeader:
-                            <Grid Name="Grid in AutoForm" Columns="auto,*,auto" Margin="0,10,0,0">
+                            <Grid Columns="auto,*,auto" Margin="0,10,0,0">
 @*                                 @if (field.HasError)
                                 {
                                     <Grid Column="0" VerticalAlignment="Alignment.Start">
@@ -59,8 +59,8 @@
                                     </Grid>
                                 }
                 *@
-                                <Grid Name="Grid in AutoForm" Column="1" Row="GetFieldIndex(field)">
-                                    <TextBlock Name="TextBlock in AutoForm" Typography=@GetLabelTypography()>(Collection)</TextBlock>
+                                <Grid Column="1" Row="GetFieldIndex(field)">
+                                    <TextBlock Typography=@GetLabelTypography()>(Collection)</TextBlock>
                                 </Grid>
 @*                                 @if (!_localIsReadOnly)
                                 {
@@ -101,7 +101,7 @@
                             }
  *@                            break;
                         case ItemType.ClassItem:
-                            <Grid Name="Grid in AutoForm" Columns="*,auto" Column="1" Row="GetFieldIndex(field)">
+                            <Grid Columns="*,auto" Column="1" Row="GetFieldIndex(field)">
 @*                                 @if (field.HasError)
                                 {
                                     <Grid Column="1" VerticalAlignment="Alignment.End">
@@ -111,7 +111,7 @@
                                     </Grid>
                                 }
  *@
-                                <Grid Name="Grid in AutoForm" Column="0" Padding="2">
+                                <Grid Column="0" Padding="2">
                                     <DynamicComponent Type=@field.InputType Parameters="@field.InputParameters" />
                                 </Grid>
                             </Grid>

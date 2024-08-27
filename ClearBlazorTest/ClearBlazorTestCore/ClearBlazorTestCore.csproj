@@ -7,7 +7,6 @@
     <RootNamespace>ClearBlazorTest</RootNamespace>
     <AssemblyName>ClearBlazorTestCore</AssemblyName>
   </PropertyGroup>
-
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
@@ -21,9 +20,15 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <EmbeddedResource Include="Pages\Components\Border\Code\BorderGradientBackgroundExampleCode.html" />
-	  <EmbeddedResource Include="Pages\Components\Canvas\Code\CanvasSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Canvas\Code\CanvasSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Forms\AutoForm\Code\AutoFormSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridBorderExample.razor" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridBoxShadowExample.razor" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridColourExample.razor" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridContentAlignmentExample.razor" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridGradientBackgroundExample.razor" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridRowsColsExample.razor" />
+	  <EmbeddedResource Include="Pages\Components\Layout\Grid\Examples\GridSimpleExample.razor" />
 	  <EmbeddedResource Include="Pages\Components\Inputs\DatePickerInput\Code\DatePickerInputSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Inputs\TimePickerInput\Code\TimePickerInputSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Pickers\ColourPicker\Code\ColourPickerSimpleExampleCode.html" />
@@ -47,10 +52,6 @@
     <EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarIconExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarImageExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarTextExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Border\Code\BorderBoxShadowExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Border\Code\BorderColorExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Border\Code\BorderContentExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Border\Code\BorderSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Buttons\ButtonGroup\Code\ButtonGroupHorizontalExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Buttons\ButtonGroup\Code\ButtonGroupIconsExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Buttons\ButtonGroup\Code\ButtonGroupVerticalExampleCode.html" />
@@ -66,10 +67,10 @@
     <EmbeddedResource Include="Pages\Components\Buttons\IconButtons\Code\IconButtonsToggleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Buttons\IconButtons\Code\IconButtonsVariantExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Buttons\ToggleIconButtons\Code\ToggleIconButtonsExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\DockPanel\Code\DockPanelSimpleExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Drawer\Code\DrawerSimpleExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Grid\Code\GridRowsColsExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Grid\Code\GridSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\DockPanel\Code\DockPanelSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\Drawer\Code\DrawerSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridRowsColsExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Icon\Code\IconColorExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Icon\Code\IconCustomExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Icon\Code\IconSimpleExampleCode.html" />
@@ -138,8 +139,8 @@
     <EmbeddedResource Include="Pages\Components\Popup\Code\PopupLocationExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Popup\Code\PopupSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Popup\Code\PopupVerticalFlipExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\StackPanel\Code\StackPanelHorizontalExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\StackPanel\Code\StackPanelVerticalExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\StackPanel\Code\StackPanelHorizontalExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\StackPanel\Code\StackPanelVerticalExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\TabPanel\Code\TabPanelSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockAlignmentExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockClickableExampleCode.html" />
@@ -149,18 +150,18 @@
     <EmbeddedResource Include="Pages\Components\Toolbar\Code\ToolbarSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Toolbar\Code\ToolbarTrayExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\ToolTip\Code\ToolTipSimpleExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\UniformGrid\Code\UniformGridSetRowsAndColumnsExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\UniformGrid\Code\UniformGridSetRowsExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\UniformGrid\Code\UniformGridSimpleExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\WrapPanel\Code\WrapPanelColumnExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\WrapPanel\Code\WrapPanelColumnReverseExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\WrapPanel\Code\WrapPanelRowExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\WrapPanel\Code\WrapPanelRowReverseExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\UniformGrid\Code\UniformGridSetRowsAndColumnsExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\UniformGrid\Code\UniformGridSetRowsExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\UniformGrid\Code\UniformGridSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\WrapPanel\Code\WrapPanelColumnExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\WrapPanel\Code\WrapPanelColumnReverseExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\WrapPanel\Code\WrapPanelRowExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\WrapPanel\Code\WrapPanelRowReverseExampleCode.html" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Pages\Components\ClearComponentBase\ClearComponentBaseDocsInfo.cs" />
-    <None Include="Pages\Components\Grid\GridDocsInfo.cs" />
+    <None Include="Pages\Components\Layout\Grid\GridDocsInfo.cs" />
     <None Include="Pages\Enums\Alignment\AlignmentDocsInfo.cs" />
     <None Include="Pages\Interfaces\IBackground\BackgroundDocsInfo.cs" />
   </ItemGroup>

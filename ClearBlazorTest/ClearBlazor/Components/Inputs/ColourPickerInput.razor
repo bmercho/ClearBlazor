@@ -12,7 +12,7 @@
                   BorderColour=@GetBorderColour() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
                 <div @ref="PickerElement" style="display:grid; ">
                     <Grid MinWidth=200 Columns="*,auto" OnClicked=@TogglePopup>
-                        <Border BackgroundColour=@Value />
+                        <Grid BackgroundColour=@Value />
                         @if(ShowHex)
                         {
                             <TextBlock Style="@ComputeInputStyle()" Colour=@Color.ContrastingColor(Value) 
@@ -25,13 +25,13 @@
                            AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
                            
                            @bind-Open=PopupOpen>
-                           <Border Margin=20,0,20,20 BoxShadow=2>
+                        <Grid Margin=20,0,20,20 BoxShadow=2>
                                <ColourPicker @bind-Colour=Value @bind-Colour:after=OnColourChanged />
-                           </Border>
+                           </Grid>
                     </Popup>
                      @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                     {
-                        <MaterialIcon Name="MaterialIcon in TextInputBase" Column=2 Icon="@Icons.Material.Filled.FmdBad"
+                        <MaterialIcon Column=2 Icon="@Icons.Material.Filled.FmdBad"
                                       Size=@Size ToolTip=@ValidationMessage Colour=@Color.Error />
                     }
                 </div>
