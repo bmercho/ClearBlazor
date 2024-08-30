@@ -30,8 +30,8 @@
                         <ScrollViewer @ref=ScrollViewer>
                             <ClearBlazor.Virtualize HorizontalAlignment=Alignment.Center HorizontalContentAlignment=Alignment.Center
                                                     ScrollViewer=@ScrollViewer Context="item" ItemHeight=28 
-                                                    Items=@YearList VisibleIndex=@GetYearIndex()>
-                                <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item.Value))" 
+                                                    Items=@YearList VisibleIndex="@((GetYearIndex(), Alignment.Center))">
+                                <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item.Value))"
                                      @onclick:stopPropagation="true">
                                     <TextBlock HorizontalAlignment=Alignment.Center 
                                                VerticalAlignment=Alignment.Center 

@@ -82,7 +82,7 @@ namespace ClearBlazor
                 startYear = (int)StartYear;
 
             if (year != null)
-                return  (int)year - startYear;
+                return  (int)year - startYear + 1;
             return 0;
 
         }

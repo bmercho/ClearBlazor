@@ -22,7 +22,7 @@ namespace ClearBlazor
         /// (except if it near the start or end of list, where it wont be in the centre) 
         /// </summary>
         [Parameter]
-        public int VisibleIndex { get; set; } = 0;
+        public (int index, Alignment verticalAlignment) VisibleIndex { get; set; } = (0, Alignment.Start);
 
         [Parameter]
         public Alignment HorizontalContentAlignment { get; set; } = Alignment.Start;
@@ -30,14 +30,25 @@ namespace ClearBlazor
         private string _contentElementId = Guid.NewGuid().ToString();
         private double _containerHeight = -1;
         private double? _previousContainerHeight = null;
+        private int _visibleIndex = 0;
         private double _height = 0;
         private double _itemWidth = 0;
         private int _skipItems = 0;
         private int _takeItems = 0;
         private bool _initialising = true;
         private bool _initialScroll = true;
-        private ScrollState _scrollState = new ScrollState();
+        private ScrollState _scrollState = new();
 
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSetAsync();
+
+            // index is 1 based - convert to 0 based
+            if (VisibleIndex.index > 0)
+                _visibleIndex = VisibleIndex.index - 1;
+            else
+                _visibleIndex = 0;
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -65,6 +76,7 @@ namespace ClearBlazor
                 {
                     await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", ScrollViewer.Id, 
                                                     DotNetObjectReference.Create(this));
+                    // Do not await otherwise initially the scroll top is not set???
                     CalculateScrollItems(true);
                 }
                 _initialising = false;
@@ -83,6 +95,60 @@ namespace ClearBlazor
         protected override string UpdateStyle(string css)
         {
             return css + $"display: grid; ";
+        }
+
+        public async Task GotoIndex(int index, Alignment verticalAlignment)
+        {
+            // index is 1 based - convert to 0 based
+            if (index > 0)
+                _visibleIndex = index - 1;
+            else
+                _visibleIndex = 0;
+
+            await GotoIndex(verticalAlignment);
+        }
+
+        private async Task GotoIndex(Alignment verticalAlignment)
+        {
+            double scrollTop = 0;
+            var maxItemsInContainer = _containerHeight / ItemHeight;
+
+            switch (verticalAlignment)
+            {
+                case Alignment.Stretch:
+                case Alignment.Center:
+                    _skipItems = _visibleIndex;
+                    _takeItems = (int)Math.Ceiling(maxItemsInContainer);
+
+                    if (_skipItems < maxItemsInContainer)
+                        scrollTop = _skipItems * ItemHeight;
+                    else
+                        scrollTop = (_skipItems - maxItemsInContainer / 2 + 0.5) * ItemHeight;
+                    break;
+                case Alignment.Start:
+                    _skipItems = _visibleIndex;
+                    _takeItems = (int)Math.Ceiling(maxItemsInContainer);
+
+                    scrollTop = _skipItems * ItemHeight;
+                    break;
+                case Alignment.End:
+                    if (_visibleIndex < maxItemsInContainer)
+                        _skipItems = 0;
+                    else
+                        _skipItems = _visibleIndex;
+                    _takeItems = (int)Math.Ceiling(maxItemsInContainer);
+
+                    if (_skipItems < maxItemsInContainer)
+                        scrollTop = _skipItems * ItemHeight;
+                    else
+                        scrollTop = (_skipItems - maxItemsInContainer + 1) * ItemHeight;
+                    break;
+            }
+
+            // Not sure why this has to be called twice. Does not change the scroll position if it is only called once???
+            // Also CalculateScrollItems cannot be awaited otherwise it does not change scroll position???
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", ScrollViewer.Id, scrollTop);
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", ScrollViewer.Id, scrollTop);
         }
 
         protected string GetContentStyle()
@@ -120,21 +186,7 @@ namespace ClearBlazor
         {
             _height = Items.Count() * ItemHeight;
             if (initial)
-            {
-                _skipItems = VisibleIndex;
-                var maxItemsInContainer = _containerHeight / ItemHeight;
-                if (maxItemsInContainer + _skipItems > Items.Count())
-                    _takeItems = (int)Math.Ceiling(maxItemsInContainer + _skipItems - Items.Count());  
-                else
-                    _takeItems = (int)Math.Ceiling(maxItemsInContainer);
-
-                // Not sure why this has to be called twice. Does not change the scroll position if it is only called once???
-                // Also this function (ie CalculateScrollItems) cannot be awaited otherwise it does not change scroll position???
-                await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", ScrollViewer.Id, 
-                                                (_skipItems - maxItemsInContainer /2 + 0.5)* ItemHeight);
-                await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", ScrollViewer.Id,
-                                                (_skipItems - maxItemsInContainer / 2 + 0.5) * ItemHeight);
-            }
+                await GotoIndex(VisibleIndex.verticalAlignment);
             else
             {
                 _skipItems = (int)(_scrollState.ScrollTop / ItemHeight);
