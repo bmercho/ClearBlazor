@@ -5,7 +5,7 @@
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
         <StackPanel Orientation=@Orientation>
-            <Grid BackgroundColour=@Colour >
+            <Grid BackgroundColour=@Colour>
                 <StackPanel Margin="10" Orientation=Orientation.Portrait BackgroundColour=@Colour>
                     <Button ButtonStyle=TextEditFillMode.None
                             HorizontalAlignment=Alignment.Center Size=Size.Large
@@ -27,16 +27,18 @@
                 @switch (Mode)
                 {
                     case DatePickerMode.Year:
-                        <ScrollViewer>
-                            @* <Virtualize Context="item" Items=@YearList> *@
-                            @foreach (var item in YearList)
-                            {
-                                <div style=@GetYearStyle()
-                                     id="@(Id + item.Value)" @onclick="(() => OnYearClicked(item.Value))" @onclick:stopPropagation="true">
-                                    <TextBlock FontSize=@GetYearSize(item.Value) Colour=@GetYearColour(item.Value)>@item.Name</TextBlock>
+                        <ScrollViewer @ref=ScrollViewer>
+                            <ClearBlazor.Virtualize HorizontalAlignment=Alignment.Center HorizontalContentAlignment=Alignment.Center
+                                                    ScrollViewer=@ScrollViewer Context="item" ItemHeight=28 
+                                                    Items=@YearList VisibleIndex=@GetYearIndex()>
+                                <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item.Value))" 
+                                     @onclick:stopPropagation="true">
+                                    <TextBlock HorizontalAlignment=Alignment.Center 
+                                               VerticalAlignment=Alignment.Center 
+                                               FontSize=@GetYearSize(item.Value) 
+                                               Colour=@GetYearColour(item.Value)>@item.Name</TextBlock>
                                 </div>
-                            }
-                            @* </Virtualize> *@
+                            </ClearBlazor.Virtualize>
                         </ScrollViewer>
                         break;
                     case DatePickerMode.Month:
@@ -45,7 +47,7 @@
                                 <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Left Colour=@Color.Dark
                                             Icon=@Icons.Material.Filled.ArrowLeft OnClicked=@OnSubtractYear />
                                 <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Right Colour=@Color.Dark
-                                            Icon =@Icons.Material.Filled.ArrowRight OnClicked=@OnAddYear />
+                                            Icon=@Icons.Material.Filled.ArrowRight OnClicked=@OnAddYear />
                                 <Button ButtonStyle=TextEditFillMode.None Colour=@Color.Dark
                                         HorizontalAlignment=Alignment.Center Size=Size.VeryLarge
                                         OnClicked=@OnDateClicked>
@@ -90,7 +92,7 @@
                                 }
                             </UniformGrid>
                             <UniformGrid NumRows=6 NumColumns=7>
-                                @for (int i=1;i<=42;i++)
+                                @for (int i = 1; i <= 42; i++)
                                 {
                                     int dayIndex = i;
                                     @if (IsDayIndexValid(dayIndex))
@@ -103,7 +105,7 @@
                                     }
                                     else
                                     {
-                                        <div/>
+                                        <div />
                                     }
                                 }
                             </UniformGrid>

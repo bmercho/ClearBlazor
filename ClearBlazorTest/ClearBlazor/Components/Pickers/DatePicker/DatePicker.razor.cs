@@ -51,7 +51,7 @@ namespace ClearBlazor
         private DatePickerMode Mode = DatePickerMode.Day;
         private List<ListDataItem<int>> YearList { get; set; } = new();
 
-        private bool DoScrollToYear = true;
+        ScrollViewer ScrollViewer = null!;
         private int? MouseOverMonth = null;
         private int? MouseOverDay = null;
         private DayOfWeek FirstDayOfWeek = DayOfWeek.Monday;
@@ -71,14 +71,20 @@ namespace ClearBlazor
             SelectedDate = date;
         }
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        private int GetYearIndex()
         {
-            await base.OnAfterRenderAsync(firstRender);
-            if (!firstRender && Mode == DatePickerMode.Year && DoScrollToYear)
-            {
-                await ScrollToYear();
-                DoScrollToYear = false;
-            }
+            int? year = Date?.Year;
+
+            int startYear;
+            if (StartYear == null)
+                startYear = DateTime.Now.AddYears(-100).Year;
+            else
+                startYear = (int)StartYear;
+
+            if (year != null)
+                return  (int)year - startYear;
+            return 0;
+
         }
 
         protected override string UpdateStyle(string css)
@@ -102,13 +108,6 @@ namespace ClearBlazor
                     return Culture.DateTimeFormat.FirstDayOfWeek;
             }
             return DayOfWeek.Sunday;
-        }
-
-        private async Task ScrollToYear()
-        {
-            int? year = Date?.Year;
-            var id = $"{Id}{year}";
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.scrollIntoView", id, "center");
         }
 
         private string GetYearSize(int year)
@@ -159,7 +158,7 @@ namespace ClearBlazor
         private string GetYearStyle()
         {
 
-            return $"display:flex;justify-content: center; margin-top:5px;";
+            return $"display:flex;justify-content: center;";
         }
 
         private void AddYearRange(int? startYear, int? endYear)
@@ -178,7 +177,6 @@ namespace ClearBlazor
                 return;
 
             SelectedDate = SelectedDate.AddYears(year - SelectedDate.Year);
-            DoScrollToYear = true;
             Mode = DatePickerMode.Month;
             StateHasChanged();
         }
@@ -201,7 +199,6 @@ namespace ClearBlazor
                 return;
 
             SelectedDate = SelectedDate.AddMonths(month - SelectedDate.Month);
-            DoScrollToYear = true;
             Mode = DatePickerMode.Day;
             StateHasChanged();
         }

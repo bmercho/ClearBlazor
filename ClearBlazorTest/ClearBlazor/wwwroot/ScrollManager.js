@@ -16,5 +16,43 @@ window.scrollbar = {
         if (element) {
             element.scrollIntoView({ behavior: "instant", block: block, inline: 'start' });
         }
+    },
+
+    SetScrollTop: (elementId, scrollTop) => {
+        let element = document.getElementById(elementId);
+        if (element) {
+            element.scrollTop = scrollTop;
+        }
+    },
+
+    SetScrollLeft: (elementId, scrollLeft) => {
+        let element = document.getElementById(elementId);
+        if (element) {
+            element.scrollTop(scrollLeft);
+        }
+    },
+
+    GetScrollPosition: (elementId) => {
+        let element = document.getElementById(elementId);
+        if (element) {
+            return {
+                ScrollTop: element.scrollTop, ScrollLeft: element.scrollLeft,
+                ScrollHeight: element.ScrollHeight, ScrollWidth: element.ScrollWidth
+            }
+        }
+    },
+
+    ListenForScrollEvents: (elementId, dotnethelper) => {
+        let element = document.getElementById(elementId);
+        if (element) {
+            element.addEventListener("scroll", (e) => {
+                dotnethelper.invokeMethodAsync('HandleScrollEvent',
+                    {
+                        ScrollTop: element.scrollTop, ScrollLeft: element.scrollLeft,
+                        ScrollHeight: element.scrollHeight, ScrollWidth: element.scrollWidth
+                    })
+            })
+        }
     }
+
 }

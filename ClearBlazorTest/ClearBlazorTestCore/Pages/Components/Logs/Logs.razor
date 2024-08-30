@@ -1,16 +1,16 @@
 ﻿@page "/Logs"
-@using Microsoft.AspNetCore.Components.Web.Virtualization
 
 @namespace ClearBlazorTest
 <Grid Margin=10 BorderThickness="1" BorderColour="Color.Dark" CornerRadius="4">
-    <ScrollViewer HorizontalScrollMode=ScrollMode.Auto>
-        <Virtualize Context="item" Items=@Data>
-            <div>@item</div>
-        </Virtualize>
+    <ScrollViewer @ref="ScrollViewer" HorizontalScrollMode=ScrollMode.Auto>
+        <ClearBlazor.Virtualize ScrollViewer=@ScrollViewer Context="item" Items=@Data ItemHeight=20>
+            @item
+        </ClearBlazor.Virtualize>
     </ScrollViewer>
 </Grid>
 
 @code {
+    ScrollViewer ScrollViewer = null!;
     List<string> Data = new List<string>();
 
     protected override void OnInitialized()

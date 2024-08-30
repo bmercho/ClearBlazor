@@ -39,6 +39,8 @@ namespace ClearBlazor
             await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                              "./_content/ClearBlazor/SizeInfo.js");
             await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                             "./_content/ClearBlazor/ElementSizeInfo.js");
+            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                              "./_content/ClearBlazor/SetClasses.js");
             await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                              "./_content/ClearBlazor/SetStyleProperty.js");

@@ -7,13 +7,12 @@
 @inject NavigationManager NavManager
 @implements IHandleEvent
 
-@*  <RootComponent>
-<Select Label="Simple" @bind-Value=EnumValue>
-    <SelectItem Value=TestEnum.Enum1 Text="A very long message 123456789" />
-    <SelectItem Value=TestEnum.Enum2 />
-    <SelectItem Value=TestEnum.Enum3 />
-    <SelectItem Value=TestEnum.Enum4 />
-</Select>
+@* <RootComponent>
+    <ScrollViewer @ref="ScrollViewer" VerticalScrollMode=ScrollMode.Auto>
+        <ClearBlazor.Virtualize ScrollViewer=@ScrollViewer Context="item" Items=@items VisibleIndex=1000>
+            @item
+        </ClearBlazor.Virtualize>
+    </ScrollViewer>
 </RootComponent>
  *@  
  
@@ -170,5 +169,8 @@
     {
         StateHasChanged();
     }
+
+    ScrollViewer ScrollViewer = null!;
+    public IEnumerable<string> items = Enumerable.Range(0, 333000).Select(i => i.ToString()).ToArray();
 
 }

@@ -1,0 +1,14 @@
+﻿@namespace ClearBlazor
+@typeparam TItem
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id style="position: relative;height: @(_height)px">
+        @foreach (var item in Items.Skip(_skipItems).Take(_takeItems).Select((item, index) => new { item, index }))
+        {
+            <div style="@(GetContentStyle()) height: @(ItemHeight)px; width:@(_itemWidth)px; top: @((_skipItems + item.index) * ItemHeight)px;">
+                @ChildContent(item.item)
+            </div>
+        }
+    </div>
+</CascadingValue>
