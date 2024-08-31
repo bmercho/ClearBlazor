@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@typeparam TItem
+@inherits InputBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <StackPanel Orientation="Orientation.Portrait"  Spacing=@Spacing>
+            @if (ListData == null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @foreach (var item in ListData!)
+                {
+                }
+            }
+        </StackPanel>
+    </div>
+</CascadingValue>

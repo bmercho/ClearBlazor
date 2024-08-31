@@ -1,0 +1,51 @@
+﻿@namespace ClearBlazorTest
+    <ListView @bind-Value=_selectedItem ListViewData=@_testData Width=300 Height=500 BorderThickness="1"
+              BorderColour="Color.Dark" CornerRadius="4" Virtualize=false >
+        <RowTemplate Context=Item>
+            <Grid BackgroundColour=Color.BackgroundGrey BorderThickness=1 CornerRadius=8 Margin=10 Padding=10 Columns="*,3*">
+                <MaterialIcon Icon=@Item.IconName VerticalAlignment=Alignment.Center/>
+                <TextBlock VerticalAlignment=Alignment.Center Column=1> @(Item.Name)</TextBlock>
+            </Grid>
+        </RowTemplate>
+    </ListView>
+
+@code {
+    private List<TestViewItem>? _testData = new();
+
+    private class TestViewItem
+    {
+        public string Name { get; set; } = string.Empty;
+        public string IconName { get; set; } = string.Empty;
+    }
+
+    private TestViewItem _selectedItem = null!;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        for (int i = 0; i < 100; i++)
+        {
+            _testData?.Add(new TestViewItem { Name = $"Item # {i}", IconName = GetIconName(i) });
+        }
+    }
+
+    private string GetIconName(int i)
+    {
+        switch (i % 5)
+        {
+            case 0:
+                return Icons.Material.Filled.Add;
+            case 1:
+                return Icons.Material.Filled.AccessAlarm;
+            case 2:
+                return Icons.Material.Filled.Deck;
+            case 3:
+                return Icons.Material.Filled.Landscape;
+            case 4:
+                return Icons.Material.Filled.Airlines;
+        }
+        return Icons.Material.Filled.Add;
+    }
+
+}

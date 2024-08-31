@@ -4,7 +4,7 @@
 <Grid Margin=10 BorderThickness="1" BorderColour="Color.Dark" CornerRadius="4">
     <ScrollViewer @ref="ScrollViewer" HorizontalScrollMode=ScrollMode.Auto>
         <ClearBlazor.Virtualize ScrollViewer=@ScrollViewer Context="item" Items=@Data ItemHeight=20>
-            @item
+            @item.Item1
         </ClearBlazor.Virtualize>
     </ScrollViewer>
 </Grid>

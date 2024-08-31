@@ -24,6 +24,7 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
+            css += "display:grid; ";
             switch (VerticalScrollMode)
             {
                 case ScrollMode.Disabled:

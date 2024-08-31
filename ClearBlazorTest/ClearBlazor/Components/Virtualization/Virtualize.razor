@@ -3,12 +3,24 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id style="position: relative;height: @(_height)px">
-        @foreach (var item in Items.Skip(_skipItems).Take(_takeItems).Select((item, index) => new { item, index }))
+    <div id=@Id style="display:grid; position: relative;height: @(_height)px">
+        @if (_initialising)
         {
-            <div style="@(GetContentStyle()) height: @(ItemHeight)px; width:@(_itemWidth)px; top: @((_skipItems + item.index) * ItemHeight)px;">
-                @ChildContent(item.item)
-            </div>
+            @if (Items.Count() > 0)
+            {
+                <div id=@_firstItemId>
+                    @ChildContent((Items.First(),0))
+                </div>
+            }
+        }
+        else
+        {
+            @foreach (var item in Items.Skip(_skipItems).Take(_takeItems).Select((item, index) => new { item, index }))
+            {
+                <div style="@(GetContentStyle()) height: @(_itemHeight)px; top: @((_skipItems + item.index) * _itemHeight)px;">
+                    @ChildContent((item.item, item.index))
+                </div>
+            }
         }
     </div>
 </CascadingValue>
