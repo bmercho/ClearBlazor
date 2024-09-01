@@ -6,7 +6,7 @@ namespace ClearBlazor
     public partial class Virtualize<TItem> : ClearComponentBase
     {
         [Parameter]
-        public RenderFragment<(TItem,int)>? ChildContent { get; set; }
+        public required RenderFragment<TItem> ChildContent { get; set; }
 
         [Parameter]
         public required ScrollViewer ScrollViewer { get; set; }

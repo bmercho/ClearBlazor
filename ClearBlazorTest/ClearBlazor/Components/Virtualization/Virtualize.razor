@@ -9,7 +9,7 @@
             @if (Items.Count() > 0)
             {
                 <div id=@_firstItemId>
-                    @ChildContent((Items.First(),0))
+                    @ChildContent(Items.First())
                 </div>
             }
         }
@@ -18,7 +18,7 @@
             @foreach (var item in Items.Skip(_skipItems).Take(_takeItems).Select((item, index) => new { item, index }))
             {
                 <div style="@(GetContentStyle()) height: @(_itemHeight)px; top: @((_skipItems + item.index) * _itemHeight)px;">
-                    @ChildContent((item.item, item.index))
+                    @ChildContent(item.item)
                 </div>
             }
         }

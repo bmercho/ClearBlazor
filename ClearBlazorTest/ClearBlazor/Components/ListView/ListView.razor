@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components
 @namespace ClearBlazor
 @typeparam TItem
-@inherits InputBase
+@inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
@@ -10,20 +10,19 @@
             {
                 <ClearBlazor.Virtualize @ref="VirtualizeElement" ScrollViewer=@ScrollViewer Context="item"
                                         Items=@ListViewData ItemHeight=@ItemHeight HorizontalContentAlignment=@HorizontalContentAlignment>
-                    @if (item.Item1 != null)
-                    {
-                        <div style=@GetContentStyle()>
-                            @RowTemplate(item.Item1)
-                        </div>
-                    }
+                    <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))" 
+                                                  @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
+                        @RowTemplate(GetItemInfo(item))
+                    </div>
                 </ClearBlazor.Virtualize>
             }
             else
             {
                 @foreach (var item in ListViewData!)
                 {
-                    <div style=@GetContentStyle()>
-                        @RowTemplate(item)
+                    <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
+                         @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
+                        @RowTemplate(GetItemInfo(item))
                     </div>
                 }
             }

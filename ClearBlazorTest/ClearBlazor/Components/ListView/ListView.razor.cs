@@ -2,25 +2,31 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class ListView<TItem> : InputBase, IContent, IBackground, IBorder
+    public partial class ListView<TItem> : ClearComponentBase, IContent, IBackground, IBorder, IBoxShadow
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
         [Parameter]
-        public RenderFragment<TItem> RowTemplate { get; set; } = null!;
+        public List<TItem?> SelectedItems { get; set; } = new();
 
         [Parameter]
-        public TItem? Value { get; set; }
+        public EventCallback<List<TItem?>> SelectedItemsChanged { get; set; }
 
         [Parameter]
-        public EventCallback<TItem?> ValueChanged { get; set; }
+        public TItem? SelectedItem { get; set; } = default;
 
         [Parameter]
-        public List<TItem?>? Values { get; set; } = null;
+        public EventCallback<TItem?> SelectedItemChanged { get; set; }
 
         [Parameter]
-        public EventCallback<List<TItem?>> ValuesChanged { get; set; }
+        public RenderFragment<ItemInfo<TItem>> RowTemplate { get; set; } = null!;
+
+        [Parameter]
+        public SelectionMode SelectionMode { get; set; } = SelectionMode.None;
+
+        [Parameter]
+        public bool AllowSelectionToggle { get; set; } = false;
 
         [Parameter]
         public List<TItem>? ListViewData { get; set; } = null;
@@ -30,6 +36,11 @@ namespace ClearBlazor
 
         [Parameter]
         public Alignment HorizontalContentAlignment { get; set; } = Alignment.Stretch;
+
+        [Parameter]
+        public int? ItemHeight { get; set; }
+
+
 
         [Parameter]
         public Color? BackgroundColour { get; set; } = Color.Transparent;
@@ -50,30 +61,12 @@ namespace ClearBlazor
         public Orientation Orientation { get; set; } = Orientation.Portrait;
 
         [Parameter]
-        public int? ItemHeight { get; set; }
-
-        [Parameter]
-        public double Spacing { get; set; } = 0;
-
-        [Parameter]
-        public Size RowSize { get; set; } = Size.Normal;
-
-        [Parameter]
-        public bool Clickable { get; set; } = true;
-
-        [Parameter]
-        public bool MultiSelect { get; set; } = false;
-
-        [Parameter]
-        public bool AllowSelectionToggle { get; set; } = false;
-
-        [Parameter]
         public EventCallback<TItem> OnSelectionChanged { get; set; }
         [Parameter]
-        public EventCallback<List<TItem>> OnSelectionsChanged { get; set; }
+        public EventCallback<List<TItem?>> OnSelectionsChanged { get; set; }
 
-        private List<TItem> SelectedItems = new();
-        private TItem? SelectedItem = default;
+        private TItem? _highlightedItem = default;
+        private bool _mouseOver = false;
 
         private TItem? SelectedParentItem { get; set; } = default;
 
@@ -99,7 +92,7 @@ namespace ClearBlazor
             return css;
         }
 
-        protected string GetContentStyle()
+        protected string GetContentStyle(TItem item)
         {
             var css = "display:grid;";
             if (ItemHeight != null)
@@ -119,129 +112,90 @@ namespace ClearBlazor
                     css += "justify-self:end; ";
                     break;
             }
+
+            if (IsHighlighted(item))
+                css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColour.Value}; ";
+
+            if (IsSelected(item))
+                css += $"background-color: {ThemeManager.CurrentPalette.ListSelectedColour.Value}; ";
+
             return css;
         }
 
-        //internal async Task HandleChild(ListBoxItem<TListBox> item)
-        //{
-        //    item.HorizontalAlignmentDefaultOverride = Alignment.Start;
-        //    item.RowSize = RowSize;
-        //    item.ColourOverride = Colour;
-        //    item.Level = 1;
-        //    if (MultiSelect)
-        //    {
-        //        if (typeof(TListBox).IsEnum)
-        //        {
-        //            if (Value == null || item.Value == null)
-        //                return;
+        private ItemInfo<TItem> GetItemInfo(TItem item)
+        {
+            return new ItemInfo<TItem> { Item = item, IsHighlighted= IsHighlighted(item), IsSelected=IsSelected(item) };
+        }
+        private bool IsSelected(TItem item)
+        {
+            switch (SelectionMode)
+            {
+                case SelectionMode.None:
+                    return false;
+                case SelectionMode.Single:
+                    if (SelectedItem != null && SelectedItem.Equals(item))
+                        return true;
+                    break;
+                case SelectionMode.Multi:
+                    foreach(TItem? item1 in SelectedItems)
+                        if (item1 != null && item1.Equals(item))
+                            return true;
+                    break;
+            }
+            return false;
+        }
 
-        //            var enumValue1 = (long)Convert.ChangeType(Value, typeof(long));
-        //            var enumValue2 = (long)Convert.ChangeType(item.Value, typeof(long));
-        //            if ((enumValue1 & enumValue2) == enumValue2)
-        //            {
-        //                SelectedItems.Add(item);
-        //                await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
-        //                item.Select();
-        //                StateHasChanged();
-        //            }
-        //        }
-        //        else if (Values != null && item != null && Values.Contains(item.Value!))
-        //        {
-        //            SelectedItems.Add(item);
-        //            await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
-        //            item.Select();
-        //            StateHasChanged();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (Value != null && Value.Equals(item.Value))
-        //        {
-        //            SelectedItem = item;
-        //            await OnSelectionChanged.InvokeAsync(
-        //                  new ListDataItem<TListBox>(item.Text!, item.Value!, item.Icon, item.Avatar));
-        //            item.Select();
-        //            StateHasChanged();
-        //        }
-        //    }
-        //}
+        private bool IsHighlighted(TItem item)
+        {
+            return _mouseOver && item != null && item.Equals(_highlightedItem);
+        }
 
-        //public async Task<bool> SetSelected(ListBoxItem<TListBox> item)
-        //{
-        //    bool selected = false;
+        private void MouseEnter(TItem item)
+        {
+            _mouseOver = true;
+            _highlightedItem = item;
+            StateHasChanged();
+        }
 
-        //    if (SelectedParentItem != null && SelectedParentItem != item)
-        //        SelectedParentItem.Unselect();
-
-        //    if (item.HasChildren)
-        //    {
-        //        SelectedParentItem = item;
-        //        return true;
-        //    }
-
-        //    if (MultiSelect)
-        //    {
-        //        if (SelectedItems.Contains(item))
-        //        {
-        //            SelectedItems.Remove(item);
-        //            selected = false;
-        //        }
-        //        else
-        //        {
-        //            SelectedItems.Add(item);
-        //            selected = true;
-        //        }
-        //        if (typeof(TListBox).IsEnum)
-        //        {
-        //            long enumValue = 0;
-        //            foreach (var s in SelectedItems.Select(i => i.Value))
-        //                if (s != null)
-        //                    enumValue += (long)Convert.ChangeType(s, typeof(long));
-        //            Value = (TListBox?)Enum.ToObject(typeof(TListBox), enumValue);
-        //            await ValueChanged.InvokeAsync(Value);
-
-        //            await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
-        //        }
-        //        else
-        //        {
-        //            Values = SelectedItems.Select(s => s!.Value).ToList();
-        //            await ValuesChanged.InvokeAsync(Values);
-        //            await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (SelectedItem == item && AllowSelectionToggle)// && !item._hasChildren)
-        //        {
-        //            SelectedItem = null;
-        //            selected = false;
-        //            Value = default;
-        //        }
-        //        else
-        //        {
-        //            if (SelectedItem != null)
-        //                SelectedItem.Unselect();
-
-        //            SelectedItem = item;
-        //            selected = true;
-        //            Value = item.Value;
-        //        }
-        //        await ValueChanged.InvokeAsync(item.Value);
-        //        await OnSelectionChanged.InvokeAsync(
-        //                 new ListDataItem<TListBox>(item.Text!, item.Value!, item.Icon, item.Avatar));
-        //    }
-        //    await ValidateField();
-        //    StateHasChanged();
-        //    return selected;
-        //}
-
-        //private List<ListDataItem<TListBox>> GetDataItems(List<ListBoxItem<TListBox>> items)
-        //{
-        //    var dataItems = new List<ListDataItem<TListBox>>();
-        //    foreach (var selectedItem in SelectedItems)
-        //        dataItems.Add(new ListDataItem<TListBox>(selectedItem.Text!, selectedItem.Value!,
-        //                                             selectedItem.Icon, selectedItem.Avatar));
-        //    return dataItems;
-        //}
+        private void MouseLeave()
+        {
+            _mouseOver = false;
+            _highlightedItem = default;
+            StateHasChanged();
+        }
+        private async Task ItemClicked(TItem item)
+        {
+            switch (SelectionMode)
+            {
+                case SelectionMode.None:
+                    return;
+                case SelectionMode.Single:
+                    if (SelectedItem != null && SelectedItem.Equals(item))
+                    {
+                        if (AllowSelectionToggle)
+                        {
+                            SelectedItem = default;
+                            await SelectedItemChanged.InvokeAsync(default);
+                            await OnSelectionChanged.InvokeAsync(default);
+                        }
+                    }
+                    else
+                    {
+                        SelectedItem = item;
+                        await SelectedItemChanged.InvokeAsync(item);
+                        await OnSelectionChanged.InvokeAsync(item);
+                    }
+                    break;
+                case SelectionMode.Multi:
+                    if (IsSelected(item))
+                        SelectedItems.Remove(item);
+                    else
+                        SelectedItems.Add(item);
+                    await SelectedItemsChanged.InvokeAsync(SelectedItems);
+                    await OnSelectionsChanged.InvokeAsync(SelectedItems);
+                    break;
+            }
+            StateHasChanged();
+        }
     }
 }
