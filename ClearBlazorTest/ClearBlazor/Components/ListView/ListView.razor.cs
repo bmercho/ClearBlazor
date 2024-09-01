@@ -2,11 +2,8 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class ListView<TItem> : ClearComponentBase, IContent, IBackground, IBorder, IBoxShadow
+    public partial class ListView<TItem> : ClearComponentBase, IBackground, IBorder, IBoxShadow
     {
-        [Parameter]
-        public RenderFragment? ChildContent { get; set; } = null;
-
         [Parameter]
         public List<TItem?> SelectedItems { get; set; } = new();
 
@@ -29,10 +26,10 @@ namespace ClearBlazor
         public bool AllowSelectionToggle { get; set; } = false;
 
         [Parameter]
-        public List<TItem>? ListViewData { get; set; } = null;
+        public bool HoverHighlight { get; set; } = true;
 
         [Parameter]
-        public bool Virtualize { get; set; } = false;
+        public List<TItem>? ListViewData { get; set; } = null;
 
         [Parameter]
         public Alignment HorizontalContentAlignment { get; set; } = Alignment.Stretch;
@@ -62,17 +59,17 @@ namespace ClearBlazor
 
         [Parameter]
         public EventCallback<TItem> OnSelectionChanged { get; set; }
+
         [Parameter]
         public EventCallback<List<TItem?>> OnSelectionsChanged { get; set; }
 
         private TItem? _highlightedItem = default;
         private bool _mouseOver = false;
 
-        private TItem? SelectedParentItem { get; set; } = default;
+        private ScrollViewer? _scrollViewer;
 
-        private ScrollViewer? ScrollViewer;
-
-        private Virtualize<TItem>? VirtualizeElement;
+        private Virtualize<TItem>? _virtualizeElement;
+        private bool _virtualize { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
@@ -113,7 +110,7 @@ namespace ClearBlazor
                     break;
             }
 
-            if (IsHighlighted(item))
+            if (HoverHighlight && IsHighlighted(item))
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColour.Value}; ";
 
             if (IsSelected(item))

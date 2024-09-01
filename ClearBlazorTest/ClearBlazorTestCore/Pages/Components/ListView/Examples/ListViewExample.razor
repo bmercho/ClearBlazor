@@ -1,25 +1,27 @@
 ﻿@namespace ClearBlazorTest
 <Grid Columns="auto,auto,*">
-    <ListView Column=0 HorizontalAlignment=Alignment.Start Margin=40 
-              @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems 
-              ListViewData=@_testData Width=300 Height=500 BorderThickness="1" 
-              BorderColour=Color.Dark CornerRadius="4" Virtualize=true SelectionMode=@_selectionMode 
+    <ListView Column=0 HorizontalAlignment=Alignment.Start Margin=40
+              @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
+              ListViewData=@_testData Width=300 Height=500 BorderThickness="1"
+              BorderColour=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
+              HoverHighlight=@_hoverHighlight
               AllowSelectionToggle=@_allowSelectionToggle>
         <RowTemplate Context=Item>
             <Grid BackgroundColour=Color.BackgroundGrey BorderThickness=1 CornerRadius=8 Margin=10 Padding=10 Columns="*,3*">
-                <MaterialIcon Icon=@Item.Item.IconName VerticalAlignment=Alignment.Center/>
+                <MaterialIcon Icon=@Item.Item.IconName VerticalAlignment=Alignment.Center />
                 <TextBlock VerticalAlignment=Alignment.Center Column=1> @(Item.Item.Name)</TextBlock>
             </Grid>
         </RowTemplate>
     </ListView>
-    <StackPanel Column=1 >
+    <StackPanel Column=1>
         <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode>
             @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
             {
                 <Radio Label=@mode.ToString() Value="@mode" />
             }
         </RadioGroup>
-        <CheckBox  Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+        <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+        <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Hover on highlight" />
         <TextBlock Margin=20>Selection=@_selectedItem?.Name</TextBlock>
 
         <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
@@ -39,6 +41,7 @@
     private List<TestViewItem> _selectedItems = new();
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
+    private bool _hoverHighlight = true;
 
     protected override void OnInitialized()
     {

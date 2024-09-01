@@ -5,10 +5,10 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <ScrollViewer @ref="ScrollViewer">
-            @if (Virtualize)
+        <ScrollViewer @ref="_scrollViewer">
+            @if (_virtualize)
             {
-                <ClearBlazor.Virtualize @ref="VirtualizeElement" ScrollViewer=@ScrollViewer Context="item"
+                <ClearBlazor.Virtualize @ref="_virtualizeElement" ScrollViewer=@_scrollViewer Context="item"
                                         Items=@ListViewData ItemHeight=@ItemHeight HorizontalContentAlignment=@HorizontalContentAlignment>
                     <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))" 
                                                   @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
