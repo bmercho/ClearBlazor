@@ -49,7 +49,7 @@ namespace ClearBlazor
         const int ControlWidthLandscape = 420;
 
         private DatePickerMode Mode = DatePickerMode.Day;
-        private List<ListDataItem<int>> YearList { get; set; } = new();
+        private List<int> YearList { get; set; } = new();
 
         ScrollViewer ScrollViewer = null!;
         private int? MouseOverMonth = null;
@@ -168,7 +168,7 @@ namespace ClearBlazor
             if ( (endYear == null))
                 endYear = DateTime.Now.AddYears(100).Year;
             for (int year = (int)startYear; year <= endYear; year++)
-                YearList.Add(new ListDataItem<int>(year.ToString(), year));
+                YearList.Add(year);
         }
 
         private void OnYearClicked(int year)

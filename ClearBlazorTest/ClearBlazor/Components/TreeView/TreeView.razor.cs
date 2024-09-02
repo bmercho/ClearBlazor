@@ -58,11 +58,6 @@ namespace ClearBlazor
         [Parameter]
         public bool AllowSelectionToggle { get; set; } = false;
 
-        [Parameter]
-        public EventCallback<ListDataItem<TItem>> OnSelectionChanged { get; set; }
-        [Parameter]
-        public EventCallback<List<ListDataItem<TItem>>> OnSelectionsChanged { get; set; }
-
         private List<ListBoxItem<TItem>> SelectedItems = new();
         private ListBoxItem<TItem>? SelectedItem = null;
 

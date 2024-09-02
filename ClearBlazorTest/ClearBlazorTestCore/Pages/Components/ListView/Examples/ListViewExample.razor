@@ -21,7 +21,7 @@
             }
         </RadioGroup>
         <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
-        <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Hover on highlight" />
+        <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
         <TextBlock Margin=20>Selection=@_selectedItem?.Name</TextBlock>
 
         <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
