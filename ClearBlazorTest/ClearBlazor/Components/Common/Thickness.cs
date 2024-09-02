@@ -38,6 +38,18 @@
             Bottom = bottom;
         }
 
+        public string ThicknessToCss()
+        {
+            if (Top == Right && Top == Bottom && Top == Left)
+                return $"{Top}px";
+            else if (Top == Bottom && Left == Right)
+                return $"{Top}px {Left}.px";
+            else if (Left == Right)
+                return $"{Top}px {Left}px {Bottom}px";
+            else
+                return $"{Top}px {Right}px {Bottom}px {Left}px";
+        }
+
         public static Thickness Parse(string s)
         {
             var values = s.Split(',', StringSplitOptions.RemoveEmptyEntries);

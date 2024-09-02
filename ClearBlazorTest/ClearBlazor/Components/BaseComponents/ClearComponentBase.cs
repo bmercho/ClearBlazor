@@ -367,12 +367,10 @@ namespace ClearBlazor
             //    sb.Append("max-width: 100%; ");
 
             if (margin != Thickness.Zero)
-                css += $"margin: {ThicknessToCss(margin)}; ";
-            //if (margin != Thickness.Zero || _boxShadow != null)
-                //            css += $"margin: {ThicknessToCss(MergeThicknesses(margin, GetBoxShadowThickness(_boxShadow)))}; ";
+                css += $"margin: {margin.ThicknessToCss()}; ";
 
-                if (padding != Thickness.Zero)
-                css += $"padding: {ThicknessToCss(padding)}; ";
+            if (padding != Thickness.Zero)
+                css += $"padding: {padding.ThicknessToCss()}; ";
 
             // If the element cannot effectively stretch due to size constraints (Width/MaxWidth),
             // CSS will align it at 'start' instead. To get the typical XAML behavior ('center'),
@@ -447,10 +445,13 @@ namespace ClearBlazor
                 {
                     var borderThickness = Thickness.Parse(border.BorderThickness);
                     if (borderThickness != Thickness.Zero)
-                        css += $"border-width: {ThicknessToCss(borderThickness)}; border-style: solid;";
+                        css += $"border-width: {borderThickness.ThicknessToCss()}; border-style: solid;";
                 }
                 else
-                    css += $"border-width: {ThicknessToCss(new Thickness(1))}; border-style: solid;";
+                    css += $"border-width: {new Thickness(1).ThicknessToCss()}; border-style: solid;";
+
+                //var borderStyle = 
+
             }
 
             if (border.CornerRadius != null)
@@ -458,10 +459,10 @@ namespace ClearBlazor
                 var cornerRadius = Thickness.Parse(border.CornerRadius);
 
                 if (cornerRadius != Thickness.Zero)
-                    css += $"border-radius: {ThicknessToCss(cornerRadius)}; ";
+                    css += $"border-radius: {cornerRadius.ThicknessToCss()}; ";
             }
             else
-                css += $"border-radius: {ThicknessToCss(new Thickness(ThemeManager.CurrentTheme.DefaultCornerRadius))}; ";
+                css += $"border-radius: {new Thickness(ThemeManager.CurrentTheme.DefaultCornerRadius).ThicknessToCss()}; ";
 
             return css;
         }
@@ -560,9 +561,6 @@ namespace ClearBlazor
 
             return Alignment.Stretch;
         }
-
-        protected string ThicknessToCss(Thickness t) =>
-                 $"{t.Top}px {t.Right}px {t.Bottom}px {t.Left}px";
 
         protected string AlignmentToCss(Alignment alignment, bool allowStretch)
         {
