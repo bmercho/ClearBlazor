@@ -62,7 +62,7 @@ namespace CreateDocumentation
         private void WriteDocsInfoFile(string testComponentFolder, DocoInfo docInfo)
         {
             var folder = Path.Combine(testComponentFolder, Paths.DocsFolder);
-            var docFileName = folder + @$"\{docInfo.Name}DocsInfo";
+            var docFileName = folder + @$"\{docInfo.Name}DocsInfo.json";
             Directory.CreateDirectory(folder);
             string jsonString = JsonSerializer.Serialize(docInfo);
             File.WriteAllText(docFileName, jsonString); 

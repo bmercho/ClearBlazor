@@ -168,8 +168,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Components\Layout\Grid\Doco\GridDocsInfo.cs" />
     <None Include="Pages\Enums\Alignment\AlignmentDocsInfo.cs" />
     <None Include="Pages\Interfaces\IBackground\BackgroundDocsInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\Components\AppBar\Doco\" />
+    <Folder Include="Pages\Components\Avatar\Doco\" />
+    <Folder Include="Pages\Components\Buttons\ButtonGroup\Doco\" />
+    <Folder Include="Pages\Components\Buttons\Buttons\Doco\" />
+    <Folder Include="Pages\Components\Buttons\IconButtons\Doco\" />
+    <Folder Include="Pages\Components\Buttons\ToggleIconButtons\Doco\" />
+    <Folder Include="Pages\Components\ClearComponentBase\Doco\" />
+    <Folder Include="Pages\Components\Forms\AutoForm\Doco\" />
   </ItemGroup>
 </Project>
