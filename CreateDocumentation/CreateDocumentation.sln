@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34205.153
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateDocumentation", "CreateDocumentation\CreateDocumentation.csproj", "{4C70C1FE-1085-4BC3-A83D-6E1A8481D5DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClearBlazorTestCore", "..\ClearBlazorTest\ClearBlazorTestCore\ClearBlazorTestCore.csproj", "{37118BBB-CAAB-47CD-A81F-8EF021B05C7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{4C70C1FE-1085-4BC3-A83D-6E1A8481D5DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C70C1FE-1085-4BC3-A83D-6E1A8481D5DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C70C1FE-1085-4BC3-A83D-6E1A8481D5DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37118BBB-CAAB-47CD-A81F-8EF021B05C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37118BBB-CAAB-47CD-A81F-8EF021B05C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37118BBB-CAAB-47CD-A81F-8EF021B05C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37118BBB-CAAB-47CD-A81F-8EF021B05C7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

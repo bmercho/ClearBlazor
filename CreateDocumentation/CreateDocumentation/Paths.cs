@@ -1,10 +1,17 @@
 ﻿using System.IO;
 using System.Linq;
 
-namespace CreateExamplesMarkup
+namespace CreateDocumentation
 {
     public class Paths
     {
+        public const string SolutionFolder = "ClearBlazor";
+        public const string TestComponentsFolder = @"ClearBlazorTest\ClearBlazorTestCore\Pages\Components";
+        public const string ComponentsFolder = @"ClearBlazorTest\ClearBlazor\Components";
+        public const string InterfacesFolder = @"ClearBlazorTest\ClearBlazor\Components\Interfaces";
+        public const string EnumerationsFolder = "ClearBlazorTest\\ClearBlazor.Components.Enumerations";
+        public const string DocsFolder = "Doco";
+
         private const string DocsDirectory = "ClearBlazorTest";
         private const string TestDirectory = "MudBlazor.UnitTests";
         private const string SnippetsFile = "Snippets.generated.cs";
@@ -15,26 +22,27 @@ namespace CreateExamplesMarkup
 
         public const string ExampleDiscriminator = "Example"; // example components must contain this string
 
-        public static string SrcDirPath
+        public static string? SrcPath
         {
             get
             {
-                var workingPath = Path.GetFullPath(".");
+                var workingPath = Directory.GetCurrentDirectory();
                 do
                 {
                     workingPath = Path.GetDirectoryName(workingPath);
                 }
-                while (Path.GetFileName(workingPath) != "ClearBlazor" && !string.IsNullOrWhiteSpace(workingPath));
+                while (Path.GetFileName(workingPath) != SolutionFolder && !string.IsNullOrWhiteSpace(workingPath));
 
                 return workingPath;
             }
         }
 
+
         public string DocsDirPath
         {
             get
             {
-                return Directory.EnumerateDirectories(SrcDirPath, DocsDirectory).FirstOrDefault();
+                return Directory.EnumerateDirectories(SrcPath, DocsDirectory).FirstOrDefault();
             }
         }
 
@@ -42,7 +50,7 @@ namespace CreateExamplesMarkup
         {
             get
             {
-                return Path.Join(Directory.EnumerateDirectories(SrcDirPath, TestDirectory).FirstOrDefault(), "Generated");
+                return Path.Join(Directory.EnumerateDirectories(SrcPath, TestDirectory).FirstOrDefault(), "Generated");
             }
         }
 

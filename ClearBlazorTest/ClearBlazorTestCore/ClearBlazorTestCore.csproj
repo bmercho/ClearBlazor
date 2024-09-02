@@ -168,8 +168,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Components\ClearComponentBase\ClearComponentBaseDocsInfo.cs" />
-    <None Include="Pages\Components\Layout\Grid\GridDocsInfo.cs" />
+    <None Include="Pages\Components\Layout\Grid\Doco\GridDocsInfo.cs" />
     <None Include="Pages\Enums\Alignment\AlignmentDocsInfo.cs" />
     <None Include="Pages\Interfaces\IBackground\BackgroundDocsInfo.cs" />
   </ItemGroup>

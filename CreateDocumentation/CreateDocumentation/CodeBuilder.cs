@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace CreateExamplesMarkup
+namespace CreateDocumentation
 {
     public class CodeBuilder
     {

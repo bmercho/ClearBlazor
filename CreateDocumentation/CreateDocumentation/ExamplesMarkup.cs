@@ -4,11 +4,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ColorCode;
 
-namespace CreateExamplesMarkup
+namespace CreateDocumentation
 {
     public class ExamplesMarkup
     {
-        public bool Execute()
+        public bool Execute(string srcPath)
         {
             var paths = new Paths();
             var newFiles = new StringBuilder();
