@@ -1,0 +1,78 @@
+<div>
+<div class="html"><pre>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">auto,auto,*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">ListView</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">0</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">40</span>
+              <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-SelectedItem</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_selectedItem</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-SelectedItems</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_selectedItems</span>
+              <span class="htmlAttributeName">ListViewData</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_testData</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">300</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">500</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">1</span><span class="quot">&quot;</span>
+              <span class="htmlAttributeName">BorderColour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Dark</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">4</span><span class="quot">&quot;</span> <span class="htmlAttributeName">SelectionMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_selectionMode</span>
+              <span class="htmlAttributeName">HoverHighlight</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_hoverHighlight</span>
+              <span class="htmlAttributeName">AllowSelectionToggle</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_allowSelectionToggle</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RowTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Item</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">BackgroundColour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.BackgroundGrey</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">8</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">*,3*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">MaterialIcon</span> <span class="htmlAttributeName">Icon</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Item.Item.IconName</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlTagDelimiter">/&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span> <span class="atSign">&#64;</span>(Item.Item.Name)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RowTemplate</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">ListView</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RadioGroup</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Selection mode</span><span class="quot">&quot;</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Value</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_selectionMode</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="atSign">&#64;</span>foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+            {
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+            }
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CheckBox</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Checked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_allowSelectionToggle</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Allow selection toggle (single selection only)</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CheckBox</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Checked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_hoverHighlight</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Highlight on hover</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span><span class="htmlTagDelimiter">&gt;</span>Selection=<span class="atSign">&#64;</span>_selectedItem?.Name<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span><span class="htmlTagDelimiter">&gt;</span>Selections=<span class="atSign">&#64;</span>string.Join(&quot;,&quot;, _selectedItems.Select(s =&gt; s.Name))<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
+</pre></div>
+<div class="csharp"><pre>
+<span class="atSign">&#64;</span>code {
+    <span class="keyword">private</span> List&lt;TestViewItem&gt;? _testData = <span class="keyword">new</span>();
+
+    <span class="keyword">private</span> <span class="keyword">class</span> TestViewItem
+    {
+        <span class="keyword">public</span> <span class="keyword">string</span> Name { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="keyword">string</span>.Empty;
+        <span class="keyword">public</span> <span class="keyword">string</span> IconName { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="keyword">string</span>.Empty;
+    }
+
+    <span class="keyword">private</span> TestViewItem _selectedItem = <span class="keyword">null</span>!;
+    <span class="keyword">private</span> List&lt;TestViewItem&gt; _selectedItems = <span class="keyword">new</span>();
+    <span class="keyword">private</span> SelectionMode _selectionMode = SelectionMode.None;
+    <span class="keyword">private</span> <span class="keyword">bool</span> _allowSelectionToggle = <span class="keyword">false</span>;
+    <span class="keyword">private</span> <span class="keyword">bool</span> _hoverHighlight = <span class="keyword">true</span>;
+
+    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
+    {
+        <span class="keyword">base</span>.OnInitialized();
+
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++)
+        {
+            _testData?.Add(<span class="keyword">new</span> TestViewItem { Name = $<span class="string">&quot;Item # {i}&quot;</span>, IconName = GetIconName(i) });
+        }
+    }
+
+    <span class="keyword">private</span> <span class="keyword">string</span> GetIconName(<span class="keyword">int</span> i)
+    {
+        <span class="keyword">switch</span> (i % <span class="number">5</span>)
+        {
+            <span class="keyword">case</span> <span class="number">0</span>:
+                <span class="keyword">return</span> Icons.Material.Filled.Add;
+            <span class="keyword">case</span> <span class="number">1</span>:
+                <span class="keyword">return</span> Icons.Material.Filled.AccessAlarm;
+            <span class="keyword">case</span> <span class="number">2</span>:
+                <span class="keyword">return</span> Icons.Material.Filled.Deck;
+            <span class="keyword">case</span> <span class="number">3</span>:
+                <span class="keyword">return</span> Icons.Material.Filled.Landscape;
+            <span class="keyword">case</span> <span class="number">4</span>:
+                <span class="keyword">return</span> Icons.Material.Filled.Airlines;
+        }
+        <span class="keyword">return</span> Icons.Material.Filled.Add;
+    }
+
+}
+</pre></div>
+</div>

@@ -7,22 +7,48 @@ namespace ClearBlazor
     /// <summary>
     /// Defines a flexible grid area that consists of columns and rows.
     /// </summary>
-    public partial class Grid:ClearComponentBase,IContent,IBackground,IBoxShadow, IBorder, IBackgroundGradient, IDraggable
+    public partial class Grid:ClearComponentBase,IContent,IBackground,IBoxShadow, IBorder, IBackgroundGradient
     {
-        [Parameter]
-        public string Rows { get; set; } = "*";
-
+        /// <summary>
+        /// Defines columns by a comma delimited string of column widths. 
+        /// A column width consists of one to three values separated by colons. The seconds and third values are optional.
+        /// The first value can be one of:
+        ///    '*'    - a weighted proportion of available space.
+        ///    'auto' - the minimum width of the content
+        ///    value  - a pixel value for the width
+        /// The second value is the minimum width in pixels
+        /// The third value is the maximum width in pixels
+        /// 
+        /// eg *,2*,auto,200  - Four columns, the 3rd column auto sizes to content, the 4th column is 200px wide, and the remaining space
+        /// is shared between columns 1 and 2 but column 2 is twice as wide as column 1.
+        /// eg *:100:200,* - Two columns sharing available width equally except column 1 must be a minimum of 100px and a maximum of 200px. 
+        /// So if the available width is 600px then column 1 will be 200px and column 2 400px.
+        /// If the available width is 150px then column 1 will be 100px and column 2 50px.
+        /// If the available width is 300px then column 1 will be 150px and column 2 150px.
+        /// </summary>        
         [Parameter]
         public string Columns { get; set; } = "*";
 
+        /// <summary>
+        /// Defines rows by a comma delimited string of row heights which are similar to columns. 
         [Parameter]
-        public double RowSpacing { get; set; } = 0;
+        public string Rows { get; set; } = "*";
 
+        /// <summary>
+        /// The spacing in pixels between each column
+        /// </summary>
         [Parameter]
         public double ColumnSpacing { get; set; } = 0;
 
+        /// <summary>
+        /// The spacing in pixels between each row
+        /// </summary>
         [Parameter]
-        public RenderFragment? ChildContent { get; set; } = null;
+        public double RowSpacing { get; set; } = 0;
+
+        // IBorder
+        [Parameter]
+        public RenderFragment? ChildContent { get; set; }
 
         [Parameter]
         public string? BorderThickness { get; set; }
@@ -36,26 +62,19 @@ namespace ClearBlazor
         [Parameter]
         public string? CornerRadius { get; set; }
 
+        // IBoxShadow
+        [Parameter]
+        public int? BoxShadow { get; set; }
 
+        // IBackground
         [Parameter]
-        public int? BoxShadow { get; set; } = null;
+        public Color? BackgroundColour { get; set; }
 
+        // IBackgroundGradient
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
-
+        public string? BackgroundGradient1 { get; set; }
         [Parameter]
-        public string? BackgroundGradient1 { get; set; } = null;
-        [Parameter]
-        public string? BackgroundGradient2 { get; set; } = null;
-
-        [Parameter]
-        public bool IsDraggable { get; set; } = false;
-
-        [Parameter]
-        public virtual EventCallback<MouseEventArgs> OnElementMouseEnter { get; set; }
-
-        [Parameter]
-        public virtual EventCallback<MouseEventArgs> OnElementMouseLeave { get; set; }
+        public string? BackgroundGradient2 { get; set; }
 
 
         private readonly Regex _proportionPattern = new Regex("^[0-9]*\\*$");
