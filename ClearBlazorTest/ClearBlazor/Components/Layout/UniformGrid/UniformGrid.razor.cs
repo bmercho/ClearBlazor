@@ -8,13 +8,16 @@ namespace ClearBlazor
         public RenderFragment? ChildContent { get; set; } = null;
 
         [Parameter]
-        public string? BorderThickness { get; set; } = null;
+        public string? BorderThickness { get; set; }
 
         [Parameter]
-        public Color? BorderColour { get; set; } = null;
+        public Color? BorderColour { get; set; }
 
         [Parameter]
-        public string? CornerRadius { get; set; } = "0";
+        public BorderStyle? BorderStyle { get; set; }
+
+        [Parameter]
+        public string? CornerRadius { get; set; }
 
         [Parameter]
         public int? BoxShadow { get; set; } = null;

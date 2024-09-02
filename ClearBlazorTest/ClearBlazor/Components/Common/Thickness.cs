@@ -43,7 +43,7 @@
             if (Top == Right && Top == Bottom && Top == Left)
                 return $"{Top}px";
             else if (Top == Bottom && Left == Right)
-                return $"{Top}px {Left}.px";
+                return $"{Top}px {Left}px";
             else if (Left == Right)
                 return $"{Top}px {Left}px {Bottom}px";
             else

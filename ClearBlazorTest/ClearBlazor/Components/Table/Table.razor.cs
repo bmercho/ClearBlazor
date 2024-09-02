@@ -27,13 +27,17 @@ namespace ClearBlazor
         public GridLines VerticalGridLines { get; set; } = GridLines.None;
 
         [Parameter]
-        public string? BorderThickness { get; set; } = null;
+        public string? BorderThickness { get; set; }
 
         [Parameter]
-        public Color? BorderColour { get; set; } = null;
+        public Color? BorderColour { get; set; }
 
         [Parameter]
-        public string? CornerRadius { get; set; } = "0";
+        public BorderStyle? BorderStyle { get; set; }
+
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
 
         [Parameter]
         public int? BoxShadow { get; set; } = null;

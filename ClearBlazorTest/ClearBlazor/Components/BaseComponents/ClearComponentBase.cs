@@ -81,7 +81,7 @@ namespace ClearBlazor
 
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnClicked { get; set; }
-        
+
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnDoubleClicked { get; set; }
 
@@ -154,7 +154,7 @@ namespace ClearBlazor
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             Logger.AddLog($"SetParametersAsync: {Id}");
-            foreach(var parameter in parameters)
+            foreach (var parameter in parameters)
             {
                 if (parameter.Name == "Data")
                 {
@@ -337,7 +337,7 @@ namespace ClearBlazor
             }
             if (MaxWidth != double.PositiveInfinity)
             {
-                css += $"max-width: {MaxWidth}px; ";    
+                css += $"max-width: {MaxWidth}px; ";
                 if (double.IsNaN(Width))
                     css += $"width: 100%; ";
                 else if (MinWidth == 0)
@@ -423,7 +423,7 @@ namespace ClearBlazor
             // The line below affected images in a scrollviewer
             // Removing it does not seem to affect anything else
             //if (!InScroller())
-                css += $"overflow:hidden; ";
+            css += $"overflow:hidden; ";
             css += $"white-space: nowrap; ";
 
             return css;
@@ -450,8 +450,21 @@ namespace ClearBlazor
                 else
                     css += $"border-width: {new Thickness(1).ThicknessToCss()}; border-style: solid;";
 
-                //var borderStyle = 
-
+                if (border.BorderStyle == null)
+                    css += "border-style: solid; ";
+                else
+                    switch (border.BorderStyle)
+                    {
+                        case BorderStyle.Solid:
+                            css += "border-style: solid; ";
+                            break;
+                        case BorderStyle.Dotted:
+                            css += "border-style: dotted; ";
+                            break;
+                        case BorderStyle.Dashed:
+                            css += "border-style: dashed; ";
+                            break;
+                }
             }
 
             if (border.CornerRadius != null)
@@ -462,7 +475,7 @@ namespace ClearBlazor
                     css += $"border-radius: {cornerRadius.ThicknessToCss()}; ";
             }
             else
-                css += $"border-radius: {new Thickness(ThemeManager.CurrentTheme.DefaultCornerRadius).ThicknessToCss()}; ";
+                css += $"border-radius: {Thickness.Zero.ThicknessToCss()}; ";
 
             return css;
         }

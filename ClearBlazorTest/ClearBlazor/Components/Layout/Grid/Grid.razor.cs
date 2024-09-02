@@ -4,13 +4,16 @@ using System.Text.RegularExpressions;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Defines a flexible grid area that consists of columns and rows.
+    /// </summary>
     public partial class Grid:ClearComponentBase,IContent,IBackground,IBoxShadow, IBorder, IBackgroundGradient, IDraggable
     {
         [Parameter]
-        public string Rows { get; set; } = null!;
+        public string Rows { get; set; } = "*";
 
         [Parameter]
-        public string Columns { get; set; } = null!;
+        public string Columns { get; set; } = "*";
 
         [Parameter]
         public double RowSpacing { get; set; } = 0;
@@ -22,13 +25,17 @@ namespace ClearBlazor
         public RenderFragment? ChildContent { get; set; } = null;
 
         [Parameter]
-        public string? BorderThickness { get; set; } = null;
+        public string? BorderThickness { get; set; }
 
         [Parameter]
-        public Color? BorderColour { get; set; } = null;
+        public Color? BorderColour { get; set; }
 
         [Parameter]
-        public string? CornerRadius { get; set; } = "0";
+        public BorderStyle? BorderStyle { get; set; }
+
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
 
         [Parameter]
         public int? BoxShadow { get; set; } = null;
