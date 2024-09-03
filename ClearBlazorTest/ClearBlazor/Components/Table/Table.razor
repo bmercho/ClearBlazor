@@ -33,7 +33,13 @@
                     <div style=@GetRowStyle(rowIndex+2, colIndex+1)>
                         @if (@Columns[colIndex] == null || @Columns[colIndex].RowTemplate == null)
                         {
-                            <TextBlock>@Columns[colIndex].Field.Invoke(Items[rowIndex])</TextBlock>
+                            <TextBlock>
+                                @foreach (var line in GetLines(Columns[colIndex].Field.Invoke(Items[rowIndex]).ToString()))
+                                {
+                                    @(line)
+                                    <br />
+                                }
+                            </TextBlock>
                         }
                         else
                         {

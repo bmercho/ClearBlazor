@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClearBlazorTest.Web", "Clea
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClearBlazor", "ClearBlazor\ClearBlazor.csproj", "{890DCD7D-E179-49FF-BE51-41AC750928FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{8DE83EF4-A03A-48DA-9255-8C9428499B33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{890DCD7D-E179-49FF-BE51-41AC750928FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{890DCD7D-E179-49FF-BE51-41AC750928FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{890DCD7D-E179-49FF-BE51-41AC750928FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DE83EF4-A03A-48DA-9255-8C9428499B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DE83EF4-A03A-48DA-9255-8C9428499B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DE83EF4-A03A-48DA-9255-8C9428499B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DE83EF4-A03A-48DA-9255-8C9428499B33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

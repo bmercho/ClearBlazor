@@ -15,9 +15,6 @@ namespace ClearBlazorTest
         public List<ApiComponentInfo>? MethodApi { get; set; }
 
         [Parameter]
-        public List<ApiComponentInfo>? EventApi { get; set; }
-
-        [Parameter]
         public string? BorderThickness { get; set; }
 
         [Parameter]
@@ -40,5 +37,9 @@ namespace ClearBlazorTest
             return css + "display:grid; ";
         }
 
+        private string GetMarkupString(string value)
+        {
+            return new MarkupString(value).ToString();
+        }
     }
 }

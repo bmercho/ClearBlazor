@@ -11,6 +11,14 @@ namespace ClearBlazorTest
         [Parameter]
         public IDocsInfo? DocsInfo { get; set; }
 
+
+        protected override async  Task OnParametersSetAsync()
+        {
+            await base.OnParametersSetAsync();
+            var filename = Directory.GetCurrentDirectory(); 
+        }
+
+
         protected override string UpdateStyle(string css)
         {
             return css + "display:grid; "; 

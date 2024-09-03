@@ -9,14 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Pages\Components\Layout\Grid\Code\GridBorderExampleCode.html" />
-    <None Remove="Pages\Components\Layout\Grid\Code\GridBoxShadowExampleCode.html" />
-    <None Remove="Pages\Components\Layout\Grid\Code\GridColourExampleCode.html" />
-    <None Remove="Pages\Components\Layout\Grid\Code\GridContentAlignmentExampleCode.html" />
-    <None Remove="Pages\Components\Layout\Grid\Code\GridGradientBackgroundExampleCode.html" />
-    <None Remove="Pages\Components\Table\Code\TableSimpleExampleCode.html" />
-  </ItemGroup>
-  <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
@@ -26,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClearBlazor\ClearBlazor.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -169,17 +162,12 @@
 
   <ItemGroup>
     <None Include="Pages\Enums\Alignment\AlignmentDocsInfo.cs" />
+    <None Include="Pages\Interfaces\IColour\ColourDocsInfo.cs" />
     <None Include="Pages\Interfaces\IBackground\BackgroundDocsInfo.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Pages\Components\AppBar\Doco\" />
     <Folder Include="Pages\Components\Avatar\Doco\" />
-    <Folder Include="Pages\Components\Buttons\ButtonGroup\Doco\" />
-    <Folder Include="Pages\Components\Buttons\Buttons\Doco\" />
-    <Folder Include="Pages\Components\Buttons\IconButtons\Doco\" />
-    <Folder Include="Pages\Components\Buttons\ToggleIconButtons\Doco\" />
-    <Folder Include="Pages\Components\ClearComponentBase\Doco\" />
-    <Folder Include="Pages\Components\Forms\AutoForm\Doco\" />
   </ItemGroup>
 </Project>

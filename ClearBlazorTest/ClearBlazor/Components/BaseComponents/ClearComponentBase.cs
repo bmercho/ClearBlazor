@@ -78,7 +78,9 @@ namespace ClearBlazor
         [Parameter]
         public bool? LastChildFill { get; set; } = null!;
 
-
+        /// <summary>
+        /// Event raised when the component is clicked 
+        /// </summary>
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnClicked { get; set; }
 

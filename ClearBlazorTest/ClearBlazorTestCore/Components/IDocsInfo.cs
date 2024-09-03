@@ -11,6 +11,5 @@
         public List<ApiComponentInfo> ParameterApi { get; }
         public List<ApiComponentInfo> PropertyApi { get; }
         public List<ApiComponentInfo> MethodApi { get; }
-        public List<ApiComponentInfo> EventApi { get; }
     }
 }

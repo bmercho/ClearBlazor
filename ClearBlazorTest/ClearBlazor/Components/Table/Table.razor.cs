@@ -69,6 +69,11 @@ namespace ClearBlazor
             }
         }
 
+        private string[] GetLines(string content)
+        {
+            return content.Split('\r');
+        }
+
         private string GetHeaderStyle(int column)
         {
             string justify = "start";

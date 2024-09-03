@@ -6,7 +6,12 @@
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         <StackPanel Spacing=20>
             <TextBlock Typo=Typo.H4>@DocsName</TextBlock>
-            <TextBlock>@DocsDescription</TextBlock>
+            <TextBlock>
+                @foreach(var line in _lines)
+                {
+                    @(line)<br />
+                }
+            </TextBlock>
         </StackPanel>
     </div>
 </CascadingValue>

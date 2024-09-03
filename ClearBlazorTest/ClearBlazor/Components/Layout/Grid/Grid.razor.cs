@@ -31,6 +31,7 @@ namespace ClearBlazor
 
         /// <summary>
         /// Defines rows by a comma delimited string of row heights which are similar to columns. 
+        /// </summary>
         [Parameter]
         public string Rows { get; set; } = "*";
 

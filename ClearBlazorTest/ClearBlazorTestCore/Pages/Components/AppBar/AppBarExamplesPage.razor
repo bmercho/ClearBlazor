@@ -2,10 +2,8 @@
 
 
 @namespace ClearBlazorTest
-<ScrollViewer>
-    <StackPanel Orientation=Orientation.Portrait Padding="20" Spacing="20">
-        <CodeSnippet Code=@(typeof(AppBarSimpleExample).Name)>
-            <AppBarSimpleExample/>
-        </CodeSnippet>
-    </StackPanel>
-</ScrollViewer>
+<DocsExamplesPage DocsInfo=@(new AppBarDocsInfo())>
+    <CodeSnippet Code=@(typeof(AppBarSimpleExample).Name)>
+        <AppBarSimpleExample/>
+    </CodeSnippet>
+</DocsExamplesPage>

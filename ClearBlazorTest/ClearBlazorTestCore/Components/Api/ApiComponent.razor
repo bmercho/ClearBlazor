@@ -5,7 +5,7 @@
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         <StackPanel Spacing=20>
             <TextBlock Typo=Typo.H5 FontWeight=(int)FontWeight.Bold>Parameters</TextBlock>
-            @if (ParameterApi == null)
+            @if (ParameterApi == null || ParameterApi.Count == 0)
             {
                 <TextBlock>There are no parameters defined</TextBlock>
             }
@@ -16,7 +16,7 @@
                     <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
                     <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center>
                         <RowTemplate Context=Item>
-                            <TextBlock>@(new MarkupString(Item.Type))</TextBlock>
+                            <TextBlock>@GetMarkupString(Item.Type)</TextBlock>
                         </RowTemplate>
                     </TableColumn>
                     <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
@@ -25,7 +25,7 @@
             }
             <TextBlock Typo=Typo.H5 FontWeight=(int)FontWeight.Bold>Properties   </TextBlock>
             <TextBlock VerticalAlignment=Alignment.Center Margin="-20,0,0,0">(other than parameters)</TextBlock>
-            @if (PropertyApi == null)
+            @if (PropertyApi == null || PropertyApi.Count == 0)
             {
                 <TextBlock>There are no properties defined</TextBlock>
             }
@@ -40,35 +40,24 @@
                 </Table>
             }
             <TextBlock Typo=Typo.H5 FontWeight=(int)FontWeight.Bold>Methods</TextBlock>
-            @if (MethodApi == null)
+            @if (MethodApi == null || MethodApi.Count == 0)
             {
                 <TextBlock>There are no methods defined</TextBlock>
             }
             else
             {
                 <Table BorderThickness=1 CornerRadius=4 HorizontalGridLines=GridLines.All
-                       Items=@MethodApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
-                    <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
-                    <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
-                    <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
+                       Items=@MethodApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,*" ColumnSpacing=15>
+                    <TableColumn Label="Method signature" TItem=ApiComponentInfo Field=@(x =>x.Name) />
+                    <TableColumn Label="Return type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center>
+                        <RowTemplate Context=Item>
+                            <TextBlock>@GetMarkupString(Item.Type)</TextBlock>
+                        </RowTemplate>
+                    </TableColumn>
                     <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description) />
                 </Table>
             }
             <TextBlock Typo=Typo.H5 FontWeight=(int)FontWeight.Bold>Events</TextBlock>
-            @if (EventApi == null)
-            {
-                <TextBlock>There are no events defined</TextBlock>
-            }
-            else
-            {
-                <Table BorderThickness=1 CornerRadius=4 HorizontalGridLines=GridLines.All
-                       Items=@EventApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=15>
-                    <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
-                    <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
-                    <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) HeaderAlignment=Alignment.Center ContentAlignment=Alignment.Center />
-                    <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description) />
-                </Table>
-            }
         </StackPanel>
     </div>
 </CascadingValue>

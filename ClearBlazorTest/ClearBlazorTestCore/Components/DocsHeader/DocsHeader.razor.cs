@@ -14,6 +14,14 @@ namespace ClearBlazorTest
         [Parameter]
         public string DocsDescription { get; set; } = string.Empty;
 
+        private string[] _lines = Array.Empty<string>();    
+
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            _lines = DocsDescription.Split('\r');   
+        }
         protected override string UpdateStyle(string css)
         {
             return css + "display:grid; ";

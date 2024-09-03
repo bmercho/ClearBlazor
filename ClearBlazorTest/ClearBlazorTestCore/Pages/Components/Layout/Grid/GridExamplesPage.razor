@@ -2,7 +2,7 @@
 @using ClearBlazorTest
 @namespace ClearBlazorTest
 
-<DocsExamplesPage>
+<DocsExamplesPage DocsInfo=@(new GridDocsInfo())>
     <CodeSnippet Title="Basic example" Code=@(typeof(GridSimpleExample).Name)>
         <WrapPanel ColumnSpacing="20" RowSpacing="20">
             <GridSimpleExample />

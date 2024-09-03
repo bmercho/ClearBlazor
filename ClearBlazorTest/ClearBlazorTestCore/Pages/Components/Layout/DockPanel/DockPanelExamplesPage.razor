@@ -1,13 +1,11 @@
 ﻿@page "/DockPanel"
 @using ClearBlazorTest
 
-<ScrollViewer>
-    <StackPanel Padding=20 Spacing="20">
-        <CodeSnippet Code="DockPanelSimpleExample">
-            <Grid Height="700">
-                <DockPanelSimpleExample />
-            </Grid>
-        </CodeSnippet>
-    </StackPanel>
-</ScrollViewer>
+<DocsExamplesPage DocsInfo=@(new AppBarDocsInfo())>
+    <CodeSnippet Code="DockPanelSimpleExample">
+        <Grid Height="700">
+            <DockPanelSimpleExample />
+        </Grid>
+    </CodeSnippet>
+</DocsExamplesPage>
 
