@@ -2,6 +2,9 @@
 {
     public enum DrawerLocation
     {
-        Left,Right,Top,Bottom
+        Left,
+        Right,
+        Top,
+        Bottom
     }
 }

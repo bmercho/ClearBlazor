@@ -2,6 +2,8 @@
 {
     public enum DrawerMode
     {
-        Permanent,Temporary,Responsive
+        Permanent,
+        Temporary,
+        Responsive
     }
 }

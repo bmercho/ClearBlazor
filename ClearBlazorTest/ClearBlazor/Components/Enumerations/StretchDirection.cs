@@ -2,6 +2,8 @@
 {
     public enum StretchDirection
     {
-        UpOnly, DownOnly, Both
+        UpOnly, 
+        DownOnly, 
+        Both
     }
 }

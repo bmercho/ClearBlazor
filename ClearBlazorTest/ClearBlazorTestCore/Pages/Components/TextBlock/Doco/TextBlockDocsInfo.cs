@@ -1,25 +1,22 @@
+/// This file is auto-generated. Do not change manually
+
+using ClearBlazor.Common;
 namespace ClearBlazorTest
 {
-    public record TextBlockDocsInfo:IDocsInfo
+    public record TextBlockDocsInfo:IComponentDocsInfo
     {
-        public string Name => "TextBlock";
-        public string Description => "";
-        public (string, string) ApiLink => ("API", "TextBlockApi");
-        public (string, string) ExamplesLink => ("Examples", "TextBlock");
-        public (string, string) InheritsLink => ("", "");
-        public List<(string, string)> ImplementsLinks => new()
+        public string Name { get; set; } = "TextBlock";
+        public string Description {get; set; } = "";
+        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ExamplesLink {get; set; } = ("Examples", "TextBlock");
+        public (string, string) InheritsLink {get; set; } = ("", "Api");
+        public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
         };
-        public List<ApiComponentInfo> ParameterApi => new List<ApiComponentInfo>
+        public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
         };
-        public List<ApiComponentInfo> PropertyApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> MethodApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> EventApi => new List<ApiComponentInfo>
+        public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
         };
     }

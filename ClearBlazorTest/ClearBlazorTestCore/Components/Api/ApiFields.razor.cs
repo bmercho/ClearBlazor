@@ -1,4 +1,5 @@
 using ClearBlazor;
+using ClearBlazor.Common;
 using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazorTest

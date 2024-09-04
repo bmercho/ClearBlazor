@@ -2,6 +2,9 @@
 {
     public enum TextEditFillMode
     {
-        None, Underline, Filled, Outline
+        None, 
+        Underline, 
+        Filled, 
+        Outline
     }
 }

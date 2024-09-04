@@ -2,6 +2,7 @@
 {
     public enum ValidationErrorLocation
     {
-        Inline, ErrorIcon
+        Inline, 
+        ErrorIcon
     }
 }

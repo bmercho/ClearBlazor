@@ -2,6 +2,9 @@
 {
     public enum MinuteStep
     {
-        One, Five, Ten, Fifteen
+        One, 
+        Five, 
+        Ten, 
+        Fifteen
     }
 }

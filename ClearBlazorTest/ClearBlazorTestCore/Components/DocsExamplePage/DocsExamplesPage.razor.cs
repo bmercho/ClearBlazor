@@ -1,4 +1,5 @@
 using ClearBlazor;
+using ClearBlazor.Common;
 using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazorTest
@@ -9,7 +10,7 @@ namespace ClearBlazorTest
         public RenderFragment? ChildContent { get; set; }
 
         [Parameter]
-        public IDocsInfo? DocsInfo { get; set; }
+        public IComponentDocsInfo? DocsInfo { get; set; }
 
 
         protected override async  Task OnParametersSetAsync()

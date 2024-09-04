@@ -1,25 +1,22 @@
+/// This file is auto-generated. Do not change manually
+
+using ClearBlazor.Common;
 namespace ClearBlazorTest
 {
-    public record SliderDocsInfo:IDocsInfo
+    public record SliderDocsInfo:IComponentDocsInfo
     {
-        public string Name => "Slider";
-        public string Description => "";
-        public (string, string) ApiLink => ("API", "SliderApi");
-        public (string, string) ExamplesLink => ("Examples", "Slider");
-        public (string, string) InheritsLink => ("", "");
-        public List<(string, string)> ImplementsLinks => new()
+        public string Name { get; set; } = "Slider";
+        public string Description {get; set; } = "";
+        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ExamplesLink {get; set; } = ("Examples", "Slider");
+        public (string, string) InheritsLink {get; set; } = ("", "Api");
+        public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
         };
-        public List<ApiComponentInfo> ParameterApi => new List<ApiComponentInfo>
+        public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
         };
-        public List<ApiComponentInfo> PropertyApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> MethodApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> EventApi => new List<ApiComponentInfo>
+        public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
         };
     }

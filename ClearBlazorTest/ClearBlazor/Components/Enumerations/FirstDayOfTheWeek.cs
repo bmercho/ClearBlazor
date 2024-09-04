@@ -2,6 +2,7 @@
 {
     public enum FirstDayOfTheWeek
     {
-        Monday, Sunday
+        Monday, 
+        Sunday
     }
 }

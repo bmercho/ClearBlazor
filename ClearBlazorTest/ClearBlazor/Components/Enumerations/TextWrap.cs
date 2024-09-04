@@ -4,7 +4,6 @@
     {
         Wrap,
         WrapOnNewLines,
-        //WrapWholeWords,
         NoWrap
     }
 }

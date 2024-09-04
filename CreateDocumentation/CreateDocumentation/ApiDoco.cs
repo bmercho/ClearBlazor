@@ -1,24 +1,163 @@
-﻿using ClearBlazorTest;
-using System.Collections.Generic;
-using System.Xml.Linq;
+﻿using ClearBlazor.Common;
 
 namespace CreateDocumentation
 {
     public class ApiDoco
     {
-        public bool Execute(string srcPath)
+        public void Execute(string srcPath)
         {
             var testComponentsFolder = Path.Combine(srcPath, Paths.TestComponentsFolder);
+            var testEnumsFolder = Path.Combine(srcPath, Paths.TestEnumsFolder);
+            var testInterfacesFolder = Path.Combine(srcPath, Paths.TestInterfacesFolder);
             var componentsFolder = Path.Combine(srcPath, Paths.ComponentsFolder);
-            var directoryInfo = new DirectoryInfo(testComponentsFolder);
 
-            //foreach(var entry in Directory.EnumerateFiles(testComponentsFolder, "*.razor", SearchOption.AllDirectories)
-            //.Where(s => s.Contains("ExamplesPage) || s.Contains("ApiPage"));
+            CreateEnumDoco(testEnumsFolder, componentsFolder);
 
-            foreach (var entry in directoryInfo.GetFiles("*ApiPage.razor", SearchOption.AllDirectories))
+            CreateInterfaceDoco(testInterfacesFolder, componentsFolder);
+
+            CreateComponentDoco(testComponentsFolder, componentsFolder);
+
+        }
+
+        private void CreateEnumDoco(string testEnumsFolder, string componentsFolder)
+        {
+
+            var enumerationsFolder = Path.Combine(componentsFolder, "Enumerations");
+            var directoryInfo = new DirectoryInfo(enumerationsFolder);
+            foreach (var entry in directoryInfo.GetFiles("*.cs", SearchOption.TopDirectoryOnly))
             {
-                string testComponentFolder = entry.DirectoryName == null ? string.Empty : entry.DirectoryName;
-                string componentName = entry.Name.Substring(0, entry.Name.LastIndexOf("ApiPage.razor"));
+                OtherDocsInfo info = new();
+                var lines = File.ReadAllLines(entry.FullName);
+                int line = 0;
+                info.Name = FindName(lines, ref line, "public enum", 2);
+                if (info.Name == string.Empty)
+                {
+                    Console.WriteLine("Enumeration name not found");
+                    return;
+                }
+                info.Description = GetAssociatedComment(lines, ref line);
+                line++;
+                while (true)
+                {
+                    ApiFieldInfo api = GetNextEnumApi(lines, ref line, info.Name);
+                    if (api.Name == string.Empty)
+                        break;
+                    info.FieldApi.Add(api);
+                    SkipBlankLines(lines, ref line);
+                    if (lines[line].Trim().StartsWith('}'))
+                        break;
+                }
+
+                string testEnumFolder = Path.Combine(testEnumsFolder, info.Name);
+
+                WriteOtherDocsInfoFile(testEnumFolder, info);
+
+                WriteApiPageFile(testEnumFolder, info.Name);
+            }
+        }
+
+        private void CreateInterfaceDoco(string testInterfacesFolder, string componentsFolder)
+        {
+            var interfacesFolder = Path.Combine(componentsFolder, "Interfaces");
+            var directoryInfo = new DirectoryInfo(interfacesFolder);
+            foreach (var entry in directoryInfo.GetFiles("*.cs", SearchOption.TopDirectoryOnly))
+            {
+                OtherDocsInfo info = new();
+                var lines = File.ReadAllLines(entry.FullName);
+                int line = 0;
+                info.Name = FindName(lines, ref line, "public interface", 2);
+                if (info.Name == string.Empty)
+                {
+                    Console.WriteLine("Enumeration name not found");
+                    return;
+                }
+                info.Description = GetAssociatedComment(lines, ref line);
+                line++;
+                while (true)
+                {
+                    ApiFieldInfo api = GetNextInterfaceApi(lines, ref line);
+                    if (api.Name == string.Empty)
+                        break;
+                    info.FieldApi.Add(api);
+                    SkipBlankLines(lines, ref line);
+                    if (lines[line].Trim().StartsWith('}'))
+                        break;
+                }
+
+                string testEnumFolder = Path.Combine(testInterfacesFolder, info.Name);
+
+                WriteOtherDocsInfoFile(testEnumFolder, info);
+
+                WriteApiPageFile(testEnumFolder, info.Name);
+            }
+
+        }
+
+        private string FindName(string[] lines, ref int line, string textBeforeName, int tokenNumber)
+        {
+            for (int l = line; l < lines.Count(); l++)
+            {
+                if (lines[l].Trim().StartsWith(textBeforeName))
+                {
+                    var values = lines[l].Trim().Split(" ");
+                    line = l;
+                    return values[tokenNumber];
+                }
+            }
+            return string.Empty;
+        }
+
+        private string GetAssociatedComment(string[] lines, ref int line)
+        {
+            line--;
+            while (lines[line].Trim().StartsWith("///"))
+                line--;
+            if (lines[++line].Trim().StartsWith("///"))
+                return FindNextComment(lines, ref line);
+            return string.Empty;
+        }
+
+        private ApiFieldInfo GetNextEnumApi(string[] lines, ref int line, string enumName)
+        {
+            while (lines[line].Trim().StartsWith("///") ||
+                   lines[line].Trim().StartsWith("{") ||
+                   lines[line].Trim() == string.Empty)
+                line++;
+
+             var name = lines[line].Trim().Trim(',');
+             var comment = GetAssociatedComment(lines, ref line);
+             line++;
+             return new ApiFieldInfo(name, enumName, comment);
+        }
+
+        private ApiFieldInfo GetNextInterfaceApi(string[] lines, ref int line)
+        {
+            while (lines[line].Trim().StartsWith("///") ||
+                   lines[line].Trim().StartsWith("{") ||
+                   lines[line].Trim() == string.Empty)
+                line++;
+
+            var values = lines[line].Trim().Split(" ");
+            var name = values[2];
+            var type = values[1];
+            var comment = GetAssociatedComment(lines, ref line);
+            line++;
+            return new ApiFieldInfo(name, type, comment);
+        }
+
+        private void SkipBlankLines(string[] lines, ref int line)
+        {
+            while (lines[line].Trim() == string.Empty)
+                line++;
+        }
+
+        private void CreateComponentDoco(string testComponentsFolder, string componentsFolder)
+        {
+            var directoryInfo = new DirectoryInfo(testComponentsFolder);
+            foreach (var entry in GetValidFolders(testComponentsFolder))
+            {
+                string testComponentFolder = entry.FullName;
+                string componentName = entry.Name;
 
                 string? fileName = GetComponentFileName(componentsFolder, componentName);
 
@@ -36,8 +175,31 @@ namespace CreateDocumentation
 
                 WriteDocsInfoFile(testComponentFolder, docInfo);
 
+                WriteApiPageFile(testComponentFolder, componentName);
             }
-            return true;
+        }
+
+        private List<DirectoryInfo> GetValidFolders(string testComponentsFolder)
+        {
+            List<DirectoryInfo> folders = new();
+
+            var directoryInfo = new DirectoryInfo(testComponentsFolder);
+            foreach (var entry in directoryInfo.GetDirectories("*", SearchOption.AllDirectories))
+            {
+                if (entry.Name == "Code" || entry.Name == "Doco" || entry.Name == "Examples" || entry.Name == "Logs")
+                    continue;
+
+                var dirs = entry.GetDirectories("*", SearchOption.TopDirectoryOnly).Select(d => d.Name).ToList();
+                dirs.Remove("Code");
+                dirs.Remove("Doco");
+                dirs.Remove("Examples");
+
+                if (dirs.Count > 0)
+                    continue;
+
+                folders.Add(entry);
+            }
+            return folders;
         }
 
         private string? GetComponentFileName(string componentsFolder, string componentName)
@@ -59,9 +221,9 @@ namespace CreateDocumentation
             }
         }
 
-        private DocoInfo GetComponentDoco(string componentName, string fileName, bool hasExamples)
+        private IComponentDocsInfo GetComponentDoco(string componentName, string fileName, bool hasExamples)
         {
-            DocoInfo info = new DocoInfo();
+            IComponentDocsInfo info = new ComponentDocsInfo();
             info.Name = componentName;
             info.ApiLink = ("API", $"{componentName}Api");
             if (hasExamples)
@@ -103,8 +265,8 @@ namespace CreateDocumentation
                             else
                                 def = lines[line].Substring(index + 1).Trim().Trim(';').Trim('"');
                         var typ = values[1];
-                        typ.Replace("<", @"\<");
-                        typ.Replace(">", @"\>");
+                        typ.Replace("<", "&lt");
+                        typ.Replace(">", "&gt");
                         info.ParameterApi.Add(new ApiComponentInfo(values[2], typ, def, comment));
                     }
                     else if (lines[line].Trim().StartsWith("public") &&
@@ -170,42 +332,39 @@ namespace CreateDocumentation
             return comment;
         }
 
-        private void WriteDocsInfoFile(string testComponentFolder, DocoInfo docInfo)
+        private void WriteDocsInfoFile(string testComponentFolder, IComponentDocsInfo docInfo)
         {
             var folder = Path.Combine(testComponentFolder, Paths.DocsFolder);
             var docFileName = folder + @$"\{docInfo.Name}DocsInfo.cs";
             Directory.CreateDirectory(folder);
 
             var lines = new List<string>();
+            lines.Add("/// This file is auto-generated. Do not change manually");
+            lines.Add("");
+            lines.Add("using ClearBlazor.Common;");
             lines.Add("namespace ClearBlazorTest");
             lines.Add("{");
-            lines.Add($"    public record {docInfo.Name}DocsInfo:IDocsInfo");
+            lines.Add($"    public record {docInfo.Name}DocsInfo:IComponentDocsInfo");
             lines.Add("    {");
-            lines.Add($"        public string Name => \"{docInfo.Name}\";");
-            lines.Add($"        public string Description => \"{docInfo.Description}\";");
-            lines.Add($"        public (string, string) ApiLink => (\"{docInfo.ApiLink.Item1}\", \"{docInfo.ApiLink.Item2}\");");
-            lines.Add($"        public (string, string) ExamplesLink => (\"{docInfo.ExamplesLink.Item1}\", \"{docInfo.ExamplesLink.Item2}\");");
-            lines.Add($"        public (string, string) InheritsLink => (\"{docInfo.InheritsLink.Item1}\", \"{docInfo.InheritsLink.Item2}\");");
+            lines.Add("        public string Name { get; set; } = " + $"\"{docInfo.Name}\";");
+            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description}\";");
+            lines.Add("        public (string, string) ApiLink  {get; set; } =  (\"{docInfo.ApiLink.Item1}\", \"{docInfo.ApiLink.Item2}\");");
+            lines.Add("        public (string, string) ExamplesLink {get; set; } = " + $"(\"{docInfo.ExamplesLink.Item1}\", \"{docInfo.ExamplesLink.Item2}\");");
+            lines.Add("        public (string, string) InheritsLink {get; set; } = " + $"(\"{docInfo.InheritsLink.Item1}\", \"{docInfo.InheritsLink.Item2}\");");
 
-            lines.Add($"        public List<(string, string)> ImplementsLinks => new()");
+            lines.Add("        public List<(string, string)> ImplementsLinks {get; set; } = new()");
             lines.Add("        {");
             foreach (var link in docInfo.ImplementsLinks)
-                lines.Add($"        (\"{link.Item1}\", \"{link.Item2}\"),");
+                lines.Add($"            (\"{link.Item1}\", \"{link.Item2}\"),");
             lines.Add("        };");
 
-            lines.Add("        public List<ApiComponentInfo> ParameterApi => new List<ApiComponentInfo>");
+            lines.Add("        public List<ApiComponentInfo> ParameterApi {get; set; } = " + $"new List<ApiComponentInfo>");
             lines.Add("        {");
             foreach (var info in docInfo.ParameterApi)
                 lines.Add($"            new ApiComponentInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Default}\", \"{info.Description}\"),");
             lines.Add("        };");
 
-            lines.Add("        public List<ApiComponentInfo> PropertyApi => new List<ApiComponentInfo>");
-            lines.Add("        {");
-            foreach (var info in docInfo.PropertyApi)
-                lines.Add($"            new ApiComponentInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Default}\", \"{info.Description}\"),");
-            lines.Add("        };");
-
-            lines.Add("        public List<ApiComponentInfo> MethodApi => new List<ApiComponentInfo>");
+            lines.Add("        public List<ApiComponentInfo> MethodApi {get; set; } = " + $" new List<ApiComponentInfo>");
             lines.Add("        {");
             foreach (var info in docInfo.MethodApi)
                 lines.Add($"            new ApiComponentInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Default}\", \"{info.Description}\"),");
@@ -216,27 +375,47 @@ namespace CreateDocumentation
 
             File.WriteAllLines(docFileName, lines);
         }
-    }
 
+        private void WriteOtherDocsInfoFile(string testFolder, IOtherDocsInfo docInfo)
+        {
+            var docFileName = testFolder + @$"\{docInfo.Name}DocsInfo.cs";
+            Directory.CreateDirectory(testFolder);
 
-    public record DocoInfo
-    {
-        public string Name { get; set; } = string.Empty;
+            var lines = new List<string>();
+            lines.Add("/// This file is auto-generated. Do not change manually");
+            lines.Add("");
+            lines.Add("using ClearBlazor.Common;");
+            lines.Add("namespace ClearBlazorTest");
+            lines.Add("{");
+            lines.Add($"    public record {docInfo.Name}DocsInfo:IOtherDocsInfo");
+            lines.Add("    {");
+            lines.Add("        public string Name { get; set; } = " + $"\"{docInfo.Name}\";");
+            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description}\";");
+            lines.Add("        public List<ApiFieldInfo> FieldApi {get; set; } = " + $"new List<ApiFieldInfo>");
+            lines.Add("        {");
+            foreach (var info in docInfo.FieldApi)
+                lines.Add($"            new ApiFieldInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Description}\"),");
+            lines.Add("        };");
+            lines.Add("    }");
+            lines.Add("}");
 
-        public string Description { get; set; } = string.Empty;
+            File.WriteAllLines(docFileName, lines);
+        }
 
-        public (string, string) ApiLink { get; set; }
+        private void WriteApiPageFile(string testFolder, string componentName)
+        {
+            Directory.CreateDirectory(testFolder);
 
-        public (string, string) ExamplesLink { get; set; }
+            var docFileName = testFolder + @$"\{componentName}ApiPage.razor";
 
-        public (string, string) InheritsLink { get; set; }
+            var lines = new List<string>();
+            lines.Add("/// This file is auto-generated. Do not change manually");
+            lines.Add("");
+            lines.Add($"@page \"/{componentName}Api\"");
+            lines.Add("@using ClearBlazorTest");
+            lines.Add($"<DocsApiPage DocsInfo=@(new {componentName}DocsInfo())/>");
 
-        public List<(string, string)> ImplementsLinks { get; set; } = new();
-
-        public List<ApiComponentInfo> ParameterApi { get; set; } = new();
-
-        public List<ApiComponentInfo> PropertyApi { get; set; } = new();
-        public List<ApiComponentInfo> MethodApi { get; set; } = new();
-        public List<ApiComponentInfo> EventApi { get; set; } = new();
+            File.WriteAllLines(docFileName, lines);
+        }
     }
 }

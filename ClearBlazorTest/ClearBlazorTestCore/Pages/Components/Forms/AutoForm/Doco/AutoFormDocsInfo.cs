@@ -1,25 +1,22 @@
+/// This file is auto-generated. Do not change manually
+
+using ClearBlazor.Common;
 namespace ClearBlazorTest
 {
-    public record AutoFormDocsInfo:IDocsInfo
+    public record AutoFormDocsInfo:IComponentDocsInfo
     {
-        public string Name => "AutoForm";
-        public string Description => "";
-        public (string, string) ApiLink => ("API", "AutoFormApi");
-        public (string, string) ExamplesLink => ("Examples", "AutoForm");
-        public (string, string) InheritsLink => ("", "");
-        public List<(string, string)> ImplementsLinks => new()
+        public string Name { get; set; } = "AutoForm";
+        public string Description {get; set; } = "";
+        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ExamplesLink {get; set; } = ("Examples", "AutoForm");
+        public (string, string) InheritsLink {get; set; } = ("", "Api");
+        public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
         };
-        public List<ApiComponentInfo> ParameterApi => new List<ApiComponentInfo>
+        public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
         };
-        public List<ApiComponentInfo> PropertyApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> MethodApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> EventApi => new List<ApiComponentInfo>
+        public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
         };
     }

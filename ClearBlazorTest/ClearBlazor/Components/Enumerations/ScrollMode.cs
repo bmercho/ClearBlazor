@@ -2,6 +2,8 @@
 {
     public enum ScrollMode
     {
-        Disabled, Enabled, Auto
+        Disabled, 
+        Enabled, 
+        Auto
     }
 }

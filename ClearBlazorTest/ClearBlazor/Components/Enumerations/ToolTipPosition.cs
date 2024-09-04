@@ -2,6 +2,9 @@
 {
     public enum ToolTipPosition
     {
-        Bottom,Top,Left,Right
+        Bottom,
+        Top,
+        Left,
+        Right
     }
 }

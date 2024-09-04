@@ -1,24 +1,24 @@
+/// This file is auto-generated. Do not change manually
+
+using ClearBlazor.Common;
 namespace ClearBlazorTest
 {
-    public record AppBarDocsInfo:IDocsInfo
+    public record AppBarDocsInfo:IComponentDocsInfo
     {
-        public string Name => "AppBar";
-        public string Description => "Represents a bar used to display actions, branding, navigation and screen titles.\r";
-        public (string, string) ApiLink => ("API", "AppBarApi");
-        public (string, string) ExamplesLink => ("Examples", "AppBar");
-        public (string, string) InheritsLink => ("DockPanel", "DockPanelApi");
-        public List<(string, string)> ImplementsLinks => new()
+        public string Name { get; set; } = "AppBar";
+        public string Description {get; set; } = "Represents a bar used to display actions, branding, navigation and screen titles.\r";
+        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ExamplesLink {get; set; } = ("Examples", "AppBar");
+        public (string, string) InheritsLink {get; set; } = ("DockPanel", "DockPanelApi");
+        public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
-        ("IColour", "IColour"),
+            ("IColour", "IColour"),
         };
-        public List<ApiComponentInfo> ParameterApi => new List<ApiComponentInfo>
+        public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
             new ApiComponentInfo("Colour", "Color?", "null", "The foreground color of the AppBar\r"),
         };
-        public List<ApiComponentInfo> PropertyApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> MethodApi => new List<ApiComponentInfo>
+        public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
             new ApiComponentInfo("DoSomething()", "void", "", "Do some thing\r"),
         };

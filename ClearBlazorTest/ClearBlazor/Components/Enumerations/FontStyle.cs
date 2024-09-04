@@ -2,6 +2,8 @@
 {
     public enum FontStyle
     {
-        Normal, Italic, Oblique
+        Normal, 
+        Italic, 
+        Oblique
     }
 }

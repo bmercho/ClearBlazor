@@ -1,4 +1,5 @@
 using ClearBlazor;
+using ClearBlazor.Common;
 using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazorTest
@@ -6,7 +7,7 @@ namespace ClearBlazorTest
     public partial class DocsApiPage: ClearComponentBase
     {
         [Parameter]
-        public IDocsInfo? DocsInfo { get; set; }
+        public IComponentDocsInfo? DocsInfo { get; set; }
 
         protected override string UpdateStyle(string css)
         {

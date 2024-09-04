@@ -4,7 +4,6 @@
     {
         private static void Main(string[] args)
         {
-            bool success = false;
             var srcPath = Paths.SrcPath;
             if (srcPath == null)
             {
@@ -12,17 +11,13 @@
                 return ;
             }
 
-
-            //var success = new ExamplesMarkup().Execute(srcPath);
+            //new ExamplesMarkup().Execute(srcPath);
 
             Console.WriteLine("Creating Examples markup completed.");
 
-            success = new ApiDoco().Execute(srcPath);
+            new ApiDoco().Execute(srcPath);
 
-            if (success) 
-                Console.WriteLine("Creating API Documentation completed.");
-            else
-                Console.WriteLine("Creating API Documentation had errors.");
+            Console.WriteLine("Creating API Documentation completed.");
         }
     }
 }

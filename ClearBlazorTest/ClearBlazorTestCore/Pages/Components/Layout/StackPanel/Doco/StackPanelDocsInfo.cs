@@ -1,25 +1,26 @@
+/// This file is auto-generated. Do not change manually
+
+using ClearBlazor.Common;
 namespace ClearBlazorTest
 {
-    public record StackPanelDocsInfo:IDocsInfo
+    public record StackPanelDocsInfo:IComponentDocsInfo
     {
-        public string Name => "StackPanel";
-        public string Description => "";
-        public (string, string) ApiLink => ("API", "StackPanelApi");
-        public (string, string) ExamplesLink => ("Examples", "StackPanel");
-        public (string, string) InheritsLink => ("", "");
-        public List<(string, string)> ImplementsLinks => new()
+        public string Name { get; set; } = "StackPanel";
+        public string Description {get; set; } = "";
+        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ExamplesLink {get; set; } = ("Examples", "StackPanel");
+        public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");
+        public List<(string, string)> ImplementsLinks {get; set; } = new()
+        {
+            (" IContent", " IContent"),
+            (" IBackground", " IBackground"),
+            (" IBorder", " IBorder"),
+            (" IBoxShadow", " IBoxShadow"),
+        };
+        public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
         };
-        public List<ApiComponentInfo> ParameterApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> PropertyApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> MethodApi => new List<ApiComponentInfo>
-        {
-        };
-        public List<ApiComponentInfo> EventApi => new List<ApiComponentInfo>
+        public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
         };
     }

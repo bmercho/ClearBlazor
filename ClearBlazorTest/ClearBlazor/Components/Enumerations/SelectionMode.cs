@@ -2,6 +2,8 @@
 {
     public enum SelectionMode
     {
-        None, Single, Multi
+        None, 
+        Single, 
+        Multi
     }
 }

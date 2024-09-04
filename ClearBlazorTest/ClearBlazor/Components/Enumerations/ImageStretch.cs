@@ -2,6 +2,9 @@
 {
     public enum ImageStretch
     {
-        None, Fill, Uniform, UniformToFill
+        None, 
+        Fill, 
+        Uniform, 
+        UniformToFill
     }
 }

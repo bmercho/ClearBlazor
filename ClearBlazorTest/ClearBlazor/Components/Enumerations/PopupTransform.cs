@@ -2,8 +2,14 @@
 {
     public enum PopupTransform
     {
-        TopLeft,TopCentre,TopRight,
-        CentreLeft, CentreCentre, CentreRight,
-        BottomLeft, BottomCentre, BottomRight
+        TopLeft,
+        TopCentre,
+        TopRight,
+        CentreLeft, 
+        CentreCentre, 
+        CentreRight,
+        BottomLeft, 
+        BottomCentre, 
+        BottomRight
     }
 }

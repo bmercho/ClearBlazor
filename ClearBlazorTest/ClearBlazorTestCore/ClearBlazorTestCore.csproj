@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <EmbeddedResource Include="Pages\Components\Layout\Canvas\Code\CanvasSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Layout\DrawingCanvas\Code\CanvasSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Forms\AutoForm\Code\AutoFormSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Inputs\DatePickerInput\Code\DatePickerInputSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Inputs\TimePickerInput\Code\TimePickerInputSimpleExampleCode.html" />
@@ -55,27 +55,27 @@
     <EmbeddedResource Include="Pages\Components\Buttons\ButtonGroup\Code\ButtonGroupHorizontalExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Buttons\ButtonGroup\Code\ButtonGroupIconsExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Buttons\ButtonGroup\Code\ButtonGroupVerticalExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\Buttons\Code\ButtonsFilledExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\Buttons\Code\ButtonsIconExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\Buttons\Code\ButtonsNoShadowExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\Buttons\Code\ButtonsOutlineExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\Buttons\Code\ButtonsSizeExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\Buttons\Code\ButtonsTextExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\Buttons\Code\ButtonsToggleExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\IconButtons\Code\IconButtonsSimpleExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\IconButtons\Code\IconButtonsSquareShapeExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\IconButtons\Code\IconButtonsToggleExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\IconButtons\Code\IconButtonsVariantExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Buttons\ToggleIconButtons\Code\ToggleIconButtonsExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsFilledExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsIconExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsNoShadowExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsOutlineExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsSizeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsTextExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsToggleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsSquareShapeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsToggleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsVariantExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Buttons\ToggleIconButton\Code\ToggleIconButtonsExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Layout\DockPanel\Code\DockPanelSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Layout\Drawer\Code\DrawerSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridRowsColsExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridSimpleExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Icon\Code\IconColorExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Icon\Code\IconCustomExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Icon\Code\IconSimpleExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Icon\Code\IconSizeExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Icon\Code\IconStyleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconColorExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconCustomExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconSizeExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconStyleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Image\Code\ImagePeopleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Image\Code\ImageSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioColourExampleCode.html" />
@@ -141,7 +141,7 @@
     <EmbeddedResource Include="Pages\Components\Popup\Code\PopupVerticalFlipExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Layout\StackPanel\Code\StackPanelHorizontalExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Layout\StackPanel\Code\StackPanelVerticalExampleCode.html" />
-    <EmbeddedResource Include="Pages\Components\Layout\TabPanel\Code\TabPanelSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Layout\Tabs\Code\TabPanelSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Table\Code\TableSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockAlignmentExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockClickableExampleCode.html" />
@@ -161,13 +161,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Pages\Enums\Alignment\AlignmentDocsInfo.cs" />
-    <None Include="Pages\Interfaces\IColour\ColourDocsInfo.cs" />
-    <None Include="Pages\Interfaces\IBackground\BackgroundDocsInfo.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Pages\Components\AppBar\Doco\" />
     <Folder Include="Pages\Components\Avatar\Doco\" />
+    <Folder Include="Pages\Enums\Alignment\" />
+    <Folder Include="Pages\Interfaces\IBackground\" />
+    <Folder Include="Pages\Interfaces\IColour\" />
   </ItemGroup>
 </Project>

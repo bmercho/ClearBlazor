@@ -7,6 +7,8 @@ namespace CreateDocumentation
     {
         public const string SolutionFolder = "ClearBlazor";
         public const string TestComponentsFolder = @"ClearBlazorTest\ClearBlazorTestCore\Pages\Components";
+        public const string TestEnumsFolder = @"ClearBlazorTest\ClearBlazorTestCore\Pages\Enums";
+        public const string TestInterfacesFolder = @"ClearBlazorTest\ClearBlazorTestCore\Pages\Interfaces";
         public const string ComponentsFolder = @"ClearBlazorTest\ClearBlazor\Components";
         public const string InterfacesFolder = @"ClearBlazorTest\ClearBlazor\Components\Interfaces";
         public const string EnumerationsFolder = "ClearBlazorTest\\ClearBlazor.Components.Enumerations";

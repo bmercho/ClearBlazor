@@ -5,6 +5,5 @@
         Uppercase,
         Lowercase,
         Capitalize
-
     }
 }

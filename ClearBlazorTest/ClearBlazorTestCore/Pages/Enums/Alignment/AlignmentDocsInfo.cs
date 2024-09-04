@@ -1,19 +1,18 @@
-﻿namespace ClearBlazorTest
+/// This file is auto-generated. Do not change manually
+
+using ClearBlazor.Common;
+namespace ClearBlazorTest
 {
-    public record AlignmentDocsInfo:IDocsEnumInfo
+    public record AlignmentDocsInfo:IOtherDocsInfo
     {
-        public string Name => "Alignment";
-
-        public string Description => "The alignment of a component within its parent container.";
-
-        public List<ApiFieldInfo> FieldApi => new List<ApiFieldInfo>
+        public string Name { get; set; } = "Alignment";
+        public string Description {get; set; } = "Defines the alignment of content within its available space\r";
+        public List<ApiFieldInfo> FieldApi {get; set; } = new List<ApiFieldInfo>
         {
-            new ApiFieldInfo("Start", "Alignment", "Aligns the component to the top or left within the parent's container."),
-            new ApiFieldInfo("End", "Alignment", "Aligns the component to the bottom or right within the parent's container."),
-            new ApiFieldInfo("Center", "Alignment", "Aligns the component to the center within the parent's container" +
-                             " in the direction of the alignment."),
-            new ApiFieldInfo("Stretch", "Alignment", "Aligns the component to fill the parent's container in the direction" +
-                             " of the alignment. Explicit Width and Height values take precedence.")
+            new ApiFieldInfo("Stretch", "Alignment", "The content is stretched using all available space\r"),
+            new ApiFieldInfo("Start", "Alignment", "The content is aligned to the start of the available space\r"),
+            new ApiFieldInfo("Center", "Alignment", "The content is centered in the available space\r"),
+            new ApiFieldInfo("End", "Alignment", "The content is aligned to the end of the available space\r"),
         };
     }
 }

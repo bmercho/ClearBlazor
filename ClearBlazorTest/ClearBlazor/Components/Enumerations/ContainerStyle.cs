@@ -2,6 +2,8 @@
 {
     public enum ContainerStyle
     {
-        None, Filled, Outline
+        None, 
+        Filled, 
+        Outline
     }
 }

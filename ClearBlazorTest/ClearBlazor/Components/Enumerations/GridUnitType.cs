@@ -2,6 +2,8 @@
 {
     public enum GridUnitType
     {
-        Absolute, Star, Auto
+        Absolute, 
+        Star, 
+        Auto
     }
 }
