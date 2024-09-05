@@ -7,14 +7,23 @@ namespace ClearBlazorTest
     {
         public string Name { get; set; } = "CheckBox";
         public string Description {get; set; } = "";
-        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ApiLink  {get; set; } = ("API", "CheckBoxApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "CheckBox");
-        public (string, string) InheritsLink {get; set; } = ("", "Api");
+        public (string, string) InheritsLink {get; set; } = ("<TItem> : InputBase", "<TItem> : InputBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
+            ("IBackground", "IBackgroundApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("Checked", "TItem?", "null", ""),
+            new ApiComponentInfo("CheckedChanged", "EventCallback<TItem>", "", ""),
+            new ApiComponentInfo("LabelLocation", "<a href=LabelLocationApi>LabelLocation</a>", "LabelLocation.End", ""),
+            new ApiComponentInfo("CheckedIcon", "string", "Icons.Material.Filled.CheckBox", ""),
+            new ApiComponentInfo("UncheckedIcon", "string", "Icons.Material.Filled.CheckBoxOutlineBlank", ""),
+            new ApiComponentInfo("IndeterminateIcon", "string", "Icons.Material.Filled.IndeterminateCheckBox", ""),
+            new ApiComponentInfo("TriState", "bool", "false", ""),
+            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

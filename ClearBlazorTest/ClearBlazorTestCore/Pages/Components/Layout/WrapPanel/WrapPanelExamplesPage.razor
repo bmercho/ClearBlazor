@@ -1,20 +1,17 @@
 ﻿@page "/WrapPanel"
 @using ClearBlazorTest
 
-<ScrollViewer>
-    <StackPanel Padding=20 Spacing="20">
-        <CodeSnippet Code="WrapPanelRowExample">
-            <WrapPanelRowExample />
-        </CodeSnippet>
-        <CodeSnippet Code="WrapPanelColumnExample">
-            <WrapPanelColumnExample />
-        </CodeSnippet>
-        <CodeSnippet Code="WrapPanelRowReverseExample">
-            <WrapPanelRowReverseExample />
-        </CodeSnippet>
-        <CodeSnippet Code="WrapPanelColumnReverseExample">
-            <WrapPanelColumnReverseExample />
-        </CodeSnippet>
-    </StackPanel>
-</ScrollViewer>
-
+<DocsExamplesPage DocsInfo=@(new WrapPanelDocsInfo())>
+    <CodeSnippet Code="WrapPanelRowExample">
+        <WrapPanelRowExample />
+    </CodeSnippet>
+    <CodeSnippet Code="WrapPanelColumnExample">
+        <WrapPanelColumnExample />
+    </CodeSnippet>
+    <CodeSnippet Code="WrapPanelRowReverseExample">
+        <WrapPanelRowReverseExample />
+    </CodeSnippet>
+    <CodeSnippet Code="WrapPanelColumnReverseExample">
+        <WrapPanelColumnReverseExample />
+    </CodeSnippet>
+</DocsExamplesPage>

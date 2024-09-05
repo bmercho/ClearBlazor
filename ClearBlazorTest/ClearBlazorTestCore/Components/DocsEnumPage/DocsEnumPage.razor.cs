@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazorTest
 {
-    public partial class DocsEnum:ClearComponentBase
+    public partial class DocsEnumPage:ClearComponentBase
     {
         [Parameter]
-        public IEnumerationDocsInfo? DocsInfo { get; set; }
+        public IOtherDocsInfo? DocsInfo { get; set; }
 
         protected override string UpdateStyle(string css)
         {

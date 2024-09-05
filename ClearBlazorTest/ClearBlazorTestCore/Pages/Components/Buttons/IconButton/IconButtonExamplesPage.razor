@@ -1,21 +1,19 @@
 ﻿@page "/IconButton"
 @using ClearBlazorTest
-<ScrollViewer>
-    <StackPanel Padding="20" Spacing="20">
-        <CodeSnippet Code="IconButtonsSimpleExample" Title="Basic">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <IconButtonsSimpleExample/>
-            </StackPanel>
-        </CodeSnippet>
-        <CodeSnippet Code="IconButtonsVariantExample" Title="Variant">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <IconButtonsVariantExample />
-            </StackPanel>
-        </CodeSnippet>
-        <CodeSnippet Code="IconButtonsSquareShapeExample" Title="Shape">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <IconButtonsSquareShapeExample />
-            </StackPanel>
-        </CodeSnippet>
-    </StackPanel>
-</ScrollViewer>
+<DocsExamplesPage DocsInfo=@(new IconButtonDocsInfo())>
+    <CodeSnippet Code="IconButtonsSimpleExample" Title="Basic">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <IconButtonsSimpleExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code="IconButtonsVariantExample" Title="Variant">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <IconButtonsVariantExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code="IconButtonsSquareShapeExample" Title="Shape">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <IconButtonsSquareShapeExample />
+        </StackPanel>
+    </CodeSnippet>
+</DocsExamplesPage>

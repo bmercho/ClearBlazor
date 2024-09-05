@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <!--<PropertyGroup>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>-->
+
   <ItemGroup>
     <Compile Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor.cs" />
   </ItemGroup>

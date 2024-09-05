@@ -14,6 +14,8 @@ namespace ClearBlazorTest
             return css + "display:grid; ";
         }
 
+        private readonly List<string> InheritExclusions = new List<string>() { "ComponentBase" };
+
         private MarkupString GetExamplesLink()
         {
             return new MarkupString($"<a href={(DocsInfo == null ? string.Empty : DocsInfo.ExamplesLink.Item2)}>" +
@@ -25,8 +27,11 @@ namespace ClearBlazorTest
             if (DocsInfo == null || DocsInfo?.InheritsLink.Item1 == string.Empty)
                 return new MarkupString(string.Empty);
 
-            return new MarkupString($"Inherits from: <a href={(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item2)}>" +
-                                    $" {(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item1)}</a>");
+            if (InheritExclusions.Contains(DocsInfo!.InheritsLink.Item1))
+                return new MarkupString($"Inherits from: {DocsInfo!.InheritsLink.Item1}");
+            else
+                return new MarkupString($"Inherits from: <a href={(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item2)}>" +
+                                        $" {(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item1)}</a>");
         }
 
         private MarkupString GetImplementsLink()

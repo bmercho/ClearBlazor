@@ -1,41 +1,39 @@
 ﻿@page "/Button"
 @using ClearBlazorTest
-<ScrollViewer>
-    <StackPanel Padding="20" Spacing="20">
-         <CodeSnippet Code="ButtonsFilledExample">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <ButtonsFilledExample/>
-            </StackPanel>
-        </CodeSnippet>
-        <CodeSnippet Code="ButtonsNoShadowExample">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <ButtonsNoShadowExample />
-            </StackPanel>
-        </CodeSnippet>
-        <CodeSnippet Code="ButtonsOutlineExample">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <ButtonsOutlineExample />
-            </StackPanel>
-        </CodeSnippet>
-        <CodeSnippet Code="ButtonsTextExample">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <ButtonsTextExample />
-            </StackPanel>
-        </CodeSnippet>
-        <CodeSnippet Code="ButtonsSizeExample">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <ButtonsSizeExample />
-            </StackPanel>
-        </CodeSnippet>
-         <CodeSnippet Code="ButtonsIconExample">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <ButtonsIconExample />
-            </StackPanel>
-        </CodeSnippet>
-        <CodeSnippet Code="ButtonsToggleExample">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-                <ButtonsToggleExample />
-            </StackPanel>
-        </CodeSnippet>
-    </StackPanel>
-</ScrollViewer>
+<DocsExamplesPage DocsInfo=@(new ButtonDocsInfo())>
+    <CodeSnippet Code="ButtonsFilledExample">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <ButtonsFilledExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code="ButtonsNoShadowExample">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <ButtonsNoShadowExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code="ButtonsOutlineExample">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <ButtonsOutlineExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code="ButtonsTextExample">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <ButtonsTextExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code="ButtonsSizeExample">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <ButtonsSizeExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code="ButtonsIconExample">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <ButtonsIconExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code="ButtonsToggleExample">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+            <ButtonsToggleExample />
+        </StackPanel>
+    </CodeSnippet>
+</DocsExamplesPage>

@@ -1,15 +1,12 @@
 ﻿@page "/TimePicker"
 @using ClearBlazorTest
-<ScrollViewer>
-    <StackPanel Orientation="Orientation.Portrait">
-        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Time Picker</TextBlock>
-        <StackPanel Padding="5" Spacing="30">
-            <CodeSnippet Title="Basic" Description="This is an example of basic usage" Code=@(typeof(TimePickerSimpleExample).Name)>
-                <StackPanel Margin="5" Spacing="20" Orientation=Orientation.Portrait>
-                    <TimePickerSimpleExample />
-                </StackPanel>
-            </CodeSnippet>
-        </StackPanel>
-     </StackPanel>
-</ScrollViewer>
-
+<DocsExamplesPage DocsInfo=@(new TimePickerDocsInfo())>
+    <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Time Picker</TextBlock>
+    <StackPanel Padding="5" Spacing="30">
+        <CodeSnippet Title="Basic" Description="This is an example of basic usage" Code=@(typeof(TimePickerSimpleExample).Name)>
+            <StackPanel Margin="5" Spacing="20" Orientation=Orientation.Portrait>
+                <TimePickerSimpleExample />
+            </StackPanel>
+        </CodeSnippet>
+    </StackPanel>
+</DocsExamplesPage>

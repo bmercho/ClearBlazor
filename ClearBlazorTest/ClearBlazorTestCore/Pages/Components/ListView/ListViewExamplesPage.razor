@@ -2,14 +2,11 @@
 
 @using ClearBlazorTest
 
-<ScrollViewer>
-    <StackPanel Padding="20" Spacing="20">
-        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">ListView</TextBlock>
-        <CodeSnippet Title="ListView (100000 items)"
-                     Code=@(typeof(ListViewExample).Name)>
-            <ListViewExample />
-        </CodeSnippet>
-    </StackPanel>
-</ScrollViewer>
-
+<DocsExamplesPage DocsInfo=@(new ListViewDocsInfo())>
+    <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">ListView</TextBlock>
+    <CodeSnippet Title="ListView (100000 items)"
+                 Code=@(typeof(ListViewExample).Name)>
+        <ListViewExample />
+    </CodeSnippet>
+</DocsExamplesPage>
 

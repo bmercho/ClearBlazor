@@ -2,15 +2,12 @@
 
 @using ClearBlazorTest
 
- @* <ScrollViewer> *@
-    <StackPanel Spacing="20">
-        <CodeSnippet Code="ToolTipSimpleExample">
+<DocsExamplesPage DocsInfo=@(new ToolTipDocsInfo())>
+    <CodeSnippet Code="ToolTipSimpleExample">
         <WrapPanel Direction=Direction.Row ColumnSpacing=20 Padding="0,0,10,0">
-                <ToolTipSimpleExample />
-            </WrapPanel>
-        </CodeSnippet>
-    </StackPanel>
-@* </ScrollViewer> *@
-
+            <ToolTipSimpleExample />
+        </WrapPanel>
+    </CodeSnippet>
+</DocsExamplesPage>
 
 

@@ -1,9 +1,13 @@
 ﻿using ClearBlazor.Common;
+using System;
 
 namespace CreateDocumentation
 {
     public class ApiDoco
     {
+        private List<string> _enumerations = new();
+
+
         public void Execute(string srcPath)
         {
             var testComponentsFolder = Path.Combine(srcPath, Paths.TestComponentsFolder);
@@ -50,9 +54,11 @@ namespace CreateDocumentation
 
                 string testEnumFolder = Path.Combine(testEnumsFolder, info.Name);
 
+                _enumerations.Add(info.Name);
+
                 WriteOtherDocsInfoFile(testEnumFolder, info);
 
-                WriteApiPageFile(testEnumFolder, info.Name);
+                WriteApiPageFile(testEnumFolder, info.Name, true, false);
             }
         }
 
@@ -88,7 +94,7 @@ namespace CreateDocumentation
 
                 WriteOtherDocsInfoFile(testEnumFolder, info);
 
-                WriteApiPageFile(testEnumFolder, info.Name);
+                WriteApiPageFile(testEnumFolder, info.Name, false, true);
             }
 
         }
@@ -175,7 +181,7 @@ namespace CreateDocumentation
 
                 WriteDocsInfoFile(testComponentFolder, docInfo);
 
-                WriteApiPageFile(testComponentFolder, componentName);
+                WriteApiPageFile(testComponentFolder, componentName, false, false);
             }
         }
 
@@ -231,69 +237,35 @@ namespace CreateDocumentation
             var lines = File.ReadAllLines(fileName);
             int line = 0;
 
-            (string inherits, List<string> implements) = ExtractInheritsAndImplements(componentName, lines, line);
+            (string inherits, List<string> implements) = ExtractInheritsAndImplements(componentName, lines, ref line);
             if (inherits != null)
                 info.InheritsLink = (inherits, $"{inherits}Api");
             if (implements.Count() > 0)
                 foreach (var link in implements)
-                    info.ImplementsLinks.Add((link, link));
-            line = 0;
+                    info.ImplementsLinks.Add((link, $"{link}Api"));
 
-
-            while (line < lines.Count())
+            line++;
+            while (true)
             {
-                var comment = FindNextComment(lines, ref line);
-                if (comment != string.Empty)
-                {
-                    if (lines[line].Contains($"class {componentName}"))
-                        info.Description = comment;
-                    else if (lines[line].Trim().StartsWith("[Parameter]"))
-                    {
-                        line++;
-                        var values = lines[line].Trim().Split(" ");
-                        if (values[1] == "virtual" || values[1] == "override")
-                        {
-                            var l = values.ToList();
-                            l.Remove(values[1]);
-                            values = l.ToArray();   
-                        }
-                        var index = lines[line].IndexOf('=');
-                        string def = string.Empty;
-                        if (!lines[line].Contains("EventCallback"))
-                            if (index == -1)
-                                def = "null";
-                            else
-                                def = lines[line].Substring(index + 1).Trim().Trim(';').Trim('"');
-                        var typ = values[1];
-                        typ.Replace("<", "&lt");
-                        typ.Replace(">", "&gt");
-                        info.ParameterApi.Add(new ApiComponentInfo(values[2], typ, def, comment));
-                    }
-                    else if (lines[line].Trim().StartsWith("public") &&
-                             !lines[line].Contains("=") &&
-                             lines[line].Trim().EndsWith(")"))
-                    {
-                        var values = lines[line].Trim().Split(" ");
-                        info.MethodApi.Add(new ApiComponentInfo(values[2], values[1], "", comment));
-                    }
-
-                }
+                bool found = GetNextComponentApi(info, lines, ref line);
+                if (!found)
+                    break;
             }
 
             return info;
         }
 
-        private (string inherits, List<string> implements) ExtractInheritsAndImplements(string componentName, string[] lines, int line)
+        private (string inherits, List<string> implements) ExtractInheritsAndImplements(string componentName, string[] lines, ref int line)
         {
             string inherits = string.Empty;
             List<string> implements = new();
             while (line < lines.Count())
             {
-                int index = lines[line].IndexOf($"class {componentName}:");
+                int index = lines[line].IndexOf($"class {componentName}");
                 if (index > 0)
                 {
 
-                    var values = lines[line].Substring(index + $"class {componentName}:".Length).Split(',');
+                    var values = lines[line].Substring(index + $"class {componentName}".Length).Trim().Trim(':').Trim().Split(',');
 
                     if (values.Length > 0)
                         if (!values[0].StartsWith("I"))
@@ -308,6 +280,78 @@ namespace CreateDocumentation
                 line++;
             }
             return (inherits, implements);
+        }
+
+        private bool GetNextComponentApi(IComponentDocsInfo info, string[] lines, ref int line)
+        {
+            while (line < lines.Count())
+            {
+                var trimmedLine = lines[line].Trim();   
+                if (trimmedLine.StartsWith("public"))
+                {
+                    if (!lines[line].Contains("=") &&
+                        lines[line].Trim().EndsWith(")"))
+                    {
+                        var values = lines[line].Trim().Split(" ");
+                        if (values[1].Split('(').First() == info.Name || values[1] == "override" || values[1] == "virtual")
+                        {
+                            line++;
+                            continue;
+                        }
+                            
+                        var index1 = lines[line].Trim().IndexOf(values[2]);
+                        var index2 = lines[line].Trim().IndexOf(')', index1);
+                        var methodSignature = lines[line].Trim().Substring(index1, index2 - index1+1);
+
+                        var typ = values[1];
+                        typ.Replace("<", "&lt");
+                        typ.Replace(">", "&gt");
+
+                        if (_enumerations.Contains(typ.Trim('?')))
+                        {
+                            typ = $"<a href={typ.Trim('?')}Api>{typ}</a>";
+                        }
+
+                        var comment = GetAssociatedComment(lines, ref line);
+                        line++;
+                        info.MethodApi.Add(new ApiComponentInfo(methodSignature, typ, "", comment));
+                    }
+                }
+                else if (trimmedLine.StartsWith("[Parameter]"))
+                {
+                    line++;
+                    var values = lines[line].Trim().Split(" ");
+                    if (values[1] == "virtual" || values[1] == "override")
+                    {
+                        var l = values.ToList();
+                        l.Remove(values[1]);
+                        values = l.ToArray();
+                    }
+                    var index = lines[line].IndexOf('=');
+                    string def = string.Empty;
+                    if (!lines[line].Contains("EventCallback"))
+                        if (index == -1)
+                            def = "null";
+                        else
+                            def = lines[line].Substring(index + 1).Trim().Trim(';').Trim('"');
+                    var typ = values[1];
+                    typ.Replace("<", "&lt");
+                    typ.Replace(">", "&gt");
+
+                    if (_enumerations.Contains(typ.Trim('?')))
+                    {
+                        typ = $"<a href={ typ.Trim('?')}Api>{typ}</a>";
+                    }
+
+                    var comment = GetAssociatedComment(lines, ref line);
+                    line++;
+                    info.ParameterApi.Add(new ApiComponentInfo(values[2], typ, def, comment));
+                    return true;
+                }
+                line++;
+            }
+
+            return false;
         }
 
         private string FindNextComment(string[] lines, ref int line)
@@ -348,7 +392,7 @@ namespace CreateDocumentation
             lines.Add("    {");
             lines.Add("        public string Name { get; set; } = " + $"\"{docInfo.Name}\";");
             lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description}\";");
-            lines.Add("        public (string, string) ApiLink  {get; set; } =  (\"{docInfo.ApiLink.Item1}\", \"{docInfo.ApiLink.Item2}\");");
+            lines.Add("        public (string, string) ApiLink  {get; set; } = " + $"(\"{docInfo.ApiLink.Item1}\", \"{docInfo.ApiLink.Item2}\");");
             lines.Add("        public (string, string) ExamplesLink {get; set; } = " + $"(\"{docInfo.ExamplesLink.Item1}\", \"{docInfo.ExamplesLink.Item2}\");");
             lines.Add("        public (string, string) InheritsLink {get; set; } = " + $"(\"{docInfo.InheritsLink.Item1}\", \"{docInfo.InheritsLink.Item2}\");");
 
@@ -402,18 +446,23 @@ namespace CreateDocumentation
             File.WriteAllLines(docFileName, lines);
         }
 
-        private void WriteApiPageFile(string testFolder, string componentName)
+        private void WriteApiPageFile(string testFolder, string componentName, bool isEnum, bool isInterface)
         {
             Directory.CreateDirectory(testFolder);
 
             var docFileName = testFolder + @$"\{componentName}ApiPage.razor";
 
             var lines = new List<string>();
-            lines.Add("/// This file is auto-generated. Do not change manually");
+            lines.Add("@* This file is auto-generated. Do not change manually *@");
             lines.Add("");
             lines.Add($"@page \"/{componentName}Api\"");
             lines.Add("@using ClearBlazorTest");
-            lines.Add($"<DocsApiPage DocsInfo=@(new {componentName}DocsInfo())/>");
+            if (isEnum)
+                lines.Add($"<DocsEnumPage DocsInfo=@(new {componentName}DocsInfo())/>");
+            else if (isInterface)
+                lines.Add($"<DocsInterfacePage DocsInfo=@(new {componentName}DocsInfo())/>");
+            else
+                lines.Add($"<DocsApiPage DocsInfo=@(new {componentName}DocsInfo())/>");
 
             File.WriteAllLines(docFileName, lines);
         }

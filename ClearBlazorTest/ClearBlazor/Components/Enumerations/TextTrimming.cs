@@ -5,8 +5,8 @@
         None,
 
         /// <summary>
-        /// Due to CSS limitations this only works if <see cref="TextWrapping"/>
-        /// is set to <see cref="TextWrapping.NoWrap"/>.
+        /// Due to CSS limitations this only works if TextWrapping/>
+        /// is set to TextWrapping.NoWrap/>.
         /// </summary>
         Ellipsis
     }

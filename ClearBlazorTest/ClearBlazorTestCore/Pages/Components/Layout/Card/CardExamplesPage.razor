@@ -1,9 +1,7 @@
 ﻿@page "/Card"
 @using ClearBlazorTest
-<ScrollViewer>
-    <StackPanel Padding="20" Spacing="20">
-        <CodeSnippet Code=@(typeof(CardSimpleExample).Name)>
-            <CardSimpleExample />
-        </CodeSnippet>
-    </StackPanel>
-</ScrollViewer>
+<DocsExamplesPage DocsInfo=@(new CardDocsInfo())>
+    <CodeSnippet Code=@(typeof(CardSimpleExample).Name)>
+        <CardSimpleExample />
+    </CodeSnippet>
+</DocsExamplesPage>

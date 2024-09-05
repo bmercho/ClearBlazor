@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazorTest
 {
-    public partial class DocsInterface:ClearComponentBase
+    public partial class DocsInterfacePage:ClearComponentBase
     {
         [Parameter]
-        public IInterfaceDocsInfo? DocsInfo { get; set; }
+        public IOtherDocsInfo? DocsInfo { get; set; }
 
         protected override string UpdateStyle(string css)
         {

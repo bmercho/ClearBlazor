@@ -7,7 +7,7 @@ namespace ClearBlazorTest
     {
         public string Name { get; set; } = "TextInput";
         public string Description {get; set; } = "";
-        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ApiLink  {get; set; } = ("API", "TextInputApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "TextInput");
         public (string, string) InheritsLink {get; set; } = ("ContainerInputBase<string>", "ContainerInputBase<string>Api");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
@@ -15,6 +15,10 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("Required", "bool", "false", ""),
+            new ApiComponentInfo("MaxLength", "int?", "null", ""),
+            new ApiComponentInfo("Lines", "int?", "1", ""),
+            new ApiComponentInfo("IsPassword", "bool", "false", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

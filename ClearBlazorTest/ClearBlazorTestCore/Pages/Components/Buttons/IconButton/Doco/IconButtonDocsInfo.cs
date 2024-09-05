@@ -7,9 +7,9 @@ namespace ClearBlazorTest
     {
         public string Name { get; set; } = "IconButton";
         public string Description {get; set; } = "";
-        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ApiLink  {get; set; } = ("API", "IconButtonApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "IconButton");
-        public (string, string) InheritsLink {get; set; } = ("", "Api");
+        public (string, string) InheritsLink {get; set; } = ("Button", "ButtonApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
         };

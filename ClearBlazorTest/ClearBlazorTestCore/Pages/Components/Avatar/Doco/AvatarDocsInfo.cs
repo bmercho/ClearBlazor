@@ -7,14 +7,23 @@ namespace ClearBlazorTest
     {
         public string Name { get; set; } = "Avatar";
         public string Description {get; set; } = "";
-        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ApiLink  {get; set; } = ("API", "AvatarApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "Avatar");
-        public (string, string) InheritsLink {get; set; } = ("", "Api");
+        public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("Icon", "string", "string.Empty", ""),
+            new ApiComponentInfo("Image", "string", "string.Empty", ""),
+            new ApiComponentInfo("Alt", "string", "string.Empty", ""),
+            new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
+            new ApiComponentInfo("AvatarStyle", "<a href=TextEditFillModeApi>TextEditFillMode</a>", "TextEditFillMode.Filled", ""),
+            new ApiComponentInfo("Shape", "<a href=ContainerShapeApi>ContainerShape</a>", "ContainerShape.Circle", ""),
+            new ApiComponentInfo("Colour", "Color", "ThemeManager.CurrentPalette.Primary", ""),
+            new ApiComponentInfo("Text", "string", "string.Empty", ""),
+            new ApiComponentInfo("IconColour", "Color?", "null", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

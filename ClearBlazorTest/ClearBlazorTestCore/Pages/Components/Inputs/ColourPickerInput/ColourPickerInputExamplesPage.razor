@@ -1,14 +1,12 @@
 ﻿@page "/ColourPickerInput"
 @using ClearBlazorTest
-<ScrollViewer>
-    <StackPanel Orientation="Orientation.Portrait">
-        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Switch</TextBlock>
-        <StackPanel Padding="20" Spacing="30">
-            <CodeSnippet Title="Basic" Code=@(typeof(ColourPickerInputSimpleExample).Name)>
-                <WrapPanel Margin="10" ColumnSpacing="20">
-                    <ColourPickerInputSimpleExample />
-                </WrapPanel>
-            </CodeSnippet>
-          </StackPanel>
-     </StackPanel>
-</ScrollViewer>
+<DocsExamplesPage DocsInfo=@(new ColourPickerInputDocsInfo())>
+    <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Switch</TextBlock>
+    <StackPanel Padding="20" Spacing="30">
+        <CodeSnippet Title="Basic" Code=@(typeof(ColourPickerInputSimpleExample).Name)>
+            <WrapPanel Margin="10" ColumnSpacing="20">
+                <ColourPickerInputSimpleExample />
+            </WrapPanel>
+        </CodeSnippet>
+    </StackPanel>
+</DocsExamplesPage>

@@ -38,9 +38,9 @@ namespace ClearBlazorTest
             return css + "display:grid; ";
         }
 
-        private string GetMarkupString(string value)
+        private MarkupString GetMarkupString(string value)
         {
-            return new MarkupString(value).ToString();
+            return new MarkupString(value);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿@page "/CheckBox"
 @using ClearBlazorTest
-<ScrollViewer>
-    <StackPanel Orientation="Orientation.Portrait">
+<DocsExamplesPage DocsInfo=@(new CheckBoxDocsInfo())>
         <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">CheckBox</TextBlock>
         <StackPanel Padding="20" Spacing="30">
             <CodeSnippet Title="Basic" Code=@(typeof(CheckBoxSimpleExample).Name)>
@@ -35,5 +34,4 @@
                 </WrapPanel>
             </CodeSnippet>
         </StackPanel>
-     </StackPanel>
-</ScrollViewer>
+</DocsExamplesPage>

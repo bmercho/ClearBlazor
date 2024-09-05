@@ -7,14 +7,24 @@ namespace ClearBlazorTest
     {
         public string Name { get; set; } = "TimePickerInput";
         public string Description {get; set; } = "";
-        public (string, string) ApiLink  {get; set; } =  ("{docInfo.ApiLink.Item1}", "{docInfo.ApiLink.Item2}");
+        public (string, string) ApiLink  {get; set; } = ("API", "TimePickerInputApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "TimePickerInput");
-        public (string, string) InheritsLink {get; set; } = ("", "Api");
+        public (string, string) InheritsLink {get; set; } = ("ContainerInputBase<TimeOnly?>", "ContainerInputBase<TimeOnly?>Api");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
+            (" IBackground", " IBackgroundApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("TimeFormat", "string", "hh:mm tt", ""),
+            new ApiComponentInfo("Hours24", "bool", "false", ""),
+            new ApiComponentInfo("MinuteStep", "<a href=MinuteStepApi>MinuteStep</a>", "MinuteStep.One", ""),
+            new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Portrait", ""),
+            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
+            new ApiComponentInfo("Position", "<a href=PopupPositionApi>PopupPosition</a>", "PopupPosition.BottomLeft", ""),
+            new ApiComponentInfo("Transform", "<a href=PopupTransformApi>PopupTransform</a>", "PopupTransform.TopLeft", ""),
+            new ApiComponentInfo("AllowVerticalFlip", "bool", "true", ""),
+            new ApiComponentInfo("AllowHorizontalFlip", "bool", "true", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

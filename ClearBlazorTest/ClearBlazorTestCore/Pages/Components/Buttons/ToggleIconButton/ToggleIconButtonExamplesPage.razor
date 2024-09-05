@@ -1,11 +1,9 @@
 ﻿@page "/ToggleIconButton"
 @using ClearBlazorTest
-<ScrollViewer>
-    <StackPanel Padding="20" Spacing="20">
-        <CodeSnippet Code="ToggleIconButtonsExample" Title="Toggle Icon Button">
-            <StackPanel Orientation="Orientation.Landscape" Spacing="20">
-                <ToggleIconButtonsExample />
-            </StackPanel>
-        </CodeSnippet>
-    </StackPanel>
-</ScrollViewer>
+<DocsExamplesPage DocsInfo=@(new ToggleIconButtonDocsInfo())>
+    <CodeSnippet Code="ToggleIconButtonsExample" Title="Toggle Icon Button">
+        <StackPanel Orientation="Orientation.Landscape" Spacing="20">
+            <ToggleIconButtonsExample />
+        </StackPanel>
+    </CodeSnippet>
+</DocsExamplesPage>

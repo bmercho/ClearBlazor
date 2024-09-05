@@ -10,7 +10,7 @@ namespace ClearBlazorTest
         public List<ApiFieldInfo> FieldApi {get; set; } = new List<ApiFieldInfo>
         {
             new ApiFieldInfo("None", "TextTrimming", ""),
-            new ApiFieldInfo("Ellipsis", "TextTrimming", "Due to CSS limitations this only works if <see cref="TextWrapping"/>\ris set to <see cref="TextWrapping.NoWrap"/>.\r"),
+            new ApiFieldInfo("Ellipsis", "TextTrimming", "Due to CSS limitations this only works if TextWrapping/>\ris set to TextWrapping.NoWrap/>.\r"),
         };
     }
 }
