@@ -25,20 +25,12 @@ namespace ClearBlazor
         private string? DateString => Value == null ? string.Empty : ((DateOnly)Value).ToString(DateFormat);
 
         private bool PopupOpen = false;
-        private SizeInfo? SizeInfo = null;
         private ElementReference PickerElement;
         private DateOnly? CurrentDate = null;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
-            SizeInfo? existing = null;
-            if (SizeInfo != null)
-                existing = SizeInfo;
-            SizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", PickerElement);
-            //if (existing == null ||
-            //    !existing.Equals(SizeInfo))
-            //    StateHasChanged();
            if (CurrentDate == null)
                 CurrentDate = Value;
         }
@@ -70,14 +62,6 @@ namespace ClearBlazor
         {
             PopupOpen = !PopupOpen;
             StateHasChanged();
-        }
-
-        private int GetPopupWidth()
-        {
-            if (SizeInfo == null)
-                return 200;
-            else
-                return (int)SizeInfo.ParentWidth + 40;
         }
 
         protected override async Task ClearEntry()

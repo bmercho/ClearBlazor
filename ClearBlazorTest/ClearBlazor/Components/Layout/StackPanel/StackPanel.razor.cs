@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace ClearBlazor
 {
-    public partial class StackPanel:ClearComponentBase, IContent, IBackground, IBorder, IBoxShadow
+    public partial class StackPanel:ClearComponentBase, IBackground, IBorder, IBoxShadow
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;

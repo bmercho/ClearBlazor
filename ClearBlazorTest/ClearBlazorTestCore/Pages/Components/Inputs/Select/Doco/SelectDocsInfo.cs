@@ -12,7 +12,6 @@ namespace ClearBlazorTest
         public (string, string) InheritsLink {get; set; } = ("ContainerInputBase<TItem>", "ContainerInputBase<TItem>Api");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
-            (" IContent", " IContentApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {

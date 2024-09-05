@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class Form : ClearComponentBase, IContent
+    public partial class Form : ClearComponentBase
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;

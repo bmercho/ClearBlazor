@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazorTest
 {
-    public partial class DocsExamplesPage: ClearComponentBase,IContent
+    public partial class DocsExamplesPage: ClearComponentBase
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; }

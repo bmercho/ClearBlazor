@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClearBlazor
 {
-    public partial class Button : ClearComponentBase, IContent,IColor
+    public partial class Button : ClearComponentBase, IColor
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;

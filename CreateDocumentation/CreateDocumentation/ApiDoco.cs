@@ -142,6 +142,9 @@ namespace CreateDocumentation
                    lines[line].Trim() == string.Empty)
                 line++;
 
+            if (lines[line].Trim().StartsWith("}"))
+                return new ApiFieldInfo(string.Empty, string.Empty, string.Empty);
+
             var values = lines[line].Trim().Split(" ");
             var name = values[2];
             var type = values[1];

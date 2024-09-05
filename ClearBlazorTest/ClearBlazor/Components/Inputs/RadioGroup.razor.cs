@@ -3,7 +3,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClearBlazor
 {
-    public partial class RadioGroup<TItem> : InputBase, IBackground, IContent
+    public partial class RadioGroup<TItem> : InputBase, IBackground
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;

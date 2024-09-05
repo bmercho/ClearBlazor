@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClearBlazor
 {
-    public partial class ListBoxItem<TListBox> : ClearComponentBase, IContent, IBackground, IColor
+    public partial class ListBoxItem<TListBox> : ClearComponentBase, IBackground, IColor
     {
         [Parameter]
         public TListBox? Value { get; set; }

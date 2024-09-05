@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class ScrollViewer:ClearComponentBase,IContent
+    public partial class ScrollViewer:ClearComponentBase
     {
         [Parameter]
         public ScrollMode HorizontalScrollMode { get; set; } = ScrollMode.Disabled;

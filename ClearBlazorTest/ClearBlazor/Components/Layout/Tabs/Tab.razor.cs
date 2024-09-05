@@ -2,7 +2,7 @@ using global::Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class Tab:IContent
+    public partial class Tab
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;

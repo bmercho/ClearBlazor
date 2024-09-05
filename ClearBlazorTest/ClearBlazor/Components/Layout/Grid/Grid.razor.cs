@@ -9,7 +9,7 @@ namespace ClearBlazor
     /// By default a grid will occupy all of the available space given by its parent.
     /// In other words HorizontalAlignment and VerticalAlignment are both by default 'Stretch'.
     /// </summary>
-    public partial class Grid:ClearComponentBase,IContent,IBackground,IBoxShadow, IBorder, IBackgroundGradient
+    public partial class Grid:ClearComponentBase,IBackground,IBoxShadow, IBorder, IBackgroundGradient
     {
         /// <summary>
         /// Defines columns by a comma delimited string of column widths. 

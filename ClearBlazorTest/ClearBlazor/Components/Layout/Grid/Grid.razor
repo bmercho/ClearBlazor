@@ -8,6 +8,10 @@
 <CascadingValue Value=this IsFixed=false>
     <div id=@Id class=@Classes style=@ComputeStyle()
          @onclick=OnElementClicked>
+        @if (BackgroundGradient2 != null)
+        {
+            <div background=/>
+        }
         @ChildContent
     </div>
 </CascadingValue>

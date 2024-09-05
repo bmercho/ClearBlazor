@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 
 namespace ClearBlazor
 {
-    public partial class Select<TItem> : ContainerInputBase<TItem>, IContent
+    public partial class Select<TItem> : ContainerInputBase<TItem>
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;

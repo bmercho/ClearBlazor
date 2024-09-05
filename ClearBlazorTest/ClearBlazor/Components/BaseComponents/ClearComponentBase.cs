@@ -159,6 +159,9 @@ namespace ClearBlazor
 
         public string Id { get; set; }
 
+        protected ElementSizeInfo? SizeInfo { get; private set; } = null;
+        protected ElementSizeInfo? ParentSizeInfo { get; private set; } = null;
+
         internal Alignment? HorizontalAlignmentDefaultOverride { get; set; } = null;
 
         internal Alignment? VerticalAlignmentDefaultOverride { get; set; } = null;
@@ -170,6 +173,10 @@ namespace ClearBlazor
         protected bool IsScroller { get; set; } = false;
 
         private bool _doubleClickRaised = false;
+
+        private ElementSizeInfo? previousSizeInfo = null;
+
+        private ElementSizeInfo? previousParentSizeInfo = null;
 
         public ClearComponentBase()
         {
@@ -224,6 +231,31 @@ namespace ClearBlazor
                     _preventFromRecursiveSetParameters = true;
                     Parent.StateHasChanged();
                     _preventFromRecursiveSetParameters = false;
+                }
+            }
+
+
+            if (this is IComponentSize)
+            {
+                SizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", Id);
+
+                if (previousSizeInfo == null ||
+                    !previousSizeInfo.Equals(SizeInfo))
+                {
+                    previousSizeInfo = SizeInfo;
+                    StateHasChanged();
+                }
+            }
+
+            if (this is IParentComponentSize && Parent != null)
+            {
+                ParentSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", Parent.Id);
+
+                if (previousParentSizeInfo == null ||
+                    !previousParentSizeInfo.Equals(ParentSizeInfo))
+                {
+                    previousParentSizeInfo = ParentSizeInfo;
+                    StateHasChanged();
                 }
             }
 

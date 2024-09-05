@@ -2,7 +2,7 @@ using global::Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class DockPanel : ClearComponentBase, IContent, IBackground
+    public partial class DockPanel : ClearComponentBase, IBackground
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;

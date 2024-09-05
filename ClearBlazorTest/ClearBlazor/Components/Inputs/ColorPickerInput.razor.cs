@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace ClearBlazor
 {
@@ -19,20 +18,7 @@ namespace ClearBlazor
         public bool AllowHorizontalFlip { get; set; } = true;
 
         private bool PopupOpen = false;
-        private SizeInfo? SizeInfo = null;
         private ElementReference PickerElement;
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-            SizeInfo? existing = null;
-            if (SizeInfo != null)
-                existing = SizeInfo;
-            SizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", PickerElement);
-            //if (existing == null ||
-            //    !existing.Equals(SizeInfo))
-            //    StateHasChanged();
-        }
 
         private string GetSize()
         {
@@ -61,14 +47,6 @@ namespace ClearBlazor
         {
             PopupOpen = !PopupOpen;
             StateHasChanged();
-        }
-
-        private int GetPopupWidth()
-        {
-            if (SizeInfo == null)
-                return 200;
-            else
-                return (int)SizeInfo.ParentWidth + 40;
         }
 
         protected override async Task ClearEntry()

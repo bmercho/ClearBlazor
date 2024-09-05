@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class ListBox<TListBox> : InputBase, IContent, IBackground, IBorder
+    public partial class ListBox<TListBox> : InputBase, IBackground, IBorder
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
@@ -102,7 +102,7 @@ namespace ClearBlazor
                     if ((enumValue1 & enumValue2) == enumValue2)
                     {
                         SelectedItems.Add(item);
-                        await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
+                        //await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
                         item.Select();
                         StateHasChanged();
                     }
@@ -110,7 +110,7 @@ namespace ClearBlazor
                 else if (Values != null && item != null && Values.Contains(item.Value!))
                 {
                     SelectedItems.Add(item);
-                    await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
+                    //await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
                     item.Select();
                     StateHasChanged();
                 }
@@ -120,8 +120,8 @@ namespace ClearBlazor
                 if (Value != null && Value.Equals(item.Value))
                 {
                     SelectedItem = item;
-                    await OnSelectionChanged.InvokeAsync(
-                          new ListDataItem<TListBox>(item.Text!, item.Value!, item.Icon, item.Avatar));
+                   // await OnSelectionChanged.InvokeAsync(
+                   //       new ListDataItem<TListBox>(item.Text!, item.Value!, item.Icon, item.Avatar));
                     item.Select();
                     StateHasChanged();
                 }
