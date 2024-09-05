@@ -9,12 +9,12 @@
                     VerticalAlignment=Alignment.Start>
             @if (Label != null && LabelLocation == LabelLocation.Start)
             {
-                <TextBlock Colour=@GetColour() VerticalAlignment=Alignment.Center>@Label</TextBlock>
+                <TextBlock Color=@GetColor() VerticalAlignment=Alignment.Center>@Label</TextBlock>
             }
-            <IconButton  Disabled=@IsDisabled IconColour=@GetColour() Icon=@GetIcon() Size="@Size" OnClicked=@OnIconClicked />
+            <IconButton  Disabled=@IsDisabled IconColor=@GetColor() Icon=@GetIcon() Size="@Size" OnClicked=@OnIconClicked />
             @if (Label != null && LabelLocation == LabelLocation.End)
             {
-                <TextBlock Colour=@GetColour() VerticalAlignment=Alignment.Center>@Label</TextBlock>
+                <TextBlock Color=@GetColor() VerticalAlignment=Alignment.Center>@Label</TextBlock>
             }
         </StackPanel>
     </div>

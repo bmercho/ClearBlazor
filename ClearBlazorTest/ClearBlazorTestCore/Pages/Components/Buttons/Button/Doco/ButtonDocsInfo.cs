@@ -13,18 +13,18 @@ namespace ClearBlazorTest
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
             (" IContent", " IContentApi"),
-            ("IColour", "IColourApi"),
+            ("IColor", "IColorApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
             new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
             new ApiComponentInfo("ButtonStyle", "<a href=TextEditFillModeApi>TextEditFillMode?</a>", "null", ""),
-            new ApiComponentInfo("Colour", "Color?", "null", ""),
+            new ApiComponentInfo("Color", "Color?", "null", ""),
             new ApiComponentInfo("DisableBoxShadow", "bool", "false", ""),
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
             new ApiComponentInfo("Shape", "<a href=ContainerShapeApi>ContainerShape</a>", "ContainerShape.Square", ""),
             new ApiComponentInfo("Icon", "string?", "null", ""),
-            new ApiComponentInfo("IconColour", "Color?", "null", ""),
+            new ApiComponentInfo("IconColor", "Color?", "null", ""),
             new ApiComponentInfo("IconLocation", "<a href=IconLocationApi>IconLocation</a>", "IconLocation.Start", ""),
             new ApiComponentInfo("ToolTip", "string?", "null", ""),
             new ApiComponentInfo("ToolTipPosition", "<a href=ToolTipPositionApi>ToolTipPosition?</a>", "null", ""),

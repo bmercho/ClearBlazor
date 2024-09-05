@@ -27,7 +27,7 @@ namespace ClearBlazor
         public EventCallback<TItem> ValueChanged { get; set; }
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = null;
 
         protected Radio<TItem>? _selectedRadio = null;
         private string? RequiredErrorMessage = null;
@@ -48,7 +48,7 @@ namespace ClearBlazor
         internal void HandleChild(Radio<TItem> radio)
         {
             radio.Size = Size;
-            radio.ColourOverride = Colour;
+            radio.ColorOverride = Color;
             radio.IsDisabled = IsDisabled;
             radio.IsReadOnly = IsReadOnly;
             if (Value != null && Value.Equals(radio.Value))

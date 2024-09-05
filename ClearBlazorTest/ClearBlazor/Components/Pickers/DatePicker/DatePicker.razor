@@ -5,8 +5,8 @@
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
         <StackPanel Orientation=@Orientation>
-            <Grid BackgroundColour=@Colour>
-                <StackPanel Margin="10" Orientation=Orientation.Portrait BackgroundColour=@Colour>
+            <Grid BackgroundColor=@Color>
+                <StackPanel Margin="10" Orientation=Orientation.Portrait BackgroundColor=@Color>
                     <Button ButtonStyle=TextEditFillMode.None
                             HorizontalAlignment=Alignment.Center Size=Size.Large
                             OnClicked=@OnDateClicked>
@@ -36,7 +36,7 @@
                                     <TextBlock HorizontalAlignment=Alignment.Center 
                                                VerticalAlignment=Alignment.Center 
                                                FontSize=@GetYearSize(item) 
-                                               Colour=@GetYearColour(item)>@item</TextBlock>
+                                               Color=@GetYearColor(item)>@item</TextBlock>
                                 </div>
                             </ClearBlazor.Virtualize>
                         </ScrollViewer>
@@ -44,11 +44,11 @@
                     case DatePickerMode.Month:
                         <DockPanel>
                             <DockPanel Margin="10,0,0,0" Dock=ClearBlazor.Dock.Top>
-                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Left Colour=@Color.Dark
+                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Left Color=@Color.Dark
                                             Icon=@Icons.Material.Filled.ArrowLeft OnClicked=@OnSubtractYear />
-                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Right Colour=@Color.Dark
+                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Right Color=@Color.Dark
                                             Icon=@Icons.Material.Filled.ArrowRight OnClicked=@OnAddYear />
-                                <Button ButtonStyle=TextEditFillMode.None Colour=@Color.Dark
+                                <Button ButtonStyle=TextEditFillMode.None Color=@Color.Dark
                                         HorizontalAlignment=Alignment.Center Size=Size.VeryLarge
                                         OnClicked=@OnDateClicked>
                                     @SelectedDate.Year
@@ -62,7 +62,7 @@
                                          @onmouseenter="(() => OnMouseEnterMonth(month))" 
                                          @onmouseleave=OnMouseLeaveMonth
                                          @onclick="(() => OnMonthClicked(month))" @onclick:stopPropagation="true">
-                                        <TextBlock FontSize=@GetMonthSize(month) Colour=@GetMonthColour(month)>
+                                        <TextBlock FontSize=@GetMonthSize(month) Color=@GetMonthColor(month)>
                                             @GetMonthName(month)
                                         </TextBlock>
                                     </div>
@@ -73,11 +73,11 @@
                     case DatePickerMode.Day:
                         <DockPanel Margin=5>
                             <DockPanel Dock=ClearBlazor.Dock.Top>
-                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Left Colour=@Color.Dark
+                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Left Color=@Color.Dark
                                             Icon=@Icons.Material.Filled.ArrowLeft OnClicked=@OnSubtractMonth />
-                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Right Colour=@Color.Dark
+                                <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Right Color=@Color.Dark
                                             Icon=@Icons.Material.Filled.ArrowRight OnClicked=@OnAddMonth />
-                                <Button ButtonStyle=TextEditFillMode.None Colour=@Color.Dark
+                                <Button ButtonStyle=TextEditFillMode.None Color=@Color.Dark
                                         HorizontalAlignment=Alignment.Center Size=Size.VeryLarge
                                         OnClicked=@OnGotoMonths>
                                     @GetMonthYear()
@@ -87,7 +87,7 @@
                                 @for (int i = 0; i < 7; i++)
                                 {
                                     int day = i;
-                                    <TextBlock HorizontalAlignment=Alignment.Center Colour=@Color.Dark.Lighten(.4)>
+                                    <TextBlock HorizontalAlignment=Alignment.Center Color=@Color.Dark.Lighten(.4)>
                                         @GetDayName(day)
                                     </TextBlock>
                                 }
@@ -100,7 +100,7 @@
                                     {
                                         <Button ButtonStyle=@GetDayButtonStyle(dayIndex) HorizontalAlignment=Alignment.Stretch
                                                 VerticalAlignment=Alignment.Stretch DisableBoxShadow=true Shape=ContainerShape.Circle
-                                                Colour=@GetDayColour(dayIndex) OnClicked=@(() => OnDayClicked(dayIndex))>
+                                                Color=@GetDayColor(dayIndex) OnClicked=@(() => OnDayClicked(dayIndex))>
                                             @GetDay(dayIndex)
                                         </Button>
                                     }

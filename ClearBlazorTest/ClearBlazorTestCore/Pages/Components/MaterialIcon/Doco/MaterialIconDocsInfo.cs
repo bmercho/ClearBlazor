@@ -18,7 +18,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Icon", "string", "string.Empty", ""),
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
             new ApiComponentInfo("Rotation", "double", "0.0", ""),
-            new ApiComponentInfo("Colour", "Color", "ThemeManager.CurrentPalette.Dark", ""),
+            new ApiComponentInfo("Color", "Color", "ThemeManager.CurrentPalette.Dark", ""),
             new ApiComponentInfo("ViewBox", "string", "0 0 24 24", ""),
             new ApiComponentInfo("ToolTip", "string?", "null", ""),
             new ApiComponentInfo("ToolTipPosition", "<a href=ToolTipPositionApi>ToolTipPosition?</a>", "null", ""),

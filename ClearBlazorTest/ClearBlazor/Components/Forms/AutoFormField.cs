@@ -656,12 +656,12 @@ namespace ClearBlazor
 
             if (_propertyType == typeof(string))
             {
-                //if (IsColourAttribute(PropertyInfo))
+                //if (IsColorAttribute(PropertyInfo))
                 //{
                 //    CheckPlaceholderAttribute();
                 //    InputParameters.Add("LabelShown", _autoFormViewModel.ShowLabels);
                 //    AddToolTipParameter();
-                //    InputType = typeof(InputColourEditor);
+                //    InputType = typeof(InputColorEditor);
                 //    return;
                 //}
 

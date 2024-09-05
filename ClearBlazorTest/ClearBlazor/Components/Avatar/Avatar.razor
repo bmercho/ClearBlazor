@@ -12,11 +12,11 @@
                        FontFamily="@FontFamily"
                        FontWeight="@FontWeight"
                        FontStyle="@FontStyle"
-                       Colour=@TextColour>@Text</TextBlock>
+                       Color=@TextColor>@Text</TextBlock>
         }
         else if (!string.IsNullOrEmpty(Icon))
         {
-            <MaterialIcon Size=@Size Icon=@Icon Colour=@IconColour HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center/>
+            <MaterialIcon Size=@Size Icon=@Icon Color=@IconColor HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center/>
         }
         else if (!string.IsNullOrEmpty(Image))
         {

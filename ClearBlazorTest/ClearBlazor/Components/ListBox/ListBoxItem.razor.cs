@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ClearBlazor
 {
-    public partial class ListBoxItem<TListBox> : ClearComponentBase, IContent, IBackground, IColour
+    public partial class ListBoxItem<TListBox> : ClearComponentBase, IContent, IBackground, IColor
     {
         [Parameter]
         public TListBox? Value { get; set; }
@@ -25,10 +25,10 @@ namespace ClearBlazor
         public string? Avatar { get; set; } = null;
 
         [Parameter]
-        public Color? Colour { get; set; } = null;
+        public Color? Color { get; set; } = null;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = null;
 
 
         [Parameter]
@@ -43,7 +43,7 @@ namespace ClearBlazor
         internal Size RowSize { get; set; } = Size.Normal;
         internal int Level { get; set; } = 1;
         internal bool HasChildren { get; set; } = false;
-        internal Color? ColourOverride { get; set; } = null;
+        internal Color? ColorOverride { get; set; } = null;
 
         private string FontSize = "";
         private string FontFamily = "";
@@ -107,9 +107,9 @@ namespace ClearBlazor
 
             css += "display: grid; ";
 
-            RowStyle = IsSelected && HasChildren ? $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColour.Value}; " :
-                      IsSelected ? $"background-color: {ThemeManager.CurrentPalette.ListSelectedColour.Value}; " :
-                      MouseOver ? $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColour.Value}; " :
+            RowStyle = IsSelected && HasChildren ? $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; " :
+                      IsSelected ? $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; " :
+                      MouseOver ? $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; " :
                                string.Empty;
             RowStyle += $"height:{GetRowHeight()}; ";
             return css;
@@ -157,7 +157,7 @@ namespace ClearBlazor
                 if (listBoxItem != null)
                 {
                     listBoxItem.RowSize = RowSize;
-                    listBoxItem.Colour = Colour;
+                    listBoxItem.Color = Color;
                     listBoxItem.Level = Level + 1;
                     HasChildren = true;
                     if (FirstTime)
@@ -336,13 +336,13 @@ namespace ClearBlazor
                     return ThemeManager.CurrentTheme.Typography.ListItemNormal.FontSize;
             }
         }
-        private Color? GetColour()
+        private Color? GetColor()
         {
-            //if (Colour != null)
-            //    return Colour;
+            //if (Color != null)
+            //    return Color;
 
-            //if (ColourOverride != null)
-            //    return ColourOverride;
+            //if (ColorOverride != null)
+            //    return ColorOverride;
 
             return Color.Dark;
         }

@@ -18,7 +18,7 @@ namespace ClearBlazorTest
         {
             new ApiComponentInfo("DateFormat", "string", "dd MMM yyyy", ""),
             new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Portrait", ""),
-            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
             new ApiComponentInfo("Position", "<a href=PopupPositionApi>PopupPosition</a>", "PopupPosition.BottomLeft", ""),
             new ApiComponentInfo("Transform", "<a href=PopupTransformApi>PopupTransform</a>", "PopupTransform.TopLeft", ""),
             new ApiComponentInfo("AllowVerticalFlip", "bool", "true", ""),

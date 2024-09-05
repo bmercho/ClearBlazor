@@ -9,8 +9,8 @@
             {
                 <div style=@GetLabelStyle()>@Label</div>
             }
-            <Grid BackgroundColour=@GetBackgroundColour() BorderThickness=@GetBorderThickness()
-                  BorderColour=@GetBorderColour() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
+            <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
+                  BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
                 <input id="@id" @ref="TextInput" style=@ComputeInputStyle() placeholder=@Placeholder type=@GetInputType()
                        readonly=@IsReadOnly disabled=@IsDisabled value=@StringValue
                        @onmouseenter="OnMouseEnter"
@@ -22,18 +22,18 @@
                 @if (Clearable && StringValue?.Length > 0)
                 {
                     <IconButton Column=1 Icon="@Icons.Material.Filled.Close"
-                                Size=@Size Colour=@Color.Dark OnClicked="ClearEntry" />
+                                Size=@Size Color=@Color.Dark OnClicked="ClearEntry" />
                 }
                 @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                 {
                     <MaterialIcon Column=2 Icon="@Icons.Material.Filled.FmdBad"
-                                  Size=@Size ToolTip=@ValidationMessage Colour=@Color.Error />
+                                  Size=@Size ToolTip=@ValidationMessage Color=@Color.Error />
                 }
             </Grid>
             @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)
             {
                 <TextBlock TextWrapping="TextWrap.WrapOnNewLines"
-                           Colour=@Color.Error>@ValidationMessage</TextBlock>
+                           Color=@Color.Error>@ValidationMessage</TextBlock>
             }
         </StackPanel>
     </div>

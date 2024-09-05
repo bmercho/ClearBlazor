@@ -1,0 +1,7 @@
+﻿@namespace ClearBlazorTest
+<Slider Label="Success" Color=Color.Success @bind-Value=Value />
+<Slider Label="Error" Color=Color.Error @bind-Value=Value />
+<div>@Value</div>
+@code {
+    public double Value { get; set; } = 50;
+}

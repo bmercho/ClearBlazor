@@ -18,7 +18,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Checked", "bool", "null", ""),
             new ApiComponentInfo("CheckedChanged", "EventCallback<bool>", "", ""),
             new ApiComponentInfo("LabelLocation", "<a href=LabelLocationApi>LabelLocation</a>", "LabelLocation.End", ""),
-            new ApiComponentInfo("UncheckedColour", "Color?", "null", ""),
+            new ApiComponentInfo("UncheckedColor", "Color?", "null", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

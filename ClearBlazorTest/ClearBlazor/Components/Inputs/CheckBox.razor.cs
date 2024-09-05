@@ -25,7 +25,7 @@ namespace ClearBlazor
         [Parameter]
         public bool TriState { get; set; } = false;
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = null;
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {

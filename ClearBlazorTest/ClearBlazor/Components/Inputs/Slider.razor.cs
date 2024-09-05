@@ -46,9 +46,9 @@ namespace ClearBlazor
         [Parameter]
         public string? BackgroundGradient2 { get; set; } = null;
 
-        private Color BackgroundTrackColour = ThemeManager.CurrentPalette.BackgroundDisabled;
-        private Color TrackColour = ThemeManager.CurrentPalette.Primary.Lighten(.3);
-        private Color ThumbColour = ThemeManager.CurrentPalette.Primary;
+        private Color BackgroundTrackColor = ThemeManager.CurrentPalette.BackgroundDisabled;
+        private Color TrackColor = ThemeManager.CurrentPalette.Primary.Lighten(.3);
+        private Color ThumbColor = ThemeManager.CurrentPalette.Primary;
         private int TrackHeight = 10;
         private double TrackWidth = 0;
         private string TrackMargin = "5px";
@@ -90,19 +90,19 @@ namespace ClearBlazor
 
             if (IsDisabled)
             {
-                ThumbColour = ThemeManager.CurrentPalette.GrayLight;
-                TrackColour = ThemeManager.CurrentPalette.BackgroundDisabled;
+                ThumbColor = ThemeManager.CurrentPalette.GrayLight;
+                TrackColor = ThemeManager.CurrentPalette.BackgroundDisabled;
 
             }
-            else if (Colour != null)
+            else if (Color != null)
             {
-                ThumbColour = Colour;
-                TrackColour = Colour.Lighten(.3);
+                ThumbColor = Color;
+                TrackColor = Color.Lighten(.3);
             }
             if (ContrastTrackBackground)
-                BackgroundTrackColour = ThemeManager.CurrentPalette.BackgroundDisabled;
+                BackgroundTrackColor = ThemeManager.CurrentPalette.BackgroundDisabled;
             else
-                BackgroundTrackColour = TrackColour;
+                BackgroundTrackColor = TrackColor;
             switch (Size)
             {
                 case Size.VerySmall:
@@ -269,7 +269,7 @@ namespace ClearBlazor
         {
             string css = $"height:{ThumbDiameter}px; width:{ThumbDiameter}px; " +
                          $"border-radius:{ThumbDiameter / 2}px; grid-area: 1 / 1 / span 1 / span 1; " +
-                         $"background-color: {ThumbColour.Value}; margin-left:{ThumbMargin}px; ";
+                         $"background-color: {ThumbColor.Value}; margin-left:{ThumbMargin}px; ";
             return css;
         }
 

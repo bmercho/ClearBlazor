@@ -113,7 +113,7 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            css += $"color: {ThemeManager.CurrentPalette.ToolTipTextColour.Value}; ";
+            css += $"color: {ThemeManager.CurrentPalette.ToolTipTextColor.Value}; ";
             css += "z-index:100;";
             if (UseTransition)
                 css += "transition: opacity .2s ease-in-out; ";

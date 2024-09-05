@@ -239,7 +239,7 @@ textarea {
     -ms-transition: 100ms linear;
     transition: 100ms linear;
 }
-.colourpicker-transition {
+.colorpicker-transition {
     -webkit-transition: 50ms linear;
     -moz-transition: 50ms linear;
     -o-transition: 50ms linear;

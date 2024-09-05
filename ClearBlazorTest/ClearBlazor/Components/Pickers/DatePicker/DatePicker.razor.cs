@@ -37,7 +37,7 @@ namespace ClearBlazor
         public string? BorderThickness { get; set; }
 
         [Parameter]
-        public Color? BorderColour { get; set; }
+        public Color? BorderColor { get; set; }
 
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
@@ -64,8 +64,8 @@ namespace ClearBlazor
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
-            if (Colour == null)
-                Colour = Color.Primary;
+            if (Color == null)
+                Color = Color.Primary;
             if (Date == null)   
                 Date = DateOnly.FromDateTime(DateTime.Now);
             AddYearRange(StartYear, EndYear);
@@ -122,23 +122,23 @@ namespace ClearBlazor
             return "16px";
         }
 
-        private Color GetYearColour(int year)
+        private Color GetYearColor(int year)
         {
             if (year == SelectedDate.Year)
-                return Colour!;
+                return Color!;
             else
                 return Color.Dark;
         }
 
-        private Color GetMonthColour(int month)
+        private Color GetMonthColor(int month)
         {
             if (month == SelectedDate.Month)
-                return Colour!;
+                return Color!;
             else
                 return Color.Dark;
         }
 
-        private Color GetDayColour(int dayIndex)
+        private Color GetDayColor(int dayIndex)
         {
             if (Date == null)
                 return Color.Dark;
@@ -150,11 +150,11 @@ namespace ClearBlazor
 
             if (SelectedDate.Year == date.Year && SelectedDate.Month == date.Month &&
                 date.Day == dayIndex - firstValidIndex + 1)
-                return Colour!;
+                return Color!;
 
             if (SelectedDate.Year == DateTime.Now.Date.Year && SelectedDate.Month == DateTime.Now.Date.Month &&
                 DateTime.Now.Date.Day == dayIndex - firstValidIndex + 1)
-                return Colour!;
+                return Color!;
 
             return Color.Dark;
         }
@@ -192,7 +192,7 @@ namespace ClearBlazor
                 return css;
 
             if (MouseOverMonth == month)
-                return css + $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColour.Value}; ";
+                return css + $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 
             return css;
         }

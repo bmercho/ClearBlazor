@@ -16,14 +16,14 @@ namespace ClearBlazor
         public LabelLocation LabelLocation { get; set; } = LabelLocation.End;
 
         [Parameter]
-        public Color? UncheckedColour { get; set; } = null;
+        public Color? UncheckedColor { get; set; } = null;
 
         private bool MouseOver = false;
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             HorizontalAlignment = Alignment.Start;
             VerticalAlignment = Alignment.Start;
-            Colour = Color.Primary;
+            Color = Color.Primary;
             await base.SetParametersAsync(parameters);
         }
 
@@ -90,12 +90,12 @@ namespace ClearBlazor
             if (IsDisabled)
                 css += $"background-color:{ThemeManager.CurrentPalette.TextDisabled.Lighten(.2).Value};";
             else if (Checked)
-                css += $"background-color:{Colour!.Lighten(.3).Value};";
+                css += $"background-color:{Color!.Lighten(.3).Value};";
             else
-                if (UncheckedColour == null)
-                css += $"background-color:{Colour!.Lighten(.3).Value}; ";
+                if (UncheckedColor == null)
+                css += $"background-color:{Color!.Lighten(.3).Value}; ";
             else
-                css += $"background-color:{UncheckedColour!.Lighten(.3).Value}; ";
+                css += $"background-color:{UncheckedColor!.Lighten(.3).Value}; ";
 
             (double height, double width, double margin) = GetSwitchSize();
 
@@ -111,12 +111,12 @@ namespace ClearBlazor
             if (IsDisabled)
                 css += $"background-color:{ThemeManager.CurrentPalette.TextDisabled.Value};";
             else if (Checked)
-                css += $"background-color:{Colour!.Value}; ";
+                css += $"background-color:{Color!.Value}; ";
             else
-                if (UncheckedColour == null)
-                css += $"background-color:{Colour!.Value}; ";
+                if (UncheckedColor == null)
+                css += $"background-color:{Color!.Value}; ";
             else
-                css += $"background-color:{UncheckedColour!.Value}; ";
+                css += $"background-color:{UncheckedColor!.Value}; ";
 
             (double height, double width, double margin) = GetSwitchSize();
 

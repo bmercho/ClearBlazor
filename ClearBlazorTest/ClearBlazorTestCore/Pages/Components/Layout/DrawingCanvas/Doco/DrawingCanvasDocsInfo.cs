@@ -18,11 +18,11 @@ namespace ClearBlazorTest
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
             new ApiComponentInfo("BorderThickness", "string?", "null", ""),
-            new ApiComponentInfo("BorderColour", "Color?", "null", ""),
+            new ApiComponentInfo("BorderColor", "Color?", "null", ""),
             new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", ""),
             new ApiComponentInfo("CornerRadius", "string?", "null", ""),
             new ApiComponentInfo("BoxShadow", "int?", "null", ""),
-            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
             new ApiComponentInfo("OnCanvasSizeChange", "EventCallback<CanvasSize>", "", ""),
             new ApiComponentInfo("OnPaint", "EventCallback<Batch2D?>", "", ""),
             new ApiComponentInfo("OnCanvasClick", "EventCallback<MouseEventArgs>", "", ""),

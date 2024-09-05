@@ -21,7 +21,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Stretch", "<a href=ImageStretchApi>ImageStretch</a>", "ImageStretch.Uniform", ""),
             new ApiComponentInfo("StretchDirection", "<a href=StretchDirectionApi>StretchDirection</a>", "StretchDirection.Both", ""),
             new ApiComponentInfo("ImageId", "string", "string.Empty", ""),
-            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

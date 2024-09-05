@@ -14,7 +14,7 @@ namespace ClearBlazor
         public string ToolTip { get; set; } = "";
 
         [Parameter]
-        public Color? Colour { get; set; } = null;
+        public Color? Color { get; set; } = null;
 
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
@@ -88,8 +88,8 @@ namespace ClearBlazor
                 css += $"color: {ThemeManager.CurrentPalette.BackgroundDisabled.Value}; ";
             else if (!IsValid)
                 css += $"color: {Color.Error.Value}; ";
-            //else if (Colour != null)
-            //    css += $"color: {Colour.Value}; ";
+            //else if (Color != null)
+            //    css += $"color: {Color.Value}; ";
 
             TypographyBase typo = ThemeManager.CurrentTheme.Typography.InputLabelNormal;
             switch (Size)

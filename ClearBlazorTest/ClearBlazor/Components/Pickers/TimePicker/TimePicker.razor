@@ -5,35 +5,35 @@
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
         <StackPanel Orientation=@Orientation HorizontalAlignment=Alignment.Start VerticalAlignment=Alignment.Start>
-            <Grid BackgroundColour=@Colour>
-                <Grid Margin="10" BackgroundColour=@Colour>
+            <Grid BackgroundColor=@Color>
+                <Grid Margin="10" BackgroundColor=@Color>
                     <StackPanel Orientation=Orientation.Portrait VerticalAlignment=Alignment.Center
                                 HorizontalAlignment=Alignment.Center
-                                BackgroundColour=Color.Transparent>
+                                BackgroundColor=Color.Transparent>
                         <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Center
-                                    BackgroundColour=Color.Transparent>
-                            <TextBlock Colour=@GetHourColour() Typo=Typo.H2 Clickable=true OnClicked=@OnHourClicked>
+                                    BackgroundColor=Color.Transparent>
+                            <TextBlock Color=@GetHourColor() Typo=Typo.H2 Clickable=true OnClicked=@OnHourClicked>
                                 @Hour.ToString("D2")
                             </TextBlock>
                             <TextBlock Typo=Typo.H2>:</TextBlock>
-                            <TextBlock Colour=@GetMinuteColour() Typo=Typo.H2 Clickable=true OnClicked=@OnMinuteClicked>
+                            <TextBlock Color=@GetMinuteColor() Typo=Typo.H2 Clickable=true OnClicked=@OnMinuteClicked>
                                 @Minute.ToString("D2")
                             </TextBlock>
                             @if (!Hours24 && Orientation == Orientation.Portrait)
                             {
                                 <StackPanel Margin="0,0,0,20" Orientation=@Orientation VerticalAlignment=Alignment.Center
-                                            BackgroundColour=Color.Transparent>
-                                    <TextBlock Colour=@GetAMColour() Typo=Typo.H6 Margin="0,0,10,0" Clickable=true OnClicked=@OnAMClicked>AM</TextBlock>
-                                    <TextBlock Colour=@GetPMColour() Typo=Typo.H6 Clickable=true OnClicked=@OnPMClicked>PM</TextBlock>
+                                            BackgroundColor=Color.Transparent>
+                                    <TextBlock Color=@GetAMColor() Typo=Typo.H6 Margin="0,0,10,0" Clickable=true OnClicked=@OnAMClicked>AM</TextBlock>
+                                    <TextBlock Color=@GetPMColor() Typo=Typo.H6 Clickable=true OnClicked=@OnPMClicked>PM</TextBlock>
                                 </StackPanel>
                             }
                         </StackPanel>
                         @if (!Hours24 && Orientation == Orientation.Landscape)
                         {
                             <StackPanel Margin="0,0,0,10" Orientation=@Orientation HorizontalAlignment=Alignment.Center
-                                        BackgroundColour=Color.Transparent>
-                                <TextBlock Colour=@GetAMColour() Typo=Typo.H6 Margin="0,10,0,0" Clickable=true OnClicked=@OnAMClicked>AM</TextBlock>
-                                <TextBlock Colour=@GetPMColour() Typo=Typo.H6 Clickable=true OnClicked=@OnPMClicked>PM</TextBlock>
+                                        BackgroundColor=Color.Transparent>
+                                <TextBlock Color=@GetAMColor() Typo=Typo.H6 Margin="0,10,0,0" Clickable=true OnClicked=@OnAMClicked>AM</TextBlock>
+                                <TextBlock Color=@GetPMColor() Typo=Typo.H6 Clickable=true OnClicked=@OnPMClicked>PM</TextBlock>
                             </StackPanel>
                         }
                     </StackPanel>

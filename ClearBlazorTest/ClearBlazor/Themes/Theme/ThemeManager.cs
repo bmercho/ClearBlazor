@@ -87,9 +87,9 @@ namespace ClearBlazor
                 }
 
             await jsRuntime.InvokeVoidAsync("window.scrollbar.setScrollBarProperties", width, height, borderRadius,
-                                                       CurrentPalette.ScrollbarBackgroundColour.Value,
-                                                       CurrentPalette.ScrollbarThumbColour.Value,
-                                                       CurrentPalette.ScrollbarThumbColour.Darken(0.1).Value,
+                                                       CurrentPalette.ScrollbarBackgroundColor.Value,
+                                                       CurrentPalette.ScrollbarThumbColor.Value,
+                                                       CurrentPalette.ScrollbarThumbColor.Darken(0.1).Value,
                                                        thumbBorder);
         }
     }

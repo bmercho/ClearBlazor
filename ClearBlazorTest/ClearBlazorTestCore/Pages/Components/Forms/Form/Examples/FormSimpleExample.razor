@@ -30,7 +30,7 @@
 
             <Slider Label="Simple slider" @bind-Value=SliderValue FieldName="SliderValue" />
           
-            <ColourPickerInput @bind-Value=ColourValue FieldName="ColourValue" />
+            <ColorPickerInput @bind-Value=ColorValue FieldName="ColorValue" />
             <DatePickerInput @bind-Value=DateValue FieldName="DateValue" />
             <TimePickerInput @bind-Value=TimeValue FieldName="TimeValue" />
 
@@ -64,7 +64,7 @@
     public string? RadioValue { get; set; } = null;
     public TestEnum EnumValue { get; set; } = TestEnum.Enum2;
     public double SliderValue { get; set; } = 50;
-    public Color? ColourValue { get; set; } = Color.Secondary;
+    public Color? ColorValue { get; set; } = Color.Secondary;
     public DateOnly? DateValue { get; set; } = DateOnly.FromDateTime(DateTime.Now);
     public TimeOnly? TimeValue { get; set; } = new TimeOnly(22,15);
 

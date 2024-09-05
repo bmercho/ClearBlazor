@@ -17,7 +17,7 @@ namespace ClearBlazorTest
         {
             new ApiComponentInfo("OnToggleChanged", "EventCallback<bool>", "", ""),
             new ApiComponentInfo("ToggledIcon", "string?", "null", ""),
-            new ApiComponentInfo("ToggledIconColour", "Color?", "null", ""),
+            new ApiComponentInfo("ToggledIconColor", "Color?", "null", ""),
             new ApiComponentInfo("Text", "string", "string.Empty", ""),
             new ApiComponentInfo("ToggledText", "string", "string.Empty", ""),
         };

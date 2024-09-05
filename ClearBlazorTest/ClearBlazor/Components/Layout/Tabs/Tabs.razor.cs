@@ -11,7 +11,7 @@ namespace ClearBlazor
         public string? BorderThickness { get; set; }
 
         [Parameter]
-        public Color? BorderColour { get; set; }
+        public Color? BorderColor { get; set; }
 
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
@@ -24,13 +24,13 @@ namespace ClearBlazor
         public int? BoxShadow { get; set; } = null;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = null;
 
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
         [Parameter]
-        public Color? Colour { get; set; } = null;
+        public Color? Color { get; set; } = null;
 
         [Parameter]
         public EventCallback<Tab> OnTabChanged { get; set; }
@@ -58,20 +58,20 @@ namespace ClearBlazor
             return css;
         }
 
-        protected Color GetButtonColour(Tab page)
+        protected Color GetButtonColor(Tab page)
         {
             
             if (page == ActivePage)
             {
-                if (Colour == null)
+                if (Color == null)
                     return ThemeManager.CurrentPalette.Primary;
-                return Colour;
+                return Color;
             }
             else
             {
-                if (Colour == null)
+                if (Color == null)
                     return ThemeManager.CurrentPalette.Primary.Darken(.25);
-                return Colour.Darken(.25);
+                return Color.Darken(.25);
             }
         }
 

@@ -36,35 +36,35 @@ public class Color:IEquatable<Color>
         BackgroundGrey = ThemeManager.CurrentPalette.BackgroundGrey;
     }
 
-    public static Color GetAssocTextColour(Color? colour)
+    public static Color GetAssocTextColor(Color? color)
     {
-        if (colour == null)
+        if (color == null)
             return ThemeManager.CurrentPalette.PrimaryContrastText;
-        if (colour == Color.Primary)
+        if (color == Color.Primary)
             return ThemeManager.CurrentPalette.PrimaryContrastText;
-        if (colour == Color.Secondary)
+        if (color == Color.Secondary)
             return ThemeManager.CurrentPalette.SecondaryContrastText;
-        if (colour == Color.Tertiary)
+        if (color == Color.Tertiary)
             return ThemeManager.CurrentPalette.TertiaryContrastText;
-        if (colour == Color.Info)
+        if (color == Color.Info)
             return ThemeManager.CurrentPalette.InfoContrastText;
-        if (colour == Color.Success)
+        if (color == Color.Success)
             return ThemeManager.CurrentPalette.SuccessContrastText;
-        if (colour == Color.Warning)
+        if (color == Color.Warning)
             return ThemeManager.CurrentPalette.WarningContrastText;
-        if (colour == Color.Error)
+        if (color == Color.Error)
             return ThemeManager.CurrentPalette.ErrorContrastText;
-        if (colour == Color.Dark)
+        if (color == Color.Dark)
             return ThemeManager.CurrentPalette.DarkContrastText;
-        if (colour == Color.Light)
+        if (color == Color.Light)
             return ThemeManager.CurrentPalette.GrayLighterContrastText;
 
-        return ContrastingColor(colour);
+        return ContrastingColor(color);
     }
 
     public static Color Custom(string colorValue)
     {
-        var colour = new Color(colorValue);
+        var color = new Color(colorValue);
         return new Color(colorValue);
     }
 
@@ -139,14 +139,14 @@ public class Color:IEquatable<Color>
         GetHSLFromRGB();
     }
 
-    public Color(int r, int g, int b, Color existingColour)
+    public Color(int r, int g, int b, Color existingColor)
     {
         R = (byte)CheckRange(r, 0, 255);
         G = (byte)CheckRange(g, 0, 255);
         B = (byte)CheckRange(b, 0, 255);
-        A = (byte)CheckRange((int)existingColour.A, 0, 255);
+        A = (byte)CheckRange((int)existingColor.A, 0, 255);
         GetHSLFromRGB();
-        H = existingColour.H;
+        H = existingColor.H;
     }
 
     public Color(int r, int g, int b, int a)
@@ -178,11 +178,11 @@ public class Color:IEquatable<Color>
     public Color RgbDarken() => Darken(0.075);
 
 
-    public static Color ContrastingColor(Color colour)
+    public static Color ContrastingColor(Color color)
     {
         int nThreshold = 105;
-        int bgDelta = Convert.ToInt32((colour.R * 0.299) + (colour.G * 0.587) +
-                                      (colour.B * 0.114));
+        int bgDelta = Convert.ToInt32((color.R * 0.299) + (color.G * 0.587) +
+                                      (color.B * 0.114));
 
         return (255 - bgDelta < nThreshold) ? ThemeManager.CurrentPalette.Black : ThemeManager.CurrentPalette.White;
     }
@@ -247,7 +247,7 @@ public class Color:IEquatable<Color>
             GetRGBFromHashValue(value);
         }
         else
-            GetRGBFromHashValue(ColourNames.GetRgbForColourName(value));
+            GetRGBFromHashValue(ColorNames.GetRgbForColorName(value));
     }
 
     private void GetHSLFromRGB()

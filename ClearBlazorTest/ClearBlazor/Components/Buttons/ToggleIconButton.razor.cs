@@ -12,7 +12,7 @@ namespace ClearBlazor
         public string? ToggledIcon { get; set; } = null;
 
         [Parameter]
-        public Color? ToggledIconColour { get; set; } = null;
+        public Color? ToggledIconColor { get; set; } = null;
 
         [Parameter]
         public string Text { get; set; } = string.Empty;

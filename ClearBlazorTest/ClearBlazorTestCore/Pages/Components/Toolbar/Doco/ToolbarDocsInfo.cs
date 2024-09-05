@@ -19,7 +19,7 @@ namespace ClearBlazorTest
         {
             new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
             new ApiComponentInfo("BorderThickness", "string?", "null", ""),
-            new ApiComponentInfo("BorderColour", "Color?", "null", ""),
+            new ApiComponentInfo("BorderColor", "Color?", "null", ""),
             new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", ""),
             new ApiComponentInfo("CornerRadius", "string?", "null", ""),
             new ApiComponentInfo("BoxShadow", "int?", "null", ""),

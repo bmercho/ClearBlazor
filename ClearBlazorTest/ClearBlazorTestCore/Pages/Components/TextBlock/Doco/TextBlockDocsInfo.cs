@@ -14,14 +14,14 @@ namespace ClearBlazorTest
         {
             (" IContent", " IContentApi"),
             (" IBackground", " IBackgroundApi"),
-            ("IColour", "IColourApi"),
+            ("IColor", "IColorApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
             new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
             new ApiComponentInfo("OnMouseOver", "EventCallback<MouseOverEventArgs>", "", ""),
-            new ApiComponentInfo("Colour", "Color?", "null", ""),
-            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
+            new ApiComponentInfo("Color", "Color?", "null", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
             new ApiComponentInfo("Typo", "<a href=TypoApi>Typo?</a>", "null", ""),
             new ApiComponentInfo("Typography", "TypographyBase?", "null", ""),
             new ApiComponentInfo("FontFamily", "string?", "null", ""),

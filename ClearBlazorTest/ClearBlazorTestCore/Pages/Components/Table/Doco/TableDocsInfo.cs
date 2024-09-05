@@ -26,11 +26,11 @@ namespace ClearBlazorTest
             new ApiComponentInfo("HorizontalGridLines", "<a href=GridLinesApi>GridLines</a>", "GridLines.None", ""),
             new ApiComponentInfo("VerticalGridLines", "<a href=GridLinesApi>GridLines</a>", "GridLines.None", ""),
             new ApiComponentInfo("BorderThickness", "string?", "null", ""),
-            new ApiComponentInfo("BorderColour", "Color?", "null", ""),
+            new ApiComponentInfo("BorderColor", "Color?", "null", ""),
             new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", ""),
             new ApiComponentInfo("CornerRadius", "string?", "null", ""),
             new ApiComponentInfo("BoxShadow", "int?", "null", ""),
-            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

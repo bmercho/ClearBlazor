@@ -64,8 +64,8 @@ public class PaletteDark : Palette
 
     //public override Color ChipDefaultHover { get; set; } = new("rgba(255,255,255, 0.24)");
 
-    public override Color ToolTipBackgroundColour { get; set; } = new ("#808080");
-    public override Color ToolTipTextColour { get; set; } = new ("#0000ff");
+    public override Color ToolTipBackgroundColor { get; set; } = new ("#808080");
+    public override Color ToolTipTextColor { get; set; } = new ("#0000ff");
 
-    public override Color ListBackgroundColour { get; set; } = new(Colors.Grey.Lighten2);
+    public override Color ListBackgroundColor { get; set; } = new(Colors.Grey.Lighten2);
 }

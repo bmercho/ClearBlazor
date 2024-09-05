@@ -62,7 +62,7 @@ namespace ClearBlazor
                 _debounceInterval = (int)DebounceInterval;
         }
 
-        protected Color GetBackgroundColour()
+        protected Color GetBackgroundColor()
         {
             switch (TextEditFillMode)
             {
@@ -136,7 +136,7 @@ namespace ClearBlazor
                     return "1";
             }
         }
-        protected Color GetBorderColour()
+        protected Color GetBorderColor()
         {
             if (IsDisabled)
             {
@@ -204,8 +204,8 @@ namespace ClearBlazor
                 css += $"color: {ThemeManager.CurrentPalette.BackgroundDisabled.Value}; ";
             else if (!IsValid)
                 css += $"color: {Color.Error.Value}; ";
-            else if (Colour != null)
-                css += $"color: {Colour.Value}; ";
+            else if (Color != null)
+                css += $"color: {Color.Value}; ";
 
             TypographyBase typo = ThemeManager.CurrentTheme.Typography.InputNormal;
             switch (Size)

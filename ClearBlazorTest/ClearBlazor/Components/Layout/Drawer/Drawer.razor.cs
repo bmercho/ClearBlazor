@@ -30,10 +30,10 @@ namespace ClearBlazor
         public bool OverlayEnabled { get; set; } = true;
 
         [Parameter]
-        public Color? Colour { get; set; } = null;
+        public Color? Color { get; set; } = null;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = null;
 
         [Inject]
         public BrowserSizeService BrowserSizeService { get; set; } = null!;

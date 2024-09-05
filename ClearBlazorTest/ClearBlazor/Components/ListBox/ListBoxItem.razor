@@ -4,7 +4,7 @@
 @inherits ClearComponentBase
 <CascadingValue Value=this IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <StackPanel Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch BackgroundColour=@Color.Transparent>
+        <StackPanel Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch BackgroundColor=@Color.Transparent>
             <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=@ContentAlignment Spacing=20
                         Padding=@LinePadding Class=@RowClasses
                         Style=@RowStyle
@@ -16,25 +16,25 @@
                     @if (IsSelected)
                     {
                         <MaterialIcon VerticalAlignment=Alignment.Center Size=@RowSize
-                                      Colour=@GetColour() Icon=@Icons.Material.Filled.CheckBox />
+                                      Color=@GetColor() Icon=@Icons.Material.Filled.CheckBox />
                     }
                     else
                     {
                         <MaterialIcon VerticalAlignment=Alignment.Center Size=@RowSize
-                                      Colour=@GetColour() Icon=@Icons.Material.Filled.CheckBoxOutlineBlank />
+                                      Color=@GetColor() Icon=@Icons.Material.Filled.CheckBoxOutlineBlank />
                     }
                 }
 
                 @if (Icon != null)
                 {
-                    <MaterialIcon Margin="0,7,0,7" Size=@RowSize Icon=@Icon Colour=@GetColour()
+                    <MaterialIcon Margin="0,7,0,7" Size=@RowSize Icon=@Icon Color=@GetColor()
                                   HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center />
                 }
                 else if (Avatar != null)
                 {
                     <Avatar HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center
-                            AvatarStyle=TextEditFillMode.None Size=@RowSize Icon=@Avatar Colour=@GetColour()
-                            IconColour=@GetColour() />
+                            AvatarStyle=TextEditFillMode.None Size=@RowSize Icon=@Avatar Color=@GetColor()
+                            IconColor=@GetColor() />
                 }
 
                 @if (Text != null)
@@ -46,18 +46,18 @@
                                FontWeight="@FontWeight"
                                FontStyle="@FontStyle"
                                TextWrapping="TextWrap.NoWrap"
-                               Colour=@GetColour()>@Text</TextBlock>
+                               Color=@GetColor()>@Text</TextBlock>
 
                 }
                 @if (HasChildren)
                 {
                     @if (IsExpanded)
                     {
-                        <MaterialIcon Colour=@GetColour() Size=Size.Normal Icon=@Icons.Material.Filled.ExpandLess VerticalAlignment=Alignment.Center />
+                        <MaterialIcon Color=@GetColor() Size=Size.Normal Icon=@Icons.Material.Filled.ExpandLess VerticalAlignment=Alignment.Center />
                     }
                     else
                     {
-                        <MaterialIcon Colour=@GetColour() Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore VerticalAlignment=Alignment.Center />
+                        <MaterialIcon Color=@GetColor() Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore VerticalAlignment=Alignment.Center />
                     }
                 }
             </StackPanel>

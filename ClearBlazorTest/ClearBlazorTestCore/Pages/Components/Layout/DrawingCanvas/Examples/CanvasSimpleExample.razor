@@ -43,8 +43,8 @@
         for (int i = 0; i < 100; i++)
         {
             await context.SaveAsync();
-            await context.StrokeStyleAsync(Color.Custom(GetRandomColour(random)).Value);
-            await context.FillStyleAsync(Color.Custom(GetRandomColour(random)).Value);
+            await context.StrokeStyleAsync(Color.Custom(GetRandomColor(random)).Value);
+            await context.FillStyleAsync(Color.Custom(GetRandomColor(random)).Value);
 
             double start = random.NextDouble();
             double span = (1.0 - start) * random.NextDouble() + start;
@@ -72,7 +72,7 @@
         }
     }
 
-    private string GetRandomColour(Random random)
+    private string GetRandomColor(Random random)
     {
         return $"rgba({random.Next(0, 255)}, {random.Next(0, 255)}, {random.Next(0, 255)}, 1)";
     }

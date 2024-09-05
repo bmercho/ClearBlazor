@@ -13,12 +13,12 @@
         {
             <TextBlock FontSize="16px" Margin="10,0,10,0">@Description</TextBlock>
         }
-        <Grid Padding="20" BorderThickness="1,1,0,1" CornerRadius="8,8,0,0" BackgroundColour=@BackgroundColour>
+        <Grid Padding="20" BorderThickness="1,1,0,1" CornerRadius="8,8,0,0" BackgroundColor=@BackgroundColor>
             @ChildContent
         </Grid>
         @if (ShowCode)
         {
-            <Grid CornerRadius="0,0,8,8" BorderThickness="1" BackgroundColour="@Color.BackgroundGrey" Padding="20">
+            <Grid CornerRadius="0,0,8,8" BorderThickness="1" BackgroundColor="@Color.BackgroundGrey" Padding="20">
                 <ScrollViewer HorizontalScrollMode="ScrollMode.Auto" VerticalScrollMode="ScrollMode.Disabled">
                     @CodeComponent(Code)
                 </ScrollViewer>

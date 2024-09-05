@@ -14,7 +14,7 @@ namespace ClearBlazor
         public Orientation Orientation { get; set; } = Orientation.Landscape;
 
         [Parameter]
-        public Color? Colour { get; set; } = null;
+        public Color? Color { get; set; } = null;
 
         [Parameter]
         public bool DisableBoxShadow { get; set; } = false;
@@ -47,8 +47,8 @@ namespace ClearBlazor
                 var btn = (Button)child;
                 if (ButtonStyle != null)
                     btn.ButtonStyleOverride = ButtonStyle;
-                if (Colour != null)
-                    btn.ColourOverride = Colour;
+                if (Color != null)
+                    btn.ColorOverride = Color;
                 btn.SizeOverride = Size;
             }
         }

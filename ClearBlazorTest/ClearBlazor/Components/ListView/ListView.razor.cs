@@ -40,13 +40,13 @@ namespace ClearBlazor
 
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = Color.Transparent;
+        public Color? BackgroundColor { get; set; } = Color.Transparent;
 
         [Parameter]
         public string? BorderThickness { get; set; }
 
         [Parameter]
-        public Color? BorderColour { get; set; }
+        public Color? BorderColor { get; set; }
 
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
@@ -115,10 +115,10 @@ namespace ClearBlazor
             }
 
             if (HoverHighlight && IsHighlighted(item))
-                css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColour.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 
             if (IsSelected(item))
-                css += $"background-color: {ThemeManager.CurrentPalette.ListSelectedColour.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; ";
 
             return css;
         }

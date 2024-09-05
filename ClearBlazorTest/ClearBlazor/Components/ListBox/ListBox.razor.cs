@@ -23,13 +23,13 @@ namespace ClearBlazor
         public List<ListDataItem<TListBox>>? ListData { get; set; } = null;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = Color.Transparent;
+        public Color? BackgroundColor { get; set; } = Color.Transparent;
 
         [Parameter]
         public string? BorderThickness { get; set; }
 
         [Parameter]
-        public Color? BorderColour { get; set; }
+        public Color? BorderColor { get; set; }
 
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
@@ -88,7 +88,7 @@ namespace ClearBlazor
         {
             item.HorizontalAlignmentDefaultOverride = Alignment.Start;
             item.RowSize = RowSize;
-            item.ColourOverride = Colour;
+            item.ColorOverride = Color;
             item.Level = 1;
             if (MultiSelect)
             {

@@ -31,7 +31,7 @@ namespace ClearBlazor
         public string? BorderThickness { get; set; }
 
         [Parameter]
-        public Color? BorderColour { get; set; }
+        public Color? BorderColor { get; set; }
 
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
@@ -67,8 +67,8 @@ namespace ClearBlazor
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
-            if (Colour == null)
-                Colour = Color.Primary;
+            if (Color == null)
+                Color = Color.Primary;
             if (Time == null)
                 Time = new TimeOnly(0, 0);
         }
@@ -136,7 +136,7 @@ namespace ClearBlazor
             await context.ClosePathAsync();
 
             await context.BeginPathAsync();
-            await context.FillStyleAsync(Colour!.Value);
+            await context.FillStyleAsync(Color!.Value);
             await context.ArcAsync(0, 0, 5, 0, 2 * Math.PI);
             await context.ClosePathAsync();
             await context.FillAsync(FillRule.NonZero);
@@ -183,7 +183,7 @@ namespace ClearBlazor
         private async Task DrawHand(Batch2D context, double angle, double length, double width, double endCircleSize)
         {
             await context.SaveAsync();
-            await context.StrokeStyleAsync(Colour!.Value);
+            await context.StrokeStyleAsync(Color!.Value);
             await context.BeginPathAsync();
             await context.LineWidthAsync(width);
             await context.LineCapAsync(LineCap.Round);
@@ -198,7 +198,7 @@ namespace ClearBlazor
 
             await context.SaveAsync();
             await context.BeginPathAsync();
-            await context.FillStyleAsync(Colour!.Value);
+            await context.FillStyleAsync(Color!.Value);
             await context.RotateAsync(angle);
             await context.TranslateAsync(0, -length);
             await context.ArcAsync(0, 0, endCircleSize, 0, 2 * Math.PI);
@@ -295,36 +295,36 @@ namespace ClearBlazor
             }
         }
 
-        private Color GetHourColour()
+        private Color GetHourColor()
         {
             if (PickerMode == PickerMode.Hour12 || PickerMode == PickerMode.Hour24)
-                return Color.ContrastingColor(Colour!);
+                return Color.ContrastingColor(Color!);
             else
-                return Color.ContrastingColor(Colour!).Darken(0.3);
+                return Color.ContrastingColor(Color!).Darken(0.3);
         }
 
-        private Color GetMinuteColour()
+        private Color GetMinuteColor()
         {
             if (PickerMode == PickerMode.Minute)
-                return Color.ContrastingColor(Colour!);
+                return Color.ContrastingColor(Color!);
             else
-                return Color.ContrastingColor(Colour!).Darken(0.3);
+                return Color.ContrastingColor(Color!).Darken(0.3);
         }
 
-        private Color GetAMColour()
+        private Color GetAMColor()
         {
             if (IsAM)
-                return Color.ContrastingColor(Colour!);
+                return Color.ContrastingColor(Color!);
             else
-                return Color.ContrastingColor(Colour!).Darken(0.3);
+                return Color.ContrastingColor(Color!).Darken(0.3);
         }
 
-        private Color GetPMColour()
+        private Color GetPMColor()
         {
             if (IsAM)
-                return Color.ContrastingColor(Colour!).Darken(0.3);
+                return Color.ContrastingColor(Color!).Darken(0.3);
             else
-                return Color.ContrastingColor(Colour!);
+                return Color.ContrastingColor(Color!);
         }
 
         private void OnMinuteClicked()

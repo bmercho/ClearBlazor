@@ -8,7 +8,7 @@ namespace ClearBlazor
         public RenderFragment? ChildContent { get; set; } = null;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = null;
 
         List<Toolbar> Toolbars = new List<Toolbar>();
 

@@ -26,11 +26,11 @@ namespace ClearBlazorTest
             new ApiComponentInfo("RowSpacing", "double", "0", "The spacing in pixels between each row\r"),
             new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
             new ApiComponentInfo("BorderThickness", "string?", "null", ""),
-            new ApiComponentInfo("BorderColour", "Color?", "null", ""),
+            new ApiComponentInfo("BorderColor", "Color?", "null", ""),
             new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", ""),
             new ApiComponentInfo("CornerRadius", "string?", "null", ""),
             new ApiComponentInfo("BoxShadow", "int?", "null", ""),
-            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
             new ApiComponentInfo("BackgroundGradient1", "string?", "null", ""),
             new ApiComponentInfo("BackgroundGradient2", "string?", "null", ""),
         };

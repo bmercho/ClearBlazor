@@ -9,7 +9,7 @@ namespace ClearBlazorTest
         public string Description {get; set; } = "";
         public List<ApiFieldInfo> FieldApi {get; set; } = new List<ApiFieldInfo>
         {
-            new ApiFieldInfo("BackgroundColour", "Color?", ""),
+            new ApiFieldInfo("BackgroundColor", "Color?", ""),
         };
     }
 }

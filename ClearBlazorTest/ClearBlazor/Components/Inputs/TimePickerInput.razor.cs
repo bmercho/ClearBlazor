@@ -18,7 +18,7 @@ namespace ClearBlazor
         public Orientation Orientation { get; set; } = Orientation.Portrait;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = null;
         [Parameter]
         public PopupPosition Position { get; set; } = PopupPosition.BottomLeft;
         [Parameter]

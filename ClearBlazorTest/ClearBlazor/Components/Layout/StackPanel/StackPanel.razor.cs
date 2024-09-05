@@ -12,7 +12,7 @@ namespace ClearBlazor
         public string? BorderThickness { get; set; }
 
         [Parameter]
-        public Color? BorderColour { get; set; }
+        public Color? BorderColor { get; set; }
 
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
@@ -25,7 +25,7 @@ namespace ClearBlazor
         public int? BoxShadow { get; set; } = null;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = null;
 
         [Parameter]
         public Orientation Orientation { get; set; } = Orientation.Portrait;

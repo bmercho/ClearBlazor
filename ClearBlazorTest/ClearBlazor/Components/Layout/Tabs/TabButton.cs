@@ -14,7 +14,7 @@ namespace ClearBlazor
         [Parameter]
         public bool IsLastTab { get; set; } = false;
 
-        protected override string GetBorder(TextEditFillMode buttonStyle, Color colour)
+        protected override string GetBorder(TextEditFillMode buttonStyle, Color color)
         {
             switch (buttonStyle)
             {
@@ -22,13 +22,13 @@ namespace ClearBlazor
                 case TextEditFillMode.None:
                     if (IsActive)
                         if (IsFirstTab)
-                            return $"border-width: 0 0 2px 0; border-style: solid; border-color: {colour.Value};  border-radius: 4px 0 0 0; ";
+                            return $"border-width: 0 0 2px 0; border-style: solid; border-color: {color.Value};  border-radius: 4px 0 0 0; ";
                         else
-                            return $"border-width: 0 0 2px 0; border-style: solid; border-color: {colour.Value};  border-radius: 0; ";
+                            return $"border-width: 0 0 2px 0; border-style: solid; border-color: {color.Value};  border-radius: 0; ";
                     else
                         return $"border-radius: 0; ";
                 case TextEditFillMode.Outline:
-                    return $"border-width: 1px; border-style: solid; border-color: {colour.Value}; border-radius: 0; ";
+                    return $"border-width: 1px; border-style: solid; border-color: {color.Value}; border-radius: 0; ";
             }
             return string.Empty;
         }

@@ -21,9 +21,9 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
             new ApiComponentInfo("AvatarStyle", "<a href=TextEditFillModeApi>TextEditFillMode</a>", "TextEditFillMode.Filled", ""),
             new ApiComponentInfo("Shape", "<a href=ContainerShapeApi>ContainerShape</a>", "ContainerShape.Circle", ""),
-            new ApiComponentInfo("Colour", "Color", "ThemeManager.CurrentPalette.Primary", ""),
+            new ApiComponentInfo("Color", "Color", "ThemeManager.CurrentPalette.Primary", ""),
             new ApiComponentInfo("Text", "string", "string.Empty", ""),
-            new ApiComponentInfo("IconColour", "Color?", "null", ""),
+            new ApiComponentInfo("IconColor", "Color?", "null", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

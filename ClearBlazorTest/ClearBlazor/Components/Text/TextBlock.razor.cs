@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class TextBlock : ClearComponentBase, IContent, IBackground,IColour
+    public partial class TextBlock : ClearComponentBase, IContent, IBackground,IColor
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
@@ -11,10 +11,10 @@ namespace ClearBlazor
         public EventCallback<MouseOverEventArgs> OnMouseOver { get; set; }
 
         [Parameter]
-        public Color? Colour { get; set; } = null;
+        public Color? Color { get; set; } = null;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = null;
 
         [Parameter]
         public Typo? Typo { get; set; } = null;
@@ -68,8 +68,8 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            if (Colour != null)
-                css += $"color: {Colour.Value}; ";
+            if (Color != null)
+                css += $"color: {Color.Value}; ";
             else
                 css += $"color: {ThemeManager.CurrentPalette.TextPrimary.Value}; ";
 

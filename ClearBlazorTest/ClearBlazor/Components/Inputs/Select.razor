@@ -10,8 +10,8 @@
             {
                 <TextBlock Style=@GetLabelStyle()>@Label</TextBlock>
             }
-            <Grid BackgroundColour=@GetBackgroundColour() BorderThickness=@GetBorderThickness()
-                  BorderColour=@GetBorderColour() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
+            <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
+                  BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
                 <div @ref="SelectElement" style="display:grid; ">
                     <Grid Columns="*,auto" OnClicked=@ToggleDropdown>
                         <TextBlock Style=@ComputeInputStyle() VerticalAlignment=Alignment.Center>@SelectionText</TextBlock>
@@ -23,8 +23,8 @@
                            @bind-Open=DropdownOpen Width=@GetPopupWidth()>
                         <ListBox TListBox=TItem @bind-Value=Value @bind-Values=Values
                                  MultiSelect=@MultiSelect RowSize=Size
-                                 Colour=Colour Margin="0,20,20,20" Padding="10,0,10,0"
-                                 BackgroundColour=Color.Background BoxShadow="2" CornerRadius="4"
+                                 Color=Color Margin="0,20,20,20" Padding="10,0,10,0"
+                                 BackgroundColor=Color.Background BoxShadow="2" CornerRadius="4"
                                  OnSelectionChanged=@OnListSelectionChanged
                                  OnSelectionsChanged=@OnListSelectionsChanged>
                             @if (SelectData == null)
@@ -44,14 +44,14 @@
                     @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                     {
                         <MaterialIcon Column=2 Icon="@Icons.Material.Filled.FmdBad"
-                                      Size=@Size ToolTip=@ValidationMessage Colour=@Color.Error />
+                                      Size=@Size ToolTip=@ValidationMessage Color=@Color.Error />
                     }
                 </div>
             </Grid>
             @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)
             {
                 <TextBlock TextWrapping="TextWrap.WrapOnNewLines"
-                           Colour=@Color.Error>@ValidationMessage</TextBlock>
+                           Color=@Color.Error>@ValidationMessage</TextBlock>
             }
         </StackPanel>
     </div>

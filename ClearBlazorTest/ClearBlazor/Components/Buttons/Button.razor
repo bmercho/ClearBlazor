@@ -12,17 +12,17 @@
         }
         <StackPanel Orientation="Orientation.Landscape" 
                     Spacing="@Spacing" VerticalAlignment="Alignment.Center" 
-                    BackgroundColour=@Color.Transparent>
+                    BackgroundColor=@Color.Transparent>
             @if (Icon != null && IconLocation == IconLocation.Start)
             {
-                <MaterialIcon Colour="@IconColour" Size="@Size" Icon="@Icon" />
+                <MaterialIcon Color="@IconColor" Size="@Size" Icon="@Icon" />
             }
             <span style="@LabelStyle">
                 @ChildContent
             </span>
             @if (Icon != null && IconLocation == IconLocation.End)
             {
-                <MaterialIcon Colour="@IconColour" Size="@Size" Icon="@Icon" />
+                <MaterialIcon Color="@IconColor" Size="@Size" Icon="@Icon" />
             }
         </StackPanel>
     </div>

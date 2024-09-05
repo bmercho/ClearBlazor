@@ -13,19 +13,19 @@
             <Grid Rows="auto,auto">
                 @if (BackgroundGradient1 == null && BackgroundGradient2 == null)
                 {
-                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=BackgroundTrackColour
+                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColor=BackgroundTrackColor
                             OnClicked=@OnTrackClicked />
                     <Grid Height=@TrackHeight Width=@TrackWidth HorizontalAlignment=Alignment.Start CornerRadius=@CornerRadius
-                            BackgroundColour=TrackColour OnClicked=@OnTrackClicked />
+                            BackgroundColor=TrackColor OnClicked=@OnTrackClicked />
                 }
                 @if (BackgroundGradient1 != null)
                 {
-                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=@Color.Transparent
+                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColor=@Color.Transparent
                             BackgroundGradient1=@BackgroundGradient1 OnClicked=@OnTrackClicked />
                 }
                 @if (BackgroundGradient2 != null)
                 {
-                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColour=@Color.Transparent
+                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColor=@Color.Transparent
                             BackgroundGradient2=@BackgroundGradient2 OnClicked=@OnTrackClicked />
                 }
                 @if (ShowTickMarks && Step != null)
@@ -33,7 +33,7 @@
                     <Grid Row=1 Margin="-5,0,0,0" Rows="auto,auto" HorizontalAlignment=Alignment.Start>
                         @foreach (var info in TickInfo)
                         {
-                            <Grid Height=@GetTickHeight() BorderColour=@TrackColour BorderThickness="2,0,0,0"
+                            <Grid Height=@GetTickHeight() BorderColor=@TrackColor BorderThickness="2,0,0,0"
                                     Margin=@info.TickMargin />
                             @if (ShowTickMarkLabels)
                             {
@@ -52,7 +52,7 @@
                 {
                     <Popup Position=PopupPosition.TopLeft Transform=PopupTransform.TopLeft Margin=@GetValueMargin()
                            @bind-Open=DropdownOpen CloseOnOutsideClick=false>
-                        <Grid BorderThickness=1 BackgroundColour=Color.BackgroundGrey CornerRadius=2>
+                        <Grid BorderThickness=1 BackgroundColor=Color.BackgroundGrey CornerRadius=2>
                             <TextBlock Typography=@GetTypograghy() VerticalAlignment=Alignment.Center 
                                        Margin="0,5,0,5" >@ValueLabel</TextBlock>
                         </Grid>

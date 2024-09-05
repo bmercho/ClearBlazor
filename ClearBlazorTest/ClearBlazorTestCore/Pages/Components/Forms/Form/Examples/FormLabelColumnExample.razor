@@ -35,8 +35,8 @@
             </Select>
             <TextBlock Column="0" Row="7" VerticalAlignment=Alignment.Center>Slider</TextBlock>
             <Slider Column="1" Row="7" @bind-Value=SliderValue FieldName="SliderValue" />
-            <TextBlock Column="0" Row="8" VerticalAlignment=Alignment.Center>Colour</TextBlock>
-            <ColourPickerInput Column="1" Row="8" @bind-Value=ColourValue FieldName="ColourValue" />
+            <TextBlock Column="0" Row="8" VerticalAlignment=Alignment.Center>Color</TextBlock>
+            <ColorPickerInput Column="1" Row="8" @bind-Value=ColorValue FieldName="ColorValue" />
         </Grid>
     </Form>
     <Button HorizontalAlignment=Alignment.Start OnClicked=@(() => form.Validate())>Validate</Button>
@@ -66,7 +66,7 @@
     public string? RadioValue { get; set; } = null;
     public TestEnum EnumValue { get; set; } = TestEnum.Enum2;
     public double SliderValue { get; set; } = 50;
-    public Color? ColourValue { get; set; } = Color.Secondary;
+    public Color? ColorValue { get; set; } = Color.Secondary;
 
     Form form;
 

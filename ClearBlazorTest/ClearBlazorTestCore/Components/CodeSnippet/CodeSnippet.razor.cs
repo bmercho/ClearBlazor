@@ -11,7 +11,7 @@ namespace ClearBlazorTest
         public RenderFragment? ChildContent { get; set; } = null;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; } = Color.Transparent;
+        public Color? BackgroundColor { get; set; } = Color.Transparent;
 
         [Parameter]
         public string Code { get; set; } = string.Empty;

@@ -2,6 +2,6 @@
 {
     public interface IBackground
     {
-        public Color? BackgroundColour { get; set; }
+        public Color? BackgroundColor { get; set; }
     }
 }

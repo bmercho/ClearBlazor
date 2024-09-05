@@ -20,7 +20,7 @@ namespace ClearBlazor
         [Parameter]
         public string UncheckedIcon { get; set; } = Icons.Material.Filled.RadioButtonUnchecked;
 
-        internal Color? ColourOverride { get; set; } = null;
+        internal Color? ColorOverride { get; set; } = null;
 
         protected override void OnInitialized()
         {
@@ -80,15 +80,15 @@ namespace ClearBlazor
                 return UncheckedIcon;
         }
 
-        private Color? GetColour()
+        private Color? GetColor()
         {
-            if (Colour != null)
-                return Colour;
+            if (Color != null)
+                return Color;
 
-            if (ColourOverride != null)
-                return ColourOverride;
+            if (ColorOverride != null)
+                return ColorOverride;
 
-            return Colour;
+            return Color;
         }
     }
 }

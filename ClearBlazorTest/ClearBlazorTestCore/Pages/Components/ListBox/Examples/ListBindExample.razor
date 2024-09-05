@@ -1,5 +1,5 @@
 ﻿@namespace ClearBlazorTest
-<ListBox @bind-Value=StringValue Width=300 BorderThickness="1" BorderColour="Color.Dark" CornerRadius="4">
+<ListBox @bind-Value=StringValue Width=300 BorderThickness="1" BorderColor="Color.Dark" CornerRadius="4">
     <ListBoxItem Value=@("Apple")/>
     <ListBoxItem Value=@("Apricot") />
     <ListBoxItem Value=@("Banana") />
@@ -11,7 +11,7 @@
 </ListBox>
 <TextBlock HorizontalAlignment=Alignment.Center >String value = @StringValue</TextBlock>
 
-<ListBox @bind-Value=DoubleValue Width=300 BorderThickness="1" BorderColour="Color.Dark" CornerRadius="4">
+<ListBox @bind-Value=DoubleValue Width=300 BorderThickness="1" BorderColor="Color.Dark" CornerRadius="4">
     <ListBoxItem Value=5.3 />
     <ListBoxItem Value=2.45 />
     <ListBoxItem Value=4.0 />
@@ -22,7 +22,7 @@
 </ListBox>
 <TextBlock HorizontalAlignment=Alignment.Center>Double value = @DoubleValue</TextBlock>
 
-<ListBox @bind-Value=EnumValue Width=300 BorderThickness="1" BorderColour="Color.Dark" CornerRadius="4">
+<ListBox @bind-Value=EnumValue Width=300 BorderThickness="1" BorderColor="Color.Dark" CornerRadius="4">
     @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
     {
         <ListBoxItem Text=@item.ToString() Value="@item" />

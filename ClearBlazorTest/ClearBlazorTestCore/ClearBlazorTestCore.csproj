@@ -27,15 +27,20 @@
     <Folder Include="Pages\Components\Avatar\Doco\" />
     <Folder Include="Pages\Enums\Alignment\" />
     <Folder Include="Pages\Interfaces\IBackground\" />
-    <Folder Include="Pages\Interfaces\IColour\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerColorExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Pickers\ColorPicker\Code\ColorPickerSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridColorExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\Slider\Code\SliderColorExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectSizeColorExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioColorExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\ColorPickerInput\Code\ColorPickerInputSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListColorsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerReadOnlyDisabledExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerCultureExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerColourExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Pickers\ColourPicker\Code\ColourPickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\WrapPanel\Code\WrapPanelRowReverseExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\WrapPanel\Code\WrapPanelRowExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\WrapPanel\Code\WrapPanelColumnReverseExampleCode.html" />
@@ -50,7 +55,6 @@
 	<EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridRowsColsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridGradientBackgroundExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridContentAlignmentExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridColourExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridBoxShadowExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\Grid\Code\GridBorderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\DrawingCanvas\Code\CanvasSimpleExampleCode.html" />
@@ -83,11 +87,9 @@
 	<EmbeddedResource Include="Pages\Components\Inputs\Slider\Code\SliderReadonlyExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Slider\Code\SliderDisabledExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Slider\Code\SliderCustomTickMarkLabelExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Slider\Code\SliderColourExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Slider\Code\SliderBackgroundGradientExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectTypeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectStretchExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectSizeColourExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectPlacementExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectMultiselectStringExampleCode.html" />
@@ -102,7 +104,6 @@
 	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioNullableTypeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioDisabledExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioDataExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioColourExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputTypeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputSpinButtonsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputSimpleExampleCode.html" />
@@ -110,7 +111,6 @@
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputImmediateExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputCultureExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\DatePickerInput\Code\DatePickerInputSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\ColourPickerInput\Code\ColourPickerInputSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\CheckBox\Code\CheckBoxSizeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\CheckBox\Code\CheckBoxSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\CheckBox\Code\CheckBoxReadonlyExampleCode.html" />
@@ -160,7 +160,6 @@
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListMultiLevelExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListIconAvatarExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListDataExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListColoursExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListBindExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Image\Code\ImageSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Image\Code\ImagePeopleExampleCode.html" />

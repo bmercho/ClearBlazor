@@ -23,13 +23,13 @@
                 @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                 {
                     <MaterialIcon Column=1 Icon="@Icons.Material.Filled.FmdBad" Size=@Size ToolTip=@ValidationMessage
-                                  Colour=@Color.Error />
+                                  Color=@Color.Error />
                 }
 
             </Grid>
             @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)
             {
-                <TextBlock TextWrapping="TextWrap.WrapOnNewLines" Colour=@Color.Error>@ValidationMessage</TextBlock>
+                <TextBlock TextWrapping="TextWrap.WrapOnNewLines" Color=@Color.Error>@ValidationMessage</TextBlock>
             }
         </StackPanel>
     </div>

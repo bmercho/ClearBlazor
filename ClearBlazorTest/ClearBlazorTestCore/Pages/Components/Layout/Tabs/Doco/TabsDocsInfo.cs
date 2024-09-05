@@ -20,13 +20,13 @@ namespace ClearBlazorTest
         {
             new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
             new ApiComponentInfo("BorderThickness", "string?", "null", ""),
-            new ApiComponentInfo("BorderColour", "Color?", "null", ""),
+            new ApiComponentInfo("BorderColor", "Color?", "null", ""),
             new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", ""),
             new ApiComponentInfo("CornerRadius", "string?", "null", ""),
             new ApiComponentInfo("BoxShadow", "int?", "null", ""),
-            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
-            new ApiComponentInfo("Colour", "Color?", "null", ""),
+            new ApiComponentInfo("Color", "Color?", "null", ""),
             new ApiComponentInfo("OnTabChanged", "EventCallback<Tab>", "", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>

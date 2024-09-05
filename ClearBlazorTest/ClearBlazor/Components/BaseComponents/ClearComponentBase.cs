@@ -279,8 +279,8 @@ namespace ClearBlazor
             if (this is IDraggable)
                 css += CssBuilder((IDraggable)this);
 
-            if (this is IColour)
-                SetColour((IColour)this);
+            if (this is IColor)
+                SetColor((IColor)this);
 
             css = UpdateStyle(css);
 
@@ -472,8 +472,8 @@ namespace ClearBlazor
 
             if (border.BorderThickness != null && border.BorderThickness != "0")
             {
-                if (border.BorderColour != null)
-                    css += $"border-color: {border.BorderColour.Value}; ";
+                if (border.BorderColor != null)
+                    css += $"border-color: {border.BorderColor.Value}; ";
                 else
                     css += $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
 
@@ -537,8 +537,8 @@ namespace ClearBlazor
         {
             var css = string.Empty;
 
-            if (background.BackgroundColour != null)
-                css += $"background-color: {background.BackgroundColour.Value}; ";
+            if (background.BackgroundColor != null)
+                css += $"background-color: {background.BackgroundColor.Value}; ";
             else if (this is Grid || this is StackPanel ||
                      this is DockPanel || this is UniformGrid || this is WrapPanel || this is Tabs ||
                      this is Drawer)
@@ -570,15 +570,15 @@ namespace ClearBlazor
             return css;
         }
 
-        private void SetColour(IColour thisComponent)
+        private void SetColor(IColor thisComponent)
         {
-            var parent = FindColourParent();
+            var parent = FindColorParent();
             if (parent != null && thisComponent != null)
-                if (thisComponent.Colour == null && parent.BackgroundColour != null)
-                    thisComponent.Colour = Color.ContrastingColor(parent.BackgroundColour);
+                if (thisComponent.Color == null && parent.BackgroundColor != null)
+                    thisComponent.Color = Color.ContrastingColor(parent.BackgroundColor);
         }
 
-        private IBackground? FindColourParent()
+        private IBackground? FindColorParent()
         {
             var backgroundParent = Parent as IBackground;
             var parent = Parent;

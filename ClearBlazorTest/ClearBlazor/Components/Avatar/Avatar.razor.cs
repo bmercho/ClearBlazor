@@ -24,15 +24,15 @@ namespace ClearBlazor
         public ContainerShape Shape { get; set; } = ContainerShape.Circle;
 
         [Parameter]
-        public Color Colour { get; set; } = ThemeManager.CurrentPalette.Primary;
+        public Color Color { get; set; } = ThemeManager.CurrentPalette.Primary;
 
         [Parameter]
         public string Text { get; set; } = string.Empty;
 
         [Parameter]
-        public Color? IconColour { get; set; } = null;
+        public Color? IconColor { get; set; } = null;
 
-        public Color TextColour { get; set; } = ThemeManager.CurrentPalette.PrimaryContrastText;
+        public Color TextColor { get; set; } = ThemeManager.CurrentPalette.PrimaryContrastText;
         
         public string FontSize { get; set; } = "";
         public string FontFamily { get; set; } = "";
@@ -67,30 +67,30 @@ namespace ClearBlazor
                     css += "height:38px; width:38px; ";
                     break;
             }
-            IconColour = GetIconColour();
+            IconColor = GetIconColor();
             switch (AvatarStyle)
             {
                 case TextEditFillMode.None:
-                    TextColour = Colour;
-                    css += $"background: {ThemeManager.CurrentPalette.AvatarBackgroundColour.Value}; ";
+                    TextColor = Color;
+                    css += $"background: {ThemeManager.CurrentPalette.AvatarBackgroundColor.Value}; ";
                     break;
                 case TextEditFillMode.Filled:
-                    TextColour = Color.GetAssocTextColour(Colour);
-                    css += $"background: {Colour.Value}; ";
+                    TextColor = Color.GetAssocTextColor(Color);
+                    css += $"background: {Color.Value}; ";
                     break;
                 case TextEditFillMode.Outline:
-                    TextColour = Colour;
-                    css += $"border-width: 1px; border-style: solid; border-color: {Colour.Value}; ";
-                    css += $"background: {ThemeManager.CurrentPalette.AvatarBackgroundColour.Value}; ";
+                    TextColor = Color;
+                    css += $"border-width: 1px; border-style: solid; border-color: {Color.Value}; ";
+                    css += $"background: {ThemeManager.CurrentPalette.AvatarBackgroundColor.Value}; ";
                     break;
             }
 
             return css;
         }
 
-        private Color GetIconColour()
+        private Color GetIconColor()
         {
-            if (IconColour == null)
+            if (IconColor == null)
             {
                 switch (AvatarStyle)
                 {
@@ -98,12 +98,12 @@ namespace ClearBlazor
                     case TextEditFillMode.None:
                         return ThemeManager.CurrentPalette.Dark;
                     case TextEditFillMode.Outline:
-                        return Colour;
+                        return Color;
                 }
                 return ThemeManager.CurrentPalette.Dark;
             }
             else 
-                return IconColour;
+                return IconColor;
 
         }
 

@@ -1,6 +1,6 @@
 <div>
 <div class="html"><pre>
-<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">Icon</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Icon</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Clicked</span> <span class="htmlAttributeName">Colour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Colour</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">Icon</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Icon</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Clicked</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Color</span><span class="htmlTagDelimiter">&gt;</span>
     <span class="atSign">&#64;</span>Content
 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
@@ -8,7 +8,7 @@
 <span class="atSign">&#64;</span>code {
     <span class="keyword">public</span> <span class="keyword">string</span> Icon { <span class="keyword">get</span>; <span class="keyword">set</span>; } = Icons.Material.Filled.AlarmOff;
     <span class="keyword">public</span> <span class="keyword">string</span> Content { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="string">&quot;Alarm off&quot;</span>;
-    <span class="keyword">public</span> Color Colour { <span class="keyword">get</span>; <span class="keyword">set</span>; } = Color.Primary;
+    <span class="keyword">public</span> Color Color { <span class="keyword">get</span>; <span class="keyword">set</span>; } = Color.Primary;
     <span class="keyword">private</span> <span class="keyword">bool</span> toggled = <span class="keyword">false</span>;
 
     <span class="keyword">private</span> <span class="keyword">void</span> Clicked()
@@ -16,7 +16,7 @@
         toggled = !toggled;
         Icon = toggled == <span class="keyword">true</span> ? Icons.Material.Filled.AlarmOn : Icons.Material.Filled.AlarmOff;
         Content = toggled == <span class="keyword">true</span> ? <span class="string">&quot;Alarm on&quot;</span> : <span class="string">&quot;alarm off&quot;</span>;
-        Colour = toggled == <span class="keyword">true</span> ? Color.Error : Color.Primary;
+        Color = toggled == <span class="keyword">true</span> ? Color.Error : Color.Primary;
     }
 }
 </pre></div>

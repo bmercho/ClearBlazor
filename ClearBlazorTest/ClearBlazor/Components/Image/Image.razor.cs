@@ -21,7 +21,7 @@ namespace ClearBlazor
         public string ImageId { get; set; } = string.Empty;
 
         [Parameter]
-        public Color? BackgroundColour { get; set; }
+        public Color? BackgroundColor { get; set; }
         private string ImageStyle { get; set; } = string.Empty;
 
         protected override void OnParametersSet()
@@ -33,8 +33,8 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            if (BackgroundColour != null)
-                css += $"background-color: {BackgroundColour.Value}; ";
+            if (BackgroundColor != null)
+                css += $"background-color: {BackgroundColor.Value}; ";
 
             var size =
                  Stretch == ImageStretch.Fill ? "100% 100%" :

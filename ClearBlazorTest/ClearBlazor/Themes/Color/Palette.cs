@@ -196,17 +196,17 @@ public abstract class Palette
 
     //    public Color OverlayLight { get; set; } = new Color(Colors.Shades.White).SetAlpha(0.5);
 
-    public virtual Color AvatarBackgroundColour { get; set; } = new(Colors.Grey.Lighten1);
+    public virtual Color AvatarBackgroundColor { get; set; } = new(Colors.Grey.Lighten1);
 
-    public virtual Color ToolTipBackgroundColour { get; set; } = new(Colors.Grey.Darken3);
-    public virtual Color ToolTipTextColour { get; set; } = new Color(Colors.Green.Lighten2);
+    public virtual Color ToolTipBackgroundColor { get; set; } = new(Colors.Grey.Darken3);
+    public virtual Color ToolTipTextColor { get; set; } = new Color(Colors.Green.Lighten2);
 
-    public virtual Color ScrollbarBackgroundColour { get; set; } = new(Colors.Grey.Lighten4);
-    public virtual Color ScrollbarThumbColour { get; set; } = new(Colors.Indigo.Darken1);
+    public virtual Color ScrollbarBackgroundColor { get; set; } = new(Colors.Grey.Lighten4);
+    public virtual Color ScrollbarThumbColor { get; set; } = new(Colors.Indigo.Darken1);
 
-    public virtual Color ListBackgroundColour { get; set; } = new(Colors.Grey.Lighten2);
-    public virtual Color ListSelectedColour { get; set; } = new(Colors.Blue.Lighten5);
+    public virtual Color ListBackgroundColor { get; set; } = new(Colors.Grey.Lighten2);
+    public virtual Color ListSelectedColor { get; set; } = new(Colors.Blue.Lighten5);
 
-    public virtual Color ListColour { get; set; } = new(Colors.Grey.Darken1);
+    public virtual Color ListColor { get; set; } = new(Colors.Grey.Darken1);
 
 }

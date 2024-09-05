@@ -23,7 +23,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("UncheckedIcon", "string", "Icons.Material.Filled.CheckBoxOutlineBlank", ""),
             new ApiComponentInfo("IndeterminateIcon", "string", "Icons.Material.Filled.IndeterminateCheckBox", ""),
             new ApiComponentInfo("TriState", "bool", "false", ""),
-            new ApiComponentInfo("BackgroundColour", "Color?", "null", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

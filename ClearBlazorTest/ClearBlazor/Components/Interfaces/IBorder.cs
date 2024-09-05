@@ -17,7 +17,7 @@
         /// <summary>
         /// The color of the border
         /// </summary>
-        public Color? BorderColour { get; set; }
+        public Color? BorderColor { get; set; }
 
         /// <summary>
         /// The style of the border. Solid,Dotted or Dashed.

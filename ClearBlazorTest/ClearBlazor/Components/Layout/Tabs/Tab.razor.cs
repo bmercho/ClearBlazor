@@ -22,7 +22,7 @@ namespace ClearBlazor
         [Parameter]
         public bool Disabled { get; set; } = false;
 
-        public Color? IconColour { get; set; } = null;
+        public Color? IconColor { get; set; } = null;
 
         private Tabs? _parent = null;
 

@@ -15,7 +15,7 @@ namespace ClearBlazor
         public double Rotation { get; set; } = 0.0;
 
         [Parameter]
-        public Color Colour { get; set; } = ThemeManager.CurrentPalette.Dark;
+        public Color Color { get; set; } = ThemeManager.CurrentPalette.Dark;
 
         [Parameter]
         public string ViewBox { get; set; } = "0 0 24 24";
@@ -34,10 +34,10 @@ namespace ClearBlazor
 
         protected string GetIconStyle()
         {
-            if (Colour == null)
+            if (Color == null)
                 return $"font-size:{GetIconSize()}rem; height:1em; vertical-align: middle;";
             else
-                return $"fill:{Colour.Value}; font-size:{GetIconSize()}rem; height:1em; vertical-align: middle;";
+                return $"fill:{Color.Value}; font-size:{GetIconSize()}rem; height:1em; vertical-align: middle;";
         }
 
         protected string GetTransform()

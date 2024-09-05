@@ -4,15 +4,15 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class="@Classes" style="@ComputeStyle()">
-        <Grid Rows="auto,*" CornerRadius=@GridCornerRadius BackgroundColour=@BackgroundColour>
+        <Grid Rows="auto,*" CornerRadius=@GridCornerRadius BackgroundColor=@BackgroundColor>
             <WrapPanel CornerRadius=@GridCornerRadius VerticalAlignment="Alignment.Start">
                 @foreach (Tab tabPage in Pages)
                 {
                     <TabButton Size=@Size ButtonStyle="TextEditFillMode.None" IsFirstTab=@(Pages.First()==tabPage)
                                IsLastTab=@(Pages.Last()==tabPage)
                                Icon=@tabPage.Icon
-                               IconColour=@GetButtonColour(tabPage)
-                               Colour=@GetButtonColour(tabPage)
+                               IconColor=@GetButtonColor(tabPage)
+                               Color=@GetButtonColor(tabPage)
                                ToolTip=@tabPage.ToolTip
                                IsActive=@(tabPage == ActivePage) Disabled="@tabPage.Disabled"
                                OnClicked="@(e => ActivatePage(tabPage))">

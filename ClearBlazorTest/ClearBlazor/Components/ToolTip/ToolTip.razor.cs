@@ -34,8 +34,8 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            css += $"color: {ThemeManager.CurrentPalette.ToolTipTextColour.Value}; ";
-            css += $"background-color: {ThemeManager.CurrentPalette.ToolTipBackgroundColour.Value}; ";
+            css += $"color: {ThemeManager.CurrentPalette.ToolTipTextColor.Value}; ";
+            css += $"background-color: {ThemeManager.CurrentPalette.ToolTipBackgroundColor.Value}; ";
             css += ToolTipVisible ? "visibility: visible; opacity: 1; " : "visibility: hidden; opacity: 0; ";
             css += GetLocationCss(Position);
             css += GetFontSize();
