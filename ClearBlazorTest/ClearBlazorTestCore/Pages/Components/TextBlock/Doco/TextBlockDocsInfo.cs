@@ -33,6 +33,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("TextTransform", "<a href=TextTransformApi>TextTransform?</a>", "null", ""),
             new ApiComponentInfo("TextWrapping", "<a href=TextWrapApi>TextWrap?</a>", "null", ""),
             new ApiComponentInfo("TextTrimming", "bool?", "null", ""),
+            new ApiComponentInfo("TextAlignment", "<a href=AlignmentApi>Alignment</a>", "Alignment.Start", "The horizontal alignment of the text within the TextBlock. \rIf alignment is set to Stretch the text is centered.\r"),
             new ApiComponentInfo("IsTextSelectionEnabled", "bool", "false", ""),
             new ApiComponentInfo("ToolTip", "string", "", ""),
             new ApiComponentInfo("Clickable", "bool", "false", ""),

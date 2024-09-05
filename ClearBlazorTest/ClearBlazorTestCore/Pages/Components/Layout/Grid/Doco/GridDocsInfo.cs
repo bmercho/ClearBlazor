@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record GridDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "Grid";
-        public string Description {get; set; } = "Defines a flexible grid area that consists of columns and rows.\r";
+        public string Description {get; set; } = "Defines a flexible grid area that consists of columns and rows.\rBy default a grid will occupy all of the available space given by its parent.\rIn other words HorizontalAlignment and VerticalAlignment are both by default 'Stretch'.\r";
         public (string, string) ApiLink  {get; set; } = ("API", "GridApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "Grid");
         public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");
@@ -24,7 +24,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Rows", "string", "*", "Defines rows by a comma delimited string of row heights which are similar to columns. \r"),
             new ApiComponentInfo("ColumnSpacing", "double", "0", "The spacing in pixels between each column\r"),
             new ApiComponentInfo("RowSpacing", "double", "0", "The spacing in pixels between each row\r"),
-            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
+            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
             new ApiComponentInfo("BorderThickness", "string?", "null", ""),
             new ApiComponentInfo("BorderColour", "Color?", "null", ""),
             new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", ""),
