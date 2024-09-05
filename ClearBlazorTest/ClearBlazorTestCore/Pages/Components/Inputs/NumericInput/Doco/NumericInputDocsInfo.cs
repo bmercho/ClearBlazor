@@ -5,11 +5,11 @@ namespace ClearBlazorTest
 {
     public record NumericInputDocsInfo:IComponentDocsInfo
     {
-        public string Name { get; set; } = "NumericInput";
+        public string Name { get; set; } = "NumericInput<TItem>";
         public string Description {get; set; } = "";
         public (string, string) ApiLink  {get; set; } = ("API", "NumericInputApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "NumericInput");
-        public (string, string) InheritsLink {get; set; } = ("<TItem> : ContainerInputBase<TItem>", "<TItem> : ContainerInputBase<TItem>Api");
+        public (string, string) InheritsLink {get; set; } = ("ContainerInputBase<TItem>", "ContainerInputBase<TItem>Api");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
         };

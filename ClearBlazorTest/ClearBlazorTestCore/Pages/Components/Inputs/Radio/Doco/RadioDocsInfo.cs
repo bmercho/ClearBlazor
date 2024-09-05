@@ -5,11 +5,11 @@ namespace ClearBlazorTest
 {
     public record RadioDocsInfo:IComponentDocsInfo
     {
-        public string Name { get; set; } = "Radio";
+        public string Name { get; set; } = "Radio<TItem>";
         public string Description {get; set; } = "";
         public (string, string) ApiLink  {get; set; } = ("API", "RadioApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "Radio");
-        public (string, string) InheritsLink {get; set; } = ("<TItem> : InputBase", "<TItem> : InputBaseApi");
+        public (string, string) InheritsLink {get; set; } = ("InputBase", "InputBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
         };

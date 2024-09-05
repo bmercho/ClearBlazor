@@ -5,11 +5,11 @@ namespace ClearBlazorTest
 {
     public record CheckBoxDocsInfo:IComponentDocsInfo
     {
-        public string Name { get; set; } = "CheckBox";
+        public string Name { get; set; } = "CheckBox<TItem>";
         public string Description {get; set; } = "";
         public (string, string) ApiLink  {get; set; } = ("API", "CheckBoxApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "CheckBox");
-        public (string, string) InheritsLink {get; set; } = ("<TItem> : InputBase", "<TItem> : InputBaseApi");
+        public (string, string) InheritsLink {get; set; } = ("InputBase", "InputBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
             ("IBackground", "IBackgroundApi"),

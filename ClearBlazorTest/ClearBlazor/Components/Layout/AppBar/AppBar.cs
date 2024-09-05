@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 namespace ClearBlazor
 {
     /// <summary>
-    /// Represents a bar used to display actions, branding, navigation and screen titles.
+    /// The AppBar displays information and actions relating to the AppBar's content.
     /// </summary>
     public class AppBar:DockPanel,IColour
     {
@@ -13,13 +13,6 @@ namespace ClearBlazor
         [Parameter]
         public Color? Colour { get; set; } = null;
 
-        /// <summary>
-        /// Do some thing
-        /// </summary>
-        public void DoSomething()
-        {
-
-        }
         protected override void OnParametersSet()
         {
             base.OnParametersSet();

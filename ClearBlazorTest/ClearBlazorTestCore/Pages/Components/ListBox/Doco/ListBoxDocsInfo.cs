@@ -5,11 +5,11 @@ namespace ClearBlazorTest
 {
     public record ListBoxDocsInfo:IComponentDocsInfo
     {
-        public string Name { get; set; } = "ListBox";
+        public string Name { get; set; } = "ListBox<TListBox>";
         public string Description {get; set; } = "";
         public (string, string) ApiLink  {get; set; } = ("API", "ListBoxApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "ListBox");
-        public (string, string) InheritsLink {get; set; } = ("<TListBox> : InputBase", "<TListBox> : InputBaseApi");
+        public (string, string) InheritsLink {get; set; } = ("InputBase", "InputBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
             (" IContent", " IContentApi"),

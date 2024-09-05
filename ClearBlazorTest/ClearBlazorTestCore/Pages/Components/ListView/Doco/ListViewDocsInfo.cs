@@ -5,11 +5,11 @@ namespace ClearBlazorTest
 {
     public record ListViewDocsInfo:IComponentDocsInfo
     {
-        public string Name { get; set; } = "ListView";
+        public string Name { get; set; } = "ListView<TItem>";
         public string Description {get; set; } = "";
         public (string, string) ApiLink  {get; set; } = ("API", "ListViewApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "ListView");
-        public (string, string) InheritsLink {get; set; } = ("<TItem> : ClearComponentBase", "<TItem> : ClearComponentBaseApi");
+        public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
             (" IBackground", " IBackgroundApi"),

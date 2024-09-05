@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record AppBarDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "AppBar";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "The AppBar displays information and actions relating to the AppBar's content.\r";
         public (string, string) ApiLink  {get; set; } = ("API", "AppBarApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "AppBar");
         public (string, string) InheritsLink {get; set; } = ("DockPanel", "DockPanelApi");
@@ -16,11 +16,10 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("Colour", "Color?", "null", ""),
+            new ApiComponentInfo("Colour", "Color?", "null", "The foreground color of the AppBar\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("DoSomething()", "void", "", "Do some thing\r"),
         };
     }
 }

@@ -14,7 +14,8 @@ namespace ClearBlazorTest
             return css + "display:grid; ";
         }
 
-        private readonly List<string> InheritExclusions = new List<string>() { "ComponentBase" };
+        private readonly List<string> InheritExclusions = new List<string>() { "ComponentBase"};
+        private readonly List<string> ImplementsExclusions = new List<string>() { "IDisposable", "IHandleEvent" };
 
         private MarkupString GetExamplesLink()
         {
@@ -28,7 +29,7 @@ namespace ClearBlazorTest
                 return new MarkupString(string.Empty);
 
             if (InheritExclusions.Contains(DocsInfo!.InheritsLink.Item1))
-                return new MarkupString($"Inherits from: {DocsInfo!.InheritsLink.Item1}");
+                return new MarkupString($"Inherits from: {DocsInfo!.InheritsLink.Item1.Trim()}");
             else
                 return new MarkupString($"Inherits from: <a href={(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item2)}>" +
                                         $" {(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item1)}</a>");
@@ -42,7 +43,10 @@ namespace ClearBlazorTest
             string implementsString = $"Implements: ";
             foreach(var implement in  DocsInfo.ImplementsLinks)
             {
-                implementsString += $"<a href ={implement.Item2}> {implement.Item1}</a>  ";
+                if (ImplementsExclusions.Contains(implement.Item1.Trim()))
+                    implementsString += $"{implement.Item1.Trim()}  ";
+                else
+                    implementsString += $"<a href ={implement.Item2}> {implement.Item1}</a>  ";
             }
 
             return new MarkupString(implementsString);

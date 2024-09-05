@@ -3,7 +3,7 @@
 using ClearBlazor.Common;
 namespace ClearBlazorTest
 {
-    public record DrawerDocsInfo:IComponentDocsInfo
+    public record ElementSizeDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "ElementSize";
         public string Description {get; set; } = "";

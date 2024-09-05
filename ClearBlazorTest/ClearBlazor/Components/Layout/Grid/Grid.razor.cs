@@ -47,10 +47,10 @@ namespace ClearBlazor
         [Parameter]
         public double RowSpacing { get; set; } = 0;
 
-        // IBorder
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
+        // IBorder
         [Parameter]
         public string? BorderThickness { get; set; }
 

@@ -107,7 +107,7 @@ namespace CreateDocumentation
                 {
                     var values = lines[l].Trim().Split(" ");
                     line = l;
-                    return values[tokenNumber];
+                    return values[tokenNumber].Trim().Split(":")[0];
                 }
             }
             return string.Empty;
@@ -178,10 +178,12 @@ namespace CreateDocumentation
                 bool hasExamples = File.Exists(examplesFilename);
 
                 var docInfo = GetComponentDoco(componentName, fileName, hasExamples);
+                if (docInfo != null)
+                {
+                    WriteDocsInfoFile(componentName, testComponentFolder, docInfo);
 
-                WriteDocsInfoFile(testComponentFolder, docInfo);
-
-                WriteApiPageFile(testComponentFolder, componentName, false, false);
+                    WriteApiPageFile(testComponentFolder, componentName, false, false);
+                }
             }
         }
 
@@ -227,15 +229,30 @@ namespace CreateDocumentation
             }
         }
 
-        private IComponentDocsInfo GetComponentDoco(string componentName, string fileName, bool hasExamples)
+        private IComponentDocsInfo? GetComponentDoco(string componentName, string fileName, bool hasExamples)
         {
             IComponentDocsInfo info = new ComponentDocsInfo();
-            info.Name = componentName;
+            var lines = File.ReadAllLines(fileName);
+            int line = 0;
+            info.Name = FindName(lines, ref line, "public class", 2);
+            if (info.Name == string.Empty)
+            {
+                info.Name = FindName(lines, ref line, "public abstract class", 3);
+                if (info.Name == string.Empty)
+                {
+                    info.Name = FindName(lines, ref line, "public partial class", 3);
+                    if (info.Name == string.Empty)
+                    {
+                        Console.WriteLine("Component class name not found");
+                        return null;
+                    }
+                }
+            }
+            info.Description = GetAssociatedComment(lines, ref line);
+
             info.ApiLink = ("API", $"{componentName}Api");
             if (hasExamples)
                 info.ExamplesLink = ("Examples", $"{componentName}");
-            var lines = File.ReadAllLines(fileName);
-            int line = 0;
 
             (string inherits, List<string> implements) = ExtractInheritsAndImplements(componentName, lines, ref line);
             if (inherits != null)
@@ -264,11 +281,11 @@ namespace CreateDocumentation
                 int index = lines[line].IndexOf($"class {componentName}");
                 if (index > 0)
                 {
+                    var values = lines[line].Split(':');
 
-                    var values = lines[line].Substring(index + $"class {componentName}".Length).Trim().Trim(':').Trim().Split(',');
-
-                    if (values.Length > 0)
-                        if (!values[0].StartsWith("I"))
+                    if (values.Length > 1)
+                        values = values[1].Trim().Split(',');
+                        if (!values[0].StartsWith("I") || !Char.IsUpper(values[0][1]))
                         {
                             inherits = values[0];
                             values = values.Skip(1).Select(s => s).ToArray();
@@ -342,7 +359,7 @@ namespace CreateDocumentation
                     {
                         typ = $"<a href={ typ.Trim('?')}Api>{typ}</a>";
                     }
-
+                    line--;
                     var comment = GetAssociatedComment(lines, ref line);
                     line++;
                     info.ParameterApi.Add(new ApiComponentInfo(values[2], typ, def, comment));
@@ -376,10 +393,10 @@ namespace CreateDocumentation
             return comment;
         }
 
-        private void WriteDocsInfoFile(string testComponentFolder, IComponentDocsInfo docInfo)
+        private void WriteDocsInfoFile(string componentName, string testComponentFolder, IComponentDocsInfo docInfo)
         {
             var folder = Path.Combine(testComponentFolder, Paths.DocsFolder);
-            var docFileName = folder + @$"\{docInfo.Name}DocsInfo.cs";
+            var docFileName = folder + @$"\{componentName}DocsInfo.cs";
             Directory.CreateDirectory(folder);
 
             var lines = new List<string>();
@@ -388,7 +405,7 @@ namespace CreateDocumentation
             lines.Add("using ClearBlazor.Common;");
             lines.Add("namespace ClearBlazorTest");
             lines.Add("{");
-            lines.Add($"    public record {docInfo.Name}DocsInfo:IComponentDocsInfo");
+            lines.Add($"    public record {componentName}DocsInfo:IComponentDocsInfo");
             lines.Add("    {");
             lines.Add("        public string Name { get; set; } = " + $"\"{docInfo.Name}\";");
             lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description}\";");

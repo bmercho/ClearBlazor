@@ -63,7 +63,7 @@ namespace ClearBlazor
         protected override void AddChild(ClearComponentBase child)
         {
             base.AddChild(child);
-            Refresh();
+            StateHasChanged();
         }
 
         private string GetRowSpacing()

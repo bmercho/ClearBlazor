@@ -5,11 +5,11 @@ namespace ClearBlazorTest
 {
     public record SelectDocsInfo:IComponentDocsInfo
     {
-        public string Name { get; set; } = "Select";
+        public string Name { get; set; } = "Select<TItem>";
         public string Description {get; set; } = "";
         public (string, string) ApiLink  {get; set; } = ("API", "SelectApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "Select");
-        public (string, string) InheritsLink {get; set; } = ("<TItem> : ContainerInputBase<TItem>", "<TItem> : ContainerInputBase<TItem>Api");
+        public (string, string) InheritsLink {get; set; } = ("ContainerInputBase<TItem>", "ContainerInputBase<TItem>Api");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
             (" IContent", " IContentApi"),

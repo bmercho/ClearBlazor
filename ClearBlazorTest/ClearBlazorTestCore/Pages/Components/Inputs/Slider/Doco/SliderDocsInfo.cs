@@ -5,15 +5,14 @@ namespace ClearBlazorTest
 {
     public record SliderDocsInfo:IComponentDocsInfo
     {
-        public string Name { get; set; } = "Slider";
+        public string Name { get; set; } = "Slider<TItem>";
         public string Description {get; set; } = "";
         public (string, string) ApiLink  {get; set; } = ("API", "SliderApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "Slider");
-        public (string, string) InheritsLink {get; set; } = ("<TItem> : InputBase", "<TItem> : InputBaseApi");
+        public (string, string) InheritsLink {get; set; } = ("InputBase", "InputBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
-            (" IBackgroundGradient where TItem : struct", " IBackgroundGradient where TItem : structApi"),
-            (" INumber<TItem>", " INumber<TItem>Api"),
+            (" IBackgroundGradient where TItem", " IBackgroundGradient where TItemApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {

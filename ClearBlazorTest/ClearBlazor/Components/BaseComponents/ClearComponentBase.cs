@@ -5,10 +5,12 @@ using System.Text;
 
 namespace ClearBlazor
 {
-    public abstract class ClearComponentBase : ComponentBase, IBaseProperties, IDisposable, IHandleEvent
+    /// <summary>
+    /// An abstract base class for all components.
+    /// </summary>
+    public abstract class ClearComponentBase : ComponentBase, IDisposable, IHandleEvent
     {
         private bool _preventFromRecursiveSetParameters;
-        private bool _initialised = false;
 
         [CascadingParameter]
         public ClearComponentBase? Parent { get; set; } = null;
@@ -16,67 +18,126 @@ namespace ClearBlazor
         [Inject]
         protected IJSRuntime JSRuntime { get; set; } = null!;
 
-        [Parameter]
-        public object? Tag { get; set; } = null;
-
+        /// <summary>
+        /// Name of component
+        /// </summary>
         [Parameter]
         public string? Name { get; set; } = null;
 
+        /// <summary>
+        /// Optional classes to be applied to component
+        /// </summary>
         [Parameter]
         public string Class { get; set; }
 
+        /// <summary>
+        /// Optional styles to be applied to the component
+        /// </summary>
         [Parameter]
         public string Style { get; set; }
 
+        /// <summary>
+        /// The width of the component. Takes precedence over other layout requirements.
+        /// </summary>
         [Parameter]
         public double Width { get; set; } = double.NaN;
 
+        /// <summary>
+        /// The height of the component. Takes precedence over other layout requirements.
+        /// </summary>
         [Parameter]
         public double Height { get; set; } = double.NaN;
 
+        /// <summary>
+        /// The minimum width of the component. Takes precedence over other layout requirements.
+        /// </summary>
         [Parameter]
         public double MinWidth { get; set; } = 0;
 
+        /// <summary>
+        /// The minimum height of the component. Takes precedence over other layout requirements.
+        /// </summary>
         [Parameter]
         public double MinHeight { get; set; } = 0;
 
+        /// <summary>
+        /// The maximum width of the component. Takes precedence over other layout requirements, apart from width.
+        /// </summary>
         [Parameter]
         public double MaxWidth { get; set; } = double.PositiveInfinity;
 
+        /// <summary>
+        /// The maximum height of the component. Takes precedence over other layout requirements, apart from height.
+        /// </summary>
         [Parameter]
         public double MaxHeight { get; set; } = double.PositiveInfinity;
 
+        /// <summary>
+        /// The margin of the component.
+        /// Can be in the format of:
+        ///     4 - all margins are 4px
+        ///     4,8 - top and bottom margins are 4px radius, left and right margins have 8px radius
+        ///     20,10,30,40 - top has 20px margin, right has 10px margin, bottom has 30px margin and left has 40px margin
+        /// </summary>
         [Parameter]
         public string Margin { get; set; } = String.Empty;
 
+        /// <summary>
+        /// The padding of the component.
+        /// Can be in the format of:
+        ///     4 - all paddings are 4px
+        ///     4,8 - top and bottom paddings are 4px radius, left and right paddings have 8px radius
+        ///     20,10,30,40 - top has 20px padding, right has 10px padding, bottom has 30px padding and left has 40px padding
+        /// </summary>
         [Parameter]
         public string Padding { get; set; } = String.Empty;
 
-
+        /// <summary>
+        /// The horizontal alignment of the component in its available space.
+        /// </summary>
         [Parameter]
         public Alignment? HorizontalAlignment { get; set; } = null;
 
+        /// <summary>
+        /// The vertical alignment of the component in its available space.
+        /// </summary>
         [Parameter]
         public Alignment? VerticalAlignment { get; set; } = null;
 
 
         // For Grid children
+
+        /// <summary>
+        /// Applies to children of a grid. Indicates the start row of the grid that the child will occupy. 
+        /// The first row is 0.
+        /// </summary>
         [Parameter]
         public int Row { get; set; } = 0;
+        /// <summary>
+        /// Applies to children of a grid. Indicates the start column of the grid that the child will occupy. 
+        /// The first column is 0.
+        /// </summary>
         [Parameter]
         public int Column { get; set; } = 0;
+        /// <summary>
+        /// Applies to children of a grid. Indicates how many rows of the grid that the child will occupy (starting at Row). 
+        /// </summary>
         [Parameter]
         public int RowSpan { get; set; } = 1;
+        /// <summary>
+        /// Applies to children of a <a href=GridPage>Grid</a>. Indicates how many columns of the grid that the child will occupy (starting at Column). 
+        /// </summary>
         [Parameter]
         public int ColumnSpan { get; set; } = 1;
 
 
         // For DockPanel children
+        /// <summary>
+        /// Applies to children of a <a href=GridPage>DockPanel</a>. 
+        /// Indicates how the component will dock in its parent.
+        /// </summary>
         [Parameter]
         public Dock? Dock { get; set; } = null;
-
-        [Parameter]
-        public bool? LastChildFill { get; set; } = null!;
 
         /// <summary>
         /// Event raised when the component is clicked 
@@ -84,32 +145,32 @@ namespace ClearBlazor
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnClicked { get; set; }
 
+        /// <summary>
+        /// Event raised when the component is double clicked 
+        /// </summary>
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnDoubleClicked { get; set; }
 
+        /// <summary>
+        /// Event raised when the mouse is moved over the component 
+        /// </summary>
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnMouseMoved { get; set; }
 
-        public Alignment? HorizontalAlignmentDefaultOverride { get; set; } = null;
-
-        public Alignment? VerticalAlignmentDefaultOverride { get; set; } = null;
-
-        bool doubleClickRaised = false;
-
-        //public string Css { get; set; }
-
-        public string Classes { get; set; }
-
         public string Id { get; set; }
 
-        public bool IsScroller { get; set; } = false;
+        internal Alignment? HorizontalAlignmentDefaultOverride { get; set; } = null;
 
+        internal Alignment? VerticalAlignmentDefaultOverride { get; set; } = null;
 
-        protected bool PerformRender { get; set; } = true;
+        internal List<ClearComponentBase> Children { get; set; } = new List<ClearComponentBase>();
 
-        public List<ClearComponentBase> Children { get; set; } = new List<ClearComponentBase>();
+        protected string Classes { get; set; }
 
-        //        private int? _boxShadow = null;
+        protected bool IsScroller { get; set; } = false;
+
+        private bool _doubleClickRaised = false;
+
         public ClearComponentBase()
         {
             Class = String.Empty;
@@ -120,38 +181,13 @@ namespace ClearBlazor
             Id = GetType().Name + "-" + Guid.NewGuid().ToString();
         }
 
-        public void Refresh()
-        {
-            if (_initialised)
-            {
-                try
-                {
-                    StateHasChanged();
-                }
-                catch (ObjectDisposedException)
-                {
-                    // Looks like the parent is also disposed.
-                }
-                catch (InvalidOperationException)
-                {
-                    // Looks like we are in a threading issue.
-                }
-            }
-        }
-
-
         protected override void OnInitialized()
         {
             if (Parent != null)
                 Parent.AddChild(this);
 
             base.OnInitialized();
-
-            _initialised = true;
         }
-
-        protected override bool ShouldRender() => PerformRender;
-
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
@@ -186,7 +222,7 @@ namespace ClearBlazor
                 if (paramsChanged)
                 {
                     _preventFromRecursiveSetParameters = true;
-                    Parent.Refresh();
+                    Parent.StateHasChanged();
                     _preventFromRecursiveSetParameters = false;
                 }
             }
@@ -226,8 +262,7 @@ namespace ClearBlazor
             }
 
             var css = string.Empty;
-            if (this is IBaseProperties)
-                css += CssBuilder();
+            css += CssBuilder();
 
             if (this is IBorder)
                 css += CssBuilder((IBorder)this);
@@ -279,29 +314,21 @@ namespace ClearBlazor
 
         protected async Task OnElementClicked(MouseEventArgs e)
         {
-            doubleClickRaised = false;
+            _doubleClickRaised = false;
             await Task.Delay(250);
-            if (!doubleClickRaised)
+            if (!_doubleClickRaised)
                 await OnClicked.InvokeAsync(e);
         }
 
         protected async Task OnElementDblClicked(MouseEventArgs e)
         {
-            doubleClickRaised = true;
+            _doubleClickRaised = true;
             await OnDoubleClicked.InvokeAsync(e);
         }
 
         protected async Task OnElementMouseMoved(MouseEventArgs e)
         {
             await OnMouseMoved.InvokeAsync(e);
-        }
-
-        private void UpdateClasses()
-        {
-            var sb = new StringBuilder();
-            ComputeOwnClasses(sb);
-            Parent?.ComputeChildClasses(sb, this);
-            Classes = sb.ToString();
         }
 
         protected virtual void ComputeOwnClasses(StringBuilder sb)
@@ -313,6 +340,14 @@ namespace ClearBlazor
         protected virtual string ComputeChildClasses(StringBuilder sb, ClearComponentBase child)
         {
             return string.Empty;
+        }
+
+        private void UpdateClasses()
+        {
+            var sb = new StringBuilder();
+            ComputeOwnClasses(sb);
+            Parent?.ComputeChildClasses(sb, this);
+            Classes = sb.ToString();
         }
 
         private string CssBuilder()
@@ -617,19 +652,19 @@ namespace ClearBlazor
             return "none";
         }
 
-        private bool InScroller()
-        {
-            var parent = Parent;
-            while (parent != null)
-            {
-                if (parent.IsScroller)
-                    return true;
-                parent = parent.Parent;
-            }
-            return false;
-        }
+        //private bool InScroller()
+        //{
+        //    var parent = Parent;
+        //    while (parent != null)
+        //    {
+        //        if (parent.IsScroller)
+        //            return true;
+        //        parent = parent.Parent;
+        //    }
+        //    return false;
+        //}
 
-        public string GetBoxShadowCss(int? boxShadow)
+        protected string GetBoxShadowCss(int? boxShadow)
         {
             if (boxShadow == null)
                 return string.Empty;
