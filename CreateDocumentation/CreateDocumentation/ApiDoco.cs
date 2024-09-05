@@ -1,5 +1,4 @@
 ﻿using ClearBlazor.Common;
-using System;
 
 namespace CreateDocumentation
 {

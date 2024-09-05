@@ -48,7 +48,6 @@
 	  <EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputSimpleExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputSpinButtonsExampleCode.html" />
 	  <EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputTypeExampleCode.html" />
-	  <EmbeddedResource Include="Pages\Components\AppBar\Code\AppBarSimpleExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarIconExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarImageExampleCode.html" />
     <EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarTextExampleCode.html" />
@@ -161,6 +160,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\Components\AppBar\Code\" />
     <Folder Include="Pages\Components\AppBar\Doco\" />
     <Folder Include="Pages\Components\Avatar\Doco\" />
     <Folder Include="Pages\Enums\Alignment\" />

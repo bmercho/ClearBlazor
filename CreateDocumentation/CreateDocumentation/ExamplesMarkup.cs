@@ -11,7 +11,6 @@ namespace CreateDocumentation
         public bool Execute(string srcPath)
         {
             var paths = new Paths();
-            var newFiles = new StringBuilder();
             var success = true;
             var noOfFilesUpdated = 0;
             var noOfFilesCreated = 0;
@@ -20,13 +19,8 @@ namespace CreateDocumentation
             {
                 var formatter = new HtmlClassFormatter();
                 var lastCheckedTime = new DateTime();
-                if (File.Exists(paths.NewFilesToBuildPath))
-                {
-                    var lastNewFilesToBuild = new FileInfo(paths.NewFilesToBuildPath);
-                    lastCheckedTime = lastNewFilesToBuild.LastWriteTime;
-                }
 
-                var directoryInfo = new DirectoryInfo(paths.DocsDirPath);
+                var directoryInfo = new DirectoryInfo(Path.Combine(srcPath, Paths.TestComponentsFolder));
 
                 foreach (var entry in directoryInfo.GetFiles("*.razor", SearchOption.AllDirectories))
                 {
@@ -82,19 +76,8 @@ namespace CreateDocumentation
                     if (currentCode != cb.ToString())
                     {
                         File.WriteAllText(markupPath, cb.ToString());
-                        if (currentCode == string.Empty)
-                        {
-                            newFiles.AppendLine(markupPath);
-                            noOfFilesCreated++;
-                        }
-                        else
-                        {
-                            noOfFilesUpdated++;
-                        }
                     }
                 }
-
-                File.WriteAllText(paths.NewFilesToBuildPath, newFiles.ToString());
             }
             catch (Exception e)
             {

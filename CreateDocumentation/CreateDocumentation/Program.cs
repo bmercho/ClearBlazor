@@ -11,7 +11,7 @@
                 return ;
             }
 
-            //new ExamplesMarkup().Execute(srcPath);
+            new ExamplesMarkup().Execute(srcPath);
 
             Console.WriteLine("Creating Examples markup completed.");
 
