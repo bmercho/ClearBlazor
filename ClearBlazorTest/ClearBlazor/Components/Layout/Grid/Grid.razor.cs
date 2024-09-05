@@ -6,6 +6,8 @@ namespace ClearBlazor
 {
     /// <summary>
     /// Defines a flexible grid area that consists of columns and rows.
+    /// By default a grid will occupy all of the available space given by its parent.
+    /// In other words HorizontalAlignment and VerticalAlignment are both by default 'Stretch'.
     /// </summary>
     public partial class Grid:ClearComponentBase,IContent,IBackground,IBoxShadow, IBorder, IBackgroundGradient
     {
@@ -47,6 +49,9 @@ namespace ClearBlazor
         [Parameter]
         public double RowSpacing { get; set; } = 0;
 
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 

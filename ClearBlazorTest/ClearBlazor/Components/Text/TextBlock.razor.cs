@@ -49,6 +49,13 @@ namespace ClearBlazor
         [Parameter]
         public bool? TextTrimming { get; set; } = null;
 
+        /// <summary>
+        /// The horizontal alignment of the text within the TextBlock. 
+        /// If alignment is set to Stretch the text is centered.
+        /// </summary>
+        [Parameter]
+        public Alignment TextAlignment { get; set; } = Alignment.Start;
+
         [Parameter]
         public bool IsTextSelectionEnabled { get; set; } = false;
 
@@ -154,7 +161,21 @@ namespace ClearBlazor
             else
                 if (typo.TextTransform != null)
                     css += $"text-transform: {typo.TextTransform}; ";
-            css += "text-align:justify; ";
+            switch (TextAlignment)
+            {
+                case Alignment.Stretch:
+                    css += "text-align:center; ";
+                    break;
+                case Alignment.Start:
+                    css += "text-align:left; ";
+                    break;
+                case Alignment.Center:
+                    css += "text-align:center; ";
+                    break;
+                case Alignment.End:
+                    css += "text-align:right; ";
+                    break;
+            }
             if (TextWrapping != null)
             {
                 switch (TextWrapping)
