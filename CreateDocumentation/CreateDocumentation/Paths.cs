@@ -12,7 +12,7 @@ namespace CreateDocumentation
         public const string ComponentsFolder = @"ClearBlazorTest\ClearBlazor\Components";
         public const string InterfacesFolder = @"ClearBlazorTest\ClearBlazor\Components\Interfaces";
         public const string EnumerationsFolder = "ClearBlazorTest\\ClearBlazor.Components.Enumerations";
-        private const string DocsDirectory = @"ClearBlazorTest\Pages\Components";
+        public const string TestCoreProjectFile = @"ClearBlazorTest\ClearBlazorTestCore\ClearBlazorTestCore.csproj";
         public const string DocsFolder = "Doco";
         public const string ExampleDiscriminator = "Example.razor"; // example components must contain this string
 

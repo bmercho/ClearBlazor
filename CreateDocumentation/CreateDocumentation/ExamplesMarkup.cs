@@ -77,6 +77,8 @@ namespace CreateDocumentation
                     {
                         File.WriteAllText(markupPath, cb.ToString());
                     }
+                    var testCoreProjectFile = Path.Combine(srcPath, Paths.TestCoreProjectFile);
+                    SetAsEmbeddedResource(testCoreProjectFile, markupPath);
                 }
             }
             catch (Exception e)
@@ -89,6 +91,41 @@ namespace CreateDocumentation
             Console.WriteLine($"Docs.Compiler generated {noOfFilesCreated} new files");
             return success;
         }
+
+        private static void SetAsEmbeddedResource(string testCoreProjectFile, string filename)
+        {
+            var lines = File.ReadLines(testCoreProjectFile, Encoding.UTF8).ToList();
+            var entry = "\t<EmbeddedResource Include=\"" + filename.Substring(filename.IndexOf(@"Pages\Components")) + "\" />";
+
+            for(int line= 0;line < lines.Count();line++)
+            {
+                if (lines[line].Contains(entry))
+                    return;
+            }
+
+            for (int line = 0; line < lines.Count(); line++)
+            {
+                if (lines[line].Contains("EmbeddedResource"))
+                {
+                    lines.Insert(line, entry);
+                    File.WriteAllLines(testCoreProjectFile, lines);
+                    return;
+                }
+            }
+
+            for (int line = 0; line < lines.Count(); line++)
+            {
+                if (lines[line].Contains("/Project"))
+                {
+                    lines.Insert(line++, "  <ItemGroup>");
+                    lines.Insert(line++, entry);
+                    lines.Insert(line, "  </ItemGroup>");
+                    File.WriteAllLines(testCoreProjectFile, lines);
+                    return;
+                }
+            }
+        }
+
 
         private static string StripComponentSource(string path)
         {
