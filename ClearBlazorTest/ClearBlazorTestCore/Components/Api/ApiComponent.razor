@@ -21,7 +21,11 @@
                         </RowTemplate>
                     </TableColumn>
                     <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) />
-                    <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description) />
+                    <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description)>
+                        <RowTemplate Context=Item>
+                            <TextBlock>@GetMarkupString(Item.Description)</TextBlock>
+                        </RowTemplate>
+                    </TableColumn>
                 </Table>
             }
             <TextBlock Typo=Typo.H5 FontWeight=(int)FontWeight.Bold>Methods</TextBlock>
@@ -39,7 +43,11 @@
                             <TextBlock>@GetMarkupString(Item.Type)</TextBlock>
                         </RowTemplate>
                     </TableColumn>
-                    <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description) />
+                    <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description)>
+                        <RowTemplate Context=Item>
+                            <TextBlock>@GetMarkupString(Item.Description)</TextBlock>
+                        </RowTemplate>
+                    </TableColumn>
                 </Table>
             }
         </StackPanel>

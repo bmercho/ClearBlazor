@@ -21,7 +21,11 @@
                             <TextBlock>@(new MarkupString(Item.Type))</TextBlock>
                         </RowTemplate>
                     </TableColumn>
-                    <TableColumn Label="Description" TItem=ApiFieldInfo Field=@(x =>x.Description) />
+                    <TableColumn Label="Description" TItem=ApiFieldInfo Field=@(x =>x.Description) >
+                        <RowTemplate Context=Item>
+                            <TextBlock>@(new MarkupString(Item.Description))</TextBlock>
+                        </RowTemplate>
+                    </TableColumn>
                 </Table>
             }
         </StackPanel>
