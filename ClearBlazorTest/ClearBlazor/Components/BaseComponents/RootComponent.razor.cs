@@ -16,45 +16,49 @@ namespace ClearBlazor
         private double? Height = null;
         private double? Width = null;
         private IDisposable? unsubscriber;
-        private bool LoadingComplete = false;
+        private bool LoadingComplete = true;
 
         public RootComponent()
         {
             ThemeManager = new ThemeManager(this, false);
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override async  Task OnAfterRenderAsync(bool firstRender)
         {
-            // Load all javascript
-            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                             "./_content/ClearBlazor/ClearBlazor.js");
-            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                             "./_content/ClearBlazor/MouseCapture.js");
-            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                             "./_content/ClearBlazor/ResizeCanvas.js");
-            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                             "./_content/ClearBlazor/ResizeListener.js");
-            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                             "./_content/ClearBlazor/ScrollManager.js");
-            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                             "./_content/ClearBlazor/SizeInfo.js");
-            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                             "./_content/ClearBlazor/ElementSizeInfo.js");
-            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                             "./_content/ClearBlazor/SetClasses.js");
-            await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                             "./_content/ClearBlazor/SetStyleProperty.js");
+            await base.OnAfterRenderAsync(firstRender);
 
-            await ThemeManager.UpdateTheme(JSRuntime);
-            BrowserSizeService.Init(JSRuntime);
+            if (firstRender)
+            {
+                // Load all javascript
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/ClearBlazor.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/MouseCapture.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/ResizeCanvas.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/ResizeListener.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/ScrollManager.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/SizeInfo.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/ElementSizeInfo.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/SetClasses.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/SetStyleProperty.js");
 
-            LoadingComplete = true;
+                await ThemeManager.UpdateTheme(JSRuntime);
+                BrowserSizeService.Init(JSRuntime);
 
-            await base.OnInitializedAsync();
-            Subscribe(BrowserSizeService);
+                LoadingComplete = true;
+
+                Subscribe(BrowserSizeService);
+                StateHasChanged();
+            }
 
         }
-
         private string GetStyle()
         {
             string css = string.Empty;
