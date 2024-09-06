@@ -35,9 +35,6 @@ namespace ClearBlazor
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
 
-        [Inject]
-        public BrowserSizeService BrowserSizeService { get; set; } = null!;
-
         protected string Columns { get; set; } = "*";
 
         protected string Rows { get; set; } = "*";
@@ -69,7 +66,7 @@ namespace ClearBlazor
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            Subscribe(BrowserSizeService);
+            Subscribe(BrowserSizeService.Instance);
         }
 
         public DrawerMode CurrentDrawerMode => _drawerMode;

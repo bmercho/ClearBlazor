@@ -8,6 +8,13 @@ namespace ClearBlazor
         private IJSRuntime JSRuntime = null!;
         private BrowserSizeInfo browserSizeInfo = new BrowserSizeInfo();
 
+        public static BrowserSizeService Instance { get; private set; } = null!;
+
+        public BrowserSizeService()
+        {
+            Instance = this;
+        }
+
         public async void Init(IJSRuntime js)
         {
             if (JSRuntime == null)

@@ -1,7 +1,6 @@
 ﻿@namespace ClearBlazor
 @inherits ComponentBase
 @using Microsoft.JSInterop;
-@inject BrowserSizeService BrowserSizeService
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 
 @if (LoadingComplete)
@@ -13,8 +12,4 @@
             </div>
         </div>
     </div>
-}
-else
-{
-    <div>Test</div>
 }

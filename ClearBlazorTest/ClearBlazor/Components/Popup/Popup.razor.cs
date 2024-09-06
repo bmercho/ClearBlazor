@@ -6,9 +6,6 @@ namespace ClearBlazor
 {
     public partial class Popup : ClearComponentBase, IDisposable, IObserver<BrowserSizeInfo>, IObserver<bool>
     {
-        [Inject]
-        public BrowserSizeService BrowserSizeService { get; set; } = null!;
-
         [Parameter]
         public bool UseTransition { get; set; } = true;
 
@@ -55,7 +52,7 @@ namespace ClearBlazor
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            Subscribe(BrowserSizeService);
+            Subscribe(BrowserSizeService.Instance);
             ScrollViewer.Subscribe(this);
         }
 

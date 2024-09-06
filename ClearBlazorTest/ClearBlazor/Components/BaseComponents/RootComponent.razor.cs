@@ -16,7 +16,7 @@ namespace ClearBlazor
         private double? Height = null;
         private double? Width = null;
         private IDisposable? unsubscriber;
-        private bool LoadingComplete = true;
+        private bool LoadingComplete = false;
 
         public RootComponent()
         {
@@ -50,11 +50,12 @@ namespace ClearBlazor
                                  "./_content/ClearBlazor/SetStyleProperty.js");
 
                 await ThemeManager.UpdateTheme(JSRuntime);
-                BrowserSizeService.Init(JSRuntime);
+                var service = new BrowserSizeService();
+                service.Init(JSRuntime);
 
                 LoadingComplete = true;
 
-                Subscribe(BrowserSizeService);
+                Subscribe(service);
                 StateHasChanged();
             }
 
