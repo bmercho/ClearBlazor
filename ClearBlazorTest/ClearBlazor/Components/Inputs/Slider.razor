@@ -33,7 +33,7 @@
                     <Grid Row=1 Margin="-5,0,0,0" Rows="auto,auto" HorizontalAlignment=Alignment.Start>
                         @foreach (var info in TickInfo)
                         {
-                            <Grid Height=@GetTickHeight() BorderColor=@TrackColor BorderThickness="2,0,0,0"
+                            <Grid Height=@GetTickHeight() BorderColor=@TrackColor BorderThickness="0,0,0,2"
                                     Margin=@info.TickMargin />
                             @if (ShowTickMarkLabels)
                             {

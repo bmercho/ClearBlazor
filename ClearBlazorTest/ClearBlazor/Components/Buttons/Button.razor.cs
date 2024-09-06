@@ -198,17 +198,17 @@ namespace ClearBlazor
             switch (size)
             {
                 case Size.VerySmall:
-                    return $"padding: 4px 0px; ";
+                    return $"padding: 0px 4px; ";
                 case Size.Small:
-                    return $"padding: 10px 0px; ";
+                    return $"padding: 0px 16px; ";
                 case Size.Normal:
-                    return $"padding: 16px 0px; ";
+                    return $"padding: 0px 16px; ";
                 case Size.Large:
-                    return $"padding: 22px 0px; ";
+                    return $"padding: 0px 22px; ";
                 case Size.VeryLarge:
-                    return $"padding: 28px 0px; ";
+                    return $"padding: 0px 28px; ";
                 default:
-                    return $"padding: 16px 0px; ";
+                    return $"padding: 0px 16px; ";
             }
         }
 

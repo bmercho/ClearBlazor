@@ -108,31 +108,31 @@ namespace ClearBlazor
                 case Size.VerySmall:
                     TrackHeight = 2;
                     CornerRadius = "1";
-                    TrackMargin = "5px 0 5px 0";
+                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 10;
                     break;
                 case Size.Small:
                     TrackHeight = 6;
                     CornerRadius = "3";
-                    TrackMargin = "5px 0 5px 0";
+                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 14;
                     break;
                 case Size.Normal:
                     TrackHeight = 10;
                     CornerRadius = "5";
-                    TrackMargin = "5px 0 5px 0";
+                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 20;
                     break;
                 case Size.Large:
                     TrackHeight = 14;
                     CornerRadius = "7";
-                    TrackMargin = "5px 0 5px 0";
+                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 24;
                     break;
                 case Size.VeryLarge:
                     TrackHeight = 18;
                     CornerRadius = "9";
-                    TrackMargin = "5px 0 5px 0";
+                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 30;
                     break;
             }
@@ -200,11 +200,11 @@ namespace ClearBlazor
         {
             if (forText)
             {
-                return $"{ThumbDiameter / 2 - 1 - GetOffset(label.ToString().Length, i == 0, last) +
-                                                  TickMarkSpacing * i},0,0,0";
+                return $"0,0,0,{ThumbDiameter / 2 - 1 - GetOffset(label.ToString().Length, i == 0, last) +
+                                                  TickMarkSpacing * i}";
             }
             else
-                return $"{ThumbDiameter / 2 - 1 + TickMarkSpacing * i},0,0,0";
+                return $"0,0,0,{ThumbDiameter / 2 - 1 + TickMarkSpacing * i}";
         }
 
         private int GetOffset(int strLength, bool first, bool last)
@@ -276,7 +276,7 @@ namespace ClearBlazor
         private string GetValueMargin()
         {
             var offset = GetOffset(ValueLabel.Length, false, false);
-            return $"-21,0,0,{double.Parse(ThumbMargin) - offset}";
+            return $"{double.Parse(ThumbMargin) - offset},-21,0,0";
         }
 
         private async Task OnTrackClicked(MouseEventArgs e)
@@ -333,7 +333,6 @@ namespace ClearBlazor
                     value = MaxDouble;
 
                 Value = (TItem)Convert.ChangeType(value, typeof(TItem));
-                Console.WriteLine($"Offset={offset} value={value} Value={Value}");
 
                 HandleValueChange();
 
