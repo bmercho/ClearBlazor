@@ -246,3 +246,5 @@ ModelManifest.xml
 .fake/
 /LinkWorm/LinkWormWebClient/LinkWormWebClient/AppData
 
+# jetbrains ide folder
+.idea
