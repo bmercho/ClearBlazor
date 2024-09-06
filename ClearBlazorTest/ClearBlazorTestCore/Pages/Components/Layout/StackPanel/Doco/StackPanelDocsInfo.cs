@@ -18,18 +18,17 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
-            new ApiComponentInfo("BorderThickness", "string?", "null", ""),
-            new ApiComponentInfo("BorderColor", "Color?", "null", ""),
-            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", ""),
-            new ApiComponentInfo("CornerRadius", "string?", "null", ""),
-            new ApiComponentInfo("BoxShadow", "int?", "null", ""),
-            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
-            new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Portrait", ""),
-            new ApiComponentInfo("Spacing", "double", "0", ""),
-            new ApiComponentInfo("DropZoneName", "string?", "null", ""),
-            new ApiComponentInfo("OnElementMouseEnter", "EventCallback<MouseEventArgs>", "", ""),
-            new ApiComponentInfo("OnElementMouseLeave", "EventCallback<MouseEventArgs>", "", ""),
+            new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Portrait", "Defines the orientation of the stack panel. Landscape or portrait\r"),
+            new ApiComponentInfo("Spacing", "double", "0", "The spacing between children in the direction defined by Orientation.\r"),
+            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
+            new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
+            new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
+            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", "See <a href=IBorderApi>IBorder</a>\r"),
+            new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
+            new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=IBoxShadowApi>IBoxShadow</a>\r"),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=IBacgroundApi>IBackground</a>\r"),
+            new ApiComponentInfo("OnElementMouseEnter", "EventCallback<MouseEventArgs>", "", "Event raised when the mouse enters the component \r"),
+            new ApiComponentInfo("OnElementMouseLeave", "EventCallback<MouseEventArgs>", "", "Event raised when the mouse leaves the component \r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

@@ -234,33 +234,7 @@ namespace ClearBlazor
                 }
             }
 
-
-            if (this is IComponentSize)
-            {
-                SizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", Id);
-
-                if (previousSizeInfo == null ||
-                    !previousSizeInfo.Equals(SizeInfo))
-                {
-                    previousSizeInfo = SizeInfo;
-                    StateHasChanged();
-                }
-            }
-
-            if (this is IParentComponentSize && Parent != null)
-            {
-                ParentSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", Parent.Id);
-
-                if (previousParentSizeInfo == null ||
-                    !previousParentSizeInfo.Equals(ParentSizeInfo))
-                {
-                    previousParentSizeInfo = ParentSizeInfo;
-                    StateHasChanged();
-                }
-            }
-
             UpdateClasses();
-
         }
 
         protected virtual bool HaveParametersChanged(ClearComponentBase child, ParameterView parameters)

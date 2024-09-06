@@ -5,40 +5,69 @@ namespace ClearBlazor
 {
     public partial class StackPanel:ClearComponentBase, IBackground, IBorder, IBoxShadow
     {
-        [Parameter]
-        public RenderFragment? ChildContent { get; set; } = null;
-
-        [Parameter]
-        public string? BorderThickness { get; set; }
-
-        [Parameter]
-        public Color? BorderColor { get; set; }
-
-        [Parameter]
-        public BorderStyle? BorderStyle { get; set; }
-
-        [Parameter]
-        public string? CornerRadius { get; set; }
-
-
-        [Parameter]
-        public int? BoxShadow { get; set; } = null;
-
-        [Parameter]
-        public Color? BackgroundColor { get; set; } = null;
-
+        /// <summary>
+        /// Defines the orientation of the stack panel. Landscape or portrait
+        /// </summary>
         [Parameter]
         public Orientation Orientation { get; set; } = Orientation.Portrait;
 
+        /// <summary>
+        /// The spacing between children in the direction defined by Orientation.
+        /// </summary>
         [Parameter]
         public double Spacing { get; set; } = 0;
 
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
-        public string? DropZoneName { get; set; } = null;
+        public RenderFragment? ChildContent { get; set; } = null;
 
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? BorderThickness { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public Color? BorderColor { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public BorderStyle? BorderStyle { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
+        /// <summary>
+        /// See <a href=IBoxShadowApi>IBoxShadow</a>
+        /// </summary>
+        [Parameter]
+        public int? BoxShadow { get; set; } = null;
+
+        /// <summary>
+        /// See <a href=IBacgroundApi>IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; } = null;
+
+        /// <summary>
+        /// Event raised when the mouse enters the component 
+        /// </summary>
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnElementMouseEnter { get; set; }
 
+        /// <summary>
+        /// Event raised when the mouse leaves the component 
+        /// </summary>
         [Parameter]
         public virtual EventCallback<MouseEventArgs> OnElementMouseLeave { get; set; }
 

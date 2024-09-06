@@ -1,40 +1,69 @@
-using global::Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
     public partial class WrapPanel:ClearComponentBase, IBackground, IBorder
     {
-        [Parameter]
-        public RenderFragment? ChildContent { get; set; } = null;
-
-        [Parameter]
-        public string? BorderThickness { get; set; }
-
-        [Parameter]
-        public Color? BorderColor { get; set; }
-
-        [Parameter]
-        public BorderStyle? BorderStyle { get; set; }
-
-        [Parameter]
-        public string? CornerRadius { get; set; }
-
-
-        [Parameter]
-        public int? BoxShadow { get; set; } = null;
-
-        [Parameter]
-        public Color? BackgroundColor { get; set; } = null;
-
+        /// <summary>
+        /// The spacing between rows.
+        /// </summary>
         [Parameter]
         public double RowSpacing { get; set; } = 0;
 
+        /// <summary>
+        /// The spacing between columns.
+        /// </summary>
         [Parameter]
         public double ColumnSpacing { get; set; } = 0;
 
-
+        /// <summary>
+        /// The direction for the wrapping. 
+        /// </summary>
         [Parameter]
         public Direction Direction { get; set; } = Direction.Row;
+
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
+        [Parameter]
+        public RenderFragment? ChildContent { get; set; } = null;
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? BorderThickness { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public Color? BorderColor { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public BorderStyle? BorderStyle { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
+        /// <summary>
+        /// See <a href=IBoxShadowApi>IBoxShadow</a>
+        /// </summary>
+        [Parameter]
+        public int? BoxShadow { get; set; } = null;
+
+        /// <summary>
+        /// See <a href=IBacgroundApi>IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; } = null;
+
         public override Task SetParametersAsync(ParameterView parameters)
         {
             parameters.TryGetValue<Direction>(nameof(Direction), out var direction);

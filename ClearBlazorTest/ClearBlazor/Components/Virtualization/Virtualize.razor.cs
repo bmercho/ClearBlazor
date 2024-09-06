@@ -59,7 +59,7 @@ namespace ClearBlazor
             await base.OnAfterRenderAsync(firstRender);
 
             bool changed = false;
-            var containerSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetParentElementSizeInfoById", Id);
+            var containerSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", ScrollViewer.Id);
 
             if (containerSizeInfo == null ||
                  _previousContainerHeight != containerSizeInfo.ElementHeight)
