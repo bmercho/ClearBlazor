@@ -585,8 +585,6 @@ namespace ClearBlazor
 
             if (gradient.BackgroundGradient1 != null)
                 css += $"background: {gradient.BackgroundGradient1}";
-            if (gradient.BackgroundGradient2 != null)
-                css += $"background: {gradient.BackgroundGradient2}";
 
             return css;
         }
@@ -604,13 +602,23 @@ namespace ClearBlazor
 
         private void SetColor(IColor thisComponent)
         {
-            var parent = FindColorParent();
-            if (parent != null && thisComponent != null)
-                if (thisComponent.Color == null && parent.BackgroundColor != null)
-                    thisComponent.Color = Color.ContrastingColor(parent.BackgroundColor);
+            if (thisComponent.Color == null)
+            {
+                var backgroundColor = FindBackgroundColor();
+                if (backgroundColor != null)
+                    thisComponent.Color = Color.ContrastingColor(backgroundColor);
+            }
         }
 
-        private IBackground? FindColorParent()
+        private Color? FindBackgroundColor()
+        {
+            if (this is IBackground backgroundComponent && backgroundComponent.BackgroundColor != null)
+                return backgroundComponent.BackgroundColor;
+
+            return FindParentColor();
+        }
+
+        private Color? FindParentColor()
         {
             var backgroundParent = Parent as IBackground;
             var parent = Parent;
@@ -619,7 +627,7 @@ namespace ClearBlazor
                 parent = parent.Parent;
                 backgroundParent = parent as IBackground;
             }
-            return backgroundParent;
+            return backgroundParent == null ? null : backgroundParent.BackgroundColor;
         }
 
         private Alignment GetHorizontalAlignment()

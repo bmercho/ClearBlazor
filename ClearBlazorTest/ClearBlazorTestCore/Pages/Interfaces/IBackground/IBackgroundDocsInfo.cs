@@ -6,10 +6,10 @@ namespace ClearBlazorTest
     public record IBackgroundDocsInfo:IOtherDocsInfo
     {
         public string Name { get; set; } = "IBackground";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "Defines the backround color for a component\r";
         public List<ApiFieldInfo> FieldApi {get; set; } = new List<ApiFieldInfo>
         {
-            new ApiFieldInfo("BackgroundColor", "Color?", ""),
+            new ApiFieldInfo("BackgroundColor", "Color?", "Background color of component\r"),
         };
     }
 }

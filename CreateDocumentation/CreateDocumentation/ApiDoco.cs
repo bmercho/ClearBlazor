@@ -38,7 +38,7 @@ namespace CreateDocumentation
                     Console.WriteLine("Enumeration name not found");
                     return;
                 }
-                info.Description = GetAssociatedComment(lines, ref line);
+                info.Description = GetAssociatedComment(lines, line);
                 line++;
                 while (true)
                 {
@@ -76,7 +76,7 @@ namespace CreateDocumentation
                     Console.WriteLine("Enumeration name not found");
                     return;
                 }
-                info.Description = GetAssociatedComment(lines, ref line);
+                info.Description = GetAssociatedComment(lines, line);
                 line++;
                 while (true)
                 {
@@ -112,9 +112,10 @@ namespace CreateDocumentation
             return string.Empty;
         }
 
-        private string GetAssociatedComment(string[] lines, ref int line)
+        private string GetAssociatedComment(string[] lines, int line)
         {
             line--;
+            SkipBlankLinesInReverse(lines, ref line);
             while (lines[line].Trim().StartsWith("///"))
                 line--;
             if (lines[++line].Trim().StartsWith("///"))
@@ -130,7 +131,7 @@ namespace CreateDocumentation
                 line++;
 
              var name = lines[line].Trim().Trim(',');
-             var comment = GetAssociatedComment(lines, ref line);
+             var comment = GetAssociatedComment(lines, line);
              line++;
              return new ApiFieldInfo(name, enumName, comment);
         }
@@ -148,7 +149,7 @@ namespace CreateDocumentation
             var values = lines[line].Trim().Split(" ");
             var name = values[2];
             var type = values[1];
-            var comment = GetAssociatedComment(lines, ref line);
+            var comment = GetAssociatedComment(lines, line);
             line++;
             return new ApiFieldInfo(name, type, comment);
         }
@@ -157,6 +158,12 @@ namespace CreateDocumentation
         {
             while (lines[line].Trim() == string.Empty)
                 line++;
+        }
+
+        private void SkipBlankLinesInReverse(string[] lines, ref int line)
+        {
+            while (lines[line].Trim() == string.Empty)
+                line--;
         }
 
         private void CreateComponentDoco(string testComponentsFolder, string componentsFolder)
@@ -250,8 +257,7 @@ namespace CreateDocumentation
                     }
                 }
             }
-            info.Description = GetAssociatedComment(lines, ref line);
-
+            info.Description = GetAssociatedComment(lines, line);
             info.ApiLink = ("API", $"{componentName}Api");
             if (hasExamples)
                 info.ExamplesLink = ("Examples", $"{componentName}");
@@ -331,7 +337,7 @@ namespace CreateDocumentation
                             typ = $"<a href={typ.Trim('?')}Api>{typ}</a>";
                         }
 
-                        var comment = GetAssociatedComment(lines, ref line);
+                        var comment = GetAssociatedComment(lines, line);
                         line++;
                         info.MethodApi.Add(new ApiComponentInfo(methodSignature, typ, "", comment));
                     }
@@ -362,7 +368,7 @@ namespace CreateDocumentation
                         typ = $"<a href={ typ.Trim('?')}Api>{typ}</a>";
                     }
                     line--;
-                    var comment = GetAssociatedComment(lines, ref line);
+                    var comment = GetAssociatedComment(lines, line);
                     line++;
                     info.ParameterApi.Add(new ApiComponentInfo(values[2], typ, def, comment));
                     return true;
