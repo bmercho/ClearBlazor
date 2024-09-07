@@ -198,7 +198,6 @@ namespace ClearBlazor
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
-            Logger.AddLog($"SetParametersAsync: {Id}");
             foreach (var parameter in parameters)
             {
                 if (parameter.Name == "Data")
