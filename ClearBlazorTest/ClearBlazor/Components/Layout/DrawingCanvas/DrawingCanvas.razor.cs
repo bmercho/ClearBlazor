@@ -75,6 +75,14 @@ namespace ClearBlazor
         private Canvas? CanvasReference = null;
         private ElementReference CanvasContainerElement;
         private bool RenderingInProgress = false;
+        private SynchronizationContext? _context;
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            _context = SynchronizationContext.Current;
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -123,9 +131,24 @@ namespace ClearBlazor
             if (Canvas == null || SizeInfo == null)
                 return;
 
-            await using (var context = Canvas.CreateBatch())
+            if (_context == null)
             {
-                await OnPaint.InvokeAsync(context);
+                await using (var context = Canvas.CreateBatch())
+                {
+                    await OnPaint.InvokeAsync(context);
+                }
+            }
+            else
+            {
+                // Required when running in WPF app
+                _context.Post(async
+                    delegate
+                    {
+                        await using (var context = Canvas.CreateBatch())
+                        {
+                            await OnPaint.InvokeAsync(context);
+                        }
+                    }, null);
             }
         }
 
