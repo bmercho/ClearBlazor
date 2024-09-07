@@ -19,5 +19,8 @@
   <ItemGroup>
     <ProjectReference Include="..\ClearBlazorTestCore\ClearBlazorTestCore.csproj" />
   </ItemGroup>
-
+	
+	<PropertyGroup>
+		<RunAOTCompilation>true</RunAOTCompilation>
+	</PropertyGroup>
 </Project>

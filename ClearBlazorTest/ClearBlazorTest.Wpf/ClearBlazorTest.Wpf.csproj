@@ -11,22 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\js\material\material.js" />
-    <Content Remove="wwwroot\js\material\material.js.map" />
-    <Content Remove="wwwroot\js\material\material.min.js" />
-    <Content Remove="wwwroot\js\material\material.min.js.map" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="8.0.80" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ClearBlazorTestCore\ClearBlazorTestCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\js\material\" />
   </ItemGroup>
 
 </Project>
