@@ -6,13 +6,13 @@ namespace ClearBlazorTest
     public record DrawerLocationDocsInfo:IOtherDocsInfo
     {
         public string Name { get; set; } = "DrawerLocation";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "Used by Drawer to indicate which side the sides in from.\r";
         public List<ApiFieldInfo> FieldApi {get; set; } = new List<ApiFieldInfo>
         {
-            new ApiFieldInfo("Left", "DrawerLocation", ""),
-            new ApiFieldInfo("Right", "DrawerLocation", ""),
-            new ApiFieldInfo("Top", "DrawerLocation", ""),
-            new ApiFieldInfo("Bottom", "DrawerLocation", ""),
+            new ApiFieldInfo("Left", "DrawerLocation", "Draw slides in from the left.\r"),
+            new ApiFieldInfo("Right", "DrawerLocation", "Draw slides in from the right.\r"),
+            new ApiFieldInfo("Top", "DrawerLocation", "Draw slides in from the top.\r"),
+            new ApiFieldInfo("Bottom", "DrawerLocation", "Draw slides in from the bottom.\r"),
         };
     }
 }
