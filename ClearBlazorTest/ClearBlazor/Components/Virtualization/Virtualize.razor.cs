@@ -99,7 +99,9 @@ namespace ClearBlazor
                     await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", ScrollViewer.Id, 
                                                     DotNetObjectReference.Create(this));
                     // Do not await otherwise initially the scroll top is not set???
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     CalculateScrollItems(true);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 }
                 StateHasChanged();
             }

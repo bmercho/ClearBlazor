@@ -1,7 +1,7 @@
 ﻿namespace ClearBlazor
 {   
     /// <summary>
-    /// Defines the backround color for a component
+    /// Defines the background color for a component
     /// </summary>
 
     public interface IBackground

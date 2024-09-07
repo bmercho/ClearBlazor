@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using System.Drawing;
 using System.Text;
 
 namespace ClearBlazor

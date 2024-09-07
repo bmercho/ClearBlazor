@@ -22,7 +22,7 @@ namespace ClearBlazor
         public Size Size { get; set; } = Size.Normal;
 
         [Parameter]
-        public ContainerShape Shape { get; set; } = ContainerShape.Square;
+        public ContainerShape Shape { get; set; } = ContainerShape.SquareRounded;
 
         [Parameter]
         public string? Icon { get; set; } = null; 
@@ -179,11 +179,18 @@ namespace ClearBlazor
 
         protected virtual string GetBorderRadius()
         {
-            if (Shape == ContainerShape.Circle)
-                return "border-radius:50%; ";
-
-            return "border-radius:4px; ";
+            switch (Shape)
+            {
+                case ContainerShape.Circle:
+                    return "border-radius:50%; ";
+                case ContainerShape.Square:
+                    return "";
+                case ContainerShape.SquareRounded:
+                    return "border-radius:4px; ";
+            }
+            return "";
         }
+
 
         protected virtual string GetIconSize(Size size)
         {
@@ -192,9 +199,6 @@ namespace ClearBlazor
 
         protected virtual string GetPadding(Size size)
         {
-            if (Shape == ContainerShape.Circle)
-                return string.Empty;
-
             switch (size)
             {
                 case Size.VerySmall:

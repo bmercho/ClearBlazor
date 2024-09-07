@@ -21,7 +21,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Color", "Color?", "null", ""),
             new ApiComponentInfo("DisableBoxShadow", "bool", "false", ""),
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
-            new ApiComponentInfo("Shape", "<a href=ContainerShapeApi>ContainerShape</a>", "ContainerShape.Square", ""),
+            new ApiComponentInfo("Shape", "<a href=ContainerShapeApi>ContainerShape</a>", "ContainerShape.SquareRounded", ""),
             new ApiComponentInfo("Icon", "string?", "null", ""),
             new ApiComponentInfo("IconColor", "Color?", "null", ""),
             new ApiComponentInfo("IconLocation", "<a href=IconLocationApi>IconLocation</a>", "IconLocation.Start", ""),

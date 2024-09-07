@@ -1,39 +1,44 @@
 ﻿@page "/Button"
 @using ClearBlazorTest
 <DocsExamplesPage DocsInfo=@(new ButtonDocsInfo())>
-    <CodeSnippet Code="ButtonsFilledExample">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+    <CodeSnippet Title="Filled" Code=@(typeof(ButtonsFilledExample).Name)>
+        <WrapPanel RowSpacing=20 ColumnSpacing=20>
             <ButtonsFilledExample />
-        </StackPanel>
+        </WrapPanel>
     </CodeSnippet>
-    <CodeSnippet Code="ButtonsNoShadowExample">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-            <ButtonsNoShadowExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Code="ButtonsOutlineExample">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+    <CodeSnippet Title="Outline" Code=@(typeof(ButtonsOutlineExample).Name)>
+        <WrapPanel RowSpacing=20 ColumnSpacing=20>
             <ButtonsOutlineExample />
-        </StackPanel>
+        </WrapPanel>
     </CodeSnippet>
-    <CodeSnippet Code="ButtonsTextExample">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+    <CodeSnippet Title="No fill or outline" Code=@(typeof(ButtonsTextExample).Name)>
+        <WrapPanel RowSpacing=20 ColumnSpacing=20>
             <ButtonsTextExample />
-        </StackPanel>
+        </WrapPanel>
     </CodeSnippet>
-    <CodeSnippet Code="ButtonsSizeExample">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+    <CodeSnippet Title="Shape" Code=@(typeof(ButtonsShapeExample).Name)>
+        <WrapPanel RowSpacing=20 ColumnSpacing=20>
+            <ButtonsShapeExample />
+        </WrapPanel>
+    </CodeSnippet>
+    <CodeSnippet Title="No Shadow" Code=@(typeof(ButtonsNoShadowExample).Name)>
+        <WrapPanel RowSpacing=20 ColumnSpacing=20>
+            <ButtonsNoShadowExample />
+        </WrapPanel>
+    </CodeSnippet>
+    <CodeSnippet Title="Size" Code=@(typeof(ButtonsSizeExample).Name)>
+        <WrapPanel RowSpacing=20 ColumnSpacing=20>
             <ButtonsSizeExample />
-        </StackPanel>
+        </WrapPanel>
     </CodeSnippet>
-    <CodeSnippet Code="ButtonsIconExample">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+    <CodeSnippet Title="Icons" Code=@(typeof(ButtonsIconExample).Name)>
+        <WrapPanel RowSpacing=20 ColumnSpacing=20>
             <ButtonsIconExample />
-        </StackPanel>
+        </WrapPanel>
     </CodeSnippet>
-    <CodeSnippet Code="ButtonsToggleExample">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+    <CodeSnippet Title="Toggle" Code=@(typeof(ButtonsToggleExample).Name)>
+        <WrapPanel RowSpacing=20 ColumnSpacing=20>
             <ButtonsToggleExample />
-        </StackPanel>
+        </WrapPanel>
     </CodeSnippet>
 </DocsExamplesPage>
