@@ -3,7 +3,7 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-     <div id="@Id" @ref="CanvasContainerElement" class="@Classes" style="@ComputeStyle()"
+     <div id="@Id" @ref="_canvasContainerElement" class="@Classes" style="@ComputeStyle()"
          @onclick=OnClick 
          @onmousedown=OnMouseDown
          @onmouseup=OnMouseUp
@@ -16,6 +16,6 @@
          @ontouchmove=OnTouchMove
          @ontouchmove:preventDefault 
          @ontouchmove:stopPropagation>
-        <Canvas @ref="CanvasReference" id=@CanvasId style="height:100%;width:100%;"/>
+        <Canvas @ref="_canvasReference" id=@_canvasId style="height:100%;width:100%;"/>
     </div>
  </CascadingValue>

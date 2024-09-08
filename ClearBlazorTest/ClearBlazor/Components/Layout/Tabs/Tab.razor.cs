@@ -4,25 +4,35 @@ namespace ClearBlazor
 {
     public partial class Tab
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
+        /// <summary>
+        /// The text displayed in the tab header
+        /// </summary>
         [Parameter]
         public string? Text { get; set; } = null;
 
-        [Parameter]
-        public string? Value { get; set; } = null;
-
+        /// <summary>
+        /// The icon shown in the tab header
+        /// </summary>
         [Parameter]
         public string? Icon { get; set; } = null;
 
+        /// <summary>
+        /// The text shown as a tooltip when a tabbed is hovered over.
+        /// </summary>
         [Parameter]
         public string? ToolTip { get; set; } = null;
 
+        /// <summary>
+        /// Indicates if the tab is disabled.
+        /// </summary>
         [Parameter]
         public bool Disabled { get; set; } = false;
-
-        public Color? IconColor { get; set; } = null;
 
         private Tabs? _parent = null;
 

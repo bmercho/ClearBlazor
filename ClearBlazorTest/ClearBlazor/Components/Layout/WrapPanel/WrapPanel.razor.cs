@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// The WrapPanel positions children next to the other, horizontally(default) or vertically,
+    /// until there is no more room, where it will wrap to the next line(or column) and then continue.
+    /// </summary>
     public partial class WrapPanel:ClearComponentBase, IBackground, IBorder
     {
         /// <summary>
@@ -59,7 +63,7 @@ namespace ClearBlazor
         public int? BoxShadow { get; set; } = null;
 
         /// <summary>
-        /// See <a href=IBacgroundApi>IBackground</a>
+        /// See <a href=IBackgroundApi>IBackground</a>
         /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;

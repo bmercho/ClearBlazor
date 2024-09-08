@@ -92,7 +92,7 @@ namespace ClearBlazor
         // IBackground
 
         /// <summary>
-        /// See <a href=IBacgroundApi>IBackground</a>
+        /// See <a href=IBackgroundApi>IBackground</a>
         /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; }

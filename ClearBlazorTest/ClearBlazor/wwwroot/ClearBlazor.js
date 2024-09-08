@@ -96,14 +96,6 @@ window.clearBlazor = {
             document.getElementById(elementId).value = value;
         }
     },
-    drawer: {
-        getElementSize: (elementId) => {
-            var elementRect = document.getElementById(elementId).getBoundingClientRect();
-            return {
-                ElementX: elementRect.x, ElementY: elementRect.y, ElementWidth: elementRect.width, ElementHeight: elementRect.height
-            }
-        }
-    },
     popup: {
         initialize: (dotNetInstance) => {
             document.addEventListener('mousedown', function (event) {

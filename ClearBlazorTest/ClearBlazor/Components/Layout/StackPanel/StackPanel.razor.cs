@@ -1,8 +1,10 @@
-using global::Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Arranges children elements into a single line that can be oriented horizontally or vertically.
+    /// </summary>
     public partial class StackPanel:ClearComponentBase, IBackground, IBorder, IBoxShadow
     {
         /// <summary>
@@ -54,7 +56,7 @@ namespace ClearBlazor
         public int? BoxShadow { get; set; } = null;
 
         /// <summary>
-        /// See <a href=IBacgroundApi>IBackground</a>
+        /// See <a href=IBackgroundApi>IBackground</a>
         /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;

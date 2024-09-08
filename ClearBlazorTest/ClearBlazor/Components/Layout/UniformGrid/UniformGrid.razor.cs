@@ -2,40 +2,80 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// The UniformGrid control is a layout control which arranges items in a evenly-spaced set of rows or columns
+    /// to fill the total available display space. Each cell in the grid, by default, will be the same size.
+    /// If no value for Rows and Columns are provided, the UniformGrid will create a square layout
+    /// based on the total number of visible items.
+    /// If a fixed size is provided for Rows and Columns then additional children 
+    /// that can't fit in the number of cells provided won't be displayed.
+    /// </summary>
     public partial class UniformGrid:ClearComponentBase,IBackground,IBorder,IBoxShadow
     {
-        [Parameter]
-        public RenderFragment? ChildContent { get; set; } = null;
-
-        [Parameter]
-        public string? BorderThickness { get; set; }
-
-        [Parameter]
-        public Color? BorderColor { get; set; }
-
-        [Parameter]
-        public BorderStyle? BorderStyle { get; set; }
-
-        [Parameter]
-        public string? CornerRadius { get; set; }
-
-        [Parameter]
-        public int? BoxShadow { get; set; } = null;
-
-        [Parameter]
-        public Color? BackgroundColor { get; set; } = null;
-
+        /// <summary>
+        /// The number of rows to display. If not provided the number of rows will be automatically determined. 
+        /// </summary>
         [Parameter]
         public int? NumRows { get; set; } = null;
 
+        /// <summary>
+        /// The number of columns to display. If not provided the number of columns will be automatically determined. 
+        /// </summary>
         [Parameter]
         public int? NumColumns { get; set; } = null;
 
+        /// <summary>
+        /// The spacing between rows.
+        /// </summary>
         [Parameter]
         public int? RowSpacing { get; set; } = null;
 
+        /// <summary>
+        /// The spacing between columns.
+        /// </summary>
         [Parameter]
         public int? ColumnSpacing { get; set; } = null;
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
+        [Parameter]
+        public RenderFragment? ChildContent { get; set; } = null;
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? BorderThickness { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public Color? BorderColor { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public BorderStyle? BorderStyle { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public int? BoxShadow { get; set; } = null;
+
+        /// <summary>
+        /// See <a href=IBackgroundApi>IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; } = null;
 
         protected override string UpdateStyle(string css)
         {
@@ -110,7 +150,6 @@ namespace ClearBlazor
 
             return rows;
         }
-
 
         protected override string UpdateChildStyle(ClearComponentBase child, string css)
         {

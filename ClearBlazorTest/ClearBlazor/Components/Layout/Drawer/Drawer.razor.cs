@@ -1,67 +1,75 @@
-using ClearBlazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A panel docked to a side of the page that slides in and out to shown or hidden.
+    /// </summary>
     public partial class Drawer : ClearComponentBase,IBackground,IDisposable, IObserver<BrowserSizeInfo>
     {
+        /// <summary>
+        /// The side that the drawer will reside.
+        /// </summary>
         [Parameter]
         public DrawerLocation DrawerLocation { get; set; } = DrawerLocation.Left;
 
+        /// <summary>
+        /// The drawer mode.
+        /// </summary>
         [Parameter]
         public DrawerMode DrawerMode { get; set; } = DrawerMode.Responsive;
         
+        /// <summary>
+        /// The content of the drawer
+        /// </summary>
         [Parameter]
         public RenderFragment? DrawerContent { get; set; } = null;
 
+        /// <summary>
+        /// The content of the drawer body
+        /// </summary>
         [Parameter]
         public RenderFragment? DrawerBody { get; set; } = null;
 
+        /// <summary>
+        /// Indicates if the drawer is open
+        /// </summary>
         [Parameter]
         public bool Open { get; set; } = false;
 
-        [Parameter]
-        public EventCallback<bool> OpenChanged { get; set; }
-
+        /// <summary>
+        /// Indicates if an overlay will be shown over the container of the drawer
+        /// </summary>
         [Parameter]
         public bool OverlayEnabled { get; set; } = true;
 
-        [Parameter]
-        public Color? Color { get; set; } = null;
-
+        /// <summary>
+        /// See <a href=IBackgroundApi>IBackground</a>
+        /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
 
-        protected string Columns { get; set; } = "*";
+        /// <summary>
+        /// Event that is raised when the drawer is opened or closed.
+        /// </summary>
+        [Parameter]
+        public EventCallback<bool> OpenChanged { get; set; }
 
-        protected string Rows { get; set; } = "*";
-
-        protected int DrawerContentColumn { get; set; } = 0;
-
-        protected int DrawerBodyColumn { get; set; } = 1;
-        protected int DrawerBodyColumnSpan { get; set; } = 1;
-
-        protected int DrawerContentRow { get; set; } = 0;
-
-        protected int DrawerBodyRow { get; set; } = 0;
-
-
-        private Grid? Content = null;
-
-        private ElementSize? ElementSize = null;
-
-        private string DrawerMargin = "0";
-
-        private bool gotSize = false;
-
+        private string _columns = "*";
+        private string _rows = "*";
+        private int _drawerContentColumn = 0;
+        private int _drawerBodyColumn = 1;
+        private int _drawerBodyColumnSpan = 1;
+        private int _drawerContentRow = 0;
+        private int _drawerBodyRow = 0;
+        private Grid? _content = null;
+        private ElementSizeInfo? _elementSize = null;
+        private string _drawerMargin = "0";
+        private bool _gotSize = false;
         private DrawerMode _drawerMode = DrawerMode.Responsive;
-
-        private bool ShowOverlay { get; set; } = false;
-
-        private IDisposable unsubscriber;
+        private bool _showOverlay = false;
+        private IDisposable _unsubscriber;
 
         protected override void OnInitialized()
         {
@@ -82,15 +90,15 @@ namespace ClearBlazor
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            if (!gotSize)
+            if (!_gotSize)
             {
-                var size = await JSRuntime.InvokeAsync<ElementSize>("window.clearBlazor.drawer.getElementSize", Content?.Id);
+                var size = await JSRuntime.InvokeAsync<ElementSizeInfo>("window.GetElementSizeInfoById", _content?.Id);
                 if (size.ElementWidth != 0 && size.ElementHeight != 0)
                 {
-                    if (ElementSize == null || size.ElementWidth != ElementSize.ElementWidth || size.ElementHeight != ElementSize.ElementHeight)
+                    if (_elementSize == null || size.ElementWidth != _elementSize.ElementWidth || size.ElementHeight != _elementSize.ElementHeight)
                     {
-                        ElementSize = size;
-                        gotSize = true;
+                        _elementSize = size;
+                        _gotSize = true;
                         ProcessModeChange();
                         StateHasChanged();
                     }
@@ -123,88 +131,88 @@ namespace ClearBlazor
                 case DrawerLocation.Left:
                     if (_drawerMode == DrawerMode.Permanent)
                     {
-                        Columns = "auto,*";
-                        DrawerBodyColumn = 1;
-                        DrawerBodyColumnSpan = 1;
+                        _columns = "auto,*";
+                        _drawerBodyColumn = 1;
+                        _drawerBodyColumnSpan = 1;
                     }
                     else
                     {
-                        Columns = "auto,*";
-                        DrawerBodyColumn = 0;
-                        DrawerBodyColumnSpan = 2;
+                        _columns = "auto,*";
+                        _drawerBodyColumn = 0;
+                        _drawerBodyColumnSpan = 2;
                     }
-                    Rows = "*";
-                    DrawerContentColumn = 0;
-                    DrawerContentRow = 0;
-                    DrawerBodyRow = 0;
+                    _rows = "*";
+                    _drawerContentColumn = 0;
+                    _drawerContentRow = 0;
+                    _drawerBodyRow = 0;
                     break;
                 case DrawerLocation.Right:
                     if (_drawerMode == DrawerMode.Permanent)
                     {
-                        Columns = "*,auto";
-                        DrawerContentColumn = 1;
+                        _columns = "*,auto";
+                        _drawerContentColumn = 1;
                     }
                     else
                     {
-                        Columns = "*";
-                        DrawerContentColumn = 0;
+                        _columns = "*";
+                        _drawerContentColumn = 0;
                     }
-                    Columns = "*,auto";
-                    Rows = "*";
-                    DrawerBodyColumn = 0;
-                    DrawerContentRow = 0;
-                    DrawerBodyRow = 0;
+                    _columns = "*,auto";
+                    _rows = "*";
+                    _drawerBodyColumn = 0;
+                    _drawerContentRow = 0;
+                    _drawerBodyRow = 0;
                     break;
                 case DrawerLocation.Top:
                     if (_drawerMode == DrawerMode.Permanent)
                     {
-                        Rows = "auto,*";
-                        DrawerBodyRow = 1;
+                        _rows = "auto,*";
+                        _drawerBodyRow = 1;
                     }
                     else
                     {
-                        Rows = "*";
-                        DrawerBodyRow = 0;
+                        _rows = "*";
+                        _drawerBodyRow = 0;
                     }
-                    Rows = "auto,*";
-                    Columns = "*";
-                    DrawerContentColumn = 0;
-                    DrawerBodyColumn = 0;
-                    DrawerContentRow = 0;
+                    _rows = "auto,*";
+                    _columns = "*";
+                    _drawerContentColumn = 0;
+                    _drawerBodyColumn = 0;
+                    _drawerContentRow = 0;
                     break;
                 case DrawerLocation.Bottom:
                     if (_drawerMode == DrawerMode.Permanent)
                     {
-                        Rows = "*,auto";
-                        DrawerContentRow = 1;
+                        _rows = "*,auto";
+                        _drawerContentRow = 1;
                     }
                     else
                     {
-                        Rows = "*";
-                        DrawerContentRow = 0;
+                        _rows = "*";
+                        _drawerContentRow = 0;
                     }
-                    Rows = "*,auto";
-                    Columns = "*";
-                    DrawerContentColumn = 0;
-                    DrawerBodyColumn = 0;
-                    DrawerBodyRow = 0;
+                    _rows = "*,auto";
+                    _columns = "*";
+                    _drawerContentColumn = 0;
+                    _drawerBodyColumn = 0;
+                    _drawerBodyRow = 0;
                     break;
             }
-            if (gotSize)
+            if (_gotSize)
             {
-                ShowOverlay = false;
-                if (ElementSize != null && Content != null)
+                _showOverlay = false;
+                if (_elementSize != null && _content != null)
                     if (Open)
                     {
                         if (OverlayEnabled && _drawerMode == DrawerMode.Temporary)
-                            ShowOverlay = true;
-                        DrawerMargin = "0";
+                            _showOverlay = true;
+                        _drawerMargin = "0";
                     }
                     else
                         SetMargin();
             }
             else
-                DrawerMargin = "0";
+                _drawerMargin = "0";
         }
 
         private void SetMargin()
@@ -214,28 +222,28 @@ namespace ClearBlazor
                 case DrawerLocation.Left:
                     // The -5 used below is to fix an issue where the calculated element width (in OnAfterRenderAsync)
                     // is a couple of pixels less than what the actual width comes out as. Not sure why.
-                    DrawerMargin = $"0,0,0,{-ElementSize.ElementWidth - 5}";
+                    _drawerMargin = $"0,0,0,{-_elementSize.ElementWidth - 5}";
                     break;
                 case DrawerLocation.Right:
-                    DrawerMargin = $"0,{-ElementSize.ElementWidth-5},0,0";
+                    _drawerMargin = $"0,{-_elementSize.ElementWidth-5},0,0";
                     break;
                 case DrawerLocation.Top:
-                    DrawerMargin = $"{-ElementSize.ElementHeight-5},0,0,0";
+                    _drawerMargin = $"{-_elementSize.ElementHeight-5},0,0,0";
                     break;
                 case DrawerLocation.Bottom:
-                    DrawerMargin = $"0,0,{-ElementSize.ElementHeight-5},0";
+                    _drawerMargin = $"0,0,{-_elementSize.ElementHeight-5},0";
                     break;
             }
         }
 
-        public virtual void Subscribe(IObservable<BrowserSizeInfo> provider)
+        protected virtual void Subscribe(IObservable<BrowserSizeInfo> provider)
         {
-            unsubscriber = provider.Subscribe(this);
+            _unsubscriber = provider.Subscribe(this);
         }
 
-        public virtual void Unsubscribe()
+        protected virtual void Unsubscribe()
         {
-            unsubscriber.Dispose();
+            _unsubscriber.Dispose();
         }
 
         public virtual void OnCompleted()
@@ -305,13 +313,4 @@ namespace ClearBlazor
         }
 
     }
-
-    public class ElementSize
-    {
-        public double ElementX { get; set; }
-        public double ElementY { get; set; }
-        public double ElementWidth { get; set; }
-        public double ElementHeight { get; set; }
-    }
-
 }

@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record StackPanelDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "StackPanel";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "Arranges children elements into a single line that can be oriented horizontally or vertically.\r";
         public (string, string) ApiLink  {get; set; } = ("API", "StackPanelApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "StackPanel");
         public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");
@@ -26,7 +26,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", "See <a href=IBorderApi>IBorder</a>\r"),
             new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
             new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=IBoxShadowApi>IBoxShadow</a>\r"),
-            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=IBacgroundApi>IBackground</a>\r"),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=IBackgroundApi>IBackground</a>\r"),
             new ApiComponentInfo("OnElementMouseEnter", "EventCallback<MouseEventArgs>", "", "Event raised when the mouse enters the component \r"),
             new ApiComponentInfo("OnElementMouseLeave", "EventCallback<MouseEventArgs>", "", "Event raised when the mouse leaves the component \r"),
         };

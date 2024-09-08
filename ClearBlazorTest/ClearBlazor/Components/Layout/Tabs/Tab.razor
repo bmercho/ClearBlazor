@@ -2,7 +2,7 @@
 @namespace ClearBlazor
 @inherits ClearComponentBase
 
-@if (_parent != null && _parent.ActivePage == this)
+@if (_parent != null && _parent._activePage == this)
 {
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         @ChildContent

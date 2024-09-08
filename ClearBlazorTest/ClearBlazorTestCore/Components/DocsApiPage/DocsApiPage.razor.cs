@@ -15,7 +15,8 @@ namespace ClearBlazorTest
         }
 
         private readonly List<string> InheritExclusions = new List<string>() { "ComponentBase"};
-        private readonly List<string> ImplementsExclusions = new List<string>() { "IDisposable", "IHandleEvent" };
+        private readonly List<string> ImplementsExclusions = new List<string>() 
+            { "IDisposable", "IHandleEvent", "IObserver<BrowserSizeInfo>"  };
 
         private MarkupString GetExamplesLink()
         {
