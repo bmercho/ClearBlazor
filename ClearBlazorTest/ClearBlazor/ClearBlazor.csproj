@@ -21,10 +21,6 @@
 		<NoWarn>1701;1702;1591;</NoWarn>
 	</PropertyGroup>
 
-	<PropertyGroup>
-		<RunAOTCompilation>true</RunAOTCompilation>
-	</PropertyGroup>
-
 	<ItemGroup>
 		<Compile Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor.cs" />
 	</ItemGroup>
