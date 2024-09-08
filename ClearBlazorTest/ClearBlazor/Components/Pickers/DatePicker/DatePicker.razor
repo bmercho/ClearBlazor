@@ -98,7 +98,7 @@
                                     int dayIndex = i;
                                     @if (IsDayIndexValid(dayIndex))
                                     {
-                                        <Button ButtonStyle=@GetDayButtonStyle(dayIndex) HorizontalAlignment=Alignment.Stretch
+                                        <Button Padding=0 ButtonStyle=@GetDayButtonStyle(dayIndex) HorizontalAlignment=Alignment.Stretch
                                                 VerticalAlignment=Alignment.Stretch DisableBoxShadow=true Shape=ContainerShape.Circle
                                                 Color=@GetDayColor(dayIndex) OnClicked=@(() => OnDayClicked(dayIndex))>
                                             @GetDay(dayIndex)

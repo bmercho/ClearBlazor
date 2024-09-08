@@ -199,6 +199,9 @@ namespace ClearBlazor
 
         protected virtual string GetPadding(Size size)
         {
+            if (Padding != string.Empty)
+                return Thickness.Parse(Padding).ThicknessToCss();
+
             switch (size)
             {
                 case Size.VerySmall:

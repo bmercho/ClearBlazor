@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines a box shadow surrounding a component.
     /// Note that it is drawn outside of the component so there needs to space around the component to show the box shadow.
-    /// Set a margin if there is no room to show it.
+    /// Set a padding if there is no room to show it.
     /// </summary>
     public interface IBoxShadow
     {
