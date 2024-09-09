@@ -6,13 +6,13 @@ namespace CreateDocumentation
     public class Paths
     {
         public const string SolutionFolder = "ClearBlazor";
-        public const string TestComponentsFolder = @"ClearBlazorTest\ClearBlazorTestCore\Pages\Components";
-        public const string TestEnumsFolder = @"ClearBlazorTest\ClearBlazorTestCore\Pages\Enums";
-        public const string TestInterfacesFolder = @"ClearBlazorTest\ClearBlazorTestCore\Pages\Interfaces";
-        public const string ComponentsFolder = @"ClearBlazorTest\ClearBlazor\Components";
-        public const string InterfacesFolder = @"ClearBlazorTest\ClearBlazor\Components\Interfaces";
-        public const string EnumerationsFolder = "ClearBlazorTest\\ClearBlazor.Components.Enumerations";
-        public const string TestCoreProjectFile = @"ClearBlazorTest\ClearBlazorTestCore\ClearBlazorTestCore.csproj";
+        public const string TestComponentsFolder = @"src\ClearBlazorTestCore\Pages\Components";
+        public const string TestEnumsFolder = @"src\ClearBlazorTestCore\Pages\Enums";
+        public const string TestInterfacesFolder = @"src\ClearBlazorTestCore\Pages\Interfaces";
+        public const string ComponentsFolder = @"src\ClearBlazor\Components";
+        public const string InterfacesFolder = @"src\ClearBlazor\Components\Interfaces";
+        public const string EnumerationsFolder = "src\\ClearBlazor.Components.Enumerations";
+        public const string TestCoreProjectFile = @"src\ClearBlazorTestCore\ClearBlazorTestCore.csproj";
         public const string DocsFolder = "Doco";
         public const string ExampleDiscriminator = "Example.razor"; // example components must contain this string
 

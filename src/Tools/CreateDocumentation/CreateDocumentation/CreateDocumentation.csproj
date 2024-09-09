@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ClearBlazorTest\Common\Common.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.csproj" />
   </ItemGroup>
 
 </Project>
