@@ -18,8 +18,9 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("RenderFragment<TItem>?", "required", "null", "The child content of this control.\rThe item is passed to each child for customization of the child content\r"),
+            new ApiComponentInfo("RenderFragment<TItem>?", "required", "null", "The child content of this control.\rThe item is passed to each child for customization of the row\r"),
             new ApiComponentInfo("Items", "IEnumerable<TItem>", "new List<TItem>()", " The items to be displayed in the list.\r"),
+            new ApiComponentInfo("ItemsProvider", "ItemsProviderRequestDelegate<TItem>?", "null", ""),
             new ApiComponentInfo("ItemHeight", "int?", "null", "The height to be used for each item.\rThis is optional in which case the height is obtained from the first item.\r"),
             new ApiComponentInfo("index,", "(int", "(0, Alignment.Start)", "Gets or sets the index of the Items to be displayed in the centre of the visible area \r(except if it near the start or end of list, where it wont be in the centre) \r"),
             new ApiComponentInfo("HorizontalContentAlignment", "<a href=AlignmentApi>Alignment</a>", "Alignment.Stretch", ""),
