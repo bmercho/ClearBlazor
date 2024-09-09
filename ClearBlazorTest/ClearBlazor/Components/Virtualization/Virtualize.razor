@@ -3,24 +3,31 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id style="display:grid; position: relative;height: @(_height)px">
-        @if (_initialising)
-        {
-            @if (Items.Count() > 0)
-            {
-                <div id=@_firstItemId>
-                    @ChildContent(Items.First())
-                </div>
-            }
-        }
-        else
-        {
-            @foreach (var item in Items.Skip(_skipItems).Take(_takeItems).Select((item, index) => new { item, index }))
-            {
-                <div style="@(GetContentStyle()) height: @(_itemHeight)px; top: @((_skipItems + item.index) * _itemHeight)px;">
-                    @ChildContent(item.item)
-                </div>
-            }
-        }
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <ScrollViewer @ref="_scrollViewer">
+            <div style="display:grid; position: relative;height: @(_height)px">
+                @if (ChildContent != null)
+                {
+                    @if (_initialising)
+                    {
+                        @if (Items.Count() > 0)
+                        {
+                            <div id=@_firstItemId>
+                                @ChildContent(Items.First())
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        @foreach (var item in Items.Skip(_skipItems).Take(_takeItems).Select((item, index) => new { item, index }))
+                        {
+                            <div style="@(GetContentStyle()) height: @(_itemHeight)px; top: @((_skipItems + item.index) * _itemHeight)px;">
+                                @ChildContent(item.item)
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </ScrollViewer>
     </div>
 </CascadingValue>

@@ -5,27 +5,12 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <ScrollViewer @ref="_scrollViewer">
-            @if (_virtualize)
-            {
-                <ClearBlazor.Virtualize @ref="_virtualizeElement" ScrollViewer=@_scrollViewer Context="item"
-                                        Items=@ListViewData ItemHeight=@ItemHeight HorizontalContentAlignment=@HorizontalContentAlignment>
-                    <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))" 
-                                                  @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
-                        @RowTemplate(GetItemInfo(item))
-                    </div>
-                </ClearBlazor.Virtualize>
-            }
-            else
-            {
-                @foreach (var item in ListViewData!)
-                {
-                    <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
-                         @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
-                        @RowTemplate(GetItemInfo(item))
-                    </div>
-                }
-            }
-        </ScrollViewer>
+        <ClearBlazor.Virtualize @ref="_virtualizeElement" Context="item"
+                                Items=@ListViewData ItemHeight=@ItemHeight>
+            <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
+                 @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
+                @RowTemplate(GetItemInfo(item))
+            </div>
+        </ClearBlazor.Virtualize>
     </div>
 </CascadingValue>

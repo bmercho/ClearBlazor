@@ -1,0 +1,13 @@
+﻿@page "/Virtualize"
+@using ClearBlazorTest
+<DocsExamplesPage DocsInfo=@(new VirtualizeDocsInfo())>
+    <CodeSnippet title="Basic (with 100000 items)" Code=@(typeof(VirtualizeSimpleExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <VirtualizeSimpleExample />
+    </CodeSnippet>
+    <CodeSnippet title="Goto index" Code=@(typeof(VirtualizeGotoIndexExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <VirtualizeGotoIndexExample />
+    </CodeSnippet>
+    <CodeSnippet title="Row template" Code=@(typeof(VirtualizeContentExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <VirtualizeContentExample />
+    </CodeSnippet>
+</DocsExamplesPage>

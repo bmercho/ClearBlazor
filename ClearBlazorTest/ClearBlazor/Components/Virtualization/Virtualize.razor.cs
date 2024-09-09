@@ -3,17 +3,32 @@ using Microsoft.JSInterop;
 
 namespace ClearBlazor
 {
-    public partial class Virtualize<TItem> : ClearComponentBase
+    /// <summary>
+    /// Virtualizes a list of items( of type 'IItem') inside a ScrollViewer which is embedded in this component.
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
+    public partial class Virtualize<TItem> : ClearComponentBase,IBorder,IBackground, IBoxShadow
     {
+        /// <summary>
+        /// The child content of this control.
+        /// The item is passed to each child for customization of the row
+        /// </summary>
         [Parameter]
-        public required RenderFragment<TItem> ChildContent { get; set; }
+        public required RenderFragment<TItem>? ChildContent { get; set; }
+
+        /// <summary>
+        ///  The items to be displayed in the list.
+        /// </summary>
+        [Parameter]
+        public IEnumerable<TItem> Items { get; set; } = new List<TItem>();
 
         [Parameter]
-        public required ScrollViewer ScrollViewer { get; set; }
+        public ItemsProviderRequestDelegate<TItem>? ItemsProvider { get; set; }
 
-        [Parameter]
-        public IEnumerable<TItem> Items { get; set; } = null!;
-
+        /// <summary>
+        /// The height to be used for each item.
+        /// This is optional in which case the height is obtained from the first item.
+        /// </summary>
         [Parameter]
         public int? ItemHeight { get; set; }
 
@@ -26,6 +41,44 @@ namespace ClearBlazor
 
         [Parameter]
         public Alignment HorizontalContentAlignment { get; set; } = Alignment.Stretch;
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? BorderThickness { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public Color? BorderColor { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public BorderStyle? BorderStyle { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
+        // IBoxShadow
+
+        /// <summary>
+        /// See <a href=IBoxShadowApi>IBoxShadow</a>
+        /// </summary>
+        [Parameter]
+        public int? BoxShadow { get; set; }
+
+        /// <summary>
+        /// See <a href=IBackgroundApi>IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; }
 
         private string _firstItemId = Guid.NewGuid().ToString();
         private double _containerHeight = -1;
@@ -40,6 +93,7 @@ namespace ClearBlazor
         private bool _initialising = true;
         private bool _initialScroll = true;
         private ScrollState _scrollState = new();
+        private ScrollViewer _scrollViewer = null!;
 
         protected override void OnParametersSet()
         {
@@ -54,12 +108,26 @@ namespace ClearBlazor
                 _itemHeight = ItemHeight.Value; 
         }
 
+        public async Task GotoIndex(int index, Alignment verticalAlignment)
+        {
+            // index is 1 based - convert to 0 based
+            if (index > 0)
+                _visibleIndex = index - 1;
+            else
+                _visibleIndex = 0;
+
+            await GotoIndex(verticalAlignment);
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
 
             bool changed = false;
-            var containerSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", ScrollViewer.Id);
+            var containerSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", _scrollViewer.Id);
+
+            if (ChildContent == null)
+                return; 
 
             if (containerSizeInfo == null ||
                  _previousContainerHeight != containerSizeInfo.ElementHeight)
@@ -96,7 +164,7 @@ namespace ClearBlazor
                 if (_initialising)
                 {
                     _initialising = false;
-                    await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", ScrollViewer.Id, 
+                    await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewer.Id, 
                                                     DotNetObjectReference.Create(this));
                     // Do not await otherwise initially the scroll top is not set???
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
@@ -118,17 +186,6 @@ namespace ClearBlazor
         protected override string UpdateStyle(string css)
         {
             return css + $"display: grid; ";
-        }
-
-        public async Task GotoIndex(int index, Alignment verticalAlignment)
-        {
-            // index is 1 based - convert to 0 based
-            if (index > 0)
-                _visibleIndex = index - 1;
-            else
-                _visibleIndex = 0;
-
-            await GotoIndex(verticalAlignment);
         }
 
         private async Task GotoIndex(Alignment verticalAlignment)
@@ -170,13 +227,13 @@ namespace ClearBlazor
 
             // Not sure why this has to be called twice. Does not change the scroll position if it is only called once???
             // Also CalculateScrollItems cannot be awaited otherwise it does not change scroll position???
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", ScrollViewer.Id, scrollTop);
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", ScrollViewer.Id, scrollTop);
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, scrollTop);
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, scrollTop);
         }
 
         protected string GetContentStyle()
         {
-            var css = "display:grid; position:absolute; ";
+            var css = "display:grid; position:absolute; margin-right:5px; ";
             switch (HorizontalContentAlignment)
             {
                 case Alignment.Stretch:

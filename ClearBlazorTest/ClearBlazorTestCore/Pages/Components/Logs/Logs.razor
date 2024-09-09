@@ -2,11 +2,9 @@
 
 @namespace ClearBlazorTest
 <Grid Margin=10 BorderThickness="1" BorderColor="Color.Dark" CornerRadius="4">
-    <ScrollViewer @ref="ScrollViewer" HorizontalScrollMode=ScrollMode.Auto>
-        <ClearBlazor.Virtualize ScrollViewer=@ScrollViewer Context="item" Items=@Data ItemHeight=20>
-            @item
-        </ClearBlazor.Virtualize>
-    </ScrollViewer>
+    <ClearBlazor.Virtualize Context="item" Items=@Data ItemHeight=20>
+        @item
+    </ClearBlazor.Virtualize>
 </Grid>
 
 @code {

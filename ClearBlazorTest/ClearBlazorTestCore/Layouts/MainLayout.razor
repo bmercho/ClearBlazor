@@ -81,6 +81,7 @@
                                     <ListBoxItem Text="Form" HRef="/Form" OnClicked=@Close />
                                     <ListBoxItem Text="Auto Form" HRef="/AutoForm" OnClicked=@Close />
                                 </ListBoxItem>
+                                <ListBoxItem Text="Virtualize" HRef="/Virtualize" OnClicked=@Close />
                                 <ListBoxItem Text="Logs" HRef="/Logs" OnClicked=@Close />
                             </ListBoxItem>
                         </ListBox>
@@ -171,14 +172,4 @@
     {
         StateHasChanged();
     }
-
-    async Task Clicked1()
-    {
-        await Virtualize.GotoIndex(10000, Alignment.Start);
-    }
-
-    ClearBlazor.Virtualize<string> Virtualize;
-    ScrollViewer ScrollViewer = null!;
-    public IEnumerable<string> items = Enumerable.Range(1, 100000).Select(i => i.ToString()).ToArray();
-
 }

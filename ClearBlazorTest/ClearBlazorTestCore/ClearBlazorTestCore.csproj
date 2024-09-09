@@ -29,6 +29,8 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeGotoIndexExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsShapeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsShapeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerColorExampleCode.html" />

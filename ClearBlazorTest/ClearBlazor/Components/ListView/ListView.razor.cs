@@ -37,9 +37,7 @@ namespace ClearBlazor
         [Parameter]
         public int? ItemHeight { get; set; }
 
-
-
-        [Parameter]
+                [Parameter]
         public Color? BackgroundColor { get; set; } = Color.Transparent;
 
         [Parameter]
@@ -73,7 +71,6 @@ namespace ClearBlazor
         private ScrollViewer? _scrollViewer;
 
         private Virtualize<TItem>? _virtualizeElement;
-        private bool _virtualize { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
         {
