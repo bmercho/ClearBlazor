@@ -455,10 +455,10 @@ namespace ClearBlazor
             if (stackPanel != null)
                 css += "flex-shrink:0; ";
 
-            // The line below affected images in a scrollviewer
-            // Removing it does not seem to affect anything else
-            //if (!InScroller())
-            css += $"overflow:hidden; ";
+            if (!InScroller() || this is Avatar || this is Image)
+                // The line below affected images in a scrollviewer
+                // but is required for text in a scrollviewer
+                css += $"overflow:hidden; ";
             css += $"white-space: nowrap; ";
 
             return css;
@@ -658,17 +658,17 @@ namespace ClearBlazor
             return "none";
         }
 
-        //private bool InScroller()
-        //{
-        //    var parent = Parent;
-        //    while (parent != null)
-        //    {
-        //        if (parent.IsScroller)
-        //            return true;
-        //        parent = parent.Parent;
-        //    }
-        //    return false;
-        //}
+        private bool InScroller()
+        {
+            var parent = Parent;
+            while (parent != null)
+            {
+                if (parent.IsScroller)
+                    return true;
+                parent = parent.Parent;
+            }
+            return false;
+        }
 
         protected string GetBoxShadowCss(int? boxShadow)
         {

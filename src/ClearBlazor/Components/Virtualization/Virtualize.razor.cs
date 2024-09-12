@@ -123,6 +123,9 @@ namespace ClearBlazor
         {
             await base.OnAfterRenderAsync(firstRender);
 
+            if (Items.Count() == 0)
+                return;
+
             bool changed = false;
             var containerSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", _scrollViewer.Id);
 
@@ -250,16 +253,6 @@ namespace ClearBlazor
                     break;
             }
             return css;
-        }
-
-        protected string GetItemStyle()
-        {
-            return "position: absolute;  overflow:hidden; ";
-        }
-
-        protected string GetItemTop()
-        {
-            return $"";
         }
 
         private async Task CalculateScrollItems(bool initial)
