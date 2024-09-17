@@ -10,10 +10,10 @@ namespace VirtualizeDemo
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
-        public async Task<FeedEntryResult> GetFeedEntries(int startIndex, int endIndex)
+        public async Task<FeedEntryResult> GetFeedEntries(int startIndex, int count)
         {
             if (DatabaseManager != null)
-                return await DatabaseManager.GetFeeds(startIndex, endIndex);
+                return await DatabaseManager.GetFeeds(startIndex, count);
             return new FeedEntryResult();
         }
     }

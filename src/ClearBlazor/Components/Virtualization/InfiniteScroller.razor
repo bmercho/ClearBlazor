@@ -1,0 +1,38 @@
+﻿@namespace ClearBlazor
+@typeparam TItem
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <ScrollViewer @ref="_scrollViewer">
+            @if (ChildContent != null)
+            {
+                <div style=@GetTransformStyle()>
+                    <div id=@_firstMarkerId style=@GetIndicatorStyle() />
+                    @for(int i=0;i<_items.Count;i++)
+                    {
+                        @if (i == PageSize)
+                        {
+                            <div id=@_middleMarkerId style=@GetIndicatorStyle() />
+                        }
+                        var item = _items[i];
+                        <div style="@(GetContentStyle()) ">
+                            @ChildContent(item)
+                        </div>
+                    }
+                    @if(_items.Count == 0 || _items.Count < PageSize)
+                    {
+                        <div id=@_middleMarkerId style=@GetIndicatorStyle() />
+                    }
+
+@*                     @if (_loading)
+                    {
+                        @LoadingTemplate
+                    }
+ *@
+                    <div id=@_lastMarkerId style=@GetIndicatorStyle() />
+                </div>
+            }
+        </ScrollViewer>
+    </div>
+</CascadingValue>

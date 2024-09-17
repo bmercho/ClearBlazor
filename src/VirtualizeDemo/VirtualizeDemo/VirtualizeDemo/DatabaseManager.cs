@@ -103,7 +103,7 @@ namespace VirtualizeDemo
             }
         }
 
-        public async Task<FeedEntryResult> GetFeeds(int firstIndex, int lastIndex)
+        public async Task<FeedEntryResult> GetFeeds(int firstIndex, int count)
         {
             FeedEntryResult result = new FeedEntryResult();
             using (var dbContext = new FeedContext())
@@ -112,7 +112,7 @@ namespace VirtualizeDemo
                 {
                     result.TotalNumEntries = dbContext.Feeds.Count();
                     result.FirstIndex = firstIndex;
-                    result.FeedEntries = await dbContext.Feeds.Skip(firstIndex-1).Take(lastIndex - firstIndex + 1).ToListAsync();
+                    result.FeedEntries = await dbContext.Feeds.Skip(firstIndex).Take(count).ToListAsync();
                 }
                 catch (Exception ex)
                 {

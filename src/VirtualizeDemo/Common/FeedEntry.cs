@@ -26,5 +26,10 @@ namespace VirtualizeDemo
 
         [Column]
         public DateTime TimeStamp { get; set; }
+
+        public override string ToString()
+        {
+            return Title!.Replace("Message", "");
+        }
     }
 }

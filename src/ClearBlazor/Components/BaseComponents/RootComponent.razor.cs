@@ -48,6 +48,8 @@ namespace ClearBlazor
                                  "./_content/ClearBlazor/SetClasses.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/SetStyleProperty.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/InfiniteScrolling.js");
 
                 await ThemeManager.UpdateTheme(JSRuntime);
                 var service = new BrowserSizeService();

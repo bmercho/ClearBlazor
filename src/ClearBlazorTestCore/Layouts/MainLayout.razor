@@ -7,19 +7,33 @@
 @inject NavigationManager NavManager
 @implements IHandleEvent
 
-@* <RootComponent>
-    <Grid Width=100 Height=300 BorderThickness=1>
-            <TextBlock TextWrapping=TextWrap.Wrap >A verylongwordaverylongwordverylongwordaverylongword Lorem ipsum dolor sit amet.</TextBlock>
-    </Grid>
-</RootComponent>
- *@  
- 
- 
 <RootComponent>
+    <VirtualizeNew HorizontalAlignment=Alignment.Start Height=300 Width=300 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                @ref="Virtualize" Context=item ItemsProvider=@GetItems PageSize=5>
+        <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Stretch Margin=10
+                    BackgroundColor=Color.Transparent>
+@*             <Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
+                    Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{item.ImageId}/200/200") />
+ *@            <StackPanel Margin="0,0,0,20" Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch
+                        BackgroundColor=Color.Transparent>
+                <TextBlock Typo=Typo.H6 VerticalAlignment=Alignment.Center Color=@Color.Dark>
+                    @($"{item.Title}")
+                </TextBlock>
+                <TextBlock VerticalAlignment=Alignment.Center Color=@Color.Dark>
+                    @($"{item.Message}")
+                </TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </VirtualizeNew>
+</RootComponent>
+
+
+
+@* <RootComponent>
     <Grid Rows="auto,*">
          <AppBar Row="0" Padding="10" BackgroundColor="Color.BackgroundGrey">
             <IconButton Dock="Dock.Left" Icon="@Icons.Material.Filled.Menu" OnClicked=@MenuClicked />
-            <TextBlock Typo="Typo.H6" HorizontalAlignment="Alignment.Center" 
+            <TextBlock Typo="Typo.H6" HorizontalAlignment="Alignment.Center"
                        VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
         </AppBar>
         <Drawer @ref=Drawer Row=1 @bind-Open=Open DrawerLocation=DrawerLocation.Left DrawerMode="DrawerMode.Responsive">
@@ -100,7 +114,7 @@
         </Drawer>
     </Grid>
  </RootComponent>
-
+ *@
 @code {
     Drawer Drawer;
 
@@ -168,5 +182,51 @@
     void Clicked()
     {
         StateHasChanged();
+    }
+
+    VirtualizeNew<Feed> Virtualize = null!;
+
+    public struct Feed
+    {
+        public Feed(int imageId, string title, string message)
+        {
+            ImageId = imageId;
+            Title = title;
+            Message = message;
+
+        }
+        public int ImageId;
+        public string Title;
+        public string Message;
+
+        public override string ToString()
+        {
+            return Title.Replace("Record", "");
+
+        }
+    }
+
+    List<Feed> _feeds = new List<Feed>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        for (int i = 0; i < 50; i++)
+        {
+            _feeds.Add(new Feed((i + 1) % 1000, $"Record #{i}", "This is a message"));
+        }
+    }
+
+    async Task<IEnumerable<Feed>> GetItems(ClearBlazor.ItemsProviderRequest request)
+    {
+        //await Task.Delay(1000); // Simulate async loading
+
+        int num = request.EndIndex - request.StartIndex;
+        if (request.StartIndex < _feeds.Count)
+            if (request.StartIndex + num  < _feeds.Count)
+                return _feeds.Skip(request.StartIndex).Take(num);
+            else
+                return _feeds.Skip(request.StartIndex).Take(_feeds.Count-request.StartIndex);
+        return new List<Feed>();
     }
 }
