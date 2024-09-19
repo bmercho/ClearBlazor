@@ -1,0 +1,52 @@
+﻿@namespace ClearBlazorTest
+<InfiniteScroller Height=600 Width=500 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                  ItemsProvider=@GetItemsLocally Context=item PageSize=10>
+    <RowTemplate Context="item">
+        <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
+            <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
+                   Style="border-radius:50%; " Stretch=ImageStretch.Fill
+                   Source=@($"https://picsum.photos/id/{item.ElementId}/200/200") />
+
+            <StackPanel Column=1 Orientation=Orientation.Portrait>
+                <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
+                    @item.Title
+                </TextBlock>
+                <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
+                    <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                        @item.Message
+                    </TextBlock>
+                </ScrollViewer>
+            </StackPanel>
+        </Grid>
+    </RowTemplate>
+</InfiniteScroller>
+
+@code {
+
+    List<FeedEntry> _feedEntries = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        for (int i = 0; i < 10000; i++)
+        {
+            _feedEntries.Add(new FeedEntry() { ElementId = (i + 1) % 1000, 
+                                               Title = $"Record #{i}", 
+                                               Message = "This is a message" });
+        }
+    }
+
+    async Task<IEnumerable<FeedEntry>> GetItemsLocally(ClearBlazor.ItemsProviderRequest request)
+    {
+        await Task.CompletedTask;
+        return _feedEntries.Skip(request.StartIndex).Take(request.Count);
+    }
+
+    public class FeedEntry
+    {
+        public long ElementId { get; set; }
+        public string? Title { get; set; }
+        public string? Message { get; set; }
+    }
+
+}

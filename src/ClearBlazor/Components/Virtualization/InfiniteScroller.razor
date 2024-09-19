@@ -5,7 +5,7 @@
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
         <Grid>
-            <ScrollViewer @ref="_scrollViewer">
+            <ScrollViewer @ref="_scrollViewer" Width=@Width Height=@Height>
                 @if (RowTemplate != null)
                 {
                     <div style=@GetHeightDivStyle()>
