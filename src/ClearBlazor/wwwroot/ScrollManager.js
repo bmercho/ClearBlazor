@@ -49,7 +49,8 @@ window.scrollbar = {
                 dotnethelper.invokeMethodAsync('HandleScrollEvent',
                     {
                         ScrollTop: element.scrollTop, ScrollLeft: element.scrollLeft,
-                        ScrollHeight: element.scrollHeight, ScrollWidth: element.scrollWidth
+                        ScrollHeight: element.scrollHeight, ScrollWidth: element.scrollWidth,
+                        ClientHeight: element.clientHeight, ClientWidth: element.clientWidth
                     })
             })
         }

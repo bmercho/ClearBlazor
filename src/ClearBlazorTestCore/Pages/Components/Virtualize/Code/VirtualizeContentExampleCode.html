@@ -1,31 +1,40 @@
 <div>
 <div class="html"><pre>
 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Virtualize</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">300</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">300</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">BoxShadow</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span>
-            <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Virtualize</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Items</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_people</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">item</span> <span class="htmlAttributeName">HorizontalContentAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">MaterialIcon</span> <span class="htmlAttributeName">Icon</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Icons.Material.Filled.Person</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">0,20,0,0</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Color.Dark</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="atSign">&#64;</span>($&quot;{item.Name} born {item.BirthDate}&quot;)
-        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Virtualize</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Items</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_feeds</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">item</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Stretch</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span>
+                <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span><span class="htmlTagDelimiter">&gt;</span>
+        &lt;Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
+                Size=Size.VeryLarge Image=<span class="atSign">&#64;</span>($&quot;https://picsum.photos/id/{item.ImageId}/200/200&quot;) /&gt;
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">0,0,0,20</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Stretch</span>
+                    <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Typo</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Typo.H6</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Color.Dark</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="atSign">&#64;</span>($&quot;{item.Title}&quot;)
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Color.Dark</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="atSign">&#64;</span>($&quot;{item.Message}&quot;)
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
     <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Virtualize</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
 <div class="csharp"><pre>
 <span class="atSign">&#64;</span>code {
 
-    ClearBlazor.Virtualize&lt;Person&gt; Virtualize = <span class="keyword">null</span>!;
+    ClearBlazor.Virtualize&lt;Feed&gt; Virtualize = <span class="keyword">null</span>!;
 
-    record Person(<span class="keyword">int</span> PersonId, <span class="keyword">string</span> Name, DateOnly BirthDate);
+    record Feed(<span class="keyword">int</span> ImageId, <span class="keyword">string</span> Title, <span class="keyword">string</span> Message);
 
-    List&lt;Person&gt; _people = <span class="keyword">new</span> List&lt;Person&gt;
+    List&lt;Feed&gt; _feeds = <span class="keyword">new</span> List&lt;Feed&gt;();
+
+    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
     {
-        <span class="keyword">new</span> Person(<span class="number">10895</span>, <span class="string">&quot;Jean Martin&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">1985</span>, <span class="number">3</span>, <span class="number">16</span>)),
-        <span class="keyword">new</span> Person(<span class="number">10944</span>, <span class="string">&quot;Ant&#243;nio Langa&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">1991</span>, <span class="number">12</span>, <span class="number">1</span>)),
-        <span class="keyword">new</span> Person(<span class="number">11203</span>, <span class="string">&quot;Julie Smith&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">1958</span>, <span class="number">10</span>, <span class="number">10</span>)),
-        <span class="keyword">new</span> Person(<span class="number">11205</span>, <span class="string">&quot;Nur Sari&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">1922</span>, <span class="number">4</span>, <span class="number">27</span>)),
-        <span class="keyword">new</span> Person(<span class="number">11898</span>, <span class="string">&quot;Jose Hernandez&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">2011</span>, <span class="number">5</span>, <span class="number">3</span>)),
-        <span class="keyword">new</span> Person(<span class="number">12130</span>, <span class="string">&quot;Kenji Sato&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">2004</span>, <span class="number">1</span>, <span class="number">9</span>)),
-    };
+        <span class="keyword">base</span>.OnInitialized();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++)
+        {
+            _feeds.Add(<span class="keyword">new</span> Feed((i + <span class="number">1</span>) % <span class="number">1000</span>, $<span class="string">&quot;Record #{i}&quot;</span>, <span class="string">&quot;This is a message&quot;</span>));
+        }
+    }
 }
 </pre></div>
 </div>

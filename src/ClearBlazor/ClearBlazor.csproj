@@ -30,6 +30,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Components\Spinner\Spinner.razor.css" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 

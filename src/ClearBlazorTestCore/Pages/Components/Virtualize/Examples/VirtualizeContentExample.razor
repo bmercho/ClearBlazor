@@ -3,17 +3,17 @@
             @ref="Virtualize" Items=@_feeds Context=item>
     <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Stretch Margin=10
                 BackgroundColor=Color.Transparent>
-         <Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
+        <Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
                 Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{item.ImageId}/200/200") />
         <StackPanel Margin="0,0,0,20" Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch
                     BackgroundColor=Color.Transparent>
-                 <TextBlock Typo=Typo.H6 VerticalAlignment=Alignment.Center Color=@Color.Dark>
-                     @($"{item.Title}")
-                 </TextBlock>
-                 <TextBlock VerticalAlignment=Alignment.Center Color=@Color.Dark>
-                     @($"{item.Message}")
-                 </TextBlock>
-             </StackPanel>
+            <TextBlock Typo=Typo.H6 VerticalAlignment=Alignment.Center Color=@Color.Dark>
+                @($"{item.Title}")
+            </TextBlock>
+            <TextBlock VerticalAlignment=Alignment.Center Color=@Color.Dark>
+                @($"{item.Message}")
+            </TextBlock>
+        </StackPanel>
     </StackPanel>
 </Virtualize>
 
@@ -30,7 +30,7 @@
         base.OnInitialized();
         for (int i = 0; i < 10000; i++)
         {
-            _feeds.Add(new Feed((i+1) % 1000,$"Record #{i}","This is a message"));
+            _feeds.Add(new Feed((i + 1) % 1000, $"Record #{i}", "This is a message"));
         }
     }
 }

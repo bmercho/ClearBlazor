@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\VirtualizeDemo.Client\Pages\Home.razor.cs" Link="Home.razor.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj" />
     <ProjectReference Include="..\VirtualizeDemo.Client\VirtualizeDemo.Client.csproj" />
     <PackageReference Include="LoremNET" Version="2.0.0" />

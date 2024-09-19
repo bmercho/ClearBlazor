@@ -3,25 +3,55 @@
 @using Microsoft.AspNetCore.SignalR.Client
 
 <RootComponent>
-    <StackPanel Orientation=Orientation.Portrait>
-        <InfiniteScroller Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
-                       ItemsProvider=@GetItems Context=item PageSize=10>
-            <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
-                <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
-                        Style="border-radius:50%; " Stretch=ImageStretch.Fill
-                        Source=@($"https://picsum.photos/id/{item.ElementId}/200/200") />
-                <StackPanel Column=1 Orientation=Orientation.Portrait>
-                    <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                        @item.Title
-                    </TextBlock>
-                    <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
-                        <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                            @item.Message
-                        </TextBlock>
-                    </ScrollViewer>
-                </StackPanel>
-            </Grid>
-        </InfiniteScroller>
-        <Button Width=180 OnClicked=@OnClick>Load data from database</Button>
-    </StackPanel>
-</RootComponent>
+    <StackPanel Orientation=Orientation.Landscape>
+        <StackPanel Orientation=Orientation.Portrait>
+            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Data from database</TextBlock>
+            <InfiniteScroller Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                               ItemsProvider=@GetItemsFromDatabase Context=item PageSize=10 ShowLoadingSpinner=true>
+                <RowTemplate Context="item">
+                    <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
+                        <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
+                               Style="border-radius:50%; " Stretch=ImageStretch.Fill
+                               Source=@($"https://picsum.photos/id/{item.ElementId}/200/200") />
+                        <StackPanel Column=1 Orientation=Orientation.Portrait>
+                            <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
+                                @item.Title
+                            </TextBlock>
+                            <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
+                                <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                                    @item.Message
+                                </TextBlock>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </Grid>
+                </RowTemplate>
+            </InfiniteScroller>
+
+            <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
+        </StackPanel>
+        <StackPanel Orientation=Orientation.Portrait>
+            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Local data</TextBlock>
+            <InfiniteScroller Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                               ItemsProvider=@GetItemsLocally Context=item PageSize=10>
+                <RowTemplate Context="item">
+                    <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
+                        <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
+                               Style="border-radius:50%; " Stretch=ImageStretch.Fill
+                               Source=@($"https://picsum.photos/id/{item.ElementId}/200/200") />
+
+                        <StackPanel Column=1 Orientation=Orientation.Portrait>
+                            <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
+                                @item.Title
+                            </TextBlock>
+                            <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
+                                <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                                    @item.Message
+                                </TextBlock>
+                            </ScrollViewer>
+                        </StackPanel>
+                    </Grid>
+                </RowTemplate>
+            </InfiniteScroller>
+        </StackPanel>
+     </StackPanel>
+   </RootComponent>

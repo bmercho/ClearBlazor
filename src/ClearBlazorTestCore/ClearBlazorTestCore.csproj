@@ -29,6 +29,7 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Spinner\Code\SpinnerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeContentExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeGotoIndexExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeSimpleExampleCode.html" />
