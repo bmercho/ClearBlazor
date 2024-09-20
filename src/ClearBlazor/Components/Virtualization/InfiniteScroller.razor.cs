@@ -172,7 +172,7 @@ namespace ClearBlazor
             }
             else if (DataProvider != null)
             {
-                _loadItemsCts ??= new CancellationTokenSource();
+                _loadItemsCts = new CancellationTokenSource();
                 try
                 {
                     var result = await DataProvider(new DataProviderRequest(startIndex, count,
@@ -182,10 +182,12 @@ namespace ClearBlazor
                 }
                 catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
                 {
+                    Console.WriteLine($"Cancelled StartIndex:{startIndex}");
                     _loadItemsCts = null;
-                    Console.WriteLine("Cancelled");
                 }
             }
+            Console.WriteLine($"GetItems: complete StartIndex {startIndex}");
+
             return new List<TItem>();
         }
 
@@ -214,7 +216,7 @@ namespace ClearBlazor
             if (_loadingUp || _loadingDown)
             {
                 Console.WriteLine($"GetNextPageData: Already loading {_pageNum}");
-                //_loadItemsCts?.Cancel();
+                _loadItemsCts?.Cancel();
             }
             await semaphoreSlim.WaitAsync();
             try
@@ -238,14 +240,7 @@ namespace ClearBlazor
                     else
                     {
                         _pageNum++;
-                        try
-                        {
-                            _yOffset = _pageOffsets[_pageNum];
-                        }
-                        catch(Exception ex)
-                        {
-                            Console.WriteLine($"Exception {Name}");
-                        }
+                        _yOffset = _pageOffsets[_pageNum];
                     }
                     _atStart = false;
                     _dataIndex += newItems.Count;
@@ -305,6 +300,7 @@ namespace ClearBlazor
                         }
                         finally
                         {
+                            Console.WriteLine($"CalculateScrollItems: complete {page}");
                             _loadingDown = false;
                             _loadingUp = false;
                             semaphoreSlim.Release();
