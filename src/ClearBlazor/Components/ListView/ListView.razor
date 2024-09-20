@@ -5,12 +5,29 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <ClearBlazor.Virtualize @ref="_virtualizeElement" Context="item"
-                                Items=@ListViewData ItemHeight=@ItemHeight>
-            <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
-                 @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
-                @RowTemplate(GetItemInfo(item))
-            </div>
-        </ClearBlazor.Virtualize>
+        @if (VariableItemHeight)
+        {
+            <InfiniteScroller Height=@Height Width=@Width
+                                    Items=@Items DataProvider=@DataProvider>
+                <RowTemplate Context=item>
+                    <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
+                         @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
+                        @RowTemplate(GetItemInfo(item))
+                    </div>
+                </RowTemplate>
+            </InfiniteScroller>
+        }
+        else
+        {
+            <ClearBlazor.Virtualize Height=@Height Width=@Width
+                                    Items=@Items DataProvider=@DataProvider ItemHeight=@ItemHeight>
+                <RowTemplate Context=item>
+                    <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
+                         @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
+                         @RowTemplate(GetItemInfo(item))
+                    </div>
+                </RowTemplate>
+            </ClearBlazor.Virtualize>
+        }
     </div>
 </CascadingValue>

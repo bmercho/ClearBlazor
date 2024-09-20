@@ -4,9 +4,18 @@
 
 <DocsExamplesPage DocsInfo=@(new ListViewDocsInfo())>
     <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">ListView</TextBlock>
-    <CodeSnippet Title="ListView (100000 items)"
+    <CodeSnippet Title="ListView (10000 items)"
                  Code=@(typeof(ListViewExample).Name)>
         <ListViewExample />
+    </CodeSnippet>
+
+    <CodeSnippet Title="ListView with data provider and same height rows (10000 items)"
+                 Code=@(typeof(ListViewDataProviderExample).Name)>
+        <ListViewDataProviderExample />
+    </CodeSnippet>
+    <CodeSnippet Title="ListView with data provider and variable height rows (10000 items)"
+                 Code=@(typeof(ListViewVariableHeightExample).Name)>
+        <ListViewVariableHeightExample />
     </CodeSnippet>
 </DocsExamplesPage>
 

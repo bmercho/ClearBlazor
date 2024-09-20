@@ -7,7 +7,8 @@
         <StackPanel Orientation=Orientation.Portrait>
             <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Data from database</TextBlock>
             <InfiniteScroller Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
-                               ItemsProvider=@GetItemsFromDatabase Context=item PageSize=10 ShowLoadingSpinner=true>
+                               DataProvider=@GetItemsFromDatabase Context=item 
+                               PageSize=10 ShowLoadingSpinner=true>
                 <RowTemplate Context="item">
                     <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
                         <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
@@ -29,10 +30,10 @@
 
             <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
         </StackPanel>
-        <StackPanel Orientation=Orientation.Portrait>
+@*         <StackPanel Orientation=Orientation.Portrait>
             <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Local data</TextBlock>
             <InfiniteScroller Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
-                               ItemsProvider=@GetItemsLocally Context=item PageSize=10>
+                               DataProvider=@GetItemsLocally Context=item PageSize=10>
                 <RowTemplate Context="item">
                     <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
                         <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
@@ -53,5 +54,5 @@
                 </RowTemplate>
             </InfiniteScroller>
         </StackPanel>
-     </StackPanel>
+ *@     </StackPanel>
    </RootComponent>

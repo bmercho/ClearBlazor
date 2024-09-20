@@ -6,23 +6,23 @@
     <div id=@Id class=@Classes style=@ComputeStyle()>
         <ScrollViewer @ref="_scrollViewer">
             <div style="display:grid; position: relative;height: @(_height)px">
-                @if (ChildContent != null)
+                @if (RowTemplate != null)
                 {
                     @if (_initialising)
                     {
-                        @if (Items.Count() > 0)
+                        @if (_items.Count() > 0)
                         {
                             <div id=@_firstItemId>
-                                @ChildContent(Items.First())
+                                @RowTemplate(_items.First())
                             </div>
                         }
                     }
                     else
                     {
-                        @foreach (var item in Items.Skip(_skipItems).Take(_takeItems).Select((item, index) => new { item, index }))
+                        @foreach (var item in _items.Select((item, index) => new { item, index }))
                         {
                             <div style="@(GetContentStyle()) height: @(_itemHeight)px; top: @((_skipItems + item.index) * _itemHeight)px;">
-                                @ChildContent(item.item)
+                                @RowTemplate(item.item)
                             </div>
                         }
                     }

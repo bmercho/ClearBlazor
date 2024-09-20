@@ -1,7 +1,4 @@
-﻿using Excubo.Blazor.Canvas.Contexts;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace VirtualizeDemo
 {

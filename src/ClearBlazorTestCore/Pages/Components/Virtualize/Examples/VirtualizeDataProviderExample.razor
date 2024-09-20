@@ -1,6 +1,6 @@
 ﻿@namespace ClearBlazorTest
 <Virtualize HorizontalAlignment=Alignment.Start Height=300 Width=300 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
-            @ref="Virtualize" Items=@_feeds>
+            @ref="Virtualize" DataProvider=@GetData>
     <RowTemplate Context=item>
         <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Stretch Margin=10
                     BackgroundColor=Color.Transparent>
@@ -35,4 +35,11 @@
             _feeds.Add(new Feed((i + 1) % 1000, $"Record #{i}", "This is a message"));
         }
     }
+
+    async Task<(int totalNumItem, IEnumerable<Feed> items)> GetData(ClearBlazor.DataProviderRequest request)
+    {
+        await Task.CompletedTask;
+        return (_feeds.Count(), _feeds.Skip(request.StartIndex).Take(request.Count));
+    }
+
 }

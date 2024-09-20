@@ -4,73 +4,141 @@ namespace ClearBlazor
 {
     public partial class ListView<TItem> : ClearComponentBase, IBackground, IBorder, IBoxShadow
     {
+        /// <summary>
+        /// The currently selected items. (when in Multiselect mode)
+        /// </summary>
         [Parameter]
         public List<TItem?> SelectedItems { get; set; } = new();
 
+        /// <summary>
+        /// Event that is raised when the SelectedItems is changed.(when in multi select mode)
+        /// </summary>
         [Parameter]
         public EventCallback<List<TItem?>> SelectedItemsChanged { get; set; }
 
+        /// <summary>
+        /// The currently selected item. (when in single select mode)
+        /// </summary>
         [Parameter]
         public TItem? SelectedItem { get; set; } = default;
 
+        /// <summary>
+        /// Event that is raised when the SelectedItem is changed.(when in single select mode)
+        /// </summary>
         [Parameter]
         public EventCallback<TItem?> SelectedItemChanged { get; set; }
 
-        [Parameter]
-        public RenderFragment<ItemInfo<TItem>> RowTemplate { get; set; } = null!;
-
-        [Parameter]
-        public SelectionMode SelectionMode { get; set; } = SelectionMode.None;
-
-        [Parameter]
-        public bool AllowSelectionToggle { get; set; } = false;
-
-        [Parameter]
-        public bool HoverHighlight { get; set; } = true;
-
-        [Parameter]
-        public List<TItem>? ListViewData { get; set; } = null;
-
-        [Parameter]
-        public Alignment HorizontalContentAlignment { get; set; } = Alignment.Stretch;
-
-        [Parameter]
-        public int? ItemHeight { get; set; }
-
-                [Parameter]
-        public Color? BackgroundColor { get; set; } = Color.Transparent;
-
-        [Parameter]
-        public string? BorderThickness { get; set; }
-
-        [Parameter]
-        public Color? BorderColor { get; set; }
-
-        [Parameter]
-        public BorderStyle? BorderStyle { get; set; }
-
-        [Parameter]
-        public string? CornerRadius { get; set; }
-
-
-        [Parameter]
-        public int? BoxShadow { get; set; } = null;
-
-        [Parameter]
-        public Orientation Orientation { get; set; } = Orientation.Portrait;
-
+        /// <summary>
+        /// Event that is raised when the SelectedItem is changed.(when in single select mode)
+        /// </summary>
         [Parameter]
         public EventCallback<TItem> OnSelectionChanged { get; set; }
 
+        /// <summary>
+        /// Event that is raised when the SelectedItems is changed.(when in multi select mode)
+        /// </summary>
         [Parameter]
         public EventCallback<List<TItem?>> OnSelectionsChanged { get; set; }
 
+        /// <summary>
+        /// The template for rendering each row.
+        /// The item is passed to each child for customization of the row
+        /// </summary>
+        [Parameter]
+        public RenderFragment<ItemInfo<TItem>> RowTemplate { get; set; } = null!;
+
+        /// <summary>
+        /// The selection mode of this control. One of None, Single or Multi
+        /// </summary>
+        [Parameter]
+        public SelectionMode SelectionMode { get; set; } = SelectionMode.None;
+
+        /// <summary>
+        /// If true, when in single selection mode, allows the selection to be toggled.
+        /// </summary>
+        [Parameter]
+        public bool AllowSelectionToggle { get; set; } = false;
+
+        /// <summary>
+        /// If true highlights the item when it is hovered over.
+        /// </summary>
+        [Parameter]
+        public bool HoverHighlight { get; set; } = true;
+
+        /// <summary>
+        ///  The items to be displayed in the list. If this is not null DataProvider is used.
+        ///  If DataProvider is also not null then Items takes precedence.
+        /// </summary>
+        [Parameter]
+        public IEnumerable<TItem>? Items { get; set; }
+
+        /// <summary>
+        /// Defines the data provider used to get pages of data from where ever. eg database
+        /// Used if Items is null.
+        /// </summary>
+        [Parameter]
+        public DataProviderRequestDelegate<TItem>? DataProvider { get; set; }
+
+        /// <summary>
+        /// The horizontal content alignment within the control.
+        /// </summary>
+        [Parameter]
+        public Alignment HorizontalContentAlignment { get; set; } = Alignment.Stretch;
+
+        /// <summary>
+        /// The height of each item.
+        /// If not provided uses the height of the first item.
+        /// Ignored if VariableItemHeight is true.
+        /// </summary>
+        [Parameter]
+        public int? ItemHeight { get; set; }
+
+        /// <summary>
+        /// If true it ignores ItemHeight and internally uses the InfiniteScroller component
+        /// </summary>
+        [Parameter]
+        public bool VariableItemHeight { get; set; } = false;
+
+        /// <summary>
+        /// See <a href=IBackgroundApi>IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; } = Color.Transparent;
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? BorderThickness { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public Color? BorderColor { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public BorderStyle? BorderStyle { get; set; }
+
+        /// <summary>
+        /// See <a href=IBorderApi>IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
+        // IBoxShadow
+
+        /// <summary>
+        /// See <a href=IBoxShadowApi>IBoxShadow</a>
+        /// </summary>
+        [Parameter]
+        public int? BoxShadow { get; set; }
+
         private TItem? _highlightedItem = default;
         private bool _mouseOver = false;
-
-        private ScrollViewer? _scrollViewer;
-
-        private Virtualize<TItem>? _virtualizeElement;
 
         protected override async Task OnInitializedAsync()
         {

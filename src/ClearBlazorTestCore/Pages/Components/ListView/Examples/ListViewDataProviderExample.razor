@@ -2,7 +2,7 @@
 <Grid Columns="auto,auto,*">
     <ListView Column=0 HorizontalAlignment=Alignment.Start Margin=40
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
-              Items=@_testData Width=300 Height=500 BorderThickness="1"
+              DataProvider=@GetData Width=300 Height=500 BorderThickness="1"
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
               HoverHighlight=@_hoverHighlight
               AllowSelectionToggle=@_allowSelectionToggle>
@@ -29,7 +29,7 @@
 </Grid>
 
 @code {
-    private List<TestViewItem>? _testData = new();
+    private List<TestViewItem> _testData = new();
 
     private class TestViewItem
     {
@@ -51,6 +51,12 @@
         {
             _testData?.Add(new TestViewItem { Name = $"Item # {i}", IconName = GetIconName(i) });
         }
+    }
+
+    async Task<(int totalNumItem, IEnumerable<TestViewItem> items)> GetData(ClearBlazor.DataProviderRequest request)
+    {
+        await Task.CompletedTask;
+        return (_testData.Count(), _testData.Skip(request.StartIndex).Take(request.Count));
     }
 
     private string GetIconName(int i)

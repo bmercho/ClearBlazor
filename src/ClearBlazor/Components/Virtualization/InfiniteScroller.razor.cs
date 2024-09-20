@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Threading;
 
 namespace ClearBlazor
 {
@@ -10,23 +11,33 @@ namespace ClearBlazor
     public partial class InfiniteScroller<TItem> : ClearComponentBase, IBorder, IBackground, IBoxShadow
     {
         /// <summary>
-        /// The child content of this control.
+        /// The template for rendering each row.
         /// The item is passed to each child for customization of the row
         /// </summary>
         [Parameter]
         public required RenderFragment<TItem>? RowTemplate { get; set; }
 
         /// <summary>
-        ///  The items to be displayed in the list.
+        ///  The items to be displayed in the list. If this is not null DataProvider is used.
+        ///  If DataProvider is also not null then Items takes precedence.
         /// </summary>
-        //[Parameter]
-        //public IEnumerable<TItem> Items { get; set; } = new List<TItem>();
+        [Parameter]
+        public IEnumerable<TItem>? Items { get; set; }
 
-        [Parameter, EditorRequired]
-        public ItemsProviderRequestDelegate<TItem> ItemsProvider { get; set; } = null!;
+        /// <summary>
+        /// Defines the data provider used to get pages of data from where ever. eg database
+        /// Used if Items is null.
+        /// </summary>
+        [Parameter]
+        public DataProviderRequestDelegate<TItem>? DataProvider { get; set; }
 
+        /// <summary>
+        /// Indicates if the spinner is shown when new data is being loaded. Use when getting data externally and 
+        /// it takes some time to load the data.
+        /// </summary>
         [Parameter]
         public bool ShowLoadingSpinner { get; set; } = false;
+
         /// <summary>
         /// Approximately the number of rows that will fit in the ScrollViewer.
         /// Adjust this until this number al least fills a page.
@@ -42,6 +53,9 @@ namespace ClearBlazor
         [Parameter]
         public (int index, Alignment verticalAlignment) VisibleIndex { get; set; } = (0, Alignment.Start);
 
+        /// <summary>
+        /// The horizontal content alignment within the control.
+        /// </summary>
         [Parameter]
         public Alignment HorizontalContentAlignment { get; set; } = Alignment.Stretch;
 
@@ -105,6 +119,8 @@ namespace ClearBlazor
         private bool _atEnd = false;
         private double _maxScrollHeight = 0;
         private bool _pagingDown = true;
+        private bool _hasHadData = false;
+        private SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
         private List<TItem> _items { get; set; } = new List<TItem>();
 
@@ -122,10 +138,13 @@ namespace ClearBlazor
                 _previousScrollViewerSizeInfo = _scrollViewerSizeInfo;
             }
 
-            if (_items.Count == 0 && !_loadingUp || _loadingDown)
+            if (!_hasHadData && !_loadingUp && !_loadingDown)
             {
                 if (await GetNextPageData())
+                {
+                    _hasHadData = true;
                     changed = true;
+                }
             }
 
             if (_initialising)
@@ -142,18 +161,30 @@ namespace ClearBlazor
 
         private async Task<List<TItem>> GetItems(int startIndex, int count)
         {
-            _loadItemsCts ??= new CancellationTokenSource();
-            try
-            {
-                if (startIndex < 0)
-                    startIndex = 0;
-                var newItems = await ItemsProvider(new ItemsProviderRequest(startIndex, count,
-                                                                            _loadItemsCts.Token));
+            Console.WriteLine($"GetItems: {startIndex}  {count}");
 
-                return newItems.ToList();
-            }
-            catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
+            if (startIndex < 0)
+                startIndex = 0;
+
+            if (Items != null)
             {
+                return Items.Skip(startIndex).Take(count).ToList();
+            }
+            else if (DataProvider != null)
+            {
+                _loadItemsCts ??= new CancellationTokenSource();
+                try
+                {
+                    var result = await DataProvider(new DataProviderRequest(startIndex, count,
+                                                                                _loadItemsCts.Token));
+                    Console.WriteLine($"Results: {result.Items.Count()}");
+                    return result.Items.ToList();
+                }
+                catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
+                {
+                    _loadItemsCts = null;
+                    Console.WriteLine("Cancelled");
+                }
             }
             return new List<TItem>();
         }
@@ -166,6 +197,8 @@ namespace ClearBlazor
 
             if (Math.Ceiling(scrollState.ClientHeight + scrollState.ScrollTop) >= scrollState.ScrollHeight)
             {
+                Console.WriteLine($"HandleScrollEvent1: {scrollState.ScrollTop}");
+
                 // Record page offset
                 _pageOffsets.Add(scrollState.ScrollHeight);
 
@@ -179,12 +212,18 @@ namespace ClearBlazor
         private async Task<bool> GetNextPageData()
         {
             if (_loadingUp || _loadingDown)
-                return false;
+            {
+                Console.WriteLine($"GetNextPageData: Already loading {_pageNum}");
+                //_loadItemsCts?.Cancel();
+            }
+            await semaphoreSlim.WaitAsync();
             try
             {
                 _loadingDown = true;
                 if (ShowLoadingSpinner)
-                    StateHasChanged(); 
+                    StateHasChanged();
+                Console.WriteLine($"GetNextPageData: {_dataIndex} {PageSize}");
+
                 var newItems = await GetItems(_dataIndex, PageSize);
 
                 if (newItems.Count > 0)
@@ -199,7 +238,14 @@ namespace ClearBlazor
                     else
                     {
                         _pageNum++;
-                        _yOffset = _pageOffsets[_pageNum];
+                        try
+                        {
+                            _yOffset = _pageOffsets[_pageNum];
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine($"Exception {Name}");
+                        }
                     }
                     _atStart = false;
                     _dataIndex += newItems.Count;
@@ -219,11 +265,13 @@ namespace ClearBlazor
             {
                 _loadingDown = false;
                 _loadingUp = false;
+                semaphoreSlim.Release();
             }
         }
 
         private async Task CalculateScrollItems(double scrollTop)
         {
+
             for (int page = 0; page < _pageOffsets.Count - 1; page++)
             {
                 double minOffset = _pageOffsets[page];
@@ -232,15 +280,25 @@ namespace ClearBlazor
                 {
                     if (page != _pageNum)
                     {
-                        if (page < _pageNum)
-                            _loadingUp = true;
-                        else
-                            _loadingDown = true;
+                        if (_loadingUp || _loadingDown)
+                        {
+                            _loadItemsCts?.Cancel();
+                            Console.WriteLine($"Cancelling: {_pageNum}");
 
-                        if (ShowLoadingSpinner)
-                            StateHasChanged();
+                        }
+                        await semaphoreSlim.WaitAsync();
                         try
                         {
+                            if (page < _pageNum)
+                                _loadingUp = true;
+                            else
+                                _loadingDown = true;
+
+                            if (ShowLoadingSpinner)
+                                StateHasChanged();
+
+                            Console.WriteLine($"CalculateScrollItems: {page}");
+
                             _pageNum = page;
                             _yOffset = _pageOffsets[_pageNum];
                             _items = await GetItems(_pageNum * 10, PageSize * 2);
@@ -249,6 +307,7 @@ namespace ClearBlazor
                         {
                             _loadingDown = false;
                             _loadingUp = false;
+                            semaphoreSlim.Release();
                             StateHasChanged();
                         }
                     }

@@ -27,15 +27,17 @@
                 @switch (Mode)
                 {
                     case DatePickerMode.Year:
-                        <ClearBlazor.Virtualize Context="item" ItemHeight=28
+                        <ClearBlazor.Virtualize ItemHeight=28
                                                 Items=@YearList VisibleIndex="@((GetYearIndex(), Alignment.Center))">
-                            <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item))"
-                                 @onclick:stopPropagation="true">
-                                <TextBlock HorizontalAlignment=Alignment.Center
-                                           VerticalAlignment=Alignment.Center
-                                           FontSize=@GetYearSize(item)
-                                           Color=@GetYearColor(item)>@item</TextBlock>
-                            </div>
+                            <RowTemplate Context=item>
+                                <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item))"
+                                     @onclick:stopPropagation="true">
+                                    <TextBlock HorizontalAlignment=Alignment.Center
+                                               VerticalAlignment=Alignment.Center
+                                               FontSize=@GetYearSize(item)
+                                               Color=@GetYearColor(item)>@item</TextBlock>
+                                </div>
+                            </RowTemplate>
                         </ClearBlazor.Virtualize>
                         break;
                     case DatePickerMode.Month:

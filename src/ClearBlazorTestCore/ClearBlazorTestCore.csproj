@@ -30,6 +30,8 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Virtualize\Code\InfiniteScrollerDataProviderExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualize\Code\InfiniteScrollerExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Spinner\Code\SpinnerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeContentExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeGotoIndexExampleCode.html" />

@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 @using System.ComponentModel
 @using System.ComponentModel.DataAnnotations
+@using System.Timers
 @namespace ClearBlazorTest
 @inherits LayoutComponentBase
 @inject NavigationManager NavManager
@@ -167,35 +168,4 @@
     {
         StateHasChanged();
     }
-
-
-    List<FeedEntry> _feedEntries = new();
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        for (int i = 0; i < 10000; i++)
-        {
-            _feedEntries.Add(new FeedEntry()
-                {
-                    ElementId = (i + 1) % 1000,
-                    Title = $"Record #{i}",
-                    Message = "This is a message"
-                });
-        }
-    }
-
-    async Task<IEnumerable<FeedEntry>> GetItemsLocally(ClearBlazor.ItemsProviderRequest request)
-    {
-        await Task.CompletedTask;
-        return _feedEntries.Skip(request.StartIndex).Take(request.Count);
-    }
-
-    public class FeedEntry
-    {
-        public long ElementId { get; set; }
-        public string? Title { get; set; }
-        public string? Message { get; set; }
-    }
-
 }

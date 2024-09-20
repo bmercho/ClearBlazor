@@ -1,6 +1,6 @@
 ﻿@namespace ClearBlazorTest
 <InfiniteScroller Height=600 Width=500 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
-                  Items=@_feedEntries Context=item PageSize=10>
+                  DataProvider=@GetItemsLocally Context=item PageSize=10>
     <RowTemplate Context="item">
         <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
             <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
@@ -35,7 +35,13 @@
                                                Message = "This is a message" });
         }
     }
-       
+
+    async Task<(int totalItemCount,IEnumerable<FeedEntry> items)> GetItemsLocally(ClearBlazor.DataProviderRequest request)
+    {
+        await Task.CompletedTask;
+        return (_feedEntries.Count, _feedEntries.Skip(request.StartIndex).Take(request.Count));
+    }
+
     public class FeedEntry
     {
         public long ElementId { get; set; }

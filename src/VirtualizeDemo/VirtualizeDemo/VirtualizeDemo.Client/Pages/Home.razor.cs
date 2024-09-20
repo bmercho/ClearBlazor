@@ -33,23 +33,23 @@ namespace VirtualizeDemo
             }
         }
 
-        async Task<IEnumerable<FeedEntry>> GetItemsLocally(ClearBlazor.ItemsProviderRequest request)
+        async Task<(int, IEnumerable<FeedEntry>)> GetItemsLocally(ClearBlazor.DataProviderRequest request)
         {
             await Task.CompletedTask;
-            return _localFeedEntries.FeedEntries.Skip(request.StartIndex).Take(request.Count);
+            return (0, _localFeedEntries.FeedEntries.Skip(request.StartIndex).Take(request.Count));
         }
 
-        async Task<IEnumerable<FeedEntry>> GetItemsFromDatabase(ClearBlazor.ItemsProviderRequest request)
+        async Task<(int, IEnumerable<FeedEntry>)> GetItemsFromDatabase(ClearBlazor.DataProviderRequest request)
         {
             if (hubConnection == null)
-                return new List<FeedEntry>();
+                return (0, new List<FeedEntry>());
 
             if (_addDelay)
-                await Task.Delay(1000);
+                await Task.Delay(1000,request.CancellationToken);
 
             _feedEntries =
-                  await hubConnection.InvokeAsync<FeedEntryResult>("GetFeedEntries", request.StartIndex, request.Count);
-            return _feedEntries.FeedEntries;
+                  await hubConnection.InvokeAsync<FeedEntryResult>("GetFeedEntries", request.StartIndex, request.Count, request.CancellationToken);
+            return (0, _feedEntries.FeedEntries);
         }
 
         private void Refresh()

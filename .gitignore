@@ -248,3 +248,7 @@ ModelManifest.xml
 
 # jetbrains ide folder
 .idea
+
+# SQLite files
+*.sqlite-shm
+*.sqlite-wal

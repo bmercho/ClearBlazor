@@ -10,20 +10,25 @@ namespace ClearBlazor
     public partial class Virtualize<TItem> : ClearComponentBase,IBorder,IBackground, IBoxShadow
     {
         /// <summary>
-        /// The child content of this control.
+        /// The template for rendering each row.
         /// The item is passed to each child for customization of the row
         /// </summary>
         [Parameter]
-        public required RenderFragment<TItem>? ChildContent { get; set; }
+        public required RenderFragment<TItem>? RowTemplate { get; set; }
 
         /// <summary>
-        ///  The items to be displayed in the list.
+        ///  The items to be displayed in the list. If this is not null DataProvider is used.
+        ///  If DataProvider is also not null then Items takes precedence.
         /// </summary>
         [Parameter]
-        public IEnumerable<TItem> Items { get; set; } = new List<TItem>();
+        public IEnumerable<TItem>? Items { get; set; }
 
+        /// <summary>
+        /// Defines the data provider used to get pages of data from where ever. eg database
+        /// Used if Items is null.
+        /// </summary>
         [Parameter]
-        public ItemsProviderRequestDelegate<TItem>? ItemsProvider { get; set; }
+        public DataProviderRequestDelegate<TItem>? DataProvider { get; set; }
 
         /// <summary>
         /// The height to be used for each item.
@@ -40,6 +45,9 @@ namespace ClearBlazor
         public (int index, Alignment verticalAlignment) VisibleIndex { get; set; } = (0, Alignment.Start);
 
         [Parameter]
+        /// <summary>
+        /// The horizontal content alignment within the control.
+        /// </summary>
         public Alignment HorizontalContentAlignment { get; set; } = Alignment.Stretch;
 
         /// <summary>
@@ -80,6 +88,7 @@ namespace ClearBlazor
         [Parameter]
         public Color? BackgroundColor { get; set; }
 
+        private int _totalNumItems = 0;
         private string _firstItemId = Guid.NewGuid().ToString();
         private double _containerHeight = -1;
         private double? _previousContainerHeight = null;
@@ -94,6 +103,9 @@ namespace ClearBlazor
         private bool _initialScroll = true;
         private ScrollState _scrollState = new();
         private ScrollViewer _scrollViewer = null!;
+        private CancellationTokenSource? _loadItemsCts;
+
+        private List<TItem> _items { get; set; } = new List<TItem>();
 
         protected override void OnParametersSet()
         {
@@ -106,8 +118,15 @@ namespace ClearBlazor
                 _visibleIndex = 0;
             if (ItemHeight != null) 
                 _itemHeight = ItemHeight.Value; 
+
         }
 
+        /// <summary>
+        /// Goto the given index in the data
+        /// </summary>
+        /// <param name="index">Index to goto.</param>
+        /// <param name="verticalAlignment">Where the index should be aligned in the scroll viewer.</param>
+        /// <returns></returns>
         public async Task GotoIndex(int index, Alignment verticalAlignment)
         {
             // index is 1 based - convert to 0 based
@@ -119,17 +138,32 @@ namespace ClearBlazor
             await GotoIndex(verticalAlignment);
         }
 
+        /// <summary>
+        /// Refresh the list. Call this when items are added to or deleted from the data or if an item has changed 
+        /// </summary>
+        /// <returns></returns>
+        public async Task Refresh(bool gotoEnd)
+        {
+            await CalculateScrollItems(false);
+            if (gotoEnd)
+                await GotoIndex(_totalNumItems, Alignment.End);
+            StateHasChanged();
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (Items.Count() == 0)
+            if (_items.Count() == 0)
+                _items = await GetItems(0, 1);
+
+            if (_items.Count() == 0)
                 return;
 
             bool changed = false;
             var containerSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", _scrollViewer.Id);
 
-            if (ChildContent == null)
+            if (RowTemplate == null)
                 return; 
 
             if (containerSizeInfo == null ||
@@ -227,6 +261,7 @@ namespace ClearBlazor
                         scrollTop = (_skipItems - maxItemsInContainer + 1) * _itemHeight;
                     break;
             }
+            _items = await GetItems(_skipItems, _takeItems);
 
             // Not sure why this has to be called twice. Does not change the scroll position if it is only called once???
             // Also CalculateScrollItems cannot be awaited otherwise it does not change scroll position???
@@ -257,14 +292,45 @@ namespace ClearBlazor
 
         private async Task CalculateScrollItems(bool initial)
         {
-            _height = Items.Count() * _itemHeight;
             if (initial)
+            {
+                _height = _totalNumItems * _itemHeight;
                 await GotoIndex(VisibleIndex.verticalAlignment);
+            }
             else
             {
                 _skipItems = (int)(_scrollState.ScrollTop / _itemHeight);
                 _takeItems = (int)Math.Ceiling((double)(_scrollState.ScrollTop + _containerHeight) / _itemHeight) - _skipItems;
+                _items = await GetItems(_skipItems, _takeItems);
+                _height = _totalNumItems * _itemHeight;
             }
         }
+
+        private async Task<List<TItem>> GetItems(int startIndex, int count)
+        {
+            if (startIndex < 0)
+                startIndex = 0;
+
+            if (Items != null)
+            {
+                _totalNumItems = Items.Count();
+                return Items.Skip(startIndex).Take(count).ToList();
+            }
+            else if (DataProvider != null)
+            {
+                _loadItemsCts ??= new CancellationTokenSource();
+                try
+                {
+                    var result = await DataProvider(new DataProviderRequest(startIndex, count, _loadItemsCts.Token));
+                    _totalNumItems = result.TotalNumItems;
+                    return result.Items.ToList();
+                }
+                catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
+                {
+                }
+            }
+            return new List<TItem>();
+        }
+
     }
 }
