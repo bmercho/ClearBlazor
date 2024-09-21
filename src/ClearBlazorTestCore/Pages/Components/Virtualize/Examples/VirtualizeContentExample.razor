@@ -1,5 +1,5 @@
 ﻿@namespace ClearBlazorTest
-<VirtualizeList HorizontalAlignment=Alignment.Start Height=300 Width=300 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+<VirtualizeList HorizontalAlignment=Alignment.Start Height=300 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
             @ref="Virtualize" Items=@_feeds>
     <RowTemplate Context=item>
         <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Stretch Margin=10
@@ -8,10 +8,10 @@
                     Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{item.ImageId}/200/200") />
             <StackPanel Margin="0,0,0,20" Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch
                         BackgroundColor=Color.Transparent>
-                <TextBlock Typo=Typo.H6 VerticalAlignment=Alignment.Center Color=@Color.Dark>
+                <TextBlock Typo=Typo.H6 VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
                     @($"{item.Title}")
                 </TextBlock>
-                <TextBlock VerticalAlignment=Alignment.Center Color=@Color.Dark>
+                <TextBlock VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
                     @($"{item.Message}")
                 </TextBlock>
             </StackPanel>

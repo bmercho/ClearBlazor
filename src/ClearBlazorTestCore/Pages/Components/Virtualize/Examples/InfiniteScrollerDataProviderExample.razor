@@ -1,9 +1,9 @@
 ﻿@namespace ClearBlazorTest
-<InfiniteScrollerList Height=600 Width=300 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+<InfiniteScrollerList Height=400 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
                   DataProvider=@GetItemsLocally Context=item PageSize=10>
     <RowTemplate Context="item">
-        <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
-            <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
+        <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=4>
+            <Image Height=40 Width=40 VerticalAlignment=Alignment.Center
                    Style="border-radius:50%; " Stretch=ImageStretch.Fill
                    Source=@($"https://picsum.photos/id/{item.ElementId}/200/200") />
 
@@ -32,7 +32,7 @@
         {
             _feedEntries.Add(new FeedEntry() { ElementId = (i + 1) % 1000, 
                                                Title = $"Record #{i}", 
-                                               Message = "This is a message" });
+                                               Message = GetMessage(i) });
         }
     }
 
@@ -40,6 +40,31 @@
     {
         await Task.CompletedTask;
         return (_feedEntries.Count, _feedEntries.Skip(request.StartIndex).Take(request.Count));
+    }
+
+    private string GetMessage(int i)
+    {
+        switch (i % 8)
+        {
+            case 0:
+                return "Lorem ipsum dolor";
+            case 1:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem";
+            case 2:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ";
+            case 3:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores";
+            case 4:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.";
+            case 5:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure";
+            case 6:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .";
+            case 7:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.";
+        }
+        return "Lorem ipsum dolor";
+
     }
 
     public class FeedEntry
