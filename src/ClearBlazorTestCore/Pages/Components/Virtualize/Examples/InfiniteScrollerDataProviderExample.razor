@@ -1,6 +1,6 @@
 ﻿@namespace ClearBlazorTest
 <InfiniteScrollerList Height=400 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
-                  DataProvider=@GetItemsLocally Context=item PageSize=10>
+                  DataProvider=@GetItemsLocally Context=item PageSize=10 ShowLoadingSpinner=true>
     <RowTemplate Context="item">
         <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=4>
             <Image Height=40 Width=40 VerticalAlignment=Alignment.Center
