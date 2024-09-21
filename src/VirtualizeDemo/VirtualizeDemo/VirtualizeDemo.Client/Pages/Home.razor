@@ -6,7 +6,7 @@
     <StackPanel Orientation=Orientation.Landscape>
         <StackPanel Orientation=Orientation.Portrait>
             <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Data from database</TextBlock>
-            <InfiniteScroller Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+            <InfiniteScrollerList Name="Virtualize" @ref="Scroller" Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                                DataProvider=@GetItemsFromDatabase Context=item 
                                PageSize=10 ShowLoadingSpinner=true>
                 <RowTemplate Context="item">
@@ -26,13 +26,13 @@
                         </StackPanel>
                     </Grid>
                 </RowTemplate>
-            </InfiniteScroller>
+            </InfiniteScrollerList>
 
             <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
         </StackPanel>
-@*         <StackPanel Orientation=Orientation.Portrait>
+        <StackPanel Orientation=Orientation.Portrait>
             <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Local data</TextBlock>
-            <InfiniteScroller Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+            <InfiniteScrollerList Name="InfiniteScroller" Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                                DataProvider=@GetItemsLocally Context=item PageSize=10>
                 <RowTemplate Context="item">
                     <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
@@ -52,7 +52,7 @@
                         </StackPanel>
                     </Grid>
                 </RowTemplate>
-            </InfiniteScroller>
+            </InfiniteScrollerList>
         </StackPanel>
- *@     </StackPanel>
+     </StackPanel>
    </RootComponent>

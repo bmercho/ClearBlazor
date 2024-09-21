@@ -13,8 +13,8 @@ namespace VirtualizeDemo
         public async Task<FeedEntryResult> GetFeedEntries(int startIndex, int count)
         {
             if (DatabaseManager != null)
-                return await DatabaseManager.GetFeeds(startIndex, count);
-            return new FeedEntryResult();
+                    return await DatabaseManager.GetFeeds(startIndex, count);
+                return new FeedEntryResult();
         }
     }
 }

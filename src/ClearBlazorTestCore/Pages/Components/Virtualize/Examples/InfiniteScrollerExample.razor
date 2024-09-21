@@ -1,5 +1,5 @@
 ﻿@namespace ClearBlazorTest
-<InfiniteScroller Height=600 Width=500 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+<InfiniteScrollerList Height=600 Width=300 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
                   Items=@_feedEntries Context=item PageSize=10>
     <RowTemplate Context="item">
         <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
@@ -19,7 +19,7 @@
             </StackPanel>
         </Grid>
     </RowTemplate>
-</InfiniteScroller>
+</InfiniteScrollerList>
 
 @code {
 

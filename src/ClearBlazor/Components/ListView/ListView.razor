@@ -7,7 +7,7 @@
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         @if (VariableItemHeight)
         {
-            <InfiniteScroller Height=@Height Width=@Width
+            <InfiniteScrollerList Height=@Height Width=@Width
                                     Items=@Items DataProvider=@DataProvider>
                 <RowTemplate Context=item>
                     <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
@@ -15,11 +15,11 @@
                         @RowTemplate(GetItemInfo(item))
                     </div>
                 </RowTemplate>
-            </InfiniteScroller>
+            </InfiniteScrollerList>
         }
         else
         {
-            <ClearBlazor.Virtualize Height=@Height Width=@Width
+            <VirtualizeList Height=@Height Width=@Width
                                     Items=@Items DataProvider=@DataProvider ItemHeight=@ItemHeight>
                 <RowTemplate Context=item>
                     <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
@@ -27,7 +27,7 @@
                          @RowTemplate(GetItemInfo(item))
                     </div>
                 </RowTemplate>
-            </ClearBlazor.Virtualize>
+            </VirtualizeList>
         }
     </div>
 </CascadingValue>

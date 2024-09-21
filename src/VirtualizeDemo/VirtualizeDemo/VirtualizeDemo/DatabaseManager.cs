@@ -15,6 +15,8 @@ namespace VirtualizeDemo
         private string _databaseHost = string.Empty;
         private string _password = string.Empty;
         private string _userName = string.Empty;
+        private SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
+
 
         public void Start(DatabaseType databaseType, string databaseName, 
                           string databaseHost, string userName, string password)
@@ -102,20 +104,28 @@ namespace VirtualizeDemo
 
         public async Task<FeedEntryResult> GetFeeds(int firstIndex, int count)
         {
-            FeedEntryResult result = new FeedEntryResult();
-            using (var dbContext = new FeedContext())
+            await semaphoreSlim.WaitAsync();
+            try
             {
-                try
+                FeedEntryResult result = new FeedEntryResult();
+                using (var dbContext = new FeedContext())
                 {
-                    result.TotalNumEntries = dbContext.Feeds.Count();
-                    result.FirstIndex = firstIndex;
-                    result.FeedEntries = await dbContext.Feeds.Skip(firstIndex).Take(count).ToListAsync();
+                    try
+                    {
+                        result.TotalNumEntries = dbContext.Feeds.Count();
+                        result.FirstIndex = firstIndex;
+                        result.FeedEntries = await dbContext.Feeds.Skip(firstIndex).Take(count).ToListAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
                 }
-                catch (Exception ex)
-                {
-                }
+                return result;
             }
-            return result;
+            finally 
+            { 
+                semaphoreSlim.Release(); 
+            }
         }
 
     }

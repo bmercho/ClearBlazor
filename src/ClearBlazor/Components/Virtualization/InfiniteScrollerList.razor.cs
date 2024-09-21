@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Threading;
 
 namespace ClearBlazor
 {
     /// <summary>
     /// Virtualizes a list of items( of type 'IItem') inside a ScrollViewer which is embedded in this component.
+    /// Use this component if the item height is variable or if the total number of items is unknown.
+    /// Otherwise use the VirtualizeList component.
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public partial class InfiniteScroller<TItem> : ClearComponentBase, IBorder, IBackground, IBoxShadow
+    public partial class InfiniteScrollerList<TItem> : ClearComponentBase, IBorder, IBackground, IBoxShadow
     {
         /// <summary>
         /// The template for rendering each row.
@@ -107,14 +108,13 @@ namespace ClearBlazor
         private double _yOffset = 0;
         private List<double> _pageOffsets = new();
         private double _paddingHeight = 0;
-        // Initially just one page is loaded and when that page is scrolled to the end
+
+        // Pages are zero based. Initially just one page is loaded(page 0) and when that page is scrolled to the end
         // another page is loaded (first page is kept).
         // When that page is scrolled to the bottom the top page is removed and a new page loaded.
         // From then on there are always two pages rendered.
 
-        // _pageNum is the page index of the first page of the two. Its zero based.
-        private int _pageNum = -1;
-        private int _dataIndex = 0;
+        private int _firstRenderedPageNum = 0;
         private bool _atStart = true;
         private bool _atEnd = false;
         private double _maxScrollHeight = 0;
@@ -140,11 +140,11 @@ namespace ClearBlazor
 
             if (!_hasHadData && !_loadingUp && !_loadingDown)
             {
-                if (await GetNextPageData())
-                {
-                    _hasHadData = true;
+                _hasHadData = true;
+                if (!await GetFirstPage())
+                    _hasHadData = false;
+                else
                     changed = true;
-                }
             }
 
             if (_initialising)
@@ -159,38 +159,6 @@ namespace ClearBlazor
                 StateHasChanged();
         }
 
-        private async Task<List<TItem>> GetItems(int startIndex, int count)
-        {
-            Console.WriteLine($"GetItems: {startIndex}  {count}");
-
-            if (startIndex < 0)
-                startIndex = 0;
-
-            if (Items != null)
-            {
-                return Items.Skip(startIndex).Take(count).ToList();
-            }
-            else if (DataProvider != null)
-            {
-                _loadItemsCts = new CancellationTokenSource();
-                try
-                {
-                    var result = await DataProvider(new DataProviderRequest(startIndex, count,
-                                                                                _loadItemsCts.Token));
-                    Console.WriteLine($"Results: {result.Items.Count()}");
-                    return result.Items.ToList();
-                }
-                catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
-                {
-                    Console.WriteLine($"Cancelled StartIndex:{startIndex}");
-                    _loadItemsCts = null;
-                }
-            }
-            Console.WriteLine($"GetItems: complete StartIndex {startIndex}");
-
-            return new List<TItem>();
-        }
-
         [JSInvokable]
         public async Task HandleScrollEvent(ScrollState scrollState)
         {
@@ -199,61 +167,79 @@ namespace ClearBlazor
 
             if (Math.Ceiling(scrollState.ClientHeight + scrollState.ScrollTop) >= scrollState.ScrollHeight)
             {
-                Console.WriteLine($"HandleScrollEvent1: {scrollState.ScrollTop}");
-
                 // Record page offset
                 _pageOffsets.Add(scrollState.ScrollHeight);
 
-                await GetNextPageData();
+                // If only one page loaded, now that we know the offset of that page, load the second page.
+                // From now on two pages will always be loaded.
+                if (_pageOffsets.Count == 2)
+                    await GetSecondPage();
+                else
+                    await GetNextPageData(_pageOffsets.Count - 2);
                 StateHasChanged();
             }
             else
                 await CalculateScrollItems(scrollState.ScrollTop);
         }
 
-        private async Task<bool> GetNextPageData()
+        private async Task<bool> GetFirstPage()
+        {
+            _items = await GetItems(0, PageSize);
+            if (_items.Count == 0)
+                return false;
+
+            _pageOffsets.Add(0);
+            _yOffset = 0;
+            _firstRenderedPageNum = 0;
+            return true;
+        }
+
+        private async Task GetSecondPage()
+        {
+            var newItems = await GetItems(PageSize, PageSize);
+            _items.AddRange(newItems);
+        }
+
+        private async Task<bool> GetNextPageData(int currentPageNum)
         {
             if (_loadingUp || _loadingDown)
-            {
-                Console.WriteLine($"GetNextPageData: Already loading {_pageNum}");
                 _loadItemsCts?.Cancel();
-            }
+
             await semaphoreSlim.WaitAsync();
             try
             {
                 _loadingDown = true;
                 if (ShowLoadingSpinner)
                     StateHasChanged();
-                Console.WriteLine($"GetNextPageData: {_dataIndex} {PageSize}");
-
-                var newItems = await GetItems(_dataIndex, PageSize);
+                List<TItem> newItems;
+                bool loadTwoPages = currentPageNum != _firstRenderedPageNum + 1;
+                if (loadTwoPages || _items.Count < PageSize * 2)
+                    newItems = await GetItems(currentPageNum * PageSize, PageSize*2);
+                else
+                    newItems = await GetItems((currentPageNum + 1) * PageSize, PageSize);
 
                 if (newItems.Count > 0)
                 {
+                    _firstRenderedPageNum = currentPageNum;
+                    _yOffset = _pageOffsets[_firstRenderedPageNum];
 
-                    // Record first page offset
-                    if (_pageOffsets.Count == 0)
-                    {
-                        _pageOffsets.Add(0);
-                        _yOffset = 0;
-                    }
+                    _atStart = false;
+
+                    if (loadTwoPages || _items.Count < PageSize*2)
+                        _items = newItems;
                     else
                     {
-                        _pageNum++;
-                        _yOffset = _pageOffsets[_pageNum];
-                    }
-                    _atStart = false;
-                    _dataIndex += newItems.Count;
-
-                    // Initially only one page is loaded
-                    // so in that case there is no need to extract second page
-                    if (_items.Count > PageSize)
                         _items = _items.GetRange(PageSize, PageSize);
-                    _items.AddRange(newItems);
+                        _items.AddRange(newItems);
+                    }
                     return true;
                 }
                 else
                     _atEnd = true;
+                return false;
+            }
+            catch(Exception ex)
+            {
                 return false;
             }
             finally
@@ -273,18 +259,17 @@ namespace ClearBlazor
                 double maxOffset = _pageOffsets[page + 1];
                 if (scrollTop >= minOffset && scrollTop < maxOffset)
                 {
-                    if (page != _pageNum)
+                    if (page != _firstRenderedPageNum)
                     {
                         if (_loadingUp || _loadingDown)
                         {
                             _loadItemsCts?.Cancel();
-                            Console.WriteLine($"Cancelling: {_pageNum}");
 
                         }
                         await semaphoreSlim.WaitAsync();
                         try
                         {
-                            if (page < _pageNum)
+                            if (page < _firstRenderedPageNum)
                                 _loadingUp = true;
                             else
                                 _loadingDown = true;
@@ -292,15 +277,13 @@ namespace ClearBlazor
                             if (ShowLoadingSpinner)
                                 StateHasChanged();
 
-                            Console.WriteLine($"CalculateScrollItems: {page}");
+                            _firstRenderedPageNum = page;
+                            _yOffset = _pageOffsets[page];
 
-                            _pageNum = page;
-                            _yOffset = _pageOffsets[_pageNum];
-                            _items = await GetItems(_pageNum * 10, PageSize * 2);
+                            _items = await GetItems(page * 10, PageSize * 2);
                         }
                         finally
                         {
-                            Console.WriteLine($"CalculateScrollItems: complete {page}");
                             _loadingDown = false;
                             _loadingUp = false;
                             semaphoreSlim.Release();
@@ -310,6 +293,33 @@ namespace ClearBlazor
                     return;
                 }
             }
+        }
+
+        private async Task<List<TItem>> GetItems(int startIndex, int count)
+        {
+            if (startIndex < 0)
+                startIndex = 0;
+
+            if (Items != null)
+            {
+                return Items.Skip(startIndex).Take(count).ToList();
+            }
+            else if (DataProvider != null)
+            {
+                _loadItemsCts = new CancellationTokenSource();
+                try
+                {
+                    var result = await DataProvider(new DataProviderRequest(startIndex, count,
+                                                                                _loadItemsCts.Token));
+                    return result.Items.ToList();
+                }
+                catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
+                {
+                    _loadItemsCts = null;
+                }
+            }
+
+            return new List<TItem>();
         }
 
         private string GetTransformStyle()

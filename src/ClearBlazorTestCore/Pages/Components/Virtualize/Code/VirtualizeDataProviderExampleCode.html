@@ -1,7 +1,7 @@
 <div>
 <div class="html"><pre>
 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">VirtualizeList</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">300</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">300</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">BoxShadow</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span>
-            <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Virtualize</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Items</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_feeds</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Virtualize</span><span class="quot">&quot;</span> <span class="htmlAttributeName">DataProvider</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>GetData</span><span class="htmlTagDelimiter">&gt;</span>
     <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RowTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">item</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Stretch</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span>
                     <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span><span class="htmlTagDelimiter">&gt;</span>
@@ -37,6 +37,13 @@
             _feeds.Add(<span class="keyword">new</span> Feed((i + <span class="number">1</span>) % <span class="number">1000</span>, $<span class="string">&quot;Record #{i}&quot;</span>, <span class="string">&quot;This is a message&quot;</span>));
         }
     }
+
+    <span class="keyword">async</span> Task&lt;(<span class="keyword">int</span> totalNumItem, IEnumerable&lt;Feed&gt; items)&gt; GetData(ClearBlazor.DataProviderRequest request)
+    {
+        <span class="keyword">await</span> Task.CompletedTask;
+        <span class="keyword">return</span> (_feeds.Count(), _feeds.Skip(request.StartIndex).Take(request.Count));
+    }
+
 }
 </pre></div>
 </div>

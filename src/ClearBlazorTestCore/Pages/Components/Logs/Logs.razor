@@ -2,11 +2,11 @@
 
 @namespace ClearBlazorTest
 <Grid Margin=10 BorderThickness="1" BorderColor="Color.Dark" CornerRadius="4">
-    <ClearBlazor.Virtualize Items=@Data ItemHeight=20>
+    <VirtualizeList Items=@Data ItemHeight=20>
         <RowTemplate Context=item>
             @item
         </RowTemplate>
-    </ClearBlazor.Virtualize>
+    </VirtualizeList>
 </Grid>
 
 @code {

@@ -1,28 +1,28 @@
 ﻿@namespace ClearBlazorTest
 <WrapPanel BackgroundColor=Color.Transparent ColumnSpacing=20 Padding=20>
-    <Virtualize Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+    <VirtualizeList Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                 @ref="Virtualize" Items=@items HorizontalContentAlignment=Alignment.Start>
         <RowTemplate Context=item>
             <TextBlock>@item</TextBlock>
         </RowTemplate>
-    </Virtualize>
-    <Virtualize Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+    </VirtualizeList>
+    <VirtualizeList Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                 @ref="Virtualize" Items=@items HorizontalContentAlignment=Alignment.Center>
         <RowTemplate Context=item>
             <TextBlock>@item</TextBlock>
         </RowTemplate>
-    </Virtualize>
-    <Virtualize Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+    </VirtualizeList>
+    <VirtualizeList Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                 @ref="Virtualize" Items=@items HorizontalContentAlignment=Alignment.End>
         <RowTemplate Context=item>
             <TextBlock>@item</TextBlock>
         </RowTemplate>
-    </Virtualize>
+    </VirtualizeList>
 </WrapPanel>
 
 @code {
 
-    ClearBlazor.Virtualize<string> Virtualize = null!;
+    VirtualizeList<string> Virtualize = null!;
     private IEnumerable<string> items = Enumerable.Range(1, 10000).Select(i => i.ToString()).ToArray();
 
 }

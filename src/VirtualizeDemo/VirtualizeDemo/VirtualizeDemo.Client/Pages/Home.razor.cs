@@ -1,3 +1,4 @@
+using ClearBlazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -11,7 +12,8 @@ namespace VirtualizeDemo
         private HubConnection? hubConnection;
         FeedEntryResult _feedEntries = new();
         FeedEntryResult _localFeedEntries = new();
-        bool _addDelay = true;
+        bool _addDelay = false;
+        InfiniteScrollerList<FeedEntry> Scroller;
 
         protected override async Task OnInitializedAsync()
         {
@@ -45,7 +47,20 @@ namespace VirtualizeDemo
                 return (0, new List<FeedEntry>());
 
             if (_addDelay)
-                await Task.Delay(1000,request.CancellationToken);
+                await Task.Delay(1000, request.CancellationToken);
+
+            _feedEntries =
+                  await hubConnection.InvokeAsync<FeedEntryResult>("GetFeedEntries", request.StartIndex, request.Count, request.CancellationToken);
+            return (0, _feedEntries.FeedEntries);
+        }
+
+        async Task<(int, IEnumerable<FeedEntry>)> GetItemsFromDatabase1(ClearBlazor.DataProviderRequest request)
+        {
+            if (hubConnection == null)
+                return (0, new List<FeedEntry>());
+
+            if (_addDelay)
+                await Task.Delay(1000, request.CancellationToken);
 
             _feedEntries =
                   await hubConnection.InvokeAsync<FeedEntryResult>("GetFeedEntries", request.StartIndex, request.Count, request.CancellationToken);

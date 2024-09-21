@@ -5,9 +5,12 @@ namespace ClearBlazor
 {
     /// <summary>
     /// Virtualizes a list of items( of type 'IItem') inside a ScrollViewer which is embedded in this component.
+    /// Use this component if the item heights are the same
+    /// (or close enough to the same such that the ItemHeight could be supplied as a parameter) and the number of items are known.
+    /// Otherwise use InfiniteScrollerList component.
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public partial class Virtualize<TItem> : ClearComponentBase,IBorder,IBackground, IBoxShadow
+    public partial class VirtualizeList<TItem> : ClearComponentBase,IBorder,IBackground, IBoxShadow
     {
         /// <summary>
         /// The template for rendering each row.

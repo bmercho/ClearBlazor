@@ -27,7 +27,7 @@
                 @switch (Mode)
                 {
                     case DatePickerMode.Year:
-                        <ClearBlazor.Virtualize ItemHeight=28
+                        <VirtualizeList ItemHeight=28
                                                 Items=@YearList VisibleIndex="@((GetYearIndex(), Alignment.Center))">
                             <RowTemplate Context=item>
                                 <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item))"
@@ -38,7 +38,7 @@
                                                Color=@GetYearColor(item)>@item</TextBlock>
                                 </div>
                             </RowTemplate>
-                        </ClearBlazor.Virtualize>
+                        </VirtualizeList>
                         break;
                     case DatePickerMode.Month:
                         <DockPanel>

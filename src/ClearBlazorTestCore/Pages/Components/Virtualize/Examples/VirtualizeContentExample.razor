@@ -1,5 +1,5 @@
 ﻿@namespace ClearBlazorTest
-<Virtualize HorizontalAlignment=Alignment.Start Height=300 Width=300 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+<VirtualizeList HorizontalAlignment=Alignment.Start Height=300 Width=300 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
             @ref="Virtualize" Items=@_feeds>
     <RowTemplate Context=item>
         <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Stretch Margin=10
@@ -17,11 +17,11 @@
             </StackPanel>
         </StackPanel>
     </RowTemplate>
-</Virtualize>
+</VirtualizeList>
 
 @code {
 
-    ClearBlazor.Virtualize<Feed> Virtualize = null!;
+    VirtualizeList<Feed> Virtualize = null!;
 
     record Feed(int ImageId, string Title, string Message);
 
