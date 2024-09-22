@@ -4,19 +4,19 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <StackPanel Orientation="Orientation.Portrait">
+        <StackPanel Orientation="Orientation.Portrait" BackgroundColor=@BackgroundColor>
             @if (!string.IsNullOrEmpty(Label))
             {
                 <div style=@GetLabelStyle()>@Label</div>
             }
-            <Grid Columns="*,auto">
-                <StackPanel Orientation=@Orientation Spacing=@Spacing>
+            <Grid Columns="*,auto" BackgroundColor=Color.Transparent>
+                <StackPanel Orientation=@Orientation Spacing=@Spacing BackgroundColor=Color.Transparent>
                     @ChildContent
                     @if (RadioGroupData != null)
                     {
                         @foreach (var item in RadioGroupData)
                         {
-                            <Radio Label=@item.Name Value=@item.Value/>
+                            <Radio Label=@item.Name Value=@item.Value Color=@Color/>
                         }
                     }
                 </StackPanel>

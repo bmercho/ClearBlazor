@@ -6,7 +6,8 @@
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         <StackPanel Orientation="Orientation.Landscape"
                     HorizontalAlignment=Alignment.Start 
-                    VerticalAlignment=Alignment.Start>
+                    VerticalAlignment=Alignment.Start
+                    BackgroundColor=Color.Transparent>
             @if (Label != null && LabelLocation == LabelLocation.Start)
             {
                 <TextBlock Color=@GetColor() VerticalAlignment=Alignment.Center>@Label</TextBlock>
