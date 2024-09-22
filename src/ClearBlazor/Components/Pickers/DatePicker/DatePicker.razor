@@ -27,8 +27,10 @@
                 @switch (Mode)
                 {
                     case DatePickerMode.Year:
-                        <VirtualizeList ItemHeight=28
-                                                Items=@YearList VisibleIndex="@((GetYearIndex(), Alignment.Center))">
+                        <VirtualizeList ItemHeight=28 Items=@YearList 
+                                        Height=@GetBodyHeight()
+                                        Width=@GetBodyWidth()
+                                        VisibleIndex="@((GetYearIndex(), Alignment.Center))">
                             <RowTemplate Context=item>
                                 <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item))"
                                      @onclick:stopPropagation="true">

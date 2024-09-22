@@ -9,8 +9,18 @@
 @implements IHandleEvent
 
 @* <RootComponent>
+    <VirtualizeList Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                    @ref="Virtualize" Items=@items HorizontalContentAlignment=Alignment.Start
+                    VisibleIndex=(100,Alignment.Center)>
+
+        <RowTemplate Context=item>
+            <TextBlock>@item</TextBlock>
+        </RowTemplate>
+    </VirtualizeList>
 </RootComponent>
  *@
+
+
 
 
 <RootComponent>
@@ -168,4 +178,5 @@
     {
         StateHasChanged();
     }
+
 }

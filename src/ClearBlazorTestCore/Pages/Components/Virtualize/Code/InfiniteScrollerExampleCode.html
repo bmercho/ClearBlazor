@@ -1,10 +1,10 @@
 <div>
 <div class="html"><pre>
-<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">InfiniteScrollerList</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">600</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">300</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">BoxShadow</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">InfiniteScrollerList</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">400</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">250</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">BoxShadow</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span>
                   <span class="htmlAttributeName">Items</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_feedEntries</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">item</span> <span class="htmlAttributeName">PageSize</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span><span class="htmlTagDelimiter">&gt;</span>
     <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RowTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">item</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">auto,*</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">8</span> <span class="htmlAttributeName">BoxShadow</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span><span class="htmlTagDelimiter">&gt;</span>
-            &lt;Image Height=75 Width=75 VerticalAlignment=Alignment.Center
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">auto,*</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">8</span> <span class="htmlAttributeName">BoxShadow</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span><span class="htmlTagDelimiter">&gt;</span>
+            &lt;Image Height=40 Width=40 VerticalAlignment=Alignment.Center
                    Style=&quot;border-radius:50%; &quot; Stretch=ImageStretch.Fill
                    Source=<span class="atSign">&#64;</span>($&quot;https://picsum.photos/id/{item.ElementId}/200/200&quot;) /&gt;
 
@@ -32,12 +32,40 @@
         <span class="keyword">base</span>.OnInitialized();
         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++)
         {
-            _feedEntries.Add(<span class="keyword">new</span> FeedEntry() { ElementId = (i + <span class="number">1</span>) % <span class="number">1000</span>, 
-                                               Title = $<span class="string">&quot;Record #{i}&quot;</span>, 
-                                               Message = <span class="string">&quot;This is a message&quot;</span> });
+            _feedEntries.Add(<span class="keyword">new</span> FeedEntry()
+                {
+                    ElementId = (i + <span class="number">1</span>) % <span class="number">1000</span>,
+                    Title = $<span class="string">&quot;Record #{i}&quot;</span>,
+                    Message = GetMessage(i)
+                });
         }
     }
        
+    <span class="keyword">private</span> <span class="keyword">string</span> GetMessage(<span class="keyword">int</span> i)
+    {
+        <span class="keyword">switch</span> (i % <span class="number">8</span>)
+        {
+            <span class="keyword">case</span> <span class="number">0</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor&quot;</span>;
+            <span class="keyword">case</span> <span class="number">1</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem&quot;</span>;
+            <span class="keyword">case</span> <span class="number">2</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur &quot;</span>;
+            <span class="keyword">case</span> <span class="number">3</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores&quot;</span>;
+            <span class="keyword">case</span> <span class="number">4</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.&quot;</span>;
+            <span class="keyword">case</span> <span class="number">5</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure&quot;</span>;
+            <span class="keyword">case</span> <span class="number">6</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .&quot;</span>;
+            <span class="keyword">case</span> <span class="number">7</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.&quot;</span>;
+        }
+        <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor&quot;</span>;
+
+    }
+
     <span class="keyword">public</span> <span class="keyword">class</span> FeedEntry
     {
         <span class="keyword">public</span> <span class="keyword">long</span> ElementId { <span class="keyword">get</span>; <span class="keyword">set</span>; }

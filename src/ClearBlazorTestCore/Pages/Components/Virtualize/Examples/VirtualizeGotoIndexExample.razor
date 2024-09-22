@@ -9,7 +9,7 @@
     <StackPanel Spacing=10 Orientation=Orientation.Landscape>
         <Button OnClicked=@OnGoto5000Start>Goto 5000 (start)</Button>
         <Button OnClicked=@OnGoto1000Center>Goto 1000 (center)</Button>
-        <Button OnClicked=@OnGoto15000End>Goto 15000 (end)</Button>
+        <Button OnClicked=@OnGoto9000End>Goto 9000 (end)</Button>
     </StackPanel>
 </StackPanel>
 
@@ -24,9 +24,9 @@
         await Virtualize.GotoIndex(1000, Alignment.Center);
     }
 
-    async Task OnGoto15000End()
+    async Task OnGoto9000End()
     {
-        await Virtualize.GotoIndex(15000, Alignment.End);
+        await Virtualize.GotoIndex(9000, Alignment.End);
     }
 
     VirtualizeList<string> Virtualize = null!;

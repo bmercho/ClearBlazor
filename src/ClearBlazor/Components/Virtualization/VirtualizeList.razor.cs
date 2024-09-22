@@ -157,6 +157,10 @@ namespace ClearBlazor
         {
             await base.OnAfterRenderAsync(firstRender);
 
+            if (firstRender)
+                await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewer.Id,
+                                DotNetObjectReference.Create(this));
+
             if (_items.Count() == 0)
                 _items = await GetItems(0, 1);
 
@@ -206,10 +210,7 @@ namespace ClearBlazor
                     _initialising = false;
                     await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewer.Id, 
                                                     DotNetObjectReference.Create(this));
-                    // Do not await otherwise initially the scroll top is not set???
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    CalculateScrollItems(true);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    await CalculateScrollItems(true);
                 }
                 StateHasChanged();
             }
@@ -265,10 +266,7 @@ namespace ClearBlazor
                     break;
             }
             _items = await GetItems(_skipItems, _takeItems);
-
-            // Not sure why this has to be called twice. Does not change the scroll position if it is only called once???
-            // Also CalculateScrollItems cannot be awaited otherwise it does not change scroll position???
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, scrollTop);
+            StateHasChanged();
             await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, scrollTop);
         }
 
