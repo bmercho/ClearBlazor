@@ -9,7 +9,7 @@
             <TextBlock>
                 @foreach(var line in _lines)
                 {
-                    @(line)<br />
+                    @(@GetMarkupString(line))<br />
                 }
             </TextBlock>
         </StackPanel>

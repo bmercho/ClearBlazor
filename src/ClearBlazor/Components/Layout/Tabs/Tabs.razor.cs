@@ -4,7 +4,7 @@ namespace ClearBlazor
 {
     /// <summary>
     /// Allows you to split the interface up into different areas, 
-    /// each accessible by clicking on the tab header, usually positioned at the top of the control. 
+    /// each accessible by clicking on the tab header, positioned at the top of the control. 
     /// </summary>
     public partial class Tabs : IBackground, IBorder
     {

@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record DockPanelDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "DockPanel";
-        public string Description {get; set; } = "A Dock Panel is used to dock child elements in the left, right, top, and bottom positions of the panel. \rThe position of child elements is determined by the Dock property of the respective child elements\rIf a child does not have a Dock property it used the remaining available space of the panel.\r";
+        public string Description {get; set; } = "A Dock Panel is used to dock child elements in the left, right, top, and bottom positions of the panel. \rThe position of child elements is determined by the Dock property of the respective child elements\rIf a child does not have a <a href=DockApi>Dock</a> property it uses the remaining available space of the panel.\r";
         public (string, string) ApiLink  {get; set; } = ("API", "DockPanelApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "DockPanel");
         public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");
