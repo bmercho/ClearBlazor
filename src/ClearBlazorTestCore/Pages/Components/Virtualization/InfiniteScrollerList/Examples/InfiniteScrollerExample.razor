@@ -1,0 +1,83 @@
+﻿@namespace ClearBlazorTest
+<StackPanel Orientation=Orientation.Portrait>
+<InfiniteScrollerList @ref="List" Height=400 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+                  Items=@_feedEntries Context=item PageSize=10>
+    <RowTemplate Context="item">
+        <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=4>
+            <Image Height=40 Width=40 VerticalAlignment=Alignment.Center
+                   Style="border-radius:50%; " Stretch=ImageStretch.Fill
+                   Source=@($"https://picsum.photos/id/{item.ElementId}/200/200") />
+
+            <StackPanel Column=1 Orientation=Orientation.Portrait>
+                <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
+                    @item.Title
+                </TextBlock>
+                <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
+                    <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                        @item.Message
+                    </TextBlock>
+                </ScrollViewer>
+            </StackPanel>
+        </Grid>
+    </RowTemplate>
+</InfiniteScrollerList>
+<Button HorizontalAlignment=Alignment.Start OnClicked=@OnGotoStart>Goto Start</Button>
+</StackPanel>
+
+
+@code {
+    InfiniteScrollerList<FeedEntry> List;
+    List<FeedEntry> _feedEntries = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        for (int i = 0; i < 10000; i++)
+        {
+            _feedEntries.Add(new FeedEntry()
+                {
+                    ElementId = (i + 1) % 1000,
+                    Title = $"Record #{i}",
+                    Message = GetMessage(i)
+                });
+        }
+    }
+       
+    async Task OnGotoStart()
+    {
+        await List.GotoStart();
+    }
+
+    private string GetMessage(int i)
+    {
+        switch (i % 8)
+        {
+            case 0:
+                return "Lorem ipsum dolor";
+            case 1:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem";
+            case 2:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ";
+            case 3:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores";
+            case 4:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.";
+            case 5:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure";
+            case 6:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .";
+            case 7:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.";
+        }
+        return "Lorem ipsum dolor";
+
+    }
+
+    public class FeedEntry
+    {
+        public long ElementId { get; set; }
+        public string? Title { get; set; }
+        public string? Message { get; set; }
+    }
+
+}

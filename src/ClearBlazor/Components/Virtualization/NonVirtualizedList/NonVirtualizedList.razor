@@ -1,0 +1,31 @@
+﻿@namespace ClearBlazor
+@typeparam TItem
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <ScrollViewer @ref="_scrollViewer" Width=@Width Height=@Height>
+            @if (RowTemplate != null)
+            {
+                @if (_initialising)
+                {
+                    @if (_items.Count() > 0)
+                    {
+                        <div id=@_firstItemId>
+                            @RowTemplate(_items.First())
+                        </div>
+                    }
+                }
+                else
+                {
+                    @foreach (var item in _items)
+                    {
+                        <div style="@(GetContentStyle())">
+                            @RowTemplate(item)
+                        </div>
+                    }
+                }
+            }
+        </ScrollViewer>
+    </div>
+</CascadingValue>

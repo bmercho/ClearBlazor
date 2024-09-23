@@ -1,0 +1,39 @@
+﻿@namespace ClearBlazorTest
+<WrapPanel BackgroundColor=Color.Transparent ColumnSpacing=20 Padding=20>
+    <NonVirtualizedList Height=300 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                        @ref="NonVirtualize" Items=@_feeds HorizontalContentAlignment=Alignment.Start>
+        <RowTemplate Context=item>
+            <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Stretch Margin=10
+                        BackgroundColor=Color.Transparent>
+                <Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
+                        Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{item.ImageId}/200/200") />
+                <StackPanel Margin="0,0,0,20" Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch
+                            BackgroundColor=Color.Transparent>
+                    <TextBlock Typo=Typo.H6 VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
+                        @($"{item.Title}")
+                    </TextBlock>
+                    <TextBlock VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
+                        @($"{item.Message}")
+                    </TextBlock>
+                </StackPanel>
+            </StackPanel>
+        </RowTemplate>
+    </NonVirtualizedList>
+</WrapPanel>
+
+@code {
+
+    NonVirtualizedList<Feed> NonVirtualize = null!;
+    record Feed(int ImageId, string Title, string Message);
+
+    List<Feed> _feeds = new List<Feed>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        for (int i = 0; i < 100; i++)
+        {
+            _feeds.Add(new Feed((i + 1) % 1000, $"Record #{i}", "This is a message"));
+        }
+    }
+}

@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Components\Virtualization\Code\**" />
+    <Content Remove="Pages\Components\Virtualization\Code\**" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizedGotoIndexExampleCode.html" />
+    <EmbeddedResource Remove="Pages\Components\Virtualization\Code\**" />
+    <None Remove="Pages\Components\Virtualization\Code\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
@@ -30,15 +38,18 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
-	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeDataProviderExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedGotoIndexExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedDataProviderExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedContentExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizedExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizedDataProviderExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\InfiniteScrollerList\Code\InfiniteScrollerExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Virtualization\InfiniteScrollerList\Code\InfiniteScrollerDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewVariableHeightExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewDataProviderExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualize\Code\InfiniteScrollerDataProviderExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualize\Code\InfiniteScrollerExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Spinner\Code\SpinnerSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeContentExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeGotoIndexExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualize\Code\VirtualizeSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsShapeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsShapeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerColorExampleCode.html" />

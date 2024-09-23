@@ -1,0 +1,86 @@
+<div>
+<div class="html"><pre>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">InfiniteScrollerList</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">List</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">400</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">250</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">BoxShadow</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span>
+                  <span class="htmlAttributeName">Items</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_feedEntries</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">item</span> <span class="htmlAttributeName">PageSize</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RowTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">item</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">auto,*</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">8</span> <span class="htmlAttributeName">BoxShadow</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span><span class="htmlTagDelimiter">&gt;</span>
+            &lt;Image Height=40 Width=40 VerticalAlignment=Alignment.Center
+                   Style=&quot;border-radius:50%; &quot; Stretch=ImageStretch.Fill
+                   Source=<span class="atSign">&#64;</span>($&quot;https://picsum.photos/id/{item.ElementId}/200/200&quot;) /&gt;
+
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Typo</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Typo.H6</span> <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">TextWrap.Wrap</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">0,0,10,10</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+                    <span class="atSign">&#64;</span>item.Title
+                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">ScrollViewer</span> <span class="htmlAttributeName">VerticalScrollMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">ScrollMode.Auto</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span><span class="htmlTagDelimiter">&gt;</span>
+                    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">TextWrap.Wrap</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">0,0,0,10</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+                        <span class="atSign">&#64;</span>item.Message
+                    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">ScrollViewer</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RowTemplate</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">InfiniteScrollerList</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoStart</span><span class="htmlTagDelimiter">&gt;</span>Goto Start<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+</pre></div>
+<div class="csharp"><pre>
+<span class="atSign">&#64;</span>code {
+    InfiniteScrollerList&lt;FeedEntry&gt; List;
+    List&lt;FeedEntry&gt; _feedEntries = <span class="keyword">new</span>();
+
+    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
+    {
+        <span class="keyword">base</span>.OnInitialized();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++)
+        {
+            _feedEntries.Add(<span class="keyword">new</span> FeedEntry()
+                {
+                    ElementId = (i + <span class="number">1</span>) % <span class="number">1000</span>,
+                    Title = $<span class="string">&quot;Record #{i}&quot;</span>,
+                    Message = GetMessage(i)
+                });
+        }
+    }
+       
+    <span class="keyword">async</span> Task OnGotoStart()
+    {
+        <span class="keyword">await</span> List.GotoStart();
+    }
+
+    <span class="keyword">private</span> <span class="keyword">string</span> GetMessage(<span class="keyword">int</span> i)
+    {
+        <span class="keyword">switch</span> (i % <span class="number">8</span>)
+        {
+            <span class="keyword">case</span> <span class="number">0</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor&quot;</span>;
+            <span class="keyword">case</span> <span class="number">1</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem&quot;</span>;
+            <span class="keyword">case</span> <span class="number">2</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur &quot;</span>;
+            <span class="keyword">case</span> <span class="number">3</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores&quot;</span>;
+            <span class="keyword">case</span> <span class="number">4</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.&quot;</span>;
+            <span class="keyword">case</span> <span class="number">5</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure&quot;</span>;
+            <span class="keyword">case</span> <span class="number">6</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .&quot;</span>;
+            <span class="keyword">case</span> <span class="number">7</span>:
+                <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.&quot;</span>;
+        }
+        <span class="keyword">return</span> <span class="string">&quot;Lorem ipsum dolor&quot;</span>;
+
+    }
+
+    <span class="keyword">public</span> <span class="keyword">class</span> FeedEntry
+    {
+        <span class="keyword">public</span> <span class="keyword">long</span> ElementId { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+        <span class="keyword">public</span> <span class="keyword">string</span>? Title { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+        <span class="keyword">public</span> <span class="keyword">string</span>? Message { <span class="keyword">get</span>; <span class="keyword">set</span>; }
+    }
+
+}
+</pre></div>
+</div>

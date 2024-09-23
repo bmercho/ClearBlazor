@@ -4,7 +4,7 @@
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
               DataProvider=@GetData Width=300 Height=500 BorderThickness="1"
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
-              HoverHighlight=@_hoverHighlight
+              HoverHighlight=@_hoverHighlight VirtualizeMode=VirtualizeMode.Virtualize
               AllowSelectionToggle=@_allowSelectionToggle>
         <RowTemplate Context=Item>
             <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8 Margin=10 Padding=10 Columns="*,3*">

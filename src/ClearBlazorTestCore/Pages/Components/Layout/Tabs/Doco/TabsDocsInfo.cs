@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record TabsDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "Tabs";
-        public string Description {get; set; } = "Allows you to split the interface up into different areas, \reach accessible by clicking on the tab header, usually positioned at the top of the control. \r";
+        public string Description {get; set; } = "Allows you to split the interface up into different areas, \reach accessible by clicking on the tab header, positioned at the top of the control. \r";
         public (string, string) ApiLink  {get; set; } = ("API", "TabsApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "Tabs");
         public (string, string) InheritsLink {get; set; } = ("", "Api");

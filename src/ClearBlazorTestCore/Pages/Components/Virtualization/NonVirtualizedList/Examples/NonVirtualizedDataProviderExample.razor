@@ -1,0 +1,45 @@
+﻿@namespace ClearBlazorTest
+<NonVirtualizedList HorizontalAlignment=Alignment.Start Height=300 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+            @ref="NonVirtualize" DataProvider=@GetData>
+    <RowTemplate Context=item>
+        <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Stretch Margin=10
+                    BackgroundColor=Color.Transparent>
+            <Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
+                    Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{item.ImageId}/200/200") />
+            <StackPanel Margin="0,0,0,20" Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch
+                        BackgroundColor=Color.Transparent>
+                <TextBlock Typo=Typo.H6 VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
+                    @($"{item.Title}")
+                </TextBlock>
+                <TextBlock VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
+                    @($"{item.Message}")
+                </TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </RowTemplate>
+</NonVirtualizedList>
+
+@code {
+
+    NonVirtualizedList<Feed> NonVirtualize = null!;
+
+    record Feed(int ImageId, string Title, string Message);
+
+    List<Feed> _feeds = new List<Feed>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        for (int i = 0; i < 100; i++)
+        {
+            _feeds.Add(new Feed((i + 1) % 1000, $"Record #{i}", "This is a message"));
+        }
+    }
+
+    async Task<(int totalNumItem, IEnumerable<Feed> items)> GetData(ClearBlazor.DataProviderRequest request)
+    {
+        await Task.CompletedTask;
+        return (_feeds.Count(), _feeds.Skip(request.StartIndex).Take(request.Count));
+    }
+
+}

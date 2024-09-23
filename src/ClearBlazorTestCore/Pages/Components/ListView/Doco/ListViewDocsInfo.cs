@@ -32,7 +32,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("DataProvider", "DataProviderRequestDelegate<TItem>?", "null", "Defines the data provider used to get pages of data from where ever. eg database\rUsed if Items is null.\r"),
             new ApiComponentInfo("HorizontalContentAlignment", "<a href=AlignmentApi>Alignment</a>", "Alignment.Stretch", "The horizontal content alignment within the control.\r"),
             new ApiComponentInfo("ItemHeight", "int?", "null", "The height of each item.\rIf not provided uses the height of the first item.\rIgnored if VariableItemHeight is true.\r"),
-            new ApiComponentInfo("VariableItemHeight", "bool", "false", "If true it ignores ItemHeight and internally uses the InfiniteScroller component\r"),
+            new ApiComponentInfo("VirtualizeMode", "<a href=VirtualizeModeApi>VirtualizeMode</a>", "VirtualizeMode.None", "If true it ignores ItemHeight and internally uses the InfiniteScroller component\r"),
             new ApiComponentInfo("BackgroundColor", "Color?", "Color.Transparent", "See <a href=IBackgroundApi>IBackground</a>\r"),
             new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
             new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=IBorderApi>IBorder</a>\r"),

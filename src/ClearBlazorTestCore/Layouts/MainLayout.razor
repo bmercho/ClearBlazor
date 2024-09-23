@@ -87,7 +87,11 @@
                                     <ListBoxItem Text="Auto Form" HRef="/AutoForm" OnClicked=@Close />
                                 </ListBoxItem>
                                 <ListBoxItem Text="Spinner" HRef="/Spinner" OnClicked=@Close />
-                                <ListBoxItem Text="Virtualize" HRef="/Virtualize" OnClicked=@Close />
+                                <ListBoxItem Text="Virtualization" InitiallyExpanded=true>
+                                    <ListBoxItem Text="Non Virtualized" HRef="/NonVirtualizedList" OnClicked=@Close />
+                                    <ListBoxItem Text="Virtualized" HRef="/VirtualizedLIst" OnClicked=@Close />
+                                    <ListBoxItem Text="Infinite Scroller" HRef="/InfiniteScrollerList" OnClicked=@Close />
+                                </ListBoxItem>
                                 <ListBoxItem Text="Logs" HRef="/Logs" OnClicked=@Close />
                             </ListBoxItem>
                         </ListBox>

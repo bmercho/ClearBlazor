@@ -97,7 +97,7 @@ namespace ClearBlazor
         /// If true it ignores ItemHeight and internally uses the InfiniteScroller component
         /// </summary>
         [Parameter]
-        public bool VariableItemHeight { get; set; } = false;
+        public VirtualizeMode VirtualizeMode { get; set; } = VirtualizeMode.None;
 
         /// <summary>
         /// See <a href=IBackgroundApi>IBackground</a>
