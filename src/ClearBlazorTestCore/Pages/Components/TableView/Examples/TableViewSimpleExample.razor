@@ -1,5 +1,5 @@
 ﻿@namespace ClearBlazorTest
-<Table BorderThickness=1 CornerRadius=4 VerticalGridLines=GridLines.All HorizontalGridLines=GridLines.All
+<TableView BorderThickness=1 CornerRadius=4 VerticalGridLines=GridLines.All HorizontalGridLines=GridLines.All
        Items=@People Padding=5 RowSpacing=10 ColumnSpacing=20 ColumnDefs="*,*,2*">
     <TableColumn Label="PersonId" TItem=Person Field=@(x =>x.PersonId)>
         <HeaderTemplate Context=Header>
@@ -11,7 +11,7 @@
     </TableColumn>
     <TableColumn Label="Name" TItem=Person Field=@(x =>x.Name) />
     <TableColumn Label="BirthDate" TItem=Person Field=@(x =>x.BirthDate) />
-</Table>
+</TableView>
 
 @code {
 

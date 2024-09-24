@@ -1,15 +1,32 @@
-using ClearBlazor.Components.Common;
 using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class Table<TItem> : ClearComponentBase, IBorder, IBackground,IBoxShadow
+    /// <summary>
+    /// TableView is a templated table component supporting virtualization and allowing multiple selections.
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
+    public partial class TableView<TItem> : ClearComponentBase, IBorder, IBackground,IBoxShadow
     {
+        /// <summary>
+        /// The child content of this control. Contains the columns for that table.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
+        /// <summary>
+        ///  The items to be displayed in the list. If this is not null DataProvider is used.
+        ///  If DataProvider is also not null then Items takes precedence.
+        /// </summary>
         [Parameter]
         public List<TItem> Items { get; set; } = new List<TItem>();
+
+        /// <summary>
+        /// Defines the data provider used to get pages of data from where ever. eg database
+        /// Used if Items is null.
+        /// </summary>
+        [Parameter]
+        public DataProviderRequestDelegate<TItem>? DataProvider { get; set; }
 
         [Parameter]
         public string ColumnDefs { get; set; } = "";

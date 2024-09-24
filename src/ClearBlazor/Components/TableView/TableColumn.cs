@@ -5,7 +5,7 @@ namespace ClearBlazor
     public class TableColumn<TItem>:ClearComponentBase
     {
         [CascadingParameter]
-        public Table<TItem>? Table { get; set; } = null;
+        public TableView<TItem>? Table { get; set; } = null;
 
         [Parameter]
         public string Label { get; set; } = string.Empty;

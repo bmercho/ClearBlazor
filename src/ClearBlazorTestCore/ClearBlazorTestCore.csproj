@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Remove="Pages\Components\Virtualization\Code\**" />
     <Content Remove="Pages\Components\Virtualization\Code\**" />
+	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizedGotoIndexExampleCode.html" />
     <EmbeddedResource Remove="Pages\Components\Virtualization\Code\**" />
     <None Remove="Pages\Components\Virtualization\Code\**" />
@@ -166,7 +167,6 @@
 	<EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockOptionsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockClickableExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockAlignmentExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Table\Code\TableSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Popup\Code\PopupVerticalFlipExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Popup\Code\PopupSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Popup\Code\PopupLocationExampleCode.html" />

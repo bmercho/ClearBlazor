@@ -3,12 +3,12 @@
 using ClearBlazor.Common;
 namespace ClearBlazorTest
 {
-    public record TableDocsInfo:IComponentDocsInfo
+    public record TableViewDocsInfo:IComponentDocsInfo
     {
-        public string Name { get; set; } = "Table<TItem>";
+        public string Name { get; set; } = "TableView<TItem>";
         public string Description {get; set; } = "";
-        public (string, string) ApiLink  {get; set; } = ("API", "TableApi");
-        public (string, string) ExamplesLink {get; set; } = ("Examples", "Table");
+        public (string, string) ApiLink  {get; set; } = ("API", "TableViewApi");
+        public (string, string) ExamplesLink {get; set; } = ("Examples", "TableView");
         public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {

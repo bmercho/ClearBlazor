@@ -12,7 +12,7 @@
             }
             else
             {
-                <Table BorderThickness=1 CornerRadius=4 HorizontalGridLines=GridLines.All
+                <TableView BorderThickness=1 CornerRadius=4 HorizontalGridLines=GridLines.All
                        Items=@FieldApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,*" ColumnSpacing=15>
                     <TableColumn Label="Name" TItem=ApiFieldInfo Field=@(x =>x.Name) />
                     <TableColumn Label="Type" TItem=ApiFieldInfo Field=@(x =>x.Type)
@@ -26,7 +26,7 @@
                             <TextBlock>@(new MarkupString(Item.Description))</TextBlock>
                         </RowTemplate>
                     </TableColumn>
-                </Table>
+                </TableView>
             }
         </StackPanel>
     </div>

@@ -1,0 +1,9 @@
+﻿@page "/TableView"
+@using ClearBlazorTest
+<DocsExamplesPage DocsInfo=@(new TableViewDocsInfo())>
+    <CodeSnippet title="Basic" Code=@(typeof(TableViewSimpleExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <StackPanel Spacing="20">
+            <TableViewSimpleExample />
+        </StackPanel>
+    </CodeSnippet>
+</DocsExamplesPage>
