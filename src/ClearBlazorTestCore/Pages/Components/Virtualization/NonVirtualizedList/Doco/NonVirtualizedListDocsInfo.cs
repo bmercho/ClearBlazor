@@ -15,10 +15,11 @@ namespace ClearBlazorTest
             ("IBorder", "IBorderApi"),
             ("IBackground", "IBackgroundApi"),
             (" IBoxShadow", " IBoxShadowApi"),
+            (" IList<TItem>", " IList<TItem>Api"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("RenderFragment<TItem>?", "required", "null", "The template for rendering each row.\rThe item is passed to each child for customization of the row\r"),
+            new ApiComponentInfo("RenderFragment<(TItem", "required", "null", "The template for rendering each row.\rThe item is passed to each child for customization of the row\r"),
             new ApiComponentInfo("Items", "IEnumerable<TItem>?", "null", " The items to be displayed in the list. If this is not null DataProvider is used.\r If DataProvider is also not null then Items takes precedence.\r"),
             new ApiComponentInfo("DataProvider", "DataProviderRequestDelegate<TItem>?", "null", "Defines the data provider used to get pages of data from where ever. eg database\rUsed if Items is null.\r"),
             new ApiComponentInfo("index,", "(int", "(0, Alignment.Start)", "Gets or sets the index of the Items to be initially shown  in visible area.\rIt can be shown in the centre, start or end of the visible are.\r"),
@@ -32,6 +33,7 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("Task<List<(TItem,int)", "async", "", ""),
             new ApiComponentInfo("Task GotoIndex(int index, Alignment verticalAlignment)", "async", "", "Goto the given index in the data\r"),
             new ApiComponentInfo("Task Refresh(bool gotoEnd)", "async", "", "Refresh the list. Call this when items are added to or deleted from the data or if an item has changed \r"),
         };

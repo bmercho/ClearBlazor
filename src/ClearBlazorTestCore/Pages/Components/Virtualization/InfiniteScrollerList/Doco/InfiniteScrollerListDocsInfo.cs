@@ -15,10 +15,11 @@ namespace ClearBlazorTest
             (" IBorder", " IBorderApi"),
             (" IBackground", " IBackgroundApi"),
             (" IBoxShadow", " IBoxShadowApi"),
+            ("IList<TItem>", "IList<TItem>Api"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("RenderFragment<TItem>?", "required", "null", "The template for rendering each row.\rThe item is passed to each child for customization of the row\r"),
+            new ApiComponentInfo("RenderFragment<(TItem", "required", "null", "The template for rendering each row.\rThe item is passed to each child for customization of the row\r"),
             new ApiComponentInfo("Items", "IEnumerable<TItem>?", "null", " The items to be displayed in the list. If this is null DataProvider is used.\r If DataProvider and Items are not null then Items takes precedence.\r"),
             new ApiComponentInfo("DataProvider", "DataProviderRequestDelegate<TItem>?", "null", "Defines the data provider used to get pages of data from where ever. eg database\rUsed if Items is null.\r"),
             new ApiComponentInfo("ShowLoadingSpinner", "bool", "false", "Indicates if the spinner is shown when new data is being loaded. Use when getting data externally and \rit takes some time to load the data.\r"),
@@ -35,6 +36,7 @@ namespace ClearBlazorTest
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
             new ApiComponentInfo("Task GotoStart()", "async", "", "Goes to the start of the list\r"),
+            new ApiComponentInfo("Task<List<(TItem, int)", "async", "", ""),
             new ApiComponentInfo("Task HandleScrollEvent(ScrollState scrollState)", "async", "", ""),
         };
     }

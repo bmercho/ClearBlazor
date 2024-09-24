@@ -8,23 +8,23 @@
         @switch(VirtualizeMode)
         {
             case VirtualizeMode.None:
-                <NonVirtualizedList Height=@Height Width=@Width
+                <NonVirtualizedList @ref=UnderlyingList Height=@Height Width=@Width
                                     Items=@Items DataProvider=@DataProvider>
                     <RowTemplate Context=item>
-                        <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
-                             @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
-                            @RowTemplate(GetItemInfo(item))
+                        <div style=@GetContentStyle(item.item) @onmouseenter="(() => MouseEnter(item.item))"
+                             @onmouseleave="(() => MouseLeave())" @onclick="((e) => ItemClicked(e, item.item, item.index))">
+                            @RowTemplate(GetItemInfo(item.item))
                         </div>
                     </RowTemplate>
                 </NonVirtualizedList>
                 break;
             case VirtualizeMode.Virtualize:
-                <VirtualizedList Height=@Height Width=@Width ItemHeight=@ItemHeight
+                <VirtualizedList @ref=UnderlyingList Height=@Height Width=@Width ItemHeight=@ItemHeight
                                       Items=@Items DataProvider=@DataProvider>
                     <RowTemplate Context=item>
-                        <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
-                             @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
-                            @RowTemplate(GetItemInfo(item))
+                        <div style=@GetContentStyle(item.item) @onmouseenter="(() => MouseEnter(item.item))"
+                             @onmouseleave="(() => MouseLeave())" @onclick="((e) => ItemClicked(e, item.item, item.index))">
+                            @RowTemplate(GetItemInfo(item.item))
                         </div>
                     </RowTemplate>
                 </VirtualizedList>
@@ -33,9 +33,9 @@
                 <InfiniteScrollerList Height=@Height Width=@Width
                                 Items=@Items DataProvider=@DataProvider>
                     <RowTemplate Context=item>
-                        <div style=@GetContentStyle(item) @onmouseenter="(() => MouseEnter(item))"
-                             @onmouseleave="(() => MouseLeave())" @onclick="(() => ItemClicked(item))">
-                            @RowTemplate(GetItemInfo(item))
+                        <div style=@GetContentStyle(item.item) @onmouseenter="(() => MouseEnter(item.item))"
+                             @onmouseleave="(() => MouseLeave())" @onclick="((e) => ItemClicked(e, item.item, item.index))">
+                            @RowTemplate(GetItemInfo(item.item))
                         </div>
                     </RowTemplate>
                 </InfiniteScrollerList>

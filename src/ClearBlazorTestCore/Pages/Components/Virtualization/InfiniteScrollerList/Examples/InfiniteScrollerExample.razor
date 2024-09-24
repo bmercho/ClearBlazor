@@ -6,15 +6,15 @@
         <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=4>
             <Image Height=40 Width=40 VerticalAlignment=Alignment.Center
                    Style="border-radius:50%; " Stretch=ImageStretch.Fill
-                   Source=@($"https://picsum.photos/id/{item.ElementId}/200/200") />
+                   Source=@($"https://picsum.photos/id/{item.item.ElementId}/200/200") />
 
             <StackPanel Column=1 Orientation=Orientation.Portrait>
                 <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                    @item.Title
+                    @item.item.Title
                 </TextBlock>
                 <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
                     <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                        @item.Message
+                        @item.item.Message
                     </TextBlock>
                 </ScrollViewer>
             </StackPanel>
@@ -26,7 +26,7 @@
 
 
 @code {
-    InfiniteScrollerList<FeedEntry> List;
+    InfiniteScrollerList<FeedEntry>? List;
     List<FeedEntry> _feedEntries = new();
 
     protected override void OnInitialized()
@@ -45,7 +45,8 @@
        
     async Task OnGotoStart()
     {
-        await List.GotoStart();
+        if (List != null)
+            await List.GotoStart();
     }
 
     private string GetMessage(int i)

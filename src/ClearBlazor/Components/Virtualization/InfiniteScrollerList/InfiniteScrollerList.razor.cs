@@ -9,14 +9,14 @@ namespace ClearBlazor
     /// Otherwise use the VirtualizedList component.
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public partial class InfiniteScrollerList<TItem> : ClearComponentBase, IBorder, IBackground, IBoxShadow
+    public partial class InfiniteScrollerList<TItem> : ClearComponentBase, IBorder, IBackground, IBoxShadow,IList<TItem>
     {
         /// <summary>
         /// The template for rendering each row.
         /// The item is passed to each child for customization of the row
         /// </summary>
         [Parameter]
-        public required RenderFragment<TItem>? RowTemplate { get; set; }
+        public required RenderFragment<(TItem item,int index)>? RowTemplate { get; set; }
 
         /// <summary>
         ///  The items to be displayed in the list. If this is null DataProvider is used.
@@ -122,7 +122,7 @@ namespace ClearBlazor
         private bool _hasHadData = false;
         private SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
-        private List<TItem> _items { get; set; } = new List<TItem>();
+        private List<(TItem item,int index)> _items { get; set; } = new List<(TItem, int)>();
 
         /// <summary>
         /// Goes to the start of the list
@@ -133,6 +133,14 @@ namespace ClearBlazor
             await GetFirstPage();
             StateHasChanged();
         }
+        public async Task<List<(TItem, int)>> GetSelections(int firstIndex, int secondIndex)
+        {
+            if (secondIndex > firstIndex)
+                return await GetItems(firstIndex, secondIndex - firstIndex + 1);
+            else
+                return await GetItems(secondIndex, firstIndex - secondIndex + 1);
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -222,7 +230,7 @@ namespace ClearBlazor
                 _loadingDown = true;
                 if (ShowLoadingSpinner)
                     StateHasChanged();
-                List<TItem> newItems;
+                List<(TItem,int)> newItems;
                 bool loadTwoPages = currentPageNum != _firstRenderedPageNum + 1;
                 if (loadTwoPages || _items.Count < PageSize * 2)
                     newItems = await GetItems(currentPageNum * PageSize, PageSize*2);
@@ -306,14 +314,15 @@ namespace ClearBlazor
             }
         }
 
-        private async Task<List<TItem>> GetItems(int startIndex, int count)
+        private async Task<List<(TItem,int)>> GetItems(int startIndex, int count)
         {
             if (startIndex < 0)
                 startIndex = 0;
 
             if (Items != null)
             {
-                return Items.Skip(startIndex).Take(count).ToList();
+                return Items.ToList().GetRange(startIndex, count).Select((item, index) =>
+                          (item, startIndex + index)).ToList();
             }
             else if (DataProvider != null)
             {
@@ -322,7 +331,7 @@ namespace ClearBlazor
                 {
                     var result = await DataProvider(new DataProviderRequest(startIndex, count,
                                                                                 _loadItemsCts.Token));
-                    return result.Items.ToList();
+                    return result.Items.Select((item, index) => (item, startIndex + index)).ToList();
                 }
                 catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
                 {
@@ -330,7 +339,7 @@ namespace ClearBlazor
                 }
             }
 
-            return new List<TItem>();
+            return new List<(TItem, int)>();
         }
 
         private string GetTransformStyle()

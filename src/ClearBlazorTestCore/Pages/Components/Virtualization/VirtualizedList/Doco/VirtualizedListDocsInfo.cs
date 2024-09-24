@@ -15,10 +15,11 @@ namespace ClearBlazorTest
             ("IBorder", "IBorderApi"),
             ("IBackground", "IBackgroundApi"),
             (" IBoxShadow", " IBoxShadowApi"),
+            (" IList<TItem>", " IList<TItem>Api"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("RenderFragment<TItem>?", "required", "null", "The template for rendering each row.\rThe item is passed to each child for customization of the row\r"),
+            new ApiComponentInfo("RenderFragment<(TItem", "required", "null", "The template for rendering each row.\rThe item is passed to each child for customization of the row\r"),
             new ApiComponentInfo("Items", "IEnumerable<TItem>?", "null", " The items to be displayed in the list. If this is null DataProvider is used.\r If DataProvider and Items are not null then Items takes precedence.\r"),
             new ApiComponentInfo("DataProvider", "DataProviderRequestDelegate<TItem>?", "null", "Defines the data provider used to get pages of data from where ever. eg database\rUsed if Items is null.\r"),
             new ApiComponentInfo("ItemHeight", "int?", "null", "The height to be used for each item.\rThis is optional in which case the height is obtained from the first item.\r"),
@@ -33,6 +34,7 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("Task<List<(TItem,int)", "async", "", ""),
             new ApiComponentInfo("Task GotoIndex(int index, Alignment verticalAlignment)", "async", "", "Goto the given index in the data\r"),
             new ApiComponentInfo("Task Refresh(bool gotoEnd)", "async", "", "Refresh the list. Call this when items are added to or deleted from the data or if an item has changed \r"),
             new ApiComponentInfo("Task HandleScrollEvent(ScrollState scrollState)", "async", "", ""),

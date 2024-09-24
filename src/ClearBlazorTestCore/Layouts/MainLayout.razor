@@ -9,19 +9,14 @@
 @implements IHandleEvent
 
 @* <RootComponent>
-    <VirtualizeList Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
-                    @ref="Virtualize" Items=@items HorizontalContentAlignment=Alignment.Start
-                    VisibleIndex=(100,Alignment.Center)>
-
-        <RowTemplate Context=item>
-            <TextBlock>@item</TextBlock>
-        </RowTemplate>
-    </VirtualizeList>
+    <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode>
+        @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+        {
+            <Radio Label=@mode.ToString() Value="@mode" />
+        }
+    </RadioGroup>
 </RootComponent>
  *@
-
-
-
 
 <RootComponent>
     <Grid Rows="auto,*">
@@ -182,5 +177,4 @@
     {
         StateHasChanged();
     }
-
 }

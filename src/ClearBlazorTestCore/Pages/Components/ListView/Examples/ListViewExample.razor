@@ -1,6 +1,6 @@
 ﻿@namespace ClearBlazorTest
 <Grid Columns="auto,auto,*">
-    <ListView Column=0 HorizontalAlignment=Alignment.Start Margin=40
+    <ListView Column=0 HorizontalAlignment=Alignment.Start VerticalAlignment=Alignment.Start Margin=40
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
               Items=@_testData Width=300 Height=500 BorderThickness="1"
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
@@ -35,6 +35,11 @@
     {
         public string Name { get; set; } = string.Empty;
         public string IconName { get; set; } = string.Empty;
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     private TestViewItem _selectedItem = null!;

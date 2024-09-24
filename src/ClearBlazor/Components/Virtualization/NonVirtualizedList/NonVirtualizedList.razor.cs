@@ -10,14 +10,14 @@ namespace ClearBlazor
     /// Otherwise use VirtualizedList or InfiniteScrollerList component.
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public partial class NonVirtualizedList<TItem> : ClearComponentBase,IBorder,IBackground, IBoxShadow
+    public partial class NonVirtualizedList<TItem> : ClearComponentBase,IBorder,IBackground, IBoxShadow, IList<TItem>
     {
         /// <summary>
         /// The template for rendering each row.
         /// The item is passed to each child for customization of the row
         /// </summary>
         [Parameter]
-        public required RenderFragment<TItem>? RowTemplate { get; set; }
+        public required RenderFragment<(TItem item,int index)>? RowTemplate { get; set; }
 
         /// <summary>
         ///  The items to be displayed in the list. If this is not null DataProvider is used.
@@ -90,18 +90,21 @@ namespace ClearBlazor
         private double? _previousContainerHeight = null;
         private double? _previousFirstItemHeight = null;
         private int _visibleIndex = 0;
-        private double _height = 0;
         private double _itemWidth = 0;
         private double _itemHeight = -1;
-        private int _skipItems = 0;
-        private int _takeItems = 0;
         private bool _initialising = true;
-        private bool _initialScroll = true;
-        private ScrollState _scrollState = new();
         private ScrollViewer _scrollViewer = null!;
         private CancellationTokenSource? _loadItemsCts;
 
-        private List<TItem> _items { get; set; } = new List<TItem>();
+        private List<(TItem item,int index)> _items { get; set; } = new List<(TItem item,int index)>();
+
+        public async Task<List<(TItem,int)>> GetSelections(int firstIndex, int secondIndex)
+        {
+            if (secondIndex > firstIndex)
+                return await GetItems(firstIndex, secondIndex-firstIndex + 1);
+            else
+                return await GetItems(secondIndex, firstIndex - secondIndex + 1);
+        }
 
         protected override void OnParametersSet()
         {
@@ -247,7 +250,7 @@ namespace ClearBlazor
             return css;
         }
 
-        private async Task<List<TItem>> GetItems(int startIndex, int count)
+        private async Task<List<(TItem,int)>> GetItems(int startIndex, int count)
         {
             if (startIndex < 0)
                 startIndex = 0;
@@ -255,7 +258,13 @@ namespace ClearBlazor
             if (Items != null)
             {
                 _totalNumItems = Items.Count();
-                return Items.Skip(startIndex).Take(count).ToList();
+
+                if (count > _totalNumItems)
+                    count = _totalNumItems;
+
+                return Items.ToList().GetRange(startIndex, count).Select((item, index) => 
+                              ( item, startIndex + index )).ToList();
+
             }
             else if (DataProvider != null)
             {
@@ -264,13 +273,13 @@ namespace ClearBlazor
                 {
                     var result = await DataProvider(new DataProviderRequest(startIndex, count, _loadItemsCts.Token));
                     _totalNumItems = result.TotalNumItems;
-                    return result.Items.ToList();
+                    return result.Items.Select((item,index) => (item,startIndex+index)).ToList();
                 }
                 catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
                 {
                 }
             }
-            return new List<TItem>();
+            return new List<(TItem,int)>();
         }
 
     }

@@ -180,11 +180,14 @@ public class Color:IEquatable<Color>
 
     public static Color ContrastingColor(Color color)
     {
+        if (color.A == 0)
+            return Color.Dark;
+
         int nThreshold = 105;
         int bgDelta = Convert.ToInt32((color.R * 0.299) + (color.G * 0.587) +
                                       (color.B * 0.114));
 
-        return (255 - bgDelta < nThreshold) ? ThemeManager.CurrentPalette.Black : ThemeManager.CurrentPalette.White;
+        return (255 - bgDelta < nThreshold) ? Color.Dark : Color.Light;
     }
 
     private void GetRGBAFromValue(string value)

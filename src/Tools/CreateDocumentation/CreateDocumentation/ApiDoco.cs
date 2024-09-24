@@ -55,7 +55,7 @@ namespace CreateDocumentation
 
                 _enumerations.Add(info.Name);
 
-                WriteOtherDocsInfoFile(testEnumFolder, info);
+                WriteOtherDocsInfoFile(testEnumFolder, info.Name, info);
 
                 WriteApiPageFile(testEnumFolder, info.Name, true, false);
             }
@@ -90,10 +90,16 @@ namespace CreateDocumentation
                 }
 
                 string testEnumFolder = Path.Combine(testInterfacesFolder, info.Name);
+                if (testEnumFolder.Contains("<"))
+                    testEnumFolder = testEnumFolder.Substring(0, testEnumFolder.IndexOf("<"));
 
-                WriteOtherDocsInfoFile(testEnumFolder, info);
+                var name = info.Name;
+                if (name.Contains("<"))
+                    name = name.Substring(0, name.IndexOf("<"));
 
-                WriteApiPageFile(testEnumFolder, info.Name, false, true);
+                WriteOtherDocsInfoFile(testEnumFolder, name, info);
+
+                WriteApiPageFile(testEnumFolder, name, false, true);
             }
 
         }
@@ -445,9 +451,9 @@ namespace CreateDocumentation
             File.WriteAllLines(docFileName, lines);
         }
 
-        private void WriteOtherDocsInfoFile(string testFolder, IOtherDocsInfo docInfo)
+        private void WriteOtherDocsInfoFile(string testFolder, string name, IOtherDocsInfo docInfo)
         {
-            var docFileName = testFolder + @$"\{docInfo.Name}DocsInfo.cs";
+            var docFileName = testFolder + @$"\{name}DocsInfo.cs";
             Directory.CreateDirectory(testFolder);
 
             var lines = new List<string>();
@@ -456,7 +462,7 @@ namespace CreateDocumentation
             lines.Add("using ClearBlazor.Common;");
             lines.Add("namespace ClearBlazorTest");
             lines.Add("{");
-            lines.Add($"    public record {docInfo.Name}DocsInfo:IOtherDocsInfo");
+            lines.Add($"    public record {name}DocsInfo:IOtherDocsInfo");
             lines.Add("    {");
             lines.Add("        public string Name { get; set; } = " + $"\"{docInfo.Name}\";");
             lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description}\";");

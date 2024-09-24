@@ -32,12 +32,12 @@
                                         Width=@GetBodyWidth()
                                         VisibleIndex="@((GetYearIndex(), Alignment.Center))">
                             <RowTemplate Context=item>
-                                <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item))"
+                                <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item.item))"
                                      @onclick:stopPropagation="true">
                                     <TextBlock HorizontalAlignment=Alignment.Center
                                                VerticalAlignment=Alignment.Center
-                                               FontSize=@GetYearSize(item)
-                                               Color=@GetYearColor(item)>@item</TextBlock>
+                                               FontSize=@GetYearSize(item.item)
+                                               Color=@GetYearColor(item.item)>@item</TextBlock>
                                 </div>
                             </RowTemplate>
                         </VirtualizedList>

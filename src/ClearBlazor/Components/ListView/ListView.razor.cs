@@ -1,7 +1,12 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// ListView is a templated list component supporting virtualization and allowing multiple selections.
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
     public partial class ListView<TItem> : ClearComponentBase, IBackground, IBorder, IBoxShadow
     {
         /// <summary>
@@ -11,22 +16,10 @@ namespace ClearBlazor
         public List<TItem?> SelectedItems { get; set; } = new();
 
         /// <summary>
-        /// Event that is raised when the SelectedItems is changed.(when in multi select mode)
-        /// </summary>
-        [Parameter]
-        public EventCallback<List<TItem?>> SelectedItemsChanged { get; set; }
-
-        /// <summary>
         /// The currently selected item. (when in single select mode)
         /// </summary>
         [Parameter]
         public TItem? SelectedItem { get; set; } = default;
-
-        /// <summary>
-        /// Event that is raised when the SelectedItem is changed.(when in single select mode)
-        /// </summary>
-        [Parameter]
-        public EventCallback<TItem?> SelectedItemChanged { get; set; }
 
         /// <summary>
         /// Event that is raised when the SelectedItem is changed.(when in single select mode)
@@ -48,7 +41,7 @@ namespace ClearBlazor
         public RenderFragment<ItemInfo<TItem>> RowTemplate { get; set; } = null!;
 
         /// <summary>
-        /// The selection mode of this control. One of None, Single or Multi
+        /// The selection mode of this control. One of None, Single, SimpleMulti or Multi.
         /// </summary>
         [Parameter]
         public SelectionMode SelectionMode { get; set; } = SelectionMode.None;
@@ -139,6 +132,8 @@ namespace ClearBlazor
 
         private TItem? _highlightedItem = default;
         private bool _mouseOver = false;
+        private IList<TItem>? UnderlyingList;
+        private SelectionHelper<TItem> _selectionHelper = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -202,8 +197,9 @@ namespace ClearBlazor
                     if (SelectedItem != null && SelectedItem.Equals(item))
                         return true;
                     break;
+                case SelectionMode.SimpleMulti:
                 case SelectionMode.Multi:
-                    foreach(TItem? item1 in SelectedItems)
+                    foreach (TItem? item1 in SelectedItems)
                         if (item1 != null && item1.Equals(item))
                             return true;
                     break;
@@ -229,36 +225,34 @@ namespace ClearBlazor
             _highlightedItem = default;
             StateHasChanged();
         }
-        private async Task ItemClicked(TItem item)
+        private async Task ItemClicked(MouseEventArgs args, TItem item, int index)
         {
+            bool ctrlDown = args.CtrlKey;
+            bool shiftDown = args.ShiftKey;
             switch (SelectionMode)
             {
                 case SelectionMode.None:
                     return;
                 case SelectionMode.Single:
-                    if (SelectedItem != null && SelectedItem.Equals(item))
+                    TItem? selectedItem = SelectedItem;
+                    if (_selectionHelper.HandleSingleSelect(item, ref selectedItem, AllowSelectionToggle))
                     {
-                        if (AllowSelectionToggle)
-                        {
-                            SelectedItem = default;
-                            await SelectedItemChanged.InvokeAsync(default);
-                            await OnSelectionChanged.InvokeAsync(default);
-                        }
+                        SelectedItem = selectedItem;
+                        await OnSelectionChanged.InvokeAsync(SelectedItem);
                     }
-                    else
+                    break;
+                case SelectionMode.SimpleMulti:
+                    if (_selectionHelper.HandleSimpleMultiSelect(item, SelectedItems))
                     {
-                        SelectedItem = item;
-                        await SelectedItemChanged.InvokeAsync(item);
-                        await OnSelectionChanged.InvokeAsync(item);
+                        await OnSelectionsChanged.InvokeAsync(SelectedItems);
                     }
                     break;
                 case SelectionMode.Multi:
-                    if (IsSelected(item))
-                        SelectedItems.Remove(item);
-                    else
-                        SelectedItems.Add(item);
-                    await SelectedItemsChanged.InvokeAsync(SelectedItems);
-                    await OnSelectionsChanged.InvokeAsync(SelectedItems);
+                    if (await _selectionHelper.HandleMultiSelect(item, index, SelectedItems, 
+                                                                 UnderlyingList, ctrlDown, shiftDown))
+                    {
+                        await OnSelectionsChanged.InvokeAsync(SelectedItems);
+                    }
                     break;
             }
             StateHasChanged();
