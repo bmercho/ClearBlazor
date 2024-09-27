@@ -99,15 +99,11 @@ namespace ClearBlazor
         public Color? BackgroundColor { get; set; }
 
         private ScrollViewer _scrollViewer = null!;
-        private ElementSizeInfo? _previousScrollViewerSizeInfo = null;
-        private ElementSizeInfo? _scrollViewerSizeInfo = null;
         private CancellationTokenSource? _loadItemsCts;
         private bool _loadingUp = false;
         private bool _loadingDown = false;
-        private bool _initialising = true;
         private double _yOffset = 0;
         private List<double> _pageOffsets = new();
-        private double _paddingHeight = 0;
 
         // Pages are zero based. Initially just one page is loaded(page 0) and when that page is scrolled to the end
         // another page is loaded (first page is kept).
@@ -115,10 +111,7 @@ namespace ClearBlazor
         // From then on there are always two pages rendered.
 
         private int _firstRenderedPageNum = 0;
-        private bool _atStart = true;
-        private bool _atEnd = false;
         private double _maxScrollHeight = 0;
-        private bool _pagingDown = true;
         private bool _hasHadData = false;
         private SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
@@ -149,15 +142,8 @@ namespace ClearBlazor
                 await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewer.Id,
                                 DotNetObjectReference.Create(this));
 
-            _scrollViewerSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", _scrollViewer.Id);
 
             bool changed = false;
-            if (_previousScrollViewerSizeInfo == null ||
-                !_previousScrollViewerSizeInfo.Equals(_scrollViewerSizeInfo))
-            {
-                changed = true;
-                _previousScrollViewerSizeInfo = _scrollViewerSizeInfo;
-            }
 
             if (!_hasHadData && !_loadingUp && !_loadingDown)
             {
@@ -167,13 +153,6 @@ namespace ClearBlazor
                 else
                     changed = true;
             }
-
-            if (_initialising)
-            {
-                _initialising = false;
-                changed = true;
-            }
-
             if (changed)
                 StateHasChanged();
         }
@@ -242,8 +221,6 @@ namespace ClearBlazor
                     _firstRenderedPageNum = currentPageNum;
                     _yOffset = _pageOffsets[_firstRenderedPageNum];
 
-                    _atStart = false;
-
                     if (loadTwoPages || _items.Count < PageSize*2)
                         _items = newItems;
                     else
@@ -253,8 +230,6 @@ namespace ClearBlazor
                     }
                     return true;
                 }
-                else
-                    _atEnd = true;
                 return false;
             }
             catch(Exception ex)

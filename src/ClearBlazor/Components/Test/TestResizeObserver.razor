@@ -1,0 +1,18 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<StackPanel Orientation=Orientation.Portrait>
+    <Button Width=120 Onclicked=@OnClicked1>Get random sizes</Button>
+    <Grid Margin=30>
+        <div id=@_div1Id style="height:@(_div1Height)px; width:@(_div1Width)px; background-color:lightblue;">
+            <div>H:@(_div1Height):@(_div1ObservedHeight)</div>
+            <div>W:@(_div1Width):@(_div1ObservedWidth)</div>
+        </div>
+        <div id=@_div2Id style ="height:@(_div2Height)px; width:@(_div2Width)px; background-color:lightgreen;">
+            <div>H:@(_div2Height):@(_div2ObservedHeight)</div>
+            <div>W:@(_div2Width):@(_div2ObservedWidth)</div>
+        </div>
+    </Grid>
+</StackPanel>
+
+

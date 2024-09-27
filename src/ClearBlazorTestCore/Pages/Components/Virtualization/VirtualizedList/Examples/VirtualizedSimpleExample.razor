@@ -2,20 +2,20 @@
 <WrapPanel BackgroundColor=Color.Transparent ColumnSpacing=20 Padding=20>
     <VirtualizedList Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                 @ref="Virtualize" Items=@items HorizontalContentAlignment=Alignment.Start>
-        <RowTemplate Context=item>
-            <TextBlock>@item</TextBlock>
+        <RowTemplate Context=row>
+            <TextBlock>@row.item</TextBlock>
         </RowTemplate>
     </VirtualizedList>
     <VirtualizedList Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                 @ref="Virtualize" Items=@items HorizontalContentAlignment=Alignment.Center>
-        <RowTemplate Context=item>
-            <TextBlock>@item</TextBlock>
+        <RowTemplate Context=row>
+            <TextBlock>@row.item</TextBlock>
         </RowTemplate>
     </VirtualizedList>
     <VirtualizedList Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                 @ref="Virtualize" Items=@items HorizontalContentAlignment=Alignment.End>
-        <RowTemplate Context=item>
-            <TextBlock>@item</TextBlock>
+        <RowTemplate Context=row>
+            <TextBlock>@row.item</TextBlock>
         </RowTemplate>
     </VirtualizedList>
 </WrapPanel>

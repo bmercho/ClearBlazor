@@ -1,18 +1,18 @@
 ﻿@namespace ClearBlazorTest
 <NonVirtualizedList HorizontalAlignment=Alignment.Start Height=300 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
             @ref="NonVirtualize" DataProvider=@GetData>
-    <RowTemplate Context=item>
+    <RowTemplate Context=row>
         <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Stretch Margin=10
                     BackgroundColor=Color.Transparent>
             <Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
-                    Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{item.item.ImageId}/200/200") />
+                    Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{row.item.ImageId}/200/200") />
             <StackPanel Margin="0,0,0,20" Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch
                         BackgroundColor=Color.Transparent>
                 <TextBlock Typo=Typo.H6 VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
-                    @($"{item.item.Title}")
+                    @($"{row.item.Title}")
                 </TextBlock>
                 <TextBlock VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
-                    @($"{item.item.Message}")
+                    @($"{row.item.Message}")
                 </TextBlock>
             </StackPanel>
         </StackPanel>

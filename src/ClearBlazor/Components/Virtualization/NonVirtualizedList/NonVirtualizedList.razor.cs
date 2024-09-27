@@ -10,7 +10,8 @@ namespace ClearBlazor
     /// Otherwise use VirtualizedList or InfiniteScrollerList component.
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public partial class NonVirtualizedList<TItem> : ClearComponentBase,IBorder,IBackground, IBoxShadow, IList<TItem>
+    public partial class NonVirtualizedList<TItem> : ClearComponentBase,IBorder,
+                                                     IBackground, IBoxShadow, IList<TItem>, IAsyncDisposable
     {
         /// <summary>
         /// The template for rendering each row.
@@ -47,7 +48,7 @@ namespace ClearBlazor
         public Alignment HorizontalContentAlignment { get; set; } = Alignment.Stretch;
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public string? BorderThickness { get; set; }
@@ -87,14 +88,13 @@ namespace ClearBlazor
         private int _totalNumItems = 0;
         private string _firstItemId = Guid.NewGuid().ToString();
         private double _containerHeight = -1;
-        private double? _previousContainerHeight = null;
-        private double? _previousFirstItemHeight = null;
         private int _visibleIndex = 0;
         private double _itemWidth = 0;
         private double _itemHeight = -1;
         private bool _initialising = true;
         private ScrollViewer _scrollViewer = null!;
         private CancellationTokenSource? _loadItemsCts;
+        private string _resizeObserverId = string.Empty;
 
         private List<(TItem item,int index)> _items { get; set; } = new List<(TItem item,int index)>();
 
@@ -106,30 +106,25 @@ namespace ClearBlazor
                 return await GetItems(secondIndex, firstIndex - secondIndex + 1);
         }
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
-            base.OnParametersSetAsync();
+            await base.OnParametersSetAsync();
 
-            // index is 1 based - convert to 0 based
-            if (VisibleIndex.index > 0)
-                _visibleIndex = VisibleIndex.index - 1;
-            else
-                _visibleIndex = 0;
+            _visibleIndex = VisibleIndex.index;
+
+            if (_items.Count() == 0)
+                _items = await GetItems(0, 1);
         }
 
         /// <summary>
         /// Goto the given index in the data
         /// </summary>
-        /// <param name="index">Index to goto.</param>
+        /// <param name="index">Index to goto. The index is zero bassed.</param>
         /// <param name="verticalAlignment">Where the index should be aligned in the scroll viewer.</param>
         /// <returns></returns>
         public async Task GotoIndex(int index, Alignment verticalAlignment)
         {
-            // index is 1 based - convert to 0 based
-            if (index > 0)
-                _visibleIndex = index - 1;
-            else
-                _visibleIndex = 0;
+            _visibleIndex = index;
 
             await GotoIndex(verticalAlignment);
         }
@@ -149,8 +144,6 @@ namespace ClearBlazor
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (_items.Count() == 0)
-                _items = await GetItems(0, 1);
 
             if (_items.Count() == 0)
                 return;
@@ -158,49 +151,10 @@ namespace ClearBlazor
             if (RowTemplate == null)
                 return;
 
-            bool changed = false;
-            var containerSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", _scrollViewer.Id);
-
-            if (containerSizeInfo == null ||
-                _previousContainerHeight != containerSizeInfo.ElementHeight)
-            {
-                if (containerSizeInfo != null)
-                {
-                    _previousContainerHeight = containerSizeInfo.ElementHeight;
-                    _containerHeight = containerSizeInfo.ElementHeight;
-                    _itemWidth = containerSizeInfo.ElementWidth - ThemeManager.CurrentTheme.GetScrollBarProperties().width;
-                    changed = true;
-                }
-                StateHasChanged();
-            }
-
-            if (_initialising)
-            {
-                var firstItemSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", _firstItemId);
-
-                if (firstItemSizeInfo == null ||
-                     _previousFirstItemHeight != firstItemSizeInfo.ElementHeight)
-                {
-                    if (firstItemSizeInfo != null)
-                    {
-                        _previousFirstItemHeight = firstItemSizeInfo.ElementHeight;
-                        _itemHeight = firstItemSizeInfo.ElementHeight;
-                        changed = true;
-                    }
-                    StateHasChanged();
-                }
-            }
-
-            if (changed && _containerHeight > 0 && _itemHeight > 0)
-            {
-                if (_initialising)
-                {
-                    _items = await GetItems(0, int.MaxValue);
-
-                    _initialising = false;
-                }
-                StateHasChanged();
-            }
+            if (firstRender)
+                _resizeObserverId = await ResizeObserverService.Service.
+                                          AddResizeObserver(NotifyObservedSizes,
+                                                            new List<string>() { _scrollViewer.Id, _firstItemId });
         }
 
         protected override string UpdateStyle(string css)
@@ -280,6 +234,50 @@ namespace ClearBlazor
                 }
             }
             return new List<(TItem,int)>();
+        }
+
+        public async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
+        {
+            if (observedSizes == null)
+                return;
+
+            bool changed = false;
+            foreach (var observedSize in observedSizes)
+            {
+                if (observedSize.TargetId == _scrollViewer.Id)
+                {
+                    if (observedSize.ElementHeight > 0 && _containerHeight != observedSize.ElementHeight)
+                    {
+                        _containerHeight = observedSize.ElementHeight;
+                        _itemWidth = observedSize.ElementWidth -
+                                     ThemeManager.CurrentTheme.GetScrollBarProperties().width;
+                        changed = true;
+                    }
+                }
+                else if (observedSize.TargetId == _firstItemId)
+                {
+                    if (observedSize.ElementHeight > 0 && _itemHeight != observedSize.ElementHeight)
+                    {
+                        _itemHeight = observedSize.ElementHeight;
+                        changed = true;
+                    }
+                }
+                if (changed && _containerHeight > 0 && _itemHeight > 0)
+                {
+                    if (_initialising)
+                    {
+                        _items = await GetItems(0, int.MaxValue);
+
+                        _initialising = false;
+                    }
+                    StateHasChanged();
+                }
+            }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await ResizeObserverService.Service.RemoveResizeObserver(_resizeObserverId);
         }
 
     }

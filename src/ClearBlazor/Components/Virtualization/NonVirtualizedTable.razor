@@ -1,0 +1,75 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+@typeparam TItem
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" style="@ComputeStyle()" class="@Classes">
+        <Grid Columns=@ColumnDefs ColumnSpacing=@ColumnSpacing>
+            @for (int col = 0; col < Columns.Count; col++)
+            {
+                var colIndex = col;
+                <div id=@_headerId style=@GetHeaderStyle(colIndex+1)>
+                    @if (@Columns[colIndex] == null || @Columns[colIndex].HeaderTemplate == null)
+                    {
+                        <TextBlock FontWeight=@((int)FontWeight.Bold)>@Columns[colIndex].Label</TextBlock>
+                    }
+                    else
+                    {
+                        @Columns[colIndex].HeaderTemplate(@Columns[colIndex].Label)
+                        ;
+                    }
+                </div>
+            }
+            @if (VerticalGridLines == GridLines.HeaderOnly || VerticalGridLines == GridLines.All)
+            {
+                @for (int col = 0; col < Columns.Count - 1; col++)
+                {
+                    var colIndex = col;
+                    @if (VerticalGridLines == GridLines.HeaderOnly)
+                    {
+                        <div style=@GetVerticalGridLineStyle(colIndex+2, 1) />
+                    }
+                    else
+                    {
+                        <div style=@GetVerticalGridLineStyle(colIndex+2, _items.Count+1) />
+                    }
+                }
+            }
+
+            @if (HorizontalGridLines == GridLines.HeaderOnly || HorizontalGridLines == GridLines.All)
+            {
+                <div style=@GetHorizontalGridLineStyle(2, Columns.Count) />
+            }
+
+            <div style="height:@(Height-_headerHeight - RowSpacing)px; margin-top:5px; display:grid; justify-self:stretch; overflow-y:auto; grid-area: 2 / 1 / span 1 / span 3; grid-template-columns:subgrid; row-gap:@(RowSpacing)px; ">
+                @for (int row = 0; row < _items.Count(); row++)
+                {
+                    var rowIndex = row;
+                    @for (int col = 0; col < Columns.Count; col++)
+                    {
+                        var colIndex = col;
+                        <div style=@GetRowStyle(rowIndex+2, colIndex+1)>
+                            @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
+                            {
+                                <TextBlock>
+                                    @foreach (var line in GetLines(Columns[colIndex].Field.Invoke(_items[rowIndex].item).ToString()))
+                                    {
+                                        @(line)
+                                        <br />
+                                    }
+                                </TextBlock>
+                            }
+                            else
+                            {
+                                @Columns[colIndex].DataTemplate(@_items[rowIndex].item)
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </Grid>
+    </div>
+    @ChildContent
+</CascadingValue>
+
+

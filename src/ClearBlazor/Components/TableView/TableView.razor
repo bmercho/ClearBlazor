@@ -31,7 +31,7 @@
                 {
                     var colIndex = col;
                     <div style=@GetRowStyle(rowIndex+2, colIndex+1)>
-                        @if (@Columns[colIndex] == null || @Columns[colIndex].RowTemplate == null)
+                        @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
                         {
                             <TextBlock>
                                 @foreach (var line in GetLines(Columns[colIndex].Field.Invoke(Items[rowIndex]).ToString()))
@@ -43,7 +43,7 @@
                         }
                         else
                         {
-                            @Columns[colIndex].RowTemplate(@Items[rowIndex]);
+                            @Columns[colIndex].DataTemplate(@Items[rowIndex]);
                         }
                     </div>
                 }

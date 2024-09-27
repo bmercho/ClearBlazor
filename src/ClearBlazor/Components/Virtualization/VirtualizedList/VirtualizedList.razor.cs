@@ -94,8 +94,6 @@ namespace ClearBlazor
         private int _totalNumItems = 0;
         private string _firstItemId = Guid.NewGuid().ToString();
         private double _containerHeight = -1;
-        private double? _previousContainerHeight = null;
-        private double? _previousFirstItemHeight = null;
         private int _visibleIndex = 0;
         private double _height = 0;
         private double _itemWidth = 0;
@@ -107,6 +105,7 @@ namespace ClearBlazor
         private ScrollState _scrollState = new();
         private ScrollViewer _scrollViewer = null!;
         private CancellationTokenSource? _loadItemsCts;
+        private string _resizeObserverId = string.Empty;
 
         private List<(TItem item,int index)> _items { get; set; } = new List<(TItem, int)>();
 
@@ -118,18 +117,16 @@ namespace ClearBlazor
                 return await GetItems(secondIndex, firstIndex - secondIndex + 1);
         }
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
-            base.OnParametersSetAsync();
+            await base.OnParametersSetAsync();
 
-            // index is 1 based - convert to 0 based
-            if (VisibleIndex.index > 0)
-                _visibleIndex = VisibleIndex.index - 1;
-            else
-                _visibleIndex = 0;
-            if (ItemHeight != null) 
-                _itemHeight = ItemHeight.Value; 
+            _visibleIndex = VisibleIndex.index;
+            if (ItemHeight != null)
+                _itemHeight = ItemHeight.Value;
 
+            if (_items.Count() == 0)
+                _items = await GetItems(0, 1);
         }
 
         /// <summary>
@@ -165,60 +162,24 @@ namespace ClearBlazor
         {
             await base.OnAfterRenderAsync(firstRender);
 
-            if (firstRender)
-                await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewer.Id,
-                                DotNetObjectReference.Create(this));
-
-            if (_items.Count() == 0)
-                _items = await GetItems(0, 1);
-
             if (_items.Count() == 0)
                 return;
-
-            bool changed = false;
-            var containerSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", _scrollViewer.Id);
-
+            
             if (RowTemplate == null)
-                return; 
+                return;
 
-            if (containerSizeInfo == null ||
-                 _previousContainerHeight != containerSizeInfo.ElementHeight)
+
+            if (firstRender)
             {
-                if (containerSizeInfo != null)
-                {
-                    _previousContainerHeight = containerSizeInfo.ElementHeight;
-                    _containerHeight = containerSizeInfo.ElementHeight;
-                    _itemWidth = containerSizeInfo.ElementWidth - ThemeManager.CurrentTheme.GetScrollBarProperties().width;
-                    changed = true;
-                }
-                StateHasChanged();
-            }
-
-            if (ItemHeight == null && _initialising)
-            {
-                var firstItemSizeInfo = await JSRuntime.InvokeAsync<ElementSizeInfo>("GetElementSizeInfoById", _firstItemId);
-
-                if (firstItemSizeInfo == null ||
-                     _previousFirstItemHeight != firstItemSizeInfo.ElementHeight)
-                {
-                    if (firstItemSizeInfo != null)
-                    {
-                        _previousFirstItemHeight = firstItemSizeInfo.ElementHeight;
-                        _itemHeight = firstItemSizeInfo.ElementHeight;
-                        changed = true;
-                    }
-                    StateHasChanged();
-                }
-            }
-
-            if (changed && _containerHeight > 0 && _itemHeight > 0)
-            {
-                if (_initialising)
-                {
-                    _initialising = false;
-                    await CalculateScrollItems(true);
-                }
-                StateHasChanged();
+                await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewer.Id,
+                                DotNetObjectReference.Create(this));
+                List<string> elementIds = new List<string>();
+                if (ItemHeight == null)
+                    elementIds = new List<string>() { _scrollViewer.Id, _firstItemId };
+                else
+                    elementIds = new List<string>() { _scrollViewer.Id };
+                _resizeObserverId = await ResizeObserverService.Service.
+                          AddResizeObserver(NotifyObservedSizes, elementIds);
             }
         }
 
@@ -340,5 +301,55 @@ namespace ClearBlazor
             return new List<(TItem,int)>();
         }
 
+        public async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
+        {
+
+            //if (changed && _containerHeight > 0 && _itemHeight > 0)
+            //{
+            //    if (_initialising)
+            //    {
+            //        _initialising = false;
+            //        await CalculateScrollItems(true);
+            //    }
+            //    StateHasChanged();
+            //}
+
+
+
+            if (observedSizes == null)
+                return;
+
+            bool changed = false;
+            foreach (var observedSize in observedSizes)
+            {
+                if (observedSize.TargetId == _scrollViewer.Id)
+                {
+                    if (observedSize.ElementHeight > 0 && _containerHeight != observedSize.ElementHeight)
+                    {
+                        _containerHeight = observedSize.ElementHeight;
+                        _itemWidth = observedSize.ElementWidth -
+                                     ThemeManager.CurrentTheme.GetScrollBarProperties().width;
+                        changed = true;
+                    }
+                }
+                else if (observedSize.TargetId == _firstItemId)
+                {
+                    if (observedSize.ElementHeight > 0 && _itemHeight != observedSize.ElementHeight)
+                    {
+                        _itemHeight = observedSize.ElementHeight;
+                        changed = true;
+                    }
+                }
+                if (changed && _containerHeight > 0 && _itemHeight > 0)
+                {
+                    if (_initialising)
+                    {
+                        _initialising = false;
+                        await CalculateScrollItems(true);
+                    }
+                    StateHasChanged();
+                }
+            }
+        }
     }
 }

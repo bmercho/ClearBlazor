@@ -7,18 +7,15 @@
         <ScrollViewer @ref="_scrollViewer" Width=@Width Height=@Height>
             @if (RowTemplate != null)
             {
-                @if (_initialising)
+                @foreach (var item in _items)
                 {
-                    @if (_items.Count() > 0)
+                    @if (item.Equals(_items.First()))
                     {
-                        <div id=@_firstItemId>
+                        <div id=@_firstItemId style="@(GetContentStyle())">
                             @RowTemplate(_items.First())
                         </div>
                     }
-                }
-                else
-                {
-                    @foreach (var item in _items)
+                    else
                     {
                         <div style="@(GetContentStyle())">
                             @RowTemplate(item)

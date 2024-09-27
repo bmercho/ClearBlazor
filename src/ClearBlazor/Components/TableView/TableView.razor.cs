@@ -28,6 +28,12 @@ namespace ClearBlazor
         [Parameter]
         public DataProviderRequestDelegate<TItem>? DataProvider { get; set; }
 
+        /// <summary>
+        /// If true it ignores ItemHeight and internally uses the InfiniteScroller component
+        /// </summary>
+        [Parameter]
+        public VirtualizeMode VirtualizeMode { get; set; } = VirtualizeMode.None;
+
         [Parameter]
         public string ColumnDefs { get; set; } = "";
 
@@ -62,6 +68,8 @@ namespace ClearBlazor
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
 
+
+        private IList<TItem>? UnderlyingList;
         private List<TableColumn<TItem>> Columns { get; } = new List<TableColumn<TItem>>();
 
         protected override void OnParametersSet()

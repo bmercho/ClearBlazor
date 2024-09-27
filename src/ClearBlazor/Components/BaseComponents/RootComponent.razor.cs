@@ -52,12 +52,14 @@ namespace ClearBlazor
                                  "./_content/ClearBlazor/InfiniteScrolling.js");
 
                 await ThemeManager.UpdateTheme(JSRuntime);
-                var service = new BrowserSizeService();
-                service.Init(JSRuntime);
+                var browserSizeService = new BrowserSizeService();
+                browserSizeService.Init(JSRuntime);
+                var resizeObserverService = new ResizeObserverService();
+                await resizeObserverService.Init(JSRuntime);
 
                 LoadingComplete = true;
 
-                Subscribe(service);
+                Subscribe(browserSizeService);
                 StateHasChanged();
             }
 

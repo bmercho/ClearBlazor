@@ -1,0 +1,9 @@
+﻿@page "/NonVirtualizedTable"
+@using ClearBlazorTest
+<DocsExamplesPage DocsInfo=@(new NonVirtualizedTableDocsInfo())>
+    <CodeSnippet title="Basic" Code=@(typeof(NonVirtualizedTableSimpleExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <StackPanel Spacing="20">
+            <NonVirtualizedTableSimpleExample />
+        </StackPanel>
+    </CodeSnippet>
+</DocsExamplesPage>

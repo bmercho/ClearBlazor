@@ -8,18 +8,15 @@
             <div style="display:grid; position: relative;height: @(_height)px">
                 @if (RowTemplate != null)
                 {
-                    @if (_initialising)
+                    @foreach (var item in _items.Select((item, index) => new { item, index }))
                     {
-                        @if (_items.Count() > 0)
+                        @if (item.item.Equals(_items.First()))
                         {
-                            <div id=@_firstItemId>
+                            <div id=@_firstItemId style="@(GetContentStyle()) height: @(_itemHeight)px; top: @((_skipItems + item.index) * _itemHeight)px;">
                                 @RowTemplate(_items.First())
                             </div>
                         }
-                    }
-                    else
-                    {
-                        @foreach (var item in _items.Select((item, index) => new { item, index }))
+                        else
                         {
                             <div style="@(GetContentStyle()) height: @(_itemHeight)px; top: @((_skipItems + item.index) * _itemHeight)px;">
                                 @RowTemplate(item.item)

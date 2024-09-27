@@ -1,0 +1,33 @@
+<div>
+<div class="html"><pre>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableView</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">VerticalGridLines</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">GridLines.All</span> <span class="htmlAttributeName">HorizontalGridLines</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">GridLines.All</span>
+       <span class="htmlAttributeName">Items</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>People</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName">ColumnDefs</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">*,*,2*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+    &lt;TableColumn Label=&quot;PersonId&quot; TItem=Person Field=<span class="atSign">&#64;</span>(x =&gt;x.PersonId)&gt;
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">HeaderTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Header</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">FontWeight</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>((int)FontWeight.Bold)</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>(Header + &quot; !!&quot;)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">HeaderTemplate</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RowTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Item</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>(Item.PersonId + &quot; **&quot;)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RowTemplate</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TableColumn</span><span class="htmlTagDelimiter">&gt;</span>
+    &lt;TableColumn Label=&quot;Name&quot; TItem=Person Field=<span class="atSign">&#64;</span>(x =&gt;x.Name) /&gt;
+    &lt;TableColumn Label=&quot;BirthDate&quot; TItem=Person Field=<span class="atSign">&#64;</span>(x =&gt;x.BirthDate) /&gt;
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TableView</span><span class="htmlTagDelimiter">&gt;</span>
+</pre></div>
+<div class="csharp"><pre>
+<span class="atSign">&#64;</span>code {
+
+    record Person(<span class="keyword">int</span> PersonId, <span class="keyword">string</span> Name, DateOnly BirthDate);
+
+    List&lt;Person&gt; People = <span class="keyword">new</span> List&lt;Person&gt;
+    {
+        <span class="keyword">new</span> Person(<span class="number">10895</span>, <span class="string">&quot;Jean Martin&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">1985</span>, <span class="number">3</span>, <span class="number">16</span>)),
+        <span class="keyword">new</span> Person(<span class="number">10944</span>, <span class="string">&quot;Ant&#243;nio Langa&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">1991</span>, <span class="number">12</span>, <span class="number">1</span>)),
+        <span class="keyword">new</span> Person(<span class="number">11203</span>, <span class="string">&quot;Julie Smith&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">1958</span>, <span class="number">10</span>, <span class="number">10</span>)),
+        <span class="keyword">new</span> Person(<span class="number">11205</span>, <span class="string">&quot;Nur Sari&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">1922</span>, <span class="number">4</span>, <span class="number">27</span>)),
+        <span class="keyword">new</span> Person(<span class="number">11898</span>, <span class="string">&quot;Jose Hernandez&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">2011</span>, <span class="number">5</span>, <span class="number">3</span>)),
+        <span class="keyword">new</span> Person(<span class="number">12130</span>, <span class="string">&quot;Kenji Sato&quot;</span>, <span class="keyword">new</span> DateOnly(<span class="number">2004</span>, <span class="number">1</span>, <span class="number">9</span>)),
+    };
+}
+</pre></div>
+</div>

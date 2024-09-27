@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,15 +7,6 @@
     <RootNamespace>ClearBlazorTest</RootNamespace>
     <AssemblyName>ClearBlazorTestCore</AssemblyName>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Pages\Components\Virtualization\Code\**" />
-    <Content Remove="Pages\Components\Virtualization\Code\**" />
-	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizedGotoIndexExampleCode.html" />
-    <EmbeddedResource Remove="Pages\Components\Virtualization\Code\**" />
-    <None Remove="Pages\Components\Virtualization\Code\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -39,7 +30,10 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
-	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewSimpleExampleCode.html" />
+    <EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedTable\Code\NonVirtualizedTableSimpleExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizedGotoIndexExampleCode.html" />
+	  <EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedGotoIndexExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedContentExampleCode.html" />

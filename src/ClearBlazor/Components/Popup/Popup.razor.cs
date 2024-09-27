@@ -108,6 +108,11 @@ namespace ClearBlazor
                 StateHasChanged();
         }
 
+        private void Something(object g)
+        {
+
+        }
+
         protected override string UpdateStyle(string css)
         {
             css += $"color: {ThemeManager.CurrentPalette.ToolTipTextColor.Value}; ";
