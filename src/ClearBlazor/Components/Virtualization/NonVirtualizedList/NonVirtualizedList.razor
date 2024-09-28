@@ -9,18 +9,9 @@
             {
                 @foreach (var item in _items)
                 {
-                    @if (item.Equals(_items.First()))
-                    {
-                        <div id=@_firstItemId style="@(GetContentStyle())">
-                            @RowTemplate(_items.First())
-                        </div>
-                    }
-                    else
-                    {
-                        <div style="@(GetContentStyle())">
-                            @RowTemplate(item)
-                        </div>
-                    }
+                    <div id=@(_baseRowId +item.index.ToString()) style="@(GetContentStyle())">
+                        @RowTemplate(item)
+                    </div>
                 }
             }
         </ScrollViewer>

@@ -4,7 +4,8 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" style="@ComputeStyle()" class="@Classes">
-        <Grid Columns=@ColumnDefs ColumnSpacing=@ColumnSpacing>
+        <ScrollViewer HorizontalScrollMode=ScrollMode.Auto VerticalScrollMode=ScrollMode.Disabled>
+        <Grid Rows="auto" Columns=@ColumnDefs ColumnSpacing=@ColumnSpacing>
             @for (int col = 0; col < Columns.Count; col++)
             {
                 var colIndex = col;
@@ -41,14 +42,14 @@
                 <div style=@GetHorizontalGridLineStyle(2, Columns.Count) />
             }
 
-            <div style="height:@(Height-_headerHeight - RowSpacing)px; margin-top:5px; display:grid; justify-self:stretch; overflow-y:auto; grid-area: 2 / 1 / span 1 / span 3; grid-template-columns:subgrid; row-gap:@(RowSpacing)px; ">
+            <div id=@_scrollViewerId style=@GetRowStyle()>
                 @for (int row = 0; row < _items.Count(); row++)
                 {
                     var rowIndex = row;
                     @for (int col = 0; col < Columns.Count; col++)
                     {
                         var colIndex = col;
-                        <div style=@GetRowStyle(rowIndex+2, colIndex+1)>
+                        <div id=@(row==0 && col==0 ? _firstItemId : 0) style=@GetRowStyle(rowIndex+2, colIndex+1)>
                             @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
                             {
                                 <TextBlock>
@@ -65,9 +66,17 @@
                             }
                         </div>
                     }
+                    @if (HorizontalGridLines == GridLines.All)
+                    {
+                        @if(row != _items.Count-1)
+                        {
+                            <div style=@GetHorizontalGridLineStyle(rowIndex+3, Columns.Count) />
+                        }
+                    }
                 }
             </div>
         </Grid>
+        </ScrollViewer>
     </div>
     @ChildContent
 </CascadingValue>

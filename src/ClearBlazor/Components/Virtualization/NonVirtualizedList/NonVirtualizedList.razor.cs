@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 
 namespace ClearBlazor
 {
     /// <summary>
     /// Displays a list of items( of type 'IItem') inside a ScrollViewer which is embedded in this component.
-    /// Use this component if virtualization is not required, the item heights are the same 
-    /// and the number of items are known.
+    /// Use this component if virtualization is not required.
     /// Otherwise use VirtualizedList or InfiniteScrollerList component.
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
@@ -35,11 +35,11 @@ namespace ClearBlazor
         public DataProviderRequestDelegate<TItem>? DataProvider { get; set; }
 
         /// <summary>
-        /// Gets or sets the index of the Items to be initially shown  in visible area.
+        /// Gets or sets the index of the Items to be initially shown in visible area.
         /// It can be shown in the centre, start or end of the visible are.
         /// </summary>
         [Parameter]
-        public (int index, Alignment verticalAlignment) VisibleIndex { get; set; } = (0, Alignment.Start);
+        public (int index, Alignment verticalAlignment) InitialIndex { get; set; } = (0, Alignment.Start);
 
         /// <summary>
         /// The horizontal content alignment within the control.
@@ -54,19 +54,19 @@ namespace ClearBlazor
         public string? BorderThickness { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public Color? BorderColor { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public string? CornerRadius { get; set; }
@@ -74,30 +74,32 @@ namespace ClearBlazor
         // IBoxShadow
 
         /// <summary>
-        /// See <a href=IBoxShadowApi>IBoxShadow</a>
+        /// See <a href="IBoxShadowApi">IBoxShadow</a>
         /// </summary>
         [Parameter]
         public int? BoxShadow { get; set; }
 
         /// <summary>
-        /// See <a href=IBackgroundApi>IBackground</a>
+        /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; }
 
         private int _totalNumItems = 0;
-        private string _firstItemId = Guid.NewGuid().ToString();
-        private double _containerHeight = -1;
-        private int _visibleIndex = 0;
-        private double _itemWidth = 0;
-        private double _itemHeight = -1;
-        private bool _initialising = true;
+        private bool _initializing = true;
         private ScrollViewer _scrollViewer = null!;
         private CancellationTokenSource? _loadItemsCts;
         private string _resizeObserverId = string.Empty;
+        private string _baseRowId = Guid.NewGuid().ToString();
 
         private List<(TItem item,int index)> _items { get; set; } = new List<(TItem item,int index)>();
 
+        /// <summary>
+        /// Retrieves the items (and indexes) for the given range between firstIndex and last index inclusive
+        /// </summary>
+        /// <param name="firstIndex"></param>
+        /// <param name="secondIndex"></param>
+        /// <returns></returns>
         public async Task<List<(TItem,int)>> GetSelections(int firstIndex, int secondIndex)
         {
             if (secondIndex > firstIndex)
@@ -106,81 +108,73 @@ namespace ClearBlazor
                 return await GetItems(secondIndex, firstIndex - secondIndex + 1);
         }
 
-        protected override async Task OnParametersSetAsync()
-        {
-            await base.OnParametersSetAsync();
-
-            _visibleIndex = VisibleIndex.index;
-
-            if (_items.Count() == 0)
-                _items = await GetItems(0, 1);
-        }
-
         /// <summary>
         /// Goto the given index in the data
         /// </summary>
-        /// <param name="index">Index to goto. The index is zero bassed.</param>
+        /// <param name="index">Index to goto. The index is zero based.</param>
         /// <param name="verticalAlignment">Where the index should be aligned in the scroll viewer.</param>
         /// <returns></returns>
         public async Task GotoIndex(int index, Alignment verticalAlignment)
         {
-            _visibleIndex = index;
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewer.Id,
+                                            _baseRowId + index, (int)verticalAlignment);
+        }
 
-            await GotoIndex(verticalAlignment);
+        /// <summary>
+        /// Goto the start of the list
+        /// </summary>
+        public async Task GotoStart()
+        {
+            await GotoIndex(0, Alignment.Start);
+        }
+
+        /// <summary>
+        /// Goto the end of the list
+        /// </summary>
+        public async Task GotoEnd()
+        {
+            await GotoIndex(_totalNumItems - 1, Alignment.End);
         }
 
         /// <summary>
         /// Refresh the list. Call this when items are added to or deleted from the data or if an item has changed 
         /// </summary>
         /// <returns></returns>
-        public async Task Refresh(bool gotoEnd)
+        public async Task Refresh()
         {
-            if (gotoEnd)
-                await GotoIndex(_totalNumItems, Alignment.End);
+            _items = await GetItems(0, int.MaxValue);
             StateHasChanged();
+        }
+
+        /// <summary>
+        /// Returns true if the list has been scrolled to the end. 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> AtEnd()
+        {
+            return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewer.Id,
+                                            _baseRowId + (_items.Count-1).ToString());
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            await base.OnParametersSetAsync();
+
+            if (_items.Count() == 0)
+                _items = await GetItems(0, int.MaxValue);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
 
-
-            if (_items.Count() == 0)
-                return;
-
-            if (RowTemplate == null)
-                return;
-
             if (firstRender)
-                _resizeObserverId = await ResizeObserverService.Service.
-                                          AddResizeObserver(NotifyObservedSizes,
-                                                            new List<string>() { _scrollViewer.Id, _firstItemId });
+                await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
         }
 
         protected override string UpdateStyle(string css)
         {
             return css + $"display: grid; ";
-        }
-
-        private async Task GotoIndex(Alignment verticalAlignment)
-        {
-            double scrollTop = 0;
-            var maxItemsInContainer = _containerHeight / _itemHeight;
-
-            switch (verticalAlignment)
-            {
-                case Alignment.Stretch:
-                case Alignment.Center:
-                    scrollTop = (_visibleIndex - maxItemsInContainer / 2 + 0.5) * _itemHeight;
-                    break;
-                case Alignment.Start:
-                    scrollTop = _visibleIndex * _itemHeight;
-                    break;
-                case Alignment.End:
-                    scrollTop = (_visibleIndex - maxItemsInContainer + 1) * _itemHeight;
-                    break;
-            }
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, scrollTop);
         }
 
         protected string GetContentStyle()
@@ -189,7 +183,7 @@ namespace ClearBlazor
             switch (HorizontalContentAlignment)
             {
                 case Alignment.Stretch:
-                    css += $"justify-self:stretch; width:{_itemWidth}px; ";
+                    css += $"justify-self:stretch; width:{Width}px; ";
                     break;
                 case Alignment.Start:
                     css += "justify-self:start; ";
@@ -234,45 +228,6 @@ namespace ClearBlazor
                 }
             }
             return new List<(TItem,int)>();
-        }
-
-        public async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
-        {
-            if (observedSizes == null)
-                return;
-
-            bool changed = false;
-            foreach (var observedSize in observedSizes)
-            {
-                if (observedSize.TargetId == _scrollViewer.Id)
-                {
-                    if (observedSize.ElementHeight > 0 && _containerHeight != observedSize.ElementHeight)
-                    {
-                        _containerHeight = observedSize.ElementHeight;
-                        _itemWidth = observedSize.ElementWidth -
-                                     ThemeManager.CurrentTheme.GetScrollBarProperties().width;
-                        changed = true;
-                    }
-                }
-                else if (observedSize.TargetId == _firstItemId)
-                {
-                    if (observedSize.ElementHeight > 0 && _itemHeight != observedSize.ElementHeight)
-                    {
-                        _itemHeight = observedSize.ElementHeight;
-                        changed = true;
-                    }
-                }
-                if (changed && _containerHeight > 0 && _itemHeight > 0)
-                {
-                    if (_initialising)
-                    {
-                        _items = await GetItems(0, int.MaxValue);
-
-                        _initialising = false;
-                    }
-                    StateHasChanged();
-                }
-            }
         }
 
         public async ValueTask DisposeAsync()

@@ -185,4 +185,9 @@
 	<EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarIconExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\AppBar\Code\AppBarSimpleExampleCode.html" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedVariableRowSizeExample.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
 </Project>

@@ -18,6 +18,22 @@ window.scrollbar = {
         }
     },
 
+    ScrollIntoView: (scrollViewerId, elementId, alignment) => {
+        let scrollViewer = document.getElementById(scrollViewerId);
+        let element = document.getElementById(elementId);
+        if (!scrollViewer || !element)
+            return;
+        if (alignment == 2) {
+            scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop -
+                scrollViewer.clientHeight / 2 + element.clientHeight / 2;
+        }
+        else if (alignment == 3)
+            scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop -
+                                     scrollViewer.clientHeight + element.clientHeight;
+        else
+            scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop;
+    },
+
     SetScrollTop: (elementId, scrollTop) => {
         let element = document.getElementById(elementId);
         if (element) {
@@ -40,6 +56,17 @@ window.scrollbar = {
                 ScrollHeight: element.ScrollHeight, ScrollWidth: element.ScrollWidth
             }
         }
+    },
+
+    AtScrollEnd: (scrollViewerId, elementId) => {
+        let scrollViewer = document.getElementById(scrollViewerId);
+        let element = document.getElementById(elementId);
+        if (!scrollViewer || !element)
+            return false;
+        if (scrollViewer.scrollTop == element.offsetTop - scrollViewer.offsetTop -
+                                      scrollViewer.clientHeight + element.clientHeight )
+            return true;
+        return false;
     },
 
     ListenForScrollEvents: (elementId, dotnethelper) => {
