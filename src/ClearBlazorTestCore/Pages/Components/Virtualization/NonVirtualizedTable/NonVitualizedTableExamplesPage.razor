@@ -1,9 +1,19 @@
 ﻿@page "/NonVirtualizedTable"
 @using ClearBlazorTest
 <DocsExamplesPage DocsInfo=@(new NonVirtualizedTableDocsInfo())>
-    <CodeSnippet title="Basic" Code=@(typeof(NonVirtualizedTableSimpleExample).Name) BackgroundColor="@Color.BackgroundGrey">
+    <CodeSnippet title="Non virtualized table (with 100 items)" Code=@(typeof(NonVirtualizedTableExample).Name) BackgroundColor="@Color.BackgroundGrey">
         <StackPanel Spacing="20">
-            <NonVirtualizedTableSimpleExample />
+            <NonVirtualizedTableExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet title="Non virtualized table with data provider (with 100 items)" Code=@(typeof(NonVirtualizedTableDataProviderExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <StackPanel Spacing="20">
+            <NonVirtualizedTableDataProviderExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet title="Non virtualized table with variable row size" Code=@(typeof(NonVirtualizedTableVariableSizeRowExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <StackPanel Spacing="20">
+            <NonVirtualizedTableVariableSizeRowExample />
         </StackPanel>
     </CodeSnippet>
 </DocsExamplesPage>

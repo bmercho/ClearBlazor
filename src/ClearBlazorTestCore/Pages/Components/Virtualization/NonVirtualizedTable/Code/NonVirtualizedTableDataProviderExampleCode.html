@@ -1,0 +1,104 @@
+<div>
+<div class="html"><pre>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span> <span class="htmlAttributeName">Spacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">NonVirtualizedTable</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Table</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">500</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">350</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span>
+                         <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span>
+                         <span class="htmlAttributeName">VerticalGridLines</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">GridLines.All</span> <span class="htmlAttributeName">HorizontalGridLines</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">GridLines.All</span>
+                         <span class="htmlAttributeName">DataProvider</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>GetData</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName">ColumnDefs</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">auto,auto,*,2*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+        &lt;TableColumn Label=&quot;PersonId&quot; TItem=Feed Field=<span class="atSign">&#64;</span>(x =&gt;x.ImageId)&gt;
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">HeaderTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Header</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">FontSize</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">20px</span><span class="quot">&quot;</span> <span class="htmlAttributeName">FontWeight</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>((int)FontWeight.Bold)</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>(Header + &quot; !!&quot;)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">HeaderTemplate</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DataTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Item</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>(Item.ImageId + &quot; **&quot;)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">DataTemplate</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TableColumn</span><span class="htmlTagDelimiter">&gt;</span>
+        &lt;TableColumn Label=&quot;Image&quot; TItem=Feed Field=<span class="atSign">&#64;</span>(x =&gt;x.ImageId)&gt;
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DataTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">item</span><span class="htmlTagDelimiter">&gt;</span>
+                &lt;Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
+                        Size=Size.VeryLarge Image=<span class="atSign">&#64;</span>($&quot;https://picsum.photos/id/{item.ImageId}/200/200&quot;) /&gt;
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">DataTemplate</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TableColumn</span><span class="htmlTagDelimiter">&gt;</span>
+        &lt;TableColumn Label=&quot;Name&quot; TItem=Feed Field=<span class="atSign">&#64;</span>(x =&gt;x.Title) /&gt;
+        &lt;TableColumn Label=&quot;Message&quot; TItem=Feed Field=<span class="atSign">&#64;</span>(x =&gt;x.Message) /&gt;
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">NonVirtualizedTable</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto10Start</span><span class="htmlTagDelimiter">&gt;</span>Goto 10 (start)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto50Center</span><span class="htmlTagDelimiter">&gt;</span>Goto 50 (center)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto70End</span><span class="htmlTagDelimiter">&gt;</span>Goto 70 (end)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnAddNewItem</span><span class="htmlTagDelimiter">&gt;</span>Add new item<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoEnd</span><span class="htmlTagDelimiter">&gt;</span>Goto end<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoStart</span><span class="htmlTagDelimiter">&gt;</span>Goto start<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnAddNewItemGotoEndIfAtEnd</span><span class="htmlTagDelimiter">&gt;</span>Add new item and goto end if at end<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+</pre></div>
+<div class="csharp"><pre>
+<span class="atSign">&#64;</span>code {
+    NonVirtualizedTable&lt;Feed&gt; Table = <span class="keyword">null</span>!;
+
+    record Feed(<span class="keyword">int</span> ImageId, <span class="keyword">string</span> Title, <span class="keyword">string</span> Message);
+
+    List&lt;Feed&gt; _feeds = <span class="keyword">new</span> List&lt;Feed&gt;();
+
+    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
+    {
+        <span class="keyword">base</span>.OnInitialized();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">200</span>; i++)
+        {
+            _feeds.Add(<span class="keyword">new</span> Feed((i + <span class="number">1</span>) % <span class="number">1000</span>, $<span class="string">&quot;Record #{i}&quot;</span>, <span class="string">&quot;This is a message&quot;</span>));
+        }
+    }
+
+    <span class="keyword">async</span> Task OnGoto10Start()
+    {
+        <span class="keyword">await</span> Table.GotoIndex(<span class="number">10</span>, Alignment.Start);
+    }
+
+    <span class="keyword">async</span> Task OnGoto50Center()
+    {
+        <span class="keyword">await</span> Table.GotoIndex(<span class="number">50</span>, Alignment.Center);
+    }
+
+    <span class="keyword">async</span> Task OnGoto70End()
+    {
+        <span class="keyword">await</span> Table.GotoIndex(<span class="number">70</span>, Alignment.End);
+    }
+
+    <span class="keyword">async</span> Task OnAddNewItem()
+    {
+        <span class="keyword">var</span> index = _feeds.Count;
+        _feeds.Add(<span class="keyword">new</span> Feed(index % <span class="number">1000</span>, $<span class="string">&quot;Record #{index}&quot;</span>, <span class="string">&quot;This is a message&quot;</span>));
+        <span class="keyword">await</span> Table.Refresh();
+    }
+
+    <span class="keyword">async</span> Task OnGotoEnd()
+    {
+        <span class="keyword">await</span> Table.GotoEnd();
+    }
+
+    <span class="keyword">async</span> Task OnGotoStart()
+    {
+        <span class="keyword">await</span> Table.GotoStart();
+    }
+
+    <span class="keyword">async</span> Task OnAddNewItemGotoEndIfAtEnd()
+    {
+        <span class="keyword">var</span> atEnd = <span class="keyword">await</span> Table.AtEnd();
+
+        <span class="keyword">var</span> index = _feeds.Count;
+        _feeds.Add(<span class="keyword">new</span> Feed(index % <span class="number">1000</span>, $<span class="string">&quot;Record #{index}&quot;</span>, <span class="string">&quot;This is a message&quot;</span>));
+        <span class="keyword">await</span> Table.Refresh();
+        <span class="keyword">if</span> (atEnd)
+            <span class="keyword">await</span> Table.GotoEnd();
+    }
+
+    <span class="keyword">async</span> Task&lt;(<span class="keyword">int</span> totalNumItem, IEnumerable&lt;Feed&gt; items)&gt; GetData(ClearBlazor.DataProviderRequest request)
+    {
+        <span class="keyword">await</span> Task.CompletedTask;
+        <span class="keyword">return</span> (_feeds.Count(), _feeds.Skip(request.StartIndex).Take(request.Count));
+    }
+
+}
+</pre></div>
+</div>

@@ -4,7 +4,8 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
-        <ScrollViewer @ref="_scrollViewer" Width=@Width Height=@Height>
+        @* Scroll viewer *@
+        <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
             @if (RowTemplate != null)
             {
                 @foreach (var item in _items)
@@ -14,6 +15,6 @@
                     </div>
                 }
             }
-        </ScrollViewer>
+        </div>
     </div>
 </CascadingValue>

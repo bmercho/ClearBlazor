@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System;
 
 namespace ClearBlazor
 {
@@ -11,14 +10,14 @@ namespace ClearBlazor
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
     public partial class NonVirtualizedList<TItem> : ClearComponentBase,IBorder,
-                                                     IBackground, IBoxShadow, IList<TItem>, IAsyncDisposable
+                                                     IBackground, IBoxShadow, IList<TItem>
     {
         /// <summary>
         /// The template for rendering each row.
         /// The item is passed to each child for customization of the row
         /// </summary>
         [Parameter]
-        public required RenderFragment<(TItem item,int index)>? RowTemplate { get; set; }
+        public required RenderFragment<(TItem rowData,int rowIndex)>? RowTemplate { get; set; }
 
         /// <summary>
         ///  The items to be displayed in the list. If this is not null DataProvider is used.
@@ -87,9 +86,8 @@ namespace ClearBlazor
 
         private int _totalNumItems = 0;
         private bool _initializing = true;
-        private ScrollViewer _scrollViewer = null!;
+        private string _scrollViewerId = Guid.NewGuid().ToString();
         private CancellationTokenSource? _loadItemsCts;
-        private string _resizeObserverId = string.Empty;
         private string _baseRowId = Guid.NewGuid().ToString();
 
         private List<(TItem item,int index)> _items { get; set; } = new List<(TItem item,int index)>();
@@ -116,7 +114,7 @@ namespace ClearBlazor
         /// <returns></returns>
         public async Task GotoIndex(int index, Alignment verticalAlignment)
         {
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewer.Id,
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewerId,
                                             _baseRowId + index, (int)verticalAlignment);
         }
 
@@ -152,7 +150,7 @@ namespace ClearBlazor
         /// <returns></returns>
         public async Task<bool> AtEnd()
         {
-            return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewer.Id,
+            return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId,
                                             _baseRowId + (_items.Count-1).ToString());
         }
 
@@ -175,6 +173,12 @@ namespace ClearBlazor
         protected override string UpdateStyle(string css)
         {
             return css + $"display: grid; ";
+        }
+
+        private string GetScrollViewerStyle()
+        {
+            return $"height:{Height}px; width:{Width}px; margin-top:5px; display:grid; " +
+                   $"justify-self:stretch; overflow-x:hidden; overflow-y:auto; ";
         }
 
         protected string GetContentStyle()
@@ -229,11 +233,5 @@ namespace ClearBlazor
             }
             return new List<(TItem,int)>();
         }
-
-        public async ValueTask DisposeAsync()
-        {
-            await ResizeObserverService.Service.RemoveResizeObserver(_resizeObserverId);
-        }
-
     }
 }

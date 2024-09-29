@@ -1,0 +1,101 @@
+﻿@namespace ClearBlazorTest
+<StackPanel Orientation=Orientation.Portrait Spacing=20>
+    <NonVirtualizedTable @ref=Table Height=500 Width=350 BorderThickness=1
+                         HorizontalAlignment=Alignment.Start CornerRadius=4
+                         VerticalGridLines=GridLines.All HorizontalGridLines=GridLines.All
+                         DataProvider=@GetData Padding=5 RowSpacing=10 ColumnSpacing=20 ColumnDefs="auto,auto,*,2*">
+        <TableColumn Label="PersonId" TItem=Feed Field=@(x =>x.ImageId)>
+            <HeaderTemplate Context=Header>
+                <TextBlock FontSize="20px" FontWeight=@((int)FontWeight.Bold)>@(Header + " !!")</TextBlock>
+            </HeaderTemplate>
+            <DataTemplate Context=Item>
+                <TextBlock>@(Item.ImageId + " **")</TextBlock>
+            </DataTemplate>
+        </TableColumn>
+        <TableColumn Label="Image" TItem=Feed Field=@(x =>x.ImageId)>
+            <DataTemplate Context=item>
+                <Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
+                        Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{item.ImageId}/200/200") />
+            </DataTemplate>
+        </TableColumn>
+        <TableColumn Label="Name" TItem=Feed Field=@(x =>x.Title) />
+        <TableColumn Label="Message" TItem=Feed Field=@(x =>x.Message) />
+    </NonVirtualizedTable>
+    <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+        <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
+        <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+        <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
+        <Button OnClicked=@OnAddNewItem>Add new item</Button>
+        <Button OnClicked=@OnGotoEnd>Goto end</Button>
+        <Button OnClicked=@OnGotoStart>Goto start</Button>
+        <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+    </WrapPanel>
+</StackPanel>
+
+
+@code {
+    NonVirtualizedTable<Feed> Table = null!;
+
+    record Feed(int ImageId, string Title, string Message);
+
+    List<Feed> _feeds = new List<Feed>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        for (int i = 0; i < 100; i++)
+        {
+            _feeds.Add(new Feed(i % 1000, $"Record #{i}", "This is a message"));
+        }
+    }
+
+    async Task OnGoto10Start()
+    {
+        await Table.GotoIndex(10, Alignment.Start);
+    }
+
+    async Task OnGoto50Center()
+    {
+        await Table.GotoIndex(50, Alignment.Center);
+    }
+
+    async Task OnGoto70End()
+    {
+        await Table.GotoIndex(70, Alignment.End);
+    }
+
+    async Task OnAddNewItem()
+    {
+        var index = _feeds.Count;
+        _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
+        await Table.Refresh();
+    }
+
+    async Task OnGotoEnd()
+    {
+        await Table.GotoEnd();
+    }
+
+    async Task OnGotoStart()
+    {
+        await Table.GotoStart();
+    }
+
+    async Task OnAddNewItemGotoEndIfAtEnd()
+    {
+        var atEnd = await Table.AtEnd();
+
+        var index = _feeds.Count;
+        _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
+        await Table.Refresh();
+        if (atEnd)
+            await Table.GotoEnd();
+    }
+
+    async Task<(int totalNumItem, IEnumerable<Feed> items)> GetData(ClearBlazor.DataProviderRequest request)
+    {
+        await Task.CompletedTask;
+        return (_feeds.Count(), _feeds.Skip(request.StartIndex).Take(request.Count));
+    }
+
+}

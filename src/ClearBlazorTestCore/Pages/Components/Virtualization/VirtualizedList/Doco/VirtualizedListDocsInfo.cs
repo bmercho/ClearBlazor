@@ -38,6 +38,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Task GotoIndex(int index, Alignment verticalAlignment)", "async", "", "Goto the given index in the data\r"),
             new ApiComponentInfo("Task Refresh(bool gotoEnd)", "async", "", "Refresh the list. Call this when items are added to or deleted from the data or if an item has changed \r"),
             new ApiComponentInfo("Task HandleScrollEvent(ScrollState scrollState)", "async", "", ""),
+            new ApiComponentInfo("Task NotifyObservedSizes(List<ObservedSize> observedSizes)", "async", "", ""),
         };
     }
 }

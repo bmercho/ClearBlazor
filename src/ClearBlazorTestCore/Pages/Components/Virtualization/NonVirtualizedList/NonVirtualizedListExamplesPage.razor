@@ -1,17 +1,14 @@
 ﻿@page "/NonVirtualizedList"
 @using ClearBlazorTest
 <DocsExamplesPage DocsInfo=@(new NonVirtualizedListDocsInfo())>
-    <CodeSnippet Title="Basic non virtualized (with 100 items)" 
-                 Code=@(typeof(NonVirtualizedExample).Name) BackgroundColor="@Color.BackgroundGrey">
-        <NonVirtualizedExample />
+    <CodeSnippet Title="Basic non virtualized list (with 100 items)" 
+                 Code=@(typeof(NonVirtualizedListExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <NonVirtualizedListExample />
     </CodeSnippet>
-    <CodeSnippet Title="Non virtualized with data provider (with 100 items)" Code=@(typeof(NonVirtualizedDataProviderExample).Name) BackgroundColor="@Color.BackgroundGrey">
-        <NonVirtualizedDataProviderExample />
+    <CodeSnippet Title="Non virtualized list with data provider (with 100 items)" Code=@(typeof(NonVirtualizedListDataProviderExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <NonVirtualizedListDataProviderExample />
     </CodeSnippet>
-    <CodeSnippet Title="Non virtualized goto index" Code=@(typeof(NonVirtualizedGotoIndexExample).Name) BackgroundColor="@Color.BackgroundGrey">
-        <NonVirtualizedGotoIndexExample />
-    </CodeSnippet>
-    <CodeSnippet Title="Non virtualized variable row size" Code=@(typeof(NonVirtualizedVariableRowSizeExample).Name) BackgroundColor="@Color.BackgroundGrey">
-        <NonVirtualizedVariableRowSizeExample />
+    <CodeSnippet Title="Non virtualized list with variable row size" Code=@(typeof(NonVirtualizedListVariableRowSizeExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <NonVirtualizedListVariableRowSizeExample />
     </CodeSnippet>
 </DocsExamplesPage>

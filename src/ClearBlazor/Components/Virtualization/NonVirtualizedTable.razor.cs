@@ -29,7 +29,7 @@ namespace ClearBlazor
         ///  If DataProvider is also not null then Items takes precedence.
         /// </summary>
         [Parameter]
-        public List<TItem> Items { get; set; } = new List<TItem>();
+        public List<TItem>? Items { get; set; }
 
         /// <summary>
         /// Defines the data provider used to get pages of data from where ever. eg database
@@ -79,16 +79,12 @@ namespace ClearBlazor
         public Color? BackgroundColor { get; set; } = null;
 
         private int _totalNumItems = 0;
-        private string _firstItemId = Guid.NewGuid().ToString();
-        private int _visibleIndex = 0;
         private string _scrollViewerId = Guid.NewGuid().ToString();
         private string _headerId = Guid.NewGuid().ToString();
-        private bool _initialising = true;
         private double _headerHeight = 0;
-        private double _itemHeight = 0;
-        private double _containerHeight = 0;
         private CancellationTokenSource? _loadItemsCts;
         private string _resizeObserverId = string.Empty;
+        private string _baseRowId = Guid.NewGuid().ToString();
 
         private List<(TItem item, int index)> _items { get; set; } = new List<(TItem item, int index)>();
 
@@ -97,35 +93,56 @@ namespace ClearBlazor
         /// <summary>
         /// Goto the given index in the data
         /// </summary>
-        /// <param name="index">Index to goto.</param>
+        /// <param name="index">Index to goto. The index is zero based.</param>
         /// <param name="verticalAlignment">Where the index should be aligned in the scroll viewer.</param>
         /// <returns></returns>
         public async Task GotoIndex(int index, Alignment verticalAlignment)
         {
-            _visibleIndex = index;
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewerId,
+                                            _baseRowId + index, (int)verticalAlignment);
+        }
 
-            await GotoIndex(verticalAlignment);
+        /// <summary>
+        /// Goto the start of the list
+        /// </summary>
+        public async Task GotoStart()
+        {
+            await GotoIndex(0, Alignment.Start);
+        }
+
+        /// <summary>
+        /// Goto the end of the list
+        /// </summary>
+        public async Task GotoEnd()
+        {
+            await GotoIndex(_totalNumItems - 1, Alignment.End);
         }
 
         /// <summary>
         /// Refresh the list. Call this when items are added to or deleted from the data or if an item has changed 
         /// </summary>
         /// <returns></returns>
-        public async Task Refresh(bool gotoEnd)
+        public async Task Refresh()
         {
-            if (gotoEnd)
-                await GotoIndex(_totalNumItems, Alignment.End);
+            _items = await GetItems(0, int.MaxValue);
             StateHasChanged();
         }
 
+        /// <summary>
+        /// Returns true if the list has been scrolled to the end. 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> AtEnd()
+        {
+            return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId,
+                                            _baseRowId + (_items.Count - 1).ToString());
+        }
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
 
-            _visibleIndex = InitialIndex.index;
-
             if (_items.Count() == 0)
-                _items = await GetItems(0, 1);
+                _items = await GetItems(0, int.MaxValue);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -135,8 +152,7 @@ namespace ClearBlazor
             if (firstRender)
                 _resizeObserverId = await ResizeObserverService.Service.
                                           AddResizeObserver(NotifyObservedSizes,
-                                                            new List<string>() { _scrollViewerId,
-                                                                                 _headerId,_firstItemId });
+                                                            new List<string>() { _headerId });
         }
 
         protected override string UpdateStyle(string css)
@@ -154,27 +170,6 @@ namespace ClearBlazor
                 Columns.Add(column);
                 StateHasChanged();
             }
-        }
-
-        private async Task GotoIndex(Alignment verticalAlignment)
-        {
-            double scrollTop = 0;
-            var maxItemsInContainer = _containerHeight / (_itemHeight+RowSpacing);
-
-            switch (verticalAlignment)
-            {
-                case Alignment.Stretch:
-                case Alignment.Center:
-                    scrollTop = (_visibleIndex - maxItemsInContainer / 2 + 0.5) * (_itemHeight+RowSpacing);
-                    break;
-                case Alignment.Start:
-                    scrollTop = _visibleIndex * (_itemHeight+RowSpacing);
-                    break;
-                case Alignment.End:
-                    scrollTop = (_visibleIndex - maxItemsInContainer + 1) * (_itemHeight+RowSpacing);
-                    break;
-            }
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewerId, scrollTop);
         }
 
         private string[] GetLines(string? content)
@@ -203,7 +198,7 @@ namespace ClearBlazor
             return $"display:grid; grid-area: 1 / {column} /span 1 /span 1; justify-self: {justify};";
         }
 
-        private string GetRowStyle()
+        private string GetScrollViewerStyle()
         {
             return $"height:{Height - _headerHeight - RowSpacing}px; margin-top:5px; display:grid; " +
                    $"justify-self:stretch; overflow-x:hidden; overflow-y:auto; " +
@@ -286,15 +281,7 @@ namespace ClearBlazor
             bool changed = false;
             foreach (var observedSize in observedSizes)
             {
-                if (observedSize.TargetId == _scrollViewerId)
-                {
-                    if (observedSize.ElementHeight > 0 && _containerHeight != observedSize.ElementHeight)
-                    {
-                        _containerHeight = observedSize.ElementHeight;
-                        changed = true;
-                    }
-                }
-                else if (observedSize.TargetId == _headerId)
+                if (observedSize.TargetId == _headerId)
                 {
                     if (observedSize.ElementHeight > 0 && _headerHeight != observedSize.ElementHeight)
                     {
@@ -302,25 +289,12 @@ namespace ClearBlazor
                         changed = true;
                     }
                 }
-                else if (observedSize.TargetId == _firstItemId)
-                {
-                    if (observedSize.ElementHeight > 0 && _itemHeight != observedSize.ElementHeight)
-                    {
-                        _itemHeight = observedSize.ElementHeight;
-                        changed = true;
-                    }
-                }
             }
-            if (changed && _containerHeight > 0 && _headerHeight > 0 && _itemHeight > 0)
+            if (changed && _headerHeight > 0 )
             {
-                if (_initialising)
-                {
-                    _items = await GetItems(0, int.MaxValue);
-
-                    _initialising = false;
-                }
                 StateHasChanged();
             }
+            await Task.CompletedTask;
         }
     }
 }

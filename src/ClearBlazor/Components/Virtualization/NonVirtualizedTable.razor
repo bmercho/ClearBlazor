@@ -4,7 +4,6 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" style="@ComputeStyle()" class="@Classes">
-        <ScrollViewer HorizontalScrollMode=ScrollMode.Auto VerticalScrollMode=ScrollMode.Disabled>
         <Grid Rows="auto" Columns=@ColumnDefs ColumnSpacing=@ColumnSpacing>
             @for (int col = 0; col < Columns.Count; col++)
             {
@@ -42,14 +41,15 @@
                 <div style=@GetHorizontalGridLineStyle(2, Columns.Count) />
             }
 
-            <div id=@_scrollViewerId style=@GetRowStyle()>
+            @* Scroll viewer *@
+            <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
                 @for (int row = 0; row < _items.Count(); row++)
                 {
                     var rowIndex = row;
                     @for (int col = 0; col < Columns.Count; col++)
                     {
                         var colIndex = col;
-                        <div id=@(row==0 && col==0 ? _firstItemId : 0) style=@GetRowStyle(rowIndex+2, colIndex+1)>
+                        <div id=@(col == 0 ? _baseRowId +_items[row].index.ToString() : "0") style=@GetRowStyle(rowIndex+2, colIndex+1)>
                             @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
                             {
                                 <TextBlock>
@@ -76,7 +76,6 @@
                 }
             </div>
         </Grid>
-        </ScrollViewer>
     </div>
     @ChildContent
 </CascadingValue>
