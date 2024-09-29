@@ -1,0 +1,19 @@
+﻿@page "/NonVirtualizedTree"
+@using ClearBlazorTest
+<DocsExamplesPage DocsInfo=@(new NonVirtualizedTreeDocsInfo())>
+    <CodeSnippet Title="Basic non virtualized tree (with 100 items)" 
+                 Code=@(typeof(NonVirtualizedTreeExample).Name) 
+                 BackgroundColor="@Color.BackgroundGrey">
+        <NonVirtualizedTreeExample />
+    </CodeSnippet>
+    <CodeSnippet Title="Non virtualized tree with data provider (with 100 items)" 
+                 Code=@(typeof(NonVirtualizedTreeDataProviderExample).Name) 
+                 BackgroundColor="@Color.BackgroundGrey">
+        <NonVirtualizedTreeDataProviderExample />
+    </CodeSnippet>
+    <CodeSnippet Title="Non virtualized tree with variable row size" 
+                 Code=@(typeof(NonVirtualizedTreeVariableRowSizeExample).Name) 
+                 BackgroundColor="@Color.BackgroundGrey">
+        <NonVirtualizedTreeVariableRowSizeExample />
+    </CodeSnippet>
+</DocsExamplesPage>

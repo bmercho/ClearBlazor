@@ -44,9 +44,9 @@
     <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
     {
         <span class="keyword">base</span>.OnInitialized();
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">200</span>; i++)
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)
         {
-            _feeds.Add(<span class="keyword">new</span> Feed((i + <span class="number">1</span>) % <span class="number">1000</span>, $<span class="string">&quot;Record #{i}&quot;</span>, <span class="string">&quot;This is a message&quot;</span>));
+            _feeds.Add(<span class="keyword">new</span> Feed(i % <span class="number">1000</span>, $<span class="string">&quot;Record #{i}&quot;</span>, <span class="string">&quot;This is a message&quot;</span>));
         }
     }
 

@@ -197,7 +197,7 @@ namespace CreateDocumentation
                 {
                     WriteDocsInfoFile(componentName, testComponentFolder, docInfo);
 
-                    WriteApiPageFile(testComponentFolder, componentName, false, false);
+                    WriteApiPageFile(Path.Combine(testComponentFolder, Paths.DocsFolder), componentName, false, false);
                 }
             }
         }
@@ -436,13 +436,13 @@ namespace CreateDocumentation
             lines.Add("        public List<ApiComponentInfo> ParameterApi {get; set; } = " + $"new List<ApiComponentInfo>");
             lines.Add("        {");
             foreach (var info in docInfo.ParameterApi)
-                lines.Add($"            new ApiComponentInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Default}\", \"{info.Description}\"),");
+                lines.Add($"            new ApiComponentInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Default}\", \"{info.Description.Replace("\"", "\\\"")}\"),");
             lines.Add("        };");
 
             lines.Add("        public List<ApiComponentInfo> MethodApi {get; set; } = " + $" new List<ApiComponentInfo>");
             lines.Add("        {");
             foreach (var info in docInfo.MethodApi)
-                lines.Add($"            new ApiComponentInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Default}\", \"{info.Description}\"),");
+                lines.Add($"            new ApiComponentInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Default}\", \"{info.Description.Replace("\"", "\\\"")}\"),");
             lines.Add("        };");
 
             lines.Add("    }");
@@ -469,7 +469,7 @@ namespace CreateDocumentation
             lines.Add("        public List<ApiFieldInfo> FieldApi {get; set; } = " + $"new List<ApiFieldInfo>");
             lines.Add("        {");
             foreach (var info in docInfo.FieldApi)
-                lines.Add($"            new ApiFieldInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Description}\"),");
+                lines.Add($"            new ApiFieldInfo(\"{info.Name}\", \"{info.Type}\", \"{info.Description.Replace("\"", "\\\"")}\"),");
             lines.Add("        };");
             lines.Add("    }");
             lines.Add("}");

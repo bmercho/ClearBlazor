@@ -273,7 +273,7 @@ namespace ClearBlazor
             return new List<(TItem, int)>();
         }
 
-        public async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
+        internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
         {
             if (observedSizes == null)
                 return;

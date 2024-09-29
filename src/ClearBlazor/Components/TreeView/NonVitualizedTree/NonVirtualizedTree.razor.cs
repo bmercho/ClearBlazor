@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class TreeView<TItem> : InputBase, IBackground, IBorder where TItem : ITreeItem<TItem>
+    public partial class NonVirtualizedTree<TItem> : InputBase, IBackground, IBorder where TItem : ITreeItem<TItem>
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;

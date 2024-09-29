@@ -37,7 +37,6 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Task GotoEnd()", "async", "", "Goto the end of the list\r"),
             new ApiComponentInfo("Task Refresh()", "async", "", "Refresh the list. Call this when items are added to or deleted from the data or if an item has changed \r"),
             new ApiComponentInfo("Task<bool> AtEnd()", "async", "", "Returns true if the list has been scrolled to the end. \r"),
-            new ApiComponentInfo("ValueTask DisposeAsync()", "async", "", ""),
         };
     }
 }

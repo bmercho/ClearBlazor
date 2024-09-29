@@ -301,7 +301,7 @@ namespace ClearBlazor
             return new List<(TItem,int)>();
         }
 
-        public async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
+        internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
         {
 
             //if (changed && _containerHeight > 0 && _itemHeight > 0)

@@ -30,13 +30,14 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
-  </ItemGroup>
-  <ItemGroup>
     <Content Update="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedVariableRowSizeExample.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeVariableRowSizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedGotoIndexExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedDataProviderExampleCode.html" />
