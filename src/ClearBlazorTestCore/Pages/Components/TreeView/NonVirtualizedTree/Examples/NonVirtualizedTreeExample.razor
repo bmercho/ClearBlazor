@@ -1,93 +1,208 @@
 ﻿@namespace ClearBlazorTest
-    <StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20 Orientation=Orientation.Portrait>
-        <NonVirtualizedList Height=300 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
-                            @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_feeds HorizontalContentAlignment=Alignment.Start>
-            <RowTemplate Context=row>
-                <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=4>
-                    <Image Height=40 Width=40 VerticalAlignment=Alignment.Center
-                           Style="border-radius:50%; " Stretch=ImageStretch.Fill
-                       Source=@($"https://picsum.photos/id/{row.rowData.ImageId}/200/200") />
-
-                    <StackPanel Column=1 Orientation=Orientation.Portrait>
-                        <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                        @row.rowData.Title
-                        </TextBlock>
-                        <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
-                            <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                            @row.rowData.Message
-                            </TextBlock>
-                        </ScrollViewer>
-                    </StackPanel>
-                </Grid>
-            </RowTemplate>
-        </NonVirtualizedList>
-        <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-            <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
-            <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
-            <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
-            <Button OnClicked=@OnAddNewItem>Add new item</Button>
-            <Button OnClicked=@OnGotoEnd>Goto end</Button>
-            <Button OnClicked=@OnGotoStart>Goto start</Button>
-            <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
-        </WrapPanel>
-    </StackPanel>
+<StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20 Orientation=Orientation.Portrait>
+    <NonVirtualizedTree Height=300 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+                        @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_feeds HorizontalContentAlignment=Alignment.Start>
+        <RowTemplate Context=row>
+            <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
+                <MaterialIcon Icon=@row.rowData.Icon Color=Color.Custom(Colors.Yellow.Darken1)/>
+                <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
+                    @row.rowData.Title
+                </TextBlock>
+            </StackPanel>
+        </RowTemplate>
+    </NonVirtualizedTree>
+    @*         <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+    <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
+    <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+    <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
+    <Button OnClicked=@OnAddNewItem>Add new item</Button>
+    <Button OnClicked=@OnGotoEnd>Goto end</Button>
+    <Button OnClicked=@OnGotoStart>Goto start</Button>
+    <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+    </WrapPanel>
+    *@
+</StackPanel>
 
 @code {
-    NonVirtualizedList<Feed> List = null!;
-    record Feed(int ImageId, string Title, string Message);
+    private class Feed : TreeItem<Feed>
+    {
+        public string Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Icon { get; set; } = string.Empty;
+    }
+
+    NonVirtualizedTree<Feed> List = null!;
 
     List<Feed> _feeds = new List<Feed>();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        for (int i = 0; i < 100; i++)
+
+        InitialiseData();
+    }
+
+    // async Task OnGoto10Start()
+    // {
+    //     await List.GotoIndex(10, Alignment.Start);
+    // }
+
+    // async Task OnGoto50Center()
+    // {
+    //     await List.GotoIndex(50, Alignment.Center);
+    // }
+
+    // async Task OnGoto70End()
+    // {
+    //     await List.GotoIndex(70, Alignment.End);
+    // }
+
+    // async Task OnAddNewItem()
+    // {
+    //     var index = _feeds.Count;
+    //     _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
+    //     await List.Refresh();
+    // }
+
+    // async Task OnGotoEnd()
+    // {
+    //     await List.GotoEnd();
+    // }
+
+    // async Task OnGotoStart()
+    // {
+    //     await List.GotoStart();
+    // }
+
+    // async Task OnAddNewItemGotoEndIfAtEnd()
+    // {
+    //     var atEnd = await List.AtEnd();
+
+    //     var index = _feeds.Count;
+    //     _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
+    //     await List.Refresh();
+    //     if (atEnd)
+    //         await List.GotoEnd();
+    // }
+
+    private void InitialiseData()
+    {
+        _feeds.Add(new Feed
+            {
+                Id = "01",
+                Title = "Local Disk (C:)",
+                Expanded = true,
+                Icon = Icons.Material.TwoTone.Folder,
+                Children = new List<Feed>()
         {
-            _feeds.Add(new Feed(i % 1000, $"Record #{i}", "This is a message"));
-        }
+            new Feed { Id = "01-01", Title = "Program Files",
+                       Icon = Icons.Material.TwoTone.Folder,
+                       Children = new List<Feed>()
+                {
+                    new Feed { Id = "01-01-01", Title = "Windows NT" },
+                    new Feed { Id = "01-01-02", Title = "Windows Mail" },
+                    new Feed { Id = "01-01-03", Title = "Windows Photo Viewer" }
+                },
+            },
+            new Feed
+                {
+                    Id = "01-02",
+                    Title = "Users",
+                    Icon = Icons.Material.TwoTone.Folder,
+                    Expanded = true,
+                    Children = new List<Feed>()
+                    {
+                        new Feed { Id = "01-02-01", Title = "Smith" },
+                        new Feed { Id = "01-02-02", Title = "Public" },
+                        new Feed { Id = "01-02-03", Title = "Admin" },
+                    },
+                },
+            new Feed
+                {
+                    Id = "01-03",
+                    Title = "Windows",
+                    Icon = Icons.Material.TwoTone.Folder,
+                    Children = new List<Feed>()
+                    {
+                        new Feed { Id = "01-03-01", Title = "Boot" },
+                        new Feed { Id = "01-03-02", Title = "Media" },
+                        new Feed { Id = "01-03-03", Title = "System32" },
+                    }
+                },
+        },
+            });
+        _feeds.Add(new Feed
+            {
+                Id = "02",
+                Title = "Local Disk (D:)",
+                Icon = Icons.Material.TwoTone.Folder,
+                Children = new List<Feed>()
+            {
+                new Feed { Id = "02-01", Title = "Personals",
+                Icon = Icons.Material.TwoTone.Folder,
+                    Children = new List<Feed>()
+                    {
+                        new Feed { Id = "02-01-01", Title = "My photo.png" },
+                        new Feed { Id = "02-01-02", Title = "Rental document.docx" },
+                        new Feed { Id = "02-01-03", Title = "Payslip.pdf" },
+                    },
+                },
+                new Feed { Id = "02-02", Title = "Projects",
+                                Icon = Icons.Material.TwoTone.Folder,
+    Children = new List<Feed>()
+                    {
+                        new Feed { Id = "02-02-01", Title = "Blazor Application " },
+                        new Feed { Id = "02-02-02", Title = "TypeScript Application" },
+                        new Feed { Id = "02-02-03", Title = "React Application" },
+                    }
+                },
+                new Feed { Id = "02-03", Title = "Office",
+                Icon = Icons.Material.TwoTone.Folder,
+                    Children = new List<Feed>()
+                    {
+                        new Feed { Id = "02-03-01", Title = "Work details.docx " },
+                        new Feed { Id = "02-03-02", Title = "Weekly report.docx" },
+                        new Feed { Id = "02-03-03", Title = "Wishlist.csv" },
+                    }
+                },
+            },
+            });
+        _feeds.Add(new Feed
+            {
+                Id = "03",
+                Title = "Local Disk (E:)",
+                Icon = Icons.Material.TwoTone.Folder,
+                Children = new List<Feed>()
+            {
+                new Feed { Id = "03-01", Title = "Pictures",
+                Icon = Icons.Material.TwoTone.Folder,
+                    Children = new List<Feed>()
+                    {
+                        new Feed { Id = "03-01-01", Title = "Wind.jpg " },
+                        new Feed { Id = "03-01-02", Title = "Stone.jpg" },
+                        new Feed { Id = "03-01-03", Title = "Home.jpg" },
+                    }
+                },
+                new Feed { Id = "03-02", Title = "Documents", 
+                           Icon = Icons.Material.TwoTone.Folder,
+                           Children = new List<Feed>()
+                    {
+                        new Feed { Id = "03-02-01", Title = "Environment Pollution.docx " },
+                        new Feed { Id = "03-02-02", Title = "Global Warming.ppt" },
+                        new Feed { Id = "03-02-03", Title = "Social Network.pdf" },
+                    },
+                },
+                new Feed { Id = "03-03", Title = "Study Materials",
+                           Icon = Icons.Material.TwoTone.Folder,
+                           Children = new List<Feed>()
+                    {
+                        new Feed { Id = "03-03-01", Title = "UI-Guide.pdf" },
+                        new Feed { Id = "03-03-02", Title = "Tutorials.zip" },
+                        new Feed { Id = "03-03-03", Title = "TypeScript.7z" },
+                    }
+                },
+            },
+            });
     }
-
-    async Task OnGoto10Start()
-    {
-        await List.GotoIndex(10, Alignment.Start);
-    }
-
-    async Task OnGoto50Center()
-    {
-        await List.GotoIndex(50, Alignment.Center);
-    }
-
-    async Task OnGoto70End()
-    {
-        await List.GotoIndex(70, Alignment.End);
-    }
-
-    async Task OnAddNewItem()
-    {
-        var index = _feeds.Count;
-        _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
-        await List.Refresh();
-    }
-
-    async Task OnGotoEnd()
-    {
-        await List.GotoEnd();
-    }
-
-    async Task OnGotoStart()
-    {
-        await List.GotoStart();
-    }
-
-    async Task OnAddNewItemGotoEndIfAtEnd()
-    {
-        var atEnd = await List.AtEnd();
-
-        var index = _feeds.Count;
-        _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
-        await List.Refresh();
-        if (atEnd)
-            await List.GotoEnd();
-    }
-
+}
 }
