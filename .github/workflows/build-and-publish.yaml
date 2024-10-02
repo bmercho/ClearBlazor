@@ -1,4 +1,4 @@
-name: Version Charts 
+name: Version Package 
 
 on:
   push:
