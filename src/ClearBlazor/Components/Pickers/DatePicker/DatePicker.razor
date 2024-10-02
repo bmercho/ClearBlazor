@@ -27,12 +27,12 @@
                 @switch (Mode)
                 {
                     case DatePickerMode.Year:
-                        <VirtualizedList ItemHeight=28 Items=@YearList 
+@*                         <VirtualizedList ItemHeight=28 Items=@YearList 
                                         Height=@GetBodyHeight()
                                         Width=@GetBodyWidth()
                                         VisibleIndex="@((GetYearIndex(), Alignment.Center))">
                             <RowTemplate Context=item>
-                                <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item.item))"
+                                <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item))"
                                      @onclick:stopPropagation="true">
                                     <TextBlock HorizontalAlignment=Alignment.Center
                                                VerticalAlignment=Alignment.Center
@@ -41,7 +41,7 @@
                                 </div>
                             </RowTemplate>
                         </VirtualizedList>
-                        break;
+ *@                        break;
                     case DatePickerMode.Month:
                         <DockPanel>
                             <DockPanel Margin="10,0,0,0" Dock=ClearBlazor.Dock.Top>

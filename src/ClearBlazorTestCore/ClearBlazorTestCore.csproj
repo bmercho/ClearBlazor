@@ -9,6 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Components\TreeView\NonVirtualizedTree\Examples\NonVirtualizedTreeDataProviderExample.razor" />
+    <Content Remove="Pages\Components\TreeView\NonVirtualizedTree\Examples\NonVirtualizedTreeVariableRowSizeExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\InfiniteScrollerList\Examples\InfiniteScrollerDataProviderExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\InfiniteScrollerList\Examples\InfiniteScrollerExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\InfiniteScrollerList\InfiniteScrollerListExamplesPage.razor" />
+    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\ListViewExample1.razor" />
+    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedListDataProviderExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedListExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedListVariableRowSizeExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\VirtualizedSimpleExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\NonVirtualizedListExamplesPage.razor" />
+    <Content Remove="Pages\Components\Virtualization\VirtualizedList\Examples\VirtualizedContentExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\VirtualizedList\Examples\VirtualizedDataProviderExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\VirtualizedList\Examples\VirtualizedGotoIndexExample.razor" />
+    <Content Remove="Pages\Components\Virtualization\VirtualizedList\Examples\VirtualizedSimpleExample1.razor" />
+    <Content Remove="Pages\Components\Virtualization\VirtualizedList\VirtualizedListExamplesPage.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
@@ -26,14 +45,14 @@
     <Folder Include="Pages\Components\AppBar\Code\" />
     <Folder Include="Pages\Components\AppBar\Doco\" />
     <Folder Include="Pages\Components\Avatar\Doco\" />
+    <Folder Include="Pages\Components\Virtualization\InfiniteScrollerList\Examples\" />
+    <Folder Include="Pages\Components\Virtualization\NonVirtualizedList\Examples\" />
+    <Folder Include="Pages\Components\Virtualization\VirtualizedList\Examples\" />
     <Folder Include="Pages\Enums\Alignment\" />
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
     <Content Update="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedVariableRowSizeExample.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Pages\Components\Virtualization\NonVirtualizedList\Examples\VirtualizedSimpleExample.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>

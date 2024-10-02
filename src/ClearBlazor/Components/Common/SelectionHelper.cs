@@ -77,8 +77,8 @@
                 {
                     foreach (var item1 in range)
                     {
-                        if (!IsSelected(item1.Item1, selections))
-                            selections.Add(item1.Item1);
+                        if (!IsSelected(item1, selections))
+                            selections.Add(item1);
                     }
                     return true;
                 }

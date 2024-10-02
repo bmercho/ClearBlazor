@@ -6,12 +6,12 @@
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
               HoverHighlight=@_hoverHighlight  VirtualizeMode=VirtualizeMode.InfiniteScroll
               AllowSelectionToggle=@_allowSelectionToggle>
-        <RowTemplate Context=Item>
+        <RowTemplate Context=row>
             <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8 
-                  Margin=10 Padding=10 Columns="*,3*" Rows="*,auto">
-                <MaterialIcon Icon=@Item.Item.IconName VerticalAlignment=Alignment.Center />
-                <TextBlock VerticalAlignment=Alignment.Center Column=1> @(Item.Item.Name)</TextBlock>
-                <TextBlock VerticalAlignment=Alignment.Center Column=1 Row=1> @(Item.Item.Message)</TextBlock>
+                  Margin=10 Padding=10 Columns="*,3*" Rows="*,auto" HorizontalAlignment=Alignment.Stretch>
+                <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
+                <TextBlock VerticalAlignment=Alignment.Center Column=1> @(row.Name)</TextBlock>
+                <TextBlock VerticalAlignment=Alignment.Center Column=1 Row=1> @(row.Message)</TextBlock>
             </Grid>
         </RowTemplate>
     </ListView>
@@ -33,7 +33,7 @@
 @code {
     private List<TestViewItem> _testData = new();
 
-    private class TestViewItem
+    private class TestViewItem:ListItem
     {
         public string Name { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;

@@ -5,14 +5,14 @@
         <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Stretch Margin=10
                     BackgroundColor=Color.Transparent>
             <Avatar VerticalAlignment=Alignment.Center Color=Color.Transparent
-                    Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{row.rowData.ImageId}/200/200") />
+                    Size=Size.VeryLarge Image=@($"https://picsum.photos/id/{row.ImageId}/200/200") />
             <StackPanel Margin="0,0,0,20" Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch
                         BackgroundColor=Color.Transparent>
                 <TextBlock Typo=Typo.H6 VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
-                    @($"{row.rowData.Title}")
+                    @($"{row.Title}")
                 </TextBlock>
                 <TextBlock VerticalAlignment=Alignment.Center Color=@Color.Dark TextWrapping=TextWrap.Wrap>
-                    @($"{row.rowData.Message}")
+                    @($"{row.Message}")
                 </TextBlock>
             </StackPanel>
         </StackPanel>

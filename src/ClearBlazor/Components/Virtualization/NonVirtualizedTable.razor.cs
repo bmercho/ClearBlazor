@@ -134,8 +134,7 @@ namespace ClearBlazor
         /// <returns></returns>
         public async Task<bool> AtEnd()
         {
-            return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId,
-                                            _baseRowId + (_items.Count - 1).ToString());
+            return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId);
         }
         protected override async Task OnParametersSetAsync()
         {

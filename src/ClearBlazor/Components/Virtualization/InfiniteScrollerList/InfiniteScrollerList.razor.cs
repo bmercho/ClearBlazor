@@ -317,6 +317,7 @@ namespace ClearBlazor
             return new List<(TItem, int)>();
         }
 
+        
         private string GetTransformStyle()
         {
             return $"transform: translateY({_yOffset}px);";

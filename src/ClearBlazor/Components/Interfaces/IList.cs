@@ -5,6 +5,6 @@
     /// </summary>
     public interface IList<TItem>
     {
-        Task<List<(TItem,int)>> GetSelections(int firstIndex, int secondIndex);
+        Task<List<TItem>> GetSelections(int firstIndex, int secondIndex);
     }
 }

@@ -6,10 +6,10 @@
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
               HoverHighlight=@_hoverHighlight VirtualizeMode=VirtualizeMode.Virtualize
               AllowSelectionToggle=@_allowSelectionToggle>
-        <RowTemplate Context=Item>
-            <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8 Margin=10 Padding=10 Columns="*,3*">
-                <MaterialIcon Icon=@Item.Item.IconName VerticalAlignment=Alignment.Center />
-                <TextBlock VerticalAlignment=Alignment.Center Column=1> @(Item.Item.Name)</TextBlock>
+        <RowTemplate Context=row>
+            <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8 Margin=5 Padding=10 Columns="*,3*">
+                <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
+                <TextBlock VerticalAlignment=Alignment.Center Column=1> @(row.Name)</TextBlock>
             </Grid>
         </RowTemplate>
     </ListView>
@@ -31,7 +31,7 @@
 @code {
     private List<TestViewItem> _testData = new();
 
-    private class TestViewItem
+    private class TestViewItem:ListItem
     {
         public string Name { get; set; } = string.Empty;
         public string IconName { get; set; } = string.Empty;

@@ -8,11 +8,33 @@
             <div style=@GetContainerStyle()>
                 @if (RowTemplate != null)
                 {
-                    @foreach (var row in _items.Select((item, index) => new { item, index }))
+                    @if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
                     {
-                        <div id=@(_baseRowId +row.item.index.ToString()) style="@(GetContentStyle(row.index))">
-                            @RowTemplate(row.item)
+                        <div style=@GetHeightDivStyle()>
+                            <div style=@GetTransformStyle()>
+                                @foreach (var row in _items.Select((item, index) => new { item, index }))
+                                {
+                                    <div style=@(GetContentStyle(row.item, row.index)) 
+                                         @onmouseenter="(() => MouseEnter(row.item))"
+                                         @onmouseleave="(() => MouseLeave())"
+                                         @onclick="((e) => ItemClicked(e, row.item, row.index))">
+                                        @RowTemplate(row.item)
+                                    </div>
+                                }
+                            </div>
                         </div>
+                    }
+                    else
+                    {
+                        @foreach (var row in _items.Select((item, index) => new { item, index }))
+                        {
+                            <div id=@(_baseRowId +row.index.ToString()) style=@(GetContentStyle(row.item, row.index))
+                                 @onmouseenter="(() => MouseEnter(row.item))"
+                                 @onmouseleave="(() => MouseLeave())"
+                                 @onclick="((e) => ItemClicked(e, row.item, row.index))">
+                                @RowTemplate(row.item)
+                            </div>
+                        }
                     }
                 }
             </div>

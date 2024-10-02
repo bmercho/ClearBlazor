@@ -3,7 +3,7 @@
     <NonVirtualizedList Height=300 Width=150 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                 @ref="List" VirtualizeMode=VirtualizeMode.Virtualize Items=@items HorizontalContentAlignment=Alignment.Start>
         <RowTemplate Context=row>
-            <TextBlock>@row.rowData</TextBlock>
+            <TextBlock>@row</TextBlock>
         </RowTemplate>
     </NonVirtualizedList>
     <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>

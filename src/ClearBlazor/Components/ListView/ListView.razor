@@ -1,47 +1,43 @@
-﻿@using Microsoft.AspNetCore.Components
-@namespace ClearBlazor
+﻿@namespace ClearBlazor
 @typeparam TItem
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        @switch(VirtualizeMode)
-        {
-            case VirtualizeMode.None:
-                <NonVirtualizedList @ref=UnderlyingList Height=@Height Width=@Width
-                                    Items=@Items DataProvider=@DataProvider>
-                    <RowTemplate Context=row>
-                        <div style=@GetContentStyle(row.rowData) @onmouseenter="(() => MouseEnter(row.rowData))"
-                             @onmouseleave="(() => MouseLeave())"
-                             @onclick="((e) => ItemClicked(e, row.rowData, row.rowIndex))">
-                            @RowTemplate(GetItemInfo(row.rowData))
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
+            <div style=@GetContainerStyle()>
+                @if (RowTemplate != null)
+                {
+                    @if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
+                    {
+                        <div style=@GetHeightDivStyle()>
+                            <div style=@GetTransformStyle()>
+                                @foreach (var row in _items.Select((item, index) => new { item, index }))
+                                {
+                                    <div style=@(GetContentStyle(row.item, row.index))
+                                         @onmouseenter="(() => MouseEnter(row.item))"
+                                         @onmouseleave="(() => MouseLeave())"
+                                         @onclick="((e) => ItemClicked(e, row.item, row.index))">
+                                        @RowTemplate(row.item)
+                                    </div>
+                                }
+                            </div>
                         </div>
-                    </RowTemplate>
-                </NonVirtualizedList>
-                break;
-            case VirtualizeMode.Virtualize:
-                <VirtualizedList @ref=UnderlyingList Height=@Height Width=@Width ItemHeight=@ItemHeight
-                                      Items=@Items DataProvider=@DataProvider>
-                    <RowTemplate Context=row>
-                        <div style=@GetContentStyle(row.item) @onmouseenter="(() => MouseEnter(row.item))"
-                             @onmouseleave="(() => MouseLeave())" 
-                             @onclick="((e) => ItemClicked(e, row.item, row.index))">
-                            @RowTemplate(GetItemInfo(row.item))
-                        </div>
-                    </RowTemplate>
-                </VirtualizedList>
-                break;
-            case VirtualizeMode.InfiniteScroll:
-                <InfiniteScrollerList Height=@Height Width=@Width
-                                Items=@Items DataProvider=@DataProvider>
-                    <RowTemplate Context=row>
-                        <div style=@GetContentStyle(row.item) @onmouseenter="(() => MouseEnter(row.item))"
-                             @onmouseleave="(() => MouseLeave())" @onclick="((e) => ItemClicked(e, row.item, row.index))">
-                            @RowTemplate(GetItemInfo(row.item))
-                        </div>
-                    </RowTemplate>
-                </InfiniteScrollerList>
-                break;
-        }
+                    }
+                    else
+                    {
+                        @foreach (var row in _items.Select((item, index) => new { item, index }))
+                        {
+                            <div id=@(_baseRowId +row.index.ToString()) style=@(GetContentStyle(row.item, row.index))
+                                 @onmouseenter="(() => MouseEnter(row.item))"
+                                 @onmouseleave="(() => MouseLeave())"
+                                 @onclick="((e) => ItemClicked(e, row.item, row.index))">
+                                @RowTemplate(row.item)
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
     </div>
 </CascadingValue>

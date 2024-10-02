@@ -6,15 +6,15 @@
                 <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=4>
                     <Image Height=40 Width=40 VerticalAlignment=Alignment.Center
                            Style="border-radius:50%; " Stretch=ImageStretch.Fill
-                       Source=@($"https://picsum.photos/id/{row.rowData.ImageId}/200/200") />
+                       Source=@($"https://picsum.photos/id/{row.ImageId}/200/200") />
 
                     <StackPanel Column=1 Orientation=Orientation.Portrait>
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                        @row.rowData.Title
+                        @row.Title
                         </TextBlock>
                         <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
                             <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                            @row.rowData.Message
+                            @row.Message
                             </TextBlock>
                         </ScrollViewer>
                     </StackPanel>

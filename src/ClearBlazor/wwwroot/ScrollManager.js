@@ -58,10 +58,9 @@ window.scrollbar = {
         }
     },
 
-    AtScrollEnd: (scrollViewerId, elementId) => {
+    AtScrollEnd: (scrollViewerId) => {
         let scrollViewer = document.getElementById(scrollViewerId);
-        let element = document.getElementById(elementId);
-        if (!scrollViewer || !element)
+        if (!scrollViewer)
             return false;
         if (scrollViewer.scrollTop == scrollViewer.scrollHeight - scrollViewer.clientHeight )
             return true;
