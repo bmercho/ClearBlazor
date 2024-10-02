@@ -38,11 +38,11 @@ namespace ClearBlazor
         [Parameter]
         public DataProviderRequestDelegate<TItem>? DataProvider { get; set; }
 
-        /// <summary>
-        /// If true it ignores ItemHeight and internally uses the InfiniteScroller component
-        /// </summary>
         [Parameter]
         public VirtualizeMode VirtualizeMode { get; set; } = VirtualizeMode.None;
+
+        [Parameter]
+        public bool ShowHeader { get; set; } = true;
 
         [Parameter]
         public string ColumnDefs { get; set; } = "";

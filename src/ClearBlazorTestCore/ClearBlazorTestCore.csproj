@@ -33,6 +33,9 @@
     <Content Update="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedVariableRowSizeExample.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
+    <Content Update="Pages\Components\Virtualization\NonVirtualizedList\Examples\VirtualizedSimpleExample.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
   </ItemGroup>
   <ItemGroup>
 	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeVariableRowSizeExampleCode.html" />

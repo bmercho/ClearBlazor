@@ -34,11 +34,25 @@ namespace ClearBlazor
         public DataProviderRequestDelegate<TItem>? DataProvider { get; set; }
 
         /// <summary>
+        /// The height to be used for each item.
+        /// This is only used if the VirtualizeMode is Virtualize.
+        /// In this case it is optional in which case the height is obtained from the first item.
+        /// </summary>
+        [Parameter]
+        public int? ItemHeight { get; set; }
+
+        /// <summary>
         /// Gets or sets the index of the Items to be initially shown in visible area.
         /// It can be shown in the centre, start or end of the visible are.
         /// </summary>
         [Parameter]
         public (int index, Alignment verticalAlignment) InitialIndex { get; set; } = (0, Alignment.Start);
+
+        /// <summary>
+        /// Indicates how a list of items is Virtualized.
+        /// </summary>
+        [Parameter]
+        public VirtualizeMode VirtualizeMode { get; set; } = VirtualizeMode.None;
 
         /// <summary>
         /// The horizontal content alignment within the control.
@@ -90,6 +104,18 @@ namespace ClearBlazor
         private CancellationTokenSource? _loadItemsCts;
         private string _baseRowId = Guid.NewGuid().ToString();
 
+        // Used when VirtualizeMode is Virtualize
+        private string _firstItemId = string.Empty;
+        private double _height = 0;
+        private double _itemHeight = 0;
+        private double _itemWidth = 0;
+        private double _scrollViewerHeight = 0;
+        private string _resizeObserverId = string.Empty;
+        private int _skipItems = 0;
+        private int _takeItems = 0;
+        //private bool _initialScroll = true;
+        private ScrollState _scrollState = new();
+
         private List<(TItem item,int index)> _items { get; set; } = new List<(TItem item,int index)>();
 
         /// <summary>
@@ -114,8 +140,61 @@ namespace ClearBlazor
         /// <returns></returns>
         public async Task GotoIndex(int index, Alignment verticalAlignment)
         {
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewerId,
-                                            _baseRowId + index, (int)verticalAlignment);
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                    await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewerId,
+                                                    _baseRowId + index, (int)verticalAlignment);
+                    break;
+                case VirtualizeMode.Virtualize:
+                    await GotoVirtualIndex(index, verticalAlignment);
+                    break;
+                case VirtualizeMode.InfiniteScroll:
+                    break;
+                case VirtualizeMode.Pagination:
+                    break;
+            }
+        }
+
+        private async Task GotoVirtualIndex(int index, Alignment verticalAlignment)
+        {
+            double scrollTop = 0;
+            var maxItemsInContainer = _scrollViewerHeight / _itemHeight;
+
+            switch (verticalAlignment)
+            {
+                case Alignment.Stretch:
+                case Alignment.Center:
+                    _skipItems = index;
+                    _takeItems = (int)Math.Ceiling(maxItemsInContainer);
+
+                    if (_skipItems < maxItemsInContainer)
+                        scrollTop = _skipItems * _itemHeight;
+                    else
+                        scrollTop = (_skipItems - maxItemsInContainer / 2 + 0.5) * _itemHeight;
+                    break;
+                case Alignment.Start:
+                    _skipItems = index;
+                    _takeItems = (int)Math.Ceiling(maxItemsInContainer);
+
+                    scrollTop = _skipItems * _itemHeight;
+                    break;
+                case Alignment.End:
+                    if (index < maxItemsInContainer)
+                        _skipItems = 0;
+                    else
+                        _skipItems = (int)(index - maxItemsInContainer);
+                    _takeItems = (int)Math.Ceiling(maxItemsInContainer);
+
+                    if (_skipItems < maxItemsInContainer)
+                        scrollTop =  _skipItems * _itemHeight;
+                    else
+                        scrollTop = (index - maxItemsInContainer + 1) * _itemHeight;
+                    break;
+            }
+            _items = await GetItems(_skipItems, _takeItems);
+            StateHasChanged();
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewerId, scrollTop);
         }
 
         /// <summary>
@@ -140,7 +219,10 @@ namespace ClearBlazor
         /// <returns></returns>
         public async Task Refresh()
         {
-            _items = await GetItems(0, int.MaxValue);
+            if (VirtualizeMode == VirtualizeMode.None)
+                _items = await GetItems(0, int.MaxValue);
+            else
+                await CalculateScrollItems(false);
             StateHasChanged();
         }
 
@@ -151,7 +233,14 @@ namespace ClearBlazor
         public async Task<bool> AtEnd()
         {
             return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId,
-                                            _baseRowId + (_items.Count-1).ToString());
+                                            _baseRowId + (_totalNumItems-1).ToString());
+        }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            if (VirtualizeMode == VirtualizeMode.Virtualize)
+                _firstItemId = _baseRowId + "0";
         }
 
         protected override async Task OnParametersSetAsync()
@@ -159,7 +248,16 @@ namespace ClearBlazor
             await base.OnParametersSetAsync();
 
             if (_items.Count() == 0)
-                _items = await GetItems(0, int.MaxValue);
+                if (VirtualizeMode == VirtualizeMode.Virtualize)
+                {
+                    if (ItemHeight != null)
+                        _itemHeight = ItemHeight.Value;
+
+                    if (_items.Count() == 0)
+                        _items = await GetItems(0, 1);
+                }
+                else
+                    _items = await GetItems(0, int.MaxValue);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -167,7 +265,33 @@ namespace ClearBlazor
             await base.OnAfterRenderAsync(firstRender);
 
             if (firstRender)
-                await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
+            {
+                if (VirtualizeMode == VirtualizeMode.Virtualize)
+                {
+                    await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewerId,
+                DotNetObjectReference.Create(this));
+                    List<string> elementIds = new List<string>();
+                    if (ItemHeight == null)
+                        elementIds = new List<string>() { _scrollViewerId, _firstItemId };
+                    else
+                        elementIds = new List<string>() { _scrollViewerId };
+                    _resizeObserverId = await ResizeObserverService.Service.
+                              AddResizeObserver(NotifyObservedSizes, elementIds);
+                }
+                else
+                    await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
+            }
+        }
+
+        [JSInvokable]
+        public async Task HandleScrollEvent(ScrollState scrollState)
+        {
+            if (VirtualizeMode == VirtualizeMode.Virtualize)
+            {
+                _scrollState = scrollState;
+                await CalculateScrollItems(false);
+                StateHasChanged();
+            }
         }
 
         protected override string UpdateStyle(string css)
@@ -181,9 +305,11 @@ namespace ClearBlazor
                    $"justify-self:stretch; overflow-x:hidden; overflow-y:auto; ";
         }
 
-        protected string GetContentStyle()
+        protected string GetContentStyle(int index)
         {
-            var css = "display:grid; margin-right:5px; ";
+            var css = "display:grid;";
+            if (VirtualizeMode == VirtualizeMode.Virtualize && _itemHeight > 0)
+                css += $"position:absolute; height: {_itemHeight}px; top: {(_skipItems + index) * _itemHeight}px;";
             switch (HorizontalContentAlignment)
             {
                 case Alignment.Stretch:
@@ -200,6 +326,14 @@ namespace ClearBlazor
                     break;
             }
             return css;
+        }
+
+        protected string GetContainerStyle()
+        {
+            if (VirtualizeMode == VirtualizeMode.Virtualize)
+                return $"display:grid; position: relative;height: {_height}px";
+            else
+                return string.Empty;
         }
 
         private async Task<List<(TItem,int)>> GetItems(int startIndex, int count)
@@ -233,5 +367,60 @@ namespace ClearBlazor
             }
             return new List<(TItem,int)>();
         }
+
+        internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
+        {
+            if (observedSizes == null)
+                return;
+
+            bool changed = false;
+            foreach (var observedSize in observedSizes)
+            {
+                if (observedSize.TargetId == _scrollViewerId)
+                {
+                    if (observedSize.ElementHeight > 0 && _scrollViewerHeight != observedSize.ElementHeight)
+                    {
+                        _scrollViewerHeight = observedSize.ElementHeight;
+                        _itemWidth = observedSize.ElementWidth -
+                                     ThemeManager.CurrentTheme.GetScrollBarProperties().width;
+                        changed = true;
+                    }
+                }
+                else if (observedSize.TargetId == _firstItemId)
+                {
+                    if (observedSize.ElementHeight > 0 && _itemHeight != observedSize.ElementHeight)
+                    {
+                        _itemHeight = observedSize.ElementHeight;
+                        changed = true;
+                    }
+                }
+                if (changed && _scrollViewerHeight > 0 && _itemHeight > 0)
+                {
+                    if (_initializing)
+                    {
+                        _initializing = false;
+                        await CalculateScrollItems(true);
+                    }
+                    StateHasChanged();
+                }
+            }
+        }
+
+        private async Task CalculateScrollItems(bool initial)
+        {
+            if (initial)
+            {
+                _height = _totalNumItems * _itemHeight;
+                await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
+            }
+            else
+            {
+                _skipItems = (int)(_scrollState.ScrollTop / _itemHeight);
+                _takeItems = (int)Math.Ceiling((double)(_scrollState.ScrollTop + _scrollViewerHeight) / _itemHeight) - _skipItems;
+                _items = await GetItems(_skipItems, _takeItems);
+                _height = _totalNumItems * _itemHeight;
+            }
+        }
+
     }
 }

@@ -1,10 +1,10 @@
 ﻿@page "/VirtualizedList"
 @using ClearBlazorTest
 <DocsExamplesPage DocsInfo=@(new VirtualizedListDocsInfo())>
-    <CodeSnippet Title="Basic (with 10000 items)" Code=@(typeof(VirtualizedSimpleExample).Name) BackgroundColor="@Color.BackgroundGrey">
-        <VirtualizedSimpleExample />
+    <CodeSnippet Title="Basic (with 10000 items)" Code=@(typeof(VirtualizedSimpleExample1).Name) BackgroundColor="@Color.BackgroundGrey">
+        <VirtualizedSimpleExample1 />
     </CodeSnippet>
-    <CodeSnippet Title="Goto index" Code=@(typeof(VirtualizedGotoIndexExample).Name) BackgroundColor="@Color.BackgroundGrey">
+@*     <CodeSnippet Title="Goto index" Code=@(typeof(VirtualizedGotoIndexExample).Name) BackgroundColor="@Color.BackgroundGrey">
         <VirtualizedGotoIndexExample />
     </CodeSnippet>
     <CodeSnippet Title="Row content (with 10000 items)" Code=@(typeof(VirtualizedContentExample).Name) BackgroundColor="@Color.BackgroundGrey">
@@ -13,4 +13,4 @@
     <CodeSnippet title="Item Provider (with 10000 items)" Code=@(typeof(VirtualizedDataProviderExample).Name) BackgroundColor="@Color.BackgroundGrey">
         <VirtualizedDataProviderExample />
     </CodeSnippet>
-</DocsExamplesPage>
+ *@</DocsExamplesPage>

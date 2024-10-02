@@ -19,6 +19,11 @@
         /// Virtualizes a list of items when the height of each item is not the same or the total number of 
         /// items is not known.
         /// </summary>
-        InfiniteScroll
+        InfiniteScroll,
+
+        /// <summary>
+        /// Allows for paging through a list of items. 
+        /// </summary>
+        Pagination
     }
 }

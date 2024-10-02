@@ -81,13 +81,12 @@ namespace ClearBlazor
         /// <summary>
         /// The height of each item.
         /// If not provided uses the height of the first item.
-        /// Ignored if VariableItemHeight is true.
         /// </summary>
         [Parameter]
         public int? ItemHeight { get; set; }
 
         /// <summary>
-        /// If true it ignores ItemHeight and internally uses the InfiniteScroller component
+        /// Indicates how a list of items is Virtualized.
         /// </summary>
         [Parameter]
         public VirtualizeMode VirtualizeMode { get; set; } = VirtualizeMode.None;

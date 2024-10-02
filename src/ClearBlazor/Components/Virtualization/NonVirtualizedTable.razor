@@ -5,20 +5,23 @@
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" style="@ComputeStyle()" class="@Classes">
         <Grid Rows="auto" Columns=@ColumnDefs ColumnSpacing=@ColumnSpacing>
-            @for (int col = 0; col < Columns.Count; col++)
+            @if (ShowHeader)
             {
-                var colIndex = col;
-                <div id=@_headerId style=@GetHeaderStyle(colIndex+1)>
-                    @if (@Columns[colIndex] == null || @Columns[colIndex].HeaderTemplate == null)
-                    {
-                        <TextBlock FontWeight=@((int)FontWeight.Bold)>@Columns[colIndex].Label</TextBlock>
-                    }
-                    else
-                    {
-                        @Columns[colIndex].HeaderTemplate(@Columns[colIndex].Label)
-                        ;
-                    }
-                </div>
+                @for (int col = 0; col < Columns.Count; col++)
+                {
+                    var colIndex = col;
+                    <div id=@_headerId style=@GetHeaderStyle(colIndex+1)>
+                        @if (@Columns[colIndex] == null || @Columns[colIndex].HeaderTemplate == null)
+                        {
+                            <TextBlock FontWeight=@((int)FontWeight.Bold)>@Columns[colIndex].Label</TextBlock>
+                        }
+                        else
+                        {
+                            @Columns[colIndex].HeaderTemplate(@Columns[colIndex].Label)
+                            ;
+                        }
+                    </div>
+                }
             }
             @if (VerticalGridLines == GridLines.HeaderOnly || VerticalGridLines == GridLines.All)
             {
@@ -36,9 +39,12 @@
                 }
             }
 
-            @if (HorizontalGridLines == GridLines.HeaderOnly || HorizontalGridLines == GridLines.All)
+            @if (ShowHeader)
             {
-                <div style=@GetHorizontalGridLineStyle(2, Columns.Count) />
+                @if (HorizontalGridLines == GridLines.HeaderOnly || HorizontalGridLines == GridLines.All)
+                {
+                    <div style=@GetHorizontalGridLineStyle(2, Columns.Count) />
+                }
             }
 
             @* Scroll viewer *@
@@ -68,7 +74,7 @@
                     }
                     @if (HorizontalGridLines == GridLines.All)
                     {
-                        @if(row != _items.Count-1)
+                        @if (row != _items.Count - 1)
                         {
                             <div style=@GetHorizontalGridLineStyle(rowIndex+3, Columns.Count) />
                         }
