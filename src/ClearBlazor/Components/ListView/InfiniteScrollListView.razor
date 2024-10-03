@@ -4,9 +4,9 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
-        <Grid>
-            <ScrollViewer @ref="_scrollViewer" Width=@Width Height=@Height>
-                @if (RowTemplate != null)
+        @* <Grid> *@
+        <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
+            @if (RowTemplate != null)
                 {
                     <div style=@GetHeightDivStyle()>
                         <div style=@GetTransformStyle()>
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 }
-            </ScrollViewer>
+            </div>
             @if (_loadingUp && ShowLoadingSpinner)
             {
                 <Grid BackgroundColor=Color.Transparent Margin=20
@@ -37,6 +37,6 @@
                     <Spinner />
                 </Grid>
             }
-        </Grid>
+        @* </Grid> *@
     </div>
 </CascadingValue>

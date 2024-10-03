@@ -145,7 +145,7 @@ namespace ClearBlazor
         [Parameter]
         public Color? BackgroundColor { get; set; }
 
-        private ScrollViewer _scrollViewer = null!;
+        private string _scrollViewerId = Guid.NewGuid().ToString();
         private CancellationTokenSource? _loadItemsCts;
         private bool _loadingUp = false;
         private bool _loadingDown = false;
@@ -161,7 +161,7 @@ namespace ClearBlazor
         private double _maxScrollHeight = 0;
         private bool _hasHadData = false;
         private SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
-
+ 
         private TItem? _highlightedItem = default;
         private bool _mouseOver = false;
         private SelectionHelper<TItem> _selectionHelper = new();
@@ -173,7 +173,7 @@ namespace ClearBlazor
         /// </summary>
         public async Task GotoStart()
         {
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, 0);
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewerId, 0);
             await GetFirstPage();
             StateHasChanged();
         }
@@ -190,9 +190,8 @@ namespace ClearBlazor
             await base.OnAfterRenderAsync(firstRender);
 
             if (firstRender)
-                await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewer.Id,
+                await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewerId,
                                 DotNetObjectReference.Create(this));
-
 
             bool changed = false;
 
@@ -439,13 +438,11 @@ namespace ClearBlazor
             return new List<TItem>();
         }
 
-
         private string GetTransformStyle()
         {
             return $"transform: translateY({_yOffset}px);";
 
         }
-
         private string GetHeightDivStyle()
         {
             return $"height:{_maxScrollHeight}px";
@@ -473,7 +470,7 @@ namespace ClearBlazor
             }
 
             return $"display:grid; " +
-                   $"justify-self:stretch; overflow-x:hidden; " +
+                   $"justify-self:stretch; align-self:stretch; overflow-x:hidden; " +
                    $"overflow-y:auto; scrollbar-gutter:stable; {overscrollBehaviour}";
         }
 

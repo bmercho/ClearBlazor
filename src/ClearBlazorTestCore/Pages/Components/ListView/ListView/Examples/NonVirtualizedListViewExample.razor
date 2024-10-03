@@ -1,0 +1,135 @@
+﻿@namespace ClearBlazorTest
+    <StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20 Orientation=Orientation.Portrait>
+        <ListView Height=300 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+                            @ref=_list VirtualizeMode=VirtualizeMode.None InitialIndex=@((20, Alignment.Center)) Items=@_feeds >
+            <RowTemplate Context=row>
+                <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=4>
+                    <Image Height=40 Width=40 VerticalAlignment=Alignment.Center
+                           Style="border-radius:50%; " Stretch=ImageStretch.Fill
+                       Source=@($"https://picsum.photos/id/{row.ImageId}/200/200") />
+
+                    <StackPanel Column=1 Orientation=Orientation.Portrait>
+                        <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
+                        @row.Title
+                        </TextBlock>
+                        <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
+                            <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                            @row.Message
+                            </TextBlock>
+                        </ScrollViewer>
+                    </StackPanel>
+                </Grid>
+            </RowTemplate>
+        </ListView>
+        <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+            <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
+            <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+            <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
+            <Button OnClicked=@OnAddNewItem>Add new item</Button>
+            <Button OnClicked=@OnGotoEnd>Goto end</Button>
+            <Button OnClicked=@OnGotoStart>Goto start</Button>
+            <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+        </WrapPanel>
+    </StackPanel>
+
+@code {
+    private class Feed:ListItem,IEquatable<Feed>
+    {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public int ImageId { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
+
+        public bool Equals(Feed? other)
+        {
+            if (other == null)
+                return false;
+            if (other.Id == Id)
+                return true;
+            return false;
+        }
+    }
+
+    
+    ListView<Feed> _list = null!;
+
+    List<Feed> _feeds = new List<Feed>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        for (int i = 0; i < 100; i++)
+        {
+            _feeds.Add(new Feed { ImageId = i, Title = $"Record #{i}", Message = GetMessage(i) });
+        }
+    }
+
+    async Task OnGoto10Start()
+    {
+        await _list.GotoIndex(10, Alignment.Start);
+    }
+
+    async Task OnGoto50Center()
+    {
+        await _list.GotoIndex(50, Alignment.Center);
+    }
+
+    async Task OnGoto70End()
+    {
+        await _list.GotoIndex(70, Alignment.End);
+    }
+
+    async Task OnAddNewItem()
+    {
+        var index = _feeds.Count;
+        _feeds.Add(new Feed { ImageId = index, Title = $"Record #{index}", Message = GetMessage(index) });
+        await _list.Refresh();
+    }
+
+    async Task OnGotoEnd()
+    {
+        await _list.GotoEnd();
+    }
+
+    async Task OnGotoStart()
+    {
+        await _list.GotoStart();
+    }
+
+    async Task OnAddNewItemGotoEndIfAtEnd()
+    {
+        var atEnd = await _list.AtEnd();
+
+        var index = _feeds.Count;
+        _feeds.Add(new Feed { ImageId = index, Title = $"Record #{index}", Message = GetMessage(index) });
+        await _list.Refresh();
+        if (atEnd)
+            await _list.GotoEnd();
+    }
+
+    private string GetMessage(int i)
+    {
+        switch (i % 8)
+        {
+            case 0:
+                return "Lorem ipsum dolor";
+            case 1:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem";
+            case 2:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ";
+            case 3:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores";
+            case 4:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.";
+            case 5:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure";
+            case 6:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .";
+            case 7:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.";
+        }
+        return "Lorem ipsum dolor";
+
+    }
+
+}
