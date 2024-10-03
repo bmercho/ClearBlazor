@@ -4,7 +4,10 @@ on:
   push:
     branches:
     - main
-    
+
+permissions:
+  contents: write
+
 jobs:
   build-and-publish:
     if: ${{ startsWith(github.event.commits[0].message, 'Version Package') }}
