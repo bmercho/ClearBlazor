@@ -33,7 +33,7 @@ jobs:
       - name: Create Release
         uses: changesets/action@v1
         with:
-          publish: "@changesets/cli tag"
+          publish: "npx @changesets/cli tag"
           createGitHubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
