@@ -24,6 +24,8 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 20
+    
+    - run: npm install
 
     - name: Install YQ
       uses: dcarbone/install-yq-action@v1.1.1

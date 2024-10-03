@@ -19,6 +19,8 @@ jobs:
         with:
           node-version: 20
 
+      - run: npm install
+
       - name: Get Version
         id: get-version
         run: |
