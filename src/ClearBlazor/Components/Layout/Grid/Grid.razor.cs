@@ -58,25 +58,25 @@ namespace ClearBlazor
         // IBorder
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public string? BorderThickness { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public Color? BorderColor { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public string? CornerRadius { get; set; }
@@ -84,7 +84,7 @@ namespace ClearBlazor
         // IBoxShadow
 
         /// <summary>
-        /// See <a href=IBoxShadowApi>IBoxShadow</a>
+        /// See <a href="IBoxShadowApi">IBoxShadow</a>
         /// </summary>
         [Parameter]
         public int? BoxShadow { get; set; }
@@ -92,7 +92,7 @@ namespace ClearBlazor
         // IBackground
 
         /// <summary>
-        /// See <a href=IBackgroundApi>IBackground</a>
+        /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; }
@@ -100,14 +100,14 @@ namespace ClearBlazor
         // IBackgroundGradient
 
         /// <summary>
-        /// See <a href=IBackgroundGradientApi>IBackgroundGradient</a>
+        /// See <a href="IBackgroundGradientApi">IBackgroundGradient</a>
         /// </summary>
         [Parameter]
         public string? BackgroundGradient1 { get; set; }
 
 
         /// <summary>
-        /// See <a href=IBackgroundGradientApi>IBackgroundGradient</a>
+        /// See <a href="IBackgroundGradientApi">IBackgroundGradient</a>
         /// </summary>
         [Parameter]
         public string? BackgroundGradient2 { get; set; }
