@@ -51,7 +51,7 @@ jobs:
 
     - name: 'Update version in Octopus Deploy Chart.yaml'
       run: |
-        version=$(jq -r .version src/ClearBlazor/package.json)
+        version=$(jq -r .version package.json)
         sed -i '' "s/\(<Version>\).*\(<\/Version>\)/\1$version\2/" src/ClearBlazor/ClearBlazor.csproj
         sed -i '' "s/\(<AssemblyVersion>\).*\(<\/AssemblyVersion>\)/\1$version\2/" src/ClearBlazor/ClearBlazor.csproj
         sed -i '' "s/\(<FileVersion>\).*\(<\/FileVersion>\)/\1$version\2/" src/ClearBlazor/ClearBlazor.csproj

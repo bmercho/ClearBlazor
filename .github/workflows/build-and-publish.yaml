@@ -33,7 +33,7 @@ jobs:
       - name: Get Version
         id: get-version
         run: |
-          version=$(jq -r .version src/ClearBlazor/package.json)
+          version=$(jq -r .version package.json)
           echo "versionToPublish=true" >> $GITHUB_OUTPUT
 
       - name: Build Nuget Package
