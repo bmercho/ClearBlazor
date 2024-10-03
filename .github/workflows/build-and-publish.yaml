@@ -44,6 +44,8 @@ jobs:
       - name: Upload Nuget Package to Github Release
         run: |
           gh release upload ${{ steps.get-version.outputs.versionToPublish }} "src/ClearBlazor/bin/Release/ClearBlazor.${{ steps.get-version.outputs.versionToPublish }}.nupkg"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to Nuget
         run: |
