@@ -17,6 +17,7 @@ namespace ClearBlazor
             Messages.Add($"{++Count} : {DateTime.Now.ToString("dd MMM yy HH:mm:ss" )} : {message}");
         }
 
+
         public static List<string> GetMessages()
         {
             return Messages;
