@@ -46,7 +46,7 @@ jobs:
         sed -i "s/\(<Version>\).*\(<\/Version>\)/\1$version\2/" src/ClearBlazor/ClearBlazor.csproj
         sed -i "s/\(<AssemblyVersion>\).*\(<\/AssemblyVersion>\)/\1$version\2/" src/ClearBlazor/ClearBlazor.csproj
         sed -i "s/\(<FileVersion>\).*\(<\/FileVersion>\)/\1$version\2/" src/ClearBlazor/ClearBlazor.csproj
-        git config user.email "action@github.com"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
         git config user.name "github-actions[bot]"
         git add src/ClearBlazor/ClearBlazor.csproj
         git commit -m "Update package version in ClearBlazor.csproj"
