@@ -15,7 +15,7 @@
                                 <div style="@(GetContentStyle(row.item))"
                                     @onmouseenter="(() => MouseEnter(row.item))"
                                     @onmouseleave="(() => MouseLeave())"
-                                    @onclick="((e) => ItemClicked(e, row.item, row.index))">
+                                    @onclick="((e) => ItemClicked(e, row.item, row.item.Index))">
                                     @RowTemplate(row.item)
                                 </div>
                             }

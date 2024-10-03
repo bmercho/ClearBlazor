@@ -1,10 +1,11 @@
 ﻿@namespace ClearBlazorTest
-<Grid Columns="auto,auto,*">
-    <ListView Column=0 HorizontalAlignment=Alignment.Start Margin=40
+<Grid Columns="auto,auto,*" Rows="auto,*">
+    <InfiniteScrollListView @ref=_list Column=0 HorizontalAlignment=Alignment.Start Margin=40
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
               DataProvider=@GetData Width=300 Height=500 BorderThickness="1"
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
-              HoverHighlight=@_hoverHighlight  VirtualizeMode=VirtualizeMode.InfiniteScroll
+              HoverHighlight=@_hoverHighlight  
+              OverscrollBehaviour=OverscrollBehaviour.None
               AllowSelectionToggle=@_allowSelectionToggle>
         <RowTemplate Context=row>
             <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8 
@@ -14,7 +15,7 @@
                 <TextBlock VerticalAlignment=Alignment.Center Column=1 Row=1> @(row.Message)</TextBlock>
             </Grid>
         </RowTemplate>
-    </ListView>
+    </InfiniteScrollListView>
     <StackPanel Column=1>
         <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode>
             @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
@@ -28,16 +29,28 @@
 
         <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
     </StackPanel>
+    <Button Row=1 ColumnSpan=3 HorizontalAlignment=Alignment.Start OnClicked=@OnGotoStart>Goto Start</Button>
+
 </Grid>
 
 @code {
     private List<TestViewItem> _testData = new();
 
-    private class TestViewItem:ListItem
+    private class TestViewItem:ListItem,IEquatable<TestViewItem>
     {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Name { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
         public string IconName { get; set; } = string.Empty;
+
+        public bool Equals(TestViewItem? other)
+        {
+            if (other == null)
+                return false;
+            if (other.Id == Id)
+                return true;
+            return false;
+        }
     }
 
     private TestViewItem _selectedItem = null!;
@@ -45,6 +58,7 @@
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
+    private InfiniteScrollListView<TestViewItem>? _list;
 
     protected override void OnInitialized()
     {
@@ -102,7 +116,14 @@
                 return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.";
         }
         return "Lorem ipsum dolor";
-        
+
+    }
+
+    private async Task OnGotoStart()
+    {
+        if (_list == null)
+            return;
+        await _list.GotoStart();
     }
 
 }

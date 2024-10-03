@@ -1,0 +1,12 @@
+﻿@page "/InfiniteScrollListView"
+
+@using ClearBlazorTest
+
+<DocsExamplesPage DocsInfo=@(new ListViewDocsInfo())>
+    <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">ListView</TextBlock>
+    <CodeSnippet Title="ListView (10000 items)"
+                 Code=@(typeof(InfiniteScrollListViewExample).Name)>
+        <InfiniteScrollListViewExample />
+    </CodeSnippet>
+</DocsExamplesPage>
+

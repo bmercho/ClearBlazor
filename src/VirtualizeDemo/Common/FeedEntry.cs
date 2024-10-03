@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ClearBlazor;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VirtualizeDemo
 {
     [Table("FeedEntry")]
-    public class FeedEntry
+    public class FeedEntry:ListItem, IEquatable<FeedEntry>  
     {
         [Key]
         public Guid FeedEntryId { get; set; }
@@ -26,6 +27,15 @@ namespace VirtualizeDemo
 
         [Column]
         public DateTime TimeStamp { get; set; }
+
+        public bool Equals(FeedEntry? other)
+        {
+            if (other == null)
+                return false;
+            if (other.FeedEntryId == FeedEntryId)
+                return true;
+            return false;
+        }
 
         public override string ToString()
         {

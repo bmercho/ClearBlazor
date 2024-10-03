@@ -62,7 +62,7 @@ window.scrollbar = {
         let scrollViewer = document.getElementById(scrollViewerId);
         if (!scrollViewer)
             return false;
-        if (scrollViewer.scrollTop == scrollViewer.scrollHeight - scrollViewer.clientHeight )
+        if (Math.abs(scrollViewer.scrollTop - scrollViewer.scrollHeight + scrollViewer.clientHeight) < 2)
             return true;
         return false;
     },

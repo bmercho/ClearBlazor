@@ -197,9 +197,9 @@
 	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconCustomExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconColorExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewVariableHeightExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewDataProviderExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ListView\ListView\Code\ListViewVariableHeightExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ListView\ListView\Code\ListViewExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ListView\ListView\Code\ListViewDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListSizeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListMultiSelectExampleCode.html" />

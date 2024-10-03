@@ -13,7 +13,6 @@ namespace VirtualizeDemo
         FeedEntryResult _feedEntries = new();
         FeedEntryResult _localFeedEntries = new();
         bool _addDelay = false;
-        InfiniteScrollerList<FeedEntry> Scroller;
 
         protected override async Task OnInitializedAsync()
         {

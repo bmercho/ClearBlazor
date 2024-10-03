@@ -1,19 +1,20 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
-using System.Collections.Generic;
 
 namespace ClearBlazor
 {
     /// <summary>
-    /// Virtualizes a list of items( of type 'IItem') inside a ScrollViewer which is embedded in this component.
-    /// Use this component if the item height is variable or if the total number of items is unknown.
-    /// Otherwise use the VirtualizedList component.
+    /// Displays a potentially infinite list of items (of type TItem), by loading more items when scrolled to the bottom. 
+    /// Use this component if the item height is variable. 
+    /// Otherwise use the ListView component.
+    /// </summary>
+
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public partial class InfiniteScrollerList<TItem> : ClearComponentBase, IBorder, IBackground,
-                                                       IBoxShadow, IList<TItem> 
-                                                       where TItem : ListItem, IEquatable<TItem>
+    public partial class InfiniteScrollListView<TItem> : ClearComponentBase, IBorder, IBackground,
+                                                       IBoxShadow, IList<TItem>
+        where TItem : ListItem, IEquatable<TItem>
     {
         /// <summary>
         /// The template for rendering each row.
@@ -94,6 +95,12 @@ namespace ClearBlazor
         public int PageSize { get; set; } = 10;
 
         /// <summary>
+        /// Defines what happens when the boundary of a scrolling area is reached in the vertical direction. 
+        /// </summary>
+        [Parameter]
+        public OverscrollBehaviour OverscrollBehaviour { get; set; } = OverscrollBehaviour.Auto;
+
+        /// <summary>
         /// Gets or sets the index of the Items to be initially shown  in visible area.
         /// It can be shown in the centre, start or end of the visible are.
         /// </summary>
@@ -101,31 +108,25 @@ namespace ClearBlazor
         public (int index, Alignment verticalAlignment) VisibleIndex { get; set; } = (0, Alignment.Start);
 
         /// <summary>
-        /// The horizontal content alignment within the control.
-        /// </summary>
-        [Parameter]
-        public Alignment HorizontalContentAlignment { get; set; } = Alignment.Stretch;
-
-        /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public string? BorderThickness { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public Color? BorderColor { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public string? CornerRadius { get; set; }
@@ -133,13 +134,13 @@ namespace ClearBlazor
         // IBoxShadow
 
         /// <summary>
-        /// See <a href=IBoxShadowApi>IBoxShadow</a>
+        /// See <a href="IBoxShadowApi">IBoxShadow</a>
         /// </summary>
         [Parameter]
         public int? BoxShadow { get; set; }
 
         /// <summary>
-        /// See <a href=IBackgroundApi>IBackground</a>
+        /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; }
@@ -418,7 +419,7 @@ namespace ClearBlazor
             if (Items != null)
             {
                 return Items.ToList().GetRange(startIndex, count).Select((item, index) =>
-                          item).ToList();
+                       { item.Index = startIndex + index; return item; }).ToList();
             }
             else if (DataProvider != null)
             {
@@ -426,7 +427,8 @@ namespace ClearBlazor
                 try
                 {
                     var result = await DataProvider(new DataProviderRequest(startIndex, count, _loadItemsCts.Token));
-                    return result.Items.Select((item, index) => item).ToList();
+                    return result.Items.Select((item, index) => 
+                           { item.Index = startIndex + index; return item; }).ToList();
                 }
                 catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
                 {
@@ -454,25 +456,30 @@ namespace ClearBlazor
             return css + $"display: grid; ";
         }
 
-        protected string GetContentStyle(TItem item)
+        private string GetScrollViewerStyle()
         {
-            var css = "display:grid; margin-right:5px; ";
-            switch (HorizontalContentAlignment)
+            string overscrollBehaviour = "overscroll-behavior-y:auto; ";
+            switch (OverscrollBehaviour)
             {
-                case Alignment.Stretch:
-                    css += $"justify-self:stretch;";
+                case OverscrollBehaviour.Auto:
+                    overscrollBehaviour = "overscroll-behavior-y:auto; ";
                     break;
-                case Alignment.Start:
-                    css += "justify-self:start; ";
+                case OverscrollBehaviour.Contain:
+                    overscrollBehaviour = "overscroll-behavior-y:contain; ";
                     break;
-                case Alignment.Center:
-                    css += "justify-self:center; ";
-                    break;
-                case Alignment.End:
-                    css += "justify-self:end; ";
+                case OverscrollBehaviour.None:
+                    overscrollBehaviour = "overscroll-behavior-y:none; ";
                     break;
             }
 
+            return $"display:grid; " +
+                   $"justify-self:stretch; overflow-x:hidden; " +
+                   $"overflow-y:auto; scrollbar-gutter:stable; {overscrollBehaviour}";
+        }
+
+        protected string GetContentStyle(TItem item)
+        {
+            var css = "display:grid;";
             if (HoverHighlight && IsHighlighted(item))
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 

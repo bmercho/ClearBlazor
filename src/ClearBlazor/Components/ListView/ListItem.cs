@@ -4,5 +4,6 @@
     {
         public bool IsHighlighted { get; set; }
         public bool IsSelected { get; set; }
+        internal int Index { get; set; }
     }
 }

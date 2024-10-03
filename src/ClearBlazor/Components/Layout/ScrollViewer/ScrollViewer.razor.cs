@@ -19,6 +19,19 @@ namespace ClearBlazor
         [Parameter]
         public ScrollMode VerticalScrollMode { get; set; } = ScrollMode.Auto;
 
+
+        /// <summary>
+        /// Defines what happens when the boundary of a scrolling area is reached in the vertical direction. 
+        /// </summary>
+        [Parameter]
+        public OverscrollBehaviour VerticalOverscrollBehaviour { get; set; } = OverscrollBehaviour.Auto;
+
+        /// <summary>
+        /// Defines what happens when the boundary of a scrolling area is reached in the horizontal direction. 
+        /// </summary>
+        [Parameter]
+        public OverscrollBehaviour HorizontalOverscrollBehaviour { get; set; } = OverscrollBehaviour.Auto;
+
         /// <summary>
         /// The child content of this control.
         /// </summary>
@@ -52,7 +65,6 @@ namespace ClearBlazor
                     css += $"overflow-y: auto; ";
                     break;
                 case ScrollMode.Enabled:
-                    //                    css += $"overflow-y: scroll;";
                     css += $"overflow-y: scroll;  scrollbar-gutter:stable; ";
                     break;
             }
@@ -66,11 +78,35 @@ namespace ClearBlazor
                     css += $"overflow-x: auto;";
                     break;
                 case ScrollMode.Enabled:
-                    //                   css += $"overflow-x: scroll;";
                     css += $"overflow-x: scroll; scrollbar-gutter:stable; ";
                     break;
             }
 
+            switch (VerticalOverscrollBehaviour)
+            {
+                case OverscrollBehaviour.Auto:
+                    css += "overscroll-behavior-y:auto; ";
+                    break;
+                case OverscrollBehaviour.Contain:
+                    css += "overscroll-behavior-y:contain; ";
+                    break;
+                case OverscrollBehaviour.None:
+                    css += "overscroll-behavior-y:none; ";
+                    break;
+            }
+
+            switch (HorizontalOverscrollBehaviour)
+            {
+                case OverscrollBehaviour.Auto:
+                    css += "overscroll-behavior-x:auto; ";
+                    break;
+                case OverscrollBehaviour.Contain:
+                    css += "overscroll-behavior-x:contain; ";
+                    break;
+                case OverscrollBehaviour.None:
+                    css += "overscroll-behavior-x:none; ";
+                    break;
+            }
             var margin = Thickness.Parse(Margin);
             var padding = Thickness.Parse(Padding);
             if (!css.Contains("width:"))

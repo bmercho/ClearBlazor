@@ -6,23 +6,22 @@
     <StackPanel Orientation=Orientation.Landscape>
         <StackPanel Orientation=Orientation.Portrait>
             <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Data from database</TextBlock>
-            <InfiniteScrollerList Name="Virtualize" @ref="Scroller" Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
-                               DataProvider=@GetItemsFromDatabase
-                               PageSize=10 ShowLoadingSpinner=true>
+            <InfiniteScrollerList Name="Virtualize"  
+                      Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                      DataProvider=@GetItemsFromDatabase SelectionMode=SelectionMode.Multi
+                      PageSize=10 ShowLoadingSpinner=true>
                 <RowTemplate Context=row>
                     <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
                         <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
                                Style="border-radius:50%; " Stretch=ImageStretch.Fill
-                               Source=@($"https://picsum.photos/id/{row.item.ElementId}/200/200") />
+                               Source=@($"https://picsum.photos/id/{row.ElementId}/200/200") />
                         <StackPanel Column=1 Orientation=Orientation.Portrait>
                             <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                                @row.item.Title
+                                @row.Title
                             </TextBlock>
-                            <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
-                                <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                                    @row.item.Message
-                                </TextBlock>
-                            </ScrollViewer>
+                            <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                                @row.Message
+                            </TextBlock>
                         </StackPanel>
                     </Grid>
                 </RowTemplate>
@@ -31,28 +30,80 @@
             <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
         </StackPanel>
         <StackPanel Orientation=Orientation.Portrait>
-            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Local data</TextBlock>
-            <InfiniteScrollerList Name="InfiniteScroller" Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
-                               DataProvider=@GetItemsLocally PageSize=10>
+            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Data from database</TextBlock>
+            <ListView Name="Virtualize" VirtualizeMode=VirtualizeMode.InfiniteScroll
+                      Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                      DataProvider=@GetItemsFromDatabase
+                      PageSize=10 ShowLoadingSpinner=true>
                 <RowTemplate Context=row>
                     <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
                         <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
                                Style="border-radius:50%; " Stretch=ImageStretch.Fill
-                               Source=@($"https://picsum.photos/id/{row.item.ElementId}/200/200") />
+                               Source=@($"https://picsum.photos/id/{row.ElementId}/200/200") />
+                        <StackPanel Column=1 Orientation=Orientation.Portrait>
+                            <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
+                                @row.Title
+                            </TextBlock>
+                            <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                                @row.Message
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </RowTemplate>
+            </ListView>
+
+            <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
+        </StackPanel>
+
+@*         <StackPanel Orientation=Orientation.Portrait>
+            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Local data</TextBlock>
+            <ListView Name="InfiniteScroller" VirtualizeMode=VirtualizeMode.InfiniteScroll
+                      Height =600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                      DataProvider=@GetItemsLocally PageSize=10>
+                <RowTemplate Context=row>
+                    <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
+                        <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
+                               Style="border-radius:50%; " Stretch=ImageStretch.Fill
+                               Source=@($"https://picsum.photos/id/{row.ElementId}/200/200") />
 
                         <StackPanel Column=1 Orientation=Orientation.Portrait>
                             <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                                @row.item.Title
+                                @row.Title
                             </TextBlock>
-                            <ScrollViewer VerticalScrollMode=ScrollMode.Auto VerticalAlignment=Alignment.Center>
-                                <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                                    @row.item.Message
-                                </TextBlock>
-                            </ScrollViewer>
+                            <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                                @row.Message
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </RowTemplate>
+            </ListView>
+        
+    </StackPanel>
+        <StackPanel Orientation=Orientation.Portrait>
+            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Local data</TextBlock>
+            <InfiniteScrollerList Name="InfiniteScroller" 
+                      Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                      DataProvider=@GetItemsLocally PageSize=10>
+                <RowTemplate Context=row>
+                    <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
+                        <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
+                               Style="border-radius:50%; " Stretch=ImageStretch.Fill
+                               Source=@($"https://picsum.photos/id/{row.ElementId}/200/200") />
+
+                        <StackPanel Column=1 Orientation=Orientation.Portrait>
+                            <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
+                                @row.Title
+                            </TextBlock>
+                            <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                                @row.Message
+                            </TextBlock>
                         </StackPanel>
                     </Grid>
                 </RowTemplate>
             </InfiniteScrollerList>
+
         </StackPanel>
-     </StackPanel>
-   </RootComponent>
+
+ *@    </StackPanel>
+ 
+</RootComponent>
