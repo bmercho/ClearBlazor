@@ -31,10 +31,9 @@ jobs:
         run: dotnet pack src/ClearBlazor/ClearBlazor.csproj --configuration Release
 
       - name: Create Release
-        id: changesets
         uses: changesets/action@v1
         with:
-          publish: changeset tag
+          publish: "@changesets/cli tag"
           createGitHubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
