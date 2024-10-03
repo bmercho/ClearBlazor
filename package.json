@@ -1,5 +1,11 @@
 {
-	"devDependencies": {
-		"changeset": "^0.2.6"
-	}
+  "name": "ClearBlazor",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "changeset": "^0.2.6"
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.27.8"
+  }
 }
