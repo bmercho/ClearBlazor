@@ -12,6 +12,7 @@ namespace ClearBlazorTest
             new ApiFieldInfo("None", "VirtualizeMode", "No virtualization.\r"),
             new ApiFieldInfo("Virtualize", "VirtualizeMode", "Virtualizes a list of items when the height of each item is the same and the total number of items is known.\r"),
             new ApiFieldInfo("InfiniteScroll", "VirtualizeMode", "Virtualizes a list of items when the height of each item is not the same or the total number of \ritems is not known.\r"),
+            new ApiFieldInfo("Pagination", "VirtualizeMode", "Allows for paging through a list of items. \r"),
         };
     }
 }

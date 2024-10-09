@@ -6,18 +6,21 @@
     <div id=@Id class=@Classes style=@ComputeStyle()>
         <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
             <div style=@GetContainerStyle()>
-                @if (RowTemplate != null)
-                {
-                    @foreach (var row in _items.Select((item, index) => new { item, index }))
-                    {
-                        <div id=@(_baseRowId +row.index.ToString()) style=@(GetContentStyle(row.item, row.index))
-                             @onmouseenter="(() => MouseEnter(row.item))"
-                             @onmouseleave="(() => MouseLeave())"
-                             @onclick="((e) => ItemClicked(e, row.item, row.item.Index))">
-                            @RowTemplate(row.item)
-                        </div>
-                    }
-                }
+                <div style=@GetHeightDivStyle()>
+                    <div style=@GetTransformStyle()>
+
+                        @if (RowTemplate != null)
+                        {
+                            @foreach (var row in _items.Select((item, index) => new { item, index }))
+                            {
+                                <ListViewItem RowTemplate=@RowTemplate RowData=@row.item
+                                              RowIndex=@row.item.Index
+                                              Index=@row.index
+                                              RowId=@(_baseRowId +row.index.ToString()) />
+                            }
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>

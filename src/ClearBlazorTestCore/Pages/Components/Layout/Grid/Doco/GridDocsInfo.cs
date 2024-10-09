@@ -24,14 +24,14 @@ namespace ClearBlazorTest
             new ApiComponentInfo("ColumnSpacing", "double", "0", "The spacing in pixels between each column\r"),
             new ApiComponentInfo("RowSpacing", "double", "0", "The spacing in pixels between each row\r"),
             new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
-            new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=IBoxShadowApi>IBoxShadow</a>\r"),
-            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=IBackgroundApi>IBackground</a>\r"),
-            new ApiComponentInfo("BackgroundGradient1", "string?", "null", "See <a href=IBackgroundGradientApi>IBackgroundGradient</a>\r"),
-            new ApiComponentInfo("BackgroundGradient2", "string?", "null", "See <a href=IBackgroundGradientApi>IBackgroundGradient</a>\r"),
+            new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=\"IBoxShadowApi\">IBoxShadow</a>\r"),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
+            new ApiComponentInfo("BackgroundGradient1", "string?", "null", "See <a href=\"IBackgroundGradientApi\">IBackgroundGradient</a>\r"),
+            new ApiComponentInfo("BackgroundGradient2", "string?", "null", "See <a href=\"IBackgroundGradientApi\">IBackgroundGradient</a>\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

@@ -9,36 +9,29 @@ namespace ClearBlazorTest
         public string Description {get; set; } = "";
         public (string, string) ApiLink  {get; set; } = ("API", "NonVirtualizedTreeApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "NonVirtualizedTree");
-        public (string, string) InheritsLink {get; set; } = ("InputBase", "InputBaseApi");
+        public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
-            (" IBackground", " IBackgroundApi"),
-            (" IBorder where TItem", " IBorder where TItemApi"),
+            (" IBorder", " IBorderApi"),
+            ("", "Api"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
-            new ApiComponentInfo("Value", "TItem?", "null", ""),
-            new ApiComponentInfo("ValueChanged", "EventCallback<TItem?>", "", ""),
-            new ApiComponentInfo("Values", "List<TItem?>?", "null", ""),
-            new ApiComponentInfo("ValuesChanged", "EventCallback<List<TItem?>>", "", ""),
-            new ApiComponentInfo("ListData", "List<TItem>?", "null", ""),
-            new ApiComponentInfo("BackgroundColor", "Color?", "Color.Transparent", ""),
-            new ApiComponentInfo("BorderThickness", "string?", "null", ""),
-            new ApiComponentInfo("BorderColor", "Color?", "null", ""),
-            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", ""),
-            new ApiComponentInfo("CornerRadius", "string?", "null", ""),
-            new ApiComponentInfo("BoxShadow", "int?", "null", ""),
-            new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Portrait", ""),
-            new ApiComponentInfo("ContentAlignment", "<a href=AlignmentApi>Alignment</a>", "Alignment.Stretch", ""),
-            new ApiComponentInfo("Spacing", "double", "0", ""),
-            new ApiComponentInfo("RowSize", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
-            new ApiComponentInfo("Clickable", "bool", "true", ""),
-            new ApiComponentInfo("MultiSelect", "bool", "false", ""),
-            new ApiComponentInfo("AllowSelectionToggle", "bool", "false", ""),
+            new ApiComponentInfo("RenderFragment<(TItem", "required", "null", "The template for rendering each row.\rThe item is passed to each child for customization of the row\r"),
+            new ApiComponentInfo("Items", "IEnumerable<TItem>?", "null", " The items to be displayed in the list. If this is not null DataProvider is used.\r If DataProvider is also not null then Items takes precedence.\r"),
+            new ApiComponentInfo("DataProvider", "DataProviderRequestDelegate<TItem>?", "null", "Defines the data provider used to get pages of data from where ever. eg database\rUsed if Items is null.\r"),
+            new ApiComponentInfo("index,", "(int", "(0, Alignment.Start)", "Gets or sets the index of the Items to be initially shown in visible area.\rIt can be shown in the centre, start or end of the visible are.\r"),
+            new ApiComponentInfo("HorizontalContentAlignment", "<a href=AlignmentApi>Alignment</a>", "Alignment.Stretch", "The horizontal content alignment within the control.\r"),
+            new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=\"IBoxShadowApi\">IBoxShadow</a>\r"),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("Task OnRowClicked(MouseEventArgs e, TItem item)", "async", "", ""),
         };
     }
 }

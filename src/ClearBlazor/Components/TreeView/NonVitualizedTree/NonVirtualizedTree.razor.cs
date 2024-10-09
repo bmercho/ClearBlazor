@@ -174,8 +174,8 @@ namespace ClearBlazor
             {
                 _totalNumItems = Items.Count();
 
-                if (count > _totalNumItems)
-                    count = _totalNumItems;
+                if (startIndex + count > _totalNumItems)
+                    count = _totalNumItems - startIndex;
 
                 var index = 0;
                 _items.Clear();
