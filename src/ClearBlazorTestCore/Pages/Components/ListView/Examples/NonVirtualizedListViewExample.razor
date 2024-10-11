@@ -1,7 +1,6 @@
 ﻿@namespace ClearBlazorTest
-<Grid Columns="auto,auto,*" Rows="auto,*">
-    <ListView @ref=_list TItem=Feed Height=600 Width=250 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
-              HorizontalAlignment=Alignment.Start
+<Grid Columns="400,auto" Rows="600,*">
+    <ListView @ref=_list TItem=Feed CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
               @bind-SelectedItem=_selectedItem 
               @bind-SelectedItems=_selectedItems
               SelectionMode=@_selectionMode

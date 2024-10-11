@@ -1,9 +1,8 @@
 ﻿@namespace ClearBlazorTest
-<Grid Columns="auto,auto,*" Rows="auto,*">
-    <ListView @ref=_list Column=0 HorizontalAlignment=Alignment.Start 
-              VerticalAlignment=Alignment.Start Margin=40
+<Grid Columns="400,auto" Rows="600,*">
+    <ListView @ref=_list Column=0 Margin=40
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
-              Items=@_testData Width=300 Height=500 BorderThickness="1"
+              Items=@_testData BorderThickness="1"
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
               HoverHighlight=@_hoverHighlight 
               OverscrollBehaviour=OverscrollBehaviour.None 

@@ -157,9 +157,11 @@ namespace ClearBlazor
 
         private int _totalNumItems = 0;
         private bool _initializing = true;
+        private ScrollViewer _scrollViewer = null!;
         private string _scrollViewerId = Guid.NewGuid().ToString();
         private CancellationTokenSource? _loadItemsCts;
         private string _baseRowId = Guid.NewGuid().ToString();
+        private double _componentHeight = 0;
 
         // Used when VirtualizeMode is Virtualize
         private string _firstItemId = string.Empty;
@@ -364,8 +366,21 @@ namespace ClearBlazor
             await base.OnAfterRenderAsync(firstRender);
 
             if (firstRender)
+            {
+                List<string> elementIds = new List<string>() { Id };
+
+                if (VirtualizeMode == VirtualizeMode.Virtualize)
+                {
+                    elementIds.Add(_scrollViewerId);
+                    if (ItemHeight == null)
+                        elementIds.Add(_firstItemId);
+                }
+                _resizeObserverId = await ResizeObserverService.Service.
+                                    AddResizeObserver(NotifyObservedSizes, elementIds);
+
                 await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewerId,
                                             DotNetObjectReference.Create(this));
+            }
 
             switch (VirtualizeMode)
             {
@@ -374,16 +389,6 @@ namespace ClearBlazor
                         await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
                     break;
                 case VirtualizeMode.Virtualize:
-                    if (firstRender)
-                    {
-                        List<string> elementIds = new List<string>();
-                        if (ItemHeight == null)
-                            elementIds = new List<string>() { _scrollViewerId, _firstItemId };
-                        else
-                            elementIds = new List<string>() { _scrollViewerId };
-                        _resizeObserverId = await ResizeObserverService.Service.
-                                            AddResizeObserver(NotifyObservedSizes, elementIds);
-                    }
                     break;
                 case VirtualizeMode.InfiniteScroll:
                     bool changed = false;
@@ -556,7 +561,7 @@ namespace ClearBlazor
                     if (index < maxItemsInContainer)
                         _skipItems = 0;
                     else
-                        _skipItems = (int)(index - maxItemsInContainer);
+                        _skipItems = (int)(index - maxItemsInContainer + 1);
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
                     if (_skipItems < maxItemsInContainer)
@@ -607,9 +612,10 @@ namespace ClearBlazor
                     break;
             }
 
-            return $"display:grid; " +
+            return $"display:grid; height:{_componentHeight}px; " +
                    $"justify-self:stretch; overflow-x:hidden; " +
-                   $"overflow-y:auto; scrollbar-gutter:stable; {overscrollBehaviour}";
+                   $"overflow-y:auto; scrollbar-gutter:stable; {overscrollBehaviour}" +
+                   $"grid-area: 1 / 1 / span 1 / span 1; ";
         }
 
         internal async Task HandleRowSelection(ListViewItem<TItem> selectedRow, bool ctrlDown, bool shiftDown)
@@ -788,39 +794,6 @@ namespace ClearBlazor
                 return string.Empty;
         }
 
-        private async Task<List<TItem>> GetItems(int startIndex, int count)
-        {
-            if (startIndex < 0)
-                startIndex = 0;
-
-            if (Items != null)
-            {
-                _totalNumItems = Items.Count();
-
-                if (startIndex + count > _totalNumItems)
-                    count = _totalNumItems - startIndex;
-
-                return Items.ToList().GetRange(startIndex, count).Select((item, index) =>
-                            { item.Index = startIndex + index; return item; }).ToList();
-            }
-            else if (DataProvider != null)
-            {
-                _loadItemsCts ??= new CancellationTokenSource();
-                try
-                {
-                    var result = await DataProvider(new DataProviderRequest(startIndex, count, _loadItemsCts.Token));
-                    _totalNumItems = result.TotalNumItems;
-                    return result.Items.Select((item, index) =>
-                           { item.Index = startIndex + index; return item; }).ToList();
-                }
-                catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
-                {
-                    _loadItemsCts = null;
-                }
-            }
-            return new List<TItem>();
-        }
-
         internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
         {
             if (observedSizes == null)
@@ -829,7 +802,15 @@ namespace ClearBlazor
             bool changed = false;
             foreach (var observedSize in observedSizes)
             {
-                if (observedSize.TargetId == _scrollViewerId)
+                if (observedSize.TargetId == Id)
+                {
+                    if (observedSize.ElementHeight > 0 && _componentHeight != observedSize.ElementHeight)
+                    {
+                        _componentHeight = observedSize.ElementHeight;
+                        changed = true;
+                    }
+                }
+                else if (observedSize.TargetId == _scrollViewerId)
                 {
                     if (observedSize.ElementHeight > 0 && _scrollViewerHeight != observedSize.ElementHeight)
                     {
@@ -888,10 +869,7 @@ namespace ClearBlazor
                     if (page != _firstRenderedPageNum)
                     {
                         if (_loadingUp || _loadingDown)
-                        {
                             _loadItemsCts?.Cancel();
-
-                        }
                         await _semaphoreSlim.WaitAsync();
                         try
                         {
@@ -921,5 +899,38 @@ namespace ClearBlazor
             }
         }
 
+        private async Task<List<TItem>> GetItems(int startIndex, int count)
+        {
+            if (startIndex < 0)
+                startIndex = 0;
+
+            if (Items != null)
+            {
+                _totalNumItems = Items.Count();
+
+                if (startIndex + count > _totalNumItems)
+                    count = _totalNumItems - startIndex;
+
+                return Items.ToList().GetRange(startIndex, count).Select((item, index) =>
+                { item.Index = startIndex + index; return item; }).ToList();
+            }
+            else if (DataProvider != null)
+            {
+                _loadItemsCts = new CancellationTokenSource();
+
+                try
+                {
+                    var result = await DataProvider(new DataProviderRequest(startIndex, count, _loadItemsCts.Token));
+                    _totalNumItems = result.TotalNumItems;
+                    return result.Items.Select((item, index) =>
+                    { item.Index = startIndex + index; return item; }).ToList();
+                }
+                catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
+                {
+                    _loadItemsCts = null;
+                }
+            }
+            return new List<TItem>();
+        }
     }
 }
