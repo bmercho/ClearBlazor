@@ -1,0 +1,180 @@
+﻿@namespace ClearBlazorTest
+<Grid Columns="400,auto" Rows="600,auto,auto">
+    <ListView @ref=_list TItem=Feed CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+              @bind-SelectedItem=_selectedItem 
+              @bind-SelectedItems=_selectedItems
+              SelectionMode=@_selectionMode
+              AllowSelectionToggle=@_allowSelectionToggle
+              HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
+              VirtualizeMode=VirtualizeMode.Pagination
+              PageSize=6
+              InitialIndex=@((20, Alignment.Center)) Items=@_feeds>
+        <RowTemplate Context=row>
+            <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BoxShadow=4>
+                <Image RowSpan=2 Height=40 Width=40 VerticalAlignment=Alignment.Center
+                       Style="border-radius:50%; " Stretch=ImageStretch.Fill
+                       Source=@($"https://picsum.photos/id/{row.ImageId}/200/200") />
+                <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
+                    @row.Title
+                </TextBlock>
+                <TextBlock Column=1 Row=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                    @row.Message
+                </TextBlock>
+            </Grid>
+        </RowTemplate>
+    </ListView>
+    <StackPanel Column=1>
+        <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
+                    @bind-Value:after=@SelectionModeChanged>
+            @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+            {
+                <Radio Label=@mode.ToString() Value="@mode" />
+            }
+        </RadioGroup>
+        <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+        <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+        <TextBlock Margin=20>Selection=@_selectedItem?.Title</TextBlock>
+
+        <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Title))</TextBlock>
+    </StackPanel> 
+    <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
+        <StackPanel Orientation=Orientation.Landscape>
+            <TextBlock>Page @(_list.CurrentPageNum()) of @(_list.NumPages())</TextBlock>
+        </StackPanel>
+        <Button OnClicked=@OnNextPage>Next Page</Button>
+        <Button OnClicked=@OnPrevPage>Prev Page</Button>
+        <Button OnClicked=@OnGotoStart>Goto Start</Button>
+        <Button OnClicked=@OnGotoEnd>Goto End</Button>
+    </WrapPanel>
+    <WrapPanel Row=2 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
+        <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
+        <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+        <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
+        <Button OnClicked=@OnAddNewItem>Add new item</Button>
+    </WrapPanel>
+</Grid>
+
+@code {
+    private class Feed : ListItem
+    {
+        public int ImageId { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
+    }
+
+
+    ListView<Feed> _list = null!;
+    private Feed _selectedItem = null!;
+    private List<Feed> _selectedItems = new();
+    private SelectionMode _selectionMode = SelectionMode.None;
+    private bool _allowSelectionToggle = false;
+    private bool _hoverHighlight = true;
+
+    List<Feed> _feeds = new List<Feed>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        for (int i = 0; i < 10000; i++)
+        {
+            _feeds.Add(new Feed { ImageId = i, Title = $"Record #{i}", Message = "This is a message" }); //GetMessage(i) });
+        }
+    }
+
+    async Task OnGoto10Start()
+    {
+        await _list.GotoIndex(10, Alignment.Start);
+    }
+
+    async Task OnGoto50Center()
+    {
+        await _list.GotoIndex(50, Alignment.Center);
+    }
+
+    async Task OnGoto70End()
+    {
+        await _list.GotoIndex(70, Alignment.End);
+    }
+
+    async Task OnAddNewItem()
+    {
+        var index = _feeds.Count;
+        _feeds.Add(new Feed { ImageId = index, Title = $"Record #{index}", Message = GetMessage(index) });
+        await _list.Refresh();
+    }
+
+    async Task OnGotoEnd()
+    {
+        await _list.GotoEnd();
+        StateHasChanged();
+    }
+
+    async Task OnGotoStart()
+    {
+        await _list.GotoStart();
+        StateHasChanged();
+    }
+
+    async Task OnNextPage()
+    {
+        await _list.NextPage();
+        StateHasChanged();
+    }
+
+    async Task OnPrevPage()
+    {
+        await _list.PrevPage();
+        StateHasChanged();
+    }
+
+    async Task OnAddNewItemGotoEndIfAtEnd()
+    {
+        var atEnd = await _list.AtEnd();
+
+        var index = _feeds.Count;
+        _feeds.Add(new Feed { ImageId = index, Title = $"Record #{index}", Message = GetMessage(index) });
+        await _list.Refresh();
+        if (atEnd)
+            await _list.GotoEnd();
+    }
+
+    void ChangeItem()
+    {
+        _feeds[0].Title = "Bla bla bla";
+        _list.Refresh(_feeds[0]);
+    }
+
+    private string GetMessage(int i)
+    {
+        switch (i % 8)
+        {
+            case 0:
+                return "Lorem ipsum dolor";
+            case 1:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem";
+            case 2:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ";
+            case 3:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores";
+            case 4:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.";
+            case 5:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure";
+            case 6:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .";
+            case 7:
+                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.";
+        }
+        return "Lorem ipsum dolor";
+
+    }
+
+    private async Task SelectionModeChanged()
+    {
+        if (_list == null)
+            return;
+        await _list.RemoveAllSelections();
+        StateHasChanged();
+    }
+
+}

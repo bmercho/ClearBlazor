@@ -187,6 +187,10 @@ namespace ClearBlazor
         private List<double> _pageOffsets = new();
         private double _yOffset = 0;
 
+        // Used when VirtualizeMode is Pagination
+        private int _currentPageNum = 1;
+        private int _numPages = 0;
+
         // Used for selection and highlighting
         private TItem? _highlightedItem = default;
         private bool _mouseOver = false;
@@ -219,7 +223,10 @@ namespace ClearBlazor
                     await GotoVirtualIndex(index, verticalAlignment);
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                    break;
                 case VirtualizeMode.Pagination:
+                    _currentPageNum = (int)Math.Ceiling((double)(index+1) / (double)PageSize);
+                    await GotoPage(_currentPageNum);
                     break;
             }
         }
@@ -243,6 +250,8 @@ namespace ClearBlazor
                     StateHasChanged();
                     break;
                 case VirtualizeMode.Pagination:
+                    _currentPageNum = 1;
+                    await GotoPage(_currentPageNum);
                     break;
             }
         }
@@ -260,8 +269,97 @@ namespace ClearBlazor
                     break;
                 case VirtualizeMode.InfiniteScroll:
                 case VirtualizeMode.Pagination:
+                    _currentPageNum = _numPages;
+                    await GotoPage(_currentPageNum);
                     break;
             }
+        }
+
+        /// <summary>
+        /// Returns the total number of pages. Used when VirtualizationMode is Pagination
+        /// </summary>
+        /// <returns></returns>
+        public int NumPages()
+        {
+            return _numPages;
+        }
+
+        /// <summary>
+        /// Return the current page number. Used when VirtualizationMode is Pagination
+        /// </summary>
+        /// <returns></returns>
+        public int CurrentPageNum()
+        {
+            return _currentPageNum;
+        }
+
+        /// <summary>
+        /// Loads the next page. Used when VirtualizationMode is Pagination
+        /// </summary>
+        public async Task NextPage()
+        {
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                case VirtualizeMode.Virtualize:
+                case VirtualizeMode.InfiniteScroll:
+                    break;
+                case VirtualizeMode.Pagination:
+                    if (_currentPageNum < _numPages)
+                    {
+                        _currentPageNum++;
+                        await GotoPage(_currentPageNum);
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Loads the previous page. Used when VirtualizationMode is Pagination
+        /// </summary>
+        public async Task PrevPage()
+        {
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                case VirtualizeMode.Virtualize:
+                case VirtualizeMode.InfiniteScroll:
+                    break;
+                case VirtualizeMode.Pagination:
+                    if (_currentPageNum > 1)
+                    {
+                        _currentPageNum--;
+                        await GotoPage(_currentPageNum);
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Goes to the given page number. Used when VirtualizationMode is Pagination
+        /// </summary>
+        /// <param name="pageNumber"></param>
+        public async Task GotoPage(int pageNumber)
+        {
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                case VirtualizeMode.Virtualize:
+                case VirtualizeMode.InfiniteScroll:
+                    break;
+                case VirtualizeMode.Pagination:
+                    if (pageNumber < 1)
+                        _currentPageNum = 1;
+                    else if (pageNumber > _numPages)
+                        _currentPageNum = _numPages;
+                    else
+                        _currentPageNum = pageNumber;
+                    _items = await GetItems((_currentPageNum-1) * PageSize, PageSize);
+                    _numPages = (int)Math.Ceiling((double)_totalNumItems / (double)PageSize);
+                    StateHasChanged();
+                    break;
+            }
+
         }
 
         /// <summary>
@@ -288,6 +386,7 @@ namespace ClearBlazor
                     StateHasChanged();
                     break;
                 case VirtualizeMode.Pagination:
+                    await GotoPage(_currentPageNum);
                     StateHasChanged();
                     break;
             }
@@ -304,12 +403,21 @@ namespace ClearBlazor
         }
 
         /// <summary>
-        /// Returns true if the list has been scrolled to the end. 
+        /// Returns true if the list is at the end. 
         /// </summary>
         /// <returns></returns>
         public async Task<bool> AtEnd()
         {
             return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId);
+        }
+
+        /// <summary>
+        /// Returns true if the list is at the start. 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> AtStart()
+        {
+            return false;
         }
 
         public async Task RemoveAllSelections()
@@ -356,7 +464,13 @@ namespace ClearBlazor
                             _items = await GetItems(0, 1);
                         break;
                     case VirtualizeMode.InfiniteScroll:
+                        break;
                     case VirtualizeMode.Pagination:
+                        if (_items.Count() == 0)
+                        {
+                            _items = await GetItems(0, PageSize);
+                            _numPages = (int)Math.Ceiling((double)_totalNumItems / (double)PageSize);
+                        }
                         break;
                 }
         }
@@ -470,7 +584,8 @@ namespace ClearBlazor
             if (_items.Count == 0)
                 return false;
 
-            _pageOffsets.Add(0);
+            if (_pageOffsets.Count == 0)
+                _pageOffsets.Add(0);
             _yOffset = 0;
             _firstRenderedPageNum = 0;
             return true;

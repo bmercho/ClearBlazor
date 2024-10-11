@@ -60,6 +60,7 @@ namespace ClearBlazor
                         _doRender = true;
                         break;
                     case VirtualizeMode.Pagination:
+                        _doRender = true;
                         break;
                 }
             await base.SetParametersAsync(parameters);
