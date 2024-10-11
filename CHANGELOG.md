@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.4
+
+### Patch Changes
+
+- 5c1e607: Changes to ListView Component - Combined all virtualization modes and tidied up
+
 ## 0.0.3
 
 ### Patch Changes
