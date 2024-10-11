@@ -68,6 +68,8 @@ namespace ClearBlazor
                 if (Value != null)
                     Text = Value.ToString();
 
+            var p = Parent as ListBox<TListBox>;
+
             var parent = FindParent<ListBox<TListBox>>(Parent);
             if (parent == null)
                 return;

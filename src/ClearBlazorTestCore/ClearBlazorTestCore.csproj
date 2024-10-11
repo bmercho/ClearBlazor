@@ -11,20 +11,6 @@
   <ItemGroup>
     <Content Remove="Pages\Components\TreeView\NonVirtualizedTree\Examples\NonVirtualizedTreeDataProviderExample.razor" />
     <Content Remove="Pages\Components\TreeView\NonVirtualizedTree\Examples\NonVirtualizedTreeVariableRowSizeExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\InfiniteScrollerList\Examples\InfiniteScrollerDataProviderExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\InfiniteScrollerList\Examples\InfiniteScrollerExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\InfiniteScrollerList\InfiniteScrollerListExamplesPage.razor" />
-    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\ListViewExample1.razor" />
-    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedListDataProviderExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedListExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedListVariableRowSizeExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\Examples\VirtualizedSimpleExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\NonVirtualizedList\NonVirtualizedListExamplesPage.razor" />
-    <Content Remove="Pages\Components\Virtualization\VirtualizedList\Examples\VirtualizedContentExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\VirtualizedList\Examples\VirtualizedDataProviderExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\VirtualizedList\Examples\VirtualizedGotoIndexExample.razor" />
-    <Content Remove="Pages\Components\Virtualization\VirtualizedList\Examples\VirtualizedSimpleExample1.razor" />
-    <Content Remove="Pages\Components\Virtualization\VirtualizedList\VirtualizedListExamplesPage.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,33 +31,25 @@
     <Folder Include="Pages\Components\AppBar\Code\" />
     <Folder Include="Pages\Components\AppBar\Doco\" />
     <Folder Include="Pages\Components\Avatar\Doco\" />
-    <Folder Include="Pages\Components\Virtualization\InfiniteScrollerList\Examples\" />
-    <Folder Include="Pages\Components\Virtualization\NonVirtualizedList\Examples\" />
-    <Folder Include="Pages\Components\Virtualization\VirtualizedList\Examples\" />
     <Folder Include="Pages\Enums\Alignment\" />
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Pages\Components\Virtualization\NonVirtualizedList\Examples\NonVirtualizedVariableRowSizeExample.razor">
+    <Content Update="Pages\Components\ListView\Examples\InfiniteScrollListViewExample.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\ListView\Code\NonVirtualizedListViewExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewDataProviderExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ListView\Code\InfiniteScrollListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeVariableRowSizeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeDataProviderExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedGotoIndexExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedDataProviderExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\VirtualizedList\Code\VirtualizedContentExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedTable\Code\NonVirtualizedTableVariableSizeRowExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedTable\Code\NonVirtualizedTableExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedTable\Code\NonVirtualizedTableDataProviderExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizedListVariableRowSizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizedListExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedList\Code\NonVirtualizedListDataProviderExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\InfiniteScrollerList\Code\InfiniteScrollerExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\InfiniteScrollerList\Code\InfiniteScrollerDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerReadOnlyDisabledExampleCode.html" />
@@ -197,9 +175,6 @@
 	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconCustomExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconColorExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\ListView\ListView\Code\ListViewVariableHeightExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\ListView\ListView\Code\ListViewExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\ListView\ListView\Code\ListViewDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListSizeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListMultiSelectExampleCode.html" />

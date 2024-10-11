@@ -10,7 +10,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<None Include="../../README.md" Pack="true" PackagePath="/"/>
+		<None Include="../../README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
 
 	<PropertyGroup>
@@ -27,16 +27,12 @@
 
 	<ItemGroup>
 		<Compile Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor.cs" />
-		<Compile Remove="Components\Virtualization\InfiniteScrollerList\InfiniteScrollerList.razor.cs" />
-		<Compile Remove="Components\Virtualization\NonVirtualizedList\NonVirtualizedList.razor.cs" />
-		<Compile Remove="Components\Virtualization\VirtualizedList\VirtualizedList.razor.cs" />
+		<Compile Remove="Components\ListView\ListViewOld.razor.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Content Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor" />
-		<Content Remove="Components\Virtualization\InfiniteScrollerList\InfiniteScrollerList.razor" />
-		<Content Remove="Components\Virtualization\NonVirtualizedList\NonVirtualizedList.razor" />
-		<Content Remove="Components\Virtualization\VirtualizedList\VirtualizedList.razor" />
+		<Content Remove="Components\ListView\ListViewOld.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -92,12 +88,6 @@
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Components\Virtualization\InfiniteScrollerList\" />
-	  <Folder Include="Components\Virtualization\NonVirtualizedList\" />
-	  <Folder Include="Components\Virtualization\VirtualizedList\" />
 	</ItemGroup>
 
 </Project>
