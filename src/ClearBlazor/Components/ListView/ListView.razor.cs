@@ -104,8 +104,9 @@ namespace ClearBlazor
 
         /// <summary>
         /// Approximately the number of rows that will fit in the ScrollViewer.
-        /// Adjust this until this number al least fills a page.
+        /// Adjust this until this number at least fills a page.
         /// Should be too large rather that to small.
+        /// Not used if VirtualizationMode is None.
         /// </summary>
         [Parameter]
         public int PageSize { get; set; } = 10;
@@ -206,7 +207,7 @@ namespace ClearBlazor
 
 
         /// <summary>
-        /// Goto the given index in the data
+        /// Goto the given index in the data. Not used if VirtualizationMode is InfiniteScroll.
         /// </summary>
         /// <param name="index">Index to goto. The index is zero based.</param>
         /// <param name="verticalAlignment">Where the index should be aligned in the scroll viewer.</param>
@@ -257,7 +258,7 @@ namespace ClearBlazor
         }
 
         /// <summary>
-        /// Goto the end of the list
+        /// Goto the end of the list. Not used if VirtualizationMode is InfiniteScroll.
         /// </summary>
         public async Task GotoEnd()
         {
@@ -268,6 +269,7 @@ namespace ClearBlazor
                     await GotoIndex(_totalNumItems - 1, Alignment.End);
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                    break;
                 case VirtualizeMode.Pagination:
                     _currentPageNum = _numPages;
                     await GotoPage(_currentPageNum);
@@ -359,13 +361,13 @@ namespace ClearBlazor
                     StateHasChanged();
                     break;
             }
-
         }
 
         /// <summary>
         /// Refresh the list. Call this when items are added to or deleted from the data or if an item has changed.
         /// When VirtualizationMode is None a new object needs to be created with a new Id for 
-        /// all items that need re-rendering. This ensures that only the changed items are re-rendered. (otherwise it would be expensive)
+        /// all items that need re-rendering. This ensures that only the changed items are re-rendered. 
+        /// (otherwise it would be expensive)
         /// Other Virtualized modes re-render all items, which should not be expensive as they are virtualized.
         /// </summary>
         /// <returns></returns>
@@ -408,7 +410,18 @@ namespace ClearBlazor
         /// <returns></returns>
         public async Task<bool> AtEnd()
         {
-            return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId);
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                case VirtualizeMode.Virtualize:
+                case VirtualizeMode.InfiniteScroll:
+                    return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId);
+                case VirtualizeMode.Pagination:
+                    if (_currentPageNum == _numPages)
+                        return true;
+                    break;
+            }
+            return false;
         }
 
         /// <summary>
@@ -417,9 +430,27 @@ namespace ClearBlazor
         /// <returns></returns>
         public async Task<bool> AtStart()
         {
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                case VirtualizeMode.InfiniteScroll:
+                    return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollStart", _scrollViewerId);
+                case VirtualizeMode.Virtualize:
+                    if (_scrollState.ScrollTop == 0)
+                        return true;
+                    break;
+                case VirtualizeMode.Pagination:
+                    if (_currentPageNum == 1)
+                        return true;
+                    break;
+            }
             return false;
         }
 
+        /// <summary>
+        /// Removes all selections.
+        /// </summary>
+        /// <returns></returns>
         public async Task RemoveAllSelections()
         {
             if (SelectedItem != null)

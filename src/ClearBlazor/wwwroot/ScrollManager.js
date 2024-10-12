@@ -67,6 +67,15 @@ window.scrollbar = {
         return false;
     },
 
+    AtScrollStart: (scrollViewerId) => {
+        let scrollViewer = document.getElementById(scrollViewerId);
+        if (!scrollViewer)
+            return false;
+        if (scrollViewer.scrollTop == 0)
+            return true;
+        return false;
+    },
+
     ListenForScrollEvents: (elementId, dotnethelper) => {
         let element = document.getElementById(elementId);
         if (element) {

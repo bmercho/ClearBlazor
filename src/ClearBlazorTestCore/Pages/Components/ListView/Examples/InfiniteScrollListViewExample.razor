@@ -31,8 +31,15 @@
 
         <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
     </StackPanel>
-    <Button Row=1 ColumnSpan=3 HorizontalAlignment=Alignment.Start OnClicked=@OnGotoStart>Goto Start</Button>
+    <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+        <Button Row=1 ColumnSpan=3 HorizontalAlignment=Alignment.Start OnClicked=@OnGotoStart>Goto Start</Button>
+        <StackPanel Orientation=Orientation.Landscape>
+            <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
+            <TextBlock>@_atStart</TextBlock>
+        </StackPanel>
+    </WrapPanel>
 
+    
 </Grid>
 
 @code {
@@ -51,6 +58,8 @@
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
     private ListView<TestViewItem>? _list;
+    private bool _atEnd = false;
+    private bool _atStart = true;
 
     protected override void OnInitialized()
     {
@@ -109,6 +118,14 @@
         }
         return "Lorem ipsum dolor";
 
+    }
+
+    async Task CheckAtStart()
+    {
+        if (_list == null)
+            return;
+        _atStart = await _list.AtStart();
+        StateHasChanged();
     }
 
     private async Task OnGotoStart()

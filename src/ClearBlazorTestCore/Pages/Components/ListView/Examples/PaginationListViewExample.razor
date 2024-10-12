@@ -51,6 +51,14 @@
         <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
         <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
         <Button OnClicked=@OnAddNewItem>Add new item</Button>
+        <StackPanel Orientation=Orientation.Landscape>
+            <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>
+            <TextBlock>@_atEnd</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation=Orientation.Landscape>
+            <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
+            <TextBlock>@_atStart</TextBlock>
+        </StackPanel>
     </WrapPanel>
 </Grid>
 
@@ -69,6 +77,8 @@
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
+    private bool _atEnd = false;
+    private bool _atStart = true;
 
     List<Feed> _feeds = new List<Feed>();
 
@@ -124,6 +134,17 @@
     async Task OnPrevPage()
     {
         await _list.PrevPage();
+        StateHasChanged();
+    }
+
+    async Task CheckAtEnd()
+    {
+        _atEnd = await _list.AtEnd();
+        StateHasChanged();
+    }
+    async Task CheckAtStart()
+    {
+        _atStart = await _list.AtStart();
         StateHasChanged();
     }
 

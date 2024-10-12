@@ -45,6 +45,14 @@
         <Button OnClicked=@OnGotoStart>Goto start</Button>
         <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
         <Button OnClicked=@ChangeItem>Change first item</Button>
+        <StackPanel Orientation=Orientation.Landscape>
+            <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>
+            <TextBlock>@_atEnd</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation=Orientation.Landscape>
+            <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
+            <TextBlock>@_atStart</TextBlock>
+        </StackPanel>
     </WrapPanel>
 </Grid>
 
@@ -63,6 +71,8 @@
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
+    private bool _atEnd = false;
+    private bool _atStart = true;
 
     List<Feed> _feeds = new List<Feed>();
 
@@ -124,6 +134,16 @@
         _list.Refresh(_feeds[0]);
     }
 
+    async Task CheckAtEnd()
+    {
+        _atEnd = await _list.AtEnd();
+        StateHasChanged();
+    }
+    async Task CheckAtStart()
+    {
+        _atStart = await _list.AtStart();
+        StateHasChanged();
+    }
     private string GetMessage(int i)
     {
         switch (i % 8)
