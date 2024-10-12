@@ -27,18 +27,25 @@ namespace ClearBlazorTest
 
         public bool ShowCode { get; set; } = false;
 
-        protected override void OnParametersSet()
-        {
-            base.OnParametersSet();
-            if (string.IsNullOrEmpty(Code))
-                ShowCode = false;
-            else
-                ShowCode = true;
-        }
-
         protected override string UpdateStyle(string css)
         {
             return css + "display:grid; ";
+        }
+
+        protected string GetBorderThickness()
+        {
+            if (ShowCode)
+                return "1,1,0,1";
+            else
+                return "1,1,1,1";
+        }
+
+        protected string GetCornerRadius()
+        {
+            if (ShowCode)
+                return "8,8,0,0";
+            else
+                return "8,8,8,8";
         }
 
         RenderFragment CodeComponent(string code) => builder =>
@@ -47,29 +54,35 @@ namespace ClearBlazorTest
             {
                 var names = typeof(CodeSnippet).Assembly.GetManifestResourceNames();
                 var key = typeof(CodeSnippet).Assembly.GetManifestResourceNames().FirstOrDefault(x => x.Contains($".{code}Code.html"));
+                if (key == null)
+                    return;
                 using (var stream = typeof(CodeSnippet).Assembly.GetManifestResourceStream(key))
-                using (var reader = new StreamReader(stream))
                 {
-                    var read = reader.ReadToEnd();
-
-                    if (!string.IsNullOrEmpty(HighLight))
+                    if (stream == null)
+                        return;
+                    using (var reader = new StreamReader(stream))
                     {
-                        if (HighLight.Contains(","))
-                        {
-                            var highlights = HighLight.Split(",");
+                        var read = reader.ReadToEnd();
 
-                            foreach (var value in highlights)
+                        if (!string.IsNullOrEmpty(HighLight))
+                        {
+                            if (HighLight.Contains(","))
                             {
-                                read = Regex.Replace(read, $"{value}(?=\\s|\")", $"<mark>$&</mark>");
+                                var highlights = HighLight.Split(",");
+
+                                foreach (var value in highlights)
+                                {
+                                    read = Regex.Replace(read, $"{value}(?=\\s|\")", $"<mark>$&</mark>");
+                                }
+                            }
+                            else
+                            {
+                                read = Regex.Replace(read, $"{HighLight}(?=\\s|\")", $"<mark>$&</mark>");
                             }
                         }
-                        else
-                        {
-                            read = Regex.Replace(read, $"{HighLight}(?=\\s|\")", $"<mark>$&</mark>");
-                        }
-                    }
 
-                    builder.AddMarkupContent(0, read);
+                        builder.AddMarkupContent(0, read);
+                    }
                 }
             }
             catch (Exception)
@@ -78,6 +91,16 @@ namespace ClearBlazorTest
             }
         };
 
+        void ShowTheCode()
+        {
+            ShowCode = true;
+            StateHasChanged();
+        }
+        void HideTheCode()
+        {
+            ShowCode = false;
+            StateHasChanged();
+        }
 
     }
 }

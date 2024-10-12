@@ -61,7 +61,6 @@ namespace ClearBlazor
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
-            VerticalAlignment = Alignment.Center;
         }
         protected override void ComputeOwnClasses(StringBuilder sb)
         {
