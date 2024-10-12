@@ -40,6 +40,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\ListView\Code\PaginationListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\NonVirtualizedListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewDataProviderExampleCode.html" />

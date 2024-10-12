@@ -31,7 +31,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("index,", "(int", "(0, Alignment.Start)", "Gets or sets the index of the Items to be initially shown in visible area.\rIt can be shown in the centre, start or end of the visible are.\r"),
             new ApiComponentInfo("VirtualizeMode", "<a href=VirtualizeModeApi>VirtualizeMode</a>", "VirtualizeMode.None", "Indicates how a list of items is Virtualized.\r"),
             new ApiComponentInfo("ShowLoadingSpinner", "bool", "false", "Indicates if the spinner is shown when new data is being loaded. Use when getting data externally and \rit takes some time to load the data.\r"),
-            new ApiComponentInfo("PageSize", "int", "10", "Approximately the number of rows that will fit in the ScrollViewer.\rAdjust this until this number al least fills a page.\rShould be too large rather that to small.\r"),
+            new ApiComponentInfo("PageSize", "int", "10", "Approximately the number of rows that will fit in the ScrollViewer.\rAdjust this until this number at least fills a page.\rShould be too large rather that to small.\rNot used if VirtualizationMode is None.\r"),
             new ApiComponentInfo("OverscrollBehaviour", "<a href=OverscrollBehaviourApi>OverscrollBehaviour</a>", "OverscrollBehaviour.None", "Defines what happens when the boundary of a scrolling area is reached in the vertical direction. \r"),
             new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
             new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
@@ -42,13 +42,19 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("Task GotoIndex(int index, Alignment verticalAlignment)", "async", "", "Goto the given index in the data\r"),
+            new ApiComponentInfo("Task GotoIndex(int index, Alignment verticalAlignment)", "async", "", "Goto the given index in the data. Not used if VirtualizationMode is InfiniteScroll.\r"),
             new ApiComponentInfo("Task GotoStart()", "async", "", "Goto the start of the list\r"),
-            new ApiComponentInfo("Task GotoEnd()", "async", "", "Goto the end of the list\r"),
-            new ApiComponentInfo("Task Refresh()", "async", "", "Refresh the list. Call this when items are added to or deleted from the data or if an item has changed.\rWhen VirtualizationMode is None a new object needs to be created with a new Id for \rall items that need re-rendering. This ensures that only the changed items are re-rendered. (otherwise it would be expensive)\rOther Virtualized modes re-render all items, which should not be expensive as they are virtualized.\r"),
+            new ApiComponentInfo("Task GotoEnd()", "async", "", "Goto the end of the list. Not used if VirtualizationMode is InfiniteScroll.\r"),
+            new ApiComponentInfo("NumPages()", "int", "", "Returns the total number of pages. Used when VirtualizationMode is Pagination\r"),
+            new ApiComponentInfo("CurrentPageNum()", "int", "", "Return the current page number. Used when VirtualizationMode is Pagination\r"),
+            new ApiComponentInfo("Task NextPage()", "async", "", "Loads the next page. Used when VirtualizationMode is Pagination\r"),
+            new ApiComponentInfo("Task PrevPage()", "async", "", "Loads the previous page. Used when VirtualizationMode is Pagination\r"),
+            new ApiComponentInfo("Task GotoPage(int pageNumber)", "async", "", "Goes to the given page number. Used when VirtualizationMode is Pagination\r"),
+            new ApiComponentInfo("Task Refresh()", "async", "", "Refresh the list. Call this when items are added to or deleted from the data or if an item has changed.\rWhen VirtualizationMode is None a new object needs to be created with a new Id for \rall items that need re-rendering. This ensures that only the changed items are re-rendered. \r(otherwise it would be expensive)\rOther Virtualized modes re-render all items, which should not be expensive as they are virtualized.\r"),
             new ApiComponentInfo("Refresh(TItem item)", "void", "", "Refresh an item in the list when it has been updated. (only re-renders the given item)\r"),
-            new ApiComponentInfo("Task<bool> AtEnd()", "async", "", "Returns true if the list has been scrolled to the end. \r"),
-            new ApiComponentInfo("Task RemoveAllSelections()", "async", "", ""),
+            new ApiComponentInfo("Task<bool> AtEnd()", "async", "", "Returns true if the list is at the end. \r"),
+            new ApiComponentInfo("Task<bool> AtStart()", "async", "", "Returns true if the list is at the start. \r"),
+            new ApiComponentInfo("Task RemoveAllSelections()", "async", "", "Removes all selections.\r"),
             new ApiComponentInfo("Task HandleScrollEvent(ScrollState scrollState)", "async", "", ""),
         };
     }

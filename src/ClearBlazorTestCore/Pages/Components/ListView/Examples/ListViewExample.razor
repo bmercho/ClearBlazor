@@ -38,6 +38,14 @@
         <Button OnClicked=@OnGotoEnd>Goto end</Button>
         <Button OnClicked=@OnGotoStart>Goto start</Button>
         <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+        <StackPanel Orientation=Orientation.Landscape>
+            <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>
+            <TextBlock>@_atEnd</TextBlock>
+        </StackPanel>
+        <StackPanel Orientation=Orientation.Landscape>
+            <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
+            <TextBlock>@_atStart</TextBlock>
+        </StackPanel>
     </WrapPanel>
 </Grid>
 
@@ -61,6 +69,8 @@
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
     private ListView<TestViewItem>? _list;
+    private bool _atEnd = false;
+    private bool _atStart = true;
 
     protected override void OnInitialized()
     {
@@ -145,6 +155,16 @@
         await _list.Refresh();
         if (atEnd)
             await _list.GotoEnd();
+    }
+    async Task CheckAtEnd()
+    {
+        _atEnd = await _list.AtEnd();
+        StateHasChanged();
+    }
+    async Task CheckAtStart()
+    {
+        _atStart = await _list.AtStart();
+        StateHasChanged();
     }
 
     private async Task SelectionModeChanged()
