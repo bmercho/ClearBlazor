@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.5
+
+### Patch Changes
+
+- 53d1c0e: Added pagination for ListView
+
 ## 0.0.4
 
 ### Patch Changes
