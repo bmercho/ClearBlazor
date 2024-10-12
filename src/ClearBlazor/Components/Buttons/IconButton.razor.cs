@@ -11,8 +11,6 @@ namespace ClearBlazor
             
             if (ButtonStyle == null)
                 ButtonStyle = TextEditFillMode.None;
-
-            VerticalAlignment = Alignment.Center;
         }
 
         protected override string GetBorderRadius()

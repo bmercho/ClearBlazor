@@ -13,8 +13,19 @@
         {
             <TextBlock FontSize="16px" Margin="10,0,10,0">@Description</TextBlock>
         }
-        <Grid Padding="20" BorderThickness="1,1,0,1" CornerRadius="8,8,0,0" BackgroundColor=@BackgroundColor>
+        <Grid Padding="20" BorderThickness=@GetBorderThickness() CornerRadius=@GetCornerRadius() BackgroundColor=@BackgroundColor>
             @ChildContent
+            @if (ShowCode)
+            {
+                <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
+                            Icon=@Icons.Material.Filled.CodeOff OnClicked=@HideTheCode ToolTip="Hide code" />
+            }
+            else
+            {
+                <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
+                            Icon=@Icons.Material.Filled.Code OnClicked=@ShowTheCode ToolTip="Show Code" />
+
+            }
         </Grid>
         @if (ShowCode)
         {

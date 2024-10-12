@@ -35,11 +35,6 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Pages\Components\ListView\Examples\InfiniteScrollListViewExample.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
 	<EmbeddedResource Include="Pages\Components\ListView\Code\PaginationListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\NonVirtualizedListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewExampleCode.html" />
