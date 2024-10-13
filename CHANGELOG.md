@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.6
+
+### Patch Changes
+
+- c1f8947: CodeSnippet- Implement code show and hide
+
 ## 0.0.5
 
 ### Patch Changes
