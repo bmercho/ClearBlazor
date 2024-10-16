@@ -16,5 +16,11 @@ namespace VirtualizeDemo
                     return await DatabaseManager.GetFeeds(startIndex, count);
                 return new FeedEntryResult();
         }
+        public async Task<TableRowResult> GetTableRows(int startIndex, int count)
+        {
+            if (DatabaseManager != null)
+                return await DatabaseManager.GetTablesRows(startIndex, count);
+            return new TableRowResult();
+        }
     }
 }

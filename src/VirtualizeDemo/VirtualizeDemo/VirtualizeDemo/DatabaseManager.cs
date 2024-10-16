@@ -27,7 +27,7 @@ namespace VirtualizeDemo
             _userName = userName;
             _password = password;
 
-            FeedContext.Initialise(_databaseType, _databaseName, _databaseHost, _userName, _password);
+            TestDbContext.Initialise(_databaseType, _databaseName, _databaseHost, _userName, _password);
 
             if (!IsDbCreated())
             {
@@ -38,16 +38,10 @@ namespace VirtualizeDemo
 
         private void AddTestData()
         {
-            using (var dbContext = new FeedContext())
+            using (var dbContext = new TestDbContext())
             {
                 try
                 {
-                    var user1 = dbContext.Users.Add(new User() { UserName="User1" });
-                    var user2 = dbContext.Users.Add(new User() { UserName = "User2" });
-                    var user3 = dbContext.Users.Add(new User() { UserName = "User3" });
-                    var user4 = dbContext.Users.Add(new User() { UserName = "User4" });
-                    var user5 = dbContext.Users.Add(new User() { UserName = "User5" });
-
                     for (int i = 0; i < 500; i++)
                     {
                         dbContext.Feeds.Add(new FeedEntry()
@@ -55,15 +49,34 @@ namespace VirtualizeDemo
                             EntryType = FeedEntryType.TextOnly,
                             Title = $"Message{i + 1}",
                             Message = LoremNET.Lorem.Words(10, 100),
-                            PosterUserId = user1.Entity.UserId,
+                            PosterUserId = Guid.NewGuid(),
                             ElementId = i,
                             TimeStamp = DateTime.Now
                         });
                         dbContext.SaveChanges();
                     }
 
+
+                    for (int i = 0; i < 500; i++)
+                    {
+                        var row = new TableRow()
+                        {
+                            TableRowId = new Guid(),
+                            Index = i,
+                            FirstName = TestData.GetRandomFirstName(),
+                            LastName = TestData.GetRandomSurname(),
+                            Product = TestData.GetRandomProduct(),
+                            Available = TestData.GetRandomAvailable(),
+                            Quantity = TestData.GetRandomQuantity(),
+                            UnitPrice = (decimal)TestData.GetRandomPrice(),
+                            Notes = TestData.GetText(false),
+                            NotesVariableHeight = TestData.GetText(true)
+                        };
+                        dbContext.TableRows.Add(row);
+                    }
+                    dbContext.SaveChanges();
                 }
-                catch
+                catch(Exception ex)
                 {
                     return;
                 }
@@ -73,7 +86,7 @@ namespace VirtualizeDemo
 
         private bool IsDbCreated()
         {
-            using (var dbContext = new FeedContext())
+            using (var dbContext = new TestDbContext())
             {
                 try
                 {
@@ -88,7 +101,7 @@ namespace VirtualizeDemo
 
         private string CreateDb()
         {
-            using (var dbContext = new FeedContext())
+            using (var dbContext = new TestDbContext())
             {
                 try
                 {
@@ -108,7 +121,7 @@ namespace VirtualizeDemo
             try
             {
                 FeedEntryResult result = new FeedEntryResult();
-                using (var dbContext = new FeedContext())
+                using (var dbContext = new TestDbContext())
                 {
                     try
                     {
@@ -125,6 +138,31 @@ namespace VirtualizeDemo
             finally 
             { 
                 semaphoreSlim.Release(); 
+            }
+        }
+        public async Task<TableRowResult> GetTablesRows(int firstIndex, int count)
+        {
+            await semaphoreSlim.WaitAsync();
+            try
+            {
+                TableRowResult result = new ();
+                using (var dbContext = new TestDbContext())
+                {
+                    try
+                    {
+                        result.TotalNumEntries = dbContext.TableRows.Count();
+                        result.FirstIndex = firstIndex;
+                        result.TableRows = await dbContext.TableRows.OrderBy(r => r.Index).Skip(firstIndex).Take(count).ToListAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+                return result;
+            }
+            finally
+            {
+                semaphoreSlim.Release();
             }
         }
 

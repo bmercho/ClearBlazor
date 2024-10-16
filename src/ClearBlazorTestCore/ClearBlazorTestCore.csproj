@@ -43,9 +43,6 @@
 	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeVariableRowSizeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeDataProviderExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedTable\Code\NonVirtualizedTableVariableSizeRowExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedTable\Code\NonVirtualizedTableExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Virtualization\NonVirtualizedTable\Code\NonVirtualizedTableDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerReadOnlyDisabledExampleCode.html" />

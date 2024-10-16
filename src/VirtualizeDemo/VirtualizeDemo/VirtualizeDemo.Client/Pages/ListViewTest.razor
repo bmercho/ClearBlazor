@@ -1,13 +1,14 @@
-﻿@page "/"
+﻿@page "/ListView"
 @namespace VirtualizeDemo
 @using Microsoft.AspNetCore.SignalR.Client
 
-<RootComponent>
+<StackPanel Orientation=Orientation.Portrait>
+    <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>List View Test</TextBlock>
     <WrapPanel>
-         <StackPanel Orientation=Orientation.Portrait>
-           <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>From database</TextBlock>
+        <StackPanel Orientation=Orientation.Portrait>
+            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>From database</TextBlock>
             <ListView Name="InfiniteScroller" VirtualizeMode=VirtualizeMode.InfiniteScroll
-                      Height =600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+                      Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
                       DataProvider=@GetItemsFromDatabase PageSize=10 ShowLoadingSpinner=true>
                 <RowTemplate Context=row>
                     <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
@@ -28,12 +29,12 @@
             </ListView>
             <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
 
-    </StackPanel>
-         <StackPanel Orientation=Orientation.Portrait>
+        </StackPanel>
+        <StackPanel Orientation=Orientation.Portrait>
             <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H6>Local data</TextBlock>
             <ListView Name="InfiniteScroller" VirtualizeMode=VirtualizeMode.InfiniteScroll
                       Height=600 Width=800 CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
-                                  DataProvider=@GetItemsLocally PageSize=10 ShowLoadingSpinner=false>
+                      DataProvider=@GetItemsLocally PageSize=10 ShowLoadingSpinner=false>
                 <RowTemplate Context=row>
                     <Grid Columns="auto,*" Margin=20 Padding=10 CornerRadius=8 BoxShadow=4>
                         <Image Height=75 Width=75 VerticalAlignment=Alignment.Center
@@ -54,5 +55,4 @@
 
         </StackPanel>
     </WrapPanel>
- 
-</RootComponent>
+</StackPanel>

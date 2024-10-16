@@ -1,9 +1,84 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavManager
 
-@Body
+<RootComponent>
+    <Grid Rows="auto,*">
+        <AppBar Row="0" Padding="10" BackgroundColor="Color.BackgroundGrey">
+            <IconButton Dock="Dock.Left" Icon="@Icons.Material.Filled.Menu" OnClicked=@MenuClicked />
+            <TextBlock Typo="Typo.H6" HorizontalAlignment="Alignment.Center"
+                       VerticalAlignment="Alignment.Center">Clear Blazor Tests</TextBlock>
+        </AppBar>
+        <Drawer @ref=Drawer Row=1 @bind-Open=Open DrawerLocation=DrawerLocation.Left DrawerMode="DrawerMode.Responsive">
+            <DrawerContent>
+                <Grid>
+                    <ScrollViewer VerticalScrollMode="ScrollMode.Enabled">
+                        <ListBox TListBox="string" Margin="0,10,0,10">
+                            <ListBoxItem Text="TableView" HRef="/" OnClicked=@Close />
+                            <ListBoxItem Text="ListView" HRef="/ListView" OnClicked=@Close />
+                        </ListBox>
+                    </ScrollViewer>
+                </Grid>
+            </DrawerContent>
+            <DrawerBody>
+                <Grid Margin="10">
+                    <DockPanel>
+                        <Grid Dock="Dock.Top" BorderThickness="0" HorizontalAlignment="Alignment.End">
+                            <IconButton OnClicked=@OnClicked Icon=@GetIcon() ToolTip="Toggle Light/Dark Mode" Margin="0,10,0,0" />
+                        </Grid>
+                        <Grid>
+                            @Body
+                        </Grid>
+                    </DockPanel>
+                </Grid>
+            </DrawerBody>
+        </Drawer>
+    </Grid>
+</RootComponent>
 
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
+@code {
+    Drawer? Drawer;
+
+    bool Open { get; set; } = false;
+
+    private void Toggle()
+    {
+        Open = !Open;
+    }
+
+    private string GetIcon()
+    {
+        if (ThemeManager.IsDarkMode)
+            return Icons.Material.Filled.LightMode;
+        else
+            return Icons.Material.Filled.DarkMode;
+    }
+
+    private void OnClicked()
+    {
+        ThemeManager.IsDarkMode = !ThemeManager.IsDarkMode;
+    }
+
+    private void Close()
+    {
+        if (Drawer == null)
+            return;
+
+        if (Drawer.CurrentDrawerMode == DrawerMode.Temporary)
+        {
+            Open = false;
+            StateHasChanged();
+        }
+    }
+
+    private void MenuClicked()
+    {
+        Toggle();
+        StateHasChanged();
+    }
+
+    private void GotoPage(string page)
+    {
+        NavManager.NavigateTo($"/{page}");
+    }
+
+}

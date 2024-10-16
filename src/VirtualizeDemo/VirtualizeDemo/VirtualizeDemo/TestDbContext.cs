@@ -1,18 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using System.Reflection.Metadata;
 using System.Text;
 using static VirtualizeDemo.DatabaseManager;
 
 namespace VirtualizeDemo
 {
-    public class FeedContext:DbContext
+    public class TestDbContext:DbContext
     {
-        public DbSet<User> Users { get; set; }
         public DbSet<FeedEntry> Feeds { get; set; }
-
-        public string DbPath { get; }
+        public DbSet<TableRow> TableRows { get; set; }
 
         private static DatabaseType _databaseType = DatabaseType.SQLite;
         private static string _databaseName = string.Empty;
@@ -32,11 +27,10 @@ namespace VirtualizeDemo
             _password = password;
         }
 
-        public FeedContext()
+        public TestDbContext()
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "feeds.db");
         }
 
         // The following configures EF to create a Sqlite database file in the

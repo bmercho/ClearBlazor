@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components
 @namespace ClearBlazor
 @typeparam TItem
-@inherits ClearComponentBase
+@inherits ListRowBase<TItem>
 <CascadingValue Value=this IsFixed="false">
     @if (RowTemplate != null)
     {

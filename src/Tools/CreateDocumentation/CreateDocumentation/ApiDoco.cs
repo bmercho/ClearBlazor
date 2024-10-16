@@ -19,7 +19,6 @@ namespace CreateDocumentation
             CreateInterfaceDoco(testInterfacesFolder, componentsFolder);
 
             CreateComponentDoco(testComponentsFolder, componentsFolder);
-
         }
 
         private void CreateEnumDoco(string testEnumsFolder, string componentsFolder)

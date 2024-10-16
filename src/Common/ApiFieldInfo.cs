@@ -1,4 +1,17 @@
 ﻿namespace ClearBlazor.Common
 {
-    public record ApiFieldInfo(string Name, string Type, string Description);
+    public class ApiFieldInfo : ListItem
+    {
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public string Description { get; set; }
+        public ApiFieldInfo(string name, string type, string description)
+        {
+            Name = name;
+            Type = type;
+            Description = description;
+        }
+
+    }
+
 }

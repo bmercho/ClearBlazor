@@ -28,11 +28,15 @@
 	<ItemGroup>
 		<Compile Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor.cs" />
 		<Compile Remove="Components\ListView\ListViewOld.razor.cs" />
+		<Compile Remove="Components\TableView\TableView2.razor.cs" />
+		<Compile Remove="Components\TableView\TableViewOld.razor.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<Content Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor" />
 		<Content Remove="Components\ListView\ListViewOld.razor" />
+		<Content Remove="Components\TableView\TableView2.razor" />
+		<Content Remove="Components\TableView\TableViewOld.razor" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -49,7 +53,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Update="Components\Virtualization\NonVirtualizedTable.razor">
+		<Content Update="Components\TableView\TableView.razor">
 		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 		</Content>
 		<Content Update="wwwroot\ClearBlazor.js">

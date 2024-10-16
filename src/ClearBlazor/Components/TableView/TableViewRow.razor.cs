@@ -3,21 +3,11 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace ClearBlazor
 {
-    public partial class ListViewItem<TItem> : ClearComponentBase, IDisposable
+    public partial class TableViewRow<TItem> : ListRowBase<TItem>, IDisposable
            where TItem : ListItem
     {
-        /// <summary>
-        /// The template for rendering each row.
-        /// The item is passed to each child for customization of the row
-        /// </summary>
         [Parameter]
-        public required RenderFragment<TItem>? RowTemplate { get; set; }
-
-        [Parameter]
-        public required TItem RowData { get; set; }
-
-        [Parameter]
-        public int RowIndex { get; set; }
+        public int NumRows { get; set; }
 
         [Parameter]
         public int Index { get; set; }
@@ -25,23 +15,24 @@ namespace ClearBlazor
         [Parameter]
         public string RowId { get; set; } = string.Empty;
 
+        [Parameter]
+        public int RowSpacing { get; set; } = 5;
+
+        [Parameter]
+        public int ColumnSpacing { get; set; } = 5;
+
+        [Parameter]
+        public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
 
         private bool _mouseOver = false;
-        private ListView<TItem>? _parent;
-        private bool _doRender = true;
-
-        public void Refresh()
-        {
-            _doRender = true;
-            StateHasChanged();
-        }
+        private TableView<TItem>? _parent = null;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<ListView<TItem>>(Parent);
+            _parent = FindParent<TableView<TItem>>(Parent);
             if (_parent != null)
-                _parent.AddListItem(this);
+                _parent.AddListRow(this);
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
@@ -50,10 +41,10 @@ namespace ClearBlazor
                 switch (_parent.VirtualizeMode)
                 {
                     case VirtualizeMode.None:
-                        parameters.TryGetValue<TItem>(nameof(RowData), out var rowData);
-                        if (rowData != null)
-                            if (RowData == null || rowData.Id != RowData.Id)
-                                _doRender = true;
+                            parameters.TryGetValue<TItem>(nameof(RowData), out var rowData);
+                            if (rowData != null)
+                                if (RowData == null || rowData.Id != RowData.Id)
+                                    _doRender = true;
                         break;
                     case VirtualizeMode.Virtualize:
                     case VirtualizeMode.InfiniteScroll:
@@ -66,10 +57,7 @@ namespace ClearBlazor
             await base.SetParametersAsync(parameters);
 
         }
-        protected override async Task OnParametersSetAsync()
-        {
-            await base.OnParametersSetAsync();
-        }
+
         protected override void OnAfterRender(bool firstRender)
         {
             base.OnAfterRender(firstRender);
@@ -115,15 +103,11 @@ namespace ClearBlazor
             bool shiftDown = args.ShiftKey;
             await _parent.HandleRowSelection(this, ctrlDown, shiftDown);
         }
-        protected string GetContentStyle()
-        {
-            if (_parent == null)
-                return "display:grid;";
 
-            var css = "display:grid;";
-            if (_parent.VirtualizeMode == VirtualizeMode.Virtualize && _parent._itemHeight > 0)
-                css += $"position:absolute; height: {_parent._itemHeight}px; width: {_parent._itemWidth}px; " +
-                       $"top: {(_parent._skipItems + Index) * _parent._itemHeight}px;";
+        private string GetFullRowStyle()
+        {
+            string css = "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
+                         $"grid-area: {2 + Index} / 1 /span 1 / span {Columns.Count}; ";
             if (_mouseOver)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 
@@ -133,11 +117,47 @@ namespace ClearBlazor
             return css;
         }
 
+        private string GetRowStyle(int row, int column)
+        {
+            string justify = "start";
+            switch (Columns[column - 1].ContentAlignment)
+            {
+                case Alignment.Stretch:
+                    justify = "stretch";
+                    break;
+                case Alignment.Start:
+                    justify = "start";
+                    break;
+                case Alignment.Center:
+                    justify = "center";
+                    break;
+                case Alignment.End:
+                    justify = "end";
+                    break;
+            }
+            return $"display:grid; grid-area: {row} / {column} /span 1 /span 1; justify-self: {justify};" +
+                   $"padding:{RowSpacing / 2}px {ColumnSpacing / 2}px {RowSpacing / 2}px {ColumnSpacing / 2}px;";
+
+        }
+
+        private string[] GetLines(string? content)
+        {
+            return content == null ? Array.Empty<string>() : content.Split('\r');
+        }
+
+        private string GetHorizontalGridLineStyle(int row, int columnCount)
+        {
+            return $"align-self:start; border-width:1px 0 0 0; border-style:solid; " +
+                   $"grid-area: {row} / 1 / span 1 / span {columnCount}; border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+        }
+
         public override void Dispose()
         {
             base.Dispose();
             if (_parent != null)
-                _parent.RemoveListItem(this);
+                _parent.RemoveListRow(this);
         }
+
+
     }
 }

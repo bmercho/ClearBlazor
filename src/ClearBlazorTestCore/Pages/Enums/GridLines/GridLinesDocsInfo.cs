@@ -10,8 +10,9 @@ namespace ClearBlazorTest
         public List<ApiFieldInfo> FieldApi {get; set; } = new List<ApiFieldInfo>
         {
             new ApiFieldInfo("None", "GridLines", ""),
-            new ApiFieldInfo("All", "GridLines", ""),
             new ApiFieldInfo("HeaderOnly", "GridLines", ""),
+            new ApiFieldInfo("ContentOnly", "GridLines", ""),
+            new ApiFieldInfo("All", "GridLines", ""),
         };
     }
 }

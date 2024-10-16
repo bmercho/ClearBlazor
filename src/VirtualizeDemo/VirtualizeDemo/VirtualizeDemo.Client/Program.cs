@@ -1,5 +1,15 @@
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using VirtualizeDemo;
 
-var builder = WebAssemblyHostBuilder.CreateDefault(args);
+internal class Program
+{
+    private static async Task Main(string[] args)
+    {
+        var builder = WebAssemblyHostBuilder.CreateDefault(args);
+        var baseAddress = builder.HostEnvironment.BaseAddress;
 
-await builder.Build().RunAsync();
+        await new SignalRClient().Initialise(baseAddress);
+
+        await builder.Build().RunAsync();
+    }
+}

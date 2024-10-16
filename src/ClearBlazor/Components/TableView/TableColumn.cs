@@ -2,7 +2,8 @@
 
 namespace ClearBlazor
 {
-    public class TableColumn<TItem>:ClearComponentBase
+    public class TableColumn<TItem>: ClearComponentBase where TItem : ListItem
+
     {
         [CascadingParameter]
         public TableView<TItem>? Table { get; set; } = null;
