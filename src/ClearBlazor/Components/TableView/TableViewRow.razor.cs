@@ -7,9 +7,6 @@ namespace ClearBlazor
            where TItem : ListItem
     {
         [Parameter]
-        public int NumRows { get; set; }
-
-        [Parameter]
         public int Index { get; set; }
 
         [Parameter]
@@ -106,8 +103,25 @@ namespace ClearBlazor
 
         private string GetFullRowStyle()
         {
-            string css = "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
-                         $"grid-area: {2 + Index} / 1 /span 1 / span {Columns.Count}; ";
+            if (_parent == null)
+                return string.Empty;
+
+            string css = string.Empty;
+
+
+            if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
+            {
+                css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
+                         $"grid-column: 1 / span {Columns.Count}; ";
+                css += $"justify-self:start; position:relative; " +
+                       $"top:{_parent._scrollState.ScrollTop}px; height: {_parent.RowHeight}px;";
+                //$"top:{Index * _parent.RowHeight - 1 + _parent._scrollState.ScrollTop}px; height: {_parent.RowHeight}px;";
+            }
+            else
+                css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
+                             $"grid-area: {2 + Index} / 1 /span 1 / span {Columns.Count}; ";
+
+
             if (_mouseOver)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 
@@ -119,6 +133,9 @@ namespace ClearBlazor
 
         private string GetRowStyle(int row, int column)
         {
+            if (_parent == null)
+                return string.Empty;
+
             string justify = "start";
             switch (Columns[column - 1].ContentAlignment)
             {
@@ -135,7 +152,7 @@ namespace ClearBlazor
                     justify = "end";
                     break;
             }
-            return $"display:grid; grid-area: {row} / {column} /span 1 /span 1; justify-self: {justify};" +
+            return $"display:grid; height:{_parent.RowHeight} grid-column: {column} /span 1; justify-self: {justify};" +
                    $"padding:{RowSpacing / 2}px {ColumnSpacing / 2}px {RowSpacing / 2}px {ColumnSpacing / 2}px;";
 
         }
@@ -147,8 +164,23 @@ namespace ClearBlazor
 
         private string GetHorizontalGridLineStyle(int row, int columnCount)
         {
-            return $"align-self:start; border-width:1px 0 0 0; border-style:solid; " +
-                   $"grid-area: {row} / 1 / span 1 / span {columnCount}; border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+            if (_parent == null)
+                return string.Empty;
+
+            string css = string.Empty;
+            if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
+            {
+                css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
+                       $"grid-area: 2 / 1 /span 1 / span {Columns.Count};  border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                css += $"justify-self:start; position:relative; top:{Index * _parent.RowHeight}px;";
+
+            }
+            else
+            {
+                css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
+                       $"grid-area: {row} / 1 / span 1 / span {columnCount}; border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+            }
+            return css;
         }
 
         public override void Dispose()

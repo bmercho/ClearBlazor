@@ -109,7 +109,7 @@ namespace ClearBlazor
         /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
-        public Color? BackgroundColor { get; set; }
+        public Color? BackgroundColor { get; set; } = ThemeManager.CurrentPalette.Background;
 
         internal int _totalNumItems = 0;
         private int _lastSelectedRow = 0;
@@ -365,6 +365,7 @@ namespace ClearBlazor
 
                 try
                 {
+                    Console.WriteLine($"GetItems: StartIndex:{startIndex} Count:{count}");
                     var result = await DataProvider(new DataProviderRequest(startIndex, count, _loadItemsCts.Token));
                     _totalNumItems = result.TotalNumItems;
                     return result.Items.Select((item, index) =>
@@ -372,6 +373,7 @@ namespace ClearBlazor
                 }
                 catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
                 {
+                    Console.WriteLine("Cancelled");
                     _loadItemsCts = null;
                 }
             }

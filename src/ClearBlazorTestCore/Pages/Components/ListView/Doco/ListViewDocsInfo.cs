@@ -16,7 +16,7 @@ namespace ClearBlazorTest
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
             new ApiComponentInfo("RenderFragment<TItem>?", "required", "null", "The template for rendering each row.\rThe item is passed to each child for customization of the row\r"),
-            new ApiComponentInfo("ItemHeight", "int?", "null", "The height to be used for each item.\rThis is only used if the VirtualizeMode is Virtualize.\rIn this case it is optional and if not present the height is obtained from the first item.\r"),
+            new ApiComponentInfo("int", "required", "30", "The height to be used for each row.\rThis is only used if the VirtualizeMode is Virtualize.\r"),
             new ApiComponentInfo("index,", "(int", "(0, Alignment.Start)", "Gets or sets the index of the Items to be initially shown in visible area.\rIt can be shown in the centre, start or end of the visible are.\r"),
             new ApiComponentInfo("ShowLoadingSpinner", "bool", "false", "Indicates if the spinner is shown when new data is being loaded. Use when getting data externally and \rit takes some time to load the data.\r"),
             new ApiComponentInfo("PageSize", "int", "10", "Approximately the number of rows that will fit in the ScrollViewer.\rAdjust this until this number at least fills a page.\rShould be too large rather that to small.\rNot used if VirtualizationMode is None.\r"),

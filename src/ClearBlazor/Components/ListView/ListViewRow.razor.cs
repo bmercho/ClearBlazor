@@ -104,9 +104,9 @@ namespace ClearBlazor
                 return "display:grid;";
 
             var css = "display:grid;";
-            if (_parent.VirtualizeMode == VirtualizeMode.Virtualize && _parent._itemHeight > 0)
-                css += $"position:absolute; height: {_parent._itemHeight}px; width: {_parent._itemWidth}px; " +
-                       $"top: {(_parent._skipItems + Index) * _parent._itemHeight}px;";
+            if (_parent.VirtualizeMode == VirtualizeMode.Virtualize && _parent.RowHeight > 0)
+                css += $"position:absolute; height: {_parent.RowHeight}px; width: {_parent._itemWidth}px; " +
+                       $"top: {(_parent._skipItems + Index) * _parent.RowHeight}px;";
             if (_mouseOver)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 
@@ -114,6 +114,14 @@ namespace ClearBlazor
                 css += $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; ";
 
             return css;
+        }
+
+        private string GetContainerDivStyle()
+        {
+            if (_parent == null)
+                return "display:block; ";
+
+            return $"display:block; width:{_parent._itemWidth}px; ";
         }
 
         public override void Dispose()

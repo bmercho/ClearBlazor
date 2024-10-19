@@ -6,10 +6,10 @@
     @if (RowTemplate != null)
     {
         <div id="@RowId" class="@Classes" style=@GetContentStyle()
-             @onmouseenter=OnMouseEnter
-             @onmouseleave=OnMouseLeave
-             @onclick=OnRowClicked>
-            @RowTemplate(RowData)
+                @onmouseenter=OnMouseEnter
+                @onmouseleave=OnMouseLeave
+                @onclick=OnRowClicked>
+                @RowTemplate(RowData)
         </div>
     }
 </CascadingValue>
