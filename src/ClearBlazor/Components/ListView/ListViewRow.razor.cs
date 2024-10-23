@@ -110,6 +110,12 @@ namespace ClearBlazor
             if (_mouseOver)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 
+            if (RowData.Index == 0)
+            {
+                Console.WriteLine($"P1: {RowData.IsSelected}");
+
+            }
+
             if (RowData.IsSelected)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; ";
 

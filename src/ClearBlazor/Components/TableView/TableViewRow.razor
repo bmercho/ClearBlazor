@@ -4,7 +4,7 @@
 @inherits ListRowBase<TItem>
 
 <CascadingValue Value=this IsFixed="false">
-    @if (_parent != null &&
+@*     @if (_parent != null &&
          (_parent.HorizontalGridLines == GridLines.All || _parent.HorizontalGridLines == GridLines.ContentOnly))
     {
         @if (Index != 0)
@@ -12,7 +12,7 @@
             <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
         }
     }
-    <div style=@GetFullRowStyle()
+ *@    <div style=@GetFullRowStyle()
          @onmouseenter=OnMouseEnter
          @onmouseleave=OnMouseLeave
          @onclick=OnRowClicked>

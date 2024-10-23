@@ -1,50 +1,51 @@
 using ClearBlazor;
+using Microsoft.AspNetCore.Components;
 
 namespace ListsTest
 {
-    public partial class ListViewInfiniteScrollDBTest
+    public partial class TableViewInfiniteScrollDBTest : ComponentBase
     {
-        private FeedEntry? _selectedItem = null;
-        private List<FeedEntry> _selectedItems = new();
+        private TableRow? _selectedItem = null;
+        private List<TableRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
-        private ListView<FeedEntry> _list = null!;
+        private TableView<TableRow> _table = null!;
         private bool _atEnd = false;
         private bool _atStart = true;
         private bool _addDelay = false;
 
-        private async Task<(int, IEnumerable<FeedEntry>)> GetItemsFromDatabase(ClearBlazor.DataProviderRequest request)
+        private async Task<(int, IEnumerable<TableRow>)> GetItemsFromDatabaseAsync(DataProviderRequest request)
         {
             if (_addDelay)
                 await Task.Delay(1000, request.CancellationToken);
 
-            FeedEntryResult feedEntries = await SignalRClient.Instance.GetFeedEntries(
+            TableRowResult tableRows = await SignalRClient.Instance.GetTableRows(
                                                               request.StartIndex, request.Count,
                                                               request.CancellationToken);
-            return (feedEntries.TotalNumEntries, feedEntries.FeedEntries);
+            return (tableRows.TotalNumEntries, tableRows.TableRows);
         }
 
         async Task CheckAtStart()
         {
-            if (_list == null)
+            if (_table == null)
                 return;
-            _atStart = await _list.AtStart();
+            _atStart = await _table.AtStart();
             StateHasChanged();
         }
 
         private async Task OnGotoStart()
         {
-            if (_list == null)
+            if (_table == null)
                 return;
-            await _list.GotoStart();
+            await _table.GotoStart();
         }
 
         private async Task SelectionModeChanged()
         {
-            if (_list == null)
+            if (_table == null)
                 return;
-            await _list.RemoveAllSelections();
+            await _table.RemoveAllSelections();
 
             StateHasChanged();
         }
@@ -54,7 +55,7 @@ namespace ListsTest
         }
         private async Task ClearSelections()
         {
-            await _list.RemoveAllSelections();
+            await _table.RemoveAllSelections();
             StateHasChanged();
         }
 

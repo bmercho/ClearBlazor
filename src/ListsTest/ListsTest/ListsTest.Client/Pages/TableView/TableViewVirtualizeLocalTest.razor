@@ -1,35 +1,35 @@
-﻿@page "/ListViewVirtualizeLocal"
+﻿@page "/TableViewVirtualizeLocal"
 @namespace ListsTest
 @using Microsoft.AspNetCore.SignalR.Client
 
 <StackPanel Orientation=Orientation.Portrait Spacing=30>
-    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
+    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : local data (500 rows initially loaded from DB)</TextBlock>
     <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
-        <ListView @ref=_list TItem=FeedEntry CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
-                  VirtualizeMode=VirtualizeMode.Virtualize
-                  RowHeight=110
-                  DataProvider=@GetItemsLocally
+        <TableView @ref=_table TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+                   VirtualizeMode=VirtualizeMode.Virtualize
+                   RowHeight=110
+                   Items=@_localTableRows
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
                   HoverHighlight=@_hoverHighlight
                   AllowSelectionToggle=@_allowSelectionToggle
                   SelectionMode=@_selectionMode
                   PageSize=10 ShowLoadingSpinner=true>
-            <RowTemplate Context=row>
-                <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=2>
-                    <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
-                    <StackPanel Column=1 Orientation=Orientation.Portrait>
-                        <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.NoWrap Margin="0,0,10,10">
-                            @row.Title
-                        </TextBlock>
-                        <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
-                            @row.Message
-                        </TextBlock>
-                    </StackPanel>
-                </Grid>
-            </RowTemplate>
-        </ListView>
+            <TableColumn Label="Index" TItem=TableRow Field=@(x =>x.Index) />
+            @*             <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
+            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
+            <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) />
+            <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) />
+            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) />
+            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Stretch TItem=TableRow Field=@(x =>x.UnitPrice)>
+                <DataTemplate Context=item>
+                    <TextBlock TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+                </DataTemplate>
+            </TableColumn>
+            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) />
+ *@       
+        </TableView>
         <StackPanel Column=1>
             <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
                         @bind-Value:after=@SelectionModeChanged>
@@ -40,8 +40,8 @@
             </RadioGroup>
             <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
             <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.Title</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Title))</TextBlock>
+            <TextBlock Margin=20>Selection=@_selectedItem?.FirstName</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
             <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>

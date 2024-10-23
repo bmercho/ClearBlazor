@@ -114,7 +114,7 @@ namespace ClearBlazor
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
                          $"grid-column: 1 / span {Columns.Count}; ";
                 css += $"justify-self:start; position:relative; " +
-                       $"top:{_parent._scrollState.ScrollTop}px; height: {_parent.RowHeight}px;";
+                       $"top:{_parent._scrollTop}px; height: {_parent.RowHeight}px;";
                 //$"top:{Index * _parent.RowHeight - 1 + _parent._scrollState.ScrollTop}px; height: {_parent.RowHeight}px;";
             }
             else

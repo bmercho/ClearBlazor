@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.VisualStudio.Utilities;
 
 namespace ClearBlazor
 {
@@ -156,7 +157,7 @@ namespace ClearBlazor
                 selection.IsSelected = false;
                 Refresh(selection);
             }
-            SelectedItems = new();
+            SelectedItems.Clear();
             await NotifySelections();
         }
 
@@ -222,7 +223,6 @@ namespace ClearBlazor
                 }
                 SelectedItem = item;
                 SelectedItem.IsSelected = true;
-                var l = ListRows.Keys.ToList();
                 Refresh(SelectedItem);
 
                 return true;

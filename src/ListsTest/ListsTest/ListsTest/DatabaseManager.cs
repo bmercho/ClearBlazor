@@ -43,7 +43,7 @@ namespace ListsTest
             {
                 try
                 {
-                    for (int i = 0; i < 5000; i++)
+                    for (int i = 0; i < 50; i++)
                     {
                         dbContext.Feeds.Add(FeedEntry.GetNewFeed(i));
                         dbContext.SaveChanges();

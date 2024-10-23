@@ -4,7 +4,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows initially loaded from DB)</TextBlock>
     <Grid Columns="400,auto,*" Rows="600,*">
-        <ListView @ref=_list TItem=FeedEntry CornerRadius=4 BoxShadow=4 Margin=10 Padding=10
+        <ListView @ref=_list TItem=FeedEntry CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
                   SelectionMode=@_selectionMode
@@ -37,8 +37,8 @@
             <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
             <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
             <TextBlock Margin=20>Selection=@_selectedItem?.Title</TextBlock>
-
             <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Title))</TextBlock>
+            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
             <StackPanel Orientation=Orientation.Landscape>
@@ -50,9 +50,7 @@
             <Button OnClicked=@OnGotoEnd>Goto End</Button>
         </WrapPanel>
         <WrapPanel Row=2 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
-            <Button OnClicked=@(e => GotoIndex(10, Alignment.Start))>Goto 10 (start)</Button>
-            <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Goto 50 (center)</Button>
-            <Button OnClicked=@(e => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
+            <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Goto 50</Button>
             <Button OnClicked=@OnAddNewItem>Add new item</Button>
             <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
             <Button OnClicked=@ChangeItem>Change first item</Button>

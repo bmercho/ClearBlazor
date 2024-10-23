@@ -103,6 +103,11 @@ namespace ListsTest
             await _list.RemoveAllSelections();
             StateHasChanged();
         }
+        private async Task ClearSelections()
+        {
+            await _list.RemoveAllSelections();
+            StateHasChanged();
+        }
 
     }
 }

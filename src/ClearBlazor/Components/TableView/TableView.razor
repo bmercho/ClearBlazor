@@ -1,74 +1,46 @@
 ﻿@namespace ClearBlazor
-@inherits ListBase<TItem>
 @typeparam TItem
+@inherits ListBase<TItem>
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" style="@ComputeStyle()" class="@Classes">
-        <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
-            <Grid Rows="auto" Columns=@ColumnDefs Style="overflow:visible">
-                @if (ShowHeader)
-                {
-                    <div id=@_headerId style=@GetFullHeaderStyle()>
-                        @for (int col = 0; col < Columns.Count; col++)
-                        {
-                            var colIndex = col;
-                            <div style=@GetHeaderStyle(colIndex+1)>
-                                @if (@Columns[colIndex] == null || @Columns[colIndex].HeaderTemplate == null)
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <Grid>
+            <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
+                <div style=@GetContainerStyle()>
+                    <div style=@GetHeightDivStyle()>
+                        <div style=@GetTransformStyle()>
+
+@*                             @if (RowTemplate != null)
+                            {
+ *@                                @foreach (var row in _items.Select((item, index) => new { item, index }))
                                 {
-                                    <TextBlock TextAlignment=@Columns[colIndex].HeaderAlignment
-                                               FontWeight=@((int)FontWeight.Bold)>@Columns[colIndex].Label</TextBlock>
+                                    <TableViewRow TItem=TItem RowData=@row.item
+                                                  RowIndex=@row.item.Index
+                                                  Index=row.index
+                                                  RowId=@(_baseRowId + row.index.ToString())
+                                                  RowSpacing=@RowSpacing ColumnSpacing=@ColumnSpacing
+                                                  Columns=@Columns />
                                 }
-                                else
-                                {
-                                    @Columns[colIndex].HeaderTemplate(@Columns[colIndex].Label)
-                                }
-                            </div>
-                        }
+                            @* } *@
+                        </div>
                     </div>
-                }
-                @if (VerticalGridLines != GridLines.None)
-                {
-                    @for (int col = 0; col < Columns.Count - 1; col++)
-                    {
-                        var colIndex = col;
-                        @if (VerticalGridLines == GridLines.HeaderOnly)
-                        {
-                            <div style=@GetVerticalGridLineStyle(colIndex+2, 1, false) />
-                        }
-                        else if (VerticalGridLines == GridLines.ContentOnly)
-                        {
-                            <div style=@GetVerticalGridLineStyle(colIndex+2, _items.Count, true) />
-                        }
-                        else
-                        {
-                            <div style=@GetVerticalGridLineStyle(colIndex+2, _items.Count+1, false) />
-                        }
-                    }
-                }
-
-                @if (ShowHeader)
-                {
-                    @if (HorizontalGridLines == GridLines.HeaderOnly || HorizontalGridLines == GridLines.All)
-                    {
-                        <div style=@GetHorizontalGridLineStyle(2, Columns.Count) />
-                    }
-                }
-
-                <div style=@GetHeightDivStyle()>
-                    @foreach (var row in _items.Select((item, index) => new { item, index }))
-                    {
-                        <TableViewRow TItem=TItem RowData=@row.item
-                                      RowIndex=@row.item.Index
-                                      Index=row.index
-                                      RowId=@(_baseRowId + row.index.ToString())
-                                      RowSpacing=@RowSpacing ColumnSpacing=@ColumnSpacing
-                                      Columns=@Columns />
-                    }
                 </div>
-            </Grid>
-        </div>
+            </div>
+            @if (_loadingUp && ShowLoadingSpinner)
+            {
+                <Grid BackgroundColor=Color.Transparent Margin=20
+                      HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Start>
+                    <Spinner />
+                </Grid>
+            }
+            @if (_loadingDown && ShowLoadingSpinner)
+            {
+                 <Grid BackgroundColor=Color.Transparent Margin=20
+                      HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.End>
+                    <Spinner />
+                </Grid>
+            }
+        </Grid>
     </div>
     @ChildContent
 </CascadingValue>
-
-
