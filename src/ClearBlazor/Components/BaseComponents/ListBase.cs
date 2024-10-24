@@ -380,6 +380,7 @@ namespace ClearBlazor
                 if (startIndex + count > _totalNumItems)
                     count = _totalNumItems - startIndex;
 
+                Console.WriteLine($"GetItems: StartIndex:{startIndex} Count:{count}");
                 return Items.ToList().GetRange(startIndex, count).Select((item, index) =>
                 { item.Index = startIndex + index; return item; }).ToList();
             }

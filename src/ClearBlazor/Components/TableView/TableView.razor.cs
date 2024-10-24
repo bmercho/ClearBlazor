@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace ClearBlazor
 {
@@ -86,7 +84,7 @@ namespace ClearBlazor
         /// Approximately the number of rows that will fit in the ScrollViewer.
         /// Adjust this until this number at least fills a page.
         /// Should be too large rather that to small.
-        /// Not used if VirtualizationMode is None.
+        /// Not used if VirtualizationMode is None or Virtualized.
         /// </summary>
         [Parameter]
         public int PageSize { get; set; } = 10;
@@ -653,18 +651,23 @@ namespace ClearBlazor
 
         private string GetTransformStyle()
         {
-            if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
-                return $"transform: translateY({_yOffset}px);";
-            else
-                return string.Empty;
+            string css = $"display:grid;  grid-template-columns: subgrid;align-content: flex-start; " +
+                         $"grid-area: 3 / 1 /span {_items.Count} / span {Columns.Count};";
 
+            if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
+                css += $"transform: translateY({_yOffset}px);";
+
+            return css;
         }
         private string GetHeightDivStyle()
         {
+            string css = $"display:grid;  grid-template-columns: subgrid;align-content: flex-start; " +
+                         $"grid-area: 3 / 1 /span {_items.Count} / span {Columns.Count};";
+
             if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
-                return $"height:{_maxScrollHeight}px";
-            else
-                return string.Empty;
+                css += $"height:{_maxScrollHeight}px";
+
+            return css;
         }
 
         private string GetScrollViewerStyle()
@@ -684,17 +687,20 @@ namespace ClearBlazor
             }
 
             return $"display:grid; height:{_componentHeight}px; " +
-                   $"justify-self:stretch; overflow-x:hidden; " +
+                   $"justify-self:stretch; overflow-x:auto; " +
                    $"overflow-y:auto; scrollbar-gutter:stable; {overscrollBehaviour}" +
                    $"grid-area: 1 / 1 / span 1 / span 1; ";
         }
 
         protected string GetContainerStyle()
         {
+            string css = $"display:grid;  grid-template-columns: subgrid;align-content: flex-start; " +
+             $"grid-area: 1 / 1 /span {_items.Count} / span {Columns.Count};";
+
             if (VirtualizeMode == VirtualizeMode.Virtualize)
-                return $"display:grid; position: relative;height: {_height}px";
-            else
-                return string.Empty;
+                css += $"display:grid; position: relative;height: {_height}px";
+
+            return css;
         }
 
         internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
@@ -757,10 +763,14 @@ namespace ClearBlazor
             var skipItems = (int)(scrollTop / RowHeight);
             var takeItems = (int)Math.Ceiling((double)(scrollTop + _scrollViewerHeight) / RowHeight) - skipItems;
 
-            if (reload || skipItems != _skipItems || takeItems != _takeItems || _items.Count == 0)
+            if ((reload || skipItems != _skipItems || takeItems != _takeItems || 
+                _items.Count == 0) && takeItems > 0)
             {
                 if (_loadingUp || _loadingDown)
+                {
+                    Console.WriteLine("Cancel");
                     _loadItemsCts?.Cancel();
+                }
                 await _semaphoreSlim.WaitAsync();
                 try
                 {

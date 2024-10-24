@@ -3,19 +3,20 @@
 <StackPanel Orientation=Orientation.Portrait>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows initially loaded from DB)</TextBlock>
-    <Grid Columns="400,auto,*" Rows="600,*">
+    <Grid Columns="800,auto,*" Rows="600,*">
         <TableView @ref=_table TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
-                  @bind-SelectedItem=_selectedItem
-                  @bind-SelectedItems=_selectedItems
-                  SelectionMode=@_selectionMode
-                  AllowSelectionToggle=@_allowSelectionToggle
-                  HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
-                  VirtualizeMode=VirtualizeMode.Pagination
-                  PageSize=25
-                  InitialIndex=@((20, Alignment.Center))
-                  DataProvider=@GetItemsLocallyAsync>
-                         <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
-            @*<TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
+                   RowSpacing=20 ColumnSpacing=10
+                   @bind-SelectedItem=_selectedItem
+                   @bind-SelectedItems=_selectedItems
+                   SelectionMode=@_selectionMode
+                   AllowSelectionToggle=@_allowSelectionToggle
+                   HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
+                   VirtualizeMode=VirtualizeMode.Pagination
+                   PageSize=25
+                   InitialIndex=@((20, Alignment.Center))
+                   DataProvider=@GetItemsLocallyAsync>
+            <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
+            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
             <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) />
             <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) />
             <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) />
@@ -25,8 +26,6 @@
                 </DataTemplate>
             </TableColumn>
             <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) />
- *@
-
         </TableView>
         <StackPanel Column=1>
             <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode

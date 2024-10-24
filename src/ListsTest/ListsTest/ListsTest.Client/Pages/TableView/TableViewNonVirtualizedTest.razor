@@ -3,29 +3,30 @@
 <StackPanel Orientation=Orientation.Portrait Spacing=30>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None : local data (100 rows initially loaded from database)</TextBlock>
-    <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
-        <TableView @ref=_table TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
-                  @bind-SelectedItem=_selectedItem
-                  @bind-SelectedItems=_selectedItems
-                  SelectionMode=@_selectionMode
-                  AllowSelectionToggle=@_allowSelectionToggle
-                  HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
-                  VirtualizeMode=VirtualizeMode.None
-                  InitialIndex=@((20, Alignment.Center))
-                  Items=@_localTableRows>
-             <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
-            @*            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
-            <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) />
-            <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) />
-            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) />
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Stretch TItem=TableRow Field=@(x =>x.UnitPrice)>
+    <Grid Columns="800,auto" Rows="600,auto,auto" RowSpacing=20>
+        <TableView @ref=_table TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10 
+                   RowSpacing=20 ColumnSpacing=10
+                   @bind-SelectedItem=_selectedItem
+                   @bind-SelectedItems=_selectedItems
+                   SelectionMode=@_selectionMode
+                   AllowSelectionToggle=@_allowSelectionToggle
+                   HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
+                   VirtualizeMode=VirtualizeMode.None
+                   InitialIndex=@((20, Alignment.Center))
+                   Items=@_localTableRows>
+            <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) ColumnDefinition="100"/>
+            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) ColumnDefinition="100" />
+            <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) ColumnDefinition="150" />
+            <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) ColumnDefinition="50" />
+            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) ColumnDefinition="50" />
+            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Stretch TItem=TableRow Field=@(x =>x.UnitPrice) ColumnDefinition="100">
                 <DataTemplate Context=item>
                     <TextBlock TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) />
- *@
-     </TableView>
+            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) ColumnDefinition="300" />
+
+        </TableView>
         <StackPanel Column=1>
             <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
                         @bind-Value:after=@SelectionModeChanged>

@@ -5,19 +5,20 @@
 <StackPanel Orientation=Orientation.Portrait Spacing=30>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : local data (500 rows initially loaded from DB)</TextBlock>
-    <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
+    <Grid Columns="800,auto" Rows="600,auto,auto" RowSpacing=20>
         <TableView @ref=_table TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+                   RowSpacing=0 ColumnSpacing=10
                    VirtualizeMode=VirtualizeMode.Virtualize
-                   RowHeight=110
+                   RowHeight=30
                    Items=@_localTableRows
-                  @bind-SelectedItem=_selectedItem
-                  @bind-SelectedItems=_selectedItems
-                  HoverHighlight=@_hoverHighlight
-                  AllowSelectionToggle=@_allowSelectionToggle
-                  SelectionMode=@_selectionMode
-                  PageSize=10 ShowLoadingSpinner=true>
-                         <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
-            @*<TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
+                   @bind-SelectedItem=_selectedItem
+                   @bind-SelectedItems=_selectedItems
+                   HoverHighlight=@_hoverHighlight
+                   AllowSelectionToggle=@_allowSelectionToggle
+                   SelectionMode=@_selectionMode
+                   ShowLoadingSpinner=true>
+            <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
+            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
             <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) />
             <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) />
             <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) />
@@ -26,8 +27,11 @@
                     <TextBlock TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) />
- *@       
+            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) >
+                <DataTemplate Context=item>
+                    <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>$@(item.Notes)</TextBlock>
+                </DataTemplate>
+            </TableColumn>
         </TableView>
         <StackPanel Column=1>
             <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode

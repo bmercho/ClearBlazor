@@ -12,7 +12,7 @@ namespace ClearBlazor
         public string Label { get; set; } = string.Empty;
 
         [Parameter]
-        public string ColumnDefinition { get; set; } = string.Empty;
+        public string ColumnDefinition { get; set; } = "auto";
 
         [Parameter]
         public Func<TItem, object> Field { get; set; } = null!;
