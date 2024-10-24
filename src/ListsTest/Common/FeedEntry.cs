@@ -1,19 +1,12 @@
 ﻿using ClearBlazor;
 using LoremNET;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ListsTest
 {
     [Table("FeedEntry")]
-    public class FeedEntry:ListItem, IEquatable<FeedEntry>  
+    public class FeedEntry: ListItem, IEquatable<FeedEntry>  
     {
-        [Key]
-        public Guid FeedEntryId { get; set; }
-
-        [Column]
-        public int Index { get; set; }
-
         [Column]
         public int ImageId { get; set; }
 
@@ -30,7 +23,7 @@ namespace ListsTest
         {
             if (other == null)
                 return false;
-            if (other.FeedEntryId == FeedEntryId)
+            if (other.Id == Id)
                 return true;
             return false;
         }
@@ -44,8 +37,6 @@ namespace ListsTest
         {
             return new FeedEntry()
             {
-                FeedEntryId = new Guid(),
-                Index = index,
                 Title = $"Message{index}",
                 Message = Lorem.Words(2, 40),
                 ImageId = TestData.GetRandomInt(1, 80),

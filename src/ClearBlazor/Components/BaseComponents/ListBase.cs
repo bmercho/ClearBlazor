@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.VisualStudio.Utilities;
 
 namespace ClearBlazor
 {
@@ -36,7 +35,7 @@ namespace ClearBlazor
         /// The currently selected items. (when in Multiselect mode)
         /// </summary>
         [Parameter]
-        public List<TItem> SelectedItems { get; set; } = new();
+        public List<TItem> SelectedItems { get; set; } = [];
 
         /// <summary>
         /// The currently selected item. (when in single select mode)
@@ -116,7 +115,10 @@ namespace ClearBlazor
         private int _lastSelectedRow = 0;
         internal CancellationTokenSource? _loadItemsCts;
 
-        protected Dictionary<Guid, ListRowBase<TItem>> ListRows { get; set; } = new();
+        protected Dictionary<Guid, TItem> _selectedItems { get; set; } = [];
+
+        protected Dictionary<Guid, ListRowBase<TItem>> ListRows { get; set; } = [];
+        protected List<TItem> _items { get; set; } = new List<TItem>();
 
         /// <summary>
         /// Refresh an item in the list when it has been updated. (only re-renders the given item)
@@ -134,8 +136,8 @@ namespace ClearBlazor
         /// <returns></returns>
         internal void RefreshAll()
         {
-            foreach(var row in ListRows)
-              row.Value.Refresh();
+            foreach (var row in ListRows)
+                row.Value.Refresh();
         }
 
         /// <summary>
@@ -152,13 +154,20 @@ namespace ClearBlazor
                 await NotifySelection();
             }
 
-            foreach (var selection in SelectedItems)
+            foreach (var selection in _selectedItems.Values)
             {
                 selection.IsSelected = false;
                 Refresh(selection);
             }
-            SelectedItems.Clear();
+            _selectedItems.Clear();
             await NotifySelections();
+        }
+
+        internal void SetSelectedItems()
+        {
+            _selectedItems.Clear();
+            foreach(var item in SelectedItems)
+                _selectedItems.Add(item.Id, item);
         }
 
         internal void AddListRow(ListRowBase<TItem> listItem)
@@ -235,13 +244,13 @@ namespace ClearBlazor
             {
                 item.IsSelected = false;
                 Refresh(item);
-                SelectedItems.Remove(item);
+                _selectedItems.Remove(item.Id);
             }
             else
             {
                 item.IsSelected = true;
                 Refresh(item);
-                SelectedItems.Add(item);
+                _selectedItems.Add(item.Id, item);
             }
             return true;
         }
@@ -256,17 +265,17 @@ namespace ClearBlazor
             if (!ctrlDown && !shiftDown)
             {
                 _lastSelectedRow = itemIndex;
-                if (!alreadySelected || SelectedItems.Count > 0)
+                if (!alreadySelected || _selectedItems.Count > 0)
                 {
-                    foreach (var item1 in SelectedItems)
+                    foreach (var item1 in _selectedItems.Values)
                     {
                         item1.IsSelected = false;
                         Refresh(item1);
                     }
-                    SelectedItems.Clear();
+                    _selectedItems.Clear();
                     item.IsSelected = true;
                     Refresh(item);
-                    SelectedItems.Add(item);
+                    _selectedItems.Add(item.Id, item);
                     return true;
                 }
                 else
@@ -278,13 +287,13 @@ namespace ClearBlazor
                 {
                     item.IsSelected = false;
                     Refresh(item);
-                    SelectedItems.Remove(item);
+                    _selectedItems.Remove(item.Id);
                 }
                 else
                 {
                     item.IsSelected = true;
                     Refresh(item);
-                    SelectedItems.Add(item);
+                    _selectedItems.Add(item.Id, item);
                 }
                 _lastSelectedRow = itemIndex;
                 return true;
@@ -293,12 +302,12 @@ namespace ClearBlazor
             {
                 if (!ctrlDown)
                 {
-                    foreach (var item1 in SelectedItems)
+                    foreach (var item1 in _selectedItems.Values)
                     {
                         item1.IsSelected = false;
                         Refresh(item);
                     }
-                    SelectedItems.Clear();
+                    _selectedItems.Clear();
                 }
 
                 var range = await GetSelections(_lastSelectedRow, itemIndex);
@@ -309,9 +318,23 @@ namespace ClearBlazor
                         bool selected = AlreadySelected(item1);
                         if (!selected)
                         {
-                            item1.IsSelected = true;
-                            Refresh(item1);
-                            SelectedItems.Add(item1);
+                            var item2 = _items.FirstOrDefault(i => i.Id == item1.Id);
+                            if (item2 != null)
+                            {
+                                item2.IsSelected = true;
+                                _selectedItems.Add(item2.Id, item2);
+                                if (ListRows.ContainsKey(item2.Id))
+                                    ListRows[item2.Id].SetRowData(item2);
+                                Refresh(item2);
+                            }
+                            else
+                            {
+                                item1.IsSelected = true;
+                                _selectedItems.Add(item1.Id, item1);
+                                if (ListRows.ContainsKey(item1.Id))
+                                    ListRows[item1.Id].SetRowData(item1);
+                                Refresh(item1);
+                            }
                         }
                     }
                 }
@@ -329,7 +352,7 @@ namespace ClearBlazor
 
         private bool AlreadySelected(TItem item)
         {
-            return SelectedItems.FirstOrDefault(s => s == item) != null;
+            return _selectedItems.FirstOrDefault(s => s.Key == item.Id).Value != null;
         }
 
         private async Task NotifySelection()
@@ -340,6 +363,7 @@ namespace ClearBlazor
 
         private async Task NotifySelections()
         {
+            SelectedItems = _selectedItems.Values.ToList();
             await SelectedItemsChanged.InvokeAsync(SelectedItems);
             StateHasChanged();
         }
@@ -369,7 +393,28 @@ namespace ClearBlazor
                     var result = await DataProvider(new DataProviderRequest(startIndex, count, _loadItemsCts.Token));
                     _totalNumItems = result.TotalNumItems;
                     return result.Items.Select((item, index) =>
-                    { item.Index = startIndex + index; return item; }).ToList();
+                    {
+                        item.Index = startIndex + index;
+                        switch (SelectionMode)
+                        {
+                            case SelectionMode.None:
+                                break;
+                            case SelectionMode.Single:
+                                item.IsSelected = SelectedItem == null ? false : SelectedItem.Id == item.Id;
+                                if (item.IsSelected)
+                                    SelectedItem = item;
+                                break;
+                            case SelectionMode.SimpleMulti:
+                            case SelectionMode.Multi:
+                                item.IsSelected = _selectedItems.ContainsKey(item.Id);
+                                if (item.IsSelected)
+                                    _selectedItems[item.Id] = item;
+                                break;
+                        }
+                        if (ListRows.ContainsKey(item.Id))
+                            ListRows[item.Id].SetRowData(item);
+                        return item;
+                    }).ToList();
                 }
                 catch (OperationCanceledException oce) when (oce.CancellationToken == _loadItemsCts.Token)
                 {

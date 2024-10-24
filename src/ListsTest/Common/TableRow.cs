@@ -1,19 +1,12 @@
 ﻿using ClearBlazor;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using LoremNET;
 
 namespace ListsTest
 {
     [Table("TableRow")]
-    public class TableRow : ListItem
+    public class TableRow :ListItem, IEquatable<TableRow>
     {
-        [Key]
-        public Guid TableRowId { get; set; }
-
-        [Column]
-        public int Index { get; set; }
-
         [Column]
         public int ImageId { get; set; }
 
@@ -41,12 +34,23 @@ namespace ListsTest
         [Column]
         public string Notes { get; set; } = string.Empty;
 
+        public bool Equals(TableRow? other)
+        {
+            if (other == null)
+                return false;
+            if (other.Id == Id)
+                return true;
+            return false;
+        }
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}";
+        }
+
         public static TableRow GetNewTableRow(int index)
         {
             return new TableRow()
             {
-                TableRowId = new Guid(),
-                Index = index,
                 ImageId = TestData.GetRandomInt(1,80),
                 IconName = TestData.GetIconName(),
                 FirstName = TestData.GetRandomFirstName(),

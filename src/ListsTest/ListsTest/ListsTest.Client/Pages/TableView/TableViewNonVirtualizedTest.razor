@@ -13,9 +13,8 @@
                   VirtualizeMode=VirtualizeMode.None
                   InitialIndex=@((20, Alignment.Center))
                   Items=@_localTableRows>
-            <TableColumn Label="Index" TItem=TableRow Field=@(x =>x.Index) />
-@*             <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
-            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
+             <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
+            @*            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
             <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) />
             <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) />
             <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) />

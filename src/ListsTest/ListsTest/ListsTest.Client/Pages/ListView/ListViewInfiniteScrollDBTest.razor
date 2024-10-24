@@ -40,9 +40,9 @@
             </RadioGroup>
             <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
             <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.FeedEntryId</TextBlock>
+            <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
 
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.FeedEntryId))</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
             <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
             <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
         </StackPanel>

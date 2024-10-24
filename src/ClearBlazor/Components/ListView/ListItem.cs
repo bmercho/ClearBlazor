@@ -1,11 +1,14 @@
-﻿namespace ClearBlazor
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ClearBlazor
 { 
     public abstract class ListItem:IEquatable<ListItem>
     {
+        [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-        public bool IsHighlighted { get; set; }
+        
         public bool IsSelected { get; set; }
-        internal int Index { get; set; }
+        public int Index { get; set; }
 
         public bool Equals(ListItem? other)
         {

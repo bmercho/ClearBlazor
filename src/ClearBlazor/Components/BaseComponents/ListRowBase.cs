@@ -13,6 +13,11 @@ namespace ClearBlazor
 
         internal bool _doRender = true;
 
+        internal void SetRowData(TItem rowData)
+        {
+            RowData = rowData;
+        }
+
         public void Refresh()
         {
             _doRender = true;

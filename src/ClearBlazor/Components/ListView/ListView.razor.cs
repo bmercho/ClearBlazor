@@ -83,8 +83,6 @@ namespace ClearBlazor
         internal int _skipItems = 0;
         internal int _takeItems = 0;
 
-        private List<TItem> _items { get; set; } = new List<TItem>();
-
         /// <summary>
         /// Goto the given index in the data. Not used if VirtualizationMode is InfiniteScroll.
         /// </summary>
@@ -344,6 +342,8 @@ namespace ClearBlazor
                         }
                         break;
                 }
+            SetSelectedItems();
+
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
