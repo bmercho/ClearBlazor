@@ -111,7 +111,7 @@ namespace ClearBlazor
 
             string css = string.Empty;
 
-
+            int header = _parent.ShowHeader ? 1 : 0;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
@@ -121,7 +121,7 @@ namespace ClearBlazor
             }
             else
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
-                             $"grid-area: {Index+1} / 1 /span 1 / span {Columns.Count}; ";
+                             $"grid-area: {Index+1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
 
             if (_mouseOver)

@@ -10,7 +10,10 @@
                    @bind-SelectedItems=_selectedItems
                    SelectionMode=@_selectionMode
                    AllowSelectionToggle=@_allowSelectionToggle
-                   HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
+                   HorizontalGridLines=GridLines.All
+                   VerticalGridLines=GridLines.All
+                   HoverHighlight=@_hoverHighlight
+                   OverscrollBehaviour=OverscrollBehaviour.None
                    VirtualizeMode=VirtualizeMode.Pagination
                    PageSize=25
                    InitialIndex=@((20, Alignment.Center))

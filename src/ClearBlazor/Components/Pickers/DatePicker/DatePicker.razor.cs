@@ -53,7 +53,7 @@ namespace ClearBlazor
         const int ControlWidthLandscape = 420;
 
         private DatePickerMode Mode = DatePickerMode.Day;
-        private List<int> YearList { get; set; } = new();
+        private List<YearItem> YearList { get; set; } = new();
 
         ScrollViewer ScrollViewer = null!;
         private int? MouseOverMonth = null;
@@ -171,16 +171,19 @@ namespace ClearBlazor
                 startYear = DateTime.Now.AddYears(-100).Year;
             if ( (endYear == null))
                 endYear = DateTime.Now.AddYears(100).Year;
+            int index = 0;
             for (int year = (int)startYear; year <= endYear; year++)
-                YearList.Add(year);
+            {
+                YearList.Add(new YearItem() { Year = year, Id = Guid.NewGuid(), Index = index++ });
+            }
         }
 
-        private void OnYearClicked(int year)
+        private void OnYearClicked(YearItem year)
         {
             if (IsReadOnly || IsDisabled)
                 return;
 
-            SelectedDate = SelectedDate.AddYears(year - SelectedDate.Year);
+            SelectedDate = SelectedDate.AddYears(year.Year - SelectedDate.Year);
             Mode = DatePickerMode.Month;
             StateHasChanged();
         }
@@ -398,6 +401,11 @@ namespace ClearBlazor
         {
             MouseOverDay = null;
             StateHasChanged();
+        }
+
+        private class YearItem:ListItem
+        {
+            public int Year { get; set; }
         }
     }
 }

@@ -355,9 +355,7 @@ namespace ClearBlazor
                 List<string> elementIds = new List<string>() { Id };
 
                 if (VirtualizeMode == VirtualizeMode.Virtualize)
-                {
                     elementIds.Add(_scrollViewerId);
-                }
                 _resizeObserverId = await ResizeObserverService.Service.
                                     AddResizeObserver(NotifyObservedSizes, elementIds);
 
@@ -666,6 +664,7 @@ namespace ClearBlazor
                         changed = true;
                     }
                 }
+                
                 if (changed)
                 {
                     if (VirtualizeMode == VirtualizeMode.Virtualize)
@@ -674,6 +673,8 @@ namespace ClearBlazor
                         {
                             _initializing = false;
                             await CheckForNewRows(_scrollTop, true);
+                            await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
+
                         }
                     }
                     StateHasChanged();

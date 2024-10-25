@@ -8,7 +8,11 @@
     <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
   </PropertyGroup>
 
-  <ItemGroup>
+	<PropertyGroup>
+		<RunAOTCompilation>true</RunAOTCompilation>
+	</PropertyGroup>
+
+	<ItemGroup>
     <Compile Remove="Pages\TreeView\**" />
     <Content Remove="Pages\TreeView\**" />
     <EmbeddedResource Remove="Pages\TreeView\**" />

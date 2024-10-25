@@ -13,15 +13,17 @@
             else
             {
                 <TableView BorderThickness=1 CornerRadius=4 HorizontalGridLines=GridLines.All
-                       Items=@ParameterApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,auto,*" ColumnSpacing=20>
-                    <TableColumn Label="Name" TItem=ApiComponentInfo Field=@(x =>x.Name) />
-                    <TableColumn Label="Type" TItem=ApiComponentInfo Field=@(x =>x.Type)>
+                           Height=400 Width=800 HorizontalAlignment=Alignment.Start
+                           Items=@ParameterApi Padding=5 RowSpacing=10 ColumnSpacing=20>
+                    <TableColumn Label="Name" ColumnDefinition="auto" TItem=ApiComponentInfo Field=@(x =>x.Name) />
+                    <TableColumn Label="Type" ColumnDefinition="auto" TItem=ApiComponentInfo Field=@(x =>x.Type)>
                         <DataTemplate Context=Item>
                             <TextBlock>@GetMarkupString(Item.Type)</TextBlock>
                         </DataTemplate>
                     </TableColumn>
                     <TableColumn Label="Default" TItem=ApiComponentInfo Field=@(x =>x.Default) />
-                    <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description)>
+                    <TableColumn Label="Description" ColumnDefinition="*"
+                                 TItem=ApiComponentInfo Field=@(x =>x.Description)>
                         <DataTemplate Context=Item>
                             <TextBlock>@GetMarkupString(Item.Description)</TextBlock>
                         </DataTemplate>
@@ -36,9 +38,9 @@
             else
             {
                 <TableView BorderThickness=1 CornerRadius=4 HorizontalGridLines=GridLines.All
-                       Items=@MethodApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,*" ColumnSpacing=20>
+                           Items=@MethodApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,*" ColumnSpacing=20>
                     <TableColumn Label="Method signature" TItem=ApiComponentInfo Field=@(x =>x.Name) />
-                    <TableColumn Label="Return type" TItem=ApiComponentInfo Field=@(x =>x.Type) >
+                    <TableColumn Label="Return type" TItem=ApiComponentInfo Field=@(x =>x.Type)>
                         <DataTemplate Context=Item>
                             <TextBlock>@GetMarkupString(Item.Type)</TextBlock>
                         </DataTemplate>

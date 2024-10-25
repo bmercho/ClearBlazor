@@ -91,8 +91,13 @@ namespace ClearBlazor
 
         private bool _initializing = true;
         private string _scrollViewerId = Guid.NewGuid().ToString();
+        private Grid _grid = null!;
+        private double _gridWidth = 0;
+        private string _headerId = Guid.NewGuid().ToString();
+        private double _headerHeight = 0;
         private string _baseRowId = Guid.NewGuid().ToString();
         private double _componentHeight = 0;
+        private double _componentWidth = 0;
 
         // Used when VirtualizeMode is Virtualize
         private double _height = 0;
@@ -397,12 +402,11 @@ namespace ClearBlazor
 
             if (firstRender)
             {
-                List<string> elementIds = new List<string>() { Id };
+                List<string> elementIds = new List<string>() { Id, _headerId, _grid.Id };
 
                 if (VirtualizeMode == VirtualizeMode.Virtualize)
-                {
                     elementIds.Add(_scrollViewerId);
-                }
+
                 _resizeObserverId = await ResizeObserverService.Service.
                                     AddResizeObserver(NotifyObservedSizes, elementIds);
 
@@ -651,8 +655,9 @@ namespace ClearBlazor
 
         private string GetTransformStyle()
         {
+            int header = ShowHeader ? 1 : 0;
             string css = $"display:grid;  grid-template-columns: subgrid;align-content: flex-start; " +
-                         $"grid-area: 3 / 1 /span {_items.Count} / span {Columns.Count};";
+                         $"grid-area: 1 / 1 /span {_items.Count+header} / span {Columns.Count};";
 
             if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
                 css += $"transform: translateY({_yOffset}px);";
@@ -661,8 +666,9 @@ namespace ClearBlazor
         }
         private string GetHeightDivStyle()
         {
+            int header = ShowHeader ? 1 : 0;
             string css = $"display:grid;  grid-template-columns: subgrid;align-content: flex-start; " +
-                         $"grid-area: 3 / 1 /span {_items.Count} / span {Columns.Count};";
+                         $"grid-area: 1 / 1 /span {_items.Count + header} / span {Columns.Count};";
 
             if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
                 css += $"height:{_maxScrollHeight}px";
@@ -686,21 +692,83 @@ namespace ClearBlazor
                     break;
             }
 
-            return $"display:grid; height:{_componentHeight}px; " +
-                   $"justify-self:stretch; overflow-x:auto; " +
-                   $"overflow-y:auto; scrollbar-gutter:stable; {overscrollBehaviour}" +
-                   $"grid-area: 1 / 1 / span 1 / span 1; ";
+            return $"height:{_componentHeight}px; width:{_componentWidth}px; " +
+                   $"overflow-x:auto; " +
+                   $"overflow-y:auto; " +
+                   $"grid-template-columns: subgrid; grid-area: 1 / 1 / span 1 / span {Columns.Count}; ";
         }
 
         protected string GetContainerStyle()
         {
-            string css = $"display:grid;  grid-template-columns: subgrid;align-content: flex-start; " +
-             $"grid-area: 1 / 1 /span {_items.Count} / span {Columns.Count};";
+            int header = ShowHeader ? 1 : 0;
+            string css = $"display:grid; " +
+                         $"width:{_gridWidth-ThemeManager.CurrentTheme.GetScrollBarProperties().width}px; " +
+                         $" grid-template-columns: subgrid;align-content: flex-start; " +
+             $"grid-area: 1 / 1 /span {_items.Count + header} / span {Columns.Count};";
 
             if (VirtualizeMode == VirtualizeMode.Virtualize)
                 css += $"display:grid; position: relative;height: {_height}px";
 
             return css;
+        }
+
+        private string GetFullHeaderStyle()
+        {
+            string css = "background-color:white;  z-index:1;";
+            css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
+                   $"grid-area: 1 / 1 /span 1 / span {Columns.Count}; ";
+            if (StickyHeader)
+                css += "position:sticky; top:0px; ";
+            return css;
+        }
+
+        private string GetHeaderStyle(int column)
+        {
+            string css = string.Empty;
+
+            string justify = "start";
+            switch (Columns[column - 1].HeaderAlignment)
+            {
+                case Alignment.Stretch:
+                    justify = "stretch";
+                    break;
+                case Alignment.Start:
+                    justify = "start";
+                    break;
+                case Alignment.Center:
+                    justify = "center";
+                    break;
+                case Alignment.End:
+                    justify = "end";
+                    break;
+            }
+            css += $"display:grid; " +
+                   $"padding:{RowSpacing / 2}px {ColumnSpacing / 2}px {RowSpacing / 2}px {ColumnSpacing / 2}px;" +
+                   $"grid-area: 1 / {column} /span 1 /span 1; justify-self: stretch;" +
+                   $"align-self:center; ";
+
+            return css;
+        }
+
+        private string GetHorizontalGridLineStyle(int row, int columnCount)
+        {
+            string css = string.Empty;
+            var marginTop = -RowSpacing / 2;
+            if (row == 2)
+                marginTop = RowSpacing / 2;
+            css += $"align-self:start; border-width:1px 0 0 0; border-style:solid; margin:0px 0 0 0; z-index:1; " +
+                   $"grid-area: {row} / 1 / span 1 / span {columnCount}; border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+
+            if (StickyHeader)
+                css += $"position:sticky; top:{_headerHeight}px; ";
+            return css;
+        }
+
+        private string GetVerticalGridLineStyle(int column, int rowCount, bool excludeHeader)
+        {
+            string exclude = excludeHeader == true ? "2" : "1";
+            return $"justify-self:start; z-index:2; border-width:0 0 0 1px; border-style:solid; margin:0 0 0 0px; " +
+                   $"grid-area: {exclude} / {column} / span {rowCount} / span 1; border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
         }
 
         internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
@@ -716,6 +784,7 @@ namespace ClearBlazor
                     if (observedSize.ElementHeight > 0 && _componentHeight != observedSize.ElementHeight)
                     {
                         _componentHeight = observedSize.ElementHeight;
+                        _componentWidth = observedSize.ElementWidth;
                         changed = true;
                     }
                 }
@@ -725,6 +794,22 @@ namespace ClearBlazor
                     {
                         _scrollViewerHeight = observedSize.ElementHeight;
                         _itemWidth = observedSize.ElementWidth;
+                        changed = true;
+                    }
+                }
+                else if (observedSize.TargetId == _grid.Id)
+                {
+                    if (observedSize.ElementHeight > 0 && _gridWidth != observedSize.ElementHeight)
+                    {
+                        _gridWidth = observedSize.ElementWidth;
+                        changed = true;
+                    }
+                }
+                if (observedSize.TargetId == _headerId)
+                {
+                    if (observedSize.ElementHeight > 0 && _headerHeight != observedSize.ElementHeight)
+                    {
+                        _headerHeight = observedSize.ElementHeight;
                         changed = true;
                     }
                 }

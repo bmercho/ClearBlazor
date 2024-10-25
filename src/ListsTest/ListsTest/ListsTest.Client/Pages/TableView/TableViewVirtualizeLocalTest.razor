@@ -14,6 +14,8 @@
                    @bind-SelectedItem=_selectedItem
                    @bind-SelectedItems=_selectedItems
                    HoverHighlight=@_hoverHighlight
+                   HorizontalGridLines=GridLines.All
+                   VerticalGridLines=GridLines.All
                    AllowSelectionToggle=@_allowSelectionToggle
                    SelectionMode=@_selectionMode
                    ShowLoadingSpinner=true>
@@ -29,7 +31,7 @@
             </TableColumn>
             <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) >
                 <DataTemplate Context=item>
-                    <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>$@(item.Notes)</TextBlock>
+                    <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>@(item.Notes)</TextBlock>
                 </DataTemplate>
             </TableColumn>
         </TableView>
