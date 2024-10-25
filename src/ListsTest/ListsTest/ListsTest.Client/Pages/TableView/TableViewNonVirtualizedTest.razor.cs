@@ -1,5 +1,5 @@
 using ClearBlazor;
-using ListsTest;
+using TestData;
 
 namespace ListsTest
 {

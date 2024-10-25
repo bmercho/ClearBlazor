@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using LoremNET;
 
-namespace ListsTest
+namespace TestData
 {
     [Table("TableRow")]
     public class TableRow :ListItem, IEquatable<TableRow>

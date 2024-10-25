@@ -1,6 +1,6 @@
 ﻿using ClearBlazor;
 
-namespace ListsTest
+namespace TestData
 {
     public static class TestData
     {

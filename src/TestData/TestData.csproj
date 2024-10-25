@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\ClearBlazor\ClearBlazor.csproj" />
+    <ProjectReference Include="..\ClearBlazor\ClearBlazor.csproj" />
   </ItemGroup>
 
 </Project>

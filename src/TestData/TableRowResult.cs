@@ -1,4 +1,4 @@
-﻿namespace ListsTest
+﻿namespace TestData
 {
     public class TableRowResult
     {

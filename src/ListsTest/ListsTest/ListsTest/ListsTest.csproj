@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Common.csproj" />
+    <ProjectReference Include="..\..\..\TestData\TestData.csproj" />
     <ProjectReference Include="..\ListsTest.Client\ListsTest.Client.csproj" />
     <PackageReference Include="LoremNET" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.10" />
