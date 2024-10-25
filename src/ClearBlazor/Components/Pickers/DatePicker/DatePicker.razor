@@ -27,7 +27,23 @@
                 @switch (Mode)
                 {
                     case DatePickerMode.Year:
-@*                         <VirtualizedList ItemHeight=28 Items=@YearList 
+                        <ListView RowHeight=28 Items=@YearList
+                                  VirtualizeMode=VirtualizeMode.Virtualize
+                                  Height=@GetBodyHeight()
+                                  Width=@GetBodyWidth()
+                                  InitialIndex="@((GetYearIndex(), Alignment.Center))">
+                            <RowTemplate Context=item>
+                                <div style=@GetYearStyle() @onclick="(() => OnYearClicked(item))"
+                                     @onclick:stopPropagation="true">
+                                    <TextBlock HorizontalAlignment=Alignment.Center
+                                               VerticalAlignment=Alignment.Center
+                                               FontSize=@GetYearSize(item.Year)
+                                               Color=@GetYearColor(item.Year)>@item.Year</TextBlock>
+                                </div>
+                            </RowTemplate>
+                        </ListView>
+
+                                  @*                         <VirtualizedList RowHeight=28 Items=@YearList 
                                         Height=@GetBodyHeight()
                                         Width=@GetBodyWidth()
                                         VisibleIndex="@((GetYearIndex(), Alignment.Center))">

@@ -1,0 +1,40 @@
+﻿@namespace ClearBlazorTest
+@using TestData
+<TableView TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10 Height=500
+           RowSpacing=0 ColumnSpacing=10
+           VirtualizeMode=VirtualizeMode.Virtualize
+           RowHeight=30
+           Items=@_localTableRows
+           HorizontalGridLines=GridLines.All
+           VerticalGridLines=GridLines.All
+           ShowLoadingSpinner=true>
+    <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
+    <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
+    <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) />
+    <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) />
+    <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) />
+    <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Stretch TItem=TableRow Field=@(x =>x.UnitPrice)>
+        <DataTemplate Context=item>
+            <TextBlock TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+        </DataTemplate>
+    </TableColumn>
+    <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes)>
+        <DataTemplate Context=item>
+            <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>@(item.Notes)</TextBlock>
+        </DataTemplate>
+    </TableColumn>
+</TableView>
+
+
+@code {
+
+    List<TableRow> _localTableRows = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        for (int i = 0; i < 500; i++)
+            _localTableRows.Add(TableRow.GetNewTableRow(i));
+    }
+}

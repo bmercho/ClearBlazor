@@ -1,7 +1,11 @@
 ﻿@namespace ClearBlazorTest
-<TableView BorderThickness=1 CornerRadius=4 VerticalGridLines=GridLines.All HorizontalGridLines=GridLines.All
-       Items=@People Padding=5 RowSpacing=10 ColumnSpacing=20 ColumnDefs="*,*,2*">
-    <TableColumn Label="PersonId" TItem=Person Field=@(x =>x.PersonId)>
+<TableView BorderThickness=1 Padding=5 CornerRadius=4 Height=400
+           VerticalGridLines=GridLines.All 
+           HorizontalGridLines=GridLines.All
+           Items=@People 
+           RowSpacing=10 
+           ColumnSpacing=20>
+    <TableColumn Label="PersonId" TItem=Person Field=@(x =>x.PersonId) ColumnDefinition="*">
         <HeaderTemplate Context=Header>
             <TextBlock FontWeight=@((int)FontWeight.Bold)>@(Header + " !!")</TextBlock>
         </HeaderTemplate>
@@ -9,13 +13,11 @@
             <TextBlock>@(Item.PersonId + " **")</TextBlock>
         </DataTemplate>
     </TableColumn>
-    <TableColumn Label="Name" TItem=Person Field=@(x =>x.Name) />
-    <TableColumn Label="BirthDate" TItem=Person Field=@(x =>x.BirthDate) />
+    <TableColumn Label="Name" TItem=Person Field=@(x =>x.Name) ColumnDefinition="*" />
+    <TableColumn Label="BirthDate" TItem=Person Field=@(x =>x.BirthDate) ColumnDefinition="2*" />
 </TableView>
 
 @code {
-
-    record Person(int PersonId, string Name, DateOnly BirthDate);
 
     List<Person> People = new List<Person>
     {
@@ -26,4 +28,19 @@
         new Person(11898, "Jose Hernandez", new DateOnly(2011, 5, 3)),
         new Person(12130, "Kenji Sato", new DateOnly(2004, 1, 9)),
     };
+
+    public class Person : ListItem
+    {
+        public int PersonId { get; set; }
+        public string Name { get; set; }
+        public DateOnly BirthDate { get; set; }
+        public Person(int personId, string name, DateOnly birthDate)
+        {
+            PersonId = personId;
+            Name = name;
+            BirthDate = birthDate;
+        }
+
+    }
+
 }

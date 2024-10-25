@@ -3,7 +3,8 @@
     public enum GridLines
     {
         None,
-        All,
-        HeaderOnly
+        HeaderOnly,
+        ContentOnly,
+        All
     }
 }

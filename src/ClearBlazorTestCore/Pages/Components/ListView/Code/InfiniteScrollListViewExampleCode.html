@@ -59,7 +59,7 @@
     <span class="keyword">private</span> SelectionMode _selectionMode = SelectionMode.None;
     <span class="keyword">private</span> <span class="keyword">bool</span> _allowSelectionToggle = <span class="keyword">false</span>;
     <span class="keyword">private</span> <span class="keyword">bool</span> _hoverHighlight = <span class="keyword">true</span>;
-    <span class="keyword">private</span> ListView&lt;TestViewItem&gt;? _list;
+    <span class="keyword">private</span> ListView&lt;TestViewItem&gt; _list;
     <span class="keyword">private</span> <span class="keyword">bool</span> _atEnd = <span class="keyword">false</span>;
     <span class="keyword">private</span> <span class="keyword">bool</span> _atStart = <span class="keyword">true</span>;
 
@@ -142,6 +142,7 @@
         <span class="keyword">if</span> (_list == <span class="keyword">null</span>)
             <span class="keyword">return</span>;
         <span class="keyword">await</span> _list.RemoveAllSelections();
+
         StateHasChanged();
     }
 }

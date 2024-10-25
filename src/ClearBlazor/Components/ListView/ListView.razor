@@ -1,6 +1,6 @@
 ﻿@namespace ClearBlazor
 @typeparam TItem
-@inherits ClearComponentBase
+@inherits ListBase<TItem>
 
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
@@ -14,10 +14,10 @@
                             {
                                 @foreach (var row in _items.Select((item, index) => new { item, index }))
                                 {
-                                    <ListViewItem RowTemplate=@RowTemplate RowData=@row.item
-                                                  RowIndex=@row.item.Index
-                                                  Index=@row.index
-                                                  RowId=@(_baseRowId +row.index.ToString()) />
+                                    <ListViewRow RowTemplate=@RowTemplate RowData=@row.item
+                                                 RowIndex=@row.item.Index
+                                                 Index=@row.index
+                                                 RowId=@(_baseRowId +row.index.ToString()) />
                                 }
                             }
                         </div>

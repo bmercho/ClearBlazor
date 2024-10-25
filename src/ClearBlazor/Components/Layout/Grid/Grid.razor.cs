@@ -147,7 +147,7 @@ namespace ClearBlazor
             return columns == null ? string.Empty : $"grid-template-columns: " + string.Join(" ", columns) + "; ";
         }
 
-        private string GetTemplateRows()
+        internal string GetTemplateRows()
         {
             var rows = GetRows();
             return rows == null ? string.Empty : $"grid-template-rows: " + string.Join(" ", rows) + "; ";

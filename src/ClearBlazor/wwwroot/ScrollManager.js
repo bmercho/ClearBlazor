@@ -41,6 +41,15 @@ window.scrollbar = {
         }
     },
 
+    GetScrollTop: (elementId) => {
+        let element = document.getElementById(elementId);
+        if (element) {
+            return element.scrollTop;
+        }
+        return 0;
+    },
+
+
     SetScrollLeft: (elementId, scrollLeft) => {
         let element = document.getElementById(elementId);
         if (element) {

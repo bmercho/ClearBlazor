@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateDocumentation", "Crea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\..\Common\Common.csproj", "{ECA99B2B-FC40-4B69-AEC8-585519110531}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClearBlazor", "..\..\ClearBlazor\ClearBlazor.csproj", "{55E7263C-C4F7-4A5C-8E1E-24D291784ED1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{ECA99B2B-FC40-4B69-AEC8-585519110531}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECA99B2B-FC40-4B69-AEC8-585519110531}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECA99B2B-FC40-4B69-AEC8-585519110531}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55E7263C-C4F7-4A5C-8E1E-24D291784ED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55E7263C-C4F7-4A5C-8E1E-24D291784ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55E7263C-C4F7-4A5C-8E1E-24D291784ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55E7263C-C4F7-4A5C-8E1E-24D291784ED1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,17 +1,19 @@
 ﻿@using ClearBlazor
 @namespace ClearBlazorTest
-<WrapPanel Height=500 Width=500 BorderThickness=1>
-    <Spinner Size=Size.VerySmall/>
-    <Spinner Size=Size.Small/>
-    <Spinner Size=Size.Normal/>
-    <Spinner Size=Size.Large/>
-    @if (_loading)
-    {
-        <Spinner Size=Size.VeryLarge/>
-    }
-</WrapPanel>
+<StackPanel Orientation=Orientation.Portrait>
+    <WrapPanel Height=500 Width=500 BorderThickness=1>
+        <Spinner Size=Size.VerySmall />
+        <Spinner Size=Size.Small />
+        <Spinner Size=Size.Normal />
+        <Spinner Size=Size.Large />
+        @if (_loading)
+        {
+            <Spinner Size=Size.VeryLarge />
+        }
+    </WrapPanel>
 
-<Button OnClicked=@OnClick>Load</Button> 
+    <Button Width=150 OnClicked=@OnClick>Load</Button>
+</StackPanel>
 
 @code {
     bool _loading = false;
