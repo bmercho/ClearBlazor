@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.8
+
+### Patch Changes
+
+- cf56599: Mods for TableView
+
 ## 0.0.7
 
 ### Patch Changes
