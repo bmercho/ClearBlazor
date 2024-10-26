@@ -105,5 +105,35 @@ namespace ListsTest
             StateHasChanged();
         }
 
+        private async Task Up1()
+        {
+            await _table.Scroll(1);
+        }
+        private async Task Up5()
+        {
+            await _table.Scroll(5);
+            
+        }
+        private async Task Up10()
+        {
+            await _table.Scroll(10);
+
+        }
+        private async Task Down1()
+        {
+            await _table.Scroll(-1);
+
+        }
+        private async Task Down5()
+        {
+            await _table.Scroll(-5);
+            
+        }
+        private async Task Down10()
+        {
+            await _table.Scroll(-10);
+            
+        }
+        
     }
 }

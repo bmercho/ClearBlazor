@@ -3,7 +3,7 @@
 @using TestData;
 
 <StackPanel Orientation=Orientation.Portrait>
-    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
+    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Pagination : from DB (5000 rows loaded as required)</TextBlock>
     <Grid Columns="800,auto" Rows="600,auto,auto">
         <TableView @ref=_table TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
@@ -19,6 +19,8 @@
                    OverscrollBehaviour=OverscrollBehaviour.None
                    VirtualizeMode=VirtualizeMode.Pagination
                    PageSize=25
+                   ShowHeader=true
+                   StickyHeader=true
                    InitialIndex=@((20, Alignment.Center))>
             <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
             <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
@@ -30,7 +32,13 @@
                     <TextBlock TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) />
+            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes)>
+                <DataTemplate Context=item>
+                    <TextBlock VerticalAlignment=Alignment.Center
+                               TextWrapping=TextWrap.NoWrap TextTrimming=true>@(item.Notes)</TextBlock>
+                </DataTemplate>
+
+            </TableColumn>
         </TableView>
         <StackPanel Column=1>
             <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode

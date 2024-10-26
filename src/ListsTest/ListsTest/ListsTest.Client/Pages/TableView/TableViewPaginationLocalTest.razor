@@ -18,6 +18,8 @@
                    OverscrollBehaviour=OverscrollBehaviour.None
                    VirtualizeMode=VirtualizeMode.Pagination
                    PageSize=25
+                   ShowHeader=true
+                   StickyHeader=true
                    InitialIndex=@((20, Alignment.Center))
                    DataProvider=@GetItemsLocallyAsync>
             <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
@@ -30,7 +32,11 @@
                     <TextBlock TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) />
+            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes)>
+                <DataTemplate Context=item>
+                    <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>@(item.Notes)</TextBlock>
+                </DataTemplate>
+            </TableColumn>
         </TableView>
         <StackPanel Column=1>
             <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
