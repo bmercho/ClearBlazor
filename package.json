@@ -1,6 +1,6 @@
 {
   "name": "ClearBlazor",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "private": true,
   "devDependencies": {
     "changeset": "^0.2.6"
