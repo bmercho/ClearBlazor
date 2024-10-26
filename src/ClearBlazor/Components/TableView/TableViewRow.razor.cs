@@ -18,6 +18,13 @@ namespace ClearBlazor
         [Parameter]
         public int ColumnSpacing { get; set; } = 5;
 
+        /// <summary>
+        /// Indicates if vertical grid lines are to be shown.
+        /// </summary>
+        [Parameter]
+        public GridLines VerticalGridLines { get; set; } = GridLines.None;
+
+
         [Parameter]
         public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
 
@@ -59,9 +66,6 @@ namespace ClearBlazor
         {
             base.OnAfterRender(firstRender);
             _doRender = false;
-
-            if (RowData.Index == 0)
-                Console.WriteLine("After render index = 0");
         }
         protected override bool ShouldRender()
         {
@@ -117,12 +121,12 @@ namespace ClearBlazor
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
                          $"grid-column: 1 / span {Columns.Count}; ";
                 css += $"justify-self:start; position:relative; " +
-                       $"top:{_parent._scrollTop}px; height: {(_parent.RowHeight+RowSpacing)}px;";
+                       $"top:{_parent._skipItems * (_parent.RowHeight + RowSpacing)}px;" +
+                       $" height: {(_parent.RowHeight + RowSpacing)}px;";
             }
             else
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
-                             $"grid-area: {Index+1 + header} / 1 /span 1 / span {Columns.Count}; ";
-
+                             $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
             if (_mouseOver)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
@@ -154,9 +158,23 @@ namespace ClearBlazor
                     justify = "end";
                     break;
             }
-            return $"display:grid; height:{_parent.RowHeight} grid-column: {column} /span 1; justify-self: {justify};" +
-                   $"padding:{RowSpacing / 2}px {ColumnSpacing / 2}px {RowSpacing / 2}px {ColumnSpacing / 2}px;";
+            return $"display:grid; grid-column: {column} /span 1; justify-self: stretch;" +
+                   $"padding:0px 0px 0px {ColumnSpacing / 2}px;";
 
+        }
+
+        private string GetContainerDivStyle()
+        {
+            if (_parent == null)
+                return string.Empty;
+
+            string css = "display:grid; grid-template-columns: 1fr auto; ";
+            if (_parent.VirtualizeMode != VirtualizeMode.Virtualize)
+                css += $"grid-template-rows: {RowSpacing/2}px 1fr {RowSpacing/2}px; ";
+            else
+                css += $"grid-template-rows: 0px 1fr 0px; ";
+
+            return css;
         }
 
         private string[] GetLines(string? content)
@@ -173,16 +191,32 @@ namespace ClearBlazor
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
                 css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
-                       $"grid-area: 2 / 1 /span 1 / span {Columns.Count};  border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
-                css += $"justify-self:start; position:relative; top:{Index * _parent.RowHeight}px;";
+                       $"display:grid; grid-template-columns: subgrid; " +
+                       $"grid-area: 2 / 1 /span 1 / span {Columns.Count};  " +
+                       $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                css += $"justify-self:start; position:relative; " +
+                       $"top:{(_parent._skipItems+Index) * (_parent.RowHeight + RowSpacing)}px;";
 
             }
             else
             {
                 css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
-                       $"grid-area: {row} / 1 / span 1 / span {columnCount}; border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                       $"grid-area: {row} / 1 / span 1 / span {columnCount}; " +
+                       $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
             }
             return css;
+        }
+
+        private string GetVerticalGridLineStyle(int column)
+        {
+            if (_parent == null)
+                return string.Empty;
+
+            return $"display:grid; " +
+                   $"border-width:0 0 0 1px; border-style:solid; " +
+                   $"grid-area: 1 / 2 / span 3 / span 1; " +
+                   $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+
         }
 
         public override void Dispose()

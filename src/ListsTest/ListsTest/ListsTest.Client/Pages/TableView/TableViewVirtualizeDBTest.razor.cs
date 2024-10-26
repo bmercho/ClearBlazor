@@ -16,6 +16,29 @@ namespace ListsTest
         private bool _hoverHighlight = true;
         private bool _atEnd = false;
         private bool _atStart = true;
+        List<TableRow> _localTableRows = new();
+
+        protected override async Task OnInitializedAsync()
+        {
+            base.OnInitialized();
+
+            var result = await SignalRClient.Instance.GetTableRows(0, 500);
+            _localTableRows = result.TableRows;
+            StateHasChanged();
+            await _table.Refresh();
+        }
+
+        async Task<(int, IEnumerable<TableRow>)> GetItemsLocally(DataProviderRequest request)
+        {
+            if (_localTableRows == null)
+                return (0, new List<TableRow>());
+
+            if (_addDelay)
+                await Task.Delay(400, request.CancellationToken);
+
+            await Task.CompletedTask;
+            return (_localTableRows.Count, _localTableRows.Skip(request.StartIndex).Take(request.Count));
+        }
 
         private async Task<(int, IEnumerable<TableRow>)> GetItemsFromDatabase(DataProviderRequest request)
         {
@@ -72,6 +95,36 @@ namespace ListsTest
                 return;
             await _table.RemoveAllSelections();
             StateHasChanged();
+        }
+
+        private async Task Up1()
+        {
+            await _table.Scroll(1);
+        }
+        private async Task Up5()
+        {
+            await _table.Scroll(5);
+
+        }
+        private async Task Up10()
+        {
+            await _table.Scroll(10);
+
+        }
+        private async Task Down1()
+        {
+            await _table.Scroll(-1);
+
+        }
+        private async Task Down5()
+        {
+            await _table.Scroll(-5);
+
+        }
+        private async Task Down10()
+        {
+            await _table.Scroll(-10);
+
         }
 
     }

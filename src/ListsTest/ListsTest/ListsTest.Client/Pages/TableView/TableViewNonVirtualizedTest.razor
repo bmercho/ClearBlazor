@@ -18,18 +18,21 @@
                    VerticalGridLines=GridLines.All
                    VirtualizeMode=VirtualizeMode.None
                    InitialIndex=@((20, Alignment.Center))
+                   ShowHeader=true
+                   StickyHeader=true
                    Items=@_localTableRows>
-            <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) ColumnDefinition="100"/>
-            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) ColumnDefinition="100" />
-            <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) ColumnDefinition="150" />
-            <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) ColumnDefinition="50" />
-            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) ColumnDefinition="50" />
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Stretch TItem=TableRow Field=@(x =>x.UnitPrice) ColumnDefinition="100">
+            <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) ColumnDefinition="70"/>
+            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) ColumnDefinition="70" />
+            <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) ColumnDefinition="120" />
+            <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) ColumnDefinition="40" />
+            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) ColumnDefinition="40" />
+            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.UnitPrice) ColumnDefinition="70">
                 <DataTemplate Context=item>
-                    <TextBlock TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+                    <TextBlock VerticalAlignment=Alignment.Center 
+                               TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) ColumnDefinition="300" />
+            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) ColumnDefinition="*" />
 
         </TableView>
         <StackPanel Column=1>
