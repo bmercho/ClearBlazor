@@ -2,7 +2,7 @@ using ListsTest;
 using ListsTest.Components;
 
 var databaseManager = new DatabaseManager();
-databaseManager.Start(DatabaseType.SQLite, @"..\..\Data\ListsTest.sqlite", string.Empty, string.Empty, string.Empty);
+databaseManager.Start(DatabaseType.SQLite, @"c:\Work\Data\ListsTest.sqlite", string.Empty, string.Empty, string.Empty);
 DemoHub.DatabaseManager = databaseManager;
 var builder = WebApplication.CreateBuilder(args);
 

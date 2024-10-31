@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@typeparam TItem
+@inherits ClearComponentBase
+<CascadingValue Value=this IsFixed="false">
+    @if (NodeTemplate != null)
+    {
+        <div style=@GetFullRowStyle()
+             @onmouseenter=OnMouseEnter
+             @onmouseleave=OnMouseLeave
+             @onclick=@(e => OnRowClicked(e, NodeData))>
+            @if (NodeData.HasChildren)
+            {
+                <div style=@(GetExpandStyle(NodeData))>
+                    @if (NodeData.IsExpanded)
+                    {
+                        <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore
+                                    VerticalAlignment=Alignment.Center />
+                    }
+                    else
+                    {
+                        <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ChevronRight
+                                    VerticalAlignment=Alignment.Center />
+                    }
+                </div>
+            }
+
+            @*             <div id=@(_baseRowId +NodeData.index.ToString()) style=@(GetContentStyle(NodeData))>
+ *@
+            <div style=@(GetContentStyle(NodeData))>
+                @NodeTemplate(NodeData)
+            </div>
+        </div>
+    }
+</CascadingValue>

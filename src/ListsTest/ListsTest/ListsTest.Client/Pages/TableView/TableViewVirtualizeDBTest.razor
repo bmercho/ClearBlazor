@@ -16,11 +16,11 @@
                    @bind-SelectedItem=_selectedItem
                    @bind-SelectedItems=_selectedItems
                    HoverHighlight=@_hoverHighlight
-                   HorizontalGridLines=GridLines.None
-                   VerticalGridLines=GridLines.None
+                   HorizontalGridLines=GridLines.All
+                   VerticalGridLines=GridLines.All
                    AllowSelectionToggle=@_allowSelectionToggle
                    SelectionMode=@_selectionMode
-                   ShowHeader=false
+                   ShowHeader=true
                    StickyHeader=true
                    ShowLoadingSpinner=true>
             <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />

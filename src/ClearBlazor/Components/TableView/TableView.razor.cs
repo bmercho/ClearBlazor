@@ -121,7 +121,7 @@ namespace ClearBlazor
         private bool _hasHadData = false;
         private SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private List<double> _pageOffsets = new();
-        private double _yOffset = 0;
+        internal double _yOffset = 0;
 
         // Used when VirtualizeMode is Pagination
         private int _currentPageNum = 1;
@@ -465,16 +465,16 @@ namespace ClearBlazor
         {
             try
             {
+                var top = scrollState.ScrollTop;
+                if (_scrollTop == top)
+                    return;
+
+                _scrollTop = top;
                 switch (VirtualizeMode)
                 {
                     case VirtualizeMode.None:
                         break;
                     case VirtualizeMode.Virtualize:
-                        var top = scrollState.ScrollTop;
-                        if (_scrollTop == top)
-                            return;
-
-                        _scrollTop = top;
                         await CheckForNewRows(_scrollTop, false);
                         _header.Refresh();
                         break;
@@ -488,7 +488,7 @@ namespace ClearBlazor
                                 if (_pageOffsets.Count == 1)
                                     await GetSecondPageAsync(scrollState.ScrollHeight);
                                 else
-                                    await GetNextPageDataAsync(_pageOffsets.Count - 1, 
+                                    await GetNextPageDataAsync(_pageOffsets.Count - 1,
                                                                scrollState.ScrollHeight, scrollState.ScrollTop);
                                 StateHasChanged();
                             }
@@ -498,7 +498,7 @@ namespace ClearBlazor
                         }
                         else
                             await CheckForNewRows(scrollState.ScrollTop);
-
+                        _header.Refresh();
                         break;
                     case VirtualizeMode.Pagination:
                         break;

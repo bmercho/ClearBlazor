@@ -108,8 +108,10 @@ namespace ClearBlazor
                 {
                     case VirtualizeMode.None:
                     case VirtualizeMode.Pagination:
-                    case VirtualizeMode.InfiniteScroll:
                         css += "position:sticky; top:0px; ";
+                        break;
+                    case VirtualizeMode.InfiniteScroll:
+                        css += $"transform: translateY({_parent._scrollTop-_parent._yOffset}px);";
                         break;
                     case VirtualizeMode.Virtualize:
                         css += $"position:relative; top:{_parent._scrollTop}px; ";
