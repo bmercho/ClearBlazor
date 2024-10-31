@@ -24,7 +24,7 @@
                                 <ListBoxItem Text="ListView Virtualization:Pagination:LocalData" HRef="/ListViewPaginationLocal" OnClicked=@Close />
                                 <ListBoxItem Text="ListView Virtualization:Pagination:DBData" HRef="/ListViewPaginationDB" OnClicked=@Close />
                             </ListBoxItem>
-                            <ListBoxItem Text="TableView" InitiallyExpanded=true>
+                            <ListBoxItem Text="TableView" InitiallyExpanded=false>
                                 <ListBoxItem Text="TableView Virtualization:None" HRef="/TableView" OnClicked=@Close />
                                 <ListBoxItem Text="TableView Virtualization:Virtualized:LocalData" HRef="/TableViewVirtualizeLocal" OnClicked=@Close />
                                 <ListBoxItem Text="TableView Virtualization:Virtualized:DBData" HRef="/TableViewVirtualizeDB" OnClicked=@Close />
@@ -33,6 +33,10 @@
                                 <ListBoxItem Text="TableView Virtualization:Pagination:LocalData" HRef="/TableViewPaginationLocal" OnClicked=@Close />
                                 <ListBoxItem Text="TableView Virtualization:Pagination:DBData" HRef="/TableViewPaginationDB" OnClicked=@Close />
                                 <ListBoxItem Text="Combined Virtualization:None:LocalData" HRef="/Combined" OnClicked=@Close />
+                            </ListBoxItem>
+                            <ListBoxItem Text="TreeView" InitiallyExpanded=true>
+                                <ListBoxItem Text="TreeView Virtualization:None" HRef="/TreeView" OnClicked=@Close />
+                                <ListBoxItem Text="TreeView Virtualization:Virtualized" HRef="/TreeViewVirtualize" OnClicked=@Close />
                             </ListBoxItem>
                         </ListBox>
                     </ScrollViewer>

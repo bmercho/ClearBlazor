@@ -18,7 +18,7 @@ namespace ListsTest
 
         protected override async Task OnInitializedAsync()
         {
-            var result = await SignalRClient.Instance.GetFeedEntries(0, 1000);
+            var result = await SignalRClient.Instance.GetFeedEntries(0, 100);
             _localFeedEntries = result.FeedEntries;
             await _table.Refresh();
             StateHasChanged();

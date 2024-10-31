@@ -1,0 +1,39 @@
+﻿@page "/TreeViewVirtualize"
+@namespace ClearBlazorTest
+<StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20
+Orientation=Orientation.Portrait>
+    <TreeView Height=600 Width=350 CornerRadius=4 BorderThickness=1
+    Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+    HorizontalContentAlignment=Alignment.Start
+    HoverHighlight=false
+    VirtualizeMode=@VirtualizeMode.Virtualize
+    @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_feeds>
+        <NodeTemplate Context=node>
+            <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
+                <MaterialIcon Icon=@node.Icon Color=Color.Custom(Colors.Yellow.Darken1) />
+                <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
+                    @node.Id
+                </TextBlock>
+            </StackPanel>
+        </NodeTemplate>
+    </TreeView>
+    <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+        <Button OnClicked=@CollapseAll>Collapse all</Button>
+        <Button OnClicked=@ExpandAll>Expand all</Button>
+        <Button OnClicked=@AddItem>AddItem</Button>
+        <Button OnClicked=@DeleteItem>DeleteItem</Button>
+        <Button OnClicked=@ModifyItem>ModifyItem</Button>
+        @*         <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+        <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
+    <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+    <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
+    <Button OnClicked=@OnAddNewItem>Add new item</Button>
+    <Button OnClicked=@OnGotoEnd>Goto end</Button>
+    <Button OnClicked=@OnGotoStart>Goto start</Button>
+    <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+ *@    
+    </WrapPanel>
+
+</StackPanel>
+
+

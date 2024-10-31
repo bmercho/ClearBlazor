@@ -171,6 +171,24 @@ namespace ClearBlazor
             }
             StateHasChanged();
         }
+        public async Task FullRefresh()
+        {
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                    break;
+                case VirtualizeMode.Virtualize:
+                    LoadAllNodes();
+                    GetVisibleNodes();
+                    _nodes = await GetItems(_skipItems, _takeItems);
+                    break;
+                case VirtualizeMode.InfiniteScroll:
+                    break;
+                case VirtualizeMode.Pagination:
+                    break;
+            }
+            StateHasChanged();
+        }
 
         /// <summary>
         /// Refresh an item in the list when it has been updated. (only re-renders the given item)
