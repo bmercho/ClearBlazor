@@ -39,7 +39,7 @@ namespace ClearBlazor
                     case VirtualizeMode.None:
                         parameters.TryGetValue<TItem>(nameof(RowData), out var rowData);
                         if (rowData != null)
-                            if (RowData == null || rowData.Id != RowData.Id)
+                            if (RowData == null || rowData.ListItemId != RowData.ListItemId)
                                 _doRender = true;
                         break;
                     case VirtualizeMode.Virtualize:

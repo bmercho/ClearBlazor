@@ -1,6 +1,6 @@
 ﻿@page "/ListViewVirtualizeDB"
 @namespace ListsTest
-@using TestData;
+@using Data;
 
 @using Microsoft.AspNetCore.SignalR.Client
 
@@ -8,7 +8,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : from DB (5000 rows loaded as required)</TextBlock>
     <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
-        <ListView @ref=_list TItem=FeedEntry CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.Virtualize
                   RowHeight=110
                   DataProvider=@GetItemsFromDatabase
@@ -24,10 +24,10 @@
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
                     <StackPanel Column=1 Orientation=Orientation.Portrait>
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.NoWrap Margin="0,0,10,10">
-                            @row.Title
+                            @row.ToString()
                         </TextBlock>
                         <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                            @row.Message
+                            @row.Notes
                         </TextBlock>
                     </StackPanel>
                 </Grid>
@@ -43,8 +43,8 @@
             </RadioGroup>
             <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
             <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.Title</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Title))</TextBlock>
+            <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
             <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
             <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
         </StackPanel>

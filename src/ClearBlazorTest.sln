@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClearBlazor", "ClearBlazor\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{8DE83EF4-A03A-48DA-9255-8C9428499B33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestData", "TestData\TestData.csproj", "{4F8679B0-9239-4267-8F64-06579044FDBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "TestData\Data.csproj", "{704F0D33-1DE6-4742-AF7A-80F95E375C47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{8DE83EF4-A03A-48DA-9255-8C9428499B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DE83EF4-A03A-48DA-9255-8C9428499B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DE83EF4-A03A-48DA-9255-8C9428499B33}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F8679B0-9239-4267-8F64-06579044FDBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F8679B0-9239-4267-8F64-06579044FDBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F8679B0-9239-4267-8F64-06579044FDBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F8679B0-9239-4267-8F64-06579044FDBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{704F0D33-1DE6-4742-AF7A-80F95E375C47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{704F0D33-1DE6-4742-AF7A-80F95E375C47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{704F0D33-1DE6-4742-AF7A-80F95E375C47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{704F0D33-1DE6-4742-AF7A-80F95E375C47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

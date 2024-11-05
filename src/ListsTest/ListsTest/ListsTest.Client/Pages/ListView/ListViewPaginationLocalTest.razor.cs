@@ -1,39 +1,20 @@
 using ClearBlazor;
-using TestData;
+using Data;
 
 namespace ListsTest
 {
     public partial class ListViewPaginationLocalTest
     {
-        ListView<FeedEntry> _list = null!;
-        private FeedEntry? _selectedItem = null;
-        private List<FeedEntry> _selectedItems = new();
+        ListView<TestListRow> _list = null!;
+        private TestListRow? _selectedItem = null;
+        private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
         private bool _atEnd = false;
         private bool _atStart = true;
 
-        List<FeedEntry> _localFeedEntries = new();
-
-        protected override async Task OnInitializedAsync()
-        {
-            base.OnInitialized();
-
-            var result = await SignalRClient.Instance.GetFeedEntries(0, 500);
-            _localFeedEntries = result.FeedEntries;
-            StateHasChanged();
-            await _list.Refresh();
-        }
-
-        async Task<(int, IEnumerable<FeedEntry>)> GetItemsLocally(DataProviderRequest request)
-        {
-            if (_localFeedEntries == null)
-                return (0, new List<FeedEntry>());
-
-            await Task.CompletedTask;
-            return (_localFeedEntries.Count, _localFeedEntries.Skip(request.StartIndex).Take(request.Count));
-        }
+        List<TestListRow> _localListData = ClientData.LocalTestListRows5000;
 
         async Task GotoIndex(int row, Alignment alignment)
         {
@@ -43,15 +24,15 @@ namespace ListsTest
         }
         async Task OnAddNewItem()
         {
-            var count = _localFeedEntries.Count;
-            _localFeedEntries.Add(FeedEntry.GetNewFeed(count));
+            var count = _localListData.Count;
+            _localListData.Add(TestListRow.GetNewTestListRow(count));
             await _list.Refresh();
         }
         async Task OnAddNewItemGotoEndIfAtEnd()
         {
             var atEnd = await _list.AtEnd();
-            var count = _localFeedEntries.Count;
-            _localFeedEntries.Add(FeedEntry.GetNewFeed(count));
+            var count = _localListData.Count;
+            _localListData.Add(TestListRow.GetNewTestListRow(count));
             await _list.Refresh();
             if (atEnd)
                 await _list.GotoEnd();
@@ -59,8 +40,8 @@ namespace ListsTest
 
         void ChangeItem()
         {
-            _localFeedEntries[0].Title = "Bla bla bla";
-            _list.Refresh(_localFeedEntries[0]);
+            _localListData[0].FirstName = "Bla bla bla";
+            _list.Refresh(_localListData[0]);
         }
 
         async Task OnGotoEnd()

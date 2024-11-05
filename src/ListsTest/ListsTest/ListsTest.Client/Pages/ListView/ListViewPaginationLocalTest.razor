@@ -1,12 +1,12 @@
 ﻿@page "/ListViewPaginationLocal"
 @namespace ListsTest
-@using TestData;
+@using Data;
 
 <StackPanel Orientation=Orientation.Portrait>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows initially loaded from DB)</TextBlock>
     <Grid Columns="400,auto,*" Rows="600,*">
-        <ListView @ref=_list TItem=FeedEntry CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
                   SelectionMode=@_selectionMode
@@ -15,15 +15,15 @@
                   VirtualizeMode=VirtualizeMode.Pagination
                   PageSize=5
                   InitialIndex=@((20, Alignment.Center))
-                  DataProvider=@GetItemsLocally>
+                  Items=@_localListData>
             <RowTemplate Context=row>
                 <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BoxShadow=4>
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
                     <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                        @row.Title
+                        @row.ToString()
                     </TextBlock>
                     <TextBlock Column=1 Row=1 TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
-                        @row.Message
+                        @row.Notes
                     </TextBlock>
                 </Grid>
             </RowTemplate>
@@ -38,8 +38,8 @@
             </RadioGroup>
             <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
             <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.Title</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Title))</TextBlock>
+            <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
             <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>

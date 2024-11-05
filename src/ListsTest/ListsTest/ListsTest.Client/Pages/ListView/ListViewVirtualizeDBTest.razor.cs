@@ -1,5 +1,5 @@
 using ClearBlazor;
-using TestData;
+using Data;
 using Microsoft.AspNetCore.Components;
 
 namespace ListsTest
@@ -8,24 +8,24 @@ namespace ListsTest
         : ComponentBase
     {
         private bool _addDelay = false;
-        private ListView<FeedEntry> _list = null!;
-        private FeedEntry? _selectedItem = null;
-        private List<FeedEntry> _selectedItems = new();
+        private ListView<TestListRow> _list = null!;
+        private TestListRow? _selectedItem = null;
+        private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
         private bool _atEnd = false;
         private bool _atStart = true;
 
-        private async Task<(int, IEnumerable<FeedEntry>)> GetItemsFromDatabase(DataProviderRequest request)
+        private async Task<(int, IEnumerable<TestListRow>)> GetItemsFromDatabase(DataProviderRequest request)
         {
             if (_addDelay)
                 await Task.Delay(1000, request.CancellationToken);
 
-            FeedEntryResult feedEntries = await SignalRClient.Instance.GetFeedEntries(
+            var feedEntries = await SignalRClient.Instance.GetListRows(
                                                               request.StartIndex, request.Count,
                                                               request.CancellationToken);
-            return (feedEntries.TotalNumEntries, feedEntries.FeedEntries);
+            return (feedEntries.TotalNumEntries, feedEntries.ListRows);
         }
 
         private void Refresh()

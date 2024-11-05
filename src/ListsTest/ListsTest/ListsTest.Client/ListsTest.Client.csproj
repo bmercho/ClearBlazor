@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\ClearBlazor\ClearBlazor.csproj" />
-    <ProjectReference Include="..\..\..\TestData\TestData.csproj" />
+    <ProjectReference Include="..\..\..\TestData\Data.csproj" />
   </ItemGroup>
 
 </Project>

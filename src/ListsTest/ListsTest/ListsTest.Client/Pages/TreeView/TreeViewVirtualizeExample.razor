@@ -7,12 +7,13 @@ Orientation=Orientation.Portrait>
     HorizontalContentAlignment=Alignment.Start
     HoverHighlight=false
     VirtualizeMode=@VirtualizeMode.Virtualize
-    @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_feeds>
+              @ref="List" InitialIndex=@((20, Alignment.Center)) 
+              Items=@_localTreeData>
         <NodeTemplate Context=node>
             <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
-                <MaterialIcon Icon=@node.Icon Color=Color.Custom(Colors.Yellow.Darken1) />
+                <MaterialIcon Icon=@node.IconName Color=Color.Custom(Colors.Yellow.Darken1) />
                 <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
-                    @node.Id
+                    @node.NodeId
                 </TextBlock>
             </StackPanel>
         </NodeTemplate>

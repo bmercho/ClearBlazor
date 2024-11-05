@@ -196,8 +196,8 @@ namespace ClearBlazor
         /// <returns></returns>
         public void Refresh(TItem item)
         {
-            if (TreeNodes.ContainsKey(item.NodeId))
-                TreeNodes[item.NodeId].Refresh();
+            if (TreeNodes.ContainsKey(item.ListItemId))
+                TreeNodes[item.ListItemId].Refresh();
         }
 
         protected override async Task OnParametersSetAsync()
@@ -306,18 +306,18 @@ namespace ClearBlazor
 
         internal void AddTreeNode(TreeViewNode<TItem> treeNode)
         {
-            if (TreeNodes.ContainsKey(treeNode.NodeData.NodeId))
+            if (TreeNodes.ContainsKey(treeNode.NodeData.ListItemId))
                 return;
 
-            TreeNodes.Add(treeNode.NodeData.NodeId, treeNode);
+            TreeNodes.Add(treeNode.NodeData.ListItemId, treeNode);
         }
 
         internal void RemoveTreeNode(TreeViewNode<TItem> treeNode)
         {
-            if (!TreeNodes.ContainsKey(treeNode.NodeData.NodeId))
+            if (!TreeNodes.ContainsKey(treeNode.NodeData.ListItemId))
                 return;
 
-            TreeNodes.Remove(treeNode.NodeData.NodeId);
+            TreeNodes.Remove(treeNode.NodeData.ListItemId);
         }
 
         internal void SetHighlightedItem(TreeViewNode<TItem> treeNode)

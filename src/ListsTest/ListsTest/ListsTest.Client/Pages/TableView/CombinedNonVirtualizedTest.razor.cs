@@ -1,48 +1,20 @@
 using ClearBlazor;
-using TestData;
+using Data;
 
 namespace ListsTest
 {
     public partial class CombinedNonVirtualizedTest
     {
-        private TableView<FeedEntry> _table = null!;
-        private FeedEntry? _selectedItem = null;
-        private List<FeedEntry> _selectedItems = new();
+        private TableView<TestListRow> _table = null!;
+        private TestListRow? _selectedItem = null;
+        private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
         private bool _atEnd = false;
         private bool _atStart = true;
 
-        List<FeedEntry> _localFeedEntries = new();
-
-        protected override async Task OnInitializedAsync()
-        {
-            var result = await SignalRClient.Instance.GetFeedEntries(0, 100);
-            _localFeedEntries = result.FeedEntries;
-            await _table.Refresh();
-            StateHasChanged();
-        }
-
-        async Task<(int, IEnumerable<FeedEntry>)> GetItemsLocally(DataProviderRequest request)
-        {
-            if (_localFeedEntries == null)
-                return (0, new List<FeedEntry>());
-
-            await Task.CompletedTask;
-            return (_localFeedEntries.Count, _localFeedEntries.Skip(request.StartIndex).Take(request.Count));
-        }
-
-        private async Task<(int, IEnumerable<FeedEntry>)> GetItemsFromDatabase(DataProviderRequest request)
-        {
-            //if (_addDelay)
-            //    await Task.Delay(1000, request.CancellationToken);
-
-            FeedEntryResult feedEntries = await SignalRClient.Instance.GetFeedEntries(
-                                                              request.StartIndex, request.Count,
-                                                              request.CancellationToken);
-            return (feedEntries.TotalNumEntries, feedEntries.FeedEntries);
-        }
+        List<TestListRow> _localListData = ClientData.LocalTestListRows5000;
 
         async Task GotoIndex(int row, Alignment alignment)
         {
@@ -65,15 +37,15 @@ namespace ListsTest
         {
             if (_table == null)
                 return;
-            var count = _localFeedEntries.Count();
-            _localFeedEntries.Add(FeedEntry.GetNewFeed(count));
+            var count = _localListData.Count();
+            _localListData.Add(TestListRow.GetNewTestListRow(count));
             await _table.Refresh();
         }
         async Task OnAddNewItemGotoEndIfAtEnd()
         {
             var atEnd = await _table.AtEnd();
-            var count = _localFeedEntries.Count();
-            _localFeedEntries.Add(FeedEntry.GetNewFeed(count));
+            var count = _localListData.Count();
+            _localListData.Add(TestListRow.GetNewTestListRow(count));
             await _table.Refresh();
             if (atEnd)
                 await _table.GotoEnd();
@@ -81,8 +53,8 @@ namespace ListsTest
 
         void ChangeItem()
         {
-            _localFeedEntries[0].Title = "Bla bla bla";
-            _table.Refresh(_localFeedEntries[0]);
+            _localListData[0].FirstName = "Bla bla bla";
+            _table.Refresh(_localListData[0]);
         }
 
         private async Task ClearSelections()

@@ -1,14 +1,14 @@
 ﻿@page "/ListViewInfiniteScrollLocal"
-@using TestData;
+@using Data;
 @namespace ListsTest
 
 <StackPanel Orientation=Orientation.Portrait>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows initially loaded from DB)</TextBlock>
     <Grid Columns="800,auto,*" Rows="600,*">
-        <ListView @ref=_list TItem=FeedEntry CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.InfiniteScroll
-                  DataProvider=@GetItemsLocally
+                  Items=@_localListData
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
                   HoverHighlight=@_hoverHighlight
@@ -21,10 +21,10 @@
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
                     <StackPanel Column=1 Orientation=Orientation.Portrait>
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                            @row.Title
+                            @row.ToString()
                         </TextBlock>
                         <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                            @row.Message
+                            @row.Notes
                         </TextBlock>
                     </StackPanel>
                 </Grid>

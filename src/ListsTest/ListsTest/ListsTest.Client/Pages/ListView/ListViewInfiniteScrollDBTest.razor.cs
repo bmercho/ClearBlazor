@@ -1,29 +1,29 @@
 using ClearBlazor;
-using TestData;
+using Data;
 
 namespace ListsTest
 {
     public partial class ListViewInfiniteScrollDBTest
     {
-        private FeedEntry? _selectedItem = null;
-        private List<FeedEntry> _selectedItems = new();
+        private TestListRow? _selectedItem = null;
+        private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
-        private ListView<FeedEntry> _list = null!;
+        private ListView<TestListRow> _list = null!;
         private bool _atEnd = false;
         private bool _atStart = true;
         private bool _addDelay = false;
 
-        private async Task<(int, IEnumerable<FeedEntry>)> GetItemsFromDatabase(ClearBlazor.DataProviderRequest request)
+        private async Task<(int, IEnumerable<TestListRow>)> GetItemsFromDatabase(ClearBlazor.DataProviderRequest request)
         {
             if (_addDelay)
                 await Task.Delay(1000, request.CancellationToken);
 
-            FeedEntryResult feedEntries = await SignalRClient.Instance.GetFeedEntries(
+            var feedEntries = await SignalRClient.Instance.GetListRows(
                                                               request.StartIndex, request.Count,
                                                               request.CancellationToken);
-            return (feedEntries.TotalNumEntries, feedEntries.FeedEntries);
+            return (feedEntries.TotalNumEntries, feedEntries.ListRows);
         }
 
         async Task CheckAtStart()

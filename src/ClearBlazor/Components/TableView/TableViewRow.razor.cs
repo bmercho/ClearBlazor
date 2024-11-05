@@ -47,7 +47,7 @@ namespace ClearBlazor
                     case VirtualizeMode.None:
                             parameters.TryGetValue<TItem>(nameof(RowData), out var rowData);
                             if (rowData != null)
-                                if (RowData == null || rowData.Id != RowData.Id)
+                                if (RowData == null || rowData.ListItemId != RowData.ListItemId)
                                     _doRender = true;
                         break;
                     case VirtualizeMode.Virtualize:
@@ -119,9 +119,9 @@ namespace ClearBlazor
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
-                         $"grid-column: 1 / span {Columns.Count}; ";
+                         $"grid-column: 1 / span {Columns.Count}; grid-row: 1/ span 1;";
                 css += $"justify-self:start; position:relative; " +
-                       $"top:{_parent._skipItems * (_parent.RowHeight + RowSpacing)}px;" +
+                       $"top:{(_parent._skipItems+Index+ header) * (_parent.RowHeight + RowSpacing)}px;" +
                        $" height: {(_parent.RowHeight + RowSpacing)}px;";
             }
             else

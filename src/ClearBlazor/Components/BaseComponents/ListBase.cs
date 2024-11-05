@@ -126,8 +126,8 @@ namespace ClearBlazor
         /// <returns></returns>
         public void Refresh(TItem item)
         {
-            if (ListRows.ContainsKey(item.Id))
-                ListRows[item.Id].Refresh();
+            if (ListRows.ContainsKey(item.ListItemId))
+                ListRows[item.ListItemId].Refresh();
         }
 
         /// <summary>
@@ -167,23 +167,23 @@ namespace ClearBlazor
         {
             _selectedItems.Clear();
             foreach(var item in SelectedItems)
-                _selectedItems.Add(item.Id, item);
+                _selectedItems.Add(item.ListItemId, item);
         }
 
         internal void AddListRow(ListRowBase<TItem> listItem)
         {
-            if (ListRows.ContainsKey(listItem.RowData.Id))
+            if (ListRows.ContainsKey(listItem.RowData.ListItemId))
                 return;
 
-            ListRows.Add(listItem.RowData.Id, listItem);
+            ListRows.Add(listItem.RowData.ListItemId, listItem);
         }
 
         internal void RemoveListRow(ListRowBase<TItem> listItem)
         {
-            if (!ListRows.ContainsKey(listItem.RowData.Id))
+            if (!ListRows.ContainsKey(listItem.RowData.ListItemId))
                 return;
 
-            ListRows.Remove(listItem.RowData.Id);
+            ListRows.Remove(listItem.RowData.ListItemId);
         }
 
         internal async Task HandleRowSelection(ListRowBase<TItem> selectedRow, bool ctrlDown, bool shiftDown)
@@ -244,13 +244,13 @@ namespace ClearBlazor
             {
                 item.IsSelected = false;
                 Refresh(item);
-                _selectedItems.Remove(item.Id);
+                _selectedItems.Remove(item.ListItemId);
             }
             else
             {
                 item.IsSelected = true;
                 Refresh(item);
-                _selectedItems.Add(item.Id, item);
+                _selectedItems.Add(item.ListItemId, item);
             }
             return true;
         }
@@ -275,7 +275,7 @@ namespace ClearBlazor
                     _selectedItems.Clear();
                     item.IsSelected = true;
                     Refresh(item);
-                    _selectedItems.Add(item.Id, item);
+                    _selectedItems.Add(item.ListItemId, item);
                     return true;
                 }
                 else
@@ -287,13 +287,13 @@ namespace ClearBlazor
                 {
                     item.IsSelected = false;
                     Refresh(item);
-                    _selectedItems.Remove(item.Id);
+                    _selectedItems.Remove(item.ListItemId);
                 }
                 else
                 {
                     item.IsSelected = true;
                     Refresh(item);
-                    _selectedItems.Add(item.Id, item);
+                    _selectedItems.Add(item.ListItemId, item);
                 }
                 _lastSelectedRow = itemIndex;
                 return true;
@@ -318,21 +318,21 @@ namespace ClearBlazor
                         bool selected = AlreadySelected(item1);
                         if (!selected)
                         {
-                            var item2 = _items.FirstOrDefault(i => i.Id == item1.Id);
+                            var item2 = _items.FirstOrDefault(i => i.ListItemId == item1.ListItemId);
                             if (item2 != null)
                             {
                                 item2.IsSelected = true;
-                                _selectedItems.Add(item2.Id, item2);
-                                if (ListRows.ContainsKey(item2.Id))
-                                    ListRows[item2.Id].SetRowData(item2);
+                                _selectedItems.Add(item2.ListItemId, item2);
+                                if (ListRows.ContainsKey(item2.ListItemId))
+                                    ListRows[item2.ListItemId].SetRowData(item2);
                                 Refresh(item2);
                             }
                             else
                             {
                                 item1.IsSelected = true;
-                                _selectedItems.Add(item1.Id, item1);
-                                if (ListRows.ContainsKey(item1.Id))
-                                    ListRows[item1.Id].SetRowData(item1);
+                                _selectedItems.Add(item1.ListItemId, item1);
+                                if (ListRows.ContainsKey(item1.ListItemId))
+                                    ListRows[item1.ListItemId].SetRowData(item1);
                                 Refresh(item1);
                             }
                         }
@@ -352,7 +352,7 @@ namespace ClearBlazor
 
         private bool AlreadySelected(TItem item)
         {
-            return _selectedItems.FirstOrDefault(s => s.Key == item.Id).Value != null;
+            return _selectedItems.FirstOrDefault(s => s.Key == item.ListItemId).Value != null;
         }
 
         private async Task NotifySelection()
@@ -401,19 +401,19 @@ namespace ClearBlazor
                             case SelectionMode.None:
                                 break;
                             case SelectionMode.Single:
-                                item.IsSelected = SelectedItem == null ? false : SelectedItem.Id == item.Id;
+                                item.IsSelected = SelectedItem == null ? false : SelectedItem.ListItemId == item.ListItemId;
                                 if (item.IsSelected)
                                     SelectedItem = item;
                                 break;
                             case SelectionMode.SimpleMulti:
                             case SelectionMode.Multi:
-                                item.IsSelected = _selectedItems.ContainsKey(item.Id);
+                                item.IsSelected = _selectedItems.ContainsKey(item.ListItemId);
                                 if (item.IsSelected)
-                                    _selectedItems[item.Id] = item;
+                                    _selectedItems[item.ListItemId] = item;
                                 break;
                         }
-                        if (ListRows.ContainsKey(item.Id))
-                            ListRows[item.Id].SetRowData(item);
+                        if (ListRows.ContainsKey(item.ListItemId))
+                            ListRows[item.ListItemId].SetRowData(item);
                         return item;
                     }).ToList();
                 }

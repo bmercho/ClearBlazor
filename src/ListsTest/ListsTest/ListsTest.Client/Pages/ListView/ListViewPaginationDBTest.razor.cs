@@ -1,25 +1,25 @@
 using ClearBlazor;
-using TestData;
+using Data;
 
 namespace ListsTest
 {
     public partial class ListViewPaginationDBTest
     {
-        ListView<FeedEntry> _list = null!;
-        private FeedEntry? _selectedItem = null;
-        private List<FeedEntry> _selectedItems = new();
+        ListView<TestListRow> _list = null!;
+        private TestListRow? _selectedItem = null;
+        private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
         private bool _atEnd = false;
         private bool _atStart = true;
 
-        private async Task<(int, IEnumerable<FeedEntry>)> GetItemsFromDatabase(ClearBlazor.DataProviderRequest request)
+        private async Task<(int, IEnumerable<TestListRow>)> GetItemsFromDatabase(ClearBlazor.DataProviderRequest request)
         {
-            FeedEntryResult feedEntries = await SignalRClient.Instance.GetFeedEntries(
+            var feedEntries = await SignalRClient.Instance.GetListRows(
                                                               request.StartIndex, request.Count,
                                                               request.CancellationToken);
-            return (feedEntries.TotalNumEntries, feedEntries.FeedEntries);
+            return (feedEntries.TotalNumEntries, feedEntries.ListRows);
         }
 
         async Task GotoIndex(int row, Alignment alignment)

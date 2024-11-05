@@ -1,12 +1,12 @@
 ﻿@page "/Combined"
 @namespace ListsTest
-@using TestData;
+@using Data;
 
 <StackPanel Orientation=Orientation.Portrait Spacing=30>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None : local data (100 rows initially loaded from database)</TextBlock>
     <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
-        <TableView @ref=_table TItem=FeedEntry CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <TableView @ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                    RowSpacing=0 ColumnSpacing=0
                    RowHeight=110
                    @bind-SelectedItem=_selectedItem
@@ -21,24 +21,22 @@
                    InitialIndex=@((20, Alignment.Center))
                    ShowHeader=false
                    StickyHeader=false
-                   DataProvider=@GetItemsFromDatabase>
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Center TItem=FeedEntry Field=@(x =>x.Message) ColumnDefinition="*">
+                   Items=@_localListData>
+            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="*">
                 <DataTemplate Context=item>
                     <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=2>
                         <MaterialIcon Icon=@item.IconName Margin=0,5,0,0 />
                         <StackPanel Column=1 Orientation=Orientation.Portrait>
                             <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.NoWrap Margin="0,0,10,10">
-                                @item.Title
+                                @item.ToString()
                             </TextBlock>
                             <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
-                                @item.Message
+                                @item.Notes
                             </TextBlock>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) ColumnDefinition="*" />
-
         </TableView>
         <StackPanel Column=1>
             <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode

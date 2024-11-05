@@ -154,6 +154,7 @@ namespace ClearBlazor
                     await GotoVirtualIndex(index, verticalAlignment);
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
                     _currentPageNum = (int)Math.Ceiling((double)(index + 1) / PageSize);
@@ -180,6 +181,8 @@ namespace ClearBlazor
                     await GetFirstPageAsync();
                     StateHasChanged();
                     break;
+                case VirtualizeMode.InfiniteScrollReverse:
+                    break;
                 case VirtualizeMode.Pagination:
                     _currentPageNum = 1;
                     await GotoPage(_currentPageNum);
@@ -199,6 +202,7 @@ namespace ClearBlazor
                     await GotoIndex(_totalNumItems - 1, Alignment.End);
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
                     _currentPageNum = _numPages;
@@ -235,6 +239,7 @@ namespace ClearBlazor
                 case VirtualizeMode.None:
                 case VirtualizeMode.Virtualize:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
                     if (_currentPageNum < _numPages)
@@ -263,6 +268,7 @@ namespace ClearBlazor
                 case VirtualizeMode.None:
                 case VirtualizeMode.Virtualize:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
                     if (_currentPageNum > 1)
@@ -285,6 +291,7 @@ namespace ClearBlazor
                 case VirtualizeMode.None:
                 case VirtualizeMode.Virtualize:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
                     if (pageNumber < 1)
@@ -321,6 +328,7 @@ namespace ClearBlazor
                         StateHasChanged();
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     if (_pageOffsets.Count < 2)
                     { 
                         if (await GetFirstPageAsync())
@@ -348,6 +356,7 @@ namespace ClearBlazor
                 case VirtualizeMode.None:
                 case VirtualizeMode.Virtualize:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId);
                 case VirtualizeMode.Pagination:
                     if (_currentPageNum == _numPages)
@@ -367,6 +376,7 @@ namespace ClearBlazor
             {
                 case VirtualizeMode.None:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollStart", _scrollViewerId);
                 case VirtualizeMode.Virtualize:
                     if (_scrollTop == 0)
@@ -393,6 +403,7 @@ namespace ClearBlazor
                         await CheckForNewRows(_scrollTop, true);
                         break;
                     case VirtualizeMode.InfiniteScroll:
+                    case VirtualizeMode.InfiniteScrollReverse:
                         break;
                     case VirtualizeMode.Pagination:
                         if (_items.Count() == 0)
@@ -431,6 +442,7 @@ namespace ClearBlazor
                 case VirtualizeMode.Virtualize:
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     bool changed = false;
 
                     if (!_hasHadData && !_loadingUp && !_loadingDown)
@@ -479,6 +491,7 @@ namespace ClearBlazor
                         _header.Refresh();
                         break;
                     case VirtualizeMode.InfiniteScroll:
+                    case VirtualizeMode.InfiniteScrollReverse:
                         if (Math.Ceiling(scrollState.ClientHeight + scrollState.ScrollTop) >= scrollState.ScrollHeight)
                         {
                             if (scrollState.ScrollHeight > _pageOffsets[_pageOffsets.Count - 1])
@@ -667,6 +680,8 @@ namespace ClearBlazor
 
             if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
                 css += $"transform: translateY({_yOffset}px);";
+            else if (VirtualizeMode == VirtualizeMode.InfiniteScrollReverse)
+                css += $"transform: translateY({_yOffset}px);";
 
             return css;
         }
@@ -677,6 +692,8 @@ namespace ClearBlazor
                          $"grid-area: 1 / 1 /span {_items.Count + header} / span {Columns.Count};";
 
             if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
+                css += $"height:{_maxScrollHeight}px";
+            else if (VirtualizeMode == VirtualizeMode.InfiniteScrollReverse)
                 css += $"height:{_maxScrollHeight}px";
 
             return css;
@@ -697,11 +714,11 @@ namespace ClearBlazor
                     overscrollBehaviour = "overscroll-behavior-y:none; ";
                     break;
             }
-
+            Console.WriteLine($"Col Count:{Columns.Count}");
             return $"height:{_componentHeight}px; width:{_componentWidth}px; " +
-                   $"overflow-x:auto; " +
-                   $"overflow-y:auto; " +
-                   $"grid-template-columns: subgrid; grid-area: 1 / 1 / span 1 / span {Columns.Count}; ";
+                   $"overflow-x:auto; overflow-y:auto; " +
+                   $"display:grid; grid-template-columns: subgrid; " +
+                   $"grid-area: 1 / 1 / span 1 / span {Columns.Count}; ";
         }
 
         protected string GetContainerStyle()
@@ -785,6 +802,7 @@ namespace ClearBlazor
                 case VirtualizeMode.Virtualize:
                     return await CheckForNewVirtualizationRows(scrollTop, reload);
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     return await CheckForNewInfiniteScrollRowsAsync(scrollTop);
             }
             return false;

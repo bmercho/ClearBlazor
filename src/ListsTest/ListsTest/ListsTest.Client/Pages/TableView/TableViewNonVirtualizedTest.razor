@@ -1,12 +1,12 @@
 ﻿@page "/TableView"
 @namespace ListsTest
-@using TestData;
+@using Data;
 
 <StackPanel Orientation=Orientation.Portrait Spacing=30>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None : local data (100 rows initially loaded from database)</TextBlock>
     <Grid Columns="800,auto" Rows="600,auto,auto" RowSpacing=20>
-        <TableView @ref=_table TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10 
+        <TableView @ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                    RowSpacing=20 ColumnSpacing=10
                    @bind-SelectedItem=_selectedItem
                    @bind-SelectedItems=_selectedItems
@@ -20,19 +20,19 @@
                    InitialIndex=@((20, Alignment.Center))
                    ShowHeader=true
                    StickyHeader=true
-                   Items=@_localTableRows>
-            <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) ColumnDefinition="70"/>
-            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) ColumnDefinition="70" />
-            <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) ColumnDefinition="120" />
-            <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) ColumnDefinition="40" />
-            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) ColumnDefinition="40" />
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.UnitPrice) ColumnDefinition="70">
+                   Items=@_localListData>
+            <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition="70" />
+            <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition="70" />
+            <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) ColumnDefinition="120" />
+            <TableColumn Label="Available" TItem=TestListRow Field=@(x =>x.Available) ColumnDefinition="40" />
+            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) ColumnDefinition="40" />
+            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition="70">
                 <DataTemplate Context=item>
                     <TextBlock VerticalAlignment=Alignment.Center 
                                TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes) ColumnDefinition="*" />
+            <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="*" />
 
         </TableView>
         <StackPanel Column=1>

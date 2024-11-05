@@ -1,30 +1,30 @@
 using ClearBlazor;
-using TestData;
+using Data;
 using Microsoft.AspNetCore.Components;
 
 namespace ListsTest
 {
     public partial class TableViewInfiniteScrollDBTest : ComponentBase
     {
-        private TableRow? _selectedItem = null;
-        private List<TableRow> _selectedItems = new();
+        private TestListRow? _selectedItem = null;
+        private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
-        private TableView<TableRow> _table = null!;
+        private TableView<TestListRow> _table = null!;
         private bool _atEnd = false;
         private bool _atStart = true;
         private bool _addDelay = false;
 
-        private async Task<(int, IEnumerable<TableRow>)> GetItemsFromDatabaseAsync(DataProviderRequest request)
+        private async Task<(int, IEnumerable<TestListRow>)> GetItemsFromDatabaseAsync(DataProviderRequest request)
         {
             if (_addDelay)
                 await Task.Delay(1000, request.CancellationToken);
 
-            TableRowResult tableRows = await SignalRClient.Instance.GetTableRows(
-                                                              request.StartIndex, request.Count,
+            var tableRows = await SignalRClient.Instance.GetListRows(
+                                                             request.StartIndex, request.Count,
                                                               request.CancellationToken);
-            return (tableRows.TotalNumEntries, tableRows.TableRows);
+            return (tableRows.TotalNumEntries, tableRows.ListRows);
         }
 
         async Task CheckAtStart()

@@ -1,5 +1,5 @@
-﻿using TestData;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Data;
 
 namespace ListsTest
 {
@@ -44,23 +44,23 @@ namespace ListsTest
             {
                 try
                 {
-                    for (int i = 0; i < 5000; i++)
-                    {
-                        dbContext.Feeds.Add(FeedEntry.GetNewFeed(i));
-                        dbContext.SaveChanges();
-                    }
+                    var listData = Data.TestData.GetTestListRows(5000);
+                    foreach (var row in listData)
+                        dbContext.TestListRows.Add(row);
+                    dbContext.SaveChanges();
 
+                    var treeData = Data.TestData.GetTestTreeRows(5000);
+                    var treeDataFlat = Data.TestData.GetTestTreeRowsFlat(treeData);
 
-                    for (int i = 0; i < 5000; i++)
-                        dbContext.TableRows.Add(TableRow.GetNewTableRow(i));
+                    foreach (var row in treeDataFlat)
+                        dbContext.TestTreeRows.Add(row);
                     dbContext.SaveChanges();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     return;
                 }
             }
-
         }
 
         private bool IsDbCreated()
@@ -94,19 +94,19 @@ namespace ListsTest
             }
         }
 
-        public async Task<FeedEntryResult> GetFeeds(int firstIndex, int count)
+        public async Task<ListEntryResult> GetListRows(int firstIndex, int count)
         {
             await semaphoreSlim.WaitAsync();
             try
             {
-                FeedEntryResult result = new FeedEntryResult();
+                ListEntryResult result = new ListEntryResult();
                 using (var dbContext = new TestDbContext())
                 {
                     try
                     {
-                        result.TotalNumEntries = dbContext.Feeds.Count();
+                        result.TotalNumEntries = dbContext.TestListRows.Count();
                         result.FirstIndex = firstIndex;
-                        result.FeedEntries = await dbContext.Feeds.Skip(firstIndex).Take(count).ToListAsync();
+                        result.ListRows = await dbContext.TestListRows.Skip(firstIndex).Take(count).ToListAsync();
                     }
                     catch (Exception ex)
                     {
@@ -114,24 +114,26 @@ namespace ListsTest
                 }
                 return result;
             }
-            finally 
-            { 
-                semaphoreSlim.Release(); 
+            finally
+            {
+                semaphoreSlim.Release();
             }
         }
-        public async Task<TableRowResult> GetTablesRows(int firstIndex, int count)
+        public async Task<TreeEntryResult> GetTreeRows(int firstIndex, int count)
         {
             await semaphoreSlim.WaitAsync();
             try
             {
-                TableRowResult result = new ();
+                TreeEntryResult result = new();
                 using (var dbContext = new TestDbContext())
                 {
                     try
                     {
-                        result.TotalNumEntries = dbContext.TableRows.Count();
+                        result.TotalNumEntries = dbContext.TestTreeRows.Count();
                         result.FirstIndex = firstIndex;
-                        result.TableRows = await dbContext.TableRows.OrderBy(r => r.Index).Skip(firstIndex).Take(count).ToListAsync();
+                        result.TreeRows = await dbContext.TestTreeRows.
+                                         OrderBy(r => r.Index).Skip(firstIndex).
+                                         Take(count).ToListAsync();
                     }
                     catch (Exception ex)
                     {

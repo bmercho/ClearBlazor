@@ -1,5 +1,5 @@
-﻿using TestData;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
+using Data;
 
 namespace ListsTest
 {
@@ -11,17 +11,17 @@ namespace ListsTest
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
         }
-        public async Task<FeedEntryResult> GetFeedEntries(int startIndex, int count)
+        public async Task<ListEntryResult> GetListRows(int startIndex, int count)
         {
             if (DatabaseManager != null)
-                    return await DatabaseManager.GetFeeds(startIndex, count);
-                return new FeedEntryResult();
+                return await DatabaseManager.GetListRows(startIndex, count);
+            return new ListEntryResult();
         }
-        public async Task<TableRowResult> GetTableRows(int startIndex, int count)
+        public async Task<TreeEntryResult> GetTreeRows(int startIndex, int count)
         {
             if (DatabaseManager != null)
-                return await DatabaseManager.GetTablesRows(startIndex, count);
-            return new TableRowResult();
+                return await DatabaseManager.GetTreeRows(startIndex, count);
+            return new TreeEntryResult();
         }
     }
 }

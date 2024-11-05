@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Data;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
-using TestData;
 
 
 namespace ListsTest
 {
     public class TestDbContext:DbContext
     {
-        public DbSet<FeedEntry> Feeds { get; set; }
-        public DbSet<TableRow> TableRows { get; set; }
+        public DbSet<TestListRow> TestListRows { get; set; }
+        public DbSet<TestTreeRowFlat> TestTreeRows { get; set; }
 
         private static DatabaseType _databaseType = DatabaseType.SQLite;
         private static string _databaseName = string.Empty;

@@ -28,5 +28,10 @@ namespace ClearBlazor
 
         [Parameter]
         public Alignment ContentAlignment { get; set; } = Alignment.Start;
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
     }
 }
