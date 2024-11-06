@@ -1,28 +1,28 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using ClearBlazor;
 
-namespace ClearBlazor
+namespace ClearBlazorInternal
 {
     /// <summary>
-    /// Displays a list of items( of type 'IItem') inside a ScrollViewer which is embedded in this component.
+    /// TableView is a templated table component supporting virtualization and allowing multiple selections.
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public partial class ListView<TItem> : ListBase<TItem>
+    public partial class ListViewBase<TItem>: ListBase<TItem>
         where TItem : ListItem
     {
         /// <summary>
-        /// The template for rendering each row.
-        /// The item is passed to each child for customization of the row
+        /// The child content of this control. Contains the columns for that table.
         /// </summary>
         [Parameter]
-        public required RenderFragment<TItem>? RowTemplate { get; set; }
+        public RenderFragment? ChildContent { get; set; }
 
         /// <summary>
         /// The height to be used for each row.
         /// This is only used if the VirtualizeMode is Virtualize.
         /// </summary>
         [Parameter]
-        public required int RowHeight { get; set; } = 30;
+        public int RowHeight { get; set; } = 30;
 
         /// <summary>
         /// Gets or sets the index of the Items to be initially shown in visible area.
@@ -30,6 +30,12 @@ namespace ClearBlazor
         /// </summary>
         [Parameter]
         public (int index, Alignment verticalAlignment) InitialIndex { get; set; } = (0, Alignment.Start);
+
+        /// <summary>
+        /// The spacing between the rows.
+        /// </summary>
+        [Parameter]
+        public int RowSpacing { get; set; } = 5;
 
         /// <summary>
         /// Indicates if the spinner is shown when new data is being loaded. Use when getting data externally and 
@@ -42,21 +48,32 @@ namespace ClearBlazor
         /// Approximately the number of rows that will fit in the ScrollViewer.
         /// Adjust this until this number at least fills a page.
         /// Should be too large rather that to small.
-        /// Not used if VirtualizationMode is None.
+        /// Not used if VirtualizationMode is None or Virtualized.
         /// </summary>
         [Parameter]
         public int PageSize { get; set; } = 10;
 
+        internal bool _showHeader = true;
+        internal int _columnSpacing = 5;
+        internal GridLines _horizontalGridLines  = GridLines.None;
+        internal GridLines _verticalGridLines = GridLines.None;
+        internal bool _stickyHeader = true;
+
         private bool _initializing = true;
         private string _scrollViewerId = Guid.NewGuid().ToString();
+        private Grid _grid = null!;
+        private double _gridWidth = 0;
+        private string _headerId = Guid.NewGuid().ToString();
+        internal double _headerHeight = 0;
         private string _baseRowId = Guid.NewGuid().ToString();
         private double _componentHeight = 0;
+        private double _componentWidth = 0;
+        private TableViewHeader<TItem> _header = null!;
 
         // Used when VirtualizeMode is Virtualize
         private double _height = 0;
         private double _scrollViewerHeight = 0;
-        private string _resizeObserverId = string.Empty;
-        private double _scrollTop = 0;
+        internal double _scrollTop = 0;
         private bool _loadingUp = false;
         private bool _loadingDown = false;
         private double _prevScrollTop = 0;
@@ -73,7 +90,7 @@ namespace ClearBlazor
         private bool _hasHadData = false;
         private SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
         private List<double> _pageOffsets = new();
-        private double _yOffset = 0;
+        internal double _yOffset = 0;
 
         // Used when VirtualizeMode is Pagination
         private int _currentPageNum = 1;
@@ -82,6 +99,10 @@ namespace ClearBlazor
         internal double _itemWidth = 0;
         internal int _skipItems = 0;
         internal int _takeItems = 0;
+
+        private List<TableColumn<TItem>> Columns { get; } = new List<TableColumn<TItem>>();
+        private string _columnDefinitions = string.Empty;
+        internal RenderFragment<TItem>? _rowTemplate = null;
 
         /// <summary>
         /// Goto the given index in the data. Not used if VirtualizationMode is InfiniteScroll.
@@ -101,9 +122,10 @@ namespace ClearBlazor
                     await GotoVirtualIndex(index, verticalAlignment);
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
-                    _currentPageNum = (int)Math.Ceiling((double)(index + 1) / (double)PageSize);
+                    _currentPageNum = (int)Math.Ceiling((double)(index + 1) / PageSize);
                     await GotoPage(_currentPageNum);
                     break;
             }
@@ -127,6 +149,8 @@ namespace ClearBlazor
                     await GetFirstPageAsync();
                     StateHasChanged();
                     break;
+                case VirtualizeMode.InfiniteScrollReverse:
+                    break;
                 case VirtualizeMode.Pagination:
                     _currentPageNum = 1;
                     await GotoPage(_currentPageNum);
@@ -146,6 +170,7 @@ namespace ClearBlazor
                     await GotoIndex(_totalNumItems - 1, Alignment.End);
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
                     _currentPageNum = _numPages;
@@ -182,6 +207,7 @@ namespace ClearBlazor
                 case VirtualizeMode.None:
                 case VirtualizeMode.Virtualize:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
                     if (_currentPageNum < _numPages)
@@ -191,6 +217,13 @@ namespace ClearBlazor
                     }
                     break;
             }
+        }
+
+        public async Task Scroll(int value)
+        {
+            var scrollTop = await JSRuntime.InvokeAsync<double>("window.scrollbar.GetScrollTop", _scrollViewerId);
+
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewerId, scrollTop + value);
         }
 
         /// <summary>
@@ -203,6 +236,7 @@ namespace ClearBlazor
                 case VirtualizeMode.None:
                 case VirtualizeMode.Virtualize:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
                     if (_currentPageNum > 1)
@@ -225,6 +259,7 @@ namespace ClearBlazor
                 case VirtualizeMode.None:
                 case VirtualizeMode.Virtualize:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     break;
                 case VirtualizeMode.Pagination:
                     if (pageNumber < 1)
@@ -261,8 +296,9 @@ namespace ClearBlazor
                         StateHasChanged();
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     if (_pageOffsets.Count < 2)
-                    { 
+                    {
                         if (await GetFirstPageAsync())
                             _hasHadData = true;
                     }
@@ -288,6 +324,7 @@ namespace ClearBlazor
                 case VirtualizeMode.None:
                 case VirtualizeMode.Virtualize:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId);
                 case VirtualizeMode.Pagination:
                     if (_currentPageNum == _numPages)
@@ -307,6 +344,7 @@ namespace ClearBlazor
             {
                 case VirtualizeMode.None:
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollStart", _scrollViewerId);
                 case VirtualizeMode.Virtualize:
                     if (_scrollTop == 0)
@@ -333,6 +371,7 @@ namespace ClearBlazor
                         await CheckForNewRows(_scrollTop, true);
                         break;
                     case VirtualizeMode.InfiniteScroll:
+                    case VirtualizeMode.InfiniteScrollReverse:
                         break;
                     case VirtualizeMode.Pagination:
                         if (_items.Count() == 0)
@@ -342,8 +381,6 @@ namespace ClearBlazor
                         }
                         break;
                 }
-            SetSelectedItems();
-
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -352,12 +389,24 @@ namespace ClearBlazor
 
             if (firstRender)
             {
-                List<string> elementIds = new List<string>() { Id };
+                List<string> elementIds = new List<string>() { Id, _headerId, _grid.Id };
 
                 if (VirtualizeMode == VirtualizeMode.Virtualize)
                     elementIds.Add(_scrollViewerId);
+
                 _resizeObserverId = await ResizeObserverService.Service.
                                     AddResizeObserver(NotifyObservedSizes, elementIds);
+
+                if (VirtualizeMode == VirtualizeMode.InfiniteScroll ||
+                    VirtualizeMode == VirtualizeMode.InfiniteScrollReverse)
+                {
+                    foreach (var row in RowIndexes)
+                    {
+                        if (RowSizes[row.Value] == -1)
+                            await ResizeObserverService.Service.ObserveElement(_resizeObserverId,
+                                                       row.Key.ToString());
+                    }
+                }
 
                 await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewerId,
                                             DotNetObjectReference.Create(this));
@@ -372,6 +421,7 @@ namespace ClearBlazor
                 case VirtualizeMode.Virtualize:
                     break;
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     bool changed = false;
 
                     if (!_hasHadData && !_loadingUp && !_loadingDown)
@@ -391,27 +441,36 @@ namespace ClearBlazor
             }
         }
 
+        protected override void AddChild(ClearComponentBase child)
+        {
+            TableColumn<TItem>? column = child as TableColumn<TItem>;
+            if (column != null && !Columns.Contains(column))
+            {
+                Columns.Add(column);
+                _columnDefinitions = string.Join(", ", Columns.Select(c => c.ColumnDefinition));
+                StateHasChanged();
+            }
+        }
         [JSInvokable]
         public async Task HandleScrollEvent(ScrollState scrollState)
         {
             try
             {
+                var top = scrollState.ScrollTop;
+                if (_scrollTop == top)
+                    return;
+
+                _scrollTop = top;
                 switch (VirtualizeMode)
                 {
                     case VirtualizeMode.None:
                         break;
                     case VirtualizeMode.Virtualize:
-                        double top = scrollState.ScrollTop;
-                        if (scrollState.ScrollTop > _height - _scrollViewerHeight)
-                            top = _height - _scrollViewerHeight;
-                        if (_scrollTop == top)
-                            return;
-
-                        _scrollTop = top;
-                        if (await CheckForNewRows(_scrollTop, false))
-                            StateHasChanged();
+                        await CheckForNewRows(_scrollTop, false);
+                        _header.Refresh();
                         break;
                     case VirtualizeMode.InfiniteScroll:
+                    case VirtualizeMode.InfiniteScrollReverse:
                         if (Math.Ceiling(scrollState.ClientHeight + scrollState.ScrollTop) >= scrollState.ScrollHeight)
                         {
                             if (scrollState.ScrollHeight > _pageOffsets[_pageOffsets.Count - 1])
@@ -421,23 +480,23 @@ namespace ClearBlazor
                                 if (_pageOffsets.Count == 1)
                                     await GetSecondPageAsync(scrollState.ScrollHeight);
                                 else
-                                    await GetNextPageDataAsync(_pageOffsets.Count - 1, 
+                                    await GetNextPageDataAsync(_pageOffsets.Count - 1,
                                                                scrollState.ScrollHeight, scrollState.ScrollTop);
                                 StateHasChanged();
                             }
                             else
-                               await CheckForNewRows(scrollState.ScrollTop);
+                                await CheckForNewRows(scrollState.ScrollTop);
 
                         }
                         else
                             await CheckForNewRows(scrollState.ScrollTop);
-
+                        _header.Refresh();
                         break;
                     case VirtualizeMode.Pagination:
                         break;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -496,7 +555,7 @@ namespace ClearBlazor
                 if (loadTwoPages || _items.Count < PageSize * 2)
                 {
                     numToGet = PageSize * 2;
-                    newItems = await GetItems((currentPageNum-1) * PageSize, numToGet);
+                    newItems = await GetItems((currentPageNum - 1) * PageSize, numToGet);
                 }
                 else
                 {
@@ -522,12 +581,11 @@ namespace ClearBlazor
                         _items = _items.GetRange(PageSize, PageSize);
                         _items.AddRange(newItems);
                     }
-
                     return true;
                 }
                 return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
@@ -550,7 +608,7 @@ namespace ClearBlazor
         private async Task GotoVirtualIndex(int index, Alignment verticalAlignment)
         {
             double scrollTop = 0;
-            var maxItemsInContainer = _scrollViewerHeight / RowHeight;
+            var maxItemsInContainer = _scrollViewerHeight / (RowHeight + RowSpacing);
 
             switch (verticalAlignment)
             {
@@ -560,15 +618,15 @@ namespace ClearBlazor
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
                     if (_skipItems < maxItemsInContainer)
-                        scrollTop = _skipItems * RowHeight;
+                        scrollTop = _skipItems * (RowHeight + RowSpacing);
                     else
-                        scrollTop = (_skipItems - maxItemsInContainer / 2 + 0.5) * RowHeight;
+                        scrollTop = (_skipItems - maxItemsInContainer / 2 + 0.5) * (RowHeight + RowSpacing);
                     break;
                 case Alignment.Start:
                     _skipItems = index;
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
-                    scrollTop = _skipItems * RowHeight;
+                    scrollTop = _skipItems * (RowHeight + RowSpacing);
                     break;
                 case Alignment.End:
                     if (index < maxItemsInContainer)
@@ -578,9 +636,9 @@ namespace ClearBlazor
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
                     if (_skipItems < maxItemsInContainer)
-                        scrollTop = _skipItems * RowHeight;
+                        scrollTop = _skipItems * (RowHeight + RowSpacing);
                     else
-                        scrollTop = (index - maxItemsInContainer + 1) * RowHeight;
+                        scrollTop = (index - maxItemsInContainer + 1) * (RowHeight + RowSpacing);
                     break;
             }
             _items = await GetItems(_skipItems, _takeItems);
@@ -595,18 +653,29 @@ namespace ClearBlazor
 
         private string GetTransformStyle()
         {
-            if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
-                return $"transform: translateY({_yOffset}px);";
-            else
-                return string.Empty;
+            int header = _showHeader ? 1 : 0;
+            string css = $"display:grid;  grid-template-columns: subgrid;align-content: flex-start; " +
+                         $"grid-area: 1 / 1 /span {_items.Count + header} / span {Columns.Count};";
 
+            if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
+                css += $"transform: translateY({_yOffset}px);";
+            else if (VirtualizeMode == VirtualizeMode.InfiniteScrollReverse)
+                css += $"transform: translateY({_yOffset}px);";
+
+            return css;
         }
         private string GetHeightDivStyle()
         {
+            int header = _showHeader ? 1 : 0;
+            string css = $"display:grid;  grid-template-columns: subgrid;align-content: flex-start; " +
+                         $"grid-area: 1 / 1 /span {_items.Count + header} / span {Columns.Count};";
+
             if (VirtualizeMode == VirtualizeMode.InfiniteScroll)
-                return $"height:{_maxScrollHeight}px";
-            else
-                return string.Empty;
+                css += $"height:{_maxScrollHeight}px";
+            else if (VirtualizeMode == VirtualizeMode.InfiniteScrollReverse)
+                css += $"height:{_maxScrollHeight}px";
+
+            return css;
         }
 
         private string GetScrollViewerStyle()
@@ -624,19 +693,25 @@ namespace ClearBlazor
                     overscrollBehaviour = "overscroll-behavior-y:none; ";
                     break;
             }
-
-            return $"display:grid; height:{_componentHeight}px; " +
-                   $"justify-self:stretch; overflow-x:hidden; " +
-                   $"overflow-y:auto; scrollbar-gutter:stable; {overscrollBehaviour}" +
-                   $"grid-area: 1 / 1 / span 1 / span 1; ";
+            Console.WriteLine($"Col Count:{Columns.Count}");
+            return $"height:{_componentHeight}px; width:{_componentWidth}px; " +
+                   $"overflow-x:auto; overflow-y:auto; {overscrollBehaviour}" +
+                   $"display:grid; grid-template-columns: subgrid; " +
+                   $"grid-area: 1 / 1 / span 1 / span {Columns.Count}; ";
         }
 
         protected string GetContainerStyle()
         {
+            int header = _showHeader ? 1 : 0;
+            string css = $"display:grid; " +
+                         $"width:{_gridWidth - ThemeManager.CurrentTheme.GetScrollBarProperties().width}px; " +
+                         $" grid-template-columns: subgrid;align-content: flex-start; " +
+             $"grid-area: 1 / 1 /span {_items.Count + header} / span {Columns.Count};";
+
             if (VirtualizeMode == VirtualizeMode.Virtualize)
-                return $"display:grid; position: relative;height: {_height}px";
-            else
-                return string.Empty;
+                css += $"display:grid; position: relative;height: {_height}px";
+
+            return css;
         }
 
         internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
@@ -652,6 +727,7 @@ namespace ClearBlazor
                     if (observedSize.ElementHeight > 0 && _componentHeight != observedSize.ElementHeight)
                     {
                         _componentHeight = observedSize.ElementHeight;
+                        _componentWidth = observedSize.ElementWidth;
                         changed = true;
                     }
                 }
@@ -664,21 +740,43 @@ namespace ClearBlazor
                         changed = true;
                     }
                 }
-                
-                if (changed)
+                else if (observedSize.TargetId == _grid.Id)
                 {
-                    if (VirtualizeMode == VirtualizeMode.Virtualize)
+                    if (observedSize.ElementHeight > 0 && _gridWidth != observedSize.ElementHeight)
                     {
-                        if (_scrollViewerHeight > 0 && _initializing)
-                        {
-                            _initializing = false;
-                            await CheckForNewRows(_scrollTop, true);
-                            await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
-
-                        }
+                        _gridWidth = observedSize.ElementWidth;
+                        changed = true;
                     }
-                    StateHasChanged();
                 }
+                else if (observedSize.TargetId == _headerId)
+                {
+                    if (observedSize.ElementHeight > 0 && _headerHeight != observedSize.ElementHeight)
+                    {
+                        _headerHeight = observedSize.ElementHeight;
+                        changed = true;
+                    }
+                }
+                else
+                {
+                    if (RowIndexes.ContainsKey(observedSize.TargetId) && observedSize.ElementHeight > 0)
+                    {
+                        var row = RowIndexes[observedSize.TargetId];
+                        RowSizes[row] = observedSize.ElementHeight;
+                        changed = true;
+                    }
+                }
+            }
+            if (changed)
+            {
+                if (VirtualizeMode == VirtualizeMode.Virtualize)
+                {
+                    if (_scrollViewerHeight > 0 && _initializing)
+                    {
+                        _initializing = false;
+                        await CheckForNewRows(_scrollTop, true);
+                    }
+                }
+                StateHasChanged();
             }
         }
 
@@ -692,6 +790,7 @@ namespace ClearBlazor
                 case VirtualizeMode.Virtualize:
                     return await CheckForNewVirtualizationRows(scrollTop, reload);
                 case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
                     return await CheckForNewInfiniteScrollRowsAsync(scrollTop);
             }
             return false;
@@ -699,13 +798,19 @@ namespace ClearBlazor
 
         private async Task<bool> CheckForNewVirtualizationRows(double scrollTop, bool reload)
         {
-            var skipItems = (int)(scrollTop / RowHeight);
-            var takeItems = (int)Math.Ceiling((double)(scrollTop + _scrollViewerHeight) / RowHeight) - skipItems;
+            var skipItems = (int)Math.Floor(scrollTop / (RowHeight + RowSpacing)) - 1;
+            if (skipItems < 0)
+                skipItems = 0;
 
-            if (reload || skipItems != _skipItems || takeItems != _takeItems || _items.Count == 0)
+            var takeItems = (int)Math.Ceiling(_scrollViewerHeight / (RowHeight + RowSpacing)) + 2;
+
+            if ((reload || skipItems != _skipItems || takeItems != _takeItems ||
+                _items.Count == 0) && takeItems > 0)
             {
                 if (_loadingUp || _loadingDown)
+                {
                     _loadItemsCts?.Cancel();
+                }
                 await _semaphoreSlim.WaitAsync();
                 try
                 {
@@ -721,7 +826,7 @@ namespace ClearBlazor
                     _skipItems = skipItems;
                     _takeItems = takeItems;
                     _items = await GetItems(_skipItems, _takeItems);
-                    _height = _totalNumItems * RowHeight;
+                    _height = _totalNumItems * (RowHeight + RowSpacing);
                 }
                 finally
                 {
@@ -734,7 +839,6 @@ namespace ClearBlazor
             }
             return false;
         }
-
         private async Task<bool> CheckForNewInfiniteScrollRowsAsync(double scrollTop)
         {
             for (int page = 0; page < _pageOffsets.Count - 1; page++)
@@ -753,6 +857,7 @@ namespace ClearBlazor
 
         private async Task<bool> LoadInfiniteScrollPageAsync(int page)
         {
+
             if (_loadingUp || _loadingDown)
                 _loadItemsCts?.Cancel();
             await _semaphoreSlim.WaitAsync();
@@ -760,6 +865,7 @@ namespace ClearBlazor
             {
                 if (page == _firstRenderedPageNum)
                     return false;
+
                 if (page < _firstRenderedPageNum)
                     _loadingUp = true;
                 else

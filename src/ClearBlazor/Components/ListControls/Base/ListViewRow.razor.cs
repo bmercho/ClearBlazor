@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using ClearBlazor;
 
-namespace ClearBlazor
+namespace ClearBlazorInternal
 {
-    public partial class TableViewRow<TItem> : ListRowBase<TItem>, IDisposable
+    public partial class ListViewRow<TItem> : ListRowBase<TItem>, IDisposable
            where TItem : ListItem
     {
         [Parameter]
@@ -28,15 +29,51 @@ namespace ClearBlazor
         [Parameter]
         public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
 
+        /// <summary>
+        /// Used for a ListView
+        /// The template for rendering each row.
+        /// The item is passed to each child for customization of the row
+        /// </summary>
+        [Parameter]
+        public required RenderFragment<TItem>? RowTemplate { get; set; }
+
         private bool _mouseOver = false;
-        private TableView<TItem>? _parent = null;
+        private ListViewBase<TItem>? _parent = null;
+        private TreeItem<TItem>? _nodeData = null;
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            _nodeData = RowData as TreeItem<TItem>;
+        }
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<TableView<TItem>>(Parent);
+            _parent = FindParent<ListViewBase<TItem>>(Parent);
             if (_parent != null)
-                _parent.AddListRow(this);
+            {
+                await _parent.AddListRow(this);
+                return;
+            }
+            //_parent = FindParent<TableView<TItem>>(Parent);
+            //if (_parent != null)
+            //{
+            //    await _parent.AddListRow(this);
+            //    return
+            //}
+            //_parent = FindParent<TreeView<TItem>>(Parent);
+            //if (_parent != null)
+            //{
+            //    await _parent.AddListRow(this);
+            //    return
+            //}
+            //_parent = FindParent<TreeTableView<TItem>>(Parent);
+            //if (_parent != null)
+            //{
+            //    await _parent.AddListRow(this);
+            //    return
+            //}
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
@@ -115,7 +152,7 @@ namespace ClearBlazor
 
             string css = string.Empty;
 
-            int header = _parent.ShowHeader ? 1 : 0;
+            int header = _parent._showHeader ? 1 : 0;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +

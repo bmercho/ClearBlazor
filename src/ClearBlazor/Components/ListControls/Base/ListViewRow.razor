@@ -1,15 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Components
-@namespace ClearBlazor
+@using ClearBlazor
+@namespace ClearBlazorInternal
 @typeparam TItem
 @inherits ListRowBase<TItem>
 
 <CascadingValue Value=this IsFixed="false">
     @if (_parent != null &&
-    (_parent.HorizontalGridLines == GridLines.All || _parent.HorizontalGridLines == GridLines.ContentOnly))
+    (_parent._horizontalGridLines == GridLines.All || _parent._horizontalGridLines == GridLines.ContentOnly))
     {
         @if (Index > 0)
         {
-            @if (_parent.HorizontalGridLines == GridLines.All)
+            @if (_parent._horizontalGridLines == GridLines.All)
             {
                 <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
             }
@@ -55,6 +56,16 @@
                         }
                     }
                 </div>
+            </div>
+        }
+
+        @if (RowTemplate != null)
+        {
+            <div id=@RowData.ListItemId class="@Classes"
+                 @onmouseenter=OnMouseEnter
+                 @onmouseleave=OnMouseLeave
+                 @onclick=OnRowClicked>
+                @RowTemplate(RowData)
             </div>
         }
     </div>

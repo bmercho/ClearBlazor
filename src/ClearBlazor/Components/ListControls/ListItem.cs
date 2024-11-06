@@ -2,8 +2,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ClearBlazor
-{ 
-    public abstract class ListItem:IEquatable<ListItem>
+{
+    public abstract class ListItem : IEquatable<ListItem>
     {
         [Key]
         public Guid ListItemId { get; set; } = Guid.NewGuid();
@@ -11,14 +11,14 @@ namespace ClearBlazor
         [NotMapped]
         public bool IsSelected { get; set; }
 
-        [NotMapped] 
+        [NotMapped]
         public int Index { get; set; }
 
         public bool Equals(ListItem? other)
         {
-            if (other == null) 
+            if (other == null)
                 return false;
-            if (other.ListItemId == ListItemId) 
+            if (other.ListItemId == ListItemId)
                 return true;
             return false;
         }

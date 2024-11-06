@@ -1,0 +1,62 @@
+﻿@using ClearBlazor
+@namespace ClearBlazorInternal
+@typeparam TItem
+@inherits ListBase<TItem>
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <Grid @ref=_grid Rows=auto Columns=@_columnDefinitions Style="overflow:visible">
+            <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
+                <div style=@GetContainerStyle()>
+                    <div style=@GetHeightDivStyle()>
+                        <div style=@GetTransformStyle()>
+                      
+                        @if (_showHeader)
+                            {
+                                <TableViewHeader @ref=_header
+                                                 TItem=TItem
+                                                 VirtualizeMode=@VirtualizeMode
+                                                 HeaderId=@_headerId
+                                                 RowSpacing=@RowSpacing
+                                                 ColumnSpacing=@_columnSpacing
+                                                 HorizontalGridLines=@_horizontalGridLines
+                                                 VerticalGridLines=@_verticalGridLines
+                                                 StickyHeader=@_stickyHeader
+                                                 RowHeight=@RowHeight
+                                                 Columns=@Columns />
+                            }
+
+                            @foreach (var row in _items.Select((item, index) => new { item, index }))
+                            {
+                                <ListViewRow TItem=TItem RowData=@row.item
+                                              RowIndex=@row.item.Index
+                                              Index=row.index
+                                              RowId=@(_baseRowId + row.index.ToString())
+                                              RowSpacing=@RowSpacing 
+                                              ColumnSpacing=@_columnSpacing
+                                              VerticalGridLines=@_verticalGridLines
+                                              Columns=@Columns
+                                              RowTemplate=@_rowTemplate/>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (_loadingUp && ShowLoadingSpinner)
+            {
+                <Grid BackgroundColor=Color.Transparent Margin=20 Column=0 ColumnSpan=@Columns.Count
+                      HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Start>
+                    <Spinner Style="z-index:1;" />
+                </Grid>
+            }
+            @if (_loadingDown && ShowLoadingSpinner)
+            {
+                <Grid BackgroundColor=Color.Transparent Margin=20 Column=0 ColumnSpan=@Columns.Count
+                      HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.End>
+                    <Spinner />
+                </Grid>
+            }
+        </Grid>
+    </div>
+    @ChildContent
+</CascadingValue>

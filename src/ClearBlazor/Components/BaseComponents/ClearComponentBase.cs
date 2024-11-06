@@ -242,7 +242,8 @@ namespace ClearBlazor
         protected T? FindParent<T>(ClearComponentBase? Parent) where T : ClearComponentBase
         {
             ClearComponentBase? parent = Parent;
-            while (parent != null && parent.GetType() != typeof(T))
+            while (parent != null && 
+                  parent.GetType() != typeof(T) && !parent.GetType().IsSubclassOf(typeof(T)))
                 parent = parent.Parent;
             if (parent == null)
                 return null;

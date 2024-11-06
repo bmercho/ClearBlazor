@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ClearBlazor;
 
-namespace ClearBlazor
+namespace ClearBlazorInternal
 {
     public class ListRowBase<TItem> : ClearComponentBase
            where TItem : ListItem

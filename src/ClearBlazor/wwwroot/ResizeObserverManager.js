@@ -25,6 +25,24 @@ export class ResizeObserverManager {
         }
     }
 
+    static Observe(observerId, elementId) {
+        let element = document.getElementById(elementId);
+        if (element != null) {
+            let obs = this.ResizeObservers[observerId]
+            if (obs != null)
+                obs.observe(element);
+        }
+    }
+
+    static Unobserve(observerId, elementId) {
+        let element = document.getElementById(elementId);
+        if (element != null) {
+            let obs = this.ResizeObservers[observerId]
+            if (obs != null)
+                obs.unobserve(element);
+        }
+    }
+
     static RemoveResizeObserver(observerId) {
         if (!this.ResizeObservers[observerId]) return;
         this.ResizeObservers[observerId].disconnect();

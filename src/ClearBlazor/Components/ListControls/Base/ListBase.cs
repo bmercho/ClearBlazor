@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using ClearBlazor;
 
-namespace ClearBlazor
+namespace ClearBlazorInternal
 {
     public class ListBase<TItem> : ClearComponentBase, IBorder, IBackground, IBoxShadow
            where TItem : ListItem
@@ -114,10 +115,17 @@ namespace ClearBlazor
         internal int _totalNumItems = 0;
         private int _lastSelectedRow = 0;
         internal CancellationTokenSource? _loadItemsCts;
+        internal string? _resizeObserverId = null;
 
         protected Dictionary<Guid, TItem> _selectedItems { get; set; } = [];
 
         protected Dictionary<Guid, ListRowBase<TItem>> ListRows { get; set; } = [];
+
+        //  Index, rowSize
+        protected Dictionary<int, double> RowSizes { get; set; } = [];
+
+        // RowId, Index
+        protected Dictionary<string, int> RowIndexes { get; set; } = [];
         protected List<TItem> _items { get; set; } = new List<TItem>();
 
         /// <summary>
@@ -150,7 +158,7 @@ namespace ClearBlazor
             {
                 SelectedItem.IsSelected = false;
                 Refresh(SelectedItem);
-                SelectedItem = null;
+                SelectedItem = default;
                 await NotifySelection();
             }
 
@@ -170,10 +178,24 @@ namespace ClearBlazor
                 _selectedItems.Add(item.ListItemId, item);
         }
 
-        internal void AddListRow(ListRowBase<TItem> listItem)
+        internal async Task AddListRow(ListRowBase<TItem> listItem)
         {
             if (ListRows.ContainsKey(listItem.RowData.ListItemId))
                 return;
+
+            if (VirtualizeMode == VirtualizeMode.InfiniteScroll ||
+                VirtualizeMode == VirtualizeMode.InfiniteScrollReverse)
+            {
+                RowIndexes.Add(listItem.RowData.ListItemId.ToString(), listItem.RowData.Index);
+                if (_resizeObserverId != null)
+                {
+                    RowSizes.Add(listItem.RowData.Index, 0);
+                    await ResizeObserverService.Service.ObserveElement(_resizeObserverId,
+                                            listItem.RowData.ListItemId.ToString());
+                }
+                else
+                    RowSizes.Add(listItem.RowData.Index, -1);
+            }
 
             ListRows.Add(listItem.RowData.ListItemId, listItem);
         }
@@ -424,6 +446,5 @@ namespace ClearBlazor
             }
             return new List<TItem>();
         }
-
     }
 }
