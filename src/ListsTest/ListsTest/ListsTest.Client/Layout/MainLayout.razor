@@ -15,7 +15,7 @@
                     <ScrollViewer VerticalScrollMode="ScrollMode.Enabled">
                         <ListBox TListBox="string" Margin="0,10,0,10" @bind-Value=_selection>
                             <ListBoxItem Text="Home" HRef="/" OnClicked=@Close />
-                            <ListBoxItem Text="ListView" InitiallyExpanded=true>
+                            <ListBoxItem Text="ListView" InitiallyExpanded=false>
                                 <ListBoxItem Text="ListView Virtualization:None" HRef="/ListView" OnClicked=@Close />
                                 <ListBoxItem Text="ListView Virtualization:Virtualized:LocalData" HRef="/ListViewVirtualizeLocal" OnClicked=@Close />
                                 <ListBoxItem Text="ListView Virtualization:Virtualized:DBData" HRef="/ListViewVirtualizeDB" OnClicked=@Close />
@@ -33,9 +33,13 @@
                                 <ListBoxItem Text="TableView Virtualization:Pagination:LocalData" HRef="/TableViewPaginationLocal" OnClicked=@Close />
                                 <ListBoxItem Text="TableView Virtualization:Pagination:DBData" HRef="/TableViewPaginationDB" OnClicked=@Close />
                             </ListBoxItem>
-                            <ListBoxItem Text="TreeView" InitiallyExpanded=false>
+                            <ListBoxItem Text="TreeView" InitiallyExpanded=true>
                                 <ListBoxItem Text="TreeView Virtualization:None" HRef="/TreeView" OnClicked=@Close />
                                 <ListBoxItem Text="TreeView Virtualization:Virtualized" HRef="/TreeViewVirtualize" OnClicked=@Close />
+                            </ListBoxItem>
+                            <ListBoxItem Text="TreeTableView" InitiallyExpanded=true>
+                                <ListBoxItem Text="TreeTableView Virtualization:None" HRef="/TreeTableView" OnClicked=@Close />
+                                <ListBoxItem Text="TreeTableView Virtualization:Virtualized" HRef="/TreeTableViewVirtualize" OnClicked=@Close />
                             </ListBoxItem>
                         </ListBox>
                     </ScrollViewer>

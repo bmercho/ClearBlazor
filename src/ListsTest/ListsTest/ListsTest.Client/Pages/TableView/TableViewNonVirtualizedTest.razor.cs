@@ -56,12 +56,6 @@ namespace ListsTest
             _table.Refresh(_localListData[0]);
         }
 
-        private async Task ClearSelections()
-        {
-            await _table.RemoveAllSelections();
-            StateHasChanged();
-        }
-
         async Task CheckAtEnd()
         {
             _atEnd = await _table.AtEnd();
@@ -73,6 +67,11 @@ namespace ListsTest
             StateHasChanged();
         }
 
+        private async Task ClearSelections()
+        {
+            await _table.RemoveAllSelections();
+            StateHasChanged();
+        }
         private async Task SelectionModeChanged()
         {
             if (_table == null)

@@ -1,0 +1,113 @@
+﻿@using Microsoft.AspNetCore.Components
+@using ClearBlazorInternal
+@namespace ClearBlazor
+@typeparam TItem
+@inherits ListRowBase<TItem>
+<CascadingValue Value=this IsFixed="false">
+    @if (_parent != null && _parent._horizontalGridLines == GridLines.All)
+    {
+        @if (Index > 0)
+        {
+            @if (_parent._horizontalGridLines == GridLines.All)
+            {
+                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
+            }
+            else
+            {
+                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
+            }
+        }
+    }
+    @if (NodeTemplate != null)
+    {
+        <div style=@GetFullRowStyle()
+             @onmouseenter=OnMouseEnter
+             @onmouseleave=OnMouseLeave>
+
+            @if (Columns.Count == 0)
+            {
+                <div style="display:flex; flex-direction:row;grid-row:2 / span 1;">
+                    @if (NodeData.HasChildren)
+                    {
+                        <div style=@(GetExpandStyle(NodeData))>
+                            @if (NodeData.IsExpanded)
+                            {
+                                <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore
+                                            VerticalAlignment=Alignment.Start
+                                            OnClicked=@(e => OnNodeClicked(e, NodeData)) />
+                            }
+                            else
+                            {
+                                <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ChevronRight
+                                            VerticalAlignment=Alignment.Start
+                                            OnClicked=@(e => OnNodeClicked(e, NodeData)) />
+                            }
+                        </div>
+                    }
+                    <div style=@(GetContentStyle(NodeData))
+                         @onclick=@(e => OnRowClicked(e, NodeData))>
+                        @NodeTemplate(NodeData)
+                    </div>
+                </div>
+            }
+            @for (int col = 0; col < Columns.Count; col++)
+            {
+                var colIndex = col;
+                <div style=@GetRowStyle(Index+2, colIndex+1)
+                     @onclick=@(e => OnRowClicked(e, NodeData))>
+                    <div style=@GetContainerDivStyle()>
+                        @if (colIndex == 0)
+                        {
+                            <div style="display:flex; flex-direction:row;grid-row:2 / span 1;">
+                                @if (NodeData.HasChildren)
+                                {
+                                    <div style=@(GetExpandStyle(NodeData))>
+                                        @if (NodeData.IsExpanded)
+                                        {
+                                            <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore
+                                                        VerticalAlignment=Alignment.Start />
+                                        }
+                                        else
+                                        {
+                                            <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ChevronRight
+                                                        VerticalAlignment=Alignment.Start />
+                                        }
+                                    </div>
+                                }
+                                <div style=@(GetContentStyle(NodeData))>
+                                    @NodeTemplate(NodeData)
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div style="display:grid;grid-row: 2 /span 1; align-self:start; margin-top:5px;">
+                                @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
+                                {
+                                    <TextBlock TextAlignment=@Columns[colIndex].ContentAlignment>
+                                        @foreach (var line in GetLines(Columns[colIndex].Field.Invoke(NodeData).ToString()))
+                                        {
+                                            @(line)
+                                            <br />
+                                        }
+                                    </TextBlock>
+                                }
+                                else
+                                {
+                                    @Columns[colIndex].DataTemplate?.Invoke(NodeData)
+                                }
+                            </div>
+                        }
+                        @if (VerticalGridLines == GridLines.All)
+                        {
+                            @if (colIndex != Columns.Count - 1)
+                            {
+                                <div style=@GetVerticalGridLineStyle(colIndex+3) />
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</CascadingValue>

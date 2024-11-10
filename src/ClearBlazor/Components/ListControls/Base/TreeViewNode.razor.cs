@@ -1,17 +1,24 @@
+using ClearBlazorInternal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using ClearBlazor;
 
-namespace ClearBlazorInternal
+namespace ClearBlazor
 {
-    public partial class ListViewRow<TItem> : ListRowBase<TItem>, IDisposable
-           where TItem : ListItem
+    public partial class TreeViewNode<TItem> :ListRowBase<TItem>, IDisposable
+           where TItem : TreeItem<TItem>
     {
         [Parameter]
-        public int Index { get; set; }
+        public required TItem NodeData { get; set; }
+
+        /// <summary>
+        /// The template for rendering each row.
+        /// The item is passed to each child for customization of the node
+        /// </summary>
+        [Parameter]
+        public required RenderFragment<TItem>? NodeTemplate { get; set; }
 
         [Parameter]
-        public string RowId { get; set; } = string.Empty;
+        public int Index { get; set; }
 
         [Parameter]
         public int RowSpacing { get; set; } = 5;
@@ -25,48 +32,27 @@ namespace ClearBlazorInternal
         [Parameter]
         public GridLines VerticalGridLines { get; set; } = GridLines.None;
 
-
         [Parameter]
         public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
 
-        /// <summary>
-        /// Used for a ListView
-        /// The template for rendering each row.
-        /// The item is passed to each child for customization of the row
-        /// </summary>
-        [Parameter]
-        public required RenderFragment<TItem>? RowTemplate { get; set; }
-
-        private ListViewBase<TItem>? _parent = null;
-        private TreeItem<TItem>? _nodeData = null;
-
-        protected override void OnParametersSet()
-        {
-            base.OnParametersSet();
-            _nodeData = RowData as TreeItem<TItem>;
-        }
+        private ListBase<TItem>? _parent;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<ListViewBase<TItem>>(Parent);
+            RowData = NodeData;
+            _parent = FindParent<ListBase<TItem>>(Parent);
             if (_parent != null)
-            {
                 await _parent.AddListRow(this);
-                return;
-            }
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             if (_parent != null)
+            {
                 switch (_parent.VirtualizeMode)
                 {
                     case VirtualizeMode.None:
-                            parameters.TryGetValue<TItem>(nameof(RowData), out var rowData);
-                            if (rowData != null)
-                                if (RowData == null || rowData.ListItemId != RowData.ListItemId)
-                                    _doRender = true;
                         break;
                     case VirtualizeMode.Virtualize:
                     case VirtualizeMode.InfiniteScroll:
@@ -76,10 +62,9 @@ namespace ClearBlazorInternal
                         _doRender = true;
                         break;
                 }
+            }
             await base.SetParametersAsync(parameters);
-
         }
-
         protected override void OnAfterRender(bool firstRender)
         {
             base.OnAfterRender(firstRender);
@@ -96,6 +81,7 @@ namespace ClearBlazorInternal
                 return;
             if (_parent.HoverHighlight)
             {
+                _parent.SetHighlightedItem(this);
                 _mouseOver = true;
                 await Task.CompletedTask;
                 _doRender = true;
@@ -109,6 +95,7 @@ namespace ClearBlazorInternal
                 return;
             if (_parent.HoverHighlight)
             {
+                _parent.SetHighlightedItem(null);
                 _mouseOver = false;
                 await Task.CompletedTask;
                 _doRender = true;
@@ -116,22 +103,106 @@ namespace ClearBlazorInternal
             }
         }
 
-        protected async Task OnRowClicked(MouseEventArgs args)
+        public async Task OnRowClicked(MouseEventArgs args, TItem item)
         {
             if (_parent == null)
                 return;
-
             bool ctrlDown = args.CtrlKey;
             bool shiftDown = args.ShiftKey;
-            await _parent.HandleRowSelection(RowData, RowIndex, ctrlDown, shiftDown);
+            await _parent.HandleRowSelection(NodeData, RowIndex, ctrlDown, shiftDown);
         }
 
-        private string GetFullRowStyle()
+        public void OnNodeClicked(MouseEventArgs args, TItem item)
+        {
+            if (_parent == null)
+                return;
+            if (item.HasChildren)
+            {
+                item.IsExpanded = !item.IsExpanded;
+                foreach (var child in item.Children)
+                {
+                    if (item.IsExpanded)
+                        MakeVisible(child);
+                    else
+                        MakeInvisible(child);
+                }
+            }
+            if (_parent != null)
+            {
+                var treeViewBase = _parent as TreeViewBase<TItem>;
+                treeViewBase?.Refresh();
+            }
+        }
+
+        private void MakeVisible(TItem item)
+        {
+            if (item.Parent != null)
+                if (item.Parent.IsExpanded)
+                {
+                    item.IsVisible = true;
+                    foreach (var child in item.Children)
+                        MakeVisible(child);
+                }
+        }
+
+        private void MakeInvisible(TItem item)
+        {
+            item.IsVisible = false;
+            foreach (var child in item.Children)
+                MakeInvisible(child);
+        }
+
+        protected string GetExpandStyle(TItem item)
+        {
+            var css = $"margin-left:{item.Level * 20}px; align-self:start;margin-top:-5px;";
+            return css;
+        }
+
+        protected string GetContentStyle(TItem item)
         {
             if (_parent == null)
                 return string.Empty;
 
-            string css = string.Empty;
+            int margin = item.Level * 5;
+            if (!item.HasChildren)
+                margin += item.Level * 20 + (int)_parent._iconWidth;
+            var css = $"margin-left:{margin}px; align-self:start; " +
+                      $"background-color:transparent; ";
+            switch (_parent._horizontalContentAlignment)
+            {
+                case Alignment.Stretch:
+                    css += $"justify-self:stretch; width:{Width}px; ";
+                    break;
+                case Alignment.Start:
+                    css += "justify-self:start; ";
+                    break;
+                case Alignment.Center:
+                    css += "justify-self:center; ";
+                    break;
+                case Alignment.End:
+                    css += "justify-self:end; ";
+                    break;
+            }
+            return css;
+        }
+
+        protected string GetFullRowStyle()
+        {
+            if (_parent == null)
+                return string.Empty;
+
+            var css = string.Empty;
+
+            //if (Columns.Count == 0)
+            //    css = "display:flex; flex-direction: row; ";
+            //else 
+            //    css = "flex-direction: row; display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
+            //          $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
+
+            //if (_parent.VirtualizeMode == VirtualizeMode.Virtualize && _parent._rowHeight > 0)
+            //    css += $"position:absolute; height: {_parent._rowHeight}px; width: {_parent._itemWidth}px; " +
+            //           $"top: {Index * _parent._rowHeight}px;";
+
 
             int header = _parent._showHeader ? 1 : 0;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
@@ -139,7 +210,7 @@ namespace ClearBlazorInternal
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
                          $"grid-column: 1 / span {Columns.Count}; grid-row: 1/ span 1;";
                 css += $"justify-self:start; position:relative; " +
-                       $"top:{(_parent._skipItems+Index+ header) * (_parent._rowHeight + RowSpacing)}px;" +
+                       $"top:{(_parent._skipItems + Index + header) * (_parent._rowHeight + RowSpacing)}px;" +
                        $" height: {(_parent._rowHeight + RowSpacing)}px;";
             }
             else
@@ -149,7 +220,7 @@ namespace ClearBlazorInternal
             if (_mouseOver)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 
-            if (RowData.IsSelected)
+            if (NodeData.IsSelected)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; ";
 
             return css;
@@ -160,28 +231,17 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
-            return $"display:grid; grid-column: {column} /span 1; justify-self: stretch;" +
+            return $"display:grid; grid-column: {column} /span 1; justify-self: stretch; " +
                    $"padding:0px 0px 0px {ColumnSpacing / 2}px;";
-
         }
 
-        private string GetContainerDivStyle()
+        private string GetVerticalGridLineStyle(int column)
         {
-            if (_parent == null)
-                return string.Empty;
-
-            string css = "display:grid; grid-template-columns: 1fr auto; ";
-            if (_parent.VirtualizeMode != VirtualizeMode.Virtualize)
-                css += $"grid-template-rows: {RowSpacing/2}px 1fr {RowSpacing/2}px; ";
-            else
-                css += $"grid-template-rows: 0px 1fr 0px; ";
-
+            string css =  $"display:grid; " +
+                   $"border-width:0 0 0 1px; border-style:solid; " +
+                   $"grid-area: 1 / 2 / span 3 / span 1; " +
+                   $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
             return css;
-        }
-
-        private string[] GetLines(string? content)
-        {
-            return content == null ? Array.Empty<string>() : content.Split('\r');
         }
 
         private string GetHorizontalGridLineStyle(int row, int columnCount)
@@ -197,7 +257,7 @@ namespace ClearBlazorInternal
                        $"grid-area: 2 / 1 /span 1 / span {Columns.Count};  " +
                        $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
                 css += $"justify-self:start; position:relative; " +
-                       $"top:{(_parent._skipItems+Index) * (_parent._rowHeight + RowSpacing)}px;";
+                       $"top:{(_parent._skipItems + Index) * (_parent._rowHeight + RowSpacing)}px;";
 
             }
             else
@@ -209,16 +269,20 @@ namespace ClearBlazorInternal
             return css;
         }
 
-        private string GetVerticalGridLineStyle(int column)
+        private string[] GetLines(string? content)
+        {
+            return content == null ? Array.Empty<string>() : content.Split('\r');
+        }
+
+        private string GetContainerDivStyle()
         {
             if (_parent == null)
                 return string.Empty;
 
-            return $"display:grid; " +
-                   $"border-width:0 0 0 1px; border-style:solid; " +
-                   $"grid-area: 1 / 2 / span 3 / span 1; " +
-                   $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+            string css = "display:grid; grid-template-columns: 1fr auto; ";
+            css += $"grid-template-rows: {RowSpacing / 2}px 1fr {RowSpacing / 2}px; ";
 
+            return css;
         }
 
         public override void Dispose()
@@ -227,7 +291,5 @@ namespace ClearBlazorInternal
             if (_parent != null)
                 _parent.RemoveListRow(this);
         }
-
-
     }
 }

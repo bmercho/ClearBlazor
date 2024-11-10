@@ -13,6 +13,7 @@ namespace ClearBlazorInternal
         public int RowIndex { get; set; }
 
         internal bool _doRender = true;
+        internal bool _mouseOver = false;
 
         internal void SetRowData(TItem rowData)
         {
@@ -24,6 +25,13 @@ namespace ClearBlazorInternal
             _doRender = true;
             StateHasChanged();
         }
+
+        internal void Unhighlight()
+        {
+            _mouseOver = false;
+            Refresh();
+        }
+
 
     }
 }

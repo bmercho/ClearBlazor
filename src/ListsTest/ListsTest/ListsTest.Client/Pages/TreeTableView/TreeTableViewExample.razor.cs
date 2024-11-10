@@ -4,9 +4,9 @@ using ListsTest;
 
 namespace ClearBlazorTest
 {
-    public partial class TreeViewExample : IAsyncDisposable
+    public partial class TreeTableViewExample: IAsyncDisposable
     {
-        TreeView<TestTreeRow> _tree = null!;
+        TreeTableView<TestTreeRow> _tree = null!;
         private TestTreeRow? _selectedItem = null;
         private List<TestTreeRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
@@ -65,6 +65,21 @@ namespace ClearBlazorTest
         //     if (atEnd)
         //         await List.GotoEnd();
         // }
+        private async Task ClearSelections()
+        {
+            if (_tree == null)
+                return;
+            await _tree.RemoveAllSelections();
+            StateHasChanged();
+        }
+        private async Task SelectionModeChanged()
+        {
+            if (_tree == null)
+                return;
+            await _tree.RemoveAllSelections();
+            StateHasChanged();
+        }
+
         private async Task Up1()
         {
             await _tree.Scroll(1);
@@ -94,24 +109,9 @@ namespace ClearBlazorTest
             await _tree.Scroll(-10);
         }
 
-        private async Task ClearSelections()
-        {
-            if (_tree == null)
-                return;
-            await _tree.RemoveAllSelections();
-            StateHasChanged();
-        }
-        private async Task SelectionModeChanged()
-        {
-            if (_tree == null)
-                return;
-            await _tree.RemoveAllSelections();
-            StateHasChanged();
-        }
         public async ValueTask DisposeAsync()
         {
             await _tree.RemoveAllSelections();
         }
-
     }
 }

@@ -4,19 +4,24 @@ using ListsTest;
 
 namespace ClearBlazorTest
 {
-    public partial class TreeViewVirtualizeExample
+    public partial class TreeViewVirtualizeExample : IAsyncDisposable
     {
-        TreeView<TestTreeRow> List = null!;
+        TreeView<TestTreeRow> _tree = null!;
+        private TestTreeRow? _selectedItem = null;
+        private List<TestTreeRow> _selectedItems = new();
+        private SelectionMode _selectionMode = SelectionMode.None;
+        private bool _allowSelectionToggle = false;
+        private bool _hoverHighlight = true;
 
         List<TestTreeRow> _localTreeData = ClientData.LocalTestTreeRows5000;
 
         async Task CollapseAll()
         {
-            await List.CollapseAll();
+            await _tree.CollapseAll();
         }
         async Task ExpandAll()
         {
-            await List.ExpandAll();
+            await _tree.ExpandAll();
         }
         // async Task OnGoto10Start()
         // {
@@ -78,5 +83,25 @@ namespace ClearBlazorTest
             //item.Id = "Modified";
             //await List.FullRefresh();
         }
+
+        private async Task ClearSelections()
+        {
+            if (_tree == null)
+                return;
+            await _tree.RemoveAllSelections();
+            StateHasChanged();
+        }
+        private async Task SelectionModeChanged()
+        {
+            if (_tree == null)
+                return;
+            await _tree.RemoveAllSelections();
+            StateHasChanged();
+        }
+        public async ValueTask DisposeAsync()
+        {
+            await _tree.RemoveAllSelections();
+        }
+
     }
 }

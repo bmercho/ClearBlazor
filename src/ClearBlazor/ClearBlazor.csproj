@@ -85,8 +85,4 @@
 		</Content>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Components\ListControls\TreeTableView\" />
-	</ItemGroup>
-
 </Project>

@@ -5,8 +5,7 @@
 @inherits ListRowBase<TItem>
 
 <CascadingValue Value=this IsFixed="false">
-    @if (_parent != null &&
-    (_parent._horizontalGridLines == GridLines.All || _parent._horizontalGridLines == GridLines.ContentOnly))
+    @if (_parent != null && _parent._horizontalGridLines == GridLines.All)
     {
         @if (Index > 0)
         {
@@ -47,8 +46,7 @@
                             @Columns[colIndex].DataTemplate?.Invoke(RowData)
                         }
                     </div>
-                    @if (VerticalGridLines == GridLines.ContentOnly ||
-                   VerticalGridLines == GridLines.All)
+                    @if (VerticalGridLines == GridLines.All)
                     {
                         @if (colIndex != Columns.Count - 1)
                         {

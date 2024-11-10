@@ -53,10 +53,7 @@ namespace ClearBlazorInternal
         [Parameter]
         public int PageSize { get; set; } = 10;
 
-        internal bool _showHeader = true;
         internal int _columnSpacing = 5;
-        internal GridLines _horizontalGridLines  = GridLines.None;
-        internal GridLines _verticalGridLines = GridLines.None;
         internal bool _stickyHeader = true;
 
         private bool _initializing = true;
@@ -97,8 +94,6 @@ namespace ClearBlazorInternal
         private int _numPages = 0;
 
         internal double _itemWidth = 0;
-        internal int _skipItems = 0;
-        internal int _takeItems = 0;
 
         private List<TableColumn<TItem>> Columns { get; } = new List<TableColumn<TItem>>();
         private string _columnDefinitions = string.Empty;
@@ -381,6 +376,7 @@ namespace ClearBlazorInternal
                         }
                         break;
                 }
+            _rowHeight = RowHeight;
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -608,7 +604,7 @@ namespace ClearBlazorInternal
         private async Task GotoVirtualIndex(int index, Alignment verticalAlignment)
         {
             double scrollTop = 0;
-            var maxItemsInContainer = _scrollViewerHeight / (RowHeight + RowSpacing);
+            var maxItemsInContainer = _scrollViewerHeight / (_rowHeight + RowSpacing);
 
             switch (verticalAlignment)
             {
@@ -618,15 +614,15 @@ namespace ClearBlazorInternal
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
                     if (_skipItems < maxItemsInContainer)
-                        scrollTop = _skipItems * (RowHeight + RowSpacing);
+                        scrollTop = _skipItems * (_rowHeight + RowSpacing);
                     else
-                        scrollTop = (_skipItems - maxItemsInContainer / 2 + 0.5) * (RowHeight + RowSpacing);
+                        scrollTop = (_skipItems - maxItemsInContainer / 2 + 0.5) * (_rowHeight + RowSpacing);
                     break;
                 case Alignment.Start:
                     _skipItems = index;
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
-                    scrollTop = _skipItems * (RowHeight + RowSpacing);
+                    scrollTop = _skipItems * (_rowHeight + RowSpacing);
                     break;
                 case Alignment.End:
                     if (index < maxItemsInContainer)
@@ -636,9 +632,9 @@ namespace ClearBlazorInternal
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
                     if (_skipItems < maxItemsInContainer)
-                        scrollTop = _skipItems * (RowHeight + RowSpacing);
+                        scrollTop = _skipItems * (_rowHeight + RowSpacing);
                     else
-                        scrollTop = (index - maxItemsInContainer + 1) * (RowHeight + RowSpacing);
+                        scrollTop = (index - maxItemsInContainer + 1) * (_rowHeight + RowSpacing);
                     break;
             }
             _items = await GetItems(_skipItems, _takeItems);
@@ -798,11 +794,11 @@ namespace ClearBlazorInternal
 
         private async Task<bool> CheckForNewVirtualizationRows(double scrollTop, bool reload)
         {
-            var skipItems = (int)Math.Floor(scrollTop / (RowHeight + RowSpacing)) - 1;
+            var skipItems = (int)Math.Floor(scrollTop / (_rowHeight + RowSpacing)) - 1;
             if (skipItems < 0)
                 skipItems = 0;
 
-            var takeItems = (int)Math.Ceiling(_scrollViewerHeight / (RowHeight + RowSpacing)) + 2;
+            var takeItems = (int)Math.Ceiling(_scrollViewerHeight / (_rowHeight + RowSpacing)) + 2;
 
             if ((reload || skipItems != _skipItems || takeItems != _takeItems ||
                 _items.Count == 0) && takeItems > 0)
@@ -826,7 +822,7 @@ namespace ClearBlazorInternal
                     _skipItems = skipItems;
                     _takeItems = takeItems;
                     _items = await GetItems(_skipItems, _takeItems);
-                    _height = _totalNumItems * (RowHeight + RowSpacing);
+                    _height = _totalNumItems * (_rowHeight + RowSpacing);
                 }
                 finally
                 {

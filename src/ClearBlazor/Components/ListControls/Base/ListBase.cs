@@ -116,16 +116,27 @@ namespace ClearBlazorInternal
         private int _lastSelectedRow = 0;
         internal CancellationTokenSource? _loadItemsCts;
         internal string? _resizeObserverId = null;
+        internal int _skipItems = 0;
+        internal int _takeItems = 0;
+        internal bool _showHeader = true;
+        internal Alignment _horizontalContentAlignment = Alignment.Stretch;
+        internal double _iconWidth = 0;
+        internal GridLines _horizontalGridLines = GridLines.None;
+        internal GridLines _verticalGridLines = GridLines.None;
+        internal ListRowBase<TItem>? _highlightedItem = null;
+        internal int _rowHeight = 30;
 
         protected Dictionary<Guid, TItem> _selectedItems { get; set; } = [];
 
         protected Dictionary<Guid, ListRowBase<TItem>> ListRows { get; set; } = [];
+
 
         //  Index, rowSize
         protected Dictionary<int, double> RowSizes { get; set; } = [];
 
         // RowId, Index
         protected Dictionary<string, int> RowIndexes { get; set; } = [];
+
         protected List<TItem> _items { get; set; } = new List<TItem>();
 
         /// <summary>
@@ -139,7 +150,7 @@ namespace ClearBlazorInternal
         }
 
         /// <summary>
-        /// Refresh an item in the list when it has been updated. (only re-renders the given item)
+        /// Refresh whole list.
         /// </summary>
         /// <returns></returns>
         internal void RefreshAll()
@@ -208,22 +219,24 @@ namespace ClearBlazorInternal
             ListRows.Remove(listItem.RowData.ListItemId);
         }
 
-        internal async Task HandleRowSelection(ListRowBase<TItem> selectedRow, bool ctrlDown, bool shiftDown)
+        internal async Task HandleRowSelection(TItem selectedItem, 
+                                               int selectedIndex, 
+                                               bool ctrlDown, bool shiftDown)
         {
             switch (SelectionMode)
             {
                 case SelectionMode.None:
                     return;
                 case SelectionMode.Single:
-                    if (HandleSingleSelect(selectedRow.RowData, AllowSelectionToggle))
+                    if (HandleSingleSelect(selectedItem, AllowSelectionToggle))
                         await NotifySelection();
                     break;
                 case SelectionMode.SimpleMulti:
-                    if (HandleSimpleMultiSelect(selectedRow.RowData))
+                    if (HandleSimpleMultiSelect(selectedItem))
                         await NotifySelections();
                     break;
                 case SelectionMode.Multi:
-                    if (await HandleMultiSelect(selectedRow.RowData, selectedRow.RowIndex,
+                    if (await HandleMultiSelect(selectedItem, selectedIndex,
                                                 ctrlDown, shiftDown))
                         await NotifySelections();
                     break;
@@ -390,7 +403,14 @@ namespace ClearBlazorInternal
             StateHasChanged();
         }
 
-        internal async Task<List<TItem>> GetItems(int startIndex, int count)
+        internal void SetHighlightedItem(ListRowBase<TItem>? row)
+        {
+            if (_highlightedItem != null)
+                _highlightedItem.Unhighlight();
+            _highlightedItem = row;
+        }
+
+        virtual internal async Task<List<TItem>> GetItems(int startIndex, int count)
         {
             if (startIndex < 0)
                 startIndex = 0;

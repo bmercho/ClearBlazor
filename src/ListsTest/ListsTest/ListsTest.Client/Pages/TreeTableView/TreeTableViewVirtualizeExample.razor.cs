@@ -4,16 +4,16 @@ using ListsTest;
 
 namespace ClearBlazorTest
 {
-    public partial class TreeViewExample : IAsyncDisposable
+    public partial class TreeTableViewVirtualizeExample : IAsyncDisposable
     {
-        TreeView<TestTreeRow> _tree = null!;
+        TreeTableView<TestTreeRow> _tree = null!;
         private TestTreeRow? _selectedItem = null;
         private List<TestTreeRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
 
-        List<TestTreeRow> _localTreeData = ClientData.LocalTestTreeRows100;
+        List<TestTreeRow> _localTreeData = ClientData.LocalTestTreeRows5000;
 
         async Task CollapseAll()
         {
@@ -65,6 +65,25 @@ namespace ClearBlazorTest
         //     if (atEnd)
         //         await List.GotoEnd();
         // }
+        private async Task AddItem()
+        {
+            //var item = new Feed { Id = $"New", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+            //_feeds[0].Children[0].Children[0].Children[0].Children.Add(item);
+            //await List.FullRefresh();
+        }
+        private async Task DeleteItem()
+        {
+            //var item = _feeds[0].Children[0].Children[0].Children[0].Children.Last();
+            //_feeds[0].Children[0].Children[0].Children[0].Children.Remove(item);
+            //await List.FullRefresh();
+        }
+        private async Task ModifyItem()
+        {
+            //var item = _feeds[0].Children[0].Children[0].Children[0].Children.Last();
+            //item.Id = "Modified";
+            //await List.FullRefresh();
+        }
+
         private async Task Up1()
         {
             await _tree.Scroll(1);
@@ -93,7 +112,6 @@ namespace ClearBlazorTest
         {
             await _tree.Scroll(-10);
         }
-
         private async Task ClearSelections()
         {
             if (_tree == null)

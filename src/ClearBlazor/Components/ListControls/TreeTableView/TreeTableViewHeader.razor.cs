@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class TableViewHeader<TItem> where TItem : ListItem
+    public partial class TreeTableViewHeader<TItem> where TItem : TreeItem<TItem>
     {
         /// <summary>
         /// Indicates how a list of items is Virtualized.
@@ -53,7 +53,7 @@ namespace ClearBlazor
         [Parameter]
         public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
 
-        private TableView<TItem>? _parent = null;
+        private TreeTableView<TItem>? _parent = null;
         private bool _doRender = false;
 
         public void Refresh()
@@ -65,7 +65,7 @@ namespace ClearBlazor
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<TableView<TItem>>(Parent);
+            _parent = FindParent<TreeTableView<TItem>>(Parent);
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
@@ -110,7 +110,6 @@ namespace ClearBlazor
                         css += "position:sticky; top:0px; ";
                         break;
                     case VirtualizeMode.InfiniteScroll:
-                        css += $"transform: translateY({_parent._scrollTop-_parent._yOffset}px);";
                         break;
                     case VirtualizeMode.Virtualize:
                         css += $"position:relative; top:{_parent._scrollTop}px; ";
