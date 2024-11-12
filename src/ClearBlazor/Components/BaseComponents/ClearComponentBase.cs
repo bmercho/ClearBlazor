@@ -456,7 +456,7 @@ namespace ClearBlazor
             if (stackPanel != null)
                 css += "flex-shrink:0; ";
 
-            //if (!InScroller() || this is Avatar || this is Image)
+            if (!InScroller() || this is Avatar || this is Image)
                 // The line below affected images in a scrollviewer
                 // but is required for text in a scrollviewer
                 css += $"overflow:hidden; ";

@@ -5,8 +5,8 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
-        <Grid @ref=_grid Rows=auto Columns=@_columnDefinitions Style="overflow:visible">
-            <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
+        <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
+            <Grid @ref=_grid Rows=auto Columns=@_columnDefinitions Style="overflow:visible">
                 <div style=@GetContainerStyle()>
                     <div style=@GetHeightDivStyle()>
                         <div style=@GetTransformStyle()>
@@ -14,38 +14,62 @@
                             @if (_showHeader)
                             {
                                 <TableViewHeader @ref=_header
-                                TItem=TItem
-                                VirtualizeMode=@VirtualizeMode
-                                HeaderId=@_headerId
-                                RowSpacing=@RowSpacing
-                                ColumnSpacing=@_columnSpacing
-                                HorizontalGridLines=@_horizontalGridLines
-                                VerticalGridLines=@_verticalGridLines
-                                StickyHeader=@_stickyHeader
-                                RowHeight=@RowHeight
-                                Columns=@Columns />
+                                                 TItem=TItem
+                                                 VirtualizeMode=@VirtualizeMode
+                                                 HeaderId=@_headerId
+                                                 RowSpacing=@RowSpacing
+                                                 ColumnSpacing=@_columnSpacing
+                                                 HorizontalGridLines=@_horizontalGridLines
+                                                 VerticalGridLines=@_verticalGridLines
+                                                 StickyHeader=@_stickyHeader
+                                                 RowHeight=@RowHeight
+                                                 Columns=@Columns />
                             }
 
                             @foreach (var row in _items.Select((item, index) => new { item, index }))
                             {
-                                @if (_rowTemplate != null)
+                                @if (_rowTemplate == null)
                                 {
-                                    <ListViewRow TItem=TItem 
-                                    RowData=@row.item
-                                    RowIndex=@row.item.Index
-                                    Index=row.index
-                                    RowId=@(_baseRowId + row.index.ToString())
-                                    RowSpacing=@RowSpacing
-                                    ColumnSpacing=@_columnSpacing
-                                    VerticalGridLines=@_verticalGridLines
-                                    Columns=@Columns
-                                    RowTemplate=@_rowTemplate />
+                                    <ListViewRow TItem=TItem
+                                                 RowData=@row.item
+                                                 RowIndex=@row.item.Index
+                                                 Index=row.index
+                                                 RowId=@(_baseRowId + row.index.ToString())
+                                                 RowSpacing=@RowSpacing
+                                                 ColumnSpacing=@_columnSpacing
+                                                 VerticalGridLines=@_verticalGridLines
+                                                 Columns=@Columns />
+                                }
+                                else
+                                {
+                                    <ListViewRow TItem=TItem
+                                                 RowData=@row.item
+                                                 RowIndex=@row.item.Index
+                                                 Index=row.index
+                                                 RowId=@(_baseRowId + row.item.Index.ToString())
+                                                 RowSpacing=@RowSpacing
+                                                 ColumnSpacing=@_columnSpacing
+                                                 VerticalGridLines=@_verticalGridLines
+                                                 Columns=@Columns
+                                                 RowTemplate=@_rowTemplate />
                                 }
                             }
+                            @for (int col = 0; col < Columns.Count; col++)
+                            {
+                                var colIndex = col;
+                                @if (_verticalGridLines == GridLines.All)
+                                {
+                                    @if (colIndex != Columns.Count - 1)
+                                    {
+                                        <div style=@GetVerticalGridLineStyle(colIndex+2) />
+                                    }
+                                }
+                            }
+
                         </div>
                     </div>
                 </div>
-            </div>
+            </Grid>
             @if (_loadingUp && ShowLoadingSpinner)
             {
                 <Grid BackgroundColor=Color.Transparent Margin=20 Column=0 ColumnSpan=@Columns.Count
@@ -60,7 +84,7 @@
                     <Spinner />
                 </Grid>
             }
-        </Grid>
+        </div>
     </div>
     @ChildContent
 </CascadingValue>

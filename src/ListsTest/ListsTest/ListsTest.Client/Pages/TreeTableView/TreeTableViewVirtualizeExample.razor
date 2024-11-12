@@ -32,13 +32,13 @@
                 </StackPanel>
             </NodeTemplate>
             <ChildContent>
-                <TableColumn Label="Node" ContentAlignment=Alignment.Start TItem=TestTreeRow Field=@(x =>x.FirstName) ColumnDefinition="auto" />
+                <TableColumn Label="Node" HorizontalContentAlignment=Alignment.Start TItem=TestTreeRow Field=@(x =>x.FirstName) ColumnDefinition="auto" />
                 <TableColumn Label="First Name" TItem=TestTreeRow Field=@(x =>x.FirstName) ColumnDefinition="70" />
                 <TableColumn Label="Last Name" TItem=TestTreeRow Field=@(x =>x.LastName) ColumnDefinition="90" />
                 <TableColumn Label="Product" TItem=TestTreeRow Field=@(x =>x.Product) ColumnDefinition="120" />
                 <TableColumn Label="Available" TItem=TestTreeRow Field=@(x =>x.Available) ColumnDefinition="60" />
-                <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TestTreeRow Field=@(x =>x.Quantity) ColumnDefinition="60" />
-                <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Center TItem=TestTreeRow Field=@(x =>x.UnitPrice) ColumnDefinition="80">
+                <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TestTreeRow Field=@(x =>x.Quantity) ColumnDefinition="60" />
+                <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestTreeRow Field=@(x =>x.UnitPrice) ColumnDefinition="80">
                     <DataTemplate Context=item>
                         <TextBlock VerticalAlignment=Alignment.Center
                                    TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>

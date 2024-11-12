@@ -14,7 +14,7 @@ namespace ClearBlazor
         /// The item is passed to each child for customization of the row
         /// </summary>
         [Parameter]
-        public required RenderFragment<TItem>? RowTemplate { get; set; }
+        public RenderFragment<TItem>? RowTemplate { get; set; }
 
         protected override void OnParametersSet()
         {

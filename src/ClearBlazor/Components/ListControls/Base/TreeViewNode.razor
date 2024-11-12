@@ -84,7 +84,7 @@
                             <div style="display:grid;grid-row: 2 /span 1; align-self:start; margin-top:5px;">
                                 @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
                                 {
-                                    <TextBlock TextAlignment=@Columns[colIndex].ContentAlignment>
+                                    <TextBlock TextAlignment=@Columns[colIndex].HorizontalContentAlignment>
                                         @foreach (var line in GetLines(Columns[colIndex].Field.Invoke(NodeData).ToString()))
                                         {
                                             @(line)

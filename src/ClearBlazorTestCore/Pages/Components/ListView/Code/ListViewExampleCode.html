@@ -1,15 +1,16 @@
 <div>
 <div class="html"><pre>
 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">400,auto</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Rows</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">600,*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">ListView</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_list</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">0</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">40</span>
-              <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-SelectedItem</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_selectedItem</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-SelectedItems</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_selectedItems</span>
-              <span class="htmlAttributeName">Items</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_testData</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">1</span><span class="quot">&quot;</span>
-              <span class="htmlAttributeName">BorderColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Dark</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">4</span><span class="quot">&quot;</span> <span class="htmlAttributeName">SelectionMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_selectionMode</span>
-              <span class="htmlAttributeName">HoverHighlight</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_hoverHighlight</span> 
-              <span class="htmlAttributeName">OverscrollBehaviour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">OverscrollBehaviour.None</span> 
-              <span class="htmlAttributeName">VirtualizeMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">VirtualizeMode.Virtualize</span>
-              <span class="htmlAttributeName">RowHeight</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">60</span>
-              <span class="htmlAttributeName">AllowSelectionToggle</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_allowSelectionToggle</span><span class="htmlTagDelimiter">&gt;</span>
+    &lt;ListView <span class="atSign">&#64;</span>ref=_list Column=0 Margin=40
+              <span class="atSign">&#64;</span>bind-SelectedItem=_selectedItem <span class="atSign">&#64;</span>bind-SelectedItems=_selectedItems
+              Items=<span class="atSign">&#64;</span>_testData BorderThickness=&quot;1&quot;
+              BorderColor=Color.Dark CornerRadius=&quot;4&quot; SelectionMode=<span class="atSign">&#64;</span>_selectionMode
+              HoverHighlight=<span class="atSign">&#64;</span>_hoverHighlight
+              OverscrollBehaviour=OverscrollBehaviour.None
+              VirtualizeMode=VirtualizeMode.Virtualize
+              InitialIndex=<span class="atSign">&#64;</span>((20, Alignment.Center))
+              RowHeight=50
+              AllowSelectionToggle=<span class="atSign">&#64;</span>_allowSelectionToggle&gt;
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RowTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">row</span><span class="htmlTagDelimiter">&gt;</span>
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.BackgroundGrey</span>
                   <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">8</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">*,3*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
@@ -18,37 +19,30 @@
             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RowTemplate</span><span class="htmlTagDelimiter">&gt;</span>
     <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">ListView</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
-        &lt;RadioGroup Margin=20 Label=&quot;Selection mode&quot; <span class="atSign">&#64;</span>bind-Value=_selectionMode
-                    <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>SelectionModeChanged&gt;
-            <span class="atSign">&#64;</span>foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
-            {
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
-            }
-        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CheckBox</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Checked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_allowSelectionToggle</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Allow selection toggle (single selection only)</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CheckBox</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Checked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_hoverHighlight</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Highlight on hover</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span><span class="htmlTagDelimiter">&gt;</span>Selection=<span class="atSign">&#64;</span>_selectedItem?.Name<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
-
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span><span class="htmlTagDelimiter">&gt;</span>Selections=<span class="atSign">&#64;</span>string.Join(&quot;,&quot;, _selectedItems.Select(s =&gt; s.Name))<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">ColumnSpan</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">3</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto1000Start</span><span class="htmlTagDelimiter">&gt;</span>Goto 1000 (start)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto5000Center</span><span class="htmlTagDelimiter">&gt;</span>Goto 5000 (center)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto7000End</span><span class="htmlTagDelimiter">&gt;</span>Goto 7000 (end)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnAddNewItem</span><span class="htmlTagDelimiter">&gt;</span>Add new item<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoEnd</span><span class="htmlTagDelimiter">&gt;</span>Goto end<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoStart</span><span class="htmlTagDelimiter">&gt;</span>Goto start<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnAddNewItemGotoEndIfAtEnd</span><span class="htmlTagDelimiter">&gt;</span>Add new item and goto end if at end<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>CheckAtEnd</span><span class="htmlTagDelimiter">&gt;</span>CheckAtEnd<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>_atEnd<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="atSign">&#64;</span>if (BrowserSizeService.DeviceSize &gt;= DeviceSize.Small)
+    {
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
+            &lt;RadioGroup Margin=20 Label=&quot;Selection mode&quot; <span class="atSign">&#64;</span>bind-Value=_selectionMode
+                        <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>SelectionModeChanged&gt;
+                <span class="atSign">&#64;</span>foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+                {
+                    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                }
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CheckBox</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Checked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_allowSelectionToggle</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Allow selection toggle (single selection only)</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CheckBox</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Checked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_hoverHighlight</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Highlight on hover</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span><span class="htmlTagDelimiter">&gt;</span>Selection=<span class="atSign">&#64;</span>_selectedItem?.Name<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span><span class="htmlTagDelimiter">&gt;</span>Selections=<span class="atSign">&#64;</span>string.Join(&quot;,&quot;, _selectedItems.Select(s =&gt; s.Name))<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">150</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>ClearSelections</span><span class="htmlTagDelimiter">&gt;</span>Clear selections<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>CheckAtStart</span><span class="htmlTagDelimiter">&gt;</span>CheckAtStart<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>_atStart<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">ColumnSpan</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">3</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto1000Start</span><span class="htmlTagDelimiter">&gt;</span>Goto 1000 (start)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto5000Center</span><span class="htmlTagDelimiter">&gt;</span>Goto 5000 (center)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto7000End</span><span class="htmlTagDelimiter">&gt;</span>Goto 7000 (end)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoEnd</span><span class="htmlTagDelimiter">&gt;</span>Goto end<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoStart</span><span class="htmlTagDelimiter">&gt;</span>Goto start<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
+    }
 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
 <div class="csharp"><pre>
@@ -124,15 +118,6 @@
         <span class="keyword">await</span> _list.GotoIndex(<span class="number">7000</span>, Alignment.End);
     }
 
-    <span class="keyword">async</span> Task OnAddNewItem()
-    {
-        <span class="keyword">if</span> (_list == <span class="keyword">null</span>)
-            <span class="keyword">return</span>;
-        <span class="keyword">var</span> index = _testData.Count();
-        _testData.Add(<span class="keyword">new</span> TestViewItem { Name = $<span class="string">&quot;Item # {index}&quot;</span>, IconName = GetIconName(index) });
-        <span class="keyword">await</span> _list.Refresh();
-    }
-
     <span class="keyword">async</span> Task OnGotoEnd()
     {
         <span class="keyword">if</span> (_list == <span class="keyword">null</span>)
@@ -147,29 +132,6 @@
         <span class="keyword">await</span> _list.GotoStart();
     }
 
-    <span class="keyword">async</span> Task OnAddNewItemGotoEndIfAtEnd()
-    {
-        <span class="keyword">if</span> (_list == <span class="keyword">null</span>)
-            <span class="keyword">return</span>;
-        <span class="keyword">var</span> atEnd = <span class="keyword">await</span> _list.AtEnd();
-
-        <span class="keyword">var</span> index = _testData.Count;
-        _testData.Add(<span class="keyword">new</span> TestViewItem { Name = $<span class="string">&quot;Item # {index}&quot;</span>, IconName = GetIconName(index) });
-        <span class="keyword">await</span> _list.Refresh();
-        <span class="keyword">if</span> (atEnd)
-            <span class="keyword">await</span> _list.GotoEnd();
-    }
-    <span class="keyword">async</span> Task CheckAtEnd()
-    {
-        _atEnd = <span class="keyword">await</span> _list.AtEnd();
-        StateHasChanged();
-    }
-    <span class="keyword">async</span> Task CheckAtStart()
-    {
-        _atStart = <span class="keyword">await</span> _list.AtStart();
-        StateHasChanged();
-    }
-
     <span class="keyword">private</span> <span class="keyword">async</span> Task SelectionModeChanged()
     {
         <span class="keyword">if</span> (_list == <span class="keyword">null</span>)
@@ -178,6 +140,11 @@
         StateHasChanged();
     }
 
+    <span class="keyword">private</span> <span class="keyword">async</span> Task ClearSelections()
+    {
+        <span class="keyword">await</span> _list.RemoveAllSelections();
+        StateHasChanged();
+    }
 }
 </pre></div>
 </div>

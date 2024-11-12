@@ -11,7 +11,7 @@
             <div style=@GetHeaderStyle(colIndex+1)>
                 @if (@Columns[colIndex].HeaderTemplate == null)
                 {
-                    <TextBlock TextAlignment=@Columns[colIndex].HeaderAlignment
+                    <TextBlock TextAlignment=@Columns[colIndex].HorizontalHeaderAlignment
                                FontWeight=@((int)FontWeight.Bold)>@Columns[colIndex].Label</TextBlock>
                 }
                 else

@@ -127,7 +127,7 @@ namespace ClearBlazor
             string css = string.Empty;
 
             string justify = "start";
-            switch (Columns[column - 1].HeaderAlignment)
+            switch (Columns[column - 1].HorizontalHeaderAlignment)
             {
                 case Alignment.Stretch:
                     justify = "stretch";

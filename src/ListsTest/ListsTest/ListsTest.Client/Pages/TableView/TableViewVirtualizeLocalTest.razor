@@ -14,8 +14,8 @@
                    @bind-SelectedItem=_selectedItem
                    @bind-SelectedItems=_selectedItems
                    HoverHighlight=@_hoverHighlight
-                   HorizontalGridLines=GridLines.All
-                   VerticalGridLines=GridLines.All
+                   HorizontalGridLines=GridLines.None
+                   VerticalGridLines=GridLines.None
                    AllowSelectionToggle=@_allowSelectionToggle
                    SelectionMode=@_selectionMode
                    ShowHeader=true
@@ -30,10 +30,10 @@
                 </DataTemplate>
             </TableColumn>
             <TableColumn Label="Available" TItem=TestListRow Field=@(x =>x.Available) />
-            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) />
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Stretch TItem=TestListRow Field=@(x =>x.UnitPrice)>
+            <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) />
+            <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Stretch TItem=TestListRow Field=@(x =>x.UnitPrice)>
                 <DataTemplate Context=item>
-                    <TextBlock VerticalAlignment=Alignment.Center 
+                    <TextBlock VerticalAlignment=Alignment.Start 
                                TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>

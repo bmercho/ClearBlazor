@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using ClearBlazor;
+using System;
 
 namespace ClearBlazorInternal
 {
@@ -35,7 +36,7 @@ namespace ClearBlazorInternal
         /// The item is passed to each child for customization of the row
         /// </summary>
         [Parameter]
-        public required RenderFragment<TItem>? RowTemplate { get; set; }
+        public RenderFragment<TItem>? RowTemplate { get; set; } = null;
 
         private ListViewBase<TItem>? _parent = null;
         private TreeItem<TItem>? _nodeData = null;
@@ -170,12 +171,23 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
-            string css = "display:grid; grid-template-columns: 1fr auto; ";
+            string css = "display:grid; grid-template-columns: 1fr auto;";
             if (_parent.VirtualizeMode != VirtualizeMode.Virtualize)
                 css += $"grid-template-rows: {RowSpacing/2}px 1fr {RowSpacing/2}px; ";
             else
                 css += $"grid-template-rows: 0px 1fr 0px; ";
 
+            return css;
+        }
+
+        private string GetContentDivStyle()
+        {
+            if (_parent == null)
+                return string.Empty;
+
+            string css = "display:grid; grid-row: 2 / span 1; ";
+            if (!_parent.HorizontalScrollbar)
+                css += "overflow: hidden; ";
             return css;
         }
 
@@ -209,25 +221,11 @@ namespace ClearBlazorInternal
             return css;
         }
 
-        private string GetVerticalGridLineStyle(int column)
-        {
-            if (_parent == null)
-                return string.Empty;
-
-            return $"display:grid; " +
-                   $"border-width:0 0 0 1px; border-style:solid; " +
-                   $"grid-area: 1 / 2 / span 3 / span 1; " +
-                   $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
-
-        }
-
         public override void Dispose()
         {
             base.Dispose();
             if (_parent != null)
                 _parent.RemoveListRow(this);
         }
-
-
     }
 }

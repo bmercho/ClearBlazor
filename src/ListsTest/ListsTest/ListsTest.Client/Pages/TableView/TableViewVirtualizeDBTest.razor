@@ -28,8 +28,8 @@
             <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) />
             <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) />
             <TableColumn Label="Available" TItem=TestListRow Field=@(x =>x.Available) />
-            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) />
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice)>
+            <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) />
+            <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice)>
                 <DataTemplate Context=item>
                     <TextBlock VerticalAlignment=Alignment.Center 
                                TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
@@ -37,7 +37,7 @@
             </TableColumn>
             <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes)>
                 <DataTemplate Context=item>
-                    <TextBlock VerticalAlignment=Alignment.Center 
+                    <TextBlock VerticalAlignment=Alignment.Start 
                                TextWrapping=TextWrap.NoWrap TextTrimming=true>@(item.Notes)</TextBlock>
                 </DataTemplate>
             </TableColumn>

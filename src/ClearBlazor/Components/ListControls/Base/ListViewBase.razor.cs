@@ -27,6 +27,7 @@ namespace ClearBlazorInternal
         /// <summary>
         /// Gets or sets the index of the Items to be initially shown in visible area.
         /// It can be shown in the centre, start or end of the visible are.
+        /// Not available when VirtualizationMode is InfiniteScroll
         /// </summary>
         [Parameter]
         public (int index, Alignment verticalAlignment) InitialIndex { get; set; } = (0, Alignment.Start);
@@ -100,7 +101,7 @@ namespace ClearBlazorInternal
         internal RenderFragment<TItem>? _rowTemplate = null;
 
         /// <summary>
-        /// Goto the given index in the data. Not used if VirtualizationMode is InfiniteScroll.
+        /// Goto the given index in the data. Not available if VirtualizationMode is InfiniteScroll.
         /// </summary>
         /// <param name="index">Index to goto. The index is zero based.</param>
         /// <param name="verticalAlignment">Where the index should be aligned in the scroll viewer.</param>
@@ -122,6 +123,7 @@ namespace ClearBlazorInternal
                 case VirtualizeMode.Pagination:
                     _currentPageNum = (int)Math.Ceiling((double)(index + 1) / PageSize);
                     await GotoPage(_currentPageNum);
+                    await Refresh();
                     break;
             }
         }
@@ -154,7 +156,7 @@ namespace ClearBlazorInternal
         }
 
         /// <summary>
-        /// Goto the end of the list. Not used if VirtualizationMode is InfiniteScroll.
+        /// Goto the end of the list. Not available if VirtualizationMode is InfiniteScroll.
         /// </summary>
         public async Task GotoEnd()
         {
@@ -259,8 +261,8 @@ namespace ClearBlazorInternal
                 case VirtualizeMode.Pagination:
                     if (pageNumber < 1)
                         _currentPageNum = 1;
-                    else if (pageNumber > _numPages)
-                        _currentPageNum = _numPages;
+                    //else if (pageNumber > _numPages)
+                    //    _currentPageNum = _numPages;
                     else
                         _currentPageNum = pageNumber;
                     _items = await GetItems((_currentPageNum - 1) * PageSize, PageSize);
@@ -385,10 +387,10 @@ namespace ClearBlazorInternal
 
             if (firstRender)
             {
-                List<string> elementIds = new List<string>() { Id, _headerId, _grid.Id };
-
-                if (VirtualizeMode == VirtualizeMode.Virtualize)
-                    elementIds.Add(_scrollViewerId);
+                List<string> elementIds = new List<string>() { Id, _scrollViewerId, 
+                                                               _headerId};
+                if (_grid != null)
+                    elementIds.Add(_grid.Id);
 
                 _resizeObserverId = await ResizeObserverService.Service.
                                     AddResizeObserver(NotifyObservedSizes, elementIds);
@@ -411,8 +413,6 @@ namespace ClearBlazorInternal
             switch (VirtualizeMode)
             {
                 case VirtualizeMode.None:
-                    if (firstRender)
-                        await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
                     break;
                 case VirtualizeMode.Virtualize:
                     break;
@@ -676,24 +676,27 @@ namespace ClearBlazorInternal
 
         private string GetScrollViewerStyle()
         {
-            string overscrollBehaviour = "overscroll-behavior-y:auto; ";
+            string css = $"height:{_componentHeight}px; width:{_componentWidth}px; ";
+            if (HorizontalScrollbar)
+                css += "overflow-x:auto; ";
+            else
+                css += "overflow-x:hidden; ";
+
+            css += "overflow-y:auto; ";
+
             switch (OverscrollBehaviour)
             {
                 case OverscrollBehaviour.Auto:
-                    overscrollBehaviour = "overscroll-behavior-y:auto; ";
+                    css += "overscroll-behavior-y:auto; ";
                     break;
                 case OverscrollBehaviour.Contain:
-                    overscrollBehaviour = "overscroll-behavior-y:contain; ";
+                    css += "overscroll-behavior-y:contain; ";
                     break;
                 case OverscrollBehaviour.None:
-                    overscrollBehaviour = "overscroll-behavior-y:none; ";
+                    css += "overscroll-behavior-y:none; ";
                     break;
             }
-            Console.WriteLine($"Col Count:{Columns.Count}");
-            return $"height:{_componentHeight}px; width:{_componentWidth}px; " +
-                   $"overflow-x:auto; overflow-y:auto; {overscrollBehaviour}" +
-                   $"display:grid; grid-template-columns: subgrid; " +
-                   $"grid-area: 1 / 1 / span 1 / span {Columns.Count}; ";
+            return css;
         }
 
         protected string GetContainerStyle()
@@ -708,6 +711,29 @@ namespace ClearBlazorInternal
                 css += $"display:grid; position: relative;height: {_height}px";
 
             return css;
+        }
+
+        private string GetVerticalGridLineStyle(int column)
+        {
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                case VirtualizeMode.InfiniteScroll:
+                case VirtualizeMode.InfiniteScrollReverse:
+                case VirtualizeMode.Pagination:
+                    return $"display:grid; z-index:1;" +
+                           $"border-width:0 0 0 1px; border-style:solid; " +
+                           $"grid-area: 1 / {column} / span {_items.Count} / span 1; " +
+                           $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                case VirtualizeMode.Virtualize:
+                    return $"display:grid; z-index:1;height:{_items.Count*(_rowHeight + RowSpacing)}px; " +
+                           $"border-width:0 0 0 1px; border-style:solid; position:relative; " +
+                           $"top:{(_skipItems - 1) * (_rowHeight + RowSpacing)}px;" +
+
+                           $"grid-column: {column} / span 1; " +
+                           $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+            }
+            return string.Empty;
         }
 
         internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
@@ -770,6 +796,15 @@ namespace ClearBlazorInternal
                     {
                         _initializing = false;
                         await CheckForNewRows(_scrollTop, true);
+                        await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
+                    }
+                }
+                else
+                {
+                    if (_scrollViewerHeight > 0 && _initializing)
+                    {
+                        _initializing = false;
+                        await GotoIndex(InitialIndex.index, InitialIndex.verticalAlignment);
                     }
                 }
                 StateHasChanged();

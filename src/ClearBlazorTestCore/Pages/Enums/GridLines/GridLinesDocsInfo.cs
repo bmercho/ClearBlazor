@@ -11,7 +11,6 @@ namespace ClearBlazorTest
         {
             new ApiFieldInfo("None", "GridLines", ""),
             new ApiFieldInfo("HeaderOnly", "GridLines", ""),
-            new ApiFieldInfo("ContentOnly", "GridLines", ""),
             new ApiFieldInfo("All", "GridLines", ""),
         };
     }

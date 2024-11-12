@@ -4,47 +4,50 @@
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
               DataProvider=@GetData Width=300 Height=500 BorderThickness="1"
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
-              HoverHighlight=@_hoverHighlight 
-              OverscrollBehaviour=OverscrollBehaviour.None 
+              HoverHighlight=@_hoverHighlight
+              OverscrollBehaviour=OverscrollBehaviour.None
               VirtualizeMode=VirtualizeMode.Virtualize
-              RowHeight=60
+              InitialIndex=@((20, Alignment.Center))
+              RowHeight=50
               AllowSelectionToggle=@_allowSelectionToggle>
         <RowTemplate Context=row>
-            <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8 Margin=5 Padding=10 Columns="*,3*">
+            <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8
+                  Margin=5 Padding=10 Columns="*,3*">
                 <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
                 <TextBlock VerticalAlignment=Alignment.Center Column=1> @(row.Name)</TextBlock>
             </Grid>
         </RowTemplate>
     </ListView>
-    <StackPanel Column=1>
-        <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
-                    @bind-Value:after=@SelectionModeChanged>
-            @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
-            {
-                <Radio Label=@mode.ToString() Value="@mode" />
-            }
-        </RadioGroup>
-        <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
-        <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-        <TextBlock Margin=20>Selection=@_selectedItem?.Name</TextBlock>
-
-        <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
-    </StackPanel>
-    <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-        <Button OnClicked=@OnGoto1000Start>Goto 1000 (start)</Button>
-        <Button OnClicked=@OnGoto5000Center>Goto 5000 (center)</Button>
-        <Button OnClicked=@OnGoto7000End>Goto 7000 (end)</Button>
-        <Button OnClicked=@OnAddNewItem>Add new item</Button>
-        <Button OnClicked=@OnGotoEnd>Goto end</Button>
-        <Button OnClicked=@OnGotoStart>Goto start</Button>
-        <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
-    </WrapPanel>
+    @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+    {
+        <StackPanel Column=1>
+            <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
+                        @bind-Value:after=@SelectionModeChanged>
+                @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+                {
+                    <Radio Label=@mode.ToString() Value="@mode" />
+                }
+            </RadioGroup>
+            <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+            <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+            <TextBlock Margin=20>Selection=@_selectedItem?.Name</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
+            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
+        </StackPanel>
+        <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+            <Button OnClicked=@OnGoto1000Start>Goto 1000 (start)</Button>
+            <Button OnClicked=@OnGoto5000Center>Goto 5000 (center)</Button>
+            <Button OnClicked=@OnGoto7000End>Goto 7000 (end)</Button>
+            <Button OnClicked=@OnGotoEnd>Goto end</Button>
+            <Button OnClicked=@OnGotoStart>Goto start</Button>
+        </WrapPanel>
+    }
 </Grid>
 
 @code {
     private List<TestViewItem> _testData = new();
 
-    private class TestViewItem:ListItem
+    private class TestViewItem : ListItem
     {
         public string Name { get; set; } = string.Empty;
         public string IconName { get; set; } = string.Empty;
@@ -112,15 +115,6 @@
         await _list.GotoIndex(7000, Alignment.End);
     }
 
-    async Task OnAddNewItem()
-    {
-        if (_list == null)
-            return;
-        var index = _testData.Count();
-        _testData.Add(new TestViewItem { Name = $"Item # {index}", IconName = GetIconName(index) });
-        await _list.Refresh();
-    }
-
     async Task OnGotoEnd()
     {
         if (_list == null)
@@ -135,19 +129,6 @@
         await _list.GotoStart();
     }
 
-    async Task OnAddNewItemGotoEndIfAtEnd()
-    {
-        if (_list == null)
-            return;
-        var atEnd = await _list.AtEnd();
-
-        var index = _testData.Count;
-        _testData.Add(new TestViewItem { Name = $"Item # {index}", IconName = GetIconName(index) });
-        await _list.Refresh();
-        if (atEnd)
-            await _list.GotoEnd();
-    }
-
     private async Task SelectionModeChanged()
     {
         if (_list == null)
@@ -156,4 +137,9 @@
         StateHasChanged();
     }
 
+    private async Task ClearSelections()
+    {
+        await _list.RemoveAllSelections();
+        StateHasChanged();
+    }
 }

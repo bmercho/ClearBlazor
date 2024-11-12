@@ -9,6 +9,7 @@ namespace ClearBlazor
         private BrowserSizeInfo browserSizeInfo = new BrowserSizeInfo();
 
         public static BrowserSizeService Instance { get; private set; } = null!;
+        public static DeviceSize DeviceSize { get; private set; } = DeviceSize.Large;
 
         public BrowserSizeService()
         {
@@ -43,14 +44,16 @@ namespace ClearBlazor
         private DeviceSize GetDeviceSize(int browserWidth)
         {
             if (browserWidth < (int)DeviceSize.Small)
-                return DeviceSize.ExtraSmall;
-            if (browserWidth < (int)DeviceSize.Medium)
-                return DeviceSize.Small;
-            if (browserWidth < (int)DeviceSize.Large)
-                return DeviceSize.Medium;
-            if (browserWidth < (int)DeviceSize.ExtraLarge)
-                return DeviceSize.Large;
-            return DeviceSize.ExtraLarge;
+                DeviceSize = DeviceSize.ExtraSmall;
+            else if (browserWidth < (int)DeviceSize.Medium)
+                DeviceSize = DeviceSize.Small;
+            else if (browserWidth < (int)DeviceSize.Large)
+                DeviceSize = DeviceSize.Medium;
+            else if (browserWidth < (int)DeviceSize.ExtraLarge)
+                DeviceSize = DeviceSize.Large;
+            else
+                DeviceSize = DeviceSize.ExtraLarge;
+            return DeviceSize;
         }
 
         private class Unsubscriber : IDisposable

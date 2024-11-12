@@ -20,7 +20,7 @@
         }
     }
 
-    <div style=@GetFullRowStyle()
+    <div id=@RowId style=@GetFullRowStyle()
          @onmouseenter=OnMouseEnter
          @onmouseleave=OnMouseLeave
          @onclick=OnRowClicked>
@@ -28,12 +28,13 @@
         @for (int col = 0; col < Columns.Count; col++)
         {
             var colIndex = col;
-            <div id=@(col == 0 ? RowId : "0") style=@GetRowStyle(Index+2, colIndex+1)>
+            <div style=@GetRowStyle(Index+2, colIndex+1)>
                 <div style=@GetContainerDivStyle()>
-                    <div style="display:grid;grid-row: 2 /span 1; ">
+                    <div style=@GetContentDivStyle()>
                         @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
                         {
-                            <TextBlock VerticalAlignment=Alignment.Center TextAlignment=@Columns[colIndex].ContentAlignment>
+                            <TextBlock VerticalAlignment=@Columns[colIndex].VerticalContentAlignment 
+                                       TextAlignment=@Columns[colIndex].HorizontalContentAlignment>
                                 @foreach (var line in GetLines(Columns[colIndex].Field.Invoke(RowData).ToString()))
                                 {
                                     @(line)
@@ -46,23 +47,15 @@
                             @Columns[colIndex].DataTemplate?.Invoke(RowData)
                         }
                     </div>
-                    @if (VerticalGridLines == GridLines.All)
-                    {
-                        @if (colIndex != Columns.Count - 1)
-                        {
-                            <div style=@GetVerticalGridLineStyle(colIndex+3) />
-                        }
-                    }
-                </div>
+                 </div>
             </div>
         }
 
         @if (RowTemplate != null)
         {
-            <div id=@RowData.ListItemId class="@Classes"
+            <div class="@Classes"
                  @onmouseenter=OnMouseEnter
-                 @onmouseleave=OnMouseLeave
-                 @onclick=OnRowClicked>
+                 @onmouseleave=OnMouseLeave>
                 @RowTemplate(RowData)
             </div>
         }

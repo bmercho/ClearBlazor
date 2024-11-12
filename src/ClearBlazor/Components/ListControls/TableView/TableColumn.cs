@@ -24,10 +24,13 @@ namespace ClearBlazor
         public RenderFragment<TItem>? DataTemplate { get; set; }
 
         [Parameter]
-        public Alignment HeaderAlignment { get; set; } = Alignment.Start;
+        public Alignment HorizontalHeaderAlignment { get; set; } = Alignment.Start;
 
         [Parameter]
-        public Alignment ContentAlignment { get; set; } = Alignment.Start;
+        public Alignment HorizontalContentAlignment { get; set; } = Alignment.Start;
+
+        [Parameter]
+        public Alignment VerticalContentAlignment { get; set; } = Alignment.Start;
 
         protected override void OnInitialized()
         {

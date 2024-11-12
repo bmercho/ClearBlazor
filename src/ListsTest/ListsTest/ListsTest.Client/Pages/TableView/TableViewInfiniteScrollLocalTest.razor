@@ -25,9 +25,9 @@
             <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) />
             <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) />
             <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) />
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Stretch TItem=TestListRow Field=@(x =>x.UnitPrice)>
+            <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Stretch TItem=TestListRow Field=@(x =>x.UnitPrice)>
                 <DataTemplate Context=item>
-                    <TextBlock VerticalAlignment=Alignment.Center 
+                    <TextBlock VerticalAlignment=Alignment.Start 
                                TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))
                     </TextBlock>
                 </DataTemplate>

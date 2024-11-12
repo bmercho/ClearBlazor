@@ -21,18 +21,24 @@
                    ShowHeader=true
                    StickyHeader=true
                    Items=@_localListData>
-            <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition="70" />
-            <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition="70" />
+            <TableColumn Label="Index" TItem=TestListRow Field=@(x =>x.Index) ColumnDefinition="auto" />
+            <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition="auto" />
+            <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition="auto" />
             <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) ColumnDefinition="120" />
             <TableColumn Label="Available" TItem=TestListRow Field=@(x =>x.Available) ColumnDefinition="40" />
-            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) ColumnDefinition="40" />
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition="70">
+            <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) ColumnDefinition="40" />
+            <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition="70">
                 <DataTemplate Context=item>
-                    <TextBlock VerticalAlignment=Alignment.Center 
+                    <TextBlock VerticalAlignment=Alignment.Start 
                                TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="*" />
+            <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="*">
+                <DataTemplate Context=item>
+                    <TextBlock TextWrapping=TextWrap.NoWrap >@(item.Notes)</TextBlock>
+                </DataTemplate>
+
+            </TableColumn>
 
         </TableView>
         <StackPanel Column=1>

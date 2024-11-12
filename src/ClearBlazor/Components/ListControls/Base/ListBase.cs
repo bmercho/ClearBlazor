@@ -33,6 +33,12 @@ namespace ClearBlazorInternal
         public OverscrollBehaviour OverscrollBehaviour { get; set; } = OverscrollBehaviour.None;
 
         /// <summary>
+        /// Show a horizontal scrollbar if there are too many columns.. 
+        /// </summary>
+        [Parameter]
+        public bool HorizontalScrollbar { get; set; } = true;
+
+        /// <summary>
         /// The currently selected items. (when in Multiselect mode)
         /// </summary>
         [Parameter]

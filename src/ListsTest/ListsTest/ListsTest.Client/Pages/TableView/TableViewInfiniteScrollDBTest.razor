@@ -26,10 +26,10 @@
             <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) />
             <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) />
             <TableColumn Label="Available" TItem=TestListRow Field=@(x =>x.Available) />
-            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) />
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Stretch TItem=TestListRow Field=@(x =>x.UnitPrice)>
+            <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) />
+            <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Stretch TItem=TestListRow Field=@(x =>x.UnitPrice)>
                 <DataTemplate Context=item>
-                    <TextBlock TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+                    <TextBlock TextAlignment=Alignment.Start>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
             <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) />
