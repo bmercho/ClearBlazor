@@ -1,0 +1,165 @@
+﻿@namespace ClearBlazorTest
+<StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20
+Orientation=Orientation.Portrait>
+    <TreeView Height=300 Width=250 CornerRadius=4 BorderThickness=1
+    Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+    HorizontalContentAlignment=Alignment.Start
+    VirtualizeMode=@VirtualizeMode.None
+    @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_feeds>
+        <NodeTemplate Context=node>
+            <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
+                <MaterialIcon Icon=@node.Icon Color=Color.Custom(Colors.Yellow.Darken1) />
+                <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
+                    @node.Id
+                </TextBlock>
+            </StackPanel>
+        </NodeTemplate>
+    </TreeView>
+    <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+        <Button OnClicked=@CollapseAll>Collapse all</Button>
+        <Button OnClicked=@ExpandAll>Expand all</Button>
+        <Button OnClicked=@Up1>Scroll +1</Button>
+        <Button OnClicked=@Up5>Scroll +5</Button>
+        <Button OnClicked=@Up10>Scroll +10</Button>
+        <Button OnClicked=@Down1>Scroll -1</Button>
+        <Button OnClicked=@Down5>Scroll -5</Button>
+        <Button OnClicked=@Down10>Scroll -10</Button>
+        @*         <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+        <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
+    <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+    <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
+    <Button OnClicked=@OnAddNewItem>Add new item</Button>
+    <Button OnClicked=@OnGotoEnd>Goto end</Button>
+    <Button OnClicked=@OnGotoStart>Goto start</Button>
+    <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+ *@    
+    </WrapPanel>
+
+</StackPanel>
+
+@code {
+    private class Feed : TreeItem<Feed>
+    {
+        public string Id { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public string Icon { get; set; } = string.Empty;
+    }
+
+    TreeView<Feed> List = null!;
+    Random random = new Random();
+
+    List<Feed> _feeds = new List<Feed>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        InitialiseData(100);
+    }
+
+    async Task CollapseAll()
+    {
+        await List.CollapseAll();
+    }
+    async Task ExpandAll()
+    {
+        await List.ExpandAll();
+    }
+    // async Task OnGoto10Start()
+    // {
+    //     await List.GotoIndex(10, Alignment.Start);
+    // }
+
+    // async Task OnGoto50Center()
+    // {
+    //     await List.GotoIndex(50, Alignment.Center);
+    // }
+
+    // async Task OnGoto70End()
+    // {
+    //     await List.GotoIndex(70, Alignment.End);
+    // }
+
+    // async Task OnAddNewItem()
+    // {
+    //     var index = _feeds.Count;
+    //     _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
+    //     await List.Refresh();
+    // }
+
+    // async Task OnGotoEnd()
+    // {
+    //     await List.GotoEnd();
+    // }
+
+    // async Task OnGotoStart()
+    // {
+    //     await List.GotoStart();
+    // }
+
+    // async Task OnAddNewItemGotoEndIfAtEnd()
+    // {
+    //     var atEnd = await List.AtEnd();
+
+    //     var index = _feeds.Count;
+    //     _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
+    //     await List.Refresh();
+    //     if (atEnd)
+    //         await List.GotoEnd();
+    // }
+    private async Task Up1()
+    {
+        await List.Scroll(1);
+    }
+    private async Task Up5()
+    {
+        await List.Scroll(5);
+
+    }
+    private async Task Up10()
+    {
+        await List.Scroll(10);
+
+    }
+    private async Task Down1()
+    {
+        await List.Scroll(-1);
+
+    }
+    private async Task Down5()
+    {
+        await List.Scroll(-5);
+
+    }
+    private async Task Down10()
+    {
+        await List.Scroll(-10);
+
+    }
+    private void InitialiseData(int maxNum)
+    {
+        int count = 0;
+        for (int i = 0; i <= 4; i++)
+        {
+            var item = new Feed { Id = $"{i + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+            _feeds.Add(item);
+            count++;
+            for (int j = 0; j <= 4; j++)
+            {
+                var item1 = new Feed { Id = $"{i + 1}.{j + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+                item.Children.Add(item1);
+                count++;
+                if (count >= maxNum)
+                    return;
+                for (int k = 0; k <= 3; k++)
+                {
+                    var item2 = new Feed { Id = $"{i + 1}.{j + 1}.{k + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+                    item1.Children.Add(item2);
+                    count++;
+                    if (count >= maxNum)
+                        return;
+                }
+            }
+        }
+    }
+}

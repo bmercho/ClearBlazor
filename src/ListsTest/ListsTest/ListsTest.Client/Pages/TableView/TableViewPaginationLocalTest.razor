@@ -1,12 +1,12 @@
 ﻿@page "/TableViewPaginationLocal"
 @namespace ListsTest
-@using TestData;
+@using Data;
 
 <StackPanel Orientation=Orientation.Portrait>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
-    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows initially loaded from DB)</TextBlock>
+    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows)</TextBlock>
     <Grid Columns="800,auto,*" Rows="600,*">
-        <TableView @ref=_table TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <TableView @ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                    RowSpacing=20 ColumnSpacing=10
                    @bind-SelectedItem=_selectedItem
                    @bind-SelectedItems=_selectedItems
@@ -21,18 +21,18 @@
                    ShowHeader=true
                    StickyHeader=true
                    InitialIndex=@((20, Alignment.Center))
-                   DataProvider=@GetItemsLocallyAsync>
-            <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
-            <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
-            <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) />
-            <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) />
-            <TableColumn Label="Quantity" ContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) />
-            <TableColumn Label="UnitPrice" ContentAlignment=Alignment.Stretch TItem=TableRow Field=@(x =>x.UnitPrice)>
+                   Items=@_localListData>
+            <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) />
+            <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) />
+            <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) />
+            <TableColumn Label="Available" TItem=TestListRow Field=@(x =>x.Available) />
+            <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) />
+            <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Stretch TItem=TestListRow Field=@(x =>x.UnitPrice)>
                 <DataTemplate Context=item>
-                    <TextBlock TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+                    <TextBlock TextAlignment=Alignment.Start>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes)>
+            <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes)>
                 <DataTemplate Context=item>
                     <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>@(item.Notes)</TextBlock>
                 </DataTemplate>

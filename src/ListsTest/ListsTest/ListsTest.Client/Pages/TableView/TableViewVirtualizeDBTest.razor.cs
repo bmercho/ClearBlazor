@@ -1,6 +1,7 @@
 using ClearBlazor;
 using TestData;
 using Microsoft.AspNetCore.Components;
+using Data;
 
 namespace ListsTest
 {
@@ -8,47 +9,25 @@ namespace ListsTest
         : ComponentBase
     {
         private bool _addDelay = false;
-        private TableView<TableRow> _table = null!;
-        private TableRow? _selectedItem = null;
-        private List<TableRow> _selectedItems = new();
+        private TableView<TestListRow> _table = null!;
+        private TestListRow? _selectedItem = null;
+        private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
         private bool _atEnd = false;
         private bool _atStart = true;
-        List<TableRow> _localTableRows = new();
+        List<TestListRow> _localTableRows = new();
 
-        protected override async Task OnInitializedAsync()
-        {
-            base.OnInitialized();
-
-            var result = await SignalRClient.Instance.GetTableRows(0, 500);
-            _localTableRows = result.TableRows;
-            StateHasChanged();
-            await _table.Refresh();
-        }
-
-        async Task<(int, IEnumerable<TableRow>)> GetItemsLocally(DataProviderRequest request)
-        {
-            if (_localTableRows == null)
-                return (0, new List<TableRow>());
-
-            if (_addDelay)
-                await Task.Delay(400, request.CancellationToken);
-
-            await Task.CompletedTask;
-            return (_localTableRows.Count, _localTableRows.Skip(request.StartIndex).Take(request.Count));
-        }
-
-        private async Task<(int, IEnumerable<TableRow>)> GetItemsFromDatabase(DataProviderRequest request)
+        private async Task<(int, IEnumerable<TestListRow>)> GetItemsFromDatabase(DataProviderRequest request)
         {
             if (_addDelay)
                 await Task.Delay(1000, request.CancellationToken);
 
-            TableRowResult tableRows = await SignalRClient.Instance.GetTableRows(
+            var tableRows = await SignalRClient.Instance.GetListRows(
                                                               request.StartIndex, request.Count,
                                                               request.CancellationToken);
-            return (tableRows.TotalNumEntries, tableRows.TableRows);
+            return (tableRows.TotalNumEntries, tableRows.ListRows);
         }
 
         private void Refresh()

@@ -242,7 +242,8 @@ namespace ClearBlazor
         protected T? FindParent<T>(ClearComponentBase? Parent) where T : ClearComponentBase
         {
             ClearComponentBase? parent = Parent;
-            while (parent != null && parent.GetType() != typeof(T))
+            while (parent != null && 
+                  parent.GetType() != typeof(T) && !parent.GetType().IsSubclassOf(typeof(T)))
                 parent = parent.Parent;
             if (parent == null)
                 return null;
@@ -455,7 +456,7 @@ namespace ClearBlazor
             if (stackPanel != null)
                 css += "flex-shrink:0; ";
 
-            //if (!InScroller() || this is Avatar || this is Image)
+            if (!InScroller() || this is Avatar || this is Image)
                 // The line below affected images in a scrollviewer
                 // but is required for text in a scrollviewer
                 css += $"overflow:hidden; ";

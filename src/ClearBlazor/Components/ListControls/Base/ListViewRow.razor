@@ -1,0 +1,66 @@
+﻿@using Microsoft.AspNetCore.Components
+@using ClearBlazor
+@namespace ClearBlazorInternal
+@typeparam TItem
+@inherits ListRowBase<TItem>
+
+<CascadingValue Value=this IsFixed="false">
+    @if (_parent != null && _parent._horizontalGridLines == GridLines.All)
+    {
+        @if (Index > 0)
+        {
+            @if (_parent._horizontalGridLines == GridLines.All)
+            {
+                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
+            }
+            else
+            {
+                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
+            }
+        }
+    }
+
+    <div id=@RowId style=@GetFullRowStyle()
+         @onmouseenter=OnMouseEnter
+         @onmouseleave=OnMouseLeave
+         @onclick=OnRowClicked>
+
+        @for (int col = 0; col < Columns.Count; col++)
+        {
+            var colIndex = col;
+            <div style=@GetRowStyle(Index+2, colIndex+1)>
+                <div style=@GetContainerDivStyle()>
+                    <div style=@GetContentDivStyle()>
+                        @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
+                        {
+                            <TextBlock VerticalAlignment=@Columns[colIndex].VerticalContentAlignment 
+                                       TextAlignment=@Columns[colIndex].HorizontalContentAlignment>
+                                @foreach (var line in GetLines(Columns[colIndex].Field.Invoke(RowData).ToString()))
+                                {
+                                    @(line)
+                                    <br />
+                                }
+                            </TextBlock>
+                        }
+                        else
+                        {
+                            @Columns[colIndex].DataTemplate?.Invoke(RowData)
+                        }
+                    </div>
+                 </div>
+            </div>
+        }
+
+        @if (RowTemplate != null)
+        {
+            <div class="@Classes"
+                 @onmouseenter=OnMouseEnter
+                 @onmouseleave=OnMouseLeave>
+                @RowTemplate(RowData)
+            </div>
+        }
+    </div>
+</CascadingValue>
+
+
+

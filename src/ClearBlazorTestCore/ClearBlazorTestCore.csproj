@@ -18,13 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="LoremNET" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ClearBlazor\ClearBlazor.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\TestData\Data.csproj" />
     <ProjectReference Include="..\TestData\TestData.csproj" />
   </ItemGroup>
 
@@ -36,6 +36,10 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\TreeViewVirtualizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\TreeViewExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewVirtualizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewNonVirtualizedExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\PaginationListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\NonVirtualizedListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewExampleCode.html" />
@@ -183,5 +187,10 @@
 	<EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarImageExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarIconExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\AppBar\Code\AppBarSimpleExampleCode.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Pages\Components\TreeView\NonVirtualizedTree\Examples\TreeViewVirtualizeExample.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
   </ItemGroup>
 </Project>

@@ -174,7 +174,7 @@ namespace ClearBlazor
             int index = 0;
             for (int year = (int)startYear; year <= endYear; year++)
             {
-                YearList.Add(new YearItem() { Year = year, Id = Guid.NewGuid(), Index = index++ });
+                YearList.Add(new YearItem() { Year = year, ListItemId = Guid.NewGuid(), Index = index++ });
             }
         }
 

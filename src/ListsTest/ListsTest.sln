@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListsTest.Client", "ListsTe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListsTest", "ListsTest\ListsTest\ListsTest.csproj", "{AB6B6AB9-B5C1-4FA5-86F6-4ACFDC8F0A89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestData", "..\TestData\TestData.csproj", "{9C7A67D3-E063-40E6-AB15-CF09A4BAC952}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "..\TestData\Data.csproj", "{9C7A67D3-E063-40E6-AB15-CF09A4BAC952}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

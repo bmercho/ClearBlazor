@@ -7,7 +7,7 @@ namespace ClearBlazor
     public class ResizeObserverService : IAsyncDisposable
     {
         private IJSRuntime? _jsRuntime = null;
-        private IJSObjectReference? _module = null; 
+        private IJSObjectReference? _module = null;
         private ConcurrentDictionary<string, ResizeObserverInfo> _observers = new();
 
 
@@ -36,15 +36,42 @@ namespace ClearBlazor
                 return string.Empty;
 
             var id = Guid.NewGuid().ToString();
-            ResizeObservable resizeObservable = new ResizeObservable(id, elementIds);
-            ResizeObserverInfo info = new ResizeObserverInfo() { Callback = callback, ElementIds = elementIds,
-                                                                 ResizeObserver = resizeObservable};   
+            ResizeObserverInfo info = new ResizeObserverInfo()
+            {
+                Callback = callback,
+                ElementIds = elementIds,
+                ObserverId = id
+            };
             if (!_observers.TryAdd(id, info))
                 throw new Exception($"Unable to add observer Id:{id}");
-            var a = elementIds.ToArray();
-            await _module.InvokeVoidAsync("ResizeObserverManager.AddResizeObserver", 
-                                          id, DotNetObjectReference.Create(this), elementIds.ToArray());
+
+            await _module.InvokeAsync<string>("ResizeObserverManager.AddResizeObserver", 
+                                      id, DotNetObjectReference.Create(this), elementIds.ToArray());
             return id;
+        }
+
+        public async Task ObserveElement(string resizeObserverId, string elementId)
+        {
+            if (_module == null)
+                return;
+
+            if (!_observers.ContainsKey(resizeObserverId))
+                return;
+
+            await _module.InvokeAsync<string>("ResizeObserverManager.Observe",
+                                          resizeObserverId, elementId);
+        }
+
+        public async Task UnobserveElement(string resizeObserverId, string elementId)
+        {
+            if (_module == null)
+                return;
+
+            if (!_observers.ContainsKey(resizeObserverId))
+                return;
+
+            await _module.InvokeAsync<string>("ResizeObserverManager.Unobserve",
+                                          resizeObserverId, elementId);
         }
 
         public async Task RemoveResizeObserver(string id)
@@ -73,6 +100,7 @@ namespace ClearBlazor
 
             if (!_observers.ContainsKey(observerId))
                 return;
+
             var observer = _observers[observerId];
             await observer.Callback(observedSizes);
         }
@@ -87,7 +115,7 @@ namespace ClearBlazor
 
         internal struct ResizeObserverInfo
         {
-            public ResizeObservable ResizeObserver;
+            public string ObserverId;
             public IEnumerable<string> ElementIds;
             public Func<List<ObservedSize>, Task> Callback;
         }

@@ -12,23 +12,6 @@
 		<RunAOTCompilation>true</RunAOTCompilation>
 	</PropertyGroup>
 
-	<ItemGroup>
-    <Compile Remove="Pages\TreeView\**" />
-    <Content Remove="Pages\TreeView\**" />
-    <EmbeddedResource Remove="Pages\TreeView\**" />
-    <None Remove="Pages\TreeView\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Pages\TableViewOld\TableViewTest.razor.cs" />
-    <Compile Remove="Pages\TableViewOld\TableViewVirtualizedTest.razor.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Pages\TableViewOld\TableViewTest.razor" />
-    <Content Remove="Pages\TableViewOld\TableViewVirtualizedTest.razor" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.10" />
@@ -36,11 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\ClearBlazor\ClearBlazor.csproj" />
-    <ProjectReference Include="..\..\..\TestData\TestData.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\TableViewOld\" />
+    <ProjectReference Include="..\..\..\TestData\Data.csproj" />
   </ItemGroup>
 
 </Project>

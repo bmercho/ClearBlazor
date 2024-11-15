@@ -1,6 +1,6 @@
 ﻿@page "/ListViewVirtualizeDB"
 @namespace ListsTest
-@using TestData;
+@using Data;
 
 @using Microsoft.AspNetCore.SignalR.Client
 
@@ -8,7 +8,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : from DB (5000 rows loaded as required)</TextBlock>
     <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
-        <ListView @ref=_list TItem=FeedEntry CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.Virtualize
                   RowHeight=110
                   DataProvider=@GetItemsFromDatabase
@@ -17,53 +17,57 @@
                   HoverHighlight=@_hoverHighlight
                   AllowSelectionToggle=@_allowSelectionToggle
                   SelectionMode=@_selectionMode
-                  PageSize=10 
+                  InitialIndex="@((50, Alignment.Center))"
+                  PageSize=10
                   ShowLoadingSpinner=true>
             <RowTemplate Context=row>
-                <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BoxShadow=2>
+                <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
                     <StackPanel Column=1 Orientation=Orientation.Portrait>
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.NoWrap Margin="0,0,10,10">
-                            @row.Title
+                            @(row.ToString() + $"({row.Index})")
                         </TextBlock>
-                        <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                            @row.Message
+                        <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
+                            @row.Notes
                         </TextBlock>
                     </StackPanel>
                 </Grid>
             </RowTemplate>
         </ListView>
-        <StackPanel Column=1>
-            <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
-                        @bind-Value:after=@SelectionModeChanged>
-                @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
-                {
-                    <Radio Label=@mode.ToString() Value="@mode" />
-                }
-            </RadioGroup>
-            <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
-            <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.Title</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Title))</TextBlock>
-            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
-            <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
-        </StackPanel>
-        <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-            <Button OnClicked=@(e => GotoIndex(20, Alignment.Start))> Goto 20(start)</Button>
-            <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Goto 50 (center)</Button>
-            <Button OnClicked=@(e => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
-            <Button OnClicked=@OnGotoEnd>Goto end</Button>
-            <Button OnClicked=@OnGotoStart>Goto start</Button>
-        </WrapPanel>
-        <WrapPanel Row=2 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-            <StackPanel Orientation=Orientation.Landscape>
-                <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>
-                <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atEnd</TextBlock>
+        @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+        {
+            <StackPanel Column=1>
+                <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
+                            @bind-Value:after=@SelectionModeChanged>
+                    @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+                    {
+                        <Radio Label=@mode.ToString() Value="@mode" />
+                    }
+                </RadioGroup>
+                <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+                <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+                <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
+                <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
+                <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
+                <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
             </StackPanel>
-            <StackPanel Orientation=Orientation.Landscape>
-                <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
-                <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
-            </StackPanel>
-        </WrapPanel>
+            <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+                <Button OnClicked=@(e => GotoIndex(20, Alignment.Start))> Goto 20(start)</Button>
+                <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Goto 50 (center)</Button>
+                <Button OnClicked=@(e => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
+                <Button OnClicked=@OnGotoEnd>Goto end</Button>
+                <Button OnClicked=@OnGotoStart>Goto start</Button>
+            </WrapPanel>
+            <WrapPanel Row=2 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+                <StackPanel Orientation=Orientation.Landscape>
+                    <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>
+                    <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atEnd</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation=Orientation.Landscape>
+                    <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
+                    <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
+                </StackPanel>
+            </WrapPanel>
+        }
     </Grid>
 </StackPanel>

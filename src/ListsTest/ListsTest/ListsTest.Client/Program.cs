@@ -10,6 +10,8 @@ internal class Program
 
         await new SignalRClient().Initialise(baseAddress);
 
+        ClientData.LoadTestData();
+
         await builder.Build().RunAsync();
     }
 }

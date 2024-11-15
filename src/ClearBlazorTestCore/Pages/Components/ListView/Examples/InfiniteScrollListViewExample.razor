@@ -1,6 +1,6 @@
 ﻿@namespace ClearBlazorTest
 <Grid Columns="auto,auto,*" Rows="auto,*">
-    <ListView @ref=_list Column=0 HorizontalAlignment=Alignment.Start Margin=40
+    <ListView @ref=_list TItem=@TestViewItem Column=0 HorizontalAlignment=Alignment.Start Margin=40
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
               VirtualizeMode=VirtualizeMode.InfiniteScroll
               DataProvider=@GetData Width=300 Height=500 BorderThickness="1"
@@ -9,7 +9,7 @@
               OverscrollBehaviour=OverscrollBehaviour.None
               AllowSelectionToggle=@_allowSelectionToggle>
         <RowTemplate Context=row>
-            <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8 
+            <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8
                   Margin=10 Padding=10 Columns="*,3*" Rows="*,auto" HorizontalAlignment=Alignment.Stretch>
                 <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
                 <TextBlock VerticalAlignment=Alignment.Center Column=1> @(row.Name)</TextBlock>
@@ -17,35 +17,32 @@
             </Grid>
         </RowTemplate>
     </ListView>
-    <StackPanel Column=1>
-        <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
-                    @bind-Value:after=@SelectionModeChanged>
-            @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
-            {
-                <Radio Label=@mode.ToString() Value="@mode" />
-            }
-        </RadioGroup>
-        <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
-        <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-        <TextBlock Margin=20>Selection=@_selectedItem?.Name</TextBlock>
-
-        <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
-    </StackPanel>
-    <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-        <Button Row=1 ColumnSpan=3 HorizontalAlignment=Alignment.Start OnClicked=@OnGotoStart>Goto Start</Button>
-        <StackPanel Orientation=Orientation.Landscape>
-            <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
-            <TextBlock>@_atStart</TextBlock>
+    @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+    {
+        <StackPanel Column=1>
+            <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
+                        @bind-Value:after=@SelectionModeChanged>
+                @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+                {
+                    <Radio Label=@mode.ToString() Value="@mode" />
+                }
+            </RadioGroup>
+            <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+            <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+            <TextBlock Margin=20>Selection=@_selectedItem?.Name</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
+            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
-    </WrapPanel>
-
-    
+        <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+            <Button Row=1 ColumnSpan=3 HorizontalAlignment=Alignment.Start OnClicked=@OnGotoStart>Goto Start</Button>
+        </WrapPanel>
+    }
 </Grid>
 
 @code {
     private List<TestViewItem> _testData = new();
 
-    private class TestViewItem:ListItem
+    private class TestViewItem : ListItem
     {
         public string Name { get; set; } = string.Empty;
         public string Message { get; set; } = string.Empty;
@@ -67,7 +64,7 @@
 
         for (int i = 0; i < 10000; i++)
         {
-            _testData?.Add(new TestViewItem { Name = $"Item # {i}", Message=GetMessage(i), IconName = GetIconName(i) });
+            _testData?.Add(new TestViewItem { Name = $"Item # {i}", Message = GetMessage(i), IconName = GetIconName(i) });
         }
     }
 
@@ -120,14 +117,6 @@
 
     }
 
-    async Task CheckAtStart()
-    {
-        if (_list == null)
-            return;
-        _atStart = await _list.AtStart();
-        StateHasChanged();
-    }
-
     private async Task OnGotoStart()
     {
         if (_list == null)
@@ -143,4 +132,11 @@
 
         StateHasChanged();
     }
+
+    private async Task ClearSelections()
+    {
+        await _list.RemoveAllSelections();
+        StateHasChanged();
+    }
+
 }

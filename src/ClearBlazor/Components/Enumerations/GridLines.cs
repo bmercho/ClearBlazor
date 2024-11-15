@@ -4,7 +4,6 @@
     {
         None,
         HeaderOnly,
-        ContentOnly,
         All
     }
 }

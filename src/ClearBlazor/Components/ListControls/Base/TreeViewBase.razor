@@ -1,0 +1,60 @@
+﻿@namespace ClearBlazor
+@using ClearBlazorInternal
+@typeparam TItem
+@inherits ListBase<TItem>
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id class=@Classes style=@ComputeStyle()>
+        <Grid @ref=_grid Rows=auto Columns=@_columnDefinitions Style="overflow:visible">
+            <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
+                <div style=@GetContainerStyle()>
+                    @if (_showHeader)
+                    {
+                        <TreeTableViewHeader @ref=_header
+                        TItem=TItem
+                        VirtualizeMode=@VirtualizeMode
+                        HeaderId=@_headerId
+                        RowSpacing=@RowSpacing
+                        ColumnSpacing=@_columnSpacing
+                        HorizontalGridLines=@_horizontalGridLines
+                        VerticalGridLines=@_verticalGridLines
+                        StickyHeader=@_stickyHeader
+                        RowHeight=@RowHeight
+                        Columns=@Columns />
+                    }
+
+                    @if (NodeTemplate != null)
+                    {
+                        @if (_iconWidth == 0)
+                        {
+                            /* Just to measure width initially */
+                            <IconButton @ref=@_measureIcon Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore
+                            VerticalAlignment=Alignment.Center />
+                        }
+                        @foreach (var node in _nodes.Select((item, index) => new { item, index }))
+                        {
+                            @if (!node.item.IsVisible)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                
+                            }
+                            <TreeViewNode TItem=TItem 
+                                          NodeTemplate=@NodeTemplate
+                                          NodeData=@node.item
+                                          RowIndex=@node.item.Index
+                                          Index=@node.index
+                                          RowSpacing=@RowSpacing
+                                          ColumnSpacing=@_columnSpacing
+                                          VerticalGridLines=@_verticalGridLines
+                                          Columns=@Columns />
+                        }
+                    }
+                </div>
+            </div>
+        </Grid>
+    </div>
+    @ChildContent
+</CascadingValue>

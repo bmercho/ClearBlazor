@@ -1,6 +1,7 @@
 ﻿using ClearBlazor;
 using TestData;
 using Microsoft.AspNetCore.SignalR.Client;
+using Data;
 
 namespace ListsTest
 {
@@ -45,23 +46,23 @@ namespace ListsTest
         {
         }
 
-        public async Task<FeedEntryResult> GetFeedEntries(int startIndex, int num, 
-                                                          CancellationToken? cancellationToken = null)
-        {
-            if (hubConnection == null)
-                return new ();
-
-            return await hubConnection.InvokeAsync<FeedEntryResult>("GetFeedEntries", startIndex, num,
-                                                                    new CancellationToken());
-
-        }
-        public async Task<TableRowResult> GetTableRows(int startIndex, int num,
+        public async Task<ListEntryResult> GetListRows(int startIndex, int num,
                                                        CancellationToken? cancellationToken = null)
         {
             if (hubConnection == null)
                 return new();
 
-            return await hubConnection.InvokeAsync<TableRowResult>("GetTableRows", startIndex, num,
+            return await hubConnection.InvokeAsync<ListEntryResult>("GetListRows", startIndex, num,
+                                                                    new CancellationToken());
+
+        }
+        public async Task<TreeEntryResult> GetTreeRows(int startIndex, int num,
+                                                       CancellationToken? cancellationToken = null)
+        {
+            if (hubConnection == null)
+                return new();
+
+            return await hubConnection.InvokeAsync<TreeEntryResult>("GetTreeRows", startIndex, num,
                                                                     new CancellationToken());
 
         }
