@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.9
+
+### Patch Changes
+
+- 164a712: Implemented TreeView and TreeTableView
+
 ## 0.0.8
 
 ### Patch Changes
