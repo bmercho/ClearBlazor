@@ -186,8 +186,6 @@ namespace ClearBlazorInternal
                 return string.Empty;
 
             string css = "display:grid; grid-row: 2 / span 1; ";
-            if (!_parent.HorizontalScrollbar)
-                css += "overflow: hidden; ";
             return css;
         }
 

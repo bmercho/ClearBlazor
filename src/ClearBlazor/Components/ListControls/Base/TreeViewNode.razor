@@ -65,12 +65,14 @@
                                         @if (NodeData.IsExpanded)
                                         {
                                             <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore
-                                                        VerticalAlignment=Alignment.Start />
+                                                        VerticalAlignment=Alignment.Start
+                                                        OnClicked=@(e => OnNodeClicked(e, NodeData)) />
                                         }
                                         else
                                         {
                                             <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ChevronRight
-                                                        VerticalAlignment=Alignment.Start />
+                                                        VerticalAlignment=Alignment.Start
+                                                        OnClicked=@(e => OnNodeClicked(e, NodeData)) />
                                         }
                                     </div>
                                 }

@@ -14,12 +14,13 @@
                    @bind-SelectedItem=_selectedItem
                    @bind-SelectedItems=_selectedItems
                    HoverHighlight=@_hoverHighlight
-                   HorizontalGridLines=GridLines.None
-                   VerticalGridLines=GridLines.None
+                   HorizontalGridLines=GridLines.All
+                   VerticalGridLines=GridLines.All
                    AllowSelectionToggle=@_allowSelectionToggle
                    SelectionMode=@_selectionMode
                    ShowHeader=true
                    StickyHeader=true
+                   HorizontalScrollbar=true
                    ShowLoadingSpinner=false>
             <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) />
             <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) />
@@ -40,7 +41,7 @@
             <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="50">
                 <DataTemplate Context=item>
                     <TextBlock VerticalAlignment=Alignment.Center 
-                               TextWrapping=TextWrap.NoWrap TextTrimming=true>@(item.Notes)</TextBlock>
+                               TextWrapping=TextWrap.NoWrap TextTrimming=false>@(item.Notes)</TextBlock>
                 </DataTemplate>
             </TableColumn>
         </TableView>

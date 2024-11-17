@@ -36,7 +36,7 @@ namespace ClearBlazorInternal
         /// Show a horizontal scrollbar if there are too many columns.. 
         /// </summary>
         [Parameter]
-        public bool HorizontalScrollbar { get; set; } = true;
+        public bool HorizontalScrollbar { get; set; } = false;
 
         /// <summary>
         /// The currently selected items. (when in Multiselect mode)

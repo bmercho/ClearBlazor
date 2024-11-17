@@ -58,7 +58,8 @@ namespace ClearBlazorInternal
         internal bool _stickyHeader = true;
 
         private bool _initializing = true;
-        private string _scrollViewerId = Guid.NewGuid().ToString();
+        //private string _scrollViewerId = Guid.NewGuid().ToString();
+        private ScrollViewer _scrollViewer = null!;
         private Grid _grid = null!;
         private double _gridWidth = 0;
         private string _headerId = Guid.NewGuid().ToString();
@@ -111,7 +112,7 @@ namespace ClearBlazorInternal
             switch (VirtualizeMode)
             {
                 case VirtualizeMode.None:
-                    await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewerId,
+                    await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewer.Id,
                                                     _baseRowId + index, (int)verticalAlignment);
                     break;
                 case VirtualizeMode.Virtualize:
@@ -142,7 +143,7 @@ namespace ClearBlazorInternal
                     await GotoIndex(0, Alignment.Start);
                     break;
                 case VirtualizeMode.InfiniteScroll:
-                    await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewerId, 0);
+                    await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, 0);
                     await GetFirstPageAsync();
                     StateHasChanged();
                     break;
@@ -218,9 +219,9 @@ namespace ClearBlazorInternal
 
         public async Task Scroll(int value)
         {
-            var scrollTop = await JSRuntime.InvokeAsync<double>("window.scrollbar.GetScrollTop", _scrollViewerId);
+            var scrollTop = await JSRuntime.InvokeAsync<double>("window.scrollbar.GetScrollTop", _scrollViewer.Id);
 
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewerId, scrollTop + value);
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, scrollTop + value);
         }
 
         /// <summary>
@@ -322,7 +323,7 @@ namespace ClearBlazorInternal
                 case VirtualizeMode.Virtualize:
                 case VirtualizeMode.InfiniteScroll:
                 case VirtualizeMode.InfiniteScrollReverse:
-                    return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewerId);
+                    return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollEnd", _scrollViewer.Id);
                 case VirtualizeMode.Pagination:
                     if (_currentPageNum == _numPages)
                         return true;
@@ -342,7 +343,7 @@ namespace ClearBlazorInternal
                 case VirtualizeMode.None:
                 case VirtualizeMode.InfiniteScroll:
                 case VirtualizeMode.InfiniteScrollReverse:
-                    return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollStart", _scrollViewerId);
+                    return await JSRuntime.InvokeAsync<bool>("window.scrollbar.AtScrollStart", _scrollViewer.Id);
                 case VirtualizeMode.Virtualize:
                     if (_scrollTop == 0)
                         return true;
@@ -387,7 +388,7 @@ namespace ClearBlazorInternal
 
             if (firstRender)
             {
-                List<string> elementIds = new List<string>() { Id, _scrollViewerId, 
+                List<string> elementIds = new List<string>() { Id, _scrollViewer.Id, 
                                                                _headerId};
                 if (_grid != null)
                     elementIds.Add(_grid.Id);
@@ -406,7 +407,7 @@ namespace ClearBlazorInternal
                     }
                 }
 
-                await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewerId,
+                await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents", _scrollViewer.Id,
                                             DotNetObjectReference.Create(this));
             }
 
@@ -639,7 +640,7 @@ namespace ClearBlazorInternal
             }
             _items = await GetItems(_skipItems, _takeItems);
             StateHasChanged();
-            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewerId, scrollTop);
+            await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, scrollTop);
         }
 
         protected override string UpdateStyle(string css)
@@ -674,31 +675,6 @@ namespace ClearBlazorInternal
             return css;
         }
 
-        private string GetScrollViewerStyle()
-        {
-            string css = $"height:{_componentHeight}px; width:{_componentWidth}px; ";
-            if (HorizontalScrollbar)
-                css += "overflow-x:auto; ";
-            else
-                css += "overflow-x:hidden; ";
-
-            css += "overflow-y:auto; ";
-
-            switch (OverscrollBehaviour)
-            {
-                case OverscrollBehaviour.Auto:
-                    css += "overscroll-behavior-y:auto; ";
-                    break;
-                case OverscrollBehaviour.Contain:
-                    css += "overscroll-behavior-y:contain; ";
-                    break;
-                case OverscrollBehaviour.None:
-                    css += "overscroll-behavior-y:none; ";
-                    break;
-            }
-            return css;
-        }
-
         protected string GetContainerStyle()
         {
             int header = _showHeader ? 1 : 0;
@@ -723,7 +699,7 @@ namespace ClearBlazorInternal
                 case VirtualizeMode.Pagination:
                     return $"display:grid; z-index:1;" +
                            $"border-width:0 0 0 1px; border-style:solid; " +
-                           $"grid-area: 1 / {column} / span {_items.Count} / span 1; " +
+                           $"grid-area: 1 / {column} / span {_items.Count+1} / span 1; " +
                            $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
                 case VirtualizeMode.Virtualize:
                     return $"display:grid; z-index:1;height:{_items.Count*(_rowHeight + RowSpacing)}px; " +
@@ -734,6 +710,14 @@ namespace ClearBlazorInternal
                            $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
             }
             return string.Empty;
+        }
+
+        private ScrollMode GetHorizontalScrollMode()
+        {
+            if (HorizontalScrollbar)
+                return ScrollMode.Auto;
+            else
+                return ScrollMode.Disabled;
         }
 
         internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
@@ -753,7 +737,7 @@ namespace ClearBlazorInternal
                         changed = true;
                     }
                 }
-                else if (observedSize.TargetId == _scrollViewerId)
+                else if (observedSize.TargetId == _scrollViewer.Id)
                 {
                     if (observedSize.ElementHeight > 0 && _scrollViewerHeight != observedSize.ElementHeight)
                     {

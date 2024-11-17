@@ -9,7 +9,7 @@
     <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
         <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.Virtualize
-                  RowHeight=110
+                  RowHeight=100
                   Items=@_localListData
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
@@ -17,7 +17,9 @@
                   AllowSelectionToggle=@_allowSelectionToggle
                   SelectionMode=@_selectionMode
                   InitialIndex="@((50, Alignment.Center))"
-                  PageSize=10 ShowLoadingSpinner=true>
+                  PageSize=10 
+                  ShowLoadingSpinner=true
+                  HorizontalScrollbar=false>
             <RowTemplate Context=row>
                 <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
@@ -25,7 +27,7 @@
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.NoWrap Margin="0,0,10,10">
                             @(row.ToString() + $"({row.Index})")
                         </TextBlock>
-                        <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
+                        <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false Margin="0,0,0,10">
                             @row.Notes
                         </TextBlock>
                     </StackPanel>

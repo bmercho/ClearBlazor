@@ -158,14 +158,5 @@ namespace ClearBlazor
                    $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
             return css;
         }
-
-        private string GetVerticalGridLineStyle(int column)
-        {
-            string css = $"justify-self:start; z-index:1; border-width:0 0 0 1px; " +
-                         $"border-style:solid; margin:0 0 0 -1px; "+
-                         $"grid-area: 1 / {column} / span 1 / span 1; " +
-                         $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
-            return css;
-        }
     }
 }
