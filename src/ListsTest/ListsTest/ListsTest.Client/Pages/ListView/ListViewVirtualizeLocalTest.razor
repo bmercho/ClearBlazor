@@ -18,8 +18,7 @@
                   SelectionMode=@_selectionMode
                   InitialIndex="@((50, Alignment.Center))"
                   PageSize=10 
-                  ShowLoadingSpinner=true
-                  HorizontalScrollbar=false>
+                  ShowLoadingSpinner=true>
             <RowTemplate Context=row>
                 <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
@@ -27,7 +26,7 @@
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.NoWrap Margin="0,0,10,10">
                             @(row.ToString() + $"({row.Index})")
                         </TextBlock>
-                        <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false Margin="0,0,0,10">
+                        <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
                             @row.Notes
                         </TextBlock>
                     </StackPanel>

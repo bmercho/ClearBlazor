@@ -22,26 +22,22 @@
                    StickyHeader=true
                    HorizontalScrollbar=true
                    ShowLoadingSpinner=false>
-            <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) />
-            <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) />
-            <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product)>
+            <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition=auto />
+            <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition=auto />
+            <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) ColumnDefinition=auto>
                 <DataTemplate Context=item>
-                    <TextBlock VerticalAlignment=Alignment.Center 
+                    <TextBlock  
                                TextWrapping=TextWrap.NoWrap>@(item.Product)</TextBlock>
                 </DataTemplate>
             </TableColumn>
-            <TableColumn Label="Available" TItem=TestListRow Field=@(x =>x.Available) />
-            <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) />
             <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Stretch TItem=TestListRow Field=@(x =>x.UnitPrice)>
                 <DataTemplate Context=item>
-                    <TextBlock VerticalAlignment=Alignment.Start 
-                               TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+                    <TextBlock>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
             </TableColumn>
             <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="50">
                 <DataTemplate Context=item>
-                    <TextBlock VerticalAlignment=Alignment.Center 
-                               TextWrapping=TextWrap.NoWrap TextTrimming=false>@(item.Notes)</TextBlock>
+                    <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false>@(item.Notes)</TextBlock>
                 </DataTemplate>
             </TableColumn>
         </TableView>

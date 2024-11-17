@@ -8,32 +8,8 @@
 @inject NavigationManager NavManager
 @implements IHandleEvent
 
-<RootComponent>
-    <Grid BorderThickness=1 Width=400 Height=400 BorderStyle=BorderStyle.Solid BorderColor=Color.Dark>
-         <div style="height:400px; width:400px; overflow-x:scroll; overflow-y:auto; overscroll-behavior-y:none; ">            
-            <Grid HorizontalAlignment=Alignment.Start Columns="auto,*"> 
-                <div style="display:grid; grid-template-columns: subgrid; grid-column:1/span 2;">
-                <TextBlock Margin=0,20,0,0>Test</TextBlock>
-                <TextBlock Column=1 TextWrapping=TextWrap.NoWrap>Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.;</TextBlock>
-                </div>
-                <div style="display:grid; grid-template-columns: subgrid; grid-column:1/span 2;">
-                    <TextBlock Margin=0,20,0,0>Test</TextBlock>
-                    <TextBlock Column=1 TextWrapping=TextWrap.NoWrap>Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.;</TextBlock>
-                </div>
-                <div style="display:grid; grid-template-columns: subgrid; grid-column:1/span 2;">
-                    <TextBlock Margin=0,20,0,0>Test</TextBlock>
-                    <TextBlock Column=1 TextWrapping=TextWrap.NoWrap>Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.;</TextBlock>
-                </div>
-                <div style="display:grid; grid-template-columns: subgrid; grid-column:1/span 2;">
-                    <TextBlock Margin=0,20,0,0>Test</TextBlock>
-                    <TextBlock Column=1 TextWrapping=TextWrap.NoWrap>Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.;</TextBlock>
-                </div>
-            </Grid>
-        </div>
-    </Grid>
-</RootComponent>
 
-@* <RootComponent>
+<RootComponent>
     <Grid Rows="auto,*">
          <AppBar Row="0" Padding="10" BackgroundColor="Color.BackgroundGrey">
             <IconButton Dock="Dock.Left" Icon="@Icons.Material.Filled.Menu" OnClicked=@MenuClicked />
@@ -127,7 +103,7 @@
         </Drawer>
     </Grid>
  </RootComponent>
- *@
+ 
 
  @code {
     Drawer Drawer;
@@ -195,12 +171,6 @@
 
     void Clicked()
     {
-        StateHasChanged();
-    }
-    bool _showTestResizeObserver = true;
-    void Clear()
-    {
-        _showTestResizeObserver = false;
         StateHasChanged();
     }
 }

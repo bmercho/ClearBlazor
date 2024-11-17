@@ -1,14 +1,24 @@
 ﻿@page "/TableView"
 @using ClearBlazorTest
 <DocsExamplesPage DocsInfo=@(new TableViewDocsInfo())>
-    <CodeSnippet title="Basic" Code=@(typeof(TableViewSimpleExample).Name) BackgroundColor="@Color.BackgroundGrey">
+    <CodeSnippet Code=@(typeof(TableViewSimpleExample).Name) BackgroundColor="@Color.BackgroundGrey">
         <StackPanel Spacing="20">
             <TableViewSimpleExample />
         </StackPanel>
     </CodeSnippet>
-    <CodeSnippet title="Basic" Code=@(typeof(TableViewVirtualizeExample).Name) BackgroundColor="@Color.BackgroundGrey">
+    <CodeSnippet Code=@(typeof(TableViewVirtualizeExample).Name) BackgroundColor="@Color.BackgroundGrey">
         <StackPanel Spacing="20">
             <TableViewVirtualizeExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code=@(typeof(TableViewInfiniteScrollExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <StackPanel Spacing="20">
+            <TableViewInfiniteScrollExample />
+        </StackPanel>
+    </CodeSnippet>
+    <CodeSnippet Code=@(typeof(TableViewPaginationExample).Name) BackgroundColor="@Color.BackgroundGrey">
+        <StackPanel Spacing="20">
+            <TableViewPaginationExample />
         </StackPanel>
     </CodeSnippet>
 </DocsExamplesPage>

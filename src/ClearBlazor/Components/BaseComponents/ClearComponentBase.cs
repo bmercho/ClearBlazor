@@ -456,8 +456,6 @@ namespace ClearBlazor
             if (stackPanel != null)
                 css += "flex-shrink:0; ";
 
-            if (!InScrollerX() )
-                css += $"overflow-x:hidden; ";
             if (!InScrollerY() || this is Avatar || this is Image)
                 // The line below affected images in a scroll viewer
                 // but is required for text in a scroll viewer
@@ -659,24 +657,6 @@ namespace ClearBlazor
                     return "capitalize";
             }
             return "none";
-        }
-
-        private bool InScrollerX()
-        {
-            var parent = Parent;
-            while (parent != null)
-            {
-                if (parent.IsScroller)
-                {
-                    if (parent is ScrollViewer scrollViewer && 
-                        scrollViewer.HorizontalScrollMode != ScrollMode.Disabled)
-                        return true;
-                    else
-                        return false;
-                }
-                parent = parent.Parent;
-            }
-            return false;
         }
 
         private bool InScrollerY()

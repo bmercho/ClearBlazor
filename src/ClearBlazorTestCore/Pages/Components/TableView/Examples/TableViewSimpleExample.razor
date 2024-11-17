@@ -1,22 +1,25 @@
 ﻿@namespace ClearBlazorTest
-<TableView BorderThickness=1 Padding=5 CornerRadius=4 Height=400
-           VerticalGridLines=GridLines.All 
-           HorizontalGridLines=GridLines.All
-           Items=@People 
-           RowSpacing=10 
-           ColumnSpacing=20>
-    <TableColumn Label="PersonId" TItem=Person Field=@(x =>x.PersonId) ColumnDefinition="*">
-        <HeaderTemplate Context=Header>
-            <TextBlock FontWeight=@((int)FontWeight.Bold)>@(Header + " !!")</TextBlock>
-        </HeaderTemplate>
-        <DataTemplate Context=Item>
-            <TextBlock>@(Item.PersonId + " **")</TextBlock>
-        </DataTemplate>
-    </TableColumn>
-    <TableColumn Label="Name" TItem=Person Field=@(x =>x.Name) ColumnDefinition="*" />
-    <TableColumn Label="BirthDate" TItem=Person Field=@(x =>x.BirthDate) ColumnDefinition="2*" />
-</TableView>
-
+<StackPanel Orientation=Orientation.Portrait>
+    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
+    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None</TextBlock>
+    <TableView BorderThickness=1 Padding=5 CornerRadius=4 Height=400
+               VerticalGridLines=GridLines.All
+               HorizontalGridLines=GridLines.All
+               Items=@People
+               RowSpacing=10
+               ColumnSpacing=20>
+        <TableColumn Label="PersonId" TItem=Person Field=@(x =>x.PersonId) ColumnDefinition="*">
+            <HeaderTemplate Context=Header>
+                <TextBlock FontWeight=@((int)FontWeight.Bold)>@(Header + " !!")</TextBlock>
+            </HeaderTemplate>
+            <DataTemplate Context=Item>
+                <TextBlock>@(Item.PersonId + " **")</TextBlock>
+            </DataTemplate>
+        </TableColumn>
+        <TableColumn Label="Name" TItem=Person Field=@(x =>x.Name) ColumnDefinition="*" />
+        <TableColumn Label="BirthDate" TItem=Person Field=@(x =>x.BirthDate) ColumnDefinition="2*" />
+    </TableView>
+</StackPanel>
 @code {
 
     List<Person> People = new List<Person>
