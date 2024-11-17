@@ -13,7 +13,7 @@
                 <TextBlock FontWeight=@((int)FontWeight.Bold)>@(Header + " !!")</TextBlock>
             </HeaderTemplate>
             <DataTemplate Context=Item>
-                <TextBlock>@(Item.PersonId + " **")</TextBlock>
+                <TextBlock>@(Item.PersonId + " ***")</TextBlock>
             </DataTemplate>
         </TableColumn>
         <TableColumn Label="Name" TItem=Person Field=@(x =>x.Name) ColumnDefinition="*" />
