@@ -1,41 +1,41 @@
 ﻿@namespace ClearBlazorTest
 @using Data
-<TableView TItem=TableRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10 Height=500
-           RowSpacing=0 ColumnSpacing=10
-           VirtualizeMode=VirtualizeMode.Virtualize
-           RowHeight=30
-           Items=@_localTableRows
-           HorizontalGridLines=GridLines.All
-           VerticalGridLines=GridLines.All
-           HoverHighlight=false
-           ShowLoadingSpinner=true>
-    <TableColumn Label="First Name" TItem=TableRow Field=@(x =>x.FirstName) />
-    <TableColumn Label="Last Name" TItem=TableRow Field=@(x =>x.LastName) />
-    <TableColumn Label="Product" TItem=TableRow Field=@(x =>x.Product) />
-    <TableColumn Label="Available" TItem=TableRow Field=@(x =>x.Available) />
-    <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TableRow Field=@(x =>x.Quantity) />
-    <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Stretch TItem=TableRow Field=@(x =>x.UnitPrice)>
-        <DataTemplate Context=item>
-            <TextBlock TextAlignment=Alignment.Start>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
-        </DataTemplate>
-    </TableColumn>
-    <TableColumn Label="Notes" TItem=TableRow Field=@(x =>x.Notes)>
-        <DataTemplate Context=item>
-            <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>@(item.Notes)</TextBlock>
-        </DataTemplate>
-    </TableColumn>
-</TableView>
-
+<StackPanel Orientation=Orientation.Portrait>
+    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
+    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualization (5000 rows)</TextBlock>
+    <TableView TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10 Height=500
+               RowSpacing=0 ColumnSpacing=10
+               VirtualizeMode=VirtualizeMode.Virtualize
+               RowHeight=45
+               Items=@_localListRows
+               HorizontalGridLines=GridLines.All
+               VerticalGridLines=GridLines.All
+               HoverHighlight=false
+               ShowLoadingSpinner=true
+               HorizontalScrollbar=true>
+        <TableColumn Label="First Name" VerticalContentAlignment=Alignment.Center
+                     TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition=100 />
+        <TableColumn Label="Last Name" VerticalContentAlignment=Alignment.Center
+                     TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition=120 />
+        <TableColumn Label="Product" VerticalContentAlignment=Alignment.Center
+                     TItem=TestListRow Field=@(x =>x.Product) ColumnDefinition=170 />
+        <TableColumn Label="UnitPrice" VerticalContentAlignment=Alignment.Center
+                     TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition=80>
+            <DataTemplate Context=item>
+                <TextBlock VerticalAlignment=Alignment.Center TextAlignment=Alignment.Start>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+            </DataTemplate>
+        </TableColumn>
+        <TableColumn Label="Notes" VerticalContentAlignment=Alignment.Center
+                     TItem=TestListRow Field=@(x =>x.Notes)>
+            <DataTemplate Context=item>
+                <TextBlock VerticalAlignment=Alignment.Center TextWrapping=TextWrap.NoWrap TextTrimming=false>@(item.Notes)</TextBlock>
+            </DataTemplate>
+        </TableColumn>
+    </TableView>
+</StackPanel>
 
 @code {
 
-    List<TableRow> _localTableRows = new();
+    List<TestListRow> _localListRows = ClientData.LocalTestListRows5000;
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        for (int i = 0; i < 500; i++)
-            _localTableRows.Add(TableRow.GetNewTableRow(i));
-    }
 }

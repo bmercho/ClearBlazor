@@ -218,7 +218,6 @@ namespace ClearBlazor
                 if (typo.TextTrimming)
                     css += $"white-space: nowrap;overflow:hidden; text-overflow: ellipsis; ";
 
-
             if (!IsTextSelectionEnabled)
                 css += "user-select: none; -ms-user-select: none; cursor: default; ";
 
