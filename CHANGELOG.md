@@ -1,5 +1,12 @@
 # ClearBlazor
 
+## 0.0.10
+
+### Patch Changes
+
+- baa3b5e: Test
+- 9a5a524: List component mods
+
 ## 0.0.9
 
 ### Patch Changes
