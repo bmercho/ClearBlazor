@@ -5,7 +5,7 @@
 <StackPanel Orientation=Orientation.Portrait>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Pagination : from DB (5000 rows loaded as required)</TextBlock>
-    <Grid Columns="800,auto" Rows="600,auto,auto">
+    <Grid Columns="800,auto" Rows="600,auto,auto,auto">
         <TableView @ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                    RowSpacing=20 ColumnSpacing=10
                    @bind-SelectedItem=_selectedItem
@@ -18,14 +18,12 @@
                    HoverHighlight=@_hoverHighlight
                    OverscrollBehaviour=OverscrollBehaviour.None
                    VirtualizeMode=VirtualizeMode.Pagination
-                   PageSize=25
+                   PageSize=@PageSize
                    ShowHeader=true
-                   StickyHeader=true
-                   InitialIndex=@((20, Alignment.Center))>
+                   StickyHeader=true>
+            <TableColumn Label="Index" TItem=TestListRow Field=@(x =>x.Index) />
             <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) />
             <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) />
-            <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) />
-            <TableColumn Label="Available" TItem=TestListRow Field=@(x =>x.Available) />
             <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.Quantity) />
             <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Stretch TItem=TestListRow Field=@(x =>x.UnitPrice)>
                 <DataTemplate Context=item>
@@ -40,6 +38,13 @@
 
             </TableColumn>
         </TableView>
+        <Pagination HorizontalAlignment=Alignment.Center Row=1 Color=Color.Primary
+                    ShowFirstAndLastButtons=true
+                    SelectedPage=@_selectedPage
+                    NumPages=@_numPages
+                    NumPagesShown=4
+                    SelectedPageChanged=@PageChanged />
+        <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @(_selectedPage) of @(_numPages)</TextBlock>
         <StackPanel Column=1>
             <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
                         @bind-Value:after=@SelectionModeChanged>
@@ -54,16 +59,7 @@
             <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
             <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
-        <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
-            <StackPanel Orientation=Orientation.Landscape>
-                <TextBlock>Page @(_table.CurrentPageNum()) of @(_table.NumPages())</TextBlock>
-            </StackPanel>
-            <Button OnClicked=@OnNextPage>Next Page</Button>
-            <Button OnClicked=@OnPrevPage>Prev Page</Button>
-            <Button OnClicked=@OnGotoStart>Goto Start</Button>
-            <Button OnClicked=@OnGotoEnd>Goto End</Button>
-        </WrapPanel>
-        <WrapPanel Row=2 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
+        <WrapPanel Row=3 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
             <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Goto 50</Button>
             <StackPanel Orientation=Orientation.Landscape>
                 <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>

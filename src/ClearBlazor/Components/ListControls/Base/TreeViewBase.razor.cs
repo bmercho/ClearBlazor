@@ -426,7 +426,6 @@ namespace ClearBlazor
                     _skipItems = skipItems;
                     _takeItems = takeItems;
                     _nodes = await GetItems(_skipItems, _takeItems);
-                    Console.WriteLine($"GetItems: Skip:{_skipItems} Take:{_takeItems}");
                 }
                 finally
                 {

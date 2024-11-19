@@ -36,6 +36,9 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewPaginationExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewInfiniteScrollExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Pagination\Code\PaginationSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\TreeViewVirtualizeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\TreeViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewVirtualizeExampleCode.html" />

@@ -8,7 +8,52 @@
 @inject NavigationManager NavManager
 @implements IHandleEvent
 
-
+@* <RootComponent>
+<Grid Columns="400,auto" Rows="600,*">
+    <ListView1 @ref=_list Column=0 Margin=40
+              @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
+              Items=@_testData BorderThickness="1"
+              BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
+              HoverHighlight=@_hoverHighlight
+              OverscrollBehaviour=OverscrollBehaviour.None
+              VirtualizeMode=VirtualizeMode.Virtualize
+              RowHeight=55
+              AllowSelectionToggle=@_allowSelectionToggle>
+        <RowTemplate Context=row>
+            <Grid BackgroundColor=Color.BackgroundGrey
+                  BorderThickness=1 CornerRadius=8 Margin=5 Padding=10 Columns="*,3*">
+                <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
+                <TextBlock TextTrimming=true VerticalAlignment=Alignment.Center Column=1> @(row.Name)</TextBlock>
+            </Grid>
+        </RowTemplate>
+    </ListView1>
+    @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+    {
+        <StackPanel Column=1>
+            <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
+                        @bind-Value:after=@SelectionModeChanged>
+                @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+                {
+                    <Radio Label=@mode.ToString() Value="@mode" />
+                }
+            </RadioGroup>
+            <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+            <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+            <TextBlock Margin=20>Selection=@_selectedItem?.Name</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
+            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
+        </StackPanel>
+        <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+            <Button OnClicked=@OnGoto1000Start>Goto 1000 (start)</Button>
+            <Button OnClicked=@OnGoto5000Center>Goto 5000 (center)</Button>
+            <Button OnClicked=@OnGoto7000End>Goto 7000 (end)</Button>
+            <Button OnClicked=@OnGotoEnd>Goto end</Button>
+            <Button OnClicked=@OnGotoStart>Goto start</Button>
+        </WrapPanel>
+    }
+</Grid>
+</RootComponent>
+ *@
 <RootComponent>
     <Grid Rows="auto,*">
          <AppBar Row="0" Padding="10" BackgroundColor="Color.BackgroundGrey">
@@ -56,6 +101,7 @@
                                 <ListBoxItem Text="ListBox" HRef="/ListBox" OnClicked=@Close />
                                 <ListBoxItem Text="ListView" HRef="/ListView" OnClicked=@Close />
                                 <ListBoxItem Text="Popup" HRef="/Popup" OnClicked=@Close />
+                                <ListBoxItem Text="Pagination" HRef="/Pagination" OnClicked=@Close />
                                 <ListBoxItem Text="TreeView" InitiallyExpanded=true>
                                     <ListBoxItem Text="Non Virtualized Tree" HRef="/NonVirtualizedTree" OnClicked=@Close />
                                 </ListBoxItem>
@@ -173,4 +219,106 @@
     {
         StateHasChanged();
     }
+
+
+    private List<TestViewItem> _testData = new();
+
+    private class TestViewItem : ListItem
+    {
+        public string Name { get; set; } = string.Empty;
+        public string IconName { get; set; } = string.Empty;
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    private TestViewItem _selectedItem = null!;
+    private List<TestViewItem> _selectedItems = new();
+    private SelectionMode _selectionMode = SelectionMode.None;
+    private bool _allowSelectionToggle = false;
+    private bool _hoverHighlight = true;
+    private ListView1<TestViewItem>? _list;
+    private bool _atEnd = false;
+    private bool _atStart = true;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        for (int i = 0; i < 10000; i++)
+        {
+            _testData?.Add(new TestViewItem { Name = $"Item # {i} sfsadfasd sadfsdafasdfa sadfsadfsafdsdaf", IconName = GetIconName(i) });
+        }
+    }
+
+    private string GetIconName(int i)
+    {
+        switch (i % 5)
+        {
+            case 0:
+                return Icons.Material.Filled.Add;
+            case 1:
+                return Icons.Material.Filled.AccessAlarm;
+            case 2:
+                return Icons.Material.Filled.Deck;
+            case 3:
+                return Icons.Material.Filled.Landscape;
+            case 4:
+                return Icons.Material.Filled.Airlines;
+        }
+        return Icons.Material.Filled.Add;
+    }
+
+    async Task OnGoto1000Start()
+    {
+        if (_list == null)
+            return;
+        await _list.GotoIndex(1000, Alignment.Start);
+    }
+
+    async Task OnGoto5000Center()
+    {
+        if (_list == null)
+            return;
+        await _list.GotoIndex(5000, Alignment.Center);
+    }
+
+    async Task OnGoto7000End()
+    {
+        if (_list == null)
+            return;
+        await _list.GotoIndex(7000, Alignment.End);
+    }
+
+    async Task OnGotoEnd()
+    {
+        if (_list == null)
+            return;
+        await _list.GotoEnd();
+    }
+
+    async Task OnGotoStart()
+    {
+        if (_list == null)
+            return;
+        await _list.GotoStart();
+    }
+
+    private async Task SelectionModeChanged()
+    {
+        if (_list == null)
+            return;
+        await _list.RemoveAllSelections();
+        StateHasChanged();
+    }
+
+    private async Task ClearSelections()
+    {
+        await _list.RemoveAllSelections();
+        StateHasChanged();
+    }
+
+
 }

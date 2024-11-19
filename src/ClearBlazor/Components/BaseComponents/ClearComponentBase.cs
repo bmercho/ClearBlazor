@@ -104,6 +104,12 @@ namespace ClearBlazor
         [Parameter]
         public Alignment? VerticalAlignment { get; set; } = null;
 
+        /// <summary>
+        /// Tag is user definable value.
+        /// </summary>
+        [Parameter]
+        public int? Tag { get; set; } = null;
+
 
         // For Grid children
 
@@ -278,8 +284,8 @@ namespace ClearBlazor
             if (this is IDraggable)
                 css += CssBuilder((IDraggable)this);
 
-            if (this is IColor)
-                SetColor((IColor)this);
+            //if (this is IColor)
+            //    SetColor((IColor)this);
 
             css = UpdateStyle(css);
 
@@ -309,6 +315,11 @@ namespace ClearBlazor
         protected virtual void AddChild(ClearComponentBase child)
         {
             Children.Add(child);
+        }
+
+        protected virtual void RemoveChild(ClearComponentBase child)
+        {
+            Children.Remove(child);
         }
 
         protected async Task OnElementClicked(MouseEventArgs e)
@@ -705,6 +716,8 @@ namespace ClearBlazor
 
         public virtual void Dispose()
         {
+            if (Parent != null)
+                Parent.RemoveChild(this);
         }
     }
 }

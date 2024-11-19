@@ -16,6 +16,9 @@ namespace ClearBlazor
         public Color? Color { get; set; } = null;
 
         [Parameter]
+        public Color? OutlineColor { get; set; } = null;
+
+        [Parameter]
         public bool DisableBoxShadow { get; set; } = false;
 
         [Parameter]
@@ -52,7 +55,10 @@ namespace ClearBlazor
         public int Spacing { get; set; } = 5;
         internal TextEditFillMode? ButtonStyleOverride { get; set; } = null;
         internal Color? ColorOverride { get; set; } = null;
+        internal Color? _outlineColorOverride { get; set; } = null;
         internal Size? SizeOverride { get; set; } = null;
+
+        internal Color? _iconColor = null;
 
         internal ToolTip? ToolTipElement { get; set; } = null;
 
@@ -66,7 +72,7 @@ namespace ClearBlazor
         {
             base.ComputeOwnClasses(sb); 
             if (!Disabled)
-                sb.Append("clear-ripple tooltip-wrapper");
+                sb.Append("clear-ripple tooltip-wrapper ");
         }
 
         protected override string UpdateStyle(string css)
@@ -84,7 +90,7 @@ namespace ClearBlazor
                     css += GetBoxShadowCss(2);
 
             if (Disabled)
-                css += "cursor: default; ";
+                css += "cursor: default; pointer-events:none; ";
             else
                 css += "cursor: pointer; ";
 
@@ -103,7 +109,6 @@ namespace ClearBlazor
                 case TextEditFillMode.Outline:
                     textColor = GetTextOrOutlinedTextColor(color);
                     css += $"color: {GetTextOrOutlinedTextColor(color).Value}; ";
-                    css += $"border-width: 1px; border-style: solid; border-color: {GetOutlineColor(color).Value}; ";
                     css += $"background: {GetTextOrOutlinedBackgroundColor().Value}; ";
                     break;
                 case TextEditFillMode.None:
@@ -118,7 +123,9 @@ namespace ClearBlazor
             {
                 LabelStyle += $"color: {textColor.Value}; ";
                 if (IconColor == null)
-                    IconColor = textColor;
+                    _iconColor = textColor;
+                else
+                    _iconColor = IconColor;
             }
 
             css += GetHeight(Size);
@@ -172,6 +179,12 @@ namespace ClearBlazor
             LabelStyle += $"letter-spacing: {typo.LetterSpacing}; ";
 
             LabelStyle += $"text-transform: {typo.TextTransform}; ";
+
+            LabelStyle += "align-self:center; ";
+
+            LabelStyle += "user-select: none; -ms-user-select: none; " +
+                          "-webkit-user-select: none; -moz-user-select: none; " +
+                          "cursor: default; ";
 
             return css;
         }
@@ -244,7 +257,8 @@ namespace ClearBlazor
                 case TextEditFillMode.Filled:
                     return $"border-width: 0px; ";
                 case TextEditFillMode.Outline:
-                    return $"border-width: 1px; border-style: solid; border-color: {color.Value}; ";
+                    return $"border-width: 1px; border-style: solid; border-color: " +
+                           $"{GetOutlineColor(color)}; ";
                 case TextEditFillMode.None:
                     return $"border-width: 0px; ";
             }
@@ -345,14 +359,21 @@ namespace ClearBlazor
                                 Color.Transparent;
         }
 
-        private Color GetOutlineColor(Color? color)
+        internal Color GetOutlineColor(Color? color)
         {
+            if (_outlineColorOverride != null)
+                return _outlineColorOverride;
+
+            if (OutlineColor != null)
+                return OutlineColor;
+
             if (Disabled)
             {
                 if (Parent is ButtonGroup)
                     return color == null? ThemeManager.CurrentPalette.Primary : (Color)color;
                 return ThemeManager.CurrentPalette.TextDisabled;
             }
+
             if (color == null)
                 return _mouseOver ? ThemeManager.CurrentPalette.Primary.Darken(.1) :
                                     ThemeManager.CurrentPalette.Primary;
@@ -389,15 +410,15 @@ namespace ClearBlazor
 
         private TextEditFillMode GetButtonStyle()
         {
-            if (ButtonStyleOverride != null)
-                return (TextEditFillMode)ButtonStyleOverride;
-
             if (ButtonStyle != null)
                 return (TextEditFillMode)ButtonStyle;
 
+            if (ButtonStyleOverride != null)
+                return (TextEditFillMode)ButtonStyleOverride;
+
             return TextEditFillMode.Filled;
         }
-        private Color? GetColor()
+        internal Color? GetColor()
         {
             if (Color != null)
                 return Color;

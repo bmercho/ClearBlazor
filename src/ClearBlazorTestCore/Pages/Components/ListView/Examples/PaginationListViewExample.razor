@@ -1,19 +1,18 @@
 ﻿@namespace ClearBlazorTest
 <Grid Columns="400,auto" Rows="600,auto,auto">
     <ListView @ref=_list TItem=Feed CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
-              @bind-SelectedItem=_selectedItem
-              @bind-SelectedItems=_selectedItems
-              SelectionMode=@_selectionMode
-              AllowSelectionToggle=@_allowSelectionToggle
-              HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
-              VirtualizeMode=VirtualizeMode.Pagination
-              PageSize=6
-              InitialIndex=@((20, Alignment.Center)) Items=@_feeds>
+    @bind-SelectedItem=_selectedItem
+    @bind-SelectedItems=_selectedItems
+    SelectionMode=@_selectionMode
+    AllowSelectionToggle=@_allowSelectionToggle
+    HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
+    VirtualizeMode=VirtualizeMode.Pagination
+    PageSize=6 Items=@_feeds>
         <RowTemplate Context=row>
             <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
                 <Image RowSpan=2 Height=40 Width=40 VerticalAlignment=Alignment.Center
-                       Style="border-radius:50%; " Stretch=ImageStretch.Fill
-                       Source=@($"https://picsum.photos/id/{row.ImageId}/200/200") />
+                Style="border-radius:50%; " Stretch=ImageStretch.Fill
+                Source=@($"https://picsum.photos/id/{row.ImageId}/200/200") />
                 <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
                     @row.Title
                 </TextBlock>
@@ -23,11 +22,19 @@
             </Grid>
         </RowTemplate>
     </ListView>
+    <Pagination HorizontalAlignment=Alignment.Center Row=1 Color=Color.Primary 
+                ShowFirstAndLastButtons=true
+                SelectedPage=@_selectedPage 
+                NumPages=(int)Math.Ceiling(_feeds.Count/6.0) 
+                NumPagesShown=4
+                SelectedPageChanged=@PageChanged />
+    <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10 >Page @(_list.CurrentPageNum()) of @(_list.NumPages())</TextBlock>
+
     @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
     {
         <StackPanel Column=1>
             <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
-                        @bind-Value:after=@SelectionModeChanged>
+            @bind-Value:after=@SelectionModeChanged>
                 @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
                 {
                     <Radio Label=@mode.ToString() Value="@mode" />
@@ -39,20 +46,6 @@
             <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Title))</TextBlock>
             <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
-        <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
-            <StackPanel Orientation=Orientation.Landscape>
-                <TextBlock>Page @(_list.CurrentPageNum()) of @(_list.NumPages())</TextBlock>
-            </StackPanel>
-            <Button OnClicked=@OnNextPage>Next Page</Button>
-            <Button OnClicked=@OnPrevPage>Prev Page</Button>
-            <Button OnClicked=@OnGotoStart>Goto Start</Button>
-            <Button OnClicked=@OnGotoEnd>Goto End</Button>
-        </WrapPanel>
-        <WrapPanel Row=2 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
-            <Button OnClicked=@OnGoto10Start>Goto 10</Button>
-            <Button OnClicked=@OnGoto50Center>Goto 50</Button>
-            <Button OnClicked=@OnGoto70End>Goto 70</Button>
-        </WrapPanel>
     }
 </Grid>
 
@@ -73,55 +66,30 @@
     private bool _hoverHighlight = true;
     private bool _atEnd = false;
     private bool _atStart = true;
+    private int _selectedPage = 3;
 
     List<Feed> _feeds = new List<Feed>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
         for (int i = 0; i < 10000; i++)
         {
             _feeds.Add(new Feed { ImageId = i, Title = $"Record #{i}", Message = "This is a message" }); //GetMessage(i) });
         }
     }
 
-    async Task OnGoto10Start()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await _list.GotoIndex(10, Alignment.Start);
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+            await _list.GotoPage(_selectedPage);
     }
 
-    async Task OnGoto50Center()
+    async Task PageChanged(int page)
     {
-        await _list.GotoIndex(50, Alignment.Center);
-    }
-
-    async Task OnGoto70End()
-    {
-        await _list.GotoIndex(70, Alignment.End);
-    }
-
-    async Task OnGotoEnd()
-    {
-        await _list.GotoEnd();
-        StateHasChanged();
-    }
-
-    async Task OnGotoStart()
-    {
-        await _list.GotoStart();
-        StateHasChanged();
-    }
-
-    async Task OnNextPage()
-    {
-        await _list.NextPage();
-        StateHasChanged();
-    }
-
-    async Task OnPrevPage()
-    {
-        await _list.PrevPage();
-        StateHasChanged();
+        await _list.GotoPage(page);
+        _selectedPage = page;
     }
 
     void ChangeItem()

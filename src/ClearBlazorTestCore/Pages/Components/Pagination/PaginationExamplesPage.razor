@@ -1,0 +1,9 @@
+﻿@page "/Pagination"
+
+@using ClearBlazorTest
+
+<DocsExamplesPage DocsInfo=@(new PaginationDocsInfo())>
+    <CodeSnippet  Code=@(typeof(PaginationSimpleExample).Name)>
+        <PaginationSimpleExample />
+    </CodeSnippet>
+</DocsExamplesPage>

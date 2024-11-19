@@ -13,8 +13,16 @@ namespace ListsTest
         private bool _hoverHighlight = true;
         private bool _atEnd = false;
         private bool _atStart = true;
+        private int _selectedPage = 3;
 
         List<TestListRow> _localListData = ClientData.LocalTestListRows5000;
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+                await _list.GotoPage(_selectedPage);
+        }
 
         async Task GotoIndex(int row, Alignment alignment)
         {
@@ -38,34 +46,16 @@ namespace ListsTest
                 await _list.GotoEnd();
         }
 
+        async Task PageChanged(int page)
+        {
+            await _list.GotoPage(page);
+            _selectedPage = page;
+        }
+
         void ChangeItem()
         {
             _localListData[0].FirstName = "Bla bla bla";
             _list.Refresh(_localListData[0]);
-        }
-
-        async Task OnGotoEnd()
-        {
-            await _list.GotoEnd();
-            StateHasChanged();
-        }
-
-        async Task OnGotoStart()
-        {
-            await _list.GotoStart();
-            StateHasChanged();
-        }
-
-        async Task OnNextPage()
-        {
-            await _list.NextPage();
-            StateHasChanged();
-        }
-
-        async Task OnPrevPage()
-        {
-            await _list.PrevPage();
-            StateHasChanged();
         }
 
         async Task CheckAtEnd()
