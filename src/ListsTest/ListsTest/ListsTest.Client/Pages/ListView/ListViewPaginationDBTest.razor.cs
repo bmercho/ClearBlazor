@@ -13,6 +13,25 @@ namespace ListsTest
         private bool _hoverHighlight = true;
         private bool _atEnd = false;
         private bool _atStart = true;
+        private int _selectedPage = 3;
+        private int _totalNumItems = 0;
+        private int _numPages = 0;
+
+        protected override async Task OnInitializedAsync()
+        {
+            var feedEntries = await SignalRClient.Instance.GetListRows(0, 1, null);
+            _totalNumItems = feedEntries.TotalNumEntries;
+            _numPages = (int)Math.Ceiling(_totalNumItems / 4.0);
+
+            await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+                await _list.GotoPage(_selectedPage);
+        }
 
         private async Task<(int, IEnumerable<TestListRow>)> GetItemsFromDatabase(ClearBlazor.DataProviderRequest request)
         {
@@ -20,6 +39,12 @@ namespace ListsTest
                                                               request.StartIndex, request.Count,
                                                               request.CancellationToken);
             return (feedEntries.TotalNumEntries, feedEntries.ListRows);
+        }
+
+        async Task PageChanged(int page)
+        {
+            await _list.GotoPage(page);
+            _selectedPage = page;
         }
 
         async Task GotoIndex(int row, Alignment alignment)

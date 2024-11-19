@@ -5,7 +5,7 @@
 <StackPanel Orientation=Orientation.Portrait>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows initially loaded from DB)</TextBlock>
-    <Grid Columns="400,auto,*" Rows="600,*">
+    <Grid Columns="400,auto,*" Rows="600,auto,auto,auto">
         <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
@@ -14,7 +14,6 @@
                   HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
                   VirtualizeMode=VirtualizeMode.Pagination
                   PageSize=6
-                  InitialIndex=@((20, Alignment.Center))
                   Items=@_localListData>
             <RowTemplate Context=row>
                 <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
@@ -28,6 +27,13 @@
                 </Grid>
             </RowTemplate>
         </ListView>
+        <Pagination HorizontalAlignment=Alignment.Center Row=1 Color=Color.Primary
+                    ShowFirstAndLastButtons=true
+                    SelectedPage=@_selectedPage
+                    NumPages=(int)Math.Ceiling(_localListData.Count/6.0)
+                    NumPagesShown=4
+                    SelectedPageChanged=@PageChanged />
+        <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @(_list.CurrentPageNum()) of @(_list.NumPages())</TextBlock>
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {
             <StackPanel Column=1>
@@ -44,16 +50,7 @@
                 <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
                 <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
             </StackPanel>
-            <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
-                <StackPanel Orientation=Orientation.Landscape>
-                    <TextBlock>Page @(_list.CurrentPageNum()) of @(_list.NumPages())</TextBlock>
-                </StackPanel>
-                <Button OnClicked=@OnNextPage>Next Page</Button>
-                <Button OnClicked=@OnPrevPage>Prev Page</Button>
-                <Button OnClicked=@OnGotoStart>Goto Start</Button>
-                <Button OnClicked=@OnGotoEnd>Goto End</Button>
-            </WrapPanel>
-            <WrapPanel Row=2 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
+            <WrapPanel Row=3 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
                 <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Goto 50</Button>
                 <Button OnClicked=@OnAddNewItem>Add new item</Button>
                 <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>

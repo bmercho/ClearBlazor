@@ -15,14 +15,14 @@
                     BackgroundColor=@Color.Transparent>
             @if (Icon != null && IconLocation == IconLocation.Start)
             {
-                <MaterialIcon Color="@IconColor" Size="@Size" Icon="@Icon" />
+                <MaterialIcon Color="@_iconColor" Size=@GetSize() Icon="@Icon" />
             }
             <span style="@LabelStyle">
                 @ChildContent
             </span>
             @if (Icon != null && IconLocation == IconLocation.End)
             {
-                <MaterialIcon Color="@IconColor" Size="@Size" Icon="@Icon" />
+                <MaterialIcon Color="@_iconColor" Size="@Size" Icon="@Icon" />
             }
         </StackPanel>
     </div>

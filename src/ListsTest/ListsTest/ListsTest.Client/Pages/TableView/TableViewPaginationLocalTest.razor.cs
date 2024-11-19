@@ -5,6 +5,7 @@ namespace ListsTest
 {
     public partial class TableViewPaginationLocalTest
     {
+        const int PageSize = 14;
         private TableView<TestListRow> _table = null!;
         private TestListRow? _selectedItem = null;
         private List<TestListRow> _selectedItems = new();
@@ -13,8 +14,31 @@ namespace ListsTest
         private bool _hoverHighlight = true;
         private bool _atEnd = false;
         private bool _atStart = true;
+        private int _selectedPage = 3;
+        private int _totalNumItems = 0;
+        private int _numPages = 0;
 
         List<TestListRow> _localListData = ClientData.LocalTestListRows5000;
+
+        protected override async Task OnInitializedAsync()
+        {
+            _totalNumItems = _localListData.Count;
+            _numPages = (int)Math.Ceiling(_totalNumItems / (Double)PageSize);
+
+            await base.OnInitializedAsync();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+                await _table.GotoPage(_selectedPage);
+        }
+        async Task PageChanged(int page)
+        {
+            await _table.GotoPage(page);
+            _selectedPage = page;
+        }
 
         async Task GotoIndexAsync(int row, Alignment alignment)
         {

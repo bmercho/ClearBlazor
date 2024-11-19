@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using ClearBlazor;
+using System.Threading;
 
 namespace ClearBlazorInternal
 {
@@ -131,6 +132,8 @@ namespace ClearBlazorInternal
         internal GridLines _verticalGridLines = GridLines.None;
         internal ListRowBase<TItem>? _highlightedItem = null;
         internal int _rowHeight = 30;
+        private SemaphoreSlim _semaphoreSlim1 = new SemaphoreSlim(1, 1);
+
 
         protected Dictionary<Guid, TItem> _selectedItems { get; set; } = [];
 
@@ -418,6 +421,9 @@ namespace ClearBlazorInternal
 
         virtual internal async Task<List<TItem>> GetItems(int startIndex, int count)
         {
+            await _semaphoreSlim1.WaitAsync();
+            try
+            { 
             if (startIndex < 0)
                 startIndex = 0;
 
@@ -428,7 +434,6 @@ namespace ClearBlazorInternal
                 if (startIndex + count > _totalNumItems)
                     count = _totalNumItems - startIndex;
 
-                Console.WriteLine($"GetItems: StartIndex:{startIndex} Count:{count}");
                 return Items.ToList().GetRange(startIndex, count).Select((item, index) =>
                 { item.Index = startIndex + index; return item; }).ToList();
             }
@@ -438,7 +443,6 @@ namespace ClearBlazorInternal
 
                 try
                 {
-                    Console.WriteLine($"GetItems: StartIndex:{startIndex} Count:{count}");
                     var result = await DataProvider(new DataProviderRequest(startIndex, count, _loadItemsCts.Token));
                     _totalNumItems = result.TotalNumItems;
                     return result.Items.Select((item, index) =>
@@ -471,6 +475,16 @@ namespace ClearBlazorInternal
                 }
             }
             return new List<TItem>();
+            }
+            catch (Exception ex)
+            {
+                return new List<TItem>();
+            }
+            finally
+            {
+                _semaphoreSlim1.Release();
+            }
+
         }
     }
 }

@@ -72,7 +72,7 @@ namespace ClearBlazor
         {
             base.ComputeOwnClasses(sb);
             if (!Disabled)
-                sb.Append("clear-ripple clear-ripple-icon ");
+                sb.Append("clear-ripple-icon ");
         }
     }
 }

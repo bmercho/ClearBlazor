@@ -2,16 +2,17 @@
 @namespace ClearBlazor
 @inherits Button
 <CascadingValue Value="this" IsFixed="false">
-    <button id="@Id" class="@Classes" style="@ComputeStyle()" disabled="@GetDisabledState()"
+    <div id="@Id" class=@Classes style=@ComputeStyle() disabled=@GetDisabledState()
             @onclick=@OnElementClicked
             @onmouseenter=@OnMouseEnter 
             @onmouseleave=@OnMouseLeave>
         @if (ToolTip != null && ToolTip != string.Empty)
         {
-            <ToolTip @ref="ToolTipElement" Text=@ToolTip Position=@ToolTipPosition Delay=@ToolTipDelay />
+            <ToolTip @ref="ToolTipElement" Text=@ToolTip Position=@ToolTipPosition 
+                     Delay=@ToolTipDelay />
         }
-        <MaterialIcon Color=@IconColor Size="@IconSize" Icon="@Icon"/>
-    </button>
+        <MaterialIcon Color=@_iconColor Size=@IconSize Icon="@Icon" />
+    </div>
 </CascadingValue>
 
 

@@ -219,7 +219,9 @@ namespace ClearBlazor
                     css += $"white-space: nowrap;overflow:hidden; text-overflow: ellipsis; ";
 
             if (!IsTextSelectionEnabled)
-                css += "user-select: none; -ms-user-select: none; cursor: default; ";
+                css += "user-select: none; -ms-user-select: none; " +
+                       "-webkit-user-select: none; -moz-user-select: none; " +
+                       "cursor: default; ";
 
             if (Clickable)
                 css += "cursor:pointer; ";
