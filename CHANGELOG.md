@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.11
+
+### Patch Changes
+
+- 19fd927: Added pagination control
+
 ## 0.0.10
 
 ### Patch Changes
