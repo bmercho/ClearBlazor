@@ -4,9 +4,9 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<AssemblyVersion>0.0.10</AssemblyVersion>
-		<FileVersion>0.0.10</FileVersion>
-		<Version>0.0.10</Version>
+		<AssemblyVersion>0.0.11</AssemblyVersion>
+		<FileVersion>0.0.11</FileVersion>
+		<Version>0.0.11</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 	<ItemGroup>
