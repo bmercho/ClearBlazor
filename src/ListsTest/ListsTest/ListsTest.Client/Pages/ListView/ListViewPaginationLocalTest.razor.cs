@@ -5,7 +5,7 @@ namespace ListsTest
 {
     public partial class ListViewPaginationLocalTest
     {
-        ListView<TestListRow> _list = null!;
+        ListView1<TestListRow> _list = null!;
         private TestListRow? _selectedItem = null;
         private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;

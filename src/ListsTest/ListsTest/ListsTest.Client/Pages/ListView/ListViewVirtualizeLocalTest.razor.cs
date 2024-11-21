@@ -7,7 +7,7 @@ namespace ListsTest
     public partial class ListViewVirtualizeLocalTest
         : ComponentBase
     {
-        private ListView<TestListRow> _list = null!;
+        private ListView1<TestListRow> _list = null!;
         private TestListRow? _selectedItem = null;
         private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
@@ -84,6 +84,5 @@ namespace ListsTest
             await _list.RemoveAllSelections();
             StateHasChanged();
         }
-
     }
 }

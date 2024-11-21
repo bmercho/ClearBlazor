@@ -6,7 +6,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None : local data (100 rows)</TextBlock>
     <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
-        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
                   SelectionMode=@_selectionMode
@@ -14,6 +14,7 @@
                   HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
                   VirtualizeMode=VirtualizeMode.None
                   InitialIndex=@((20, Alignment.Center))
+                  HorizontalScrollbar=true
                   Items=@_localListData>
             <RowTemplate Context=row>
                 <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
@@ -21,12 +22,13 @@
                     <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
                         @(row.ToString() + $"({row.Index})")
                     </TextBlock>
-                    <TextBlock Column=1 Row=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                    <TextBlock Column=1 Row=1 TextWrapping=TextWrap.Wrap
+                               Margin="0,0,0,10">
                         @row.Notes
                     </TextBlock>
                 </Grid>
             </RowTemplate>
-        </ListView>
+        </ListView1>
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
         {
             <StackPanel Column=1>

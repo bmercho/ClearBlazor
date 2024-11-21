@@ -140,11 +140,17 @@ namespace ClearBlazorInternal
         protected Dictionary<Guid, ListRowBase<TItem>> ListRows { get; set; } = [];
 
 
-        //  Index, rowSize
-        protected Dictionary<int, double> RowSizes { get; set; } = [];
+        //  Index, (rowHeight, top)
+//        internal Dictionary<int, (double RowHeight,double Top)> RowSizes { get; set; } = [];
+
+        //  RowId, (rowHeight, top)
+        internal Dictionary<string, (double RowHeight, double Top)> RowSizes { get; set; } = [];
 
         // RowId, Index
-        protected Dictionary<string, int> RowIndexes { get; set; } = [];
+        //        protected Dictionary<string, int> RowIndexes { get; set; } = [];
+
+        // Index, RowId
+        protected Dictionary<int, string> RowIds { get; set; } = [];
 
         protected List<TItem> _items { get; set; } = new List<TItem>();
 
@@ -198,24 +204,10 @@ namespace ClearBlazorInternal
                 _selectedItems.Add(item.ListItemId, item);
         }
 
-        internal async Task AddListRow(ListRowBase<TItem> listItem)
+        internal void AddListRow(ListRowBase<TItem> listItem)
         {
             if (ListRows.ContainsKey(listItem.RowData.ListItemId))
                 return;
-
-            if (VirtualizeMode == VirtualizeMode.InfiniteScroll ||
-                VirtualizeMode == VirtualizeMode.InfiniteScrollReverse)
-            {
-                RowIndexes.Add(listItem.RowData.ListItemId.ToString(), listItem.RowData.Index);
-                if (_resizeObserverId != null)
-                {
-                    RowSizes.Add(listItem.RowData.Index, 0);
-                    await ResizeObserverService.Service.ObserveElement(_resizeObserverId,
-                                            listItem.RowData.ListItemId.ToString());
-                }
-                else
-                    RowSizes.Add(listItem.RowData.Index, -1);
-            }
 
             ListRows.Add(listItem.RowData.ListItemId, listItem);
         }

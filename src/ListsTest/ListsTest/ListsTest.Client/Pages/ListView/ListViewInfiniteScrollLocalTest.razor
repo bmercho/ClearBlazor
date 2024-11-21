@@ -6,7 +6,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows)</TextBlock>
     <Grid Columns="800,auto,*" Rows="600,*">
-        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.InfiniteScroll
                   Items=@_localListData
                   @bind-SelectedItem=_selectedItem
@@ -29,7 +29,7 @@
                     </StackPanel>
                 </Grid>
             </RowTemplate>
-        </ListView>
+        </ListView1>
 
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {
@@ -49,10 +49,21 @@
             </StackPanel>
             <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
                 <Button Row=1 ColumnSpan=3 HorizontalAlignment=Alignment.Start OnClicked=@OnGotoStart>Goto Start</Button>
+                <Button OnClicked=@OnAddNewItem>Add new item</Button>
+                <Button OnClicked=@OnAddNewItemGotoStartIfAtStart>Add new item and goto start if at start</Button>
+                <Button OnClicked=@ChangeItem>Change first item</Button>
                 <StackPanel Orientation=Orientation.Landscape>
                     <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
                     <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
                 </StackPanel>
+            </WrapPanel>
+            <WrapPanel Row=3 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+                <Button OnClicked=@Up1>Scroll +1</Button>
+                <Button OnClicked=@Up5>Scroll +5</Button>
+                <Button OnClicked=@Up10>Scroll +10</Button>
+                <Button OnClicked=@Down1>Scroll -1</Button>
+                <Button OnClicked=@Down5>Scroll -5</Button>
+                <Button OnClicked=@Down10>Scroll -10</Button>
             </WrapPanel>
         }
     </Grid>

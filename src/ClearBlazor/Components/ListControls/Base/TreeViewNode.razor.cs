@@ -43,7 +43,7 @@ namespace ClearBlazor
             RowData = NodeData;
             _parent = FindParent<ListBase<TItem>>(Parent);
             if (_parent != null)
-                await _parent.AddListRow(this);
+                _parent.AddListRow(this);
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
