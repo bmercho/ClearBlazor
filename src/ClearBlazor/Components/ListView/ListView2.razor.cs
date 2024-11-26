@@ -9,7 +9,7 @@ namespace ClearBlazor
     /// Displays a list of items( of type 'IItem') inside a ScrollViewer which is embedded in this component.
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public partial class ListView2<TItem> : ListBase<TItem>
+    public partial class ListView1<TItem> : ListBase<TItem>
         where TItem : ListItem
     {
         /// <summary>

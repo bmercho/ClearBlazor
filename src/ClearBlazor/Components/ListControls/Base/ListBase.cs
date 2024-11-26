@@ -411,7 +411,8 @@ namespace ClearBlazorInternal
             _highlightedItem = row;
         }
 
-        virtual internal async Task<List<TItem>> GetItems(int startIndex, int count)
+        virtual internal async Task<List<TItem>> GetItems(int startIndex, int count, 
+                                                          bool inReverse = false)
         {
             await _semaphoreSlim1.WaitAsync();
             try
@@ -426,10 +427,15 @@ namespace ClearBlazorInternal
                 if (startIndex + count > _totalNumItems)
                     count = _totalNumItems - startIndex;
 
-                return Items.ToList().GetRange(startIndex, count).Select((item, index) =>
-                { item.Index = startIndex + index; return item; }).ToList();
-            }
-            else if (DataProvider != null)
+                if (inReverse)
+                        return Items.ToList().GetRange(startIndex, count).
+                                                       Select((item, index) =>
+                        { item.Index = startIndex + index; return item; }).Reverse().ToList();
+                else
+                        return Items.ToList().GetRange(startIndex, count).Select((item, index) =>
+                        { item.Index = startIndex + index; return item; }).ToList();
+                }
+                else if (DataProvider != null)
             {
                 _loadItemsCts = new CancellationTokenSource();
 

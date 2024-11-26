@@ -9,23 +9,21 @@
                       VerticalScrollMode=ScrollMode.Auto
                       HorizontalScrollMode=@GetHorizontalScrollMode()
                       VerticalOverscrollBehaviour=OverscrollBehaviour.None
-                      HorizontalOverscrollBehaviour=OverscrollBehaviour.None>
-                 <div style=@GetContainerStyle()>
-@*                      <div style=@GetHeightDivStyle()>
-                        <div style=@GetTransformStyle()>
- *@
-                            @if (RowTemplate != null)
-                            {
-                                @foreach (var row in _items.Select((item, index) => new { item, index }))
-                                {
-                                    <ListViewRow1 @key=@row RowTemplate=@RowTemplate RowData=@row.item
-                                                 RowIndex=@row.item.Index
-                                                 Index=@row.index/>
-                                }
-                            }
-@*                          </div>
-                     </div>
- *@                </div>
+                      HorizontalOverscrollBehaviour=OverscrollBehaviour.None
+                      Style="display: flex;  flex-direction: column-reverse;">
+            @* <div style=@GetContainerStyle()> *@
+                <div style=@($"display:grid; min-height: {_height1}px; ")>Test</div>
+                @if (RowTemplate != null)
+                {
+                    @foreach (var row in _items.Select((item, index) => new { item, index }))
+                    {
+                        @* Console.WriteLine($"Index:{row.item.Index} Name:{row.ToString()}"); *@
+                        <ListViewRow2 @key=@row RowTemplate=@RowTemplate RowData=@row.item
+                                      RowIndex=@row.item.Index
+                                      Index=@row.index />
+                    }
+                }
+            @* </div> *@
         </ScrollViewer>
         @if (_loadingUp && ShowLoadingSpinner)
         {

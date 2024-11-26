@@ -439,7 +439,8 @@ namespace ClearBlazor
             return false;
         }
 
-        internal override async Task<List<TItem>> GetItems(int startIndex, int count)
+        internal override async Task<List<TItem>> GetItems(int startIndex, int count, 
+                                                           bool inReverse = false)
         {
             if (startIndex < 0)
                 startIndex = 0;

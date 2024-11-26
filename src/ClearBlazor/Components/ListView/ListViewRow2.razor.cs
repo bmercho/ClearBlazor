@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using ClearBlazorInternal;
 namespace ClearBlazor
 {
-    public partial class ListViewRow1<TItem> : ListRowBase<TItem>, IDisposable
+    public partial class ListViewRow2<TItem> : ListRowBase<TItem>, IDisposable
            where TItem : ListItem
     {
         /// <summary>
@@ -16,12 +16,12 @@ namespace ClearBlazor
         [Parameter]
         public int Index { get; set; }
 
-        private ListView1<TItem>? _parent;
+        private ListView2<TItem>? _parent;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<ListView1<TItem>>(Parent);
+            _parent = FindParent<ListView2<TItem>>(Parent);
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
@@ -114,7 +114,7 @@ namespace ClearBlazor
             if (_parent == null)
                 return "display:grid;";
 
-            var css = "display:grid;";
+            var css = "display:grid; height:100px; ";
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize && _parent.RowHeight > 0)
                 css += $"position:absolute; height: {_parent.RowHeight}px; width: {_parent._itemWidth}px; " +
                        $"top: {(_parent._skipItems + Index) * _parent.RowHeight}px;";
