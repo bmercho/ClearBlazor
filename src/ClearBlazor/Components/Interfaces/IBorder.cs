@@ -25,7 +25,7 @@
         public BorderStyle? BorderStyle { get; set; }
 
         /// <summary>
-        /// The corner radius of the border
+        /// The corner radius of the control
         /// Can be in the format of:
         ///     4 - all borders have 4px radius
         ///     4,8 - top and bottom borders have 4px radius, left and right borders have 8px radius

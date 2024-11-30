@@ -36,6 +36,7 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Layout\ScrollViewer\Code\ScrollViewerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewPaginationExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewInfiniteScrollExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pagination\Code\PaginationSimpleExampleCode.html" />

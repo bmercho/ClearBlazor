@@ -202,8 +202,9 @@ public abstract class Palette
     public virtual Color ToolTipTextColor { get; set; } = new Color(Colors.Green.Lighten2);
 
     public virtual Color ScrollbarBackgroundColor { get; set; } = new(Colors.Grey.Lighten4);
+    public virtual Color ScrollbarBackgroundBoxShadowColor { get; set; } = new(Colors.Grey.Lighten1);
     public virtual Color ScrollbarThumbColor { get; set; } = new(Colors.Indigo.Darken1);
-
+    public virtual Color ScrollbarOverlayThumbColor { get; set; } = new Color(Colors.Indigo.Darken1).SetAlpha(0.5);
     public virtual Color ListBackgroundColor { get; set; } = new(Colors.Grey.Lighten2);
     public virtual Color ListSelectedColor { get; set; } = new(Colors.Blue.Lighten5);
 

@@ -30,6 +30,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Padding", "string", "String.Empty", "The padding of the component.\rCan be in the format of:\r    4 - all paddings are 4px\r    4,8 - top and bottom paddings are 4px radius, left and right paddings have 8px radius\r    20,10,30,40 - top has 20px padding, right has 10px padding, bottom has 30px padding and left has 40px padding\r"),
             new ApiComponentInfo("HorizontalAlignment", "<a href=AlignmentApi>Alignment?</a>", "null", "The horizontal alignment of the component in its available space.\r"),
             new ApiComponentInfo("VerticalAlignment", "<a href=AlignmentApi>Alignment?</a>", "null", "The vertical alignment of the component in its available space.\r"),
+            new ApiComponentInfo("Tag", "int?", "null", "Tag is user definable value.\r"),
             new ApiComponentInfo("Row", "int", "0", "Applies to children of a grid. Indicates the start row of the grid that the child will occupy. \rThe first row is 0.\r"),
             new ApiComponentInfo("Column", "int", "0", "Applies to children of a grid. Indicates the start column of the grid that the child will occupy. \rThe first column is 0.\r"),
             new ApiComponentInfo("RowSpan", "int", "1", "Applies to children of a grid. Indicates how many rows of the grid that the child will occupy (starting at Row). \r"),

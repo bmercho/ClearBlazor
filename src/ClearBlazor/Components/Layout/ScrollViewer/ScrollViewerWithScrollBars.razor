@@ -3,10 +3,12 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()"
-         @onmousewheel=OnMouseWheel @onmousewheel:stopPropagation=@StopPropogation>
-        <div style="overflow:hidden; display:grid;">
-            <div @ref="ScrollViewerElement" style="display: grid; overflow:hidden; ">
-                <div id="@ScrollId" @ref="ScrollElement" class="scrolling-transition">
+         @onmousewheel=OnMouseWheel
+         @onmouseenter=OnMouseEnter
+         @onmouseleave=OnMouseLeave>
+        <div style=@GetContentStyle()>
+            <div @ref="_scrollViewerElement" style="display: grid; overflow:hidden; ">
+                <div id="@_scrollId" @ref="_scrollElement" class="scrolling-transition">
                     @ChildContent
                 </div>
             </div>
@@ -14,18 +16,34 @@
 
         @if (ShowVerticalScrollBar())
         {
-            <div style="grid: 1/2; ">
-                <div style=@GetVerticalBackgroundStyle()>
-                    <div id="@VerticalThumbId" @ref="VerticalThumbElement" style=@GetVerticalThumbStyle() @onmousedown=OnVerticalMouseDown
-                         @onmouseup=OnVerticalMouseUp @onmousemove=OnVerticalMouseMove />
+            <div style=@GetVerticalScrollbarStyle()>
+                <div id=@_verticalScrollId
+                     style=@GetVerticalBackgroundStyle()
+                     @onclick=OnVerticalScrollbarClick
+                     @onmousedown=OnVerticalMouseDown
+                     @onmouseup=OnVerticalMouseUp
+                     @onmousemove=OnVerticalMouseMove>
+                     <div id=@_verticalThumbId  
+                         style=@GetVerticalThumbStyle()
+                         @onmouseenter=OnVerticalMouseEnter
+                         @onmouseleave=OnVerticalMouseLeave>
+                    </div>
                 </div>
             </div>
         }
         @if (ShowHorizontalScrollBar())
         {
-            <div style="grid-area: 2/1; ">
-                <div style=@GetHorizontalBackgroundStyle()>
-                    <div id="@HorizontalThumbId" @ref="HorizontalThumbElement" style=@GetHorizontalThumbStyle() />
+            <div style=@GetHorizontalScrollbarStyle()>
+                <div id=@_horizontalScrollId 
+                     style =@GetHorizontalBackgroundStyle() 
+                     @onclick =OnHorizontalScrollbarClick
+                     @onmousedown=OnHorizontalMouseDown
+                     @onmouseup=OnHorizontalMouseUp
+                     @onmousemove=OnHorizontalMouseMove>
+                    <div id="@_horizontalThumbId" 
+                         style=@GetHorizontalThumbStyle()
+                         @onmouseenter=OnHorizontalMouseEnter
+                         @onmouseleave=OnHorizontalMouseLeave />
                 </div>
             </div>
         }

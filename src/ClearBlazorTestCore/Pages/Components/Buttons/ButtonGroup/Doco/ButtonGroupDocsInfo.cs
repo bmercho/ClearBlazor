@@ -19,6 +19,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("ButtonStyle", "<a href=TextEditFillModeApi>TextEditFillMode?</a>", "null", ""),
             new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Landscape", ""),
             new ApiComponentInfo("Color", "Color?", "null", ""),
+            new ApiComponentInfo("OutlineColor", "Color?", "null", ""),
             new ApiComponentInfo("DisableBoxShadow", "bool", "false", ""),
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
             new ApiComponentInfo("IconLocation", "<a href=IconLocationApi>IconLocation</a>", "IconLocation.Start", ""),

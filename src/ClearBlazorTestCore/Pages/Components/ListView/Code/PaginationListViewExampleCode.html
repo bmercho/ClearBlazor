@@ -1,20 +1,19 @@
 <div>
 <div class="html"><pre>
 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">400,auto</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Rows</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">600,auto,auto</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
-    &lt;ListView <span class="atSign">&#64;</span>ref=_list TItem=Feed CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
-              <span class="atSign">&#64;</span>bind-SelectedItem=_selectedItem
-              <span class="atSign">&#64;</span>bind-SelectedItems=_selectedItems
-              SelectionMode=<span class="atSign">&#64;</span>_selectionMode
-              AllowSelectionToggle=<span class="atSign">&#64;</span>_allowSelectionToggle
-              HoverHighlight=<span class="atSign">&#64;</span>_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
-              VirtualizeMode=VirtualizeMode.Pagination
-              PageSize=6
-              InitialIndex=<span class="atSign">&#64;</span>((20, Alignment.Center)) Items=<span class="atSign">&#64;</span>_feeds&gt;
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">ListView</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_list</span> <span class="htmlAttributeName">TItem</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Feed</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span>
+    <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-SelectedItem</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_selectedItem</span>
+    <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-SelectedItems</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_selectedItems</span>
+    <span class="htmlAttributeName">SelectionMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_selectionMode</span>
+    <span class="htmlAttributeName">AllowSelectionToggle</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_allowSelectionToggle</span>
+    <span class="htmlAttributeName">HoverHighlight</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_hoverHighlight</span> <span class="htmlAttributeName">OverscrollBehaviour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">OverscrollBehaviour.None</span>
+    <span class="htmlAttributeName">VirtualizeMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">VirtualizeMode.Pagination</span>
+    <span class="htmlAttributeName">PageSize</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">6</span> <span class="htmlAttributeName">Items</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_feeds</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RowTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">row</span><span class="htmlTagDelimiter">&gt;</span>
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">auto,*</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Rows</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">auto,auto</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">8</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
                 &lt;Image RowSpan=2 Height=40 Width=40 VerticalAlignment=Alignment.Center
-                       Style=&quot;border-radius:50%; &quot; Stretch=ImageStretch.Fill
-                       Source=<span class="atSign">&#64;</span>($&quot;https://picsum.photos/id/{row.ImageId}/200/200&quot;) /&gt;
+                Style=&quot;border-radius:50%; &quot; Stretch=ImageStretch.Fill
+                Source=<span class="atSign">&#64;</span>($&quot;https://picsum.photos/id/{row.ImageId}/200/200&quot;) /&gt;
                 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Typo</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Typo.H6</span> <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">TextWrap.Wrap</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">0,0,10,10</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
                     <span class="atSign">&#64;</span>row.Title
                 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
@@ -24,11 +23,19 @@
             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RowTemplate</span><span class="htmlTagDelimiter">&gt;</span>
     <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">ListView</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Pagination</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Primary</span> 
+                <span class="htmlAttributeName">ShowFirstAndLastButtons</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">true</span>
+                <span class="htmlAttributeName">SelectedPage</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_selectedPage</span> 
+                <span class="htmlAttributeName">NumPages</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">(int)Math.Ceiling(_feeds.Count/6.0)</span> 
+                <span class="htmlAttributeName">NumPagesShown</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span>
+                <span class="htmlAttributeName">SelectedPageChanged</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>PageChanged</span> <span class="htmlTagDelimiter">/&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">2</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlTagDelimiter">&gt;</span>Page <span class="atSign">&#64;</span>(_list.CurrentPageNum()) of <span class="atSign">&#64;</span>(_list.NumPages())<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+
     <span class="atSign">&#64;</span>if (BrowserSizeService.DeviceSize &gt;= DeviceSize.Small)
     {
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
             &lt;RadioGroup Margin=20 Label=&quot;Selection mode&quot; <span class="atSign">&#64;</span>bind-Value=_selectionMode
-                        <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>SelectionModeChanged&gt;
+            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>SelectionModeChanged&gt;
                 <span class="atSign">&#64;</span>foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
                 {
                     <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
@@ -40,20 +47,6 @@
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span><span class="htmlTagDelimiter">&gt;</span>Selections=<span class="atSign">&#64;</span>string.Join(&quot;,&quot;, _selectedItems.Select(s =&gt; s.Title))<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">150</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>ClearSelections</span><span class="htmlTagDelimiter">&gt;</span>Clear selections<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">ColumnSpan</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">3</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span><span class="htmlTagDelimiter">&gt;</span>
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>Page <span class="atSign">&#64;</span>(_list.CurrentPageNum()) of <span class="atSign">&#64;</span>(_list.NumPages())<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnNextPage</span><span class="htmlTagDelimiter">&gt;</span>Next Page<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnPrevPage</span><span class="htmlTagDelimiter">&gt;</span>Prev Page<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoStart</span><span class="htmlTagDelimiter">&gt;</span>Goto Start<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoEnd</span><span class="htmlTagDelimiter">&gt;</span>Goto End<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">2</span> <span class="htmlAttributeName">ColumnSpan</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">3</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto10Start</span><span class="htmlTagDelimiter">&gt;</span>Goto 10<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto50Center</span><span class="htmlTagDelimiter">&gt;</span>Goto 50<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto70End</span><span class="htmlTagDelimiter">&gt;</span>Goto 70<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
     }
 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
@@ -75,55 +68,30 @@
     <span class="keyword">private</span> <span class="keyword">bool</span> _hoverHighlight = <span class="keyword">true</span>;
     <span class="keyword">private</span> <span class="keyword">bool</span> _atEnd = <span class="keyword">false</span>;
     <span class="keyword">private</span> <span class="keyword">bool</span> _atStart = <span class="keyword">true</span>;
+    <span class="keyword">private</span> <span class="keyword">int</span> _selectedPage = <span class="number">3</span>;
 
     List&lt;Feed&gt; _feeds = <span class="keyword">new</span> List&lt;Feed&gt;();
 
-    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
+    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">async</span> Task OnInitializedAsync()
     {
-        <span class="keyword">base</span>.OnInitialized();
+        <span class="keyword">await</span> <span class="keyword">base</span>.OnInitializedAsync();
         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++)
         {
             _feeds.Add(<span class="keyword">new</span> Feed { ImageId = i, Title = $<span class="string">&quot;Record #{i}&quot;</span>, Message = <span class="string">&quot;This is a message&quot;</span> }); <span class="comment">//GetMessage(i) });</span>
         }
     }
 
-    <span class="keyword">async</span> Task OnGoto10Start()
+    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">async</span> Task OnAfterRenderAsync(<span class="keyword">bool</span> firstRender)
     {
-        <span class="keyword">await</span> _list.GotoIndex(<span class="number">10</span>, Alignment.Start);
+        <span class="keyword">await</span> <span class="keyword">base</span>.OnAfterRenderAsync(firstRender);
+        <span class="keyword">if</span> (firstRender)
+            <span class="keyword">await</span> _list.GotoPage(_selectedPage);
     }
 
-    <span class="keyword">async</span> Task OnGoto50Center()
+    <span class="keyword">async</span> Task PageChanged(<span class="keyword">int</span> page)
     {
-        <span class="keyword">await</span> _list.GotoIndex(<span class="number">50</span>, Alignment.Center);
-    }
-
-    <span class="keyword">async</span> Task OnGoto70End()
-    {
-        <span class="keyword">await</span> _list.GotoIndex(<span class="number">70</span>, Alignment.End);
-    }
-
-    <span class="keyword">async</span> Task OnGotoEnd()
-    {
-        <span class="keyword">await</span> _list.GotoEnd();
-        StateHasChanged();
-    }
-
-    <span class="keyword">async</span> Task OnGotoStart()
-    {
-        <span class="keyword">await</span> _list.GotoStart();
-        StateHasChanged();
-    }
-
-    <span class="keyword">async</span> Task OnNextPage()
-    {
-        <span class="keyword">await</span> _list.NextPage();
-        StateHasChanged();
-    }
-
-    <span class="keyword">async</span> Task OnPrevPage()
-    {
-        <span class="keyword">await</span> _list.PrevPage();
-        StateHasChanged();
+        <span class="keyword">await</span> _list.GotoPage(page);
+        _selectedPage = page;
     }
 
     <span class="keyword">void</span> ChangeItem()

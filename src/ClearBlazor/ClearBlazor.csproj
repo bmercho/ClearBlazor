@@ -26,14 +26,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Remove="Components\Spinner\Spinner.razor.css" />
 	</ItemGroup>
 
