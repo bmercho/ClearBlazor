@@ -33,6 +33,12 @@ namespace ClearBlazor
         public OverscrollBehaviour HorizontalOverscrollBehaviour { get; set; } = OverscrollBehaviour.Auto;
 
         /// <summary>
+        /// Indicates when the scrollbar gutter exists
+        /// </summary>
+        [Parameter]
+        public ScrollbarGutter ScrollBarGutter { get; set; } = ScrollbarGutter.OnlyWhenOverflowed;
+
+        /// <summary>
         /// The child content of this control.
         /// </summary>
         [Parameter]
@@ -92,6 +98,19 @@ namespace ClearBlazor
                     break;
                 case ScrollMode.Enabled:
                     css += $"overflow-x: scroll; scrollbar-gutter:stable; ";
+                    break;
+            }
+
+            switch (ScrollBarGutter)
+            {
+                case ScrollbarGutter.OnlyWhenOverflowed:
+                    css += $"scrollbar-gutter:auto; ";
+                    break;
+                case ScrollbarGutter.Always:
+                    css += $"scrollbar-gutter:stable; ";
+                    break;
+                case ScrollbarGutter.AlwaysBothEdges:
+                    css += $"scrollbar-gutter:stable both-edges; ";
                     break;
             }
 

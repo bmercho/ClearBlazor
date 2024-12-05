@@ -5,12 +5,15 @@
 <StackPanel Orientation=Orientation.Portrait Spacing=20>
     <StackPanel Orientation=Orientation.Landscape>
         <Grid BorderThickness=1 Width=500 Height=500>
-            <ScrollViewer @ref=_scrollViewer
-                          VerticalScrollMode=@_verticalScrollMode
-                          HorizontalScrollMode=@_horizontalScrollMode
-                          ScrollbarGutter=@_scrollbarGutter
-                          VerticalOverscrollBehaviour=@_verticalOverscrollBehaviour
-                          HorizontalOverscrollBehaviour=@_horizontalOverscrollBehaviour>
+            <ScrollViewerWithScrollBars @ref=_scrollViewer
+                                        ScrollCallback=ScrollCallBack
+                                        VerticalScrollMode=@_verticalScrollMode
+                                        HorizontalScrollMode=@_horizontalScrollMode
+                                        VerticalGutter=@_verticalGutter
+                                        HorizontalGutter=@_horizontalGutter
+                                        VerticalOverscrollBehaviour=@_verticalOverscrollBehaviour
+                                        HorizontalOverscrollBehaviour=@_horizontalOverscrollBehaviour
+                                        UseOverlayScrollbars=@_overlayScrollbars>
                 @if (_verticalOverflowText)
                 {
                     if (_horizontalOverflowText)
@@ -18,7 +21,7 @@
                         @for (int i = 1; i <= 1000; i++)
                         {
                             int row = i;
-                            <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false>
+                            <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>
                                 @($"Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ")
                             </TextBlock>
                         }
@@ -39,7 +42,7 @@
                         @for (int i = 1; i <= 6; i++)
                         {
                             int row = i;
-                            <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false>
+                            <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>
                                 @($"Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ")
                             </TextBlock>
                         }
@@ -53,7 +56,7 @@
                         }
                     }
                 }
-            </ScrollViewer>
+            </ScrollViewerWithScrollBars>
         </Grid>
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {
@@ -72,7 +75,14 @@
                         <Radio Label=@mode.ToString() Value="@mode" />
                     }
                 </RadioGroup>
-                <RadioGroup Label="Scrollbar gutter" @bind-Value=_scrollbarGutter
+                <RadioGroup Label="Vertical gutter" @bind-Value=_verticalGutter
+                            @bind-Value:after=@Changed>
+                    @foreach (ScrollbarGutter mode in Enum.GetValues(typeof(ScrollbarGutter)))
+                    {
+                        <Radio Label=@mode.ToString() Value="@mode" />
+                    }
+                </RadioGroup>
+                <RadioGroup Label="Horizontal gutter" @bind-Value=_horizontalGutter
                             @bind-Value:after=@Changed>
                     @foreach (ScrollbarGutter mode in Enum.GetValues(typeof(ScrollbarGutter)))
                     {
@@ -101,6 +111,9 @@
                 <CheckBox @bind-Checked=_horizontalOverflowText
                           @bind-Checked:after=@Changed
                           Label="Horizontal overflow text" />
+                <CheckBox @bind-Checked=_overlayScrollbars
+                          @bind-Checked:after=@Changed
+                          Label="Overlay scrollbars" />
             </StackPanel>
         }
     </StackPanel>
@@ -113,18 +126,18 @@
 </StackPanel>
 
 @code {
-    private ScrollViewer _scrollViewer = null!;
+    private ScrollViewerWithScrollBars _scrollViewer = null!;
     private ScrollMode _verticalScrollMode = ScrollMode.Disabled;
     private ScrollMode _horizontalScrollMode = ScrollMode.Disabled;
-    private ScrollbarGutter _scrollbarGutter = ScrollbarGutter.OnlyWhenOverflowed;
+    private ScrollbarGutter _verticalGutter = ScrollbarGutter.OnlyWhenOverflowed;
+    private ScrollbarGutter _horizontalGutter = ScrollbarGutter.OnlyWhenOverflowed;
     private OverscrollBehaviour _verticalOverscrollBehaviour = OverscrollBehaviour.None;
     private OverscrollBehaviour _horizontalOverscrollBehaviour = OverscrollBehaviour.None;
     private bool _verticalOverflowText = false;
     private bool _horizontalOverflowText = false;
+    private bool _overlayScrollbars = false;
     private IDisposable ScrollViewUnsubscriber = null!;
 
-    [Inject]
-    IJSRuntime JSRuntime { get; set; } = null!;
 
     protected override void OnInitialized()
     {
@@ -154,6 +167,13 @@
         ScrollViewUnsubscriber?.Dispose();
     }
 
+    private async Task ScrollCallBack(ScrollState scrollState)
+    {
+        Console.WriteLine($"HandleScrollEvent: ScrollTop:{scrollState.ScrollTop}");
+        if (scrollState.ScrollTop == 0)
+            await _scrollViewer.SetScrollTop(800);
+    }
+
     private void Changed()
     {
         StateHasChanged();
@@ -161,12 +181,12 @@
 
     async Task GotoTop(int top)
     {
-        await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollTop", _scrollViewer.Id, top);
+        await _scrollViewer.SetScrollTop(top);
     }
 
     async Task GotoLeft(int left)
     {
-        await JSRuntime.InvokeVoidAsync("window.scrollbar.SetScrollLeft", _scrollViewer.Id, left);
+        await _scrollViewer.SetScrollLeft(left);
     }
 
 }
