@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.12
+
+### Patch Changes
+
+- 1def166: Refactor list view to allow addig rows, upgrade to DotNet 9
+
 ## 0.0.11
 
 ### Patch Changes
