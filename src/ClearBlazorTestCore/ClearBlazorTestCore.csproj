@@ -25,7 +25,6 @@
     <ProjectReference Include="..\ClearBlazor\ClearBlazor.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\TestData\Data.csproj" />
-    <ProjectReference Include="..\TestData\TestData.csproj" />
   </ItemGroup>
 
   <ItemGroup>

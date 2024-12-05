@@ -6,11 +6,9 @@
          @onmousewheel=OnMouseWheel
          @onmouseenter=OnMouseEnter
          @onmouseleave=OnMouseLeave>
-        <div style=@GetContentStyle()>
-            <div @ref="_scrollViewerElement" style="display: grid; overflow:hidden; ">
-                <div id="@_scrollId" @ref="_scrollElement" class="scrolling-transition">
-                    @ChildContent
-                </div>
+        <div id=@_scrollViewerId style=@GetContentStyle()>
+            <div id=@_scrollId>
+                @ChildContent
             </div>
         </div>
 
@@ -23,7 +21,7 @@
                      @onmousedown=OnVerticalMouseDown
                      @onmouseup=OnVerticalMouseUp
                      @onmousemove=OnVerticalMouseMove>
-                     <div id=@_verticalThumbId  
+                    <div id=@_verticalThumbId
                          style=@GetVerticalThumbStyle()
                          @onmouseenter=OnVerticalMouseEnter
                          @onmouseleave=OnVerticalMouseLeave>
@@ -34,13 +32,13 @@
         @if (ShowHorizontalScrollBar())
         {
             <div style=@GetHorizontalScrollbarStyle()>
-                <div id=@_horizontalScrollId 
-                     style =@GetHorizontalBackgroundStyle() 
-                     @onclick =OnHorizontalScrollbarClick
+                <div id=@_horizontalScrollId
+                     style=@GetHorizontalBackgroundStyle()
+                     @onclick=OnHorizontalScrollbarClick
                      @onmousedown=OnHorizontalMouseDown
                      @onmouseup=OnHorizontalMouseUp
                      @onmousemove=OnHorizontalMouseMove>
-                    <div id="@_horizontalThumbId" 
+                    <div id="@_horizontalThumbId"
                          style=@GetHorizontalThumbStyle()
                          @onmouseenter=OnHorizontalMouseEnter
                          @onmouseleave=OnHorizontalMouseLeave />

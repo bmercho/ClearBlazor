@@ -40,6 +40,7 @@ namespace ClearBlazor
 
         // Used to notify subscribers when any scrollbar is scrolled
         private static List<IObserver<bool>> _observers = new List<IObserver<bool>>();
+        private bool _doRender = true;
 
         public static IDisposable Subscribe(IObserver<bool> observer)
         {
@@ -52,6 +53,18 @@ namespace ClearBlazor
         {
             base.OnParametersSet();
             IsScroller = true;
+        }
+
+        protected override bool ShouldRender()
+        {
+            return _doRender;
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            Console.WriteLine("ScrollViewer:Render");
+            base.OnAfterRender(firstRender);
+            _doRender = true;
         }
 
         protected override string UpdateStyle(string css)

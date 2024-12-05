@@ -21,7 +21,7 @@
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
                     <StackPanel Column=1 Orientation=Orientation.Portrait>
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                            @(row.ToString() + $"({row.Index})")
+                            @(row.ToString() + $"({row.ItemIndex})")
                         </TextBlock>
                         <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
                             @row.Notes

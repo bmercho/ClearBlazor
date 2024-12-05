@@ -13,6 +13,15 @@ namespace ClearBlazor
         [Parameter]
         public required RenderFragment<TItem>? RowTemplate { get; set; }
 
+        /// <summary>
+        /// The RowId of this row. It consists of base guid as a string plus the index of the row
+        /// </summary>
+        [Parameter]
+        public string RowId { get; set; } = string.Empty;
+
+        /// <summary>
+        /// The index of just the rendered rows.
+        /// </summary>
         [Parameter]
         public int Index { get; set; }
 
@@ -53,6 +62,7 @@ namespace ClearBlazor
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            Console.WriteLine($"OnAfterRender: Index:{Index}");
             await base.OnAfterRenderAsync(firstRender);
             if (_parent != null &&
                     (_parent.VirtualizeMode == VirtualizeMode.InfiniteScroll ||
@@ -107,8 +117,19 @@ namespace ClearBlazor
 
             bool ctrlDown = args.CtrlKey;
             bool shiftDown = args.ShiftKey;
-            await _parent.HandleRowSelection(RowData, RowIndex, ctrlDown, shiftDown);
+            await _parent.HandleRowSelection(RowData, RowData.ItemIndex, ctrlDown, shiftDown);
         }
+
+        private string GetRowId()
+        {
+            if (_parent == null)
+                return string.Empty;
+
+            if (_parent.VirtualizeMode == VirtualizeMode.None)
+                return RowId;
+            return RowData.ListItemId.ToString();
+        }
+
         protected string GetContentStyle()
         {
             if (_parent == null)

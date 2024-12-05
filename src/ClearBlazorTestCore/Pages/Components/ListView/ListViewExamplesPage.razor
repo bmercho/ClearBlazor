@@ -4,16 +4,16 @@
 
 <DocsExamplesPage DocsInfo=@(new ListViewDocsInfo())>
     <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">ListView</TextBlock>
-     <CodeSnippet Title="ListView - VirtualizationMode:None (100 items)"
+@*      <CodeSnippet Title="ListView - VirtualizationMode:None (100 items)"
                  Code=@(typeof(NonVirtualizedListViewExample).Name)>
         <NonVirtualizedListViewExample />
     </CodeSnippet>
-  
+ *@  
     <CodeSnippet Title="ListView - VirtualizationMode:Virtualize (10000 items)"
                  Code=@(typeof(ListViewExample).Name)>
         <ListViewExample />
     </CodeSnippet>
-    <CodeSnippet Title="ListView with data provider - VirtualizationMode:Virtualize (10000 items)"
+@*     <CodeSnippet Title="ListView with data provider - VirtualizationMode:Virtualize (10000 items)"
                  Code=@(typeof(ListViewDataProviderExample).Name)>
         <ListViewDataProviderExample />
     </CodeSnippet>
@@ -25,6 +25,6 @@
                  Code=@(typeof(PaginationListViewExample).Name)>
         <PaginationListViewExample />
     </CodeSnippet>
-
+ *@
  </DocsExamplesPage>
 

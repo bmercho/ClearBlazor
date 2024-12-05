@@ -1,30 +1,30 @@
-﻿@page "/ListViewVirtualizeDB"
+﻿@page "/ListViewVirtualizeLocal"
 @namespace ListsTest
 @using Data;
-
 @using Microsoft.AspNetCore.SignalR.Client
 
 <StackPanel Orientation=Orientation.Portrait Spacing=30>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
-    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : from DB (5000 rows loaded as required)</TextBlock>
-    <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
-        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : local data (500 rows)</TextBlock>
+    <Grid Columns="400,auto" Rows="600,auto,auto,auto" RowSpacing=20>
+        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.Virtualize
-                  RowHeight=110
-                  DataProvider=@GetItemsFromDatabase
+                  RowHeight=100
+                  Items=@_localListData
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
                   HoverHighlight=@_hoverHighlight
                   AllowSelectionToggle=@_allowSelectionToggle
                   SelectionMode=@_selectionMode
-                  InitialIndex="@((50, Alignment.Center))"
-                  ShowLoadingSpinner=true>
+                  InitialIndex="@((200, Alignment.Center))"
+                  ShowLoadingSpinner=true
+                  HorizontalScrollbar=false>
             <RowTemplate Context=row>
                 <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
                     <StackPanel Column=1 Orientation=Orientation.Portrait>
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.NoWrap Margin="0,0,10,10">
-                            @(row.ToString() + $"({row.Index})")
+                            @(row.ToString() + $"({row.ItemIndex})")
                         </TextBlock>
                         <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
                             @row.Notes
@@ -32,7 +32,7 @@
                     </StackPanel>
                 </Grid>
             </RowTemplate>
-        </ListView>
+        </ListView1>
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {
             <StackPanel Column=1>
@@ -48,7 +48,6 @@
                 <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
                 <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
                 <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
-                <CheckBox @bind-Checked=_addDelay @bind-Checked:after=Refresh Label="Add delay" />
             </StackPanel>
             <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
                 <Button OnClicked=@(e => GotoIndex(20, Alignment.Start))> Goto 20(start)</Button>
@@ -56,8 +55,11 @@
                 <Button OnClicked=@(e => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
                 <Button OnClicked=@OnGotoEnd>Goto end</Button>
                 <Button OnClicked=@OnGotoStart>Goto start</Button>
+                <Button OnClicked=@OnAddNewItem>Add new item</Button>
             </WrapPanel>
             <WrapPanel Row=2 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+                <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+                <Button OnClicked=@ChangeItem>Change first item</Button>
                 <StackPanel Orientation=Orientation.Landscape>
                     <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>
                     <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atEnd</TextBlock>

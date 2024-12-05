@@ -1,13 +1,12 @@
 ﻿@namespace ClearBlazorTest
 <Grid Columns="400,auto" Rows="600,*">
-    <ListView @ref=_list Column=0 Margin=40
+    <ListView2 @ref=_list Column=0 Margin=40
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
               Items=@_testData BorderThickness="1"
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
               HoverHighlight=@_hoverHighlight
               OverscrollBehaviour=OverscrollBehaviour.None
               VirtualizeMode=VirtualizeMode.Virtualize
-              InitialIndex=@((20, Alignment.Center))
               RowHeight=50
               AllowSelectionToggle=@_allowSelectionToggle>
         <RowTemplate Context=row>
@@ -17,7 +16,7 @@
                 <TextBlock VerticalAlignment=Alignment.Center Column=1> @(row.Name)</TextBlock>
             </Grid>
         </RowTemplate>
-    </ListView>
+    </ListView2>
     @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
     {
         <StackPanel Column=1>
@@ -63,7 +62,7 @@
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
-    private ListView<TestViewItem>? _list;
+    private ListView2<TestViewItem>? _list;
     private bool _atEnd = false;
     private bool _atStart = true;
 

@@ -1,13 +1,11 @@
 using ClearBlazor;
 using Data;
-using Microsoft.AspNetCore.Components;
 
 namespace ListsTest
 {
-    public partial class ListViewVirtualizeLocalTest
-        : ComponentBase
+    public partial class ListViewNonVirtualizedTest
     {
-        private ListView1<TestListRow> _list = null!;
+        ListView1<TestListRow> _list = null!;
         private TestListRow? _selectedItem = null;
         private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
@@ -16,12 +14,8 @@ namespace ListsTest
         private bool _atEnd = false;
         private bool _atStart = true;
 
-        List<TestListRow> _localListData = ClientData.LocalTestListRows5000;
+        List<TestListRow> _localListData = ClientData.LocalTestListRows100;
 
-        private void Refresh()
-        {
-            StateHasChanged();
-        }
         async Task GotoIndex(int row, Alignment alignment)
         {
             if (_list == null)
@@ -38,6 +32,7 @@ namespace ListsTest
         {
             await _list.GotoStart();
         }
+
         async Task OnAddNewItem()
         {
             var count = _localListData.Count;
@@ -46,11 +41,11 @@ namespace ListsTest
         }
         async Task OnAddNewItemGotoEndIfAtEnd()
         {
-            var atEnd = await _list.AtEnd();
+            var atEnd = _list.AtEnd();
             var count = _localListData.Count;
             _localListData.Add(TestListRow.GetNewTestListRow(count));
             await _list.Refresh();
-            if (atEnd)
+            if (await atEnd)
                 await _list.GotoEnd();
         }
 

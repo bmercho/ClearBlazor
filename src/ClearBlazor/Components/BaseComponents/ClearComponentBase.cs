@@ -469,7 +469,7 @@ namespace ClearBlazor
 
             if (!InScrollerX())
                 css += $"overflow-x:hidden; ";
-            if (!InScrollerY() || this is Avatar || this is Image)
+            if (!InScrollerY() || this is Avatar || this is Image || this is MaterialIcon)
                 // The line below affected images in a scroll viewer
                 // but is required for text in a scroll viewer
                 css += $"overflow-y:hidden; ";

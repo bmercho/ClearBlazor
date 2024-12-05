@@ -569,7 +569,7 @@ namespace ClearBlazorInternal
                 if (newItems.Count > 0)
                 {
                     // Check if at end;
-                    if (_items.Count == 0 || _items[_items.Count - 1].Index == newItems[newItems.Count - 1].Index)
+                    if (_items.Count == 0 || _items[_items.Count - 1].ItemIndex == newItems[newItems.Count - 1].ItemIndex)
                         return false;
 
                     RecordPageOffset(scrollHeight);

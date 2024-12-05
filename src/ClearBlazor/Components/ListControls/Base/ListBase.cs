@@ -414,7 +414,7 @@ namespace ClearBlazorInternal
         virtual internal async Task<List<TItem>> GetItems(int startIndex, int count, 
                                                           bool inReverse = false)
         {
-            await _semaphoreSlim1.WaitAsync();
+            //await _semaphoreSlim1.WaitAsync();
             try
             { 
             if (startIndex < 0)
@@ -430,10 +430,10 @@ namespace ClearBlazorInternal
                 if (inReverse)
                         return Items.ToList().GetRange(startIndex, count).
                                                        Select((item, index) =>
-                        { item.Index = startIndex + index; return item; }).Reverse().ToList();
+                        { item.ItemIndex = startIndex + index; return item; }).Reverse().ToList();
                 else
                         return Items.ToList().GetRange(startIndex, count).Select((item, index) =>
-                        { item.Index = startIndex + index; return item; }).ToList();
+                        { item.ItemIndex = startIndex + index; return item; }).ToList();
                 }
                 else if (DataProvider != null)
             {
@@ -445,7 +445,7 @@ namespace ClearBlazorInternal
                     _totalNumItems = result.TotalNumItems;
                     return result.Items.Select((item, index) =>
                     {
-                        item.Index = startIndex + index;
+                        item.ItemIndex = startIndex + index;
                         switch (SelectionMode)
                         {
                             case SelectionMode.None:
@@ -480,7 +480,7 @@ namespace ClearBlazorInternal
             }
             finally
             {
-                _semaphoreSlim1.Release();
+               // _semaphoreSlim1.Release();
             }
 
         }

@@ -51,7 +51,7 @@ namespace Data
         {
             return new TestListRow()
             {
-                Index = index,
+                ItemIndex = index,
                 ImageId = RandomTestData.GetRandomInt(1,80),
                 IconName = RandomTestData.GetIconName(),
                 FirstName = RandomTestData.GetRandomFirstName(),

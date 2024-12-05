@@ -80,11 +80,13 @@ textarea {
 /*input[type=number]::-webkit-inner-spin-button {
     opacity: 1;
 }
-*/{
-    scrollbar-width: var(--scrollbarWidth);
+*/
+
+* {
+    scrollbar-width: thin;
     scrollbar-color: var(--scrollbarThumb) var(--scrollbarBg);
 }
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
     width: var(--scrollbarWidth);
     height: var(--scrollbarHeight);
 }
@@ -104,7 +106,7 @@ textarea {
     ::-webkit-scrollbar-thumb:hover {
             background-color: var(--scrollbarThumbHover);
         }
-
+    */
 .clear-ripple-icon:active:after {
     transform: scale(0,0);
     opacity: .1;
@@ -255,4 +257,3 @@ textarea {
         transform: rotate(360deg)
     }
 }
-

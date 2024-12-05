@@ -1,21 +1,23 @@
 using ClearBlazor;
 using Data;
+using Microsoft.AspNetCore.Components;
 
 namespace ListsTest
 {
-    public partial class ListViewInfiniteScrollDBTest
+    public partial class ListViewVirtualizeDBTest
+        : ComponentBase
     {
+        private bool _addDelay = false;
+        private ListView1<TestListRow> _list = null!;
         private TestListRow? _selectedItem = null;
         private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
-        private ListView<TestListRow> _list = null!;
         private bool _atEnd = false;
         private bool _atStart = true;
-        private bool _addDelay = false;
 
-        private async Task<(int, IEnumerable<TestListRow>)> GetItemsFromDatabase(ClearBlazor.DataProviderRequest request)
+        private async Task<(int, IEnumerable<TestListRow>)> GetItemsFromDatabase(DataProviderRequest request)
         {
             if (_addDelay)
                 await Task.Delay(1000, request.CancellationToken);
@@ -26,35 +28,48 @@ namespace ListsTest
             return (feedEntries.TotalNumEntries, feedEntries.ListRows);
         }
 
-        async Task CheckAtStart()
+        private void Refresh()
+        {
+            StateHasChanged();
+        }
+        async Task GotoIndex(int row, Alignment alignment)
         {
             if (_list == null)
                 return;
-            _atStart = await _list.AtStart();
+            await _list.GotoIndex(row, alignment);
+        }
+
+        async Task OnGotoEnd()
+        {
+            await _list.GotoEnd();
+        }
+
+        async Task OnGotoStart()
+        {
+            await _list.GotoStart();
+        }
+
+        private async Task ClearSelections()
+        {
+            await _list.RemoveAllSelections();
             StateHasChanged();
         }
 
-        private async Task OnGotoStart()
+        async Task CheckAtEnd()
         {
-            if (_list == null)
-                return;
-            await _list.GotoStart();
+            _atEnd = await _list.AtEnd();
+            StateHasChanged();
+        }
+        async Task CheckAtStart()
+        {
+            _atStart = await _list.AtStart();
+            StateHasChanged();
         }
 
         private async Task SelectionModeChanged()
         {
             if (_list == null)
                 return;
-            await _list.RemoveAllSelections();
-
-            StateHasChanged();
-        }
-        private void Refresh()
-        {
-            StateHasChanged();
-        }
-        private async Task ClearSelections()
-        {
             await _list.RemoveAllSelections();
             StateHasChanged();
         }

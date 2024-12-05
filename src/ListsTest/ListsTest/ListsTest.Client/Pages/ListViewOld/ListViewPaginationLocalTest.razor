@@ -1,38 +1,39 @@
-﻿@page "/ListViewPaginationDB"
-@using Data;
+﻿@page "/ListViewPaginationLocal"
 @namespace ListsTest
+@using Data;
+
 <StackPanel Orientation=Orientation.Portrait>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
-    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Pagination : from DB (5000 rows loaded as required)</TextBlock>
-    <Grid Columns="400,auto" Rows="600,auto,auto,auto">
-        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows initially loaded from DB)</TextBlock>
+    <Grid Columns="400,auto,*" Rows="600,auto,auto,auto">
+        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
-                  DataProvider=@GetItemsFromDatabase
                   SelectionMode=@_selectionMode
                   AllowSelectionToggle=@_allowSelectionToggle
                   HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
                   VirtualizeMode=VirtualizeMode.Pagination
-                  PageSize=4>
+                  PageSize=6
+                  Items=@_localListData>
             <RowTemplate Context=row>
                 <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
                     <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                        @(row.ToString() + $"({row.Index})")
+                        @(row.ToString() + $"({row.ItemIndex})")
                     </TextBlock>
-                    <TextBlock Column=1 Row=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                    <TextBlock Column=1 Row=1 TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
                         @row.Notes
                     </TextBlock>
                 </Grid>
             </RowTemplate>
-        </ListView>
+        </ListView1>
         <Pagination HorizontalAlignment=Alignment.Center Row=1 Color=Color.Primary
                     ShowFirstAndLastButtons=true
                     SelectedPage=@_selectedPage
-                    NumPages=@_numPages
+                    NumPages=(int)Math.Ceiling(_localListData.Count/6.0)
                     NumPagesShown=4
                     SelectedPageChanged=@PageChanged />
-        <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @(_selectedPage) of @(_numPages)</TextBlock>
+        <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @(_list.CurrentPageNum()) of @(_list.NumPages())</TextBlock>
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {
             <StackPanel Column=1>
@@ -51,6 +52,9 @@
             </StackPanel>
             <WrapPanel Row=3 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row Margin=10>
                 <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Goto 50</Button>
+                <Button OnClicked=@OnAddNewItem>Add new item</Button>
+                <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+                <Button OnClicked=@ChangeItem>Change first item</Button>
                 <StackPanel Orientation=Orientation.Landscape>
                     <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>
                     <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atEnd</TextBlock>
@@ -63,4 +67,3 @@
         }
     </Grid>
 </StackPanel>
-

@@ -64,20 +64,21 @@ namespace ClearBlazor
 
         const int ScrollIncrement = 40;
         const int PageIncrement = 400;
+        const double MinThumbSize = 30;
+
         private DotNetObjectReference<ScrollViewerWithScrollBars> _thisComponent = null!;
         private static List<IObserver<bool>> _observers = new List<IObserver<bool>>();
+        internal string? _resizeObserverId = null;
         private double _marginTop = 0;
         private double _marginLeft = 0;
         private string _scrollId = Guid.NewGuid().ToString();
+        private string _scrollViewerId = Guid.NewGuid().ToString();
         private string _verticalThumbId = Guid.NewGuid().ToString();
         private string _horizontalThumbId = Guid.NewGuid().ToString();
         private string _verticalScrollId = Guid.NewGuid().ToString();
         private string _horizontalScrollId = Guid.NewGuid().ToString();
-        private SizeInfo? _scrollableSize = null;
-        private SizeInfo? _scrollViewerSize = null;
-        SizeInfo? _previousScrollerViewerSize = null;
-        private ElementReference _scrollElement;
-        private ElementReference _scrollViewerElement;
+        private ObservedSize? _scrollableSize = null;
+        private ObservedSize? _scrollViewerSize = null;
         private string? _pendingScrollIntoViewId = null;
         private Alignment _pendingScrollIntoViewAlignment = Alignment.Start;
         private int _scrollbarWidth = 0;
@@ -93,37 +94,42 @@ namespace ClearBlazor
         private bool _overHorizontalThumb = false;
         private bool _verticalScrolling = false;
         private bool _horizontalScrolling = false;
-
+        private bool _processingkey = false;
+        private bool _scrollSmoothly = false;
+        private ScrollState _lastScrollState = new ScrollState();
         public static IDisposable Subscribe(IObserver<bool> observer)
         {
             if (!_observers.Contains(observer))
                 _observers.Add(observer);
             return new Unsubscriber(_observers, observer);
         }
-
-        public async Task SetScrollTop(int top)
+        public async Task SetScrollTop(double top)
         {
             _marginTop = ConstrainMarginTop(-top);
-            await DoVerticalScrolling();
+            await DoVerticalScrolling(false);
         }
 
-        public async Task SetScrollLeft(int left)
+        public async Task SetScrollLeft(double left)
         {
             _marginLeft = ConstrainMarginLeft(-left);
-            await DoVerticalScrolling();
+            await DoVerticalScrolling(false);
         }
 
+        public ScrollState GetScrollState()
+        {
+            return _lastScrollState;
+        }
         public async Task ScrollToStart(ScrollDirection scrollDirection)
         {
             if (scrollDirection == ScrollDirection.Horizontal)
             {
                 _marginLeft = 0;
-                await DoHorizontalScrolling();
+                await DoHorizontalScrolling(false);
             }
             else
             {
                 _marginTop = 0;
-                await DoVerticalScrolling();
+                await DoVerticalScrolling(false);
             }
         }
 
@@ -135,25 +141,25 @@ namespace ClearBlazor
             if (scrollDirection == ScrollDirection.Horizontal)
             {
                 _marginLeft = -_scrollableSize.ElementWidth + _scrollViewerSize.ElementWidth;
-                await DoHorizontalScrolling();
+                await DoHorizontalScrolling(false);
             }
             else
             {
                 _marginTop = -_scrollableSize.ElementHeight + _scrollViewerSize.ElementHeight;
-                await DoVerticalScrolling();
+                await DoVerticalScrolling(false);
             }
         }
 
         public async Task ScrollIntoView(string id, Alignment alignment)
         {
-            if (_scrollViewerSize == null)
+            var componentSize = await JSRuntime.InvokeAsync<SizeInfo>("GetSizeInfo", id);
+
+            if (_scrollViewerSize == null || componentSize == null)
             {
                 _pendingScrollIntoViewId = id;
                 _pendingScrollIntoViewAlignment = alignment;
                 return;
             }
-
-            var componentSize = await JSRuntime.InvokeAsync<SizeInfo>("GetSizeInfo", id);
 
             switch (alignment)
             {
@@ -172,9 +178,37 @@ namespace ClearBlazor
                         _marginTop = -_scrollableSize.ElementHeight + _scrollViewerSize.ElementHeight;
                     break;
             }
-            await DoVerticalScrolling();
+            await DoVerticalScrolling(false);
+        }
+        public bool AtVerticalScrollStart()
+        {
+            if (_marginTop == 0)
+                return true;
+            return false;
+        }
+        public bool AtVerticalScrollEnd()
+        {
+            if (_scrollViewerSize == null || _scrollableSize == null)
+                return false;
+            if (_marginTop == -_scrollableSize.ElementHeight + _scrollViewerSize.ElementHeight)
+                return true;
+            return false;
         }
 
+        public bool AtHorizontalScrollStart()
+        {
+            if (_marginLeft == 0)
+                return true;
+            return false;
+        }
+        public bool AtHorizontalScrollEnd()
+        {
+            if (_scrollViewerSize == null || _scrollableSize == null)
+                return false;
+            if (_marginLeft == -_scrollableSize.ElementWidth + _scrollViewerSize.ElementWidth)
+                return true;
+            return false;
+        }
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -200,15 +234,10 @@ namespace ClearBlazor
             {
                 _thisComponent = DotNetObjectReference.Create(this);
                 await JSRuntime.InvokeVoidAsync("window.StopPropagation", Id, "wheel");
-            }
 
-            _scrollableSize = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", _scrollElement);
-            _scrollViewerSize = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", _scrollViewerElement);
-
-            if (_previousScrollerViewerSize == null || !_previousScrollerViewerSize.Equals(_scrollableSize))
-            {
-                StateHasChanged();
-                _previousScrollerViewerSize = _scrollableSize;
+                List<string> elementIds = new List<string>() { _scrollId, _scrollViewerId };
+                _resizeObserverId = await ResizeObserverService.Service.
+                                    AddResizeObserver(NotifyObservedSizes, elementIds);
             }
 
             if (_pendingScrollIntoViewId != null)
@@ -219,15 +248,16 @@ namespace ClearBlazor
 
         }
 
-        private async Task VerticalScroll(int verticalAmount)
+        private async Task VerticalScroll(int amount, bool scrollSmoothly)
         {
+            Console.WriteLine("Vertical Scroll");
             if (_scrollViewerSize == null || _scrollableSize == null)
                 return;
 
             bool doScroll = false;
             if (ShowVerticalScrollBar())
             {
-                var top = _marginTop - verticalAmount;
+                var top = _marginTop - amount;
                 top = ConstrainMarginTop(top);
                 if (top != _marginTop)
                 {
@@ -237,10 +267,10 @@ namespace ClearBlazor
             }
 
             if (doScroll)
-                await DoVerticalScrolling();
+                await DoVerticalScrolling(scrollSmoothly);
         }
 
-        private async Task HorizontalScroll(int amount)
+        private async Task HorizontalScroll(int amount, bool scrollSmoothly)
         {
             if (_scrollViewerSize == null || _scrollableSize == null)
                 return;
@@ -258,19 +288,52 @@ namespace ClearBlazor
             }
 
             if (doScroll)
-                await DoHorizontalScrolling();
+                await DoHorizontalScrolling(scrollSmoothly);
         }
 
-        private async Task DoVerticalScrolling()
+        private async Task DoVerticalScrolling(bool scrollSmoothly)
         {
-            await JSRuntime.InvokeVoidAsync("SetStyleProperty", _scrollId, "margin-top", $"{_marginTop}px");
-            await JSRuntime.InvokeVoidAsync("SetStyleProperty", _verticalThumbId,
-                                "margin-top", $"{GetVerticalThumbPosition()}px");
+            if (_scrollSmoothly != scrollSmoothly)
+            {
+                if (scrollSmoothly)
+                {
+                    //await JSRuntime.InvokeVoidAsync("SetClasses", _verticalThumbId, "scrolling-transition");
+                    //await JSRuntime.InvokeVoidAsync("SetClasses", _horizontalThumbId, "scrolling-transition");
+                    await JSRuntime.InvokeVoidAsync("SetClasses", _scrollId, "scrolling-transition");
+                }
+                else
+                {
+                    //await JSRuntime.InvokeVoidAsync("SetClasses", _verticalThumbId, string.Empty);
+                    //await JSRuntime.InvokeVoidAsync("SetClasses", _horizontalThumbId, string.Empty);
+                    await JSRuntime.InvokeVoidAsync("SetClasses", _scrollId, string.Empty);
+                }
+                _scrollSmoothly = scrollSmoothly;
+            }
+            await JSRuntime.InvokeVoidAsync("SetStyleProperties",
+                                           _scrollId, "margin-top", $"{_marginTop}px",
+                                           _verticalThumbId, "margin-top",
+                                           $"{GetVerticalThumbPosition()}px");
             await OnScroll();
         }
 
-        private async Task DoHorizontalScrolling()
+        private async Task DoHorizontalScrolling(bool scrollSmoothly)
         {
+            if (_scrollSmoothly != scrollSmoothly)
+            {
+                if (scrollSmoothly)
+                {
+                    await JSRuntime.InvokeVoidAsync("SetClasses", _verticalThumbId, "scrolling-transition");
+                    await JSRuntime.InvokeVoidAsync("SetClasses", _horizontalThumbId, "scrolling-transition");
+                    await JSRuntime.InvokeVoidAsync("SetClasses", _scrollId, "scrolling-transition");
+                }
+                else
+                {
+                    await JSRuntime.InvokeVoidAsync("SetClasses", _verticalThumbId, string.Empty);
+                    await JSRuntime.InvokeVoidAsync("SetClasses", _horizontalThumbId, string.Empty);
+                    await JSRuntime.InvokeVoidAsync("SetClasses", _scrollId, string.Empty);
+                }
+                _scrollSmoothly = scrollSmoothly;
+            }
             await JSRuntime.InvokeVoidAsync("SetStyleProperties",
                                            _scrollId, "margin-left", $"{_marginLeft}px",
                                            _horizontalThumbId, "margin-left",
@@ -289,7 +352,7 @@ namespace ClearBlazor
             if (ScrollCallback == null)
                 return;
 
-            await ScrollCallback(new ScrollState
+            var scrollState = new ScrollState
             {
                 ScrollTop = Math.Abs(_marginTop),
                 ScrollLeft = Math.Abs(_marginLeft),
@@ -297,9 +360,14 @@ namespace ClearBlazor
                 ScrollWidth = _scrollableSize.ElementWidth,
                 ClientHeight = _scrollViewerSize.ElementHeight,
                 ClientWidth = _scrollViewerSize.ElementWidth
-            });
-        }
+            };
 
+            if (_lastScrollState == scrollState)
+                return;
+
+            _lastScrollState = scrollState;
+            await ScrollCallback(scrollState);
+        }
         protected override string UpdateStyle(string css)
         {
             var width = _scrollbarWidth;
@@ -370,7 +438,8 @@ namespace ClearBlazor
             if (UseOverlayScrollbars)
                 viewerHeight -= _scrollbarWidth;
 
-            return (_scrollViewerSize.ElementHeight / _scrollableSize.ElementHeight) * viewerHeight;
+            var size = (_scrollViewerSize.ElementHeight / _scrollableSize.ElementHeight) * viewerHeight;
+            return Math.Max(size, MinThumbSize);
         }
 
         private double GetHorizontalThumbSize()
@@ -385,7 +454,8 @@ namespace ClearBlazor
             if (UseOverlayScrollbars)
                 viewerWidth -= _scrollbarWidth;
 
-            return (_scrollViewerSize.ElementWidth / _scrollableSize.ElementWidth) * viewerWidth;
+            var size = (_scrollViewerSize.ElementWidth / _scrollableSize.ElementWidth) * viewerWidth;
+            return Math.Max(size, MinThumbSize);
         }
 
         private double GetVerticalThumbPosition()
@@ -568,7 +638,7 @@ namespace ClearBlazor
             {
                 _marginTop -= e.DeltaY;
                 _marginTop = ConstrainMarginTop(_marginTop);
-                await DoVerticalScrolling();
+                await DoVerticalScrolling(true);
             }
         }
 
@@ -587,32 +657,51 @@ namespace ClearBlazor
         [JSInvokable]
         public async Task KeyDown(string key, bool shift, bool ctrl, bool alt)
         {
-            switch(key)
+            if (_processingkey)
+                return;
+            _processingkey = true;
+
+            try
             {
-                case "ArrowDown":
-                    await VerticalScroll(ScrollIncrement);
-                    break;
-                case "ArrowUp":
-                    await VerticalScroll(-ScrollIncrement);
-                    break;
-                case "ArrowRight":
-                    await HorizontalScroll(ScrollIncrement);
-                    break;
-                case "ArrowLeft":
-                    await HorizontalScroll(-ScrollIncrement);
-                    break;
-                case "PageUp":
-                    await VerticalScroll(-PageIncrement);
-                    break;
-                case "PageDown":
-                    await VerticalScroll(PageIncrement);
-                    break;
-                case "Home":
-                    await VerticalScroll((int)_marginTop);
-                    break;
-                case "End":
-                    await VerticalScroll(int.MaxValue);
-                    break;
+                switch (key)
+                {
+                    case "ArrowDown":
+                        await VerticalScroll(ScrollIncrement, false);
+                        break;
+                    case "ArrowUp":
+                        await VerticalScroll(-ScrollIncrement, false);
+                        break;
+                    case "ArrowRight":
+                        await HorizontalScroll(ScrollIncrement, false);
+                        break;
+                    case "ArrowLeft":
+                        await HorizontalScroll(-ScrollIncrement, false);
+                        break;
+                    case "PageUp":
+                        await VerticalScroll(-PageIncrement, false);
+                        break;
+                    case "PageDown":
+                        await VerticalScroll(PageIncrement, false);
+                        break;
+                    case "Home":
+                        await VerticalScroll((int)_marginTop, false);
+                        break;
+                    case "End":
+                        await VerticalScroll(int.MaxValue, false);
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            finally
+            {
+                // Throttle the keys just a bit
+                await Task.Delay(0).ContinueWith(t =>
+                {
+                    _processingkey = false;
+                });
             }
             await Task.CompletedTask;
         }
@@ -669,9 +758,19 @@ namespace ClearBlazor
                 if (_scrollableSize == null || _scrollViewerSize == null)
                     return;
 
-                var factor = _scrollableSize.ElementWidth / _scrollViewerSize.ElementWidth;
-                await HorizontalScroll((int)(e.MovementX * factor));
-                _horizontalScrolling = true;
+                if (_processingkey)
+                    return;
+                _processingkey = true;
+                try
+                {
+                    var factor = _scrollableSize.ElementWidth / _scrollViewerSize.ElementWidth;
+                    await HorizontalScroll((int)(e.MovementX * factor), true);
+                    _horizontalScrolling = true;
+                }
+                finally
+                {
+                    _processingkey = false;
+                }
             }
             else
                 _horizontalScrolling = false;
@@ -696,9 +795,9 @@ namespace ClearBlazor
             var position = GetHorizontalThumbPosition();
 
             if (e.OffsetX > position + thumbSize)
-                await HorizontalScroll(PageIncrement);
+                await HorizontalScroll(PageIncrement, true);
             else if (e.OffsetX < position)
-                await HorizontalScroll(-PageIncrement);
+                await HorizontalScroll(-PageIncrement, true);
         }
 
         private async Task OnVerticalMouseDown(MouseEventArgs e)
@@ -719,9 +818,19 @@ namespace ClearBlazor
                 if (_scrollableSize == null || _scrollViewerSize == null)
                     return;
 
-                var factor = _scrollableSize.ElementHeight / _scrollViewerSize.ElementHeight;
-                await VerticalScroll((int)(e.MovementY * factor));
-                _verticalScrolling = true;
+                if (_processingkey)
+                    return;
+                _processingkey = true;
+                try
+                {
+                    var factor = _scrollableSize.ElementHeight / _scrollViewerSize.ElementHeight;
+                    await VerticalScroll((int)(e.MovementY * factor), true);
+                    _verticalScrolling = true;
+                }
+                finally
+                {
+                    _processingkey = false;
+                }
             }
             else
                 _verticalScrolling = false;
@@ -748,9 +857,45 @@ namespace ClearBlazor
             var position = GetVerticalThumbPosition();
 
             if (e.OffsetY > position + thumbSize)
-                await VerticalScroll(PageIncrement);
+                await VerticalScroll(PageIncrement, true);
             else if (e.OffsetY < position)
-                await VerticalScroll(-PageIncrement);
+                await VerticalScroll(-PageIncrement, true);
+        }
+
+        internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
+        {
+            if (observedSizes == null)
+                return;
+
+            bool changed = false;
+            foreach (var observedSize in observedSizes)
+            {
+                if (observedSize.TargetId == _scrollId)
+                {
+                    if (observedSize.ElementHeight > 0 && 
+                        (_scrollableSize == null || 
+                         _scrollableSize.ElementHeight != observedSize.ElementHeight ||
+                         _scrollableSize.ElementWidth != observedSize.ElementWidth))
+                    {
+                        _scrollableSize = observedSize;
+                        changed = true;
+                    }
+                }
+                else if (observedSize.TargetId == _scrollViewerId)
+                {
+                    if (observedSize.ElementHeight > 0 && 
+                        (_scrollViewerSize == null ||
+                         _scrollViewerSize.ElementHeight != observedSize.ElementHeight ||
+                         _scrollViewerSize.ElementWidth != observedSize.ElementWidth))
+                    {
+                        _scrollViewerSize = observedSize;
+                        changed = true;
+                    }
+                }
+            }
+            if (changed)
+                StateHasChanged();
+            await Task.CompletedTask;
         }
 
         private class Unsubscriber : IDisposable

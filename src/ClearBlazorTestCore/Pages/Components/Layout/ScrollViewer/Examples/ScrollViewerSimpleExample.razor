@@ -18,7 +18,7 @@
                 {
                     if (_horizontalOverflowText)
                     {
-                        @for (int i = 1; i <= 200; i++)
+                        @for (int i = 1; i <= 1000; i++)
                         {
                             int row = i;
                             <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>
@@ -171,7 +171,7 @@
     {
         Console.WriteLine($"HandleScrollEvent: ScrollTop:{scrollState.ScrollTop}");
         if (scrollState.ScrollTop == 0)
-            await _scrollViewer.SetScrollTop(300);
+            await _scrollViewer.SetScrollTop(800);
     }
 
     private void Changed()

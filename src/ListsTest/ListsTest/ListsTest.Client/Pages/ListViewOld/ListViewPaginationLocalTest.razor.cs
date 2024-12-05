@@ -38,11 +38,11 @@ namespace ListsTest
         }
         async Task OnAddNewItemGotoEndIfAtEnd()
         {
-            var atEnd = await _list.AtEnd();
+            var atEnd = _list.AtEnd();
             var count = _localListData.Count;
             _localListData.Add(TestListRow.GetNewTestListRow(count));
             await _list.Refresh();
-            if (atEnd)
+            if (await atEnd)
                 await _list.GotoEnd();
         }
 

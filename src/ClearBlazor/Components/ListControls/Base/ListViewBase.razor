@@ -36,7 +36,7 @@
                                 {
                                     <ListViewRow TItem=TItem
                                                  RowData=@row.item
-                                                 RowIndex=@row.item.Index
+                                                 RowIndex=@row.item.ItemIndex
                                                  Index=row.index
                                                  RowId=@(_baseRowId + row.index.ToString())
                                                  RowSpacing=@RowSpacing
@@ -48,9 +48,9 @@
                                 {
                                     <ListViewRow TItem=TItem
                                                  RowData=@row.item
-                                                 RowIndex=@row.item.Index
+                                                 RowIndex=@row.item.ItemIndex
                                                  Index=row.index
-                                                 RowId=@(_baseRowId + row.item.Index.ToString())
+                                                 RowId=@(_baseRowId + row.item.ItemIndex.ToString())
                                                  RowSpacing=@RowSpacing
                                                  ColumnSpacing=@_columnSpacing
                                                  VerticalGridLines=@_verticalGridLines

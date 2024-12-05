@@ -1,14 +1,11 @@
 using ClearBlazor;
 using Data;
-using Microsoft.AspNetCore.Components;
 
 namespace ListsTest
 {
-    public partial class ListViewVirtualizeDBTest
-        : ComponentBase
+    public partial class ListViewVirtualizeLocalTest
     {
-        private bool _addDelay = false;
-        private ListView<TestListRow> _list = null!;
+        private ListView1<TestListRow> _list = null!;
         private TestListRow? _selectedItem = null;
         private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
@@ -17,16 +14,7 @@ namespace ListsTest
         private bool _atEnd = false;
         private bool _atStart = true;
 
-        private async Task<(int, IEnumerable<TestListRow>)> GetItemsFromDatabase(DataProviderRequest request)
-        {
-            if (_addDelay)
-                await Task.Delay(1000, request.CancellationToken);
-
-            var feedEntries = await SignalRClient.Instance.GetListRows(
-                                                              request.StartIndex, request.Count,
-                                                              request.CancellationToken);
-            return (feedEntries.TotalNumEntries, feedEntries.ListRows);
-        }
+        List<TestListRow> _localListData = ClientData.LocalTestListRows5000;
 
         private void Refresh()
         {
@@ -47,6 +35,27 @@ namespace ListsTest
         async Task OnGotoStart()
         {
             await _list.GotoStart();
+        }
+        async Task OnAddNewItem()
+        {
+            var count = _localListData.Count;
+            _localListData.Add(TestListRow.GetNewTestListRow(count));
+            await _list.Refresh();
+        }
+        async Task OnAddNewItemGotoEndIfAtEnd()
+        {
+            var atEnd = _list.AtEnd();
+            var count = _localListData.Count;
+            _localListData.Add(TestListRow.GetNewTestListRow(count));
+            await _list.Refresh();
+            if (await atEnd)
+                await _list.GotoEnd();
+        }
+
+        void ChangeItem()
+        {
+            _localListData[0].FirstName = "Bla bla bla";
+            _list.Refresh(_localListData[0]);
         }
 
         private async Task ClearSelections()
@@ -73,6 +82,5 @@ namespace ListsTest
             await _list.RemoveAllSelections();
             StateHasChanged();
         }
-
     }
 }

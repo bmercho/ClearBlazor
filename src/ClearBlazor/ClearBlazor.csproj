@@ -9,6 +9,25 @@
 		<Version>0.0.11</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Components\ListView\InfiniteScrollReverse\**" />
+	  <Compile Remove="Components\ListView\InfinteScroll\**" />
+	  <Compile Remove="Components\ListView\None\**" />
+	  <Compile Remove="Components\ListView\Virtualize\**" />
+	  <Content Remove="Components\ListView\InfiniteScrollReverse\**" />
+	  <Content Remove="Components\ListView\InfinteScroll\**" />
+	  <Content Remove="Components\ListView\None\**" />
+	  <Content Remove="Components\ListView\Virtualize\**" />
+	  <EmbeddedResource Remove="Components\ListView\InfiniteScrollReverse\**" />
+	  <EmbeddedResource Remove="Components\ListView\InfinteScroll\**" />
+	  <EmbeddedResource Remove="Components\ListView\None\**" />
+	  <EmbeddedResource Remove="Components\ListView\Virtualize\**" />
+	  <None Remove="Components\ListView\InfiniteScrollReverse\**" />
+	  <None Remove="Components\ListView\InfinteScroll\**" />
+	  <None Remove="Components\ListView\None\**" />
+	  <None Remove="Components\ListView\Virtualize\**" />
+	</ItemGroup>
 	<ItemGroup>
 		<None Include="../../README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
