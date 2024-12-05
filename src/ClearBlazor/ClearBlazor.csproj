@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AssemblyVersion>0.0.11</AssemblyVersion>
@@ -53,8 +53,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.64" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" />
+		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.66" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,6 @@
 ﻿@namespace ClearBlazorTest
 <Grid Columns="400,auto" Rows="600,*">
-    <ListView @ref=_list TItem=Feed CornerRadius=4 BorderThickness=1 Margin=5 Padding=5
+    <ListView1 @ref=_list TItem=Feed CornerRadius=4 BorderThickness=1 Margin=5 Padding=5
               @bind-SelectedItem=_selectedItem
               @bind-SelectedItems=_selectedItems
               SelectionMode=@_selectionMode
@@ -21,7 +21,7 @@
                 </TextBlock>
             </Grid>
         </RowTemplate>
-    </ListView>
+    </ListView1>
     @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
     {
         <StackPanel Column=1>
@@ -57,7 +57,7 @@
     }
 
 
-    ListView<Feed> _list = null!;
+    ListView1<Feed> _list = null!;
     private Feed _selectedItem = null!;
     private List<Feed> _selectedItems = new();
     private SelectionMode _selectionMode = SelectionMode.None;
