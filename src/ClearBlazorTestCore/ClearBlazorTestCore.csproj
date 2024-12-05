@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>ClearBlazorTest</RootNamespace>
@@ -18,14 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ClearBlazor\ClearBlazor.csproj" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\TestData\Data.csproj" />
-    <ProjectReference Include="..\TestData\TestData.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +35,7 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Layout\ScrollViewer\Code\ScrollViewerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewPaginationExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewInfiniteScrollExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pagination\Code\PaginationSimpleExampleCode.html" />

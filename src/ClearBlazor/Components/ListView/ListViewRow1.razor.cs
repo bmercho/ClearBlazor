@@ -13,23 +13,30 @@ namespace ClearBlazor
         [Parameter]
         public required RenderFragment<TItem>? RowTemplate { get; set; }
 
+        /// <summary>
+        /// The RowId of this row. It consists of base guid as a string plus the index of the row
+        /// </summary>
+        [Parameter]
+        public string RowId { get; set; } = string.Empty;
+
+        /// <summary>
+        /// The index of just the rendered rows.
+        /// </summary>
         [Parameter]
         public int Index { get; set; }
 
-        private bool _mouseOver = false;
         private ListView1<TItem>? _parent;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
             _parent = FindParent<ListView1<TItem>>(Parent);
-            if (_parent != null)
-                await _parent.AddListRow(this);
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
             if (_parent != null)
+            {
                 switch (_parent.VirtualizeMode)
                 {
                     case VirtualizeMode.None:
@@ -46,20 +53,32 @@ namespace ClearBlazor
                         _doRender = true;
                         break;
                 }
+            }
             await base.SetParametersAsync(parameters);
 
+            if (_parent != null)
+                _parent.AddListRow(this);
         }
 
-        protected override void OnParametersSet()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnParametersSet();
-        }
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            base.OnAfterRender(firstRender);
+            Console.WriteLine($"OnAfterRender: Index:{Index}");
+            await base.OnAfterRenderAsync(firstRender);
+            if (_parent != null &&
+                    (_parent.VirtualizeMode == VirtualizeMode.InfiniteScroll ||
+                     _parent.VirtualizeMode == VirtualizeMode.InfiniteScrollReverse))
+            {
+                if (_parent._resizeObserverId != null)// && 
+                    //_parent.RowSizes[RowData.ListItemId.ToString()].RowHeight == 0)
+                {
+                    await ResizeObserverService.Service.ObserveElement(_parent._resizeObserverId,
+                                                                       RowData.ListItemId.ToString());
+                    //Console.WriteLine($"Observe: Id:{RowData.ListItemId.ToString()} Row:{RowData.Index}");
+                }
+            }
             _doRender = false;
         }
+
         protected override bool ShouldRender()
         {
             return _doRender;
@@ -98,8 +117,19 @@ namespace ClearBlazor
 
             bool ctrlDown = args.CtrlKey;
             bool shiftDown = args.ShiftKey;
-            //await _parent.HandleRowSelection(this, ctrlDown, shiftDown);
+            await _parent.HandleRowSelection(RowData, RowData.ItemIndex, ctrlDown, shiftDown);
         }
+
+        private string GetRowId()
+        {
+            if (_parent == null)
+                return string.Empty;
+
+            if (_parent.VirtualizeMode == VirtualizeMode.None)
+                return RowId;
+            return RowData.ListItemId.ToString();
+        }
+
         protected string GetContentStyle()
         {
             if (_parent == null)
@@ -116,14 +146,6 @@ namespace ClearBlazor
                 css += $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; ";
 
             return css;
-        }
-
-        private string GetContainerDivStyle()
-        {
-            if (_parent == null)
-                return "display:block; ";
-
-            return $"display:block; width:{_parent._itemWidth}px; ";
         }
 
         public override void Dispose()

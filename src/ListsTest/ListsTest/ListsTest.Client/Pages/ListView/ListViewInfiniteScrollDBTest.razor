@@ -7,7 +7,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : from DB (5000 rows loaded as required)</TextBlock>
     <Grid Columns="800,auto,*" Rows="600,*">
-        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.InfiniteScroll
                   DataProvider=@GetItemsFromDatabase
                   @bind-SelectedItem=_selectedItem
@@ -22,7 +22,7 @@
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
                     <StackPanel Column=1 Orientation=Orientation.Portrait>
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                            @(row.ToString() + $"({row.Index})")
+                            @(row.ToString() + $"({row.ItemIndex})")
                         </TextBlock>
                         <TextBlock Column=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
                             @row.Notes
@@ -30,7 +30,7 @@
                     </StackPanel>
                 </Grid>
             </RowTemplate>
-        </ListView>
+        </ListView1>
 
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {

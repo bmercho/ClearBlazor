@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AssemblyVersion>0.0.11</AssemblyVersion>
@@ -9,6 +9,25 @@
 		<Version>0.0.11</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Components\ListView\InfiniteScrollReverse\**" />
+	  <Compile Remove="Components\ListView\InfinteScroll\**" />
+	  <Compile Remove="Components\ListView\None\**" />
+	  <Compile Remove="Components\ListView\Virtualize\**" />
+	  <Content Remove="Components\ListView\InfiniteScrollReverse\**" />
+	  <Content Remove="Components\ListView\InfinteScroll\**" />
+	  <Content Remove="Components\ListView\None\**" />
+	  <Content Remove="Components\ListView\Virtualize\**" />
+	  <EmbeddedResource Remove="Components\ListView\InfiniteScrollReverse\**" />
+	  <EmbeddedResource Remove="Components\ListView\InfinteScroll\**" />
+	  <EmbeddedResource Remove="Components\ListView\None\**" />
+	  <EmbeddedResource Remove="Components\ListView\Virtualize\**" />
+	  <None Remove="Components\ListView\InfiniteScrollReverse\**" />
+	  <None Remove="Components\ListView\InfinteScroll\**" />
+	  <None Remove="Components\ListView\None\**" />
+	  <None Remove="Components\ListView\Virtualize\**" />
+	</ItemGroup>
 	<ItemGroup>
 		<None Include="../../README.md" Pack="true" PackagePath="/" />
 	</ItemGroup>
@@ -26,14 +45,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Compile Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor.cs" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Remove="Components\Layout\ScrollViewer\ScrollViewerWithScrollBars.razor" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Remove="Components\Spinner\Spinner.razor.css" />
 	</ItemGroup>
 
@@ -42,8 +53,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.64" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.10" />
+		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.66" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

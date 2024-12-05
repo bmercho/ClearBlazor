@@ -53,7 +53,7 @@ namespace ClearBlazorInternal
             _parent = FindParent<ListViewBase<TItem>>(Parent);
             if (_parent != null)
             {
-                await _parent.AddListRow(this);
+                _parent.AddListRow(this);
                 return;
             }
         }

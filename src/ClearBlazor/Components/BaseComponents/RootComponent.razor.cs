@@ -35,6 +35,8 @@ namespace ClearBlazor
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/MouseCapture.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/KeyboardCapture.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/ResizeCanvas.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/ResizeListener.js");
@@ -50,6 +52,8 @@ namespace ClearBlazor
                                  "./_content/ClearBlazor/SetStyleProperty.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/InfiniteScrolling.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/StopPropagation.js");
 
                 await ThemeManager.UpdateTheme(JSRuntime);
                 var browserSizeService = new BrowserSizeService();

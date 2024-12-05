@@ -22,6 +22,14 @@
 
         public virtual ScrollBarStyle ScrollBarStyle { get; set; } = ScrollBarStyle.ThinWidthRound;
 
+        // Used by new ScrollViewer
+        public virtual int ScrollbarWidth { get; set; } = 10;
+        public virtual int ScrollbarBackgroundBoxShadowWidth { get; set; } = 5;
+        public virtual int ScrollbarCornerRadius { get; set; } = 5;
+        public virtual int ScrollbarThumbCornerRadius { get; set; } = 5;
+
+        //
+
         public virtual int TextEntryDebounceInterval { get; set; } = 100;
 
         ///// <summary>

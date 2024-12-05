@@ -405,9 +405,9 @@ namespace ClearBlazorInternal
                 if (VirtualizeMode == VirtualizeMode.InfiniteScroll ||
                     VirtualizeMode == VirtualizeMode.InfiniteScrollReverse)
                 {
-                    foreach (var row in RowIndexes)
+                    foreach (var row in RowIds)
                     {
-                        if (RowSizes[row.Value] == -1)
+                        if (RowSizes[row.Value].RowHeight == -1)
                             await ResizeObserverService.Service.ObserveElement(_resizeObserverId,
                                                        row.Key.ToString());
                     }
@@ -569,7 +569,7 @@ namespace ClearBlazorInternal
                 if (newItems.Count > 0)
                 {
                     // Check if at end;
-                    if (_items.Count == 0 || _items[_items.Count - 1].Index == newItems[newItems.Count - 1].Index)
+                    if (_items.Count == 0 || _items[_items.Count - 1].ItemIndex == newItems[newItems.Count - 1].ItemIndex)
                         return false;
 
                     RecordPageOffset(scrollHeight);
@@ -770,10 +770,9 @@ namespace ClearBlazorInternal
                 }
                 else
                 {
-                    if (RowIndexes.ContainsKey(observedSize.TargetId) && observedSize.ElementHeight > 0)
+                    if (RowSizes.ContainsKey(observedSize.TargetId) && observedSize.ElementHeight > 0)
                     {
-                        var row = RowIndexes[observedSize.TargetId];
-                        RowSizes[row] = observedSize.ElementHeight;
+                        RowSizes[observedSize.TargetId] = (observedSize.ElementHeight,0);
                         changed = true;
                     }
                 }
@@ -890,7 +889,6 @@ namespace ClearBlazorInternal
 
         private async Task<bool> LoadInfiniteScrollPageAsync(int page)
         {
-
             if (_loadingUp || _loadingDown)
                 _loadItemsCts?.Cancel();
             await _semaphoreSlim.WaitAsync();

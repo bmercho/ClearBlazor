@@ -8,7 +8,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : from DB (5000 rows loaded as required)</TextBlock>
     <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
-        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.Virtualize
                   RowHeight=110
                   DataProvider=@GetItemsFromDatabase
@@ -18,14 +18,13 @@
                   AllowSelectionToggle=@_allowSelectionToggle
                   SelectionMode=@_selectionMode
                   InitialIndex="@((50, Alignment.Center))"
-                  PageSize=10
                   ShowLoadingSpinner=true>
             <RowTemplate Context=row>
                 <Grid Columns="auto,*" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
                     <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
                     <StackPanel Column=1 Orientation=Orientation.Portrait>
                         <TextBlock Typo=Typo.H6 TextWrapping=TextWrap.NoWrap Margin="0,0,10,10">
-                            @(row.ToString() + $"({row.Index})")
+                            @(row.ToString() + $"({row.ItemIndex})")
                         </TextBlock>
                         <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
                             @row.Notes
@@ -33,7 +32,7 @@
                     </StackPanel>
                 </Grid>
             </RowTemplate>
-        </ListView>
+        </ListView1>
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {
             <StackPanel Column=1>

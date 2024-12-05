@@ -8,7 +8,7 @@ namespace ListsTest
         : ComponentBase
     {
         private bool _addDelay = false;
-        private ListView<TestListRow> _list = null!;
+        private ListView1<TestListRow> _list = null!;
         private TestListRow? _selectedItem = null;
         private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;

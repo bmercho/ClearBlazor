@@ -301,7 +301,7 @@ namespace ClearBlazor
             foreach (var item in Items)
             {
                 item.IsVisible = true;
-                item.Index = index;
+                item.ItemIndex = index;
                 AddItemAndChildren(item, ref index);
             }
             GetVisibleNodes();
@@ -315,7 +315,7 @@ namespace ClearBlazor
             foreach (var child in item.Children)
             {
                 child.Parent = item;
-                child.Index = index;
+                child.ItemIndex = index;
                 child.IsVisible = item.IsExpanded;
                 child.Level = item.Level + 1;
                 AddItemAndChildren(child, ref index);
@@ -439,7 +439,8 @@ namespace ClearBlazor
             return false;
         }
 
-        internal override async Task<List<TItem>> GetItems(int startIndex, int count)
+        internal override async Task<List<TItem>> GetItems(int startIndex, int count, 
+                                                           bool inReverse = false)
         {
             if (startIndex < 0)
                 startIndex = 0;
