@@ -37,8 +37,8 @@
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
             <Button OnClicked=@OnGoto1000Start>Goto 1000 (start)</Button>
-            <Button OnClicked=@OnGoto5000Center>Goto 5000 (center)</Button>
-            <Button OnClicked=@OnGoto7000End>Goto 7000 (end)</Button>
+            <Button OnClicked=@OnGoto3000Center>Goto 3000 (center)</Button>
+            <Button OnClicked=@OnGoto4000End>Goto 4000 (end)</Button>
             <Button OnClicked=@OnGotoEnd>Goto end</Button>
             <Button OnClicked=@OnGotoStart>Goto start</Button>
         </WrapPanel>
@@ -68,18 +68,18 @@
         await _list.GotoIndex(1000, Alignment.Start);
     }
 
-    async Task OnGoto5000Center()
+    async Task OnGoto3000Center()
     {
         if (_list == null)
             return;
-        await _list.GotoIndex(5000, Alignment.Center);
+        await _list.GotoIndex(3000, Alignment.Center);
     }
 
-    async Task OnGoto7000End()
+    async Task OnGoto4000End()
     {
         if (_list == null)
             return;
-        await _list.GotoIndex(7000, Alignment.End);
+        await _list.GotoIndex(4000, Alignment.End);
     }
 
     async Task OnGotoEnd()
