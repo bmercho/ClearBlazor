@@ -62,7 +62,6 @@ namespace ClearBlazor
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            Console.WriteLine($"OnAfterRender: Index:{Index}");
             await base.OnAfterRenderAsync(firstRender);
             if (_parent != null &&
                     (_parent.VirtualizeMode == VirtualizeMode.InfiniteScroll ||
@@ -73,7 +72,6 @@ namespace ClearBlazor
                 {
                     await ResizeObserverService.Service.ObserveElement(_parent._resizeObserverId,
                                                                        RowData.ListItemId.ToString());
-                    //Console.WriteLine($"Observe: Id:{RowData.ListItemId.ToString()} Row:{RowData.Index}");
                 }
             }
             _doRender = false;

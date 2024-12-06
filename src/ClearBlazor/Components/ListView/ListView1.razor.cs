@@ -429,7 +429,6 @@ namespace ClearBlazor
         [JSInvokable]
         public async Task HandleScrollEvent(ScrollState scrollState)
         {
-            Console.WriteLine($"HandleScrollEvent: ScrollTop:{scrollState.ScrollTop}");
             try
             {
                 switch (VirtualizeMode)
@@ -437,8 +436,6 @@ namespace ClearBlazor
                     case VirtualizeMode.None:
                         break;
                     case VirtualizeMode.Virtualize:
-                        Console.WriteLine($"HandleScrollEvent: scrollTop:{scrollState.ScrollTop}" +
-                                          $"  _height:{_totalHeight}; _scrollViewerHeight:{_scrollViewerHeight}; ");
                         double top = scrollState.ScrollTop;
                         if (scrollState.ScrollTop > _totalHeight - _scrollViewerHeight)
                             top = _height - _scrollViewerHeight;

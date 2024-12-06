@@ -60,8 +60,6 @@ namespace ClearBlazor
 
             await _module.InvokeAsync<string>("ResizeObserverManager.Observe",
                                           resizeObserverId, elementId);
-            //Console.WriteLine($"Observe: Id:{elementId}");
-
         }
 
         public async Task UnobserveElement(string resizeObserverId, string elementId)
@@ -74,7 +72,6 @@ namespace ClearBlazor
 
             await _module.InvokeAsync<string>("ResizeObserverManager.Unobserve",
                                           resizeObserverId, elementId);
-            //Console.WriteLine($"Unobserve: Id:{elementId}");
         }
 
         public async Task RemoveResizeObserver(string id)

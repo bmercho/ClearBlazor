@@ -245,12 +245,10 @@ namespace ClearBlazor
                 await ScrollIntoView(_pendingScrollIntoViewId, _pendingScrollIntoViewAlignment);
                 _pendingScrollIntoViewId = null;
             }
-
         }
 
         private async Task VerticalScroll(int amount, bool scrollSmoothly)
         {
-            Console.WriteLine("Vertical Scroll");
             if (_scrollViewerSize == null || _scrollableSize == null)
                 return;
 

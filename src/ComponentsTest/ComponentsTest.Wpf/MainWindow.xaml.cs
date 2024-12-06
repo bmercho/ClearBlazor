@@ -1,6 +1,5 @@
 ﻿using ComponentsTest.Shared;
 using Microsoft.Extensions.DependencyInjection;
-using MudBlazor.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -123,7 +122,6 @@ namespace ComponentsTest.Wpf
         {
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddWpfBlazorWebView();
-            serviceCollection.AddMudServices();
             Resources.Add("services", serviceCollection.BuildServiceProvider());
             DataContext = this;
             InitializeComponent();

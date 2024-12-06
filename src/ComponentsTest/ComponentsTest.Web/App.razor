@@ -1,19 +1,8 @@
 ﻿@using ComponentsTest.Web.Pages
-@* <MudThemeProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
- *@
 
-<div style="height: 100vh;">
-    <div style="height: 100%; width:100%; display: grid;">
-        <div style="display:grid;overflow:auto;">
-            <Index/>
-        </div>
-    </div>
-</div>   
+<RootComponent>
+    <Index/>
+</RootComponent>
 
-@code {
-    ThemeManager ThemeManager { get; set; } = new ThemeManager(false);
 
-}
 

@@ -1,16 +1,15 @@
 <div>
 <div class="html"><pre>
 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">400,auto</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Rows</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">600,*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
-    &lt;ListView <span class="atSign">&#64;</span>ref=_list Column=0 Margin=40
-              <span class="atSign">&#64;</span>bind-SelectedItem=_selectedItem <span class="atSign">&#64;</span>bind-SelectedItems=_selectedItems
-              Items=<span class="atSign">&#64;</span>_testData BorderThickness=&quot;1&quot;
-              BorderColor=Color.Dark CornerRadius=&quot;4&quot; SelectionMode=<span class="atSign">&#64;</span>_selectionMode
-              HoverHighlight=<span class="atSign">&#64;</span>_hoverHighlight
-              OverscrollBehaviour=OverscrollBehaviour.None
-              VirtualizeMode=VirtualizeMode.Virtualize
-              InitialIndex=<span class="atSign">&#64;</span>((20, Alignment.Center))
-              RowHeight=50
-              AllowSelectionToggle=<span class="atSign">&#64;</span>_allowSelectionToggle&gt;
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">ListView1</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_list</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">0</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">40</span>
+              <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-SelectedItem</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_selectedItem</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-SelectedItems</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_selectedItems</span>
+              <span class="htmlAttributeName">Items</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_testData</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">1</span><span class="quot">&quot;</span>
+              <span class="htmlAttributeName">BorderColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Dark</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">4</span><span class="quot">&quot;</span> <span class="htmlAttributeName">SelectionMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_selectionMode</span>
+              <span class="htmlAttributeName">HoverHighlight</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_hoverHighlight</span>
+              <span class="htmlAttributeName">OverscrollBehaviour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">OverscrollBehaviour.None</span>
+              <span class="htmlAttributeName">VirtualizeMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">VirtualizeMode.Virtualize</span>
+              <span class="htmlAttributeName">RowHeight</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">50</span>
+              <span class="htmlAttributeName">AllowSelectionToggle</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_allowSelectionToggle</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">RowTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">row</span><span class="htmlTagDelimiter">&gt;</span>
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.BackgroundGrey</span>
                   <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">CornerRadius</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">8</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span> <span class="htmlAttributeName">Padding</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">*,3*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
@@ -18,7 +17,7 @@
                 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span> <span class="atSign">&#64;</span>(row.Name)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RowTemplate</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">ListView</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">ListView1</span><span class="htmlTagDelimiter">&gt;</span>
     <span class="atSign">&#64;</span>if (BrowserSizeService.DeviceSize &gt;= DeviceSize.Small)
     {
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
@@ -65,7 +64,7 @@
     <span class="keyword">private</span> SelectionMode _selectionMode = SelectionMode.None;
     <span class="keyword">private</span> <span class="keyword">bool</span> _allowSelectionToggle = <span class="keyword">false</span>;
     <span class="keyword">private</span> <span class="keyword">bool</span> _hoverHighlight = <span class="keyword">true</span>;
-    <span class="keyword">private</span> ListView&lt;TestViewItem&gt;? _list;
+    <span class="keyword">private</span> ListView1&lt;TestViewItem&gt;? _list;
     <span class="keyword">private</span> <span class="keyword">bool</span> _atEnd = <span class="keyword">false</span>;
     <span class="keyword">private</span> <span class="keyword">bool</span> _atStart = <span class="keyword">true</span>;
 

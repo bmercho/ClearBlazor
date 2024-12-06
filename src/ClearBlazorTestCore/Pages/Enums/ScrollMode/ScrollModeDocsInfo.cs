@@ -6,12 +6,12 @@ namespace ClearBlazorTest
     public record ScrollModeDocsInfo:IOtherDocsInfo
     {
         public string Name { get; set; } = "ScrollMode";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "The scroll bar mode\r";
         public List<ApiFieldInfo> FieldApi {get; set; } = new List<ApiFieldInfo>
         {
-            new ApiFieldInfo("Disabled", "ScrollMode", ""),
-            new ApiFieldInfo("Enabled", "ScrollMode", ""),
-            new ApiFieldInfo("Auto", "ScrollMode", ""),
+            new ApiFieldInfo("Disabled", "ScrollMode", "No scroll bar will be shown\r"),
+            new ApiFieldInfo("Enabled", "ScrollMode", "Scroll bar will always be shown.\r"),
+            new ApiFieldInfo("Auto", "ScrollMode", "Scroll bar will be shown when container overflowed.\r"),
         };
     }
 }
