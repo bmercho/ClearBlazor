@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.13
+
+### Patch Changes
+
+- 3b6d43a: List mods
+
 ## 0.0.12
 
 ### Patch Changes
