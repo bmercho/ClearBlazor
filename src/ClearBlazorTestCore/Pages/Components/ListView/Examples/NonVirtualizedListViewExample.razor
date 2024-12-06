@@ -1,23 +1,29 @@
 ﻿@namespace ClearBlazorTest
+@using Data
 <Grid Columns="400,auto" Rows="600,*">
-    <ListView1 @ref=_list TItem=Feed CornerRadius=4 BorderThickness=1 Margin=5 Padding=5
+    <ListView1 @ref=_list CornerRadius=4 BorderThickness=1 Margin=5 Padding=5
               @bind-SelectedItem=_selectedItem
               @bind-SelectedItems=_selectedItems
               SelectionMode=@_selectionMode
               AllowSelectionToggle=@_allowSelectionToggle
               HoverHighlight=@_hoverHighlight OverscrollBehaviour=OverscrollBehaviour.None
               VirtualizeMode=VirtualizeMode.None
-              InitialIndex=@((20, Alignment.Center)) Items=@_feeds>
+               InitialIndex=@((20, Alignment.Center)) Items=@_testData>
+        <RowTemplate Context=row>
+            <Grid BackgroundColor=Color.BackgroundGrey
+                  BorderThickness=1 CornerRadius=8 Margin=5 Padding=10 Columns="*,3*">
+                <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
+                <TextBlock VerticalAlignment=Alignment.Center Column=1> @($"{row.ToString()} ({row.ItemIndex})")</TextBlock>
+            </Grid>
+        </RowTemplate>
         <RowTemplate Context=row>
             <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
-                <Image RowSpan=2 Height=40 Width=40 VerticalAlignment=Alignment.Center
-                       Style="border-radius:50%; " Stretch=ImageStretch.Fill
-                       Source=@($"https://picsum.photos/id/{row.ImageId}/200/200") />
+                <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
                 <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
-                    @row.Title
+                    @($"{row.ToString()} ({row.ItemIndex})")
                 </TextBlock>
                 <TextBlock Column=1 Row=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
-                    @row.Message
+                    @row.Notes
                 </TextBlock>
             </Grid>
         </RowTemplate>
@@ -34,8 +40,8 @@
             </RadioGroup>
             <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
             <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.Title</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Title))</TextBlock>
+            <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
             <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
@@ -49,33 +55,16 @@
 </Grid>
 
 @code {
-    private class Feed : ListItem
-    {
-        public int ImageId { get; set; }
-        public string Title { get; set; } = string.Empty;
-        public string Message { get; set; } = string.Empty;
-    }
+    List<TestListRow> _testData = ClientData.LocalTestListRows100;
 
-
-    ListView1<Feed> _list = null!;
-    private Feed _selectedItem = null!;
-    private List<Feed> _selectedItems = new();
+    ListView1<TestListRow> _list = null!;
+    private TestListRow _selectedItem = null!;
+    private List<TestListRow> _selectedItems = new();
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
     private bool _atEnd = false;
     private bool _atStart = true;
-
-    List<Feed> _feeds = new List<Feed>();
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        for (int i = 0; i < 100; i++)
-        {
-            _feeds.Add(new Feed { ImageId = i, Title = $"Record #{i}", Message = GetMessage(i) });
-        }
-    }
 
     async Task OnGoto10Start()
     {
@@ -102,30 +91,6 @@
         await _list.GotoStart();
     }
 
-    private string GetMessage(int i)
-    {
-        switch (i % 8)
-        {
-            case 0:
-                return "Lorem ipsum dolor";
-            case 1:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem";
-            case 2:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ";
-            case 3:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores";
-            case 4:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.";
-            case 5:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure";
-            case 6:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .";
-            case 7:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.";
-        }
-        return "Lorem ipsum dolor";
-
-    }
 
     private async Task SelectionModeChanged()
     {

@@ -1,4 +1,5 @@
 ﻿@namespace ClearBlazorTest
+@using Data
 <Grid Columns="auto,auto,*" Rows="auto,*">
     <ListView @ref=_list Column=0 HorizontalAlignment=Alignment.Start Margin=40
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
@@ -14,7 +15,7 @@
             <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8
                   Margin=5 Padding=10 Columns="*,3*">
                 <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
-                <TextBlock VerticalAlignment=Alignment.Center Column=1> @(row.Name)</TextBlock>
+                <TextBlock VerticalAlignment=Alignment.Center Column=1> @($"{row.ToString()} ({row.ItemIndex})")</TextBlock>
             </Grid>
         </RowTemplate>
     </ListView>
@@ -30,8 +31,8 @@
             </RadioGroup>
             <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
             <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.Name</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
+            <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
             <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
@@ -45,53 +46,19 @@
 </Grid>
 
 @code {
-    private List<TestViewItem> _testData = new();
+    List<TestListRow> _testData = ClientData.LocalTestListRows5000;
 
-    private class TestViewItem : ListItem
-    {
-        public string Name { get; set; } = string.Empty;
-        public string IconName { get; set; } = string.Empty;
-    }
-
-    private TestViewItem _selectedItem = null!;
-    private List<TestViewItem> _selectedItems = new();
+    private TestListRow _selectedItem = null!;
+    private List<TestListRow> _selectedItems = new();
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
-    private ListView<TestViewItem>? _list;
+    private ListView<TestListRow>? _list;
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        for (int i = 0; i < 10000; i++)
-        {
-            _testData?.Add(new TestViewItem { Name = $"Item # {i}", IconName = GetIconName(i) });
-        }
-    }
-
-    async Task<(int totalNumItem, IEnumerable<TestViewItem> items)> GetData(ClearBlazor.DataProviderRequest request)
+    async Task<(int totalNumItem, IEnumerable<TestListRow> items)> GetData(ClearBlazor.DataProviderRequest request)
     {
         await Task.CompletedTask;
         return (_testData.Count(), _testData.Skip(request.StartIndex).Take(request.Count));
-    }
-
-    private string GetIconName(int i)
-    {
-        switch (i % 5)
-        {
-            case 0:
-                return Icons.Material.Filled.Add;
-            case 1:
-                return Icons.Material.Filled.AccessAlarm;
-            case 2:
-                return Icons.Material.Filled.Deck;
-            case 3:
-                return Icons.Material.Filled.Landscape;
-            case 4:
-                return Icons.Material.Filled.Airlines;
-        }
-        return Icons.Material.Filled.Add;
     }
 
     async Task OnGoto1000Start()
@@ -139,6 +106,8 @@
 
     private async Task ClearSelections()
     {
+        if (_list == null)
+            return;
         await _list.RemoveAllSelections();
         StateHasChanged();
     }

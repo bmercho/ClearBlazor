@@ -1,9 +1,10 @@
 ﻿@namespace ClearBlazorTest
+@using Data
 <Grid Columns="auto,auto,*" Rows="auto,*">
-    <ListView @ref=_list TItem=@TestViewItem Column=0 HorizontalAlignment=Alignment.Start Margin=40
+    <ListView1 @ref=_list Items=@_localListData Column=0 HorizontalAlignment=Alignment.Start Margin=40
               @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
               VirtualizeMode=VirtualizeMode.InfiniteScroll
-              DataProvider=@GetData Width=300 Height=500 BorderThickness="1"
+              Width=300 Height=500 BorderThickness="1"
               BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
               HoverHighlight=@_hoverHighlight ShowLoadingSpinner=true
               OverscrollBehaviour=OverscrollBehaviour.None
@@ -12,11 +13,11 @@
             <Grid BackgroundColor=Color.BackgroundGrey BorderThickness=1 CornerRadius=8
                   Margin=10 Padding=10 Columns="*,3*" Rows="*,auto" HorizontalAlignment=Alignment.Stretch>
                 <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
-                <TextBlock VerticalAlignment=Alignment.Center Column=1> @(row.Name)</TextBlock>
-                <TextBlock VerticalAlignment=Alignment.Center Column=1 Row=1> @(row.Message)</TextBlock>
+                <TextBlock VerticalAlignment=Alignment.Center Column=1>@($"{row.ToString()} ({row.ItemIndex})")</TextBlock>
+                <TextBlock VerticalAlignment=Alignment.Center Column=1 Row=1> @(row.Notes)</TextBlock>
             </Grid>
         </RowTemplate>
-    </ListView>
+    </ListView1>
     @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
     {
         <StackPanel Column=1>
@@ -29,8 +30,8 @@
             </RadioGroup>
             <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
             <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.Name</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.Name))</TextBlock>
+            <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
             <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
@@ -40,82 +41,16 @@
 </Grid>
 
 @code {
-    private List<TestViewItem> _testData = new();
+    List<TestListRow> _localListData = ClientData.LocalTestListRows5000;
 
-    private class TestViewItem : ListItem
-    {
-        public string Name { get; set; } = string.Empty;
-        public string Message { get; set; } = string.Empty;
-        public string IconName { get; set; } = string.Empty;
-    }
-
-    private TestViewItem? _selectedItem = null;
-    private List<TestViewItem> _selectedItems = new();
+    private TestListRow _selectedItem = null!;
+    private List<TestListRow> _selectedItems = new();
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
-    private ListView<TestViewItem> _list;
+    private ListView1<TestListRow>? _list = null;
     private bool _atEnd = false;
     private bool _atStart = true;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        for (int i = 0; i < 10000; i++)
-        {
-            _testData?.Add(new TestViewItem { Name = $"Item # {i}", Message = GetMessage(i), IconName = GetIconName(i) });
-        }
-    }
-
-    async Task<(int totalNumItem, IEnumerable<TestViewItem> items)> GetData(ClearBlazor.DataProviderRequest request)
-    {
-        await Task.CompletedTask;
-        return (_testData.Count(), _testData.Skip(request.StartIndex).Take(request.Count));
-    }
-
-    private string GetIconName(int i)
-    {
-        switch (i % 5)
-        {
-            case 0:
-                return Icons.Material.Filled.Add;
-            case 1:
-                return Icons.Material.Filled.AccessAlarm;
-            case 2:
-                return Icons.Material.Filled.Deck;
-            case 3:
-                return Icons.Material.Filled.Landscape;
-            case 4:
-                return Icons.Material.Filled.Airlines;
-        }
-        return Icons.Material.Filled.Add;
-    }
-
-    private string GetMessage(int i)
-    {
-        switch (i % 8)
-        {
-            case 0:
-                return "Lorem ipsum dolor";
-            case 1:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem";
-            case 2:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ";
-            case 3:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores";
-            case 4:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.";
-            case 5:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure";
-            case 6:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .";
-            case 7:
-                return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.";
-        }
-        return "Lorem ipsum dolor";
-
-    }
 
     private async Task OnGotoStart()
     {

@@ -68,7 +68,6 @@ namespace ClearBlazor
 
         protected override void OnAfterRender(bool firstRender)
         {
-            Console.WriteLine("ScrollViewer:Render");
             base.OnAfterRender(firstRender);
             _doRender = true;
         }
