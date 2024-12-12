@@ -1,16 +1,17 @@
-using Excubo.Blazor.Canvas;
-using Excubo.Blazor.Canvas.Contexts;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using SkiaSharp;
+using SkiaSharp.Views.Blazor;
 
 namespace ClearBlazor
 {
     /// <summary>
-    /// A canvas that can be used to draw on, using the third party library, Excubo.Blazor.Canvas
-    /// which is a wrapper around the Html5 canvas element.
+    /// A canvas that can be used to draw on, using the third party library, SkiaSharp
+    /// which is a wrapper around the Skia.
+    /// NB. Currently only works for Blazor Wasm.
     /// </summary>
-    public partial class DrawingCanvas : ClearComponentBase, IBorder, IBackground
+    public partial class SkiaDrawingCanvas : ClearComponentBase, IBorder, IBackground
     {
         /// <summary>
         /// See <a href="IBorderApi">IBorder</a>
@@ -58,7 +59,7 @@ namespace ClearBlazor
         /// Event raised when the canvas should be redrawn
         /// </summary>
         [Parameter]
-        public EventCallback<Batch2D?> OnPaint { get; set; }
+        public EventCallback<SKCanvas?> OnPaint { get; set; }
 
         /// <summary>
         /// Event raised when the canvas is clicked
@@ -126,90 +127,83 @@ namespace ClearBlazor
         [Parameter]
         public EventCallback<CanvasTouchEventArgs> OnCanvasTouchEnd { get; set; }
 
-        private SizeInfo? _previousSizeInfo = null;
-        private SizeInfo? _sizeInfo = null;
-        private Context2D? _canvas = null;
+
+        SKCanvasView _canvasView = null!;
         private string _canvasId = Guid.NewGuid().ToString();
-        private Canvas? _canvasReference = null;
-        private ElementReference _canvasContainerElement;
-        private bool _renderingInProgress = false;
-        private SynchronizationContext? _context;
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-            _context = SynchronizationContext.Current;
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            if (_renderingInProgress)
-                return;
-
-            _renderingInProgress = true;
-            try
-            {
-                if (firstRender)
-                {
-                    _canvas = await _canvasReference!.GetContext2DAsync();
-                    await JSRuntime.InvokeVoidAsync("ResizeCanvas", _canvasId);
-
-                }
-                _sizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", _canvasContainerElement);
-
-                if (_previousSizeInfo == null ||
-                    !_previousSizeInfo.Equals(_sizeInfo))
-                {
-                    if (_previousSizeInfo == null || _previousSizeInfo.ElementWidth != _sizeInfo.ElementWidth ||
-                        _previousSizeInfo.ElementHeight != _sizeInfo.ElementHeight)
-                    {
-                        await OnCanvasSizeChange.InvokeAsync(new CanvasSize(_sizeInfo.ElementWidth, _sizeInfo.ElementHeight));
-                        await RefreshCanvas();
-                    }
-                    StateHasChanged();
-                    _previousSizeInfo = _sizeInfo;
-                }
-            }
-            finally
-            {
-                _renderingInProgress = false;
-            }
-        }
-
-        protected override string UpdateStyle(string css)
-        {
-            css += $"touch-action: none; ";
-            return css;
-        }
+        private double _canvasHeight = 0;
+        private double _canvasWidth = 0;
+        private double _deviceHeight = 0;
+        private double _deviceWidth = 0;
+        private float _pixelToDeviceX = 0;
+        private float _pixelToDeviceY = 0;
+        internal string? _resizeObserverId = null;
 
         /// <summary>
         /// Call to refresh the canvas
         /// </summary>
         /// <returns></returns>
-        public async Task RefreshCanvas()
+        public void RefreshCanvas()
         {
-            if (_canvas == null || _sizeInfo == null)
+#pragma warning disable CA1416 // Validate platform compatibility
+            _canvasView.Invalidate();
+#pragma warning restore CA1416 // Validate platform compatibility
+        }
+        
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await JSRuntime.InvokeVoidAsync("ResizeCanvas", _canvasId);
+                List<string> elementIds = new List<string>() { Id };
+
+                _resizeObserverId = await ResizeObserverService.Service.
+                                    AddResizeObserver(NotifyObservedSizes, elementIds);
+
+            }
+        }
+        private void OnPaintSurface(SKPaintSurfaceEventArgs e)
+        {
+            var clipBounds = e.Surface.Canvas.DeviceClipBounds;
+
+            if (_canvasWidth > 0)
+            {
+                _deviceWidth = clipBounds.Width;
+                _deviceHeight = clipBounds.Height;
+                _pixelToDeviceX = (float)(_canvasWidth / _deviceWidth);
+                _pixelToDeviceY = (float)(_canvasHeight / _deviceHeight);
+            }
+
+
+            if (_pixelToDeviceX == 0)
                 return;
 
-            if (_context == null)
+            var canvas = e.Surface.Canvas;
+            canvas.Scale(1/_pixelToDeviceX, 1/_pixelToDeviceY);
+            OnPaint.InvokeAsync(canvas);
+        }
+
+        internal async Task NotifyObservedSizes(List<ObservedSize> observedSizes)
+        {
+            if (observedSizes == null)
+                return;
+
+            foreach (var observedSize in observedSizes)
             {
-                await using (var context = _canvas.CreateBatch())
+                if (observedSize.TargetId == Id)
                 {
-                    await OnPaint.InvokeAsync(context);
-                }
-            }
-            else
-            {
-                // Required when running in WPF app
-                _context.Post(async
-                    delegate
+                    if (observedSize.ElementHeight > 0 && _canvasHeight != observedSize.ElementHeight)
                     {
-                        await using (var context = _canvas.CreateBatch())
+                        _canvasHeight = observedSize.ElementHeight;
+                        _canvasWidth = observedSize.ElementWidth;
+                        if (_deviceWidth > 0)
                         {
-                            await OnPaint.InvokeAsync(context);
+                            _pixelToDeviceX = (float)(_canvasWidth / _deviceWidth);
+                            _pixelToDeviceY = (float)(_canvasHeight / _deviceHeight);
                         }
-                    }, null);
+                        await OnCanvasSizeChange.InvokeAsync(new CanvasSize(_canvasWidth, _canvasHeight));
+                        RefreshCanvas();
+                    }
+                }
             }
         }
 
@@ -255,30 +249,31 @@ namespace ClearBlazor
 
         private async Task OnTouchStart(TouchEventArgs e)
         {
-            if (_sizeInfo == null || e.ChangedTouches.Length == 0)
+            if (e.ChangedTouches.Length == 0)
                 return;
 
             await OnCanvasTouchStart.InvokeAsync(
-                new CanvasTouchEventArgs(e, e.ChangedTouches[0].ClientX - _sizeInfo.ElementX,
-                                            e.ChangedTouches[0].ClientY - _sizeInfo.ElementY));
+                new CanvasTouchEventArgs(e, e.ChangedTouches[0].ClientX - _canvasWidth,
+                                            e.ChangedTouches[0].ClientY - _canvasHeight));
         }
         private async Task OnTouchEnd(TouchEventArgs e)
         {
-            if (_sizeInfo == null || e.ChangedTouches.Length == 0)
+            if (e.ChangedTouches.Length == 0)
                 return;
 
             await OnCanvasTouchEnd.InvokeAsync(
-                new CanvasTouchEventArgs(e, e.ChangedTouches[0].ClientX - _sizeInfo.ElementX,
-                                            e.ChangedTouches[0].ClientY - _sizeInfo.ElementY));
+                new CanvasTouchEventArgs(e, e.ChangedTouches[0].ClientX - _canvasWidth,
+                                            e.ChangedTouches[0].ClientY - _canvasHeight));
         }
         private async Task OnTouchMove(TouchEventArgs e)
         {
-            if (_sizeInfo == null || e.ChangedTouches.Length == 0)
+            if (e.ChangedTouches.Length == 0)
                 return;
 
-            await OnCanvasTouchMove.InvokeAsync( 
-                new CanvasTouchEventArgs(e, e.ChangedTouches[0].ClientX - _sizeInfo.ElementX,
-                                            e.ChangedTouches[0].ClientY - _sizeInfo.ElementY));
+            await OnCanvasTouchMove.InvokeAsync(
+                new CanvasTouchEventArgs(e, e.ChangedTouches[0].ClientX - _canvasWidth,
+                                            e.ChangedTouches[0].ClientY - _canvasHeight));
         }
     }
+
 }

@@ -1,0 +1,128 @@
+﻿
+@using SkiaSharp
+@using SkiaSharp.Views.Blazor
+@using ClearBlazor
+@namespace ClearBlazorTest
+
+@inherits ClearComponentBase
+
+
+<Grid Width=500 Height=500 BorderThickness=1 Column="@Column">
+    <SkiaDrawingCanvas @ref=_canvasView OnCanvasSizeChange=CanvasSizeChange OnPaint=PaintCanvas
+                       OnCanvasClick=Clicked />
+</Grid>
+
+
+@code {
+    SkiaDrawingCanvas _canvasView = null!;
+    
+    System.Timers.Timer Timer = new System.Timers.Timer(100);
+
+    private void CanvasSizeChange(CanvasSize size)
+    {
+    }
+
+    private void PaintCanvas(SKCanvas canvas)
+    {
+
+        canvas.Clear(SKColors.AliceBlue);
+
+        int tick = System.Environment.TickCount;
+        Random random = new Random(tick);
+        SKPaint strokePaint1 = new SKPaint
+            {
+                Style = SKPaintStyle.Stroke,
+                Color = GetRandomColor(random),
+                IsAntialias = true,
+                StrokeWidth = 2
+            };
+        canvas.DrawRect(0, 0, 500, 500, strokePaint1);
+
+        for (int i = 0; i < 100; i++)
+        {
+            canvas.Save();
+
+
+            SKPaint strokePaint = new SKPaint
+                {
+                    Style = SKPaintStyle.Stroke,
+                    Color = GetRandomColor(random),
+                    IsAntialias = true,
+                    StrokeWidth = 2
+                };
+
+            SKPaint fillPaint = new SKPaint
+                {
+                    Style = SKPaintStyle.Fill,
+                    Color = GetRandomColor(random)
+                };
+
+
+
+            SKPath path1 = new SKPath();
+            double start = random.NextDouble();
+            double span = (1.0 - start) * random.NextDouble() + start;
+            double end = (start + span) * 180/Math.PI;
+            start *= 180/Math.PI;
+
+            bool anticlocksize = random.Next(0, 1) == 0;
+            int cx = random.Next(0, (int)500);
+            int cy = random.Next(0, (int)500);
+            int rx = Math.Min(cx, (int)500 - cx);
+            int ry = Math.Min(cy, (int)500 - cy);
+
+            int lt = random.Next(0, 3);
+            
+            if (lt == 1)
+            {
+                path1.AddArc(new SKRect(cx, cy, 
+                                        (float)(cx + rx * random.NextDouble()), 
+                                        (float)(cy + ry * random.NextDouble())),
+                                        (float)start, (float)end);
+
+            }
+            else
+            {
+                path1.AddOval(new SKRect(cx, cy,
+                                        (float)(cx + rx * random.NextDouble()),
+                                        (float)(cy + ry * random.NextDouble())),
+                                        SKPathDirection.Clockwise);
+
+            }
+            canvas.DrawPath(path1, strokePaint);
+            canvas.DrawPath(path1, fillPaint);
+            canvas.Restore();
+        }
+    }
+
+    private SKColor GetRandomColor(Random random)
+    {
+        return new SKColor((byte)random.Next(0, 255), (byte)random.Next(0, 255), (byte)random.Next(0, 255));
+    }
+
+    public void Clicked(MouseEventArgs position)
+    {
+        if (Timer.Enabled)
+            Timer.Enabled = false;
+        else
+        {
+            _canvasView.RefreshCanvas();
+            Timer.AutoReset = true;
+            Timer.Enabled = true;
+        }
+    }
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Timer.Elapsed += (source, eventArgs) =>
+        {
+            if (_canvasView != null)
+            {
+                _canvasView.RefreshCanvas();
+            }
+        };
+        Timer.Enabled = false;
+
+    }
+}
+

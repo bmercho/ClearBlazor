@@ -1,0 +1,25 @@
+﻿@using SkiaSharp
+@using SkiaSharp.Views.Blazor
+@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()"
+         @onclick=OnClick 
+         @onmousedown=OnMouseDown
+         @onmouseup=OnMouseUp
+         @onmousemove=OnMouseMove
+         @onmouseover=OnMouseOver
+         @onmouseout=OnMouseOut
+         @oncontextmenu=OnContextMenu
+         @ontouchstart=OnTouchStart
+         @ontouchend=OnTouchEnd
+         @ontouchmove=OnTouchMove
+         @ontouchmove:preventDefault 
+         @ontouchmove:stopPropagation>
+        <SKCanvasView @ref="_canvasView" id=@_canvasId OnPaintSurface="OnPaintSurface" />
+    </div>
+</CascadingValue>
+
+
+
