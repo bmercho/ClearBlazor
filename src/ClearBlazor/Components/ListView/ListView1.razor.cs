@@ -458,7 +458,7 @@ namespace ClearBlazor
                         }
                         break;
                     case VirtualizeMode.InfiniteScrollReverse:
-                        if (scrollState.ScrollHeight+scrollState.ScrollTop == scrollState.ClientHeight)
+                        if (scrollState.ScrollHeight+scrollState.ScrollTop < scrollState.ClientHeight+5)
                         {
                             await GetNextPageDataAsync(scrollState.ScrollTop);
                             StateHasChanged();
