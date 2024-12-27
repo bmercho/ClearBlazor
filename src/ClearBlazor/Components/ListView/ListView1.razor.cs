@@ -647,7 +647,7 @@ namespace ClearBlazor
                     css += "display: flex; flex-direction: column-reverse;";
                     // Do not delete the background color below. It somehow fixes a reverse
                     // infinite scrolling issue "
-                    css += "background-color: #ffffffff; ";
+                    //css += "background-color: #ffffffff; ";
                     break;
             }
 
