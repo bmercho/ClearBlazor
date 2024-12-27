@@ -1,0 +1,21 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+@using SkiaSharp
+@using SkiaSharp.Views.Blazor
+@using Microsoft.JSInterop;
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
+<CascadingValue Value=this IsFixed=false>
+    @if (LoadingComplete)
+    {
+        <div style=@GetStyle()>
+            <div style="height: 100%; width:100%; display: grid;">
+                <div style="display:grid;overflow:hidden;">
+                    <SkiaDrawingCanvas @ref=_canvasView OnPaint=PaintCanvas />
+                    @ChildContent
+                </div>
+            </div>
+        </div>
+    }
+</CascadingValue>
+
