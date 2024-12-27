@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.14
+
+### Patch Changes
+
+- e1867c0: Mods for list controls
+
 ## 0.0.13
 
 ### Patch Changes
