@@ -72,7 +72,7 @@ namespace ClearBlazor
         internal double _headerHeight = 0;
         private TreeTableViewHeader<TItem> _header = null!;
 
-        private List<TableColumn<TItem>> Columns { get; } = new List<TableColumn<TItem>>();
+        private List<TableColumn1<TItem>> Columns { get; } = new List<TableColumn1<TItem>>();
         private string _columnDefinitions = string.Empty;
         internal RenderFragment<TItem>? _rowTemplate = null;
 
@@ -195,7 +195,7 @@ namespace ClearBlazor
 
         protected override void AddChild(ClearComponentBase child)
         {
-            TableColumn<TItem>? column = child as TableColumn<TItem>;
+            TableColumn1<TItem>? column = child as TableColumn1<TItem>;
             if (column != null && !Columns.Contains(column))
             {
                 Columns.Add(column);

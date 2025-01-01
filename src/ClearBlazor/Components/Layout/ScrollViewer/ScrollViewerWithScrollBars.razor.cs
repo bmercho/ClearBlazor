@@ -293,18 +293,18 @@ namespace ClearBlazor
         {
             if (_scrollSmoothly != scrollSmoothly)
             {
-                if (scrollSmoothly)
-                {
-                    //await JSRuntime.InvokeVoidAsync("SetClasses", _verticalThumbId, "scrolling-transition");
-                    //await JSRuntime.InvokeVoidAsync("SetClasses", _horizontalThumbId, "scrolling-transition");
-                    await JSRuntime.InvokeVoidAsync("SetClasses", _scrollId, "scrolling-transition");
-                }
-                else
-                {
+                //if (scrollSmoothly)
+                //{
+                //    //await JSRuntime.InvokeVoidAsync("SetClasses", _verticalThumbId, "scrolling-transition");
+                //    //await JSRuntime.InvokeVoidAsync("SetClasses", _horizontalThumbId, "scrolling-transition");
+                //    await JSRuntime.InvokeVoidAsync("SetClasses", _scrollId, "scrolling-transition");
+                //}
+                //else
+                //{
                     //await JSRuntime.InvokeVoidAsync("SetClasses", _verticalThumbId, string.Empty);
                     //await JSRuntime.InvokeVoidAsync("SetClasses", _horizontalThumbId, string.Empty);
                     await JSRuntime.InvokeVoidAsync("SetClasses", _scrollId, string.Empty);
-                }
+                //}
                 _scrollSmoothly = scrollSmoothly;
             }
             await JSRuntime.InvokeVoidAsync("SetStyleProperties",
@@ -761,8 +761,11 @@ namespace ClearBlazor
                 _processingkey = true;
                 try
                 {
+                    Console.WriteLine($"Move1");
                     var factor = _scrollableSize.ElementWidth / _scrollViewerSize.ElementWidth;
                     await HorizontalScroll((int)(e.MovementX * factor), true);
+                    Console.WriteLine($"Move2");
+
                     _horizontalScrolling = true;
                 }
                 finally
@@ -800,8 +803,10 @@ namespace ClearBlazor
 
         private async Task OnVerticalMouseDown(MouseEventArgs e)
         {
-            await JSRuntime.InvokeVoidAsync("CaptureMouse", _verticalScrollId, 1);
+            Console.WriteLine("Mousedown");
             _verticalMouseDown = true;
+            await JSRuntime.InvokeVoidAsync("CaptureMouse", _verticalScrollId, 1);
+            
         }
         private async Task OnVerticalMouseUp(MouseEventArgs e)
         {
@@ -811,6 +816,8 @@ namespace ClearBlazor
 
         private async Task OnVerticalMouseMove(MouseEventArgs e)
         {
+            Console.WriteLine($"Move");
+
             if (_verticalMouseDown)
             {
                 if (_scrollableSize == null || _scrollViewerSize == null)
@@ -821,8 +828,12 @@ namespace ClearBlazor
                 _processingkey = true;
                 try
                 {
+                    Console.WriteLine($"Move1");
+
                     var factor = _scrollableSize.ElementHeight / _scrollViewerSize.ElementHeight;
                     await VerticalScroll((int)(e.MovementY * factor), true);
+                    Console.WriteLine($"Move2");
+
                     _verticalScrolling = true;
                 }
                 finally

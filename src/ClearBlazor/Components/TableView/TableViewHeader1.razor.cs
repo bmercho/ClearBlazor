@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class TreeTableViewHeader<TItem> where TItem : TreeItem<TItem>
+    public partial class TableViewHeader1<TItem> where TItem : ListItem
     {
         /// <summary>
         /// Indicates how a list of items is Virtualized.
@@ -53,7 +53,7 @@ namespace ClearBlazor
         [Parameter]
         public List<TableColumn1<TItem>> Columns { get; set; } = new List<TableColumn1<TItem>>();
 
-        private TreeTableView<TItem>? _parent = null;
+        private TableView1<TItem>? _parent = null;
         private bool _doRender = false;
 
         public void Refresh()
@@ -65,7 +65,7 @@ namespace ClearBlazor
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<TreeTableView<TItem>>(Parent);
+            _parent = FindParent<TableView1<TItem>>(Parent);
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
@@ -107,9 +107,10 @@ namespace ClearBlazor
                 {
                     case VirtualizeMode.None:
                     case VirtualizeMode.Pagination:
-                        css += "position:sticky; top:0px; ";
+                        //css += "position:sticky; top:0px; ";
                         break;
                     case VirtualizeMode.InfiniteScroll:
+                        css += $"transform: translateY({_parent._scrollTop-_parent._yOffset}px);";
                         break;
                     case VirtualizeMode.Virtualize:
                         css += $"position:relative; top:{_parent._scrollTop}px; ";
@@ -157,14 +158,12 @@ namespace ClearBlazor
                    $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
             return css;
         }
-
         private string GetVerticalGridLineStyle(int column)
         {
-            string css = $"justify-self:start; z-index:1; border-width:0 0 0 1px; " +
-                         $"border-style:solid; margin:0 0 0 -1px; "+
-                         $"grid-area: 1 / {column} / span 1 / span 1; " +
-                         $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
-            return css;
+                    return $"display:grid; z-index:1;" +
+                           $"border-width:0 0 0 1px; border-style:solid; " +
+                           $"grid-area: 1 / {column} / 1 / span 1; " +
+                           $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
         }
     }
 }
