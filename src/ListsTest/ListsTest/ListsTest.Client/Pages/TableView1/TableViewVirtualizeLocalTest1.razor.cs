@@ -4,28 +4,24 @@ using Data;
 
 namespace ListsTest
 {
-    public partial class TableViewVirtualizeLocalTest
+    public partial class TableViewVirtualizeLocalTest1
         : ComponentBase
     {
-        private TableView<TestListRow> _table = null!;
+        private TableView1<TestListRow> _table = null!;
         private TestListRow? _selectedItem = null;
         private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
-        private bool _showHeader = false;
-        private bool _stickyHeader = true;
-        private int _rowSpacing = 10;
-        private int _columnSpacing = 10;
-        private bool _horizontalScrollbar = true;
-        private GridLines _horizontalGridLines = GridLines.None;
-        private GridLines _verticalGridLines = GridLines.None;
-
         private bool _atEnd = false;
         private bool _atStart = true;
 
         List<TestListRow> _localListData = ClientData.LocalTestListRows5000;
 
+        private void Refresh()
+        {
+            StateHasChanged();
+        }
         async Task GotoIndex(int row, Alignment alignment)
         {
             if (_table == null)
@@ -121,11 +117,6 @@ namespace ListsTest
             await _table.Scroll(-10);
             
         }
-        async Task Refresh()
-        {
-            StateHasChanged();
-            await _table.Refresh();
-        }
-
+        
     }
 }

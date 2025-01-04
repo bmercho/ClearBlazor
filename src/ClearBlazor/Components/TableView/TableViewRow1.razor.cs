@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using ClearBlazor;
-using System;
-
-namespace ClearBlazorInternal
+using ClearBlazorInternal;
+namespace ClearBlazor
 {
-    public partial class ListViewRow<TItem> : ListRowBase<TItem>, IDisposable
+    public partial class TableViewRow1<TItem> : ListRowBase<TItem>, IDisposable
            where TItem : ListItem
     {
         [Parameter]
@@ -28,29 +26,14 @@ namespace ClearBlazorInternal
 
 
         [Parameter]
-        public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
+        public List<TableColumn1<TItem>> Columns { get; set; } = new List<TableColumn1<TItem>>();
 
-        /// <summary>
-        /// Used for a ListView
-        /// The template for rendering each row.
-        /// The item is passed to each child for customization of the row
-        /// </summary>
-        [Parameter]
-        public RenderFragment<TItem>? RowTemplate { get; set; } = null;
-
-        private ListViewBase<TItem>? _parent = null;
-        private TreeItem<TItem>? _nodeData = null;
-
-        protected override void OnParametersSet()
-        {
-            base.OnParametersSet();
-            _nodeData = RowData as TreeItem<TItem>;
-        }
+        private TableView1<TItem>? _parent = null;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<ListViewBase<TItem>>(Parent);
+            _parent = FindParent<TableView1<TItem>>(Parent);
             if (_parent != null)
             {
                 _parent.AddListRow(this);
@@ -64,10 +47,10 @@ namespace ClearBlazorInternal
                 switch (_parent.VirtualizeMode)
                 {
                     case VirtualizeMode.None:
-                            parameters.TryGetValue<TItem>(nameof(RowData), out var rowData);
-                            if (rowData != null)
-                                if (RowData == null || rowData.ListItemId != RowData.ListItemId)
-                                    _doRender = true;
+                        parameters.TryGetValue<TItem>(nameof(RowData), out var rowData);
+                        if (rowData != null)
+                            if (RowData == null || rowData.ListItemId != RowData.ListItemId)
+                                _doRender = true;
                         break;
                     case VirtualizeMode.Virtualize:
                     case VirtualizeMode.InfiniteScroll:
@@ -134,23 +117,19 @@ namespace ClearBlazorInternal
 
             string css = string.Empty;
 
-            int header = _parent._showHeader ? 1 : 0;
+            int header = _parent.ShowHeader ? 1 : 0;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
-                //css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
-                //       $"grid-column: 1 / span {Columns.Count}; grid-row: 1/ span 1;";
-                //css += $"justify-self:start; position:relative; " +
-                //       $"top:{(_parent._skipItems + Index + header) * (_parent._rowHeight + RowSpacing)}px;" +
-                //       $" height: {(_parent._rowHeight + RowSpacing)}px;";
-
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
-                       $"grid-area: {Index + 2 + header} / 1 /span 1 / span {Columns.Count}; " +
+                         $"grid-column: 1 / span {Columns.Count}; grid-row: 1/ span 1;";
+                css += $"justify-self:start; position:relative; " +
+                       $"top:{(_parent._skipItems + Index + header) * (_parent._rowHeight + RowSpacing)}px;" +
                        $" height: {(_parent._rowHeight + RowSpacing)}px;";
             }
             else
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
-
+            
             if (_mouseOver)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 
@@ -165,9 +144,8 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
-            return $"display:grid; grid-column: {column} /span 1; justify-self: stretch; " +
-                         $"grid-template-rows: {RowSpacing / 2}px 1fr {RowSpacing / 2}px; " +
-                         $"padding:0px 0px 0px {ColumnSpacing / 2}px;";
+            return $"display:grid; grid-column: {column} /span 1; justify-self: stretch;" +
+                   $"padding:0px 0px 0px {ColumnSpacing / 2}px;";
 
         }
 
@@ -177,10 +155,10 @@ namespace ClearBlazorInternal
                 return string.Empty;
 
             string css = "display:grid; grid-template-columns: 1fr auto;";
-            //if (_parent.VirtualizeMode != VirtualizeMode.Virtualize)
-            //    css += $"grid-template-rows: {RowSpacing/2}px 1fr {RowSpacing/2}px; ";
-            //else
-            //    css += $"grid-template-rows: 0px 1fr 0px; ";
+            if (_parent.VirtualizeMode != VirtualizeMode.Virtualize)
+                css += $"grid-template-rows: {RowSpacing / 2}px 1fr {RowSpacing / 2}px; ";
+            else
+                css += $"grid-template-rows: 0px 1fr 0px; ";
 
             return css;
         }
@@ -190,7 +168,7 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
-            string css = "display:grid; grid-row: 2 / span 1; align-self:center; ";
+            string css = "display:grid; grid-row: 2 / span 1; ";
             return css;
         }
 
@@ -204,15 +182,16 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
-            int header = _parent._showHeader ? 1 : 0;
-
             string css = string.Empty;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
                 css += $"z-order:1; align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"display:grid; grid-template-columns: subgrid; " +
-                       $"grid-area: {Index + 2 + header} / 1 /span 1 / span {Columns.Count};  " +
+                       $"grid-area: 2 / 1 /span 1 / span {Columns.Count};  " +
                        $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                css += $"justify-self:start; position:relative; " +
+                       $"top:{(_parent._skipItems + Index) * (_parent._rowHeight + RowSpacing)}px;";
+
             }
             else
             {

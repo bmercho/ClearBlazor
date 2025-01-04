@@ -1,31 +1,28 @@
 using ClearBlazor;
-using Microsoft.AspNetCore.Components;
 using Data;
 
 namespace ListsTest
 {
-    public partial class TableViewVirtualizeLocalTest
-        : ComponentBase
+    public partial class TableViewNonVirtualizedTest1
     {
-        private TableView<TestListRow> _table = null!;
+        private TableView1<TestListRow> _table = null!;
         private TestListRow? _selectedItem = null;
         private List<TestListRow> _selectedItems = new();
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
-        private bool _showHeader = false;
+        private bool _showHeader = true;
         private bool _stickyHeader = true;
         private int _rowSpacing = 10;
         private int _columnSpacing = 10;
         private bool _horizontalScrollbar = true;
-        private GridLines _horizontalGridLines = GridLines.None;
-        private GridLines _verticalGridLines = GridLines.None;
+        private GridLines _horizontalGridLines = GridLines.All;
+        private GridLines _verticalGridLines = GridLines.All;
 
         private bool _atEnd = false;
         private bool _atStart = true;
 
-        List<TestListRow> _localListData = ClientData.LocalTestListRows5000;
-
+        List<TestListRow> _localListData = ClientData.LocalTestListRows100;
         async Task GotoIndex(int row, Alignment alignment)
         {
             if (_table == null)
@@ -42,6 +39,7 @@ namespace ListsTest
         {
             await _table.GotoStart();
         }
+
         async Task OnAddNewItem()
         {
             if (_table == null)
@@ -65,12 +63,10 @@ namespace ListsTest
             _localListData[0].LastName = "Bla bla bla";
             _table.Refresh(_localListData[0]);
         }
-
-
-        private async Task ClearSelections()
+        async Task Refresh()
         {
-            await _table.RemoveAllSelections();
             StateHasChanged();
+            await _table.Refresh();
         }
 
         async Task CheckAtEnd()
@@ -84,6 +80,11 @@ namespace ListsTest
             StateHasChanged();
         }
 
+        private async Task ClearSelections()
+        {
+            await _table.RemoveAllSelections();
+            StateHasChanged();
+        }
         private async Task SelectionModeChanged()
         {
             if (_table == null)
@@ -91,41 +92,5 @@ namespace ListsTest
             await _table.RemoveAllSelections();
             StateHasChanged();
         }
-
-        private async Task Up1()
-        {
-            await _table.Scroll(1);
-        }
-        private async Task Up5()
-        {
-            await _table.Scroll(5);
-            
-        }
-        private async Task Up10()
-        {
-            await _table.Scroll(10);
-
-        }
-        private async Task Down1()
-        {
-            await _table.Scroll(-1);
-
-        }
-        private async Task Down5()
-        {
-            await _table.Scroll(-5);
-            
-        }
-        private async Task Down10()
-        {
-            await _table.Scroll(-10);
-            
-        }
-        async Task Refresh()
-        {
-            StateHasChanged();
-            await _table.Refresh();
-        }
-
     }
 }

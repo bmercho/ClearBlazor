@@ -1,9 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Components
-@using ClearBlazor
-@namespace ClearBlazorInternal
+@using ClearBlazorInternal
+@namespace ClearBlazor
 @typeparam TItem
 @inherits ListRowBase<TItem>
-
 <CascadingValue Value=this IsFixed="false">
     <div id=@RowId style=@GetFullRowStyle()
          @onmouseenter=OnMouseEnter
@@ -14,12 +13,12 @@
         {
             var colIndex = col;
             <div style=@GetRowStyle(Index+2, colIndex+1)>
-                @* <div style=@GetContainerDivStyle()> *@
+                <div style=@GetContainerDivStyle()>
                     <div style=@GetContentDivStyle()>
                         @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
                         {
-                            <TextBlock VerticalAlignment=@Columns[colIndex].VerticalContentAlignment 
-                                       TextAlignment=@Columns[colIndex].HorizontalContentAlignment>
+                            <TextBlock VerticalAlignment=@Columns[colIndex].VerticalContentAlignment
+                            TextAlignment=@Columns[colIndex].HorizontalContentAlignment>
                                 @foreach (var line in GetLines(Columns[colIndex].Field.Invoke(RowData).ToString()))
                                 {
                                     @(line)
@@ -32,29 +31,25 @@
                             @Columns[colIndex].DataTemplate?.Invoke(RowData)
                         }
                     </div>
-                 </div>
-            @* </div> *@
+                </div>
+            </div>
         }
     </div>
-    @if (_parent != null && _parent.Items != null && _parent._horizontalGridLines == GridLines.All)
+    @if (_parent != null && _parent.Items != null && _parent.HorizontalGridLines == GridLines.All)
     {
-        if (_parent._showHeader)
+        if (_parent.ShowHeader)
         {
             @if (Index > 0 && Index < _parent.Items.Count())
             {
-                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
+                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count)/>
             }
         }
         else
         {
-            @if ((Index > 0 || !_parent._showHeader) && Index < _parent.Items.Count() - 1)
+            @if ((Index > 0 || !_parent.ShowHeader) && Index < _parent.Items.Count()-1)
             {
-                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
+                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count)/>
             }
         }
     }
-
 </CascadingValue>
-
-
-

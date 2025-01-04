@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class TableViewHeader<TItem> where TItem : ListItem
+    public partial class TableViewHeader1<TItem> where TItem : ListItem
     {
         /// <summary>
         /// Indicates how a list of items is Virtualized.
@@ -51,9 +51,9 @@ namespace ClearBlazor
         public int RowHeight { get; set; } = 30;
 
         [Parameter]
-        public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
+        public List<TableColumn1<TItem>> Columns { get; set; } = new List<TableColumn1<TItem>>();
 
-        private TableView<TItem>? _parent = null;
+        private TableView1<TItem>? _parent = null;
         private bool _doRender = false;
 
         public void Refresh()
@@ -65,7 +65,7 @@ namespace ClearBlazor
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<TableView<TItem>>(Parent);
+            _parent = FindParent<TableView1<TItem>>(Parent);
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
@@ -107,14 +107,13 @@ namespace ClearBlazor
                 {
                     case VirtualizeMode.None:
                     case VirtualizeMode.Pagination:
-                        css += "position:sticky; top:0px; ";
+                        //css += "position:sticky; top:0px; ";
                         break;
                     case VirtualizeMode.InfiniteScroll:
                         css += $"transform: translateY({_parent._scrollTop-_parent._yOffset}px);";
                         break;
                     case VirtualizeMode.Virtualize:
-                        css += "position:sticky; top:0px; ";
-                        //css += $"position:relative; top:{_parent._scrollTop}px; ";
+                        css += $"position:relative; top:{_parent._scrollTop}px; ";
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -161,11 +160,10 @@ namespace ClearBlazor
         }
         private string GetVerticalGridLineStyle(int column)
         {
-            return $"display:grid; z-index:1;" +
-                   $"border-width:0 0 0 1px; border-style:solid; " +
-                   $"grid-area: 1 / {column} / 1 / span 1; " +
-                   $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                    return $"display:grid; z-index:1;" +
+                           $"border-width:0 0 0 1px; border-style:solid; " +
+                           $"grid-area: 1 / {column} / 1 / span 1; " +
+                           $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
         }
-
     }
 }

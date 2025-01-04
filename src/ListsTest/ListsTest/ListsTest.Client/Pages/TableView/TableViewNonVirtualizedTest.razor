@@ -7,25 +7,27 @@
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None : local data (100 rows)</TextBlock>
     <Grid Columns="800,auto" Rows="600,auto,auto" RowSpacing=20>
         <TableView @ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
-                   RowSpacing=20 ColumnSpacing=10
+                   RowSpacing=@_rowSpacing
+                   ColumnSpacing=@_columnSpacing
                    @bind-SelectedItem=_selectedItem
                    @bind-SelectedItems=_selectedItems
                    SelectionMode=@_selectionMode
                    AllowSelectionToggle=@_allowSelectionToggle
                    HoverHighlight=@_hoverHighlight 
-                   OverscrollBehaviour=OverscrollBehaviour.None
-                   HorizontalGridLines=GridLines.All
-                   VerticalGridLines=GridLines.All
+                   HorizontalScrollbar=@_horizontalScrollbar
+                   OverscrollBehaviour=OverscrollBehaviour.Auto
+                   HorizontalGridLines=@_horizontalGridLines
+                   VerticalGridLines=@_verticalGridLines
                    VirtualizeMode=VirtualizeMode.None
-                   InitialIndex=@((20, Alignment.Center))
-                   ShowHeader=true
-                   StickyHeader=true
+                   InitialIndex=@((0, Alignment.Start))
+                   ShowHeader=@_showHeader
+                   StickyHeader=@_stickyHeader
                    Items=@_localListData>
             <TableColumn Label="Index" TItem=TestListRow Field=@(x =>x.ItemIndex) ColumnDefinition="auto" />
             <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition="auto" />
             <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition="auto" />
             <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) ColumnDefinition="120" />
-            <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition="70">
+            <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition="90">
                 <DataTemplate Context=item>
                     <TextBlock VerticalAlignment=Alignment.Start 
                                TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
@@ -33,25 +35,47 @@
             </TableColumn>
             <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="*">
                 <DataTemplate Context=item>
-                    <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true >@(item.Notes)</TextBlock>
+                    <TextBlock TextWrapping=TextWrap.NoWrap 
+                               TextTrimming=@(!_horizontalScrollbar)>@(item.Notes)</TextBlock>
                 </DataTemplate>
 
             </TableColumn>
 
         </TableView>
-        <StackPanel Column=1>
-            <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
+        <StackPanel Column=1 Margin=5 Spacing=5>
+            <RadioGroup Label="Selection mode" @bind-Value=_selectionMode
                         @bind-Value:after=@SelectionModeChanged>
                 @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
                 {
                     <Radio Label=@mode.ToString() Value="@mode" />
                 }
             </RadioGroup>
-            <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
-            <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.FirstName</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
-            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
+            <CheckBox @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+            <CheckBox @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+            <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=Refresh Label="Horizontal scrollbar" />
+            <CheckBox @bind-Checked=_showHeader @bind-Checked:after=Refresh Label="Show header" />
+            <CheckBox @bind-Checked=_stickyHeader @bind-Checked:after=Refresh Label="Sticky header" />
+            <NumericInput Label="Row spacing" @bind-Value=_rowSpacing @bind-Value:after=Refresh Immediate=false />
+            <NumericInput Label="Column spacing" @bind-Value=_columnSpacing @bind-Value:after=Refresh Immediate=false />
+
+            <RadioGroup Label="Horizontal grid lines" @bind-Value=_horizontalGridLines
+                        @bind-Value:after=@Refresh>
+                @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
+                {
+                    <Radio Label=@gridLines.ToString() Value="@gridLines" />
+                }
+            </RadioGroup>
+            <RadioGroup Label="Vertical grid lines" @bind-Value=_verticalGridLines
+                        @bind-Value:after=@Refresh>
+                @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
+                {
+                    <Radio Label=@gridLines.ToString() Value="@gridLines" />
+                }
+            </RadioGroup>
+
+            <TextBlock>Selection=@_selectedItem?.FirstName</TextBlock>
+            <TextBlock>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
+            <Button Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
             <Button OnClicked=@(e => GotoIndex(20, Alignment.Start))> Goto 20(start)</Button>

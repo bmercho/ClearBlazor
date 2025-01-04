@@ -1,47 +1,48 @@
-﻿@page "/TableViewVirtualizeLocal"
+﻿@page "/TableView1"
 @namespace ListsTest
 @using Data;
 
 <StackPanel Orientation=Orientation.Portrait Spacing=30>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
-    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : local data (500 rows)</TextBlock>
+    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None : local data (100 rows)</TextBlock>
     <Grid Columns="800,auto" Rows="600,auto,auto" RowSpacing=20>
-        <TableView @ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
-                   RowSpacing=@_rowSpacing
+        <TableView1 @ref=_table TItem=TestListRow CornerRadius=4 
+                   BorderThickness=1 Margin=10 Padding=10
+                   RowSpacing=@_rowSpacing 
                    ColumnSpacing=@_columnSpacing
-                   VirtualizeMode=VirtualizeMode.Virtualize
-                   RowHeight=30
-                   Items=@_localListData
                    @bind-SelectedItem=_selectedItem
                    @bind-SelectedItems=_selectedItems
-                   HoverHighlight=@_hoverHighlight
                    HorizontalScrollbar=@_horizontalScrollbar
+                   SelectionMode=@_selectionMode
+                   AllowSelectionToggle=@_allowSelectionToggle
+                   HoverHighlight=@_hoverHighlight 
                    OverscrollBehaviour=OverscrollBehaviour.Auto
                    HorizontalGridLines=@_horizontalGridLines
                    VerticalGridLines=@_verticalGridLines
-                   AllowSelectionToggle=@_allowSelectionToggle
-                   SelectionMode=@_selectionMode
+                   VirtualizeMode=VirtualizeMode.None
+                   InitialIndex=@((20, Alignment.Center))
                    ShowHeader=@_showHeader
                    StickyHeader=@_stickyHeader
-                   ShowLoadingSpinner=false>
-            <TableColumn Label="Index" TItem=TestListRow Field=@(x =>x.ItemIndex) ColumnDefinition=50 />
-            <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition=100 />
-            <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition=100 />
-            <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) ColumnDefinition="120" />
-            <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition="90">
+                   Items=@_localListData>
+            <TableColumn1 Label="Index" TItem=TestListRow Field=@(x =>x.ItemIndex) ColumnDefinition="auto" />
+            <TableColumn1 Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition="auto" />
+            <TableColumn1 Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition="auto" />
+            <TableColumn1 Label="Product" TItem=TestListRow Field=@(x =>x.Product) ColumnDefinition="120" />
+            <TableColumn1 Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition="90">
                 <DataTemplate Context=item>
-                    <TextBlock VerticalAlignment=Alignment.Start
+                    <TextBlock VerticalAlignment=Alignment.Start 
                                TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                 </DataTemplate>
-            </TableColumn>
-            <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="*">
+            </TableColumn1>
+            <TableColumn1 Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="*">
                 <DataTemplate Context=item>
-                    <TextBlock TextWrapping=TextWrap.NoWrap 
-                               TextTrimming=@(!_horizontalScrollbar)>@(item.Notes)</TextBlock>
+                    <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=@(!_horizontalScrollbar)>@(item.Notes)</TextBlock>
                 </DataTemplate>
-            </TableColumn>
-        </TableView>
-        <StackPanel  Column=1 Margin=5 Spacing=5>
+
+            </TableColumn1>
+
+        </TableView1>
+        <StackPanel Column=1 Margin=5 Spacing=5>
             <RadioGroup Label="Selection mode" @bind-Value=_selectionMode
                         @bind-Value:after=@SelectionModeChanged>
                 @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
@@ -51,7 +52,6 @@
             </RadioGroup>
             <CheckBox @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
             <CheckBox @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=Refresh Label="Horizontal scrollbar" />
             <CheckBox @bind-Checked=_showHeader @bind-Checked:after=Refresh Label="Show header" />
             <CheckBox @bind-Checked=_stickyHeader @bind-Checked:after=Refresh Label="Sticky header" />
             <NumericInput Label="Row spacing" @bind-Value=_rowSpacing @bind-Value:after=Refresh Immediate=false />
@@ -72,25 +72,19 @@
                 }
             </RadioGroup>
 
-            <TextBlock>Selection=@_selectedItem?.FirstName</TextBlock>
-            <TextBlock>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
+            <TextBlock >Selection=@_selectedItem?.FirstName</TextBlock>
+            <TextBlock >Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
             <Button Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-            <Button OnClicked=@(_ => GotoIndex(20, Alignment.Start))> Goto 20(start)</Button>
-            <Button OnClicked=@(_ => GotoIndex(50, Alignment.Center))>Goto 50 (center)</Button>
-            <Button OnClicked=@(_ => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
+            <Button OnClicked=@(e => GotoIndex(20, Alignment.Start))> Goto 20(start)</Button>
+            <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Goto 50 (center)</Button>
+            <Button OnClicked=@(e => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
             <Button OnClicked=@OnGotoEnd>Goto end</Button>
             <Button OnClicked=@OnGotoStart>Goto start</Button>
             <Button OnClicked=@OnAddNewItem>Add new item</Button>
         </WrapPanel>
         <WrapPanel Row=2 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-            <Button OnClicked=@Up1>Scroll +1</Button>
-            <Button OnClicked=@Up5>Scroll +5</Button>
-            <Button OnClicked=@Up10>Scroll +10</Button>
-            <Button OnClicked=@Down1>Scroll -1</Button>
-            <Button OnClicked=@Down5>Scroll -5</Button>
-            <Button OnClicked=@Down10>Scroll -10</Button>
             <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
             <Button OnClicked=@ChangeItem>Change first item</Button>
             <StackPanel Orientation=Orientation.Landscape>
@@ -104,3 +98,4 @@
         </WrapPanel>
     </Grid>
 </StackPanel>
+

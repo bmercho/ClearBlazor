@@ -168,7 +168,7 @@ namespace ClearBlazorInternal
         /// Refresh whole list.
         /// </summary>
         /// <returns></returns>
-        internal void RefreshAll()
+        internal void RefreshAllRows()
         {
             foreach (var row in ListRows)
                 row.Value.Refresh();

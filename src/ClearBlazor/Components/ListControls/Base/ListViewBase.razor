@@ -7,6 +7,7 @@
     <div id=@Id class=@Classes style=@ComputeStyle()>
         <ScrollViewer @ref=_scrollViewer Width=@_componentWidth Height=@_componentHeight
                       VerticalScrollMode=ScrollMode.Auto
+                      Style="overflow-anchor: none;"
                       HorizontalScrollMode=@GetHorizontalScrollMode()
                       VerticalOverscrollBehaviour=OverscrollBehaviour.None
                       HorizontalOverscrollBehaviour=OverscrollBehaviour.None>
@@ -29,11 +30,10 @@
                                                  RowHeight=@RowHeight
                                                  Columns=@Columns />
                             }
+                            <div style=@GetSpacerStyle()/>
 
                             @foreach (var row in _items.Select((item, index) => new { item, index }))
                             {
-                                @if (_rowTemplate == null)
-                                {
                                     <ListViewRow TItem=TItem
                                                  RowData=@row.item
                                                  RowIndex=@row.item.ItemIndex
@@ -43,21 +43,10 @@
                                                  ColumnSpacing=@_columnSpacing
                                                  VerticalGridLines=@_verticalGridLines
                                                  Columns=@Columns />
-                                }
-                                else
-                                {
-                                    <ListViewRow TItem=TItem
-                                                 RowData=@row.item
-                                                 RowIndex=@row.item.ItemIndex
-                                                 Index=row.index
-                                                 RowId=@(_baseRowId + row.item.ItemIndex.ToString())
-                                                 RowSpacing=@RowSpacing
-                                                 ColumnSpacing=@_columnSpacing
-                                                 VerticalGridLines=@_verticalGridLines
-                                                 Columns=@Columns
-                                                 RowTemplate=@_rowTemplate />
-                                }
                             }
+                           
+
+
                             @for (int col = 0; col < Columns.Count; col++)
                             {
                                 var colIndex = col;

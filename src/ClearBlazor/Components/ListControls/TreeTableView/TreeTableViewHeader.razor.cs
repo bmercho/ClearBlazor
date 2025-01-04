@@ -51,7 +51,7 @@ namespace ClearBlazor
         public int RowHeight { get; set; } = 30;
 
         [Parameter]
-        public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
+        public List<TableColumn1<TItem>> Columns { get; set; } = new List<TableColumn1<TItem>>();
 
         private TreeTableView<TItem>? _parent = null;
         private bool _doRender = false;

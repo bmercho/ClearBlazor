@@ -11,6 +11,14 @@ namespace ListsTest
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
+        private bool _showHeader = true;
+        private bool _stickyHeader = true;
+        private int _rowSpacing = 10;
+        private int _columnSpacing = 10;
+        private bool _horizontalScrollbar = true;
+        private GridLines _horizontalGridLines = GridLines.All;
+        private GridLines _verticalGridLines = GridLines.All;
+
         private bool _atEnd = false;
         private bool _atStart = true;
 
@@ -78,6 +86,11 @@ namespace ListsTest
                 return;
             await _table.RemoveAllSelections();
             StateHasChanged();
+        }
+        async Task Refresh()
+        {
+            StateHasChanged();
+            await _table.Refresh();
         }
     }
 }
