@@ -19,7 +19,7 @@ namespace ClearBlazor
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
-            _rowTemplate = RowTemplate;
+            //_rowTemplate = RowTemplate;
             _showHeader = false;
         }
     }

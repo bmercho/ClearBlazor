@@ -113,7 +113,8 @@ namespace ClearBlazor
                         css += $"transform: translateY({_parent._scrollTop-_parent._yOffset}px);";
                         break;
                     case VirtualizeMode.Virtualize:
-                        css += $"position:relative; top:{_parent._scrollTop}px; ";
+                        css += "position:sticky; top:0px; ";
+                        //css += $"position:relative; top:{_parent._scrollTop}px; ";
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -158,5 +159,13 @@ namespace ClearBlazor
                    $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
             return css;
         }
+        private string GetVerticalGridLineStyle(int column)
+        {
+            return $"display:grid; z-index:1;" +
+                   $"border-width:0 0 0 1px; border-style:solid; " +
+                   $"grid-area: 1 / {column} / 1 / span 1; " +
+                   $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+        }
+
     }
 }

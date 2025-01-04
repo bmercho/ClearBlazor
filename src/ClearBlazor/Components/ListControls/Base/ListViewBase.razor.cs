@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using ClearBlazor;
 using System;
+using System.Reflection.PortableExecutable;
 
 namespace ClearBlazorInternal
 {
@@ -103,7 +104,6 @@ namespace ClearBlazorInternal
 
         private List<TableColumn<TItem>> Columns { get; } = new List<TableColumn<TItem>>();
         private string _columnDefinitions = string.Empty;
-        internal RenderFragment<TItem>? _rowTemplate = null;
 
         /// <summary>
         /// Goto the given index in the data. Not available if VirtualizationMode is InfiniteScroll.
@@ -313,6 +313,9 @@ namespace ClearBlazorInternal
                     StateHasChanged();
                     break;
             }
+            RefreshAllRows();
+            _header.Refresh();
+
         }
 
         /// <summary>
@@ -460,6 +463,7 @@ namespace ClearBlazorInternal
             try
             {
                 var top = scrollState.ScrollTop;
+                Console.WriteLine($"ScrollTop:{top}");
                 if (_scrollTop == top)
                     return;
 
@@ -667,6 +671,28 @@ namespace ClearBlazorInternal
 
             return css;
         }
+
+        private string GetSpacerStyle()
+        {
+            int header = _showHeader ? 1 : 0;
+            double ht = (_skipItems + header) * (_rowHeight + RowSpacing);
+            Console.WriteLine($"GetSpacerStyle: Ht:{ht}");
+            string css = $"display:grid;  grid-template-columns: subgrid; " +
+                         $"grid-area: 1 / 1 /span {1 + header} / span {Columns.Count}; ";
+            if (VirtualizeMode == VirtualizeMode.Virtualize)
+            {
+                //css += $"transform: translateY({(_skipItems + header) * (_rowHeight + RowSpacing)}px);";
+                //css += $"position:relative; top:{(_skipItems + header) * (_rowHeight + RowSpacing)}px; ";
+
+            }
+            if (VirtualizeMode == VirtualizeMode.Virtualize)
+                css += $"min-height:{(_skipItems + header) * (_rowHeight + RowSpacing)}px; ";
+            else
+                css += $"min-height:0px; ";
+
+            return css;
+        }
+
         private string GetHeightDivStyle()
         {
             int header = _showHeader ? 1 : 0;
@@ -703,16 +729,14 @@ namespace ClearBlazorInternal
                 case VirtualizeMode.InfiniteScroll:
                 case VirtualizeMode.InfiniteScrollReverse:
                 case VirtualizeMode.Pagination:
-                    return $"display:grid; z-index:1;" +
+                    return $"display:grid; z-index:1; width:1px; " +
                            $"border-width:0 0 0 1px; border-style:solid; " +
                            $"grid-area: 1 / {column} / span {_items.Count+1} / span 1; " +
                            $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
                 case VirtualizeMode.Virtualize:
-                    return $"display:grid; z-index:1;height:{_items.Count*(_rowHeight + RowSpacing)}px; " +
-                           $"border-width:0 0 0 1px; border-style:solid; position:relative; " +
-                           $"top:{(_skipItems - 1) * (_rowHeight + RowSpacing)}px;" +
-
-                           $"grid-column: {column} / span 1; " +
+                    return $"display:grid; z-index:1;width:1px; " +
+                           $"border-width:0 0 0 1px; border-style:solid; " +
+                           $"grid-area: 2 / {column} / span {_takeItems-1} / span 1; " +
                            $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
             }
             return string.Empty;
@@ -839,6 +863,7 @@ namespace ClearBlazorInternal
             if ((reload || skipItems != _skipItems || takeItems != _takeItems ||
                 _items.Count == 0) && takeItems > 0)
             {
+                Console.WriteLine($"Skip:{skipItems} Take:{takeItems}");
                 if (_loadingUp || _loadingDown)
                 {
                     _loadItemsCts?.Cancel();

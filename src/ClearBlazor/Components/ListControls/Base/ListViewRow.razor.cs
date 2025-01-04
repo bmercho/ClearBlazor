@@ -137,10 +137,14 @@ namespace ClearBlazorInternal
             int header = _parent._showHeader ? 1 : 0;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
+                //css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
+                //       $"grid-column: 1 / span {Columns.Count}; grid-row: 1/ span 1;";
+                //css += $"justify-self:start; position:relative; " +
+                //       $"top:{(_parent._skipItems + Index + header) * (_parent._rowHeight + RowSpacing)}px;" +
+                //       $" height: {(_parent._rowHeight + RowSpacing)}px;";
+
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
-                         $"grid-column: 1 / span {Columns.Count}; grid-row: 1/ span 1;";
-                css += $"justify-self:start; position:relative; " +
-                       $"top:{(_parent._skipItems+Index+ header) * (_parent._rowHeight + RowSpacing)}px;" +
+                       $"grid-area: {Index + 2 + header} / 1 /span 1 / span {Columns.Count}; " +
                        $" height: {(_parent._rowHeight + RowSpacing)}px;";
             }
             else
@@ -161,8 +165,9 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
-            return $"display:grid; grid-column: {column} /span 1; justify-self: stretch;" +
-                   $"padding:0px 0px 0px {ColumnSpacing / 2}px;";
+            return $"display:grid; grid-column: {column} /span 1; justify-self: stretch; " +
+                         $"grid-template-rows: {RowSpacing / 2}px 1fr {RowSpacing / 2}px; " +
+                         $"padding:0px 0px 0px {ColumnSpacing / 2}px;";
 
         }
 
@@ -172,10 +177,10 @@ namespace ClearBlazorInternal
                 return string.Empty;
 
             string css = "display:grid; grid-template-columns: 1fr auto;";
-            if (_parent.VirtualizeMode != VirtualizeMode.Virtualize)
-                css += $"grid-template-rows: {RowSpacing/2}px 1fr {RowSpacing/2}px; ";
-            else
-                css += $"grid-template-rows: 0px 1fr 0px; ";
+            //if (_parent.VirtualizeMode != VirtualizeMode.Virtualize)
+            //    css += $"grid-template-rows: {RowSpacing/2}px 1fr {RowSpacing/2}px; ";
+            //else
+            //    css += $"grid-template-rows: 0px 1fr 0px; ";
 
             return css;
         }
@@ -185,7 +190,7 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
-            string css = "display:grid; grid-row: 2 / span 1; ";
+            string css = "display:grid; grid-row: 2 / span 1; align-self:center; ";
             return css;
         }
 
@@ -199,20 +204,19 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
+            int header = _parent._showHeader ? 1 : 0;
+
             string css = string.Empty;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
-                css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
+                css += $"z-order:1; align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"display:grid; grid-template-columns: subgrid; " +
-                       $"grid-area: 2 / 1 /span 1 / span {Columns.Count};  " +
+                       $"grid-area: {Index + 2 + header} / 1 /span 1 / span {Columns.Count};  " +
                        $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
-                css += $"justify-self:start; position:relative; " +
-                       $"top:{(_parent._skipItems+Index) * (_parent._rowHeight + RowSpacing)}px;";
-
             }
             else
             {
-                css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
+                css += $"z-order:1; align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"grid-area: {row} / 1 / span 1 / span {columnCount}; " +
                        $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
             }

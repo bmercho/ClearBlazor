@@ -5,21 +5,6 @@
 @inherits ListRowBase<TItem>
 
 <CascadingValue Value=this IsFixed="false">
-    @if (_parent != null && _parent._horizontalGridLines == GridLines.All)
-    {
-        @if (Index > 0)
-        {
-            @if (_parent._horizontalGridLines == GridLines.All)
-            {
-                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
-            }
-            else
-            {
-                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
-            }
-        }
-    }
-
     <div id=@RowId style=@GetFullRowStyle()
          @onmouseenter=OnMouseEnter
          @onmouseleave=OnMouseLeave
@@ -29,7 +14,7 @@
         {
             var colIndex = col;
             <div style=@GetRowStyle(Index+2, colIndex+1)>
-                <div style=@GetContainerDivStyle()>
+                @* <div style=@GetContainerDivStyle()> *@
                     <div style=@GetContentDivStyle()>
                         @if (@Columns[colIndex] == null || @Columns[colIndex].DataTemplate == null)
                         {
@@ -48,18 +33,27 @@
                         }
                     </div>
                  </div>
-            </div>
-        }
-
-        @if (RowTemplate != null)
-        {
-            <div class="@Classes"
-                 @onmouseenter=OnMouseEnter
-                 @onmouseleave=OnMouseLeave>
-                @RowTemplate(RowData)
-            </div>
+            @* </div> *@
         }
     </div>
+    @if (_parent != null && _parent.Items != null && _parent._horizontalGridLines == GridLines.All)
+    {
+        if (_parent._showHeader)
+        {
+            @if (Index > 0 && Index < _parent.Items.Count())
+            {
+                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
+            }
+        }
+        else
+        {
+            @if ((Index > 0 || !_parent._showHeader) && Index < _parent.Items.Count() - 1)
+            {
+                <div style=@GetHorizontalGridLineStyle(Index+2, Columns.Count) />
+            }
+        }
+    }
+
 </CascadingValue>
 
 

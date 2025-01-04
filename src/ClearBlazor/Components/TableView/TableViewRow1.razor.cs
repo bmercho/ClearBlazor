@@ -129,7 +129,7 @@ namespace ClearBlazor
             else
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
-
+            
             if (_mouseOver)
                 css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
 

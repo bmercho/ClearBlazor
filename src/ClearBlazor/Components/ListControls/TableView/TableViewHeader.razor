@@ -19,6 +19,13 @@
                     @Columns[colIndex].HeaderTemplate?.Invoke(@Columns[colIndex].Label)
                 }
             </div>
+            @if (VerticalGridLines == GridLines.HeaderOnly || VerticalGridLines == GridLines.All)
+            {
+                @if (colIndex > 0)
+                {
+                    <div style=@GetVerticalGridLineStyle(colIndex+1) />
+                }
+            }
         }
 
         @if (HorizontalGridLines == GridLines.HeaderOnly || HorizontalGridLines == GridLines.All)

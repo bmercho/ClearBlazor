@@ -7,7 +7,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : local data (500 rows)</TextBlock>
     <Grid Columns="400,auto" Rows="600,auto,auto,auto" RowSpacing=20>
-        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.Virtualize
                   RowHeight=100
                   Items=@_localListData
@@ -32,7 +32,7 @@
                     </StackPanel>
                 </Grid>
             </RowTemplate>
-        </ListView>
+        </ListView1>
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {
             <StackPanel Column=1>
