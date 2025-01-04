@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.15
+
+### Patch Changes
+
+- 93d3ea7: Mods to TableView
+
 ## 0.0.14
 
 ### Patch Changes
