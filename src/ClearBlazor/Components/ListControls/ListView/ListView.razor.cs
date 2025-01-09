@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using ClearBlazorInternal;
-using System.ComponentModel.Design;
 
 namespace ClearBlazor
 {
@@ -9,7 +8,7 @@ namespace ClearBlazor
     /// Displays a list of items( of type 'IItem') inside a ScrollViewer which is embedded in this component.
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public partial class ListView1<TItem> : ListBase<TItem>
+    public partial class ListView<TItem> : ListBase<TItem>
         where TItem : ListItem
     {
         /// <summary>
@@ -54,7 +53,6 @@ namespace ClearBlazor
         //private ScrollViewer _scrollViewer = null!;
         private string _baseRowId = Guid.NewGuid().ToString();
         private double _componentHeight = 0;
-        private double _componentWidth = 0;
 
         // Used when VirtualizeMode is Virtualize
         private double _height = 0;
@@ -64,7 +62,6 @@ namespace ClearBlazor
         private bool _loadingUp = false;
         private bool _loadingDown = false;
         private double _prevScrollTop = 0;
-        private bool _firstPage = true;
         // For VirtualizeMode InfiniteScroll
         // Pages are zero based. Initially just one page is loaded(page 0) and when that page is scrolled to the end
         // another page is loaded (first page is kept).
@@ -702,7 +699,6 @@ namespace ClearBlazor
                     if (observedSize.ElementHeight > 0 && _componentHeight != observedSize.ElementHeight)
                     {
                         _componentHeight = observedSize.ElementHeight;
-                        _componentWidth = observedSize.ElementWidth;
                         changed = true;
                     }
                 }

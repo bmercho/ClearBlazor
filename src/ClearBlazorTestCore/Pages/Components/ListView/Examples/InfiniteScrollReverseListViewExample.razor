@@ -5,7 +5,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows)</TextBlock>
     <Grid Columns="800,auto,*" Rows="542,*">
-        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.InfiniteScrollReverse
                   Items=@_localListData
                   @bind-SelectedItem=_selectedItem
@@ -28,7 +28,7 @@
                     </StackPanel>
                 </Grid>
             </RowTemplate>
-        </ListView1>
+        </ListView>
 
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {
@@ -67,7 +67,7 @@
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
-    private ListView1<TestListRow> _list = null!;
+    private ListView<TestListRow> _list = null!;
     private bool _atEnd = false;
     private bool _atStart = true;
 

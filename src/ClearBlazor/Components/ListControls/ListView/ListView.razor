@@ -12,7 +12,7 @@
                 {
                     @foreach (var row in _items.Select((item, index) => new { item, index }))
                     {
-                        <ListViewRow1 @key=@row
+                        <ListViewRow @key=@row
                                       RowId=@(_baseRowId + row.index.ToString())
                                       RowTemplate=@RowTemplate
                                       RowData=@row.item

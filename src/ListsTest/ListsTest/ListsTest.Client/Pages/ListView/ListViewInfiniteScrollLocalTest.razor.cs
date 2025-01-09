@@ -10,7 +10,7 @@ namespace ListsTest
         private SelectionMode _selectionMode = SelectionMode.None;
         private bool _allowSelectionToggle = false;
         private bool _hoverHighlight = true;
-        private ListView1<TestListRow> _list = null!;
+        private ListView<TestListRow> _list = null!;
         private bool _atEnd = false;
         private bool _atStart = true;
 

@@ -1,7 +1,7 @@
 ﻿@namespace ClearBlazorTest
 @using Data
 <Grid Columns="400,auto" Rows="600,auto,auto">
-    <ListView1 @ref=_list CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+    <ListView @ref=_list CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
     @bind-SelectedItem=_selectedItem
     @bind-SelectedItems=_selectedItems
     SelectionMode=@_selectionMode
@@ -15,12 +15,12 @@
                 <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
                     @($"{row.ToString()} ({row.ItemIndex})")
                 </TextBlock>
-                <TextBlock Column=1 Row=1 TextWrapping=TextWrap.Wrap Margin="0,0,0,10">
+                <TextBlock Column=1 Row=1 TextWrapping=TextWrap.NoWrap TextTrimming=true Margin="0,0,0,10">
                     @row.Notes
                 </TextBlock>
             </Grid>
         </RowTemplate>
-    </ListView1>
+    </ListView>
     <Pagination HorizontalAlignment=Alignment.Center Row=1 Color=Color.Primary 
     ShowFirstAndLastButtons=true
     SelectedPage=@_selectedPage 
@@ -56,7 +56,7 @@
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
-    private ListView1<TestListRow>? _list;
+    private ListView<TestListRow>? _list;
     private bool _atEnd = false;
     private bool _atStart = true;
     private int _selectedPage = 3;

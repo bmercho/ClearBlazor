@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using ClearBlazorInternal;
 namespace ClearBlazor
 {
-    public partial class ListViewRow1<TItem> : ListRowBase<TItem>, IDisposable
+    public partial class ListViewRow<TItem> : ListRowBase<TItem>, IDisposable
            where TItem : ListItem
     {
         /// <summary>
@@ -25,12 +25,12 @@ namespace ClearBlazor
         [Parameter]
         public int Index { get; set; }
 
-        private ListView1<TItem>? _parent;
+        private ListView<TItem>? _parent;
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<ListView1<TItem>>(Parent);
+            _parent = FindParent<ListView<TItem>>(Parent);
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
