@@ -1,5 +1,5 @@
-﻿@using ClearBlazor
-@namespace ClearBlazorInternal
+﻿@using ClearBlazorInternal
+@namespace ClearBlazor
 @typeparam TItem
 @inherits ListBase<TItem>
 
@@ -16,25 +16,28 @@
                     <div style=@GetHeightDivStyle()>
                         <div style=@GetTransformStyle()>
 
-                            @if (_showHeader)
+                            @if (ShowHeader)
                             {
                                 <TableViewHeader @ref=_header
-                                                 TItem=TItem
-                                                 VirtualizeMode=@VirtualizeMode
-                                                 HeaderId=@_headerId
-                                                 RowSpacing=@RowSpacing
-                                                 ColumnSpacing=@_columnSpacing
-                                                 HorizontalGridLines=@_horizontalGridLines
-                                                 VerticalGridLines=@_verticalGridLines
-                                                 StickyHeader=@_stickyHeader
-                                                 RowHeight=@RowHeight
-                                                 Columns=@Columns />
+                                TItem=TItem
+                                VirtualizeMode=@VirtualizeMode
+                                HeaderId=@_headerId
+                                RowSpacing=@RowSpacing
+                                ColumnSpacing=@_columnSpacing
+                                HorizontalGridLines=@_horizontalGridLines
+                                VerticalGridLines=@_verticalGridLines
+                                StickyHeader=@_stickyHeader
+                                RowHeight=@RowHeight
+                                Columns=@Columns />
                             }
-                            <div style=@GetSpacerStyle()/>
+                            @if (VirtualizeMode == VirtualizeMode.Virtualize)
+                            {
+                                <div style=@GetSpacerStyle()/>
+                            }
 
                             @foreach (var row in _items.Select((item, index) => new { item, index }))
                             {
-                                    <ListViewRow TItem=TItem
+                                    <TableViewRow TItem=TItem
                                                  RowData=@row.item
                                                  RowIndex=@row.item.ItemIndex
                                                  Index=row.index

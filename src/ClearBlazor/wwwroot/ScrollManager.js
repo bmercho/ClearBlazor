@@ -18,20 +18,25 @@ window.scrollbar = {
         }
     },
 
-    ScrollIntoView: (scrollViewerId, elementId, alignment) => {
+    ScrollIntoView: (scrollViewerId, elementId, headerHeight, alignment) => {
         let scrollViewer = document.getElementById(scrollViewerId);
         let element = document.getElementById(elementId);
         if (!scrollViewer || !element)
             return;
-        if (alignment == 2) {
+        console.log("ElementTop:" + element.offsetTop + " SVTop:" + scrollViewer.offsetTop +
+            " ElementHt:" + element.offsetHeight + " SVHt:" + scrollViewer.offsetHeight +
+            " HeaderHt:" + headerHeight);
+        console.log("ElementClientTop:" + element.clientTop + " SVClientTop:" + scrollViewer.clientTop +
+            " ElementClientHt:" + element.clientHeight + " SVClientHt:" + scrollViewer.clientHeight);
+        if (alignment == 2) 
             scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop -
-                scrollViewer.clientHeight / 2 + element.clientHeight / 2;
-        }
+                scrollViewer.offsetHeight / 2 + element.offsetHeight / 2 - headerHeight / 2;
         else if (alignment == 3)
             scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop -
-                                     scrollViewer.clientHeight + element.clientHeight;
+                scrollViewer.offsetHeight + element.offsetHeight;
         else
-            scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop;
+            scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop - headerHeight;
+        console.log("ScrollTop:" + scrollViewer.scrollTop);
     },
 
     SetScrollTop: (elementId, scrollTop) => {

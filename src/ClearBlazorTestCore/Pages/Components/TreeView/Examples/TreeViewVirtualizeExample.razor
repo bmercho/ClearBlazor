@@ -1,10 +1,10 @@
 ﻿@namespace ClearBlazorTest
 <StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20
 Orientation=Orientation.Portrait>
-    <TreeView Height=300 Width=250 CornerRadius=4 BorderThickness=1
+    <TreeView Height=300 Width=600 CornerRadius=4 BorderThickness=1
     Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
     HorizontalContentAlignment=Alignment.Start
-    VirtualizeMode=@VirtualizeMode.None
+    VirtualizeMode=@VirtualizeMode.Virtualize
     @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_feeds>
         <NodeTemplate Context=node>
             <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
@@ -54,7 +54,7 @@ Orientation=Orientation.Portrait>
     {
         base.OnInitialized();
 
-        InitialiseData(100);
+        InitialiseData(100000);
     }
 
     async Task CollapseAll()
@@ -136,28 +136,44 @@ Orientation=Orientation.Portrait>
         await List.Scroll(-10);
 
     }
+
     private void InitialiseData(int maxNum)
     {
         int count = 0;
-        for (int i = 0; i <= 4; i++)
+        for (int i = 0; i <= 9; i++)
         {
             var item = new Feed { Id = $"{i + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
             _feeds.Add(item);
             count++;
-            for (int j = 0; j <= 4; j++)
+            for (int j = 0; j <= 9; j++)
             {
                 var item1 = new Feed { Id = $"{i + 1}.{j + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
                 item.Children.Add(item1);
                 count++;
                 if (count >= maxNum)
                     return;
-                for (int k = 0; k <= 3; k++)
+
+                for (int k = 0; k <= 9; k++)
                 {
                     var item2 = new Feed { Id = $"{i + 1}.{j + 1}.{k + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
                     item1.Children.Add(item2);
                     count++;
                     if (count >= maxNum)
                         return;
+
+                    for (int l = 0; l <= 9; l++)
+                    {
+                        var item3 = new Feed { Id = $"{i + 1}.{j + 1}.{k + 1}.{l + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+                        item2.Children.Add(item3);
+                        for (int m = 0; m <= 10; m++)
+                        {
+                            var item4 = new Feed { Id = $"{i + 1}.{j + 1}.{k + 1}.{l + 1}.{m + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+                            item3.Children.Add(item4);
+                            count++;
+                            if (count >= maxNum)
+                                return;
+                        }
+                    }
                 }
             }
         }

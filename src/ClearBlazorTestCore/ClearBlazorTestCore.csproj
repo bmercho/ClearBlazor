@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Pages\Components\TreeView\NonVirtualizedTree\Examples\NonVirtualizedTreeDataProviderExample.razor" />
-    <Content Remove="Pages\Components\TreeView\NonVirtualizedTree\Examples\NonVirtualizedTreeVariableRowSizeExample.razor" />
+    <Content Remove="Pages\Components\TreeView\Examples\NonVirtualizedTreeDataProviderExample.razor" />
+    <Content Remove="Pages\Components\TreeView\Examples\NonVirtualizedTreeVariableRowSizeExample.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,8 +39,8 @@
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewPaginationExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewInfiniteScrollExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pagination\Code\PaginationSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\TreeViewVirtualizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\TreeViewExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeView\Code\TreeViewVirtualizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeView\Code\TreeViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewVirtualizeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewNonVirtualizedExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\PaginationListViewExampleCode.html" />
@@ -48,9 +48,9 @@
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\InfiniteScrollListViewExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeVariableRowSizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\NonVirtualizedTree\Code\NonVirtualizedTreeDataProviderExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeView\Code\NonVirtualizedTreeVariableRowSizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeView\Code\NonVirtualizedTreeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeView\Code\NonVirtualizedTreeDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerReadOnlyDisabledExampleCode.html" />
@@ -192,7 +192,7 @@
 	<EmbeddedResource Include="Pages\Components\AppBar\Code\AppBarSimpleExampleCode.html" />
   </ItemGroup>
   <ItemGroup>
-    <Content Update="Pages\Components\TreeView\NonVirtualizedTree\Examples\TreeViewVirtualizeExample.razor">
+    <Content Update="Pages\Components\TreeView\Examples\TreeViewVirtualizeExample.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>

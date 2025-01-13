@@ -11,11 +11,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Components\ListControls\Base\ListViewRow.razor.cs" />
+	  <Compile Remove="Components\TableView\**" />
+	  <Content Remove="Components\TableView\**" />
+	  <EmbeddedResource Remove="Components\TableView\**" />
+	  <None Remove="Components\TableView\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Remove="Components\ListControls\Base\ListViewRow.razor" />
+	  <Compile Remove="Components\ListControls\TableView\TableView.cs" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="../../README.md" Pack="true" PackagePath="/" />

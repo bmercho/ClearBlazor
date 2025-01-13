@@ -33,7 +33,7 @@ namespace ClearBlazor
         public GridLines VerticalGridLines { get; set; } = GridLines.None;
 
         [Parameter]
-        public List<TableColumn1<TItem>> Columns { get; set; } = new List<TableColumn1<TItem>>();
+        public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
 
         private ListBase<TItem>? _parent;
 

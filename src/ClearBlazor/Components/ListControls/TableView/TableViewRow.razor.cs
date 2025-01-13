@@ -5,7 +5,7 @@ using System;
 
 namespace ClearBlazorInternal
 {
-    public partial class ListViewRow<TItem> : ListRowBase<TItem>, IDisposable
+    public partial class TableViewRow<TItem> : ListRowBase<TItem>, IDisposable
            where TItem : ListItem
     {
         [Parameter]
@@ -38,7 +38,7 @@ namespace ClearBlazorInternal
         [Parameter]
         public RenderFragment<TItem>? RowTemplate { get; set; } = null;
 
-        private ListViewBase<TItem>? _parent = null;
+        private TableView<TItem>? _parent = null;
         private TreeItem<TItem>? _nodeData = null;
 
         protected override void OnParametersSet()
@@ -50,7 +50,7 @@ namespace ClearBlazorInternal
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-            _parent = FindParent<ListViewBase<TItem>>(Parent);
+            _parent = FindParent<TableView<TItem>>(Parent);
             if (_parent != null)
             {
                 _parent.AddListRow(this);
@@ -134,7 +134,7 @@ namespace ClearBlazorInternal
 
             string css = string.Empty;
 
-            int header = _parent._showHeader ? 1 : 0;
+            int header = _parent.ShowHeader ? 1 : 0;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
                 //css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
@@ -204,7 +204,7 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
-            int header = _parent._showHeader ? 1 : 0;
+            int header = _parent.ShowHeader ? 1 : 0;
 
             string css = string.Empty;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)

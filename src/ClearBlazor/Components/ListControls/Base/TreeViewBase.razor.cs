@@ -1,6 +1,7 @@
 using ClearBlazorInternal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Xml.Linq;
 
 namespace ClearBlazor
 {
@@ -72,7 +73,7 @@ namespace ClearBlazor
         internal double _headerHeight = 0;
         private TreeTableViewHeader<TItem> _header = null!;
 
-        private List<TableColumn1<TItem>> Columns { get; } = new List<TableColumn1<TItem>>();
+        private List<TableColumn<TItem>> Columns { get; } = new List<TableColumn<TItem>>();
         private string _columnDefinitions = string.Empty;
         internal RenderFragment<TItem>? _rowTemplate = null;
 
@@ -89,7 +90,6 @@ namespace ClearBlazor
                 node.item.IsVisible = true;
                 node.item.IsExpanded = true;
             }
-            GetVisibleNodes();
             await Refresh();
         }
 
@@ -104,7 +104,6 @@ namespace ClearBlazor
                 node.item.IsExpanded = false;
             }
 
-            GetVisibleNodes();
             await Refresh();
         }
 
@@ -113,6 +112,8 @@ namespace ClearBlazor
             switch (VirtualizeMode)
             {
                 case VirtualizeMode.None:
+                    GetVisibleNodes();
+                    _nodes =  _visibleNodes.Select(n => n.item).ToList();
                     break;
                 case VirtualizeMode.Virtualize:
                     GetVisibleNodes();
@@ -195,7 +196,7 @@ namespace ClearBlazor
 
         protected override void AddChild(ClearComponentBase child)
         {
-            TableColumn1<TItem>? column = child as TableColumn1<TItem>;
+            TableColumn<TItem>? column = child as TableColumn<TItem>;
             if (column != null && !Columns.Contains(column))
             {
                 Columns.Add(column);
@@ -263,7 +264,7 @@ namespace ClearBlazor
 
         private string GetScrollViewerStyle()
         {
-            return $"height:{_componentHeight}px; width:{_componentWidth}px; margin-top:5px;" +
+            return $"height:{_componentHeight}px; width:{_componentWidth}px; " +
 
                    $"justify-self:stretch; overflow-x:hidden; overflow-y:auto; " +
                    $"display:grid; grid-template-columns: subgrid; " +
@@ -305,7 +306,6 @@ namespace ClearBlazor
                 AddItemAndChildren(item, ref index);
             }
             GetVisibleNodes();
-            var ns = _allNodes.Select(n => n.item).ToList();
         }
 
         private void AddItemAndChildren(TItem item, ref int index)
