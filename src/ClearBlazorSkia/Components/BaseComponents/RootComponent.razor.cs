@@ -54,19 +54,26 @@ namespace ClearBlazor
                 await resizeObserverService.Init(JSRuntime);
                 Subscribe(browserSizeService);
             }
-            PerformLayout((double)Width, (double)Height);
+   
+            PerformLayout(Width, Height);
         }
 
         private string GetStyle()
         {
             string css = string.Empty;
-            if (Height != null)
+            //if (Height != null)
                 css += $"overflow: hidden; position: relative;height:{Height}px; width:{Width}px; ";
-            else
-                css += $"height: 100vh; overflow: hidden; position: relative; ";
+            //else
+            //    css += $"height: 100vh; overflow: hidden; position: relative; ";
             return css;
         }
 
+        private string GetContentStyle()
+        {
+            string css = string.Empty;
+            css += $"position:absolute;width:{Width}px;height:{Height}px;";
+            return css;
+        }
 
         protected override Size MeasureOverride(Size availableSize)
         {

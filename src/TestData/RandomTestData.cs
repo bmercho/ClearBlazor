@@ -1,4 +1,5 @@
 ﻿using ClearBlazor;
+using System;
 
 namespace TestData
 {
@@ -88,32 +89,41 @@ namespace TestData
             return Icons.Material.Filled.Add;
         }
 
-        public static string GetRandomText()
+        public static string GetRandomText(int maxLength = 0)
         {
             int randomInt = _random.Next(7);
+            string text = "Lorem ipsum dolor";
             switch (randomInt)
             {
                 case 0:
-                    return "Lorem ipsum dolor";
+                    text = "Lorem ipsum dolor";
+                    break;
                 case 1:
-                    return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem";
+                    text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem";
+                    break;
                 case 2:
-                    return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ";
+                    text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ";
+                    break;
                 case 3:
-                    return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores";
+                    text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores";
+                    break;
                 case 4:
-                    return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.";
+                    text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur blanditiis velit dolore.";
+                    break;
                 case 5:
-                    return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure";
+                    text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure";
+                    break;
                 case 6:
-                    return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .";
+                    text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem .";
+                    break;
                 case 7:
-                    return "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.";
+                    text = "Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.";
+                    break;
             }
-            return "Lorem ipsum dolor";
-
+            if (maxLength > 0)
+                text = text.Substring(0, Math.Min(maxLength, text.Length));
+            return text;
         }
-
     }
 }
 

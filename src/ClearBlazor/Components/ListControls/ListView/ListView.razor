@@ -6,6 +6,13 @@
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
         <div id=@_scrollViewerId style=@GetScrollViewerStyle()>
+@*                     <ScrollViewer @ref=_scrollViewer Width=@_componentWidth Height=@_componentHeight
+                      VerticalScrollMode=ScrollMode.Auto
+                      Style=@GetScrollViewerStyle1()
+                      HorizontalScrollMode=@GetHorizontalScrollMode()
+                      VerticalOverscrollBehaviour=OverscrollBehaviour.None
+                      HorizontalOverscrollBehaviour=OverscrollBehaviour.None>
+ *@
             <div style=@GetContainerStyle()>
                 <div style=@GetHeightDivStyle() />
                 @if (RowTemplate != null)

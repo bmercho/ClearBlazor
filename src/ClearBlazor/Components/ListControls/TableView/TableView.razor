@@ -5,12 +5,13 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
-        <ScrollViewer @ref=_scrollViewer Width=@_componentWidth Height=@_componentHeight
+        <ScrollViewerWithScrollBars @ref=_scrollViewer Width=@_componentWidth Height=@_componentHeight
                       VerticalScrollMode=ScrollMode.Auto
                       Style="overflow-anchor: none;"
                       HorizontalScrollMode=@GetHorizontalScrollMode()
                       VerticalOverscrollBehaviour=OverscrollBehaviour.None
-                      HorizontalOverscrollBehaviour=OverscrollBehaviour.None>
+                      HorizontalOverscrollBehaviour=OverscrollBehaviour.None
+                      ScrollCallback=ScrollCallBack>
             <Grid @ref=_grid Rows=auto Columns=@_columnDefinitions Style="overflow:visible">
                 <div style=@GetContainerStyle()>
                     <div style=@GetHeightDivStyle()>
@@ -80,7 +81,7 @@
                     <Spinner />
                 </Grid>
             }
-        </ScrollViewer>
+        </ScrollViewerWithScrollBars>
     </div>
     @ChildContent
 </CascadingValue>

@@ -89,7 +89,7 @@ namespace ClearBlazor
 
         private bool _initializing = true;
         //private string _scrollViewerId = Guid.NewGuid().ToString();
-        private ScrollViewer _scrollViewer = null!;
+        private ScrollViewerWithScrollBars _scrollViewer = null!;
         private Grid _grid = null!;
         private double _gridWidth = 0;
         private string _headerId = Guid.NewGuid().ToString();
@@ -351,15 +351,33 @@ namespace ClearBlazor
             }
         }
 
+        /// <summary>
+        /// Fully refreshes the list 
+        /// </summary>
+        /// <returns></returns>
         public async Task RefreshAll()
         {
             _maxScrollHeight = 0;
             _pageOffsets.Clear();
             RowSizes.Clear();
             RowIds.Clear();
+            ListRows.Clear();
             await Refresh();
             RefreshAllRows();
             _header.Refresh();
+        }
+
+        /// <summary>
+        /// Resets the component to its initial state. Mainly used for testing.
+        /// </summary>
+        /// <returns></returns>
+        public async Task ResetComponent()
+        {
+            await GotoStart();
+            _items.Clear();
+            RowSizes.Clear();
+            RowIds.Clear();
+            ListRows.Clear();
         }
 
         /// <summary>
@@ -506,6 +524,62 @@ namespace ClearBlazor
                 StateHasChanged();
             }
         }
+        private async Task ScrollCallBack(ScrollState scrollState)
+        {
+            try
+            {
+                var top = scrollState.ScrollTop;
+                Console.WriteLine($"ScrollTop:{top}");
+                if (_scrollTop == top)
+                    return;
+
+                _scrollTop = top;
+                switch (VirtualizeMode)
+                {
+                    case VirtualizeMode.None:
+                        break;
+                    case VirtualizeMode.Virtualize:
+                        await CheckForNewRows(_scrollTop, false);
+                        _header.Refresh();
+                        break;
+                    case VirtualizeMode.InfiniteScroll:
+                    case VirtualizeMode.InfiniteScrollReverse:
+                        Console.WriteLine($"scrollState.ClientHeight:{scrollState.ClientHeight} " +
+                                          $" scrollState.ScrollTop:{scrollState.ScrollTop} " +
+                                          $" scrollState.ScrollHeight:{scrollState.ScrollHeight}");
+                        if (Math.Ceiling(scrollState.ClientHeight + scrollState.ScrollTop) >= scrollState.ScrollHeight)
+                        {
+                            Console.WriteLine($"A************");
+                            if (scrollState.ScrollHeight > _pageOffsets[_pageOffsets.Count - 1])
+                            {
+                                Console.WriteLine($"B************");
+                                // If only one page loaded, now that we know the offset of that page, load the second page.
+                                // From now on two pages will always be loaded.
+                                if (_pageOffsets.Count == 1)
+                                    await GetSecondPageAsync(scrollState.ScrollHeight);
+                                else
+                                    await GetNextPageDataAsync(_pageOffsets.Count - 1,
+                                                               scrollState.ScrollHeight, scrollState.ScrollTop);
+                                StateHasChanged();
+                            }
+                            else
+                                await CheckForNewRows(scrollState.ScrollTop);
+
+                        }
+                        else
+                            await CheckForNewRows(scrollState.ScrollTop);
+                        _header.Refresh();
+                        break;
+                    case VirtualizeMode.Pagination:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         [JSInvokable]
         public async Task HandleScrollEvent(ScrollState scrollState)
         {
@@ -662,8 +736,8 @@ namespace ClearBlazor
         {
             // Record page offset
             _pageOffsets.Add(scrollHeight);
-            if (scrollHeight > _maxScrollHeight)
-                _maxScrollHeight = scrollHeight;
+            if (scrollHeight + _scrollViewerHeight > _maxScrollHeight)
+                _maxScrollHeight = scrollHeight + _scrollViewerHeight;
         }
 
         private async Task GotoVirtualIndex(int index, Alignment verticalAlignment)
@@ -945,7 +1019,10 @@ namespace ClearBlazor
                     _skipItems = skipItems;
                     _takeItems = takeItems;
                     _items = await GetItems(_skipItems, _takeItems);
-                    _height = _totalNumItems * (_rowHeight + RowSpacing);
+                    if (ShowHeader)
+                        _height = _totalNumItems * (_rowHeight + RowSpacing) + _headerHeight;
+                    else
+                        _height = _totalNumItems * (_rowHeight + RowSpacing);
                 }
                 finally
                 {

@@ -4,7 +4,7 @@
 
 <StackPanel Orientation=Orientation.Portrait>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
-    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : local data (500 rows)</TextBlock>
+    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScrollReverse : local data (5000 rows)</TextBlock>
     <Grid Columns="800,auto,*" Rows="542,*">
         <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.InfiniteScrollReverse

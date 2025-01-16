@@ -12,7 +12,9 @@
             <div style="height: 100%; width:100%; display: grid;">
                 <div style="display:grid;overflow:hidden;">
                     <SkiaDrawingCanvas @ref=_canvasView OnPaint=PaintCanvas />
-                    @ChildContent
+                    <div style=@GetContentDivStyle()>
+                        @ChildContent
+                    </div>
                 </div>
             </div>
         </div>

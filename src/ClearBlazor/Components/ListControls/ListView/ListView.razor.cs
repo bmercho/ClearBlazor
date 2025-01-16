@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using ClearBlazorInternal;
+using System.Reflection.PortableExecutable;
 
 namespace ClearBlazor
 {
@@ -53,6 +54,8 @@ namespace ClearBlazor
         //private ScrollViewer _scrollViewer = null!;
         private string _baseRowId = Guid.NewGuid().ToString();
         private double _componentHeight = 0;
+        private double _componentWidth = 0;
+        private bool _firstRender = false;
 
         // Used when VirtualizeMode is Virtualize
         private double _height = 0;
@@ -289,8 +292,24 @@ namespace ClearBlazor
         }
 
         /// <summary>
+        /// Resets the component to its initial state. Mainly used for testing.
+        /// </summary>
+        /// <returns></returns>
+        public async Task ResetComponent()
+        {
+            await GotoStart();
+            _items.Clear();
+            RowSizes.Clear();
+            RowIds.Clear();
+            ListRows.Clear();
+            _height = 0;
+            _totalHeight = 0;
+            _firstRender = true;
+        }
+
+        /// <summary>
         /// Indicates that a row has been added to the top of the list.
-        /// Ony used if VirtualizationMode is InfiniteScroll or InfiniteScrollReverse
+        /// Only used if VirtualizationMode is InfiniteScroll or InfiniteScrollReverse
         /// </summary>
         /// <param name="listItemId"></param>
         /// <returns></returns>
@@ -399,27 +418,21 @@ namespace ClearBlazor
                                     AddResizeObserver(NotifyObservedSizes, elementIds);
 
 
+                await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents",
+                                            _scrollViewerId,
+                                            DotNetObjectReference.Create(this)); 
+            }
+
+
+            if (_resizeObserverId != null && (firstRender || _firstRender) )
+            {
+                _firstRender = false;
                 foreach (var row in RowSizes)
                 {
                     if (row.Value.RowHeight == 0)
                         await ResizeObserverService.Service.ObserveElement(_resizeObserverId,
                                                                            row.Key);
                 }
-
-                await JSRuntime.InvokeVoidAsync("window.scrollbar.ListenForScrollEvents",
-                                            _scrollViewerId,
-                                            DotNetObjectReference.Create(this)); 
-            }
-
-            switch (VirtualizeMode)
-            {
-                case VirtualizeMode.None:
-                case VirtualizeMode.Virtualize:
-                case VirtualizeMode.InfiniteScroll:
-                case VirtualizeMode.InfiniteScrollReverse:
-                    break;
-                case VirtualizeMode.Pagination:
-                    break;
             }
         }
 
@@ -628,8 +641,13 @@ namespace ClearBlazor
             }
 
             css += $"display:grid; height:{_componentHeight}px; " +
-                   $"justify-self:stretch; overflow-x:hidden; " +
+                   $"justify-self:stretch; " +
                    $"overflow-y:auto; {overscrollBehaviour}";
+
+            if (HorizontalScrollbar)
+                css += "overflow-x:auto; ";
+            else
+                css += "overflow-x:hidden; ";
 
             switch (VirtualizeMode)
             {
@@ -651,6 +669,36 @@ namespace ClearBlazor
             return css;
         }
 
+        private string GetScrollViewerStyle1()
+        {
+            string css = "justify-self:stretch; ";
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                case VirtualizeMode.Virtualize:
+                case VirtualizeMode.Pagination:
+                    break;
+                case VirtualizeMode.InfiniteScroll:
+                    css += "display: flex; flex-direction: column; ";
+                    break;
+                case VirtualizeMode.InfiniteScrollReverse:
+                    css += "display: flex; flex-direction: column-reverse;";
+                    // Do not delete the background color below. It somehow fixes a reverse
+                    // infinite scrolling issue "
+                    //css += "background-color: #ffffffff; ";
+                    break;
+            }
+
+            return css;
+        }
+
+        private ScrollMode GetHorizontalScrollMode()
+        {
+            if (HorizontalScrollbar)
+                return ScrollMode.Auto;
+            else
+                return ScrollMode.Disabled;
+        }
         protected string GetContainerStyle()
         {
             switch (VirtualizeMode)
@@ -699,6 +747,7 @@ namespace ClearBlazor
                     if (observedSize.ElementHeight > 0 && _componentHeight != observedSize.ElementHeight)
                     {
                         _componentHeight = observedSize.ElementHeight;
+                        _componentWidth = observedSize.ElementWidth;
                         changed = true;
                     }
                 }

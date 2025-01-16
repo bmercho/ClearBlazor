@@ -97,6 +97,8 @@ namespace ClearBlazor
         private bool _processingkey = false;
         private bool _scrollSmoothly = false;
         private ScrollState _lastScrollState = new ScrollState();
+        private double _vertStartPos = 0;
+        private double _horizStartPos = 0;
         public static IDisposable Subscribe(IObserver<bool> observer)
         {
             if (!_observers.Contains(observer))
@@ -259,6 +261,28 @@ namespace ClearBlazor
                 top = ConstrainMarginTop(top);
                 if (top != _marginTop)
                 {
+                    _marginTop = top;
+                    doScroll = true;
+                }
+            }
+
+            if (doScroll)
+                await DoVerticalScrolling(scrollSmoothly);
+        }
+
+        private async Task VerticalScrollTo(double position, bool scrollSmoothly)
+        {
+            if (_scrollViewerSize == null || _scrollableSize == null)
+                return;
+
+            bool doScroll = false;
+            if (ShowVerticalScrollBar())
+            {
+                var top = position;
+                top = ConstrainMarginTop(top);
+                if (top != _marginTop)
+                {
+                    Console.WriteLine($"*************");
                     _marginTop = top;
                     doScroll = true;
                 }
@@ -758,13 +782,15 @@ namespace ClearBlazor
 
                 if (_processingkey)
                     return;
+                if (e.MovementX == 0)
+                    return;
                 _processingkey = true;
                 try
                 {
-                    Console.WriteLine($"Move1");
+                    //Console.WriteLine($"Move1");
                     var factor = _scrollableSize.ElementWidth / _scrollViewerSize.ElementWidth;
                     await HorizontalScroll((int)(e.MovementX * factor), true);
-                    Console.WriteLine($"Move2");
+                    //Console.WriteLine($"Move2");
 
                     _horizontalScrolling = true;
                 }
@@ -803,20 +829,22 @@ namespace ClearBlazor
 
         private async Task OnVerticalMouseDown(MouseEventArgs e)
         {
-            Console.WriteLine("Mousedown");
+            //Console.WriteLine("Mousedown");
             _verticalMouseDown = true;
+            _vertStartPos = e.OffsetY;
             await JSRuntime.InvokeVoidAsync("CaptureMouse", _verticalScrollId, 1);
             
         }
         private async Task OnVerticalMouseUp(MouseEventArgs e)
         {
+            Console.WriteLine($"MouseUp");
             _verticalMouseDown = false;
             await JSRuntime.InvokeVoidAsync("ReleaseMouseCapture", _verticalScrollId, 1);
         }
 
         private async Task OnVerticalMouseMove(MouseEventArgs e)
         {
-            Console.WriteLine($"Move");
+            //Console.WriteLine($"Move");
 
             if (_verticalMouseDown)
             {
@@ -825,14 +853,25 @@ namespace ClearBlazor
 
                 if (_processingkey)
                     return;
+                if (e.MovementY == 0)
+                    return;
                 _processingkey = true;
                 try
                 {
-                    Console.WriteLine($"Move1");
+                    var factor = _scrollableSize.ElementHeight / 
+                                 (_scrollViewerSize.ElementHeight- GetVerticalThumbSize());
+                    Console.WriteLine($"MouseMove: {e.MovementY} Factor:{factor} {e.MovementY * factor}");
+                    Console.WriteLine($"MouseMove: scrollViewerHt:{_scrollViewerSize.ElementHeight} " +
+                                      $"OffsetY: {e.OffsetY} VertStartPos:{_vertStartPos} " +
+                                      $"ScrollableHt:{_scrollableSize.ElementHeight}" +
+                                      $"ThumbPosition:{GetVerticalThumbPosition()}" +
 
-                    var factor = _scrollableSize.ElementHeight / _scrollViewerSize.ElementHeight;
-                    await VerticalScroll((int)(e.MovementY * factor), true);
-                    Console.WriteLine($"Move2");
+                                      $"ThumbSize:{GetVerticalThumbSize()}");
+                    //if (GetVerticalThumbPosition() + GetVerticalThumbSize() < _scrollViewerSize.ElementHeight)
+                    {
+                        //if ((e.OffsetY - _vertStartPos) < (_scrollViewerSize.ElementHeight + GetVerticalThumbSize()))
+                        await VerticalScrollTo(-(e.OffsetY - _vertStartPos) * factor, true);
+                    }
 
                     _verticalScrolling = true;
                 }

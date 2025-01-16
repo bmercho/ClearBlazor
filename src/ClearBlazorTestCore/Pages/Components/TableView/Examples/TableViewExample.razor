@@ -1,5 +1,6 @@
 ﻿@namespace ClearBlazorTest
 @using Data;
+@inject NavigationManager NavManager
 <StackPanel Orientation=Orientation.Portrait Spacing=30>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>@GetTitle()></TextBlock>
@@ -24,9 +25,9 @@
             StickyHeader=@_stickyHeader
             PageSize=@GetPageSize()
             Items=@_localListData>
-                <TableColumn Label="Index" TItem=TestListRow Field=@(x =>x.ItemIndex) ColumnDefinition="auto" />
-                <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition="auto" />
-                <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition="auto" />
+                <TableColumn Label="Index" TItem=TestListRow Field=@(x =>x.ItemIndex) ColumnDefinition="70" />
+                <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition="120" />
+                <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition="120" />
                 <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) ColumnDefinition="120" />
                 <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition="90">
                     <DataTemplate Context=item>
@@ -176,7 +177,7 @@
     private bool _horizontalScrollbar = false;
     private GridLines _horizontalGridLines = GridLines.All;
     private GridLines _verticalGridLines = GridLines.All;
-    private VirtualizeMode _virtualizeMode = VirtualizeMode.Pagination;
+    private VirtualizeMode _virtualizeMode = VirtualizeMode.Virtualize;
     private bool _virtualizeModeAvailable = true;
     private int _selectedPage = 1;
     private bool _atEnd = false;
@@ -284,9 +285,13 @@
         else
             _virtualizeModeAvailable = true;
 
-        StateHasChanged();
-        await _table.GotoStart();
-        await _table.RefreshAll();
+         StateHasChanged();
+         await _table.GotoStart();
+         await _table.RefreshAll();
+        //await _table.ResetComponent();
+
+        //NavManager.NavigateTo($"/TableView");
+
     }
 
     string GetTitle()
@@ -326,7 +331,7 @@
             case VirtualizeMode.None:
                 return false;
             case VirtualizeMode.Virtualize:
-                return true;
+                return false;
             case VirtualizeMode.InfiniteScroll:
                 return false;
             case VirtualizeMode.InfiniteScrollReverse:

@@ -17,7 +17,7 @@
         <Drawer @ref=Drawer Row=1 @bind-Open=Open DrawerLocation=DrawerLocation.Left DrawerMode="DrawerMode.Responsive">
             <DrawerContent>
                 <Grid>
-                    <ScrollViewer VerticalScrollMode="ScrollMode.Enabled">
+                    <ScrollViewerWithScrollBars VerticalScrollMode="ScrollMode.Enabled">
                         <ListBox TListBox="string" Margin="0,10,0,10">
                             <ListBoxItem Text="Home" HRef="/" OnClicked=@Close />
                             <ListBoxItem Text="Components">
@@ -33,7 +33,6 @@
                                     <ListBoxItem Text="Drawing Canvas" HRef="/DrawingCanvas" OnClicked=@Close />
                                     <ListBoxItem Text="Card" HRef="/Card" OnClicked=@Close />
                                 </ListBoxItem>
-                                <ListBoxItem Text="Table View" HRef="/TableView" OnClicked=@Close />
                                 <ListBoxItem Text="TextBlock" HRef="/TextBlock" OnClicked=@Close />
                                 <ListBoxItem Text="Icons" HRef="/MaterialIcon" OnClicked=@Close />
                                 <ListBoxItem Text="Avatars" HRef="/Avatar" OnClicked=@Close />
@@ -53,10 +52,8 @@
                                 <ListBoxItem Text="ToolTip" HRef="/ToolTip" OnClicked=@Close />
                                 <ListBoxItem Text="Toolbar" HRef="/Toolbar" OnClicked=@Close />
                                 <ListBoxItem Text="ListBox" HRef="/ListBox" OnClicked=@Close />
-                                <ListBoxItem Text="ListView" HRef="/ListView" OnClicked=@Close />
                                 <ListBoxItem Text="Popup" HRef="/Popup" OnClicked=@Close />
                                 <ListBoxItem Text="Pagination" HRef="/Pagination" OnClicked=@Close />
-                                <ListBoxItem Text="TreeView" HRef="/TreeView" OnClicked=@Close />
                                 <ListBoxItem Text="Inputs" InitiallyExpanded=false>
                                     <ListBoxItem Text="Check Box" HRef="/CheckBox" OnClicked=@Close />
                                     <ListBoxItem Text="Switch" HRef="/Switch" OnClicked=@Close />
@@ -68,6 +65,12 @@
                                     <ListBoxItem Text="Color Picker" HRef="/ColorPickerInput" OnClicked=@Close />
                                     <ListBoxItem Text="Date Picker" HRef="/DatePickerInput" OnClicked=@Close />
                                     <ListBoxItem Text="Time Picker" HRef="/TimePickerInput" OnClicked=@Close />
+                                </ListBoxItem>
+                                <ListBoxItem Text="List type controls" InitiallyExpanded=true>
+                                    <ListBoxItem Text="ListView" HRef="/ListView" OnClicked=@Close />
+                                    <ListBoxItem Text="Table View" HRef="/TableView" OnClicked=@Close />
+                                    <ListBoxItem Text="TreeView" HRef="/TreeView" OnClicked=@Close />
+                                    <ListBoxItem Text="TreeTableView" HRef="/TreeTableView" OnClicked=@Close />
                                 </ListBoxItem>
                                 <ListBoxItem Text="Forms" InitiallyExpanded=false>
                                     <ListBoxItem Text="Form" HRef="/Form" OnClicked=@Close />
@@ -83,7 +86,7 @@
                                 <ListBoxItem Text="Logs" HRef="/Logs" OnClicked=@Close />
                             </ListBoxItem>
                         </ListBox>
-                    </ScrollViewer>
+                    </ScrollViewerWithScrollBars>
                 </Grid>
             </DrawerContent>
             <DrawerBody>
