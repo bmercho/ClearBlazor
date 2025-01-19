@@ -1,0 +1,196 @@
+<div>
+<div class="html"><pre>
+<span class="atSign">&#64;</span>using Microsoft.JSInterop
+<span class="atSign">&#64;</span>implements IObserver<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">bool</span><span class="htmlTagDelimiter">&gt;</span>
+
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span> <span class="htmlAttributeName">Spacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">500</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">500</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">ScrollViewerWithScrollBars</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">_scrollViewer</span>
+                                        <span class="htmlAttributeName">ScrollCallback</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">ScrollCallBack</span>
+                                        <span class="htmlAttributeName">VerticalScrollMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_verticalScrollMode</span>
+                                        <span class="htmlAttributeName">HorizontalScrollMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_horizontalScrollMode</span>
+                                        <span class="htmlAttributeName">VerticalGutter</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_verticalGutter</span>
+                                        <span class="htmlAttributeName">HorizontalGutter</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_horizontalGutter</span>
+                                        <span class="htmlAttributeName">VerticalOverscrollBehaviour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_verticalOverscrollBehaviour</span>
+                                        <span class="htmlAttributeName">HorizontalOverscrollBehaviour</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_horizontalOverscrollBehaviour</span>
+                                        <span class="htmlAttributeName">UseOverlayScrollbars</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_overlayScrollbars</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="atSign">&#64;</span>if (_verticalOverflowText)
+                {
+                    if (_horizontalOverflowText)
+                    {
+                        <span class="atSign">&#64;</span>for (int i = 1; i &lt;= 2000; i++)
+                        {
+                            int row = i;
+                            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">TextWrap.NoWrap</span> <span class="htmlAttributeName">TextTrimming</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">true</span><span class="htmlTagDelimiter">&gt;</span>
+                                <span class="atSign">&#64;</span>($&quot;Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur &quot;)
+                            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="atSign">&#64;</span>for (int i = 1; i &lt;= 2000; i++)
+                        {
+                            int row = i;
+                            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>($&quot;Line{row}&quot;)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                        }
+                    }
+                }
+                else
+                {
+                    if (_horizontalOverflowText)
+                    {
+                        <span class="atSign">&#64;</span>for (int i = 1; i &lt;= 6; i++)
+                        {
+                            int row = i;
+                            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">TextWrap.NoWrap</span> <span class="htmlAttributeName">TextTrimming</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">true</span><span class="htmlTagDelimiter">&gt;</span>
+                                <span class="atSign">&#64;</span>($&quot;Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur &quot;)
+                            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                        }
+                    }
+                    else
+                    {
+                        <span class="atSign">&#64;</span>for (int i = 1; i &lt;= 6; i++)
+                        {
+                            int row = i;
+                            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>($&quot;Line{row}&quot;)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                        }
+                    }
+                }
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">ScrollViewerWithScrollBars</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="atSign">&#64;</span>if (BrowserSizeService.DeviceSize &gt;= DeviceSize.Small)
+        {
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">30</span> <span class="htmlAttributeName">Spacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span><span class="htmlTagDelimiter">&gt;</span>
+                &lt;RadioGroup Label=&quot;Vertical Scroll mode&quot; <span class="atSign">&#64;</span>bind-Value=_verticalScrollMode
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Changed&gt;
+                    <span class="atSign">&#64;</span>foreach (ScrollMode mode in Enum.GetValues(typeof(ScrollMode)))
+                    {
+                        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                    }
+                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+                &lt;RadioGroup Label=&quot;Horizontal Scroll mode&quot; <span class="atSign">&#64;</span>bind-Value=_horizontalScrollMode
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Changed&gt;
+                    <span class="atSign">&#64;</span>foreach (ScrollMode mode in Enum.GetValues(typeof(ScrollMode)))
+                    {
+                        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                    }
+                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+                &lt;RadioGroup Label=&quot;Vertical gutter&quot; <span class="atSign">&#64;</span>bind-Value=_verticalGutter
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Changed&gt;
+                    <span class="atSign">&#64;</span>foreach (ScrollbarGutter mode in Enum.GetValues(typeof(ScrollbarGutter)))
+                    {
+                        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                    }
+                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+                &lt;RadioGroup Label=&quot;Horizontal gutter&quot; <span class="atSign">&#64;</span>bind-Value=_horizontalGutter
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Changed&gt;
+                    <span class="atSign">&#64;</span>foreach (ScrollbarGutter mode in Enum.GetValues(typeof(ScrollbarGutter)))
+                    {
+                        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                    }
+                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+                &lt;RadioGroup Label=&quot;Vertical overscroll behaviour&quot;
+                            <span class="atSign">&#64;</span>bind-Value=_verticalOverscrollBehaviour
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Changed&gt;
+                    <span class="atSign">&#64;</span>foreach (OverscrollBehaviour mode in Enum.GetValues(typeof(OverscrollBehaviour)))
+                    {
+                        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                    }
+                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+                &lt;RadioGroup Label=&quot;Horizontal overscroll behaviour&quot;
+                            <span class="atSign">&#64;</span>bind-Value=_horizontalOverscrollBehaviour
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Changed&gt;
+                    <span class="atSign">&#64;</span>foreach (OverscrollBehaviour mode in Enum.GetValues(typeof(OverscrollBehaviour)))
+                    {
+                        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                    }
+                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
+                &lt;CheckBox <span class="atSign">&#64;</span>bind-Checked=_verticalOverflowText
+                          <span class="atSign">&#64;</span>bind-Checked:after=<span class="atSign">&#64;</span>Changed
+                          Label=&quot;Vertical overflow text&quot; /&gt;
+                &lt;CheckBox <span class="atSign">&#64;</span>bind-Checked=_horizontalOverflowText
+                          <span class="atSign">&#64;</span>bind-Checked:after=<span class="atSign">&#64;</span>Changed
+                          Label=&quot;Horizontal overflow text&quot; /&gt;
+                &lt;CheckBox <span class="atSign">&#64;</span>bind-Checked=_overlayScrollbars
+                          <span class="atSign">&#64;</span>bind-Checked:after=<span class="atSign">&#64;</span>Changed
+                          Label=&quot;Overlay scrollbars&quot; /&gt;
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+        }
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">ColumnSpan</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">3</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span><span class="htmlTagDelimiter">&gt;</span>
+        &lt;Button OnClicked=<span class="atSign">&#64;</span>(e =&gt; GotoTop(100))&gt; Goto top 100<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        &lt;Button OnClicked=<span class="atSign">&#64;</span>(e =&gt; GotoTop(50))&gt; Goto top 50<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        &lt;Button OnClicked=<span class="atSign">&#64;</span>(e =&gt; GotoLeft(100))&gt; Goto left 100<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        &lt;Button OnClicked=<span class="atSign">&#64;</span>(e =&gt; GotoLeft(50))&gt; Goto left 50<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+</pre></div>
+<div class="csharp"><pre>
+<span class="atSign">&#64;</span>code {
+    <span class="keyword">private</span> ScrollViewerWithScrollBars _scrollViewer = <span class="keyword">null</span>!;
+    <span class="keyword">private</span> ScrollMode _verticalScrollMode = ScrollMode.Auto;
+    <span class="keyword">private</span> ScrollMode _horizontalScrollMode = ScrollMode.Auto;
+    <span class="keyword">private</span> ScrollbarGutter _verticalGutter = ScrollbarGutter.OnlyWhenOverflowed;
+    <span class="keyword">private</span> ScrollbarGutter _horizontalGutter = ScrollbarGutter.OnlyWhenOverflowed;
+    <span class="keyword">private</span> OverscrollBehaviour _verticalOverscrollBehaviour = OverscrollBehaviour.None;
+    <span class="keyword">private</span> OverscrollBehaviour _horizontalOverscrollBehaviour = OverscrollBehaviour.None;
+    <span class="keyword">private</span> <span class="keyword">bool</span> _verticalOverflowText = <span class="keyword">true</span>;
+    <span class="keyword">private</span> <span class="keyword">bool</span> _horizontalOverflowText = <span class="keyword">true</span>;
+    <span class="keyword">private</span> <span class="keyword">bool</span> _overlayScrollbars = <span class="keyword">false</span>;
+    <span class="keyword">private</span> IDisposable ScrollViewUnsubscriber = <span class="keyword">null</span>!;
+
+
+    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
+    {
+        <span class="keyword">base</span>.OnInitialized();
+        ScrollViewerWithScrollBars.Subscribe(<span class="keyword">this</span>);
+    }
+
+    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> OnNext(<span class="keyword">bool</span> hasScrolled)
+    {
+       <span class="comment">// Console.WriteLine(&quot;HasScrolled&quot;);</span>
+    }
+
+    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> Subscribe(IObservable&lt;<span class="keyword">bool</span>&gt; provider)
+    {
+        ScrollViewUnsubscriber = provider.Subscribe(<span class="keyword">this</span>);
+    }
+
+    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> OnCompleted()
+    {
+    }
+    <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> OnError(Exception error)
+    {
+    }
+
+    <span class="keyword">public</span> <span class="keyword">void</span> Dispose()
+    {
+        ScrollViewUnsubscriber?.Dispose();
+    }
+
+    <span class="keyword">private</span> <span class="keyword">async</span> Task ScrollCallBack(ScrollState scrollState)
+    {
+        <span class="comment">//Console.WriteLine($&quot;HandleScrollEvent: ScrollTop:{scrollState.ScrollTop}&quot;);</span>
+        <span class="comment">//if (scrollState.ScrollTop == 0)</span>
+        <span class="comment">//    await _scrollViewer.SetScrollTop(800);</span>
+    }
+
+    <span class="keyword">private</span> <span class="keyword">void</span> Changed()
+    {
+        StateHasChanged();
+    }
+
+    <span class="keyword">async</span> Task GotoTop(<span class="keyword">int</span> top)
+    {
+        <span class="keyword">await</span> _scrollViewer.SetScrollTop(top);
+    }
+
+    <span class="keyword">async</span> Task GotoLeft(<span class="keyword">int</span> left)
+    {
+        <span class="keyword">await</span> _scrollViewer.SetScrollLeft(left);
+    }
+
+}
+</pre></div>
+</div>

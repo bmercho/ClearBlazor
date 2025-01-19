@@ -19,6 +19,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("VerticalScrollMode", "<a href=ScrollModeApi>ScrollMode</a>", "ScrollMode.Auto", "The horizontal scroll mode.\r"),
             new ApiComponentInfo("VerticalOverscrollBehaviour", "<a href=OverscrollBehaviourApi>OverscrollBehaviour</a>", "OverscrollBehaviour.Auto", "Defines what happens when the boundary of a scrolling area is reached in the vertical direction. \r"),
             new ApiComponentInfo("HorizontalOverscrollBehaviour", "<a href=OverscrollBehaviourApi>OverscrollBehaviour</a>", "OverscrollBehaviour.Auto", "Defines what happens when the boundary of a scrolling area is reached in the horizontal direction. \r"),
+            new ApiComponentInfo("ScrollBarGutter", "<a href=ScrollbarGutterApi>ScrollbarGutter</a>", "ScrollbarGutter.OnlyWhenOverflowed", "Indicates when the scrollbar gutter exists\r"),
             new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>

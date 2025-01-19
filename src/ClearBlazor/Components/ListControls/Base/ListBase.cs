@@ -139,15 +139,8 @@ namespace ClearBlazorInternal
 
         protected Dictionary<Guid, ListRowBase<TItem>> ListRows { get; set; } = [];
 
-
-        //  Index, (rowHeight, top)
-//        internal Dictionary<int, (double RowHeight,double Top)> RowSizes { get; set; } = [];
-
         //  RowId, (rowHeight, top)
         internal Dictionary<string, (double RowHeight, double Top)> RowSizes { get; set; } = [];
-
-        // RowId, Index
-        //        protected Dictionary<string, int> RowIndexes { get; set; } = [];
 
         // Index, RowId
         protected Dictionary<int, string> RowIds { get; set; } = [];
@@ -414,7 +407,7 @@ namespace ClearBlazorInternal
         virtual internal async Task<List<TItem>> GetItems(int startIndex, int count, 
                                                           bool inReverse = false)
         {
-            //await _semaphoreSlim1.WaitAsync();
+            await _semaphoreSlim1.WaitAsync();
             try
             { 
             if (startIndex < 0)
@@ -480,7 +473,7 @@ namespace ClearBlazorInternal
             }
             finally
             {
-               // _semaphoreSlim1.Release();
+                _semaphoreSlim1.Release();
             }
 
         }

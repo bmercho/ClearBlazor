@@ -141,6 +141,10 @@ namespace ClearBlazor
         internal double Top { get; private set; } = 0;
         internal double Left { get; private set; } = 0;
         internal Size DesiredSize { get; private set; }
+        internal double ContentWidth { get; set; } = 0;
+        internal double ContentHeight { get; set; } = 0;
+        internal double ContentLeft { get; set; } = 0;
+        internal double ContentTop { get; set; } = 0;
 
         internal Thickness _borderThickness;
         internal Thickness _marginThickness;
@@ -169,6 +173,12 @@ namespace ClearBlazor
             Children.Remove(child);
         }
 
+        protected string GetContentDivStyle()
+        {
+            return $"position:absolute; top:{ContentTop}px; left:{ContentLeft}px; " +
+                   $"width:{ContentWidth}px;height:{ContentHeight}px;";
+        }
+
         protected abstract Size MeasureOverride(Size availableSize);
         protected abstract Size ArrangeOverride(Size finalSize);
 
@@ -182,6 +192,8 @@ namespace ClearBlazor
                     _borderThickness = Thickness.Parse(border.BorderThickness);
                     availableSize.Width -= _borderThickness.Left + _borderThickness.Right;
                     availableSize.Height -= _borderThickness.Top + _borderThickness.Bottom;
+                    Left = _borderThickness.Left;
+                    Top = _borderThickness.Top;
                 }
             }
             _marginThickness = Thickness.Parse(Margin);
@@ -192,12 +204,16 @@ namespace ClearBlazor
             availableSize.Width -= _paddingThickness.Left + _paddingThickness.Right;
             availableSize.Height -= _paddingThickness.Top + _paddingThickness.Bottom;
 
-            
             DesiredSize = MeasureOverride(availableSize);
         }
 
         internal void Arrange(Rect finalRect)
         {
+            ContentTop = finalRect.Top;
+            ContentLeft = finalRect.Left;
+            ContentWidth = finalRect.Width;
+            ContentHeight = finalRect.Height;
+
             Size finalSize = new Size(finalRect.Width, finalRect.Height);
             var actualSize = ArrangeOverride(finalSize);
         }

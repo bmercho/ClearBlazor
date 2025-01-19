@@ -17,12 +17,12 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=IBackgroundApi>IBackground</a>\r"),
+            new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
             new ApiComponentInfo("OnCanvasSizeChange", "EventCallback<CanvasSize>", "", "Event raised when the canvas size changes\r"),
             new ApiComponentInfo("OnPaint", "EventCallback<Batch2D?>", "", "Event raised when the canvas should be redrawn\r"),
             new ApiComponentInfo("OnCanvasClick", "EventCallback<MouseEventArgs>", "", "Event raised when the canvas is clicked\r"),

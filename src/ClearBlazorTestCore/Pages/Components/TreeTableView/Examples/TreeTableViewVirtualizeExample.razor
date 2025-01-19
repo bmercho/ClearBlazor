@@ -1,0 +1,219 @@
+﻿@using Data
+@namespace ClearBlazorTest
+<StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20
+            Orientation=Orientation.Portrait>
+    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Tree Table View</TextBlock>
+    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:Virtualized : local data (5000 row)</TextBlock>
+    <Grid Columns="1000,auto" Rows="450,auto" RowSpacing=20>
+        <TreeTableView @ref=_tree TItem=TestTreeRow CornerRadius=4 BorderThickness=1
+                       Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+                       HorizontalContentAlignment=Alignment.Start
+                       RowSpacing=10 ColumnSpacing=10
+                       @bind-SelectedItem=_selectedItem
+                       @bind-SelectedItems=_selectedItems
+                       SelectionMode=@_selectionMode
+                       AllowSelectionToggle=@_allowSelectionToggle
+                       HoverHighlight=@_hoverHighlight
+                       OverscrollBehaviour=OverscrollBehaviour.None
+                       VirtualizeMode=@VirtualizeMode.Virtualize
+                       InitialIndex=@((20, Alignment.Center))
+                       HorizontalGridLines=GridLines.All
+                       VerticalGridLines=GridLines.All
+                       ShowHeader=true
+                       StickyHeader=true
+                       Items=@_localTreeData>
+            <NodeTemplate Context=node>
+                <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
+                    <MaterialIcon Icon=@node.IconName Color=Color.Custom(Colors.Yellow.Darken1) />
+                    <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
+                        @node.NodeId
+                    </TextBlock>
+                </StackPanel>
+            </NodeTemplate>
+            <ChildContent>
+                <TableColumn Label="Node" HorizontalContentAlignment=Alignment.Start TItem=TestTreeRow Field=@(x =>x.FirstName) ColumnDefinition="auto" />
+                <TableColumn Label="First Name" TItem=TestTreeRow Field=@(x =>x.FirstName) ColumnDefinition="70" />
+                <TableColumn Label="Last Name" TItem=TestTreeRow Field=@(x =>x.LastName) ColumnDefinition="90" />
+                <TableColumn Label="Product" TItem=TestTreeRow Field=@(x =>x.Product) ColumnDefinition="120" />
+                <TableColumn Label="Available" TItem=TestTreeRow Field=@(x =>x.Available) ColumnDefinition="60" />
+                <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Center TItem=TestTreeRow Field=@(x =>x.Quantity) ColumnDefinition="60" />
+                <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestTreeRow Field=@(x =>x.UnitPrice) ColumnDefinition="80">
+                    <DataTemplate Context=item>
+                        <TextBlock VerticalAlignment=Alignment.Center
+                                   TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+                    </DataTemplate>
+                </TableColumn>
+                <TableColumn Label="Notes" TItem=TestTreeRow Field=@(x =>x.Notes) ColumnDefinition="*">
+                    <DataTemplate Context=item>
+                        <TextBlock VerticalAlignment=Alignment.Center
+                                   TextWrapping=TextWrap.NoWrap TextTrimming=true>@(item.Notes)</TextBlock>
+                    </DataTemplate>
+                </TableColumn>
+            </ChildContent>
+        </TreeTableView>
+        <StackPanel Column=1>
+            <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
+                        @bind-Value:after=@SelectionModeChanged>
+                @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+                {
+                    <Radio Label=@mode.ToString() Value="@mode" />
+                }
+            </RadioGroup>
+            <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+            <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+            <TextBlock Margin=20>Selection=@_selectedItem?.FirstName</TextBlock>
+            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
+            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
+        </StackPanel>
+        <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+            <Button OnClicked=@CollapseAll>Collapse all</Button>
+            <Button OnClicked=@ExpandAll>Expand all</Button>
+            <Button OnClicked=@Up1>Scroll +1</Button>
+            <Button OnClicked=@Up5>Scroll +5</Button>
+            <Button OnClicked=@Up10>Scroll +10</Button>
+            <Button OnClicked=@Down1>Scroll -1</Button>
+            <Button OnClicked=@Down5>Scroll -5</Button>
+            <Button OnClicked=@Down10>Scroll -10</Button>
+            <Button OnClicked=@AddItem>AddItem</Button>
+            <Button OnClicked=@DeleteItem>DeleteItem</Button>
+            <Button OnClicked=@ModifyItem>ModifyItem</Button>
+            @*         <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+        <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
+    <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+    <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
+    <Button OnClicked=@OnAddNewItem>Add new item</Button>
+    <Button OnClicked=@OnGotoEnd>Goto end</Button>
+    <Button OnClicked=@OnGotoStart>Goto start</Button>
+    <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+ *@    
+    </WrapPanel>
+    </Grid>
+</StackPanel>
+
+@code {
+
+    TreeTableView<TestTreeRow> _tree = null!;
+    private TestTreeRow? _selectedItem = null;
+    private List<TestTreeRow> _selectedItems = new();
+    private SelectionMode _selectionMode = SelectionMode.None;
+    private bool _allowSelectionToggle = false;
+    private bool _hoverHighlight = true;
+
+    List<TestTreeRow> _localTreeData = ClientData.LocalTestTreeRows5000;
+
+    async Task CollapseAll()
+    {
+        await _tree.CollapseAll();
+    }
+    async Task ExpandAll()
+    {
+        await _tree.ExpandAll();
+    }
+    // async Task OnGoto10Start()
+    // {
+    //     await List.GotoIndex(10, Alignment.Start);
+    // }
+
+    // async Task OnGoto50Center()
+    // {
+    //     await List.GotoIndex(50, Alignment.Center);
+    // }
+
+    // async Task OnGoto70End()
+    // {
+    //     await List.GotoIndex(70, Alignment.End);
+    // }
+
+    // async Task OnAddNewItem()
+    // {
+    //     var index = _feeds.Count;
+    //     _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
+    //     await List.Refresh();
+    // }
+
+    // async Task OnGotoEnd()
+    // {
+    //     await List.GotoEnd();
+    // }
+
+    // async Task OnGotoStart()
+    // {
+    //     await List.GotoStart();
+    // }
+
+    // async Task OnAddNewItemGotoEndIfAtEnd()
+    // {
+    //     var atEnd = await List.AtEnd();
+
+    //     var index = _feeds.Count;
+    //     _feeds.Add(new Feed(index % 1000, $"Record #{index}", "This is a message"));
+    //     await List.Refresh();
+    //     if (atEnd)
+    //         await List.GotoEnd();
+    // }
+    private async Task AddItem()
+    {
+        //var item = new Feed { Id = $"New", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+        //_feeds[0].Children[0].Children[0].Children[0].Children.Add(item);
+        //await List.FullRefresh();
+    }
+    private async Task DeleteItem()
+    {
+        //var item = _feeds[0].Children[0].Children[0].Children[0].Children.Last();
+        //_feeds[0].Children[0].Children[0].Children[0].Children.Remove(item);
+        //await List.FullRefresh();
+    }
+    private async Task ModifyItem()
+    {
+        //var item = _feeds[0].Children[0].Children[0].Children[0].Children.Last();
+        //item.Id = "Modified";
+        //await List.FullRefresh();
+    }
+
+    private async Task Up1()
+    {
+        await _tree.Scroll(1);
+    }
+    private async Task Up5()
+    {
+        await _tree.Scroll(5);
+
+    }
+    private async Task Up10()
+    {
+        await _tree.Scroll(10);
+
+    }
+    private async Task Down1()
+    {
+        await _tree.Scroll(-1);
+
+    }
+    private async Task Down5()
+    {
+        await _tree.Scroll(-5);
+
+    }
+    private async Task Down10()
+    {
+        await _tree.Scroll(-10);
+    }
+    private async Task ClearSelections()
+    {
+        if (_tree == null)
+            return;
+        await _tree.RemoveAllSelections();
+        StateHasChanged();
+    }
+    private async Task SelectionModeChanged()
+    {
+        if (_tree == null)
+            return;
+        await _tree.RemoveAllSelections();
+        StateHasChanged();
+    }
+    public async ValueTask DisposeAsync()
+    {
+        await _tree.RemoveAllSelections();
+    }
+}

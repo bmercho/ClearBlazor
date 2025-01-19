@@ -6,7 +6,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None : local data (100 rows)</TextBlock>
     <Grid Columns="400,auto" Rows="600,auto,auto" RowSpacing=20>
-        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   @bind-SelectedItem=_selectedItem
                   @bind-SelectedItems=_selectedItems
                   SelectionMode=@_selectionMode
@@ -28,7 +28,7 @@
                     </TextBlock>
                 </Grid>
             </RowTemplate>
-        </ListView1>
+        </ListView>
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
         {
             <StackPanel Column=1>

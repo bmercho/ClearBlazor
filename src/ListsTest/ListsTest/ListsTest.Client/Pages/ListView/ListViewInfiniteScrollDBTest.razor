@@ -7,7 +7,7 @@
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:InfiniteScroll : from DB (5000 rows loaded as required)</TextBlock>
     <Grid Columns="800,auto,*" Rows="600,*">
-        <ListView1 @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
+        <ListView @ref=_list TItem=TestListRow CornerRadius=4 BorderThickness=1 Margin=10 Padding=10
                   VirtualizeMode=VirtualizeMode.InfiniteScroll
                   DataProvider=@GetItemsFromDatabase
                   @bind-SelectedItem=_selectedItem
@@ -30,7 +30,7 @@
                     </StackPanel>
                 </Grid>
             </RowTemplate>
-        </ListView1>
+        </ListView>
 
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
         {

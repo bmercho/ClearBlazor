@@ -1,95 +1,142 @@
 ﻿@namespace ClearBlazorTest
 @using Data
-<Grid Columns="400,auto" Rows="600,*">
-    <ListView1 @ref=_list Column=0 Margin=40
-              @bind-SelectedItem=_selectedItem @bind-SelectedItems=_selectedItems
-              Items=@_testData BorderThickness="1"
-              BorderColor=Color.Dark CornerRadius="4" SelectionMode=@_selectionMode
-              HoverHighlight=@_hoverHighlight
-              OverscrollBehaviour=OverscrollBehaviour.None
-              VirtualizeMode=VirtualizeMode.Virtualize
-              RowHeight=50
-              AllowSelectionToggle=@_allowSelectionToggle>
-        <RowTemplate Context=row>
-            <Grid BackgroundColor=Color.BackgroundGrey
-                  BorderThickness=1 CornerRadius=8 Margin=5 Padding=10 Columns="*,3*">
-                <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
-                <TextBlock VerticalAlignment=Alignment.Center Column=1> @($"{row.ToString()} ({row.ItemIndex})")</TextBlock>
-            </Grid>
-        </RowTemplate>
-    </ListView1>
-    @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
-    {
-        <StackPanel Column=1>
-            <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
-                        @bind-Value:after=@SelectionModeChanged>
-                @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
-                {
-                    <Radio Label=@mode.ToString() Value="@mode" />
-                }
-            </RadioGroup>
-            <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
-            <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
-            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
-        </StackPanel>
-        <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-            <Button OnClicked=@OnGoto1000Start>Goto 1000 (start)</Button>
-            <Button OnClicked=@OnGoto3000Center>Goto 3000 (center)</Button>
-            <Button OnClicked=@OnGoto4000End>Goto 4000 (end)</Button>
-            <Button OnClicked=@OnGotoEnd>Goto end</Button>
-            <Button OnClicked=@OnGotoStart>Goto start</Button>
-        </WrapPanel>
-    }
-</Grid>
+@inject NavigationManager NavManager
+<StackPanel Orientation=Orientation.Portrait Spacing=30>
+    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
+    <TextBlock HorizontalAlignment=Alignment.Start>@GetTitle()></TextBlock>
+    <Grid Columns="400,auto" Rows="600,auto,auto,auto" RowSpacing=20>
+        <ListView @ref=_list CornerRadius=4 BorderThickness=1 Margin=5 Padding=5
+        @bind-SelectedItem=_selectedItem
+        @bind-SelectedItems=_selectedItems
+        RowHeight=@GetRowHeight()
+        SelectionMode=@_selectionMode
+        AllowSelectionToggle=@_allowSelectionToggle
+        HoverHighlight=@_hoverHighlight 
+        OverscrollBehaviour=OverscrollBehaviour.None
+        VirtualizeMode=@_virtualizeMode
+        HorizontalScrollbar=@_horizontalScrollbar
+        InitialIndex=@((0, Alignment.Start)) 
+        Items=@_localListData>
+            <RowTemplate Context=row>
+                <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
+                    <MaterialIcon Icon=@row.IconName VerticalAlignment=Alignment.Center />
+                    <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
+                        @($"{row.ToString()} ({row.ItemIndex})")
+                    </TextBlock>
+                    <TextBlock Column=1 Row=1 TextWrapping=@GetTextWrap()
+                    TextTrimming=@GetTextTrimming() Margin="0,0,0,10">
+                        @row.Notes
+                    </TextBlock>
+                </Grid>
+            </RowTemplate>
+        </ListView>
+        @if (_virtualizeMode == VirtualizeMode.Pagination)
+        {
+            <Pagination HorizontalAlignment=Alignment.Center Row=1
+            ShowFirstAndLastButtons=true
+            SelectedPage=@_selectedPage
+            NumPages=@_numPages
+            NumPagesShown=4
+            SelectedPageChanged=@PageChanged />
+            <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @_selectedPage of @_numPages</TextBlock>
+        }
+
+        @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+        {
+            <StackPanel Column=1>
+                <RadioGroup Label="Virtualization mode" @bind-Value=_virtualizeMode
+                @bind-Value:after=@Refresh>
+                    @foreach (VirtualizeMode mode in Enum.GetValues(typeof(VirtualizeMode)))
+                    {
+                        <Radio Label=@mode.ToString() Value="@mode" />
+                    }
+                </RadioGroup>
+                <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
+                @bind-Value:after=@SelectionModeChanged>
+                    @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+                    {
+                        <Radio Label=@mode.ToString() Value="@mode" />
+                    }
+                </RadioGroup>
+                <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+                <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+                <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=Refresh Label="Horizontal scrollbar" />
+                <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
+                <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
+                <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
+            </StackPanel>
+            @if (_virtualizeMode == VirtualizeMode.None || _virtualizeMode == VirtualizeMode.Virtualize)
+            {
+                <WrapPanel Row=3 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+                    <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
+                    <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+                    <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
+                    <Button OnClicked=@OnGotoEnd>Goto end</Button>
+                    <Button OnClicked=@OnGotoStart>Goto start</Button>
+                </WrapPanel>
+            }
+            else if (_virtualizeMode != VirtualizeMode.Pagination)
+            {
+                <WrapPanel Row=3 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+                    <Button OnClicked=@OnGotoStart>Goto start</Button>
+                </WrapPanel>
+            }
+        }
+    </Grid>
+</StackPanel>
 
 @code {
-    List<TestListRow> _testData = ClientData.LocalTestListRows5000;
+    List<TestListRow> _localListData = ClientData.LocalTestListRows100;
 
+    ListView<TestListRow> _list = null!;
     private TestListRow _selectedItem = null!;
     private List<TestListRow> _selectedItems = new();
     private SelectionMode _selectionMode = SelectionMode.None;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
-    private ListView1<TestListRow>? _list;
     private bool _atEnd = false;
     private bool _atStart = true;
+    private bool _horizontalScrollbar = false;
+    private VirtualizeMode _virtualizeMode = VirtualizeMode.None;
+    private int _selectedPage = 3;
+    private int _numPages = 0;
 
-    async Task OnGoto1000Start()
+    protected override void OnInitialized()
     {
-        if (_list == null)
-            return;
-        await _list.GotoIndex(1000, Alignment.Start);
+        base.OnInitialized();
+        if (_virtualizeMode == VirtualizeMode.None)
+            _localListData = ClientData.LocalTestListRows100;
+        else
+            _localListData = ClientData.LocalTestListRows5000;
+        _numPages = (int)Math.Ceiling(_localListData.Count / (Double)GetPageSize());
+
     }
 
-    async Task OnGoto3000Center()
+    async Task OnGoto10Start()
     {
-        if (_list == null)
-            return;
-        await _list.GotoIndex(3000, Alignment.Center);
+        await _list.GotoIndex(10, Alignment.Start);
     }
 
-    async Task OnGoto4000End()
+    async Task OnGoto50Center()
     {
-        if (_list == null)
-            return;
-        await _list.GotoIndex(4000, Alignment.End);
+        await _list.GotoIndex(50, Alignment.Center);
+    }
+
+    async Task OnGoto70End()
+    {
+        await _list.GotoIndex(70, Alignment.End);
     }
 
     async Task OnGotoEnd()
     {
-        if (_list == null)
-            return;
         await _list.GotoEnd();
     }
 
     async Task OnGotoStart()
     {
-        if (_list == null)
-            return;
         await _list.GotoStart();
     }
+
 
     private async Task SelectionModeChanged()
     {
@@ -101,9 +148,106 @@
 
     private async Task ClearSelections()
     {
-        if (_list == null)
-            return;
         await _list.RemoveAllSelections();
         StateHasChanged();
     }
+
+    TextWrap GetTextWrap()
+    {
+        if (_horizontalScrollbar)
+            return TextWrap.NoWrap;
+
+        switch (_virtualizeMode)
+        {
+            case VirtualizeMode.None:
+                return TextWrap.Wrap;
+            case VirtualizeMode.Virtualize:
+                return TextWrap.NoWrap;
+            case VirtualizeMode.InfiniteScroll:
+                return TextWrap.Wrap;
+            case VirtualizeMode.InfiniteScrollReverse:
+                return TextWrap.Wrap;
+            case VirtualizeMode.Pagination:
+                return TextWrap.NoWrap;
+        }
+        return TextWrap.NoWrap;
+    }
+
+    bool GetTextTrimming()
+    {
+        if (_horizontalScrollbar)
+            return false;
+
+        switch (_virtualizeMode)
+        {
+            case VirtualizeMode.None:
+                return false;
+            case VirtualizeMode.Virtualize:
+                return true;
+            case VirtualizeMode.InfiniteScroll:
+                return false;
+            case VirtualizeMode.InfiniteScrollReverse:
+                return false;
+            case VirtualizeMode.Pagination:
+                return true;
+        }
+        return false;
+    }
+
+    async Task Refresh()
+    {
+        _numPages = (int)Math.Ceiling(_localListData.Count / (Double)GetPageSize());
+        if (_virtualizeMode == VirtualizeMode.None)
+            _localListData = ClientData.LocalTestListRows100;
+        else
+            _localListData = ClientData.LocalTestListRows5000;
+
+        await _list.ResetComponent();
+
+        NavManager.NavigateTo($"/ListView");
+    }
+
+    int GetRowHeight()
+    {
+        switch (_virtualizeMode)
+        {
+            case VirtualizeMode.None:
+            case VirtualizeMode.InfiniteScroll:
+            case VirtualizeMode.InfiniteScrollReverse:
+            case VirtualizeMode.Pagination:
+                return 0;
+            case VirtualizeMode.Virtualize:
+                return 100;
+        }
+        return 0;
+    }
+    string GetTitle()
+    {
+        return $"VirtualizationMode:{_virtualizeMode} : " +
+               $"local data ({(_virtualizeMode == VirtualizeMode.None ? 100 : 5000)} rows)";
+    }
+
+    int GetPageSize()
+    {
+        switch (_virtualizeMode)
+        {
+            case VirtualizeMode.None:
+                return 0;
+            case VirtualizeMode.Virtualize:
+                return 0;
+            case VirtualizeMode.InfiniteScroll:
+                return 30;
+            case VirtualizeMode.InfiniteScrollReverse:
+                return 0;
+            case VirtualizeMode.Pagination:
+                return 22;
+        }
+        return 0;
+    }
+    async Task PageChanged(int page)
+    {
+        await _list.GotoPage(page);
+        _selectedPage = page;
+    }
+
 }

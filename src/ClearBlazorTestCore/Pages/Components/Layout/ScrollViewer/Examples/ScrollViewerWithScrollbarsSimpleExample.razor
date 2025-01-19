@@ -18,7 +18,7 @@
                 {
                     if (_horizontalOverflowText)
                     {
-                        @for (int i = 1; i <= 1000; i++)
+                        @for (int i = 1; i <= 2000; i++)
                         {
                             int row = i;
                             <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=true>
@@ -28,7 +28,7 @@
                     }
                     else
                     {
-                        @for (int i = 1; i <= 200; i++)
+                        @for (int i = 1; i <= 2000; i++)
                         {
                             int row = i;
                             <TextBlock>@($"Line{row}")</TextBlock>
@@ -127,14 +127,14 @@
 
 @code {
     private ScrollViewerWithScrollBars _scrollViewer = null!;
-    private ScrollMode _verticalScrollMode = ScrollMode.Disabled;
-    private ScrollMode _horizontalScrollMode = ScrollMode.Disabled;
+    private ScrollMode _verticalScrollMode = ScrollMode.Auto;
+    private ScrollMode _horizontalScrollMode = ScrollMode.Auto;
     private ScrollbarGutter _verticalGutter = ScrollbarGutter.OnlyWhenOverflowed;
     private ScrollbarGutter _horizontalGutter = ScrollbarGutter.OnlyWhenOverflowed;
     private OverscrollBehaviour _verticalOverscrollBehaviour = OverscrollBehaviour.None;
     private OverscrollBehaviour _horizontalOverscrollBehaviour = OverscrollBehaviour.None;
-    private bool _verticalOverflowText = false;
-    private bool _horizontalOverflowText = false;
+    private bool _verticalOverflowText = true;
+    private bool _horizontalOverflowText = true;
     private bool _overlayScrollbars = false;
     private IDisposable ScrollViewUnsubscriber = null!;
 
@@ -147,7 +147,7 @@
 
     public virtual void OnNext(bool hasScrolled)
     {
-        Console.WriteLine("HasScrolled");
+       // Console.WriteLine("HasScrolled");
     }
 
     public virtual void Subscribe(IObservable<bool> provider)

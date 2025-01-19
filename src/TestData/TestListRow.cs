@@ -34,6 +34,9 @@ namespace Data
         [Column]
         public string Notes { get; set; } = string.Empty;
 
+        [Column]
+        public string NotesShort { get; set; } = string.Empty;
+
         public bool Equals(TestListRow? other)
         {
             if (other == null)
@@ -61,6 +64,7 @@ namespace Data
                 Quantity = RandomTestData.GetRandomQuantity(),
                 UnitPrice = (decimal)RandomTestData.GetRandomPrice(),
                 Notes = RandomTestData.GetRandomText(),
+                NotesShort = RandomTestData.GetRandomText(30),
             };
         }
     }
