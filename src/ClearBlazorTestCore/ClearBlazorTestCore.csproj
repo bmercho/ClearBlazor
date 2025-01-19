@@ -35,6 +35,11 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Layout\ScrollViewer\Code\ScrollViewerWithScrollbarsSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Layout\DrawingCanvas\Code\SkiaDrawingCanvasExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeTableView\Code\TreeTableViewVirtualizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TreeTableView\Code\TreeTableViewExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\ScrollViewer\Code\ScrollViewerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewPaginationExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TableView\Code\TableViewInfiniteScrollExampleCode.html" />
