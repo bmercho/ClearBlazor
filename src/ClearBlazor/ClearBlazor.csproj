@@ -4,9 +4,9 @@
 		<TargetFramework>net9.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<AssemblyVersion>0.0.15</AssemblyVersion>
-		<FileVersion>0.0.15</FileVersion>
-		<Version>0.0.15</Version>
+		<AssemblyVersion>0.0.16</AssemblyVersion>
+		<FileVersion>0.0.16</FileVersion>
+		<Version>0.0.16</Version>
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
