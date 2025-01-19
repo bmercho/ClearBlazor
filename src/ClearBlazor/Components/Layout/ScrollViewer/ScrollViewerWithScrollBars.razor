@@ -18,9 +18,9 @@
                 <div id=@_verticalScrollId
                      style=@GetVerticalBackgroundStyle()
                      @onclick=OnVerticalScrollbarClick
-                     @onmousedown=OnVerticalMouseDown
-                     @onmouseup=OnVerticalMouseUp
-                     @onmousemove=OnVerticalMouseMove>
+                     @onpointerdown=OnVerticalMouseDown
+                     @onpointerup=OnVerticalMouseUp
+                     @onpointermove=OnVerticalMouseMove>
                     <div id=@_verticalThumbId
                          style=@GetVerticalThumbStyle()
                          @onmouseenter=OnVerticalMouseEnter

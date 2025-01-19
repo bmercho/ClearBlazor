@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System.Runtime.Serialization;
 
 namespace ClearBlazor
 {
@@ -94,11 +95,14 @@ namespace ClearBlazor
         private bool _overHorizontalThumb = false;
         private bool _verticalScrolling = false;
         private bool _horizontalScrolling = false;
+        private double _verticalThumbPosition = 0;
+        private double _horizontalThumbPosition = 0;
         private bool _processingkey = false;
         private bool _scrollSmoothly = false;
         private ScrollState _lastScrollState = new ScrollState();
         private double _vertStartPos = 0;
         private double _horizStartPos = 0;
+
         public static IDisposable Subscribe(IObserver<bool> observer)
         {
             if (!_observers.Contains(observer))
@@ -107,14 +111,14 @@ namespace ClearBlazor
         }
         public async Task SetScrollTop(double top)
         {
-            _marginTop = ConstrainMarginTop(-top);
-            await DoVerticalScrolling(false);
+            var position = top / GetVerticalFactor();
+            await VerticalScrollTo(position, false);
         }
 
         public async Task SetScrollLeft(double left)
         {
-            _marginLeft = ConstrainMarginLeft(-left);
-            await DoVerticalScrolling(false);
+            var position = left / GetHorizontalFactor();
+            await HorizontalScrollTo(position, false);
         }
 
         public ScrollState GetScrollState()
@@ -125,31 +129,23 @@ namespace ClearBlazor
         {
             if (scrollDirection == ScrollDirection.Horizontal)
             {
-                _marginLeft = 0;
-                await DoHorizontalScrolling(false);
+                await HorizontalScrollTo(0, false);
             }
             else
-            {
-                _marginTop = 0;
-                await DoVerticalScrolling(false);
-            }
+                await VerticalScrollTo(0, false);
         }
 
         public async Task ScrollToEnd(ScrollDirection scrollDirection)
         {
             if (_scrollViewerSize == null || _scrollableSize == null)
                 return;
-            
+
             if (scrollDirection == ScrollDirection.Horizontal)
             {
-                _marginLeft = -_scrollableSize.ElementWidth + _scrollViewerSize.ElementWidth;
-                await DoHorizontalScrolling(false);
+                await HorizontalScrollTo(_scrollViewerSize.ElementWidth - GetHorizontalThumbSize(), false);
             }
             else
-            {
-                _marginTop = -_scrollableSize.ElementHeight + _scrollViewerSize.ElementHeight;
-                await DoVerticalScrolling(false);
-            }
+                await VerticalScrollTo(_scrollViewerSize.ElementHeight-GetVerticalThumbSize(), false);
         }
 
         public async Task ScrollIntoView(string id, Alignment alignment)
@@ -163,24 +159,23 @@ namespace ClearBlazor
                 return;
             }
 
+            double top = 0;
             switch (alignment)
             {
                 case Alignment.Stretch:
                 case Alignment.Center:
-                    _marginTop -= componentSize.ElementY - _scrollViewerSize.ElementY -
-                                 _scrollViewerSize.ElementHeight / 2 +
-                                 componentSize.ElementHeight / 2;
-                    _marginTop = ConstrainMarginTop(_marginTop);
+                    top = (componentSize.ElementY - componentSize.ParentY + componentSize.ElementHeight/2 - 
+                           _scrollViewerSize.ElementHeight / 2 ) / GetVerticalFactor();
                     break;
                 case Alignment.Start:
-                    _marginTop = 0;
+                    top = (componentSize.ElementY - componentSize.ParentY) / GetVerticalFactor();
                     break;
                 case Alignment.End:
-                    if (_scrollableSize != null)
-                        _marginTop = -_scrollableSize.ElementHeight + _scrollViewerSize.ElementHeight;
+                    top = (componentSize.ElementY - componentSize.ParentY + componentSize.ElementHeight -
+                           _scrollViewerSize.ElementHeight) / GetVerticalFactor();
                     break;
             }
-            await DoVerticalScrolling(false);
+            await VerticalScrollTo(top, false);
         }
         public bool AtVerticalScrollStart()
         {
@@ -249,7 +244,16 @@ namespace ClearBlazor
             }
         }
 
-        private async Task VerticalScroll(int amount, bool scrollSmoothly)
+        private async Task VerticalScroll(double thumbPositionDelta, bool scrollSmoothly)
+        {
+            if (_scrollViewerSize == null || _scrollableSize == null)
+                return;
+
+            var position = _verticalThumbPosition + thumbPositionDelta / GetVerticalFactor();
+            await VerticalScrollTo(position, scrollSmoothly);
+        }
+
+        private async Task VerticalScrollTo(double thumbPosition, bool scrollSmoothly)
         {
             if (_scrollViewerSize == null || _scrollableSize == null)
                 return;
@@ -257,12 +261,15 @@ namespace ClearBlazor
             bool doScroll = false;
             if (ShowVerticalScrollBar())
             {
-                var top = _marginTop - amount;
-                top = ConstrainMarginTop(top);
-                if (top != _marginTop)
+                if (SetVerticalThumbPosition(thumbPosition))
                 {
-                    _marginTop = top;
-                    doScroll = true;
+                    var marginTop = -_verticalThumbPosition * GetVerticalFactor();
+
+                    if (marginTop != _marginTop)
+                    {
+                        _marginTop = marginTop;
+                        doScroll = true;
+                    }
                 }
             }
 
@@ -270,29 +277,16 @@ namespace ClearBlazor
                 await DoVerticalScrolling(scrollSmoothly);
         }
 
-        private async Task VerticalScrollTo(double position, bool scrollSmoothly)
+        private async Task HorizontalScroll(double thumbPositionDelta, bool scrollSmoothly)
         {
             if (_scrollViewerSize == null || _scrollableSize == null)
                 return;
 
-            bool doScroll = false;
-            if (ShowVerticalScrollBar())
-            {
-                var top = position;
-                top = ConstrainMarginTop(top);
-                if (top != _marginTop)
-                {
-                    Console.WriteLine($"*************");
-                    _marginTop = top;
-                    doScroll = true;
-                }
-            }
-
-            if (doScroll)
-                await DoVerticalScrolling(scrollSmoothly);
+            var position = _horizontalThumbPosition + thumbPositionDelta / GetHorizontalFactor();
+            await HorizontalScrollTo(position, scrollSmoothly);
         }
 
-        private async Task HorizontalScroll(int amount, bool scrollSmoothly)
+        private async Task HorizontalScrollTo(double thumbPosition, bool scrollSmoothly)
         {
             if (_scrollViewerSize == null || _scrollableSize == null)
                 return;
@@ -300,12 +294,15 @@ namespace ClearBlazor
             bool doScroll = false;
             if (ShowHorizontalScrollBar())
             {
-                var left = _marginLeft - amount;
-                left = ConstrainMarginLeft(left);
-                if (left != _marginLeft)
+                if (SetHorizontalThumbPosition(thumbPosition))
                 {
-                    _marginLeft = left;
-                    doScroll = true;
+                    var marginLeft = -_horizontalThumbPosition * GetHorizontalFactor();
+
+                    if (marginLeft != _marginLeft)
+                    {
+                        _marginLeft = marginLeft;
+                        doScroll = true;
+                    }
                 }
             }
 
@@ -325,16 +322,18 @@ namespace ClearBlazor
                 //}
                 //else
                 //{
-                    //await JSRuntime.InvokeVoidAsync("SetClasses", _verticalThumbId, string.Empty);
-                    //await JSRuntime.InvokeVoidAsync("SetClasses", _horizontalThumbId, string.Empty);
-                    await JSRuntime.InvokeVoidAsync("SetClasses", _scrollId, string.Empty);
+                //await JSRuntime.InvokeVoidAsync("SetClasses", _verticalThumbId, string.Empty);
+                //await JSRuntime.InvokeVoidAsync("SetClasses", _horizontalThumbId, string.Empty);
+                //await JSRuntime.InvokeVoidAsync("SetClasses", _scrollId, string.Empty);
                 //}
                 _scrollSmoothly = scrollSmoothly;
             }
             await JSRuntime.InvokeVoidAsync("SetStyleProperties",
-                                           _scrollId, "margin-top", $"{_marginTop}px",
-                                           _verticalThumbId, "margin-top",
-                                           $"{GetVerticalThumbPosition()}px");
+                                           _scrollId, "transform", $"translateY({_marginTop}px)",
+//                                           _verticalThumbId, "margin-top",
+//                                           $"{_verticalThumbPosition}px");
+                                           _verticalThumbId, "transform",
+                                           $"translateY({_verticalThumbPosition}px)");
             await OnScroll();
         }
 
@@ -359,7 +358,7 @@ namespace ClearBlazor
             await JSRuntime.InvokeVoidAsync("SetStyleProperties",
                                            _scrollId, "margin-left", $"{_marginLeft}px",
                                            _horizontalThumbId, "margin-left",
-                                           $"{GetHorizontalThumbPosition()}px");
+                                           $"{_horizontalThumbPosition}px");
             await OnScroll();
         }
 
@@ -407,6 +406,7 @@ namespace ClearBlazor
 
         private string GetContentStyle()
         {
+            Console.WriteLine($"GetContentStyle");
             string css = "overflow: hidden; display: grid; ";
             if (UseOverlayScrollbars)
                 return css + "grid-column: 1 / span 3; grid-row: 1 / span 3; ";
@@ -480,48 +480,25 @@ namespace ClearBlazor
             return Math.Max(size, MinThumbSize);
         }
 
-        private double GetVerticalThumbPosition()
-        {
-            if (_scrollableSize == null || _scrollViewerSize == null)
-                return 0;
-
-            double viewerHeight = _scrollViewerSize.ElementHeight;
-            if (UseOverlayScrollbars)
-                viewerHeight -= _scrollbarWidth;
-
-            return -_marginTop / (_scrollableSize.ElementHeight - _scrollViewerSize.ElementHeight) *
-                   (viewerHeight - GetVerticalThumbSize() - 1);
-        }
-        private double GetHorizontalThumbPosition()
-        {
-            if (_scrollableSize == null || _scrollViewerSize == null)
-                return 0;
-
-            double viewerWidth = _scrollViewerSize.ElementWidth;
-            if (UseOverlayScrollbars)
-                viewerWidth -= _scrollbarWidth;
-
-            return -_marginLeft / (_scrollableSize.ElementWidth - _scrollViewerSize.ElementWidth) *
-                   (viewerWidth - GetHorizontalThumbSize() - 1);
-        }
-
         private string GetVerticalThumbStyle()
         {
             string css = $"height:{GetVerticalThumbSize()}px; width:{_scrollbarWidth}px; " +
-                         $"margin-top:{GetVerticalThumbPosition()}px; " +
+                         $"transform:translateY({_marginTop}px); " + 
+//                         $"margin-top:{_verticalThumbPosition}px; " +
                          $"border-radius:{_scrollbarCornerRadius}px; user-select:none; ";
             if (UseOverlayScrollbars)
                 css += $"background-color:{_scrollbarOverlayThumbColor.Value}; ";
             else
                 css += $"background-color:{_scrollbarThumbColor.Value}; ";
 
+            Console.WriteLine($"GetVerticalThumbStyle: {css}");
             return css;
         }
 
         private string GetHorizontalThumbStyle()
         {
             string css = $"width:{GetHorizontalThumbSize()}px; height:{_scrollbarWidth}px; " +
-                         $"margin-left:{GetHorizontalThumbPosition()}px;" +
+                         $"margin-left:{_horizontalThumbPosition}px;" +
                          $"border-radius:{_scrollbarCornerRadius}px; " +
                          $"background-color:{_scrollbarThumbColor.Value}; user-select:none; ";
 
@@ -655,18 +632,17 @@ namespace ClearBlazor
 
         private async Task OnMouseWheel(WheelEventArgs e)
         {
-            if (ShowVerticalScrollBar() && VerticalScrollMode == ScrollMode.Auto || 
+            if (_scrollViewerSize == null)
+                return;
+
+            if (ShowVerticalScrollBar() && VerticalScrollMode == ScrollMode.Auto ||
                                            VerticalScrollMode == ScrollMode.Enabled)
-            {
-                _marginTop -= e.DeltaY;
-                _marginTop = ConstrainMarginTop(_marginTop);
-                await DoVerticalScrolling(true);
-            }
+                await VerticalScroll(e.DeltaY, true);
         }
 
         private async Task OnMouseEnter(MouseEventArgs e)
         {
-            string[] keys = {"ArrowLeft","ArrowRight","ArrowUp","ArrowDown", 
+            string[] keys = {"ArrowLeft","ArrowRight","ArrowUp","ArrowDown",
                              "PageUp","PageDown","Home","End" };
             await JSRuntime.InvokeVoidAsync("EnableKeyboardCapture", _thisComponent, keys);
         }
@@ -713,7 +689,7 @@ namespace ClearBlazor
                         break;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -734,39 +710,16 @@ namespace ClearBlazor
             await Task.CompletedTask;
         }
 
-        private double ConstrainMarginTop(double marginTop)
-        {
-            if (_scrollableSize == null || _scrollViewerSize == null)
-                return 0;
-
-            if (marginTop > 0)
-                return 0;
-
-            if (marginTop < -_scrollableSize.ElementHeight + _scrollViewerSize.ElementHeight)
-                return -_scrollableSize.ElementHeight + _scrollViewerSize.ElementHeight;
-
-            return marginTop;
-        }
-
-        private double ConstrainMarginLeft(double marginLeft)
-        {
-            if (_scrollableSize == null || _scrollViewerSize == null)
-                return 0;
-
-            if (marginLeft > 0)
-                return 0;
-
-            if (marginLeft < -_scrollableSize.ElementWidth + _scrollViewerSize.ElementWidth)
-                return -_scrollableSize.ElementWidth + _scrollViewerSize.ElementWidth;
-
-            return marginLeft;
-        }
-
         private async Task OnHorizontalMouseDown(MouseEventArgs e)
         {
+            if (_overHorizontalThumb)
+            {
+                _horizontalMouseDown = true;
+                _horizStartPos = e.OffsetX;
+            }
             await JSRuntime.InvokeVoidAsync("CaptureMouse", _horizontalScrollId, 1);
-            _horizontalMouseDown = true;
         }
+
         private async Task OnHorizontalMouseUp(MouseEventArgs e)
         {
             _horizontalMouseDown = false;
@@ -782,17 +735,14 @@ namespace ClearBlazor
 
                 if (_processingkey)
                     return;
-                if (e.MovementX == 0)
+                if (e.MovementY == 0)
                     return;
                 _processingkey = true;
                 try
                 {
-                    //Console.WriteLine($"Move1");
-                    var factor = _scrollableSize.ElementWidth / _scrollViewerSize.ElementWidth;
-                    await HorizontalScroll((int)(e.MovementX * factor), true);
-                    //Console.WriteLine($"Move2");
-
                     _horizontalScrolling = true;
+                    var position = e.OffsetX - _horizStartPos;
+                    await HorizontalScrollTo(position, true);
                 }
                 finally
                 {
@@ -819,7 +769,7 @@ namespace ClearBlazor
                 return;
 
             var thumbSize = GetHorizontalThumbSize();
-            var position = GetHorizontalThumbPosition();
+            var position = _horizontalThumbPosition;
 
             if (e.OffsetX > position + thumbSize)
                 await HorizontalScroll(PageIncrement, true);
@@ -829,23 +779,22 @@ namespace ClearBlazor
 
         private async Task OnVerticalMouseDown(MouseEventArgs e)
         {
-            //Console.WriteLine("Mousedown");
-            _verticalMouseDown = true;
-            _vertStartPos = e.OffsetY;
-            await JSRuntime.InvokeVoidAsync("CaptureMouse", _verticalScrollId, 1);
-            
+            if (_overVerticalThumb)
+            {
+                _verticalMouseDown = true;
+                _vertStartPos = e.OffsetY;
+                await JSRuntime.InvokeVoidAsync("CaptureMouse", _verticalScrollId, 1);
+            }
         }
+
         private async Task OnVerticalMouseUp(MouseEventArgs e)
         {
-            Console.WriteLine($"MouseUp");
             _verticalMouseDown = false;
             await JSRuntime.InvokeVoidAsync("ReleaseMouseCapture", _verticalScrollId, 1);
         }
 
         private async Task OnVerticalMouseMove(MouseEventArgs e)
         {
-            //Console.WriteLine($"Move");
-
             if (_verticalMouseDown)
             {
                 if (_scrollableSize == null || _scrollViewerSize == null)
@@ -858,22 +807,9 @@ namespace ClearBlazor
                 _processingkey = true;
                 try
                 {
-                    var factor = _scrollableSize.ElementHeight / 
-                                 (_scrollViewerSize.ElementHeight- GetVerticalThumbSize());
-                    Console.WriteLine($"MouseMove: {e.MovementY} Factor:{factor} {e.MovementY * factor}");
-                    Console.WriteLine($"MouseMove: scrollViewerHt:{_scrollViewerSize.ElementHeight} " +
-                                      $"OffsetY: {e.OffsetY} VertStartPos:{_vertStartPos} " +
-                                      $"ScrollableHt:{_scrollableSize.ElementHeight}" +
-                                      $"ThumbPosition:{GetVerticalThumbPosition()}" +
-
-                                      $"ThumbSize:{GetVerticalThumbSize()}");
-                    //if (GetVerticalThumbPosition() + GetVerticalThumbSize() < _scrollViewerSize.ElementHeight)
-                    {
-                        //if ((e.OffsetY - _vertStartPos) < (_scrollViewerSize.ElementHeight + GetVerticalThumbSize()))
-                        await VerticalScrollTo(-(e.OffsetY - _vertStartPos) * factor, true);
-                    }
-
                     _verticalScrolling = true;
+                    var position = e.OffsetY - _vertStartPos;
+                    await VerticalScrollTo(position, true);
                 }
                 finally
                 {
@@ -902,7 +838,7 @@ namespace ClearBlazor
                 return;
 
             var thumbSize = GetVerticalThumbSize();
-            var position = GetVerticalThumbPosition();
+            var position = _verticalThumbPosition;
 
             if (e.OffsetY > position + thumbSize)
                 await VerticalScroll(PageIncrement, true);
@@ -920,8 +856,8 @@ namespace ClearBlazor
             {
                 if (observedSize.TargetId == _scrollId)
                 {
-                    if (observedSize.ElementHeight > 0 && 
-                        (_scrollableSize == null || 
+                    if (observedSize.ElementHeight > 0 &&
+                        (_scrollableSize == null ||
                          _scrollableSize.ElementHeight != observedSize.ElementHeight ||
                          _scrollableSize.ElementWidth != observedSize.ElementWidth))
                     {
@@ -931,7 +867,7 @@ namespace ClearBlazor
                 }
                 else if (observedSize.TargetId == _scrollViewerId)
                 {
-                    if (observedSize.ElementHeight > 0 && 
+                    if (observedSize.ElementHeight > 0 &&
                         (_scrollViewerSize == null ||
                          _scrollViewerSize.ElementHeight != observedSize.ElementHeight ||
                          _scrollViewerSize.ElementWidth != observedSize.ElementWidth))
@@ -944,6 +880,72 @@ namespace ClearBlazor
             if (changed)
                 StateHasChanged();
             await Task.CompletedTask;
+        }
+
+        private bool SetVerticalThumbPosition(double position)
+        {
+            if (_scrollViewerSize == null)
+                return false;
+
+            Console.WriteLine($"SetVerticalThumbPosition: position:{ position}");
+            var ht = _scrollViewerSize.ElementHeight - GetVerticalThumbSize();
+            if (position <= 0 && _verticalThumbPosition >= 0)
+            {
+                _verticalThumbPosition = 0;
+                Console.WriteLine($"SetVerticalThumbPosition1: position:{position}");
+                return true;
+            }
+
+            if (position >= ht && _verticalThumbPosition <= ht)
+            {
+                _verticalThumbPosition = ht;
+                Console.WriteLine($"SetVerticalThumbPosition2: position:{position} pos:{ht}");
+                return true;
+            }
+
+            _verticalThumbPosition = position;
+            Console.WriteLine($"SetVerticalThumbPosition3: position:{position}");
+            return true;
+        }
+
+        private bool SetHorizontalThumbPosition(double position)
+        {
+            if (_scrollViewerSize == null)
+                return false;
+
+            var width = _scrollViewerSize.ElementWidth - GetHorizontalThumbSize();
+            if (position <= 0 && _horizontalThumbPosition >= 0)
+            {
+                _horizontalThumbPosition = 0;
+                return true;
+            }
+
+            if (position >= width && _horizontalThumbPosition <= width)
+            {
+                _horizontalThumbPosition = width;
+                return true;
+            }
+
+            _horizontalThumbPosition = position;
+            return true;
+        }
+
+        private double GetVerticalFactor()
+        {
+            if (_scrollViewerSize == null || _scrollableSize == null)
+                return 1;
+            
+            return (_scrollableSize.ElementHeight - _scrollViewerSize.ElementHeight) /
+                   (_scrollViewerSize.ElementHeight - GetVerticalThumbSize());
+        }
+
+        private double GetHorizontalFactor()
+        {
+            if (_scrollViewerSize == null || _scrollableSize == null)
+                return 1;
+
+            return (_scrollableSize.ElementWidth - _scrollViewerSize.ElementWidth) /
+                   (_scrollViewerSize.ElementWidth - GetHorizontalThumbSize());
         }
 
         private class Unsubscriber : IDisposable

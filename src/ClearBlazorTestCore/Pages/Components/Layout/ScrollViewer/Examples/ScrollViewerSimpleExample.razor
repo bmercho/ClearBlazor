@@ -17,7 +17,7 @@
                     {
                         <Grid Rows="Auto" Columns="50,*">
 
-                        @for (int i = 1; i <= 1000; i++)
+                        @for (int i = 1; i <= 200; i++)
                         {
                             int row = i;
                                 <Grid Row=@i Column=1>
@@ -141,7 +141,7 @@
 
     public virtual void OnNext(bool hasScrolled)
     {
-        Console.WriteLine("HasScrolled");
+        //Console.WriteLine("HasScrolled");
     }
 
     public virtual void Subscribe(IObservable<bool> provider)

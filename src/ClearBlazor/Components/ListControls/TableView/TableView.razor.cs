@@ -89,7 +89,7 @@ namespace ClearBlazor
 
         private bool _initializing = true;
         //private string _scrollViewerId = Guid.NewGuid().ToString();
-        private ScrollViewerWithScrollBars _scrollViewer = null!;
+        private ScrollViewer _scrollViewer = null!;
         private Grid _grid = null!;
         private double _gridWidth = 0;
         private string _headerId = Guid.NewGuid().ToString();
