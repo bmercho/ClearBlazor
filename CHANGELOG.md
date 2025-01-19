@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.16
+
+### Patch Changes
+
+- d150df7: Mods to LiostView
+
 ## 0.0.15
 
 ### Patch Changes
