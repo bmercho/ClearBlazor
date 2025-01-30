@@ -14,5 +14,12 @@
             Left = left;
             Top = top;
         }
+        public Rect(Size size)
+        {
+            Width = size.Width;
+            Height = size.Height;
+            Left = 0;
+            Top = 0;
+        }
     }
 }

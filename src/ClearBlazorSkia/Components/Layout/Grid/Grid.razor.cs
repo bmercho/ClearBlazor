@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using SkiaSharp;
 using System;
+using System.Data;
+using System.Drawing;
 using System.Text.RegularExpressions;
 
 namespace ClearBlazor
@@ -11,7 +13,7 @@ namespace ClearBlazor
     /// By default a grid will occupy all of the available space given by its parent.
     /// In other words HorizontalAlignment and VerticalAlignment are both by default 'Stretch'.
     /// </summary>
-    public partial class Grid : ClearComponentBase, IBorder
+    public partial class Grid : PanelBase, IBorder
     {
         /// <summary>
         /// Defines columns by a comma delimited string of column widths. 
@@ -51,123 +53,56 @@ namespace ClearBlazor
         [Parameter]
         public double RowSpacing { get; set; } = 0;
 
-        /// <summary>
-        /// The child content of this control.
-        /// </summary>
-        [Parameter]
-        public RenderFragment? ChildContent { get; set; }
-
-        // IBorder
-
-        /// <summary>
-        /// See <a href="IBorderApi">IBorder</a>
-        /// </summary>
-        [Parameter]
-        public string? BorderThickness { get; set; }
-
-        /// <summary>
-        /// See <a href="IBorderApi">IBorder</a>
-        /// </summary>
-        [Parameter]
-        public Color? BorderColor { get; set; }
-
-        /// <summary>
-        /// See <a href="IBorderApi">IBorder</a>
-        /// </summary>
-        [Parameter]
-        public BorderStyle? BorderStyle { get; set; }
-
-        /// <summary>
-        /// See <a href="IBorderApi">IBorder</a>
-        /// </summary>
-        [Parameter]
-        public string? CornerRadius { get; set; }
-
-        // IBoxShadow
-
-        /// <summary>
-        /// See <a href="IBoxShadowApi">IBoxShadow</a>
-        /// </summary>
-        [Parameter]
-        public int? BoxShadow { get; set; }
-
-        // IBackground
-
-        /// <summary>
-        /// See <a href="IBackgroundApi">IBackground</a>
-        /// </summary>
-        [Parameter]
-        public Color? BackgroundColor { get; set; }
-
-        // IBackgroundGradient
-
-        /// <summary>
-        /// See <a href="IBackgroundGradientApi">IBackgroundGradient</a>
-        /// </summary>
-        [Parameter]
-        public string? BackgroundGradient1 { get; set; }
-
-
-        /// <summary>
-        /// See <a href="IBackgroundGradientApi">IBackgroundGradient</a>
-        /// </summary>
-        [Parameter]
-        public string? BackgroundGradient2 { get; set; }
-
-
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
         protected override void OnAfterRender(bool firstRender)
         {
             base.OnAfterRender(firstRender);
         }
 
-        internal override void PaintCanvas(SKCanvas canvas)
+        protected override void DoPaint(SKCanvas canvas)
         {
-            canvas.ClipRect(new SKRect((float)Left, (float)Top, 
-                                       (float)ActualWidth, (float)ActualHeight));
-
-            if (BackgroundColor != null)
-                canvas.Clear(BackgroundColor.ToSKColor());
-            SKPaint strokePaint1 = new SKPaint
-            {
-                Style = SKPaintStyle.Stroke,
-                Color = SKColors.Black,
-                IsAntialias = true,
-                StrokeWidth = (float)_borderThickness.Right
-            };
-            canvas.DrawRect(new SKRect((float)Left, (float)Top,
-                                       (float)ActualWidth, (float)ActualHeight), strokePaint1);
-            base.PaintCanvas(canvas);
+            base.DoPaint(canvas);
         }
 
         protected override Size MeasureOverride(Size availableSize)
         {
             Size resultSize = new Size(0, 0);
 
+            Size border = HelperCollapseThickness(_borderThickness);
+            Size padding = HelperCollapseThickness(_paddingThickness);
+
+            // Combine into total decorating size
+            resultSize = new Size(border.Width + padding.Width, border.Height + padding.Height);
+
             foreach (ClearComponentBase child in Children)
             {
-                child.Measure(availableSize);
-                resultSize.Width = Math.Max(resultSize.Width, child.DesiredSize.Width);
-                resultSize.Height = Math.Max(resultSize.Height, child.DesiredSize.Height);
+                // Combine into total decorating size
+                Size combined = new Size(border.Width + padding.Width, border.Height + padding.Height);
+
+                // Remove size of border only from child's reference size.
+                Size childConstraint = new Size(Math.Max(0.0, availableSize.Width - combined.Width),
+                                                Math.Max(0.0, availableSize.Height - combined.Height));
+
+                child.Measure(childConstraint);
+                Size childSize = child.DesiredSize;
+
+                // Now use the returned size to drive our size, by adding back the margins, etc.
+                resultSize.Width = childSize.Width + combined.Width;
+                resultSize.Height = childSize.Height + combined.Height;
             }
-
-            resultSize.Width = double.IsPositiveInfinity(availableSize.Width) ?
-                resultSize.Width : availableSize.Width;
-
-            resultSize.Height = double.IsPositiveInfinity(availableSize.Height) ?
-                resultSize.Height : availableSize.Height;
 
             return resultSize;
         }
 
-        protected override Size ArrangeOverride(Size finalSize)
+        protected override void ArrangeOverride(double left, double top)
         {
             foreach (ClearComponentBase child in Children)
             {
-                child.Arrange(new Rect(0, 0, child.DesiredSize.Width, child.DesiredSize.Height));
+                child.Arrange(left, top);
             }
-            ActualWidth = finalSize.Width;
-            ActualHeight = finalSize.Height;
-            return finalSize;
         }
     }
 }

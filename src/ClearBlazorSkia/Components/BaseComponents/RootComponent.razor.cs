@@ -5,7 +5,7 @@ using SkiaSharp;
 
 namespace ClearBlazor
 {
-    public partial class RootComponent : ClearComponentBase, IObserver<BrowserSizeInfo>
+    public partial class RootComponent : ClearComponentBase, IObserver<BrowserSizeInfo>, IBackground
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
@@ -14,7 +14,10 @@ namespace ClearBlazor
         /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
-        public Color BackgroundColor1 { get; set; } = Color.Light;
+        public Color? BackgroundColor { get; set; } = Color.Light;
+
+        [Parameter]
+        public EventCallback LayoutComplete { get; set; }
 
         ThemeManager ThemeManager { get; set; }
         private IDisposable? unsubscriber;
@@ -25,9 +28,12 @@ namespace ClearBlazor
         public RootComponent()
         {
             ThemeManager = new ThemeManager(this, false);
-            BackgroundColor1 = Color.Light;
         }
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
 
         protected override void OnParametersSet()
         {
@@ -38,7 +44,7 @@ namespace ClearBlazor
 
             await base.OnAfterRenderAsync(firstRender);
             if (firstRender)
-            { 
+            {
                 // Load all javascript
 
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
@@ -54,25 +60,16 @@ namespace ClearBlazor
                 await resizeObserverService.Init(JSRuntime);
                 Subscribe(browserSizeService);
             }
-   
-            PerformLayout(Width, Height);
+            else
+            {
+                PerformLayout(Width, Height);
+                await LayoutComplete.InvokeAsync();
+            }
         }
 
         private string GetStyle()
         {
-            string css = string.Empty;
-            //if (Height != null)
-                css += $"overflow: hidden; position: relative;height:{Height}px; width:{Width}px; ";
-            //else
-            //    css += $"height: 100vh; overflow: hidden; position: relative; ";
-            return css;
-        }
-
-        private string GetContentStyle()
-        {
-            string css = string.Empty;
-            css += $"position:absolute;width:{Width}px;height:{Height}px;";
-            return css;
+            return $"overflow: hidden; position: relative;height:{Height}px; width:{Width}px; ";
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -82,11 +79,12 @@ namespace ClearBlazor
             if (Children.Count > 1)
                 throw new Exception("The RootComponent can only have a single child.");
 
-            foreach (ClearComponentBase child in Children)
+            if (Children.Count ==1)
             {
+                var child = Children[0];
                 child.Measure(availableSize);
-                resultSize.Width = Math.Max(resultSize.Width, child.DesiredSize.Width);
-                resultSize.Height = Math.Max(resultSize.Height, child.DesiredSize.Height);
+                resultSize.Width = child.DesiredSize.Width;
+                resultSize.Height = child.DesiredSize.Height;
             }
 
             resultSize.Width = double.IsPositiveInfinity(availableSize.Width) ?
@@ -98,17 +96,16 @@ namespace ClearBlazor
             return resultSize;
         }
 
-        protected override Size ArrangeOverride(Size finalSize)
+        protected override void ArrangeOverride(double left, double top)
         {
             if (Children.Count > 1)
                 throw new Exception("The RootComponent can only have a single child.");
 
-            foreach (ClearComponentBase child in Children)
+            if (Children.Count == 1)
             {
-                child.Arrange(new Rect(0, 0, child.DesiredSize.Width, child.DesiredSize.Height));
+                var child = Children[0];
+                child.Arrange(left, Top);
             }
-
-            return finalSize;
         }
         public void Refresh()
         {
@@ -144,23 +141,17 @@ namespace ClearBlazor
             if (browserSizeInfo.BrowserHeight == 0 || browserSizeInfo.BrowserWidth == 0)
                 return;
 
-            Height = browserSizeInfo.BrowserHeight;
-            Width = browserSizeInfo.BrowserWidth;
+            if (Height == double.PositiveInfinity)
+                Height = browserSizeInfo.BrowserHeight;
+            if (Width == double.PositiveInfinity)
+                Width = browserSizeInfo.BrowserWidth;
             LoadingComplete = true;
             StateHasChanged();
         }
 
-        private void PerformLayout(double width, double height)
+        internal void PaintCanvas(SKCanvas canvas)
         {
-            Measure(new Size(width, height));
-            Arrange(new Rect(width, height, 0, 0));
-        }
-        internal override void PaintCanvas(SKCanvas canvas)
-        {
-            //DrawingCanvas = canvas;
-            canvas.Clear(BackgroundColor1.ToSKColor());
-            canvas.Clear(SKColors.Red);
-            base.PaintCanvas(canvas);
+            RefreshCanvas(canvas);
         }
     }
 }

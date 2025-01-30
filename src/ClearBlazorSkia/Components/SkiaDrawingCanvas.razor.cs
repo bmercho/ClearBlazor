@@ -152,6 +152,7 @@ namespace ClearBlazor
             
             var canvas = e.Surface.Canvas;
             canvas.Scale(1/_pixelToDeviceX, 1/_pixelToDeviceY);
+
             OnPaint.InvokeAsync(canvas);
         }
 

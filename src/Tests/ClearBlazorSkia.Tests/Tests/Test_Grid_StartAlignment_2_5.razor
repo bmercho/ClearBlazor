@@ -1,0 +1,28 @@
+﻿@namespace ClearBlazorSkia.Tests
+@using ClearBlazor
+@using ClearBlazorSkia.Tests.Tests
+@inherits TestBase
+<RootComponent @ref=_rootComponent Width=800 Height=600 
+               BackgroundColor=@Color.Custom("green") 
+               LayoutComplete=@LayoutComplete>
+    <Grid BackgroundColor=@Color.Custom("red") Margin=10 BorderThickness=5 
+          HorizontalAlignment=Alignment.Start
+          VerticalAlignment=Alignment.Start />
+</RootComponent>
+
+
+@code {
+
+    RootComponent _rootComponent = null!;
+
+    private async Task LayoutComplete()
+    {
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0);
+        if (_rootComponent.Children.Count != 1 || !(_rootComponent.Children[0] is Grid))
+            testPassed = false;
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 10, 10, 10, 10);
+
+        testPassed &= CheckComponentBorder(_rootComponent.Children[0], 5, 5, 5, 5); 
+        await TestComplete.InvokeAsync(testPassed);
+    }
+}
