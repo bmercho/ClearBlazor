@@ -1,0 +1,87 @@
+﻿@namespace ClearBlazorSkia.Tests
+@using ClearBlazor
+@using ClearBlazorSkia.Tests.Tests
+@inherits TestBase
+<RootComponent @ref=_rootComponent
+Name ="RootComponent" 
+Width=800 Height=600
+BackgroundColor=@Color.Custom("green") 
+LayoutComplete=@LayoutComplete 
+OnClick=MouseClick
+OnPointerDown=PointerDown>
+    <Grid Name="Grid" BackgroundColor=@Color.Custom("red") 
+          Columns="*,*" Rows="*,*" Margin=10 Padding=5
+          BorderThickness=5 BorderColor=@Color.Custom("black") OnClick=MouseClick>
+        <StackPanel Name="StackPanel1" Row=0 Column=0 BackgroundColor=@Color.Custom("yellow")
+        OnClick=MouseClick />
+        <StackPanel Name="StackPanel2" Row=1 Column=0 BackgroundColor=@Color.Custom("blue")
+        OnClick=MouseClick />
+        <StackPanel Name="StackPanel3" Row=0 Column=1 BackgroundColor=@Color.Custom("pink")
+        OnClick=MouseClick />
+        <StackPanel Name="StackPanel4" Row=1 Column=1 BackgroundColor=@Color.Custom("violet")
+        OnClick=MouseClick OnPointerDown=PointerDown />
+    </Grid>
+</RootComponent>
+
+
+@code {
+
+    RootComponent _rootComponent = null!;
+
+    private async Task LayoutComplete()
+    {
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0);
+        if (_rootComponent.Children.Count != 1 || !(_rootComponent.Children[0] is Grid))
+            testPassed = false;
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 780, 580, 10, 10);
+
+        testPassed &= CheckComponentBorder(_rootComponent.Children[0], 5, 5, 5, 5);
+
+        if (_rootComponent.Children[0].Children.Count != 4 ||
+            !(_rootComponent.Children[0].Children[0] is StackPanel) ||
+            !(_rootComponent.Children[0].Children[1] is StackPanel) ||
+            !(_rootComponent.Children[0].Children[2] is StackPanel) ||
+            !(_rootComponent.Children[0].Children[3] is StackPanel))
+            testPassed = false;
+
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[0], 380, 280, 10, 10);
+
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[1], 380, 280, 10, 290);
+
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[2], 380, 280, 390, 10);
+
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[3], 380, 280, 390, 290);
+
+        await TestComplete.InvokeAsync(testPassed);
+    }
+
+    void MouseMove(ComponentMouseEventArgs e)
+    {
+        if (e.Component.Name == "StackPanel3")
+        {
+            Console.WriteLine($"Mouse move: Name:{e.Component.Name} handled");
+
+            e.Handled = true;
+        }
+        else
+            Console.WriteLine($"Mouse move: Name:{e.Component.Name}");
+    }
+
+    void MouseClick(ComponentMouseEventArgs e)
+    {
+        if (e.Component.Name == "StackPanel3")
+        {
+            Console.WriteLine($"Mouse click: Name:{e.Component.Name} handled");
+
+            e.Handled = true;
+        }
+        else
+            Console.WriteLine($"Mouse click: Name:{e.Component.Name}");
+    }
+
+    void PointerDown(ComponentPointerEventArgs e)
+    {
+        Console.WriteLine($"Pointer Down: Name:{e.Component.Name}");
+        e.Handled = true;
+    }
+}
