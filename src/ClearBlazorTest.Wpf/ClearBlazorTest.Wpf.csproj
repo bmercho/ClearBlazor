@@ -8,6 +8,7 @@
     <UseWPF>true</UseWPF>
 	<RootNamespace>ClearBlazorTest.Wpf</RootNamespace>
 	<AssemblyName>ClearBlazorTest.Wpf</AssemblyName>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
   <ItemGroup>
