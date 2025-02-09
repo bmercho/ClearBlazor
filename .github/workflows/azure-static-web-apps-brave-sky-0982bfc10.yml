@@ -46,8 +46,11 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
           app_location: "src/ClearBlazorTest.Web/bin/Release/net9.0/publish/wwwroot"
+          api_location: ""
           skip_app_build: true
+          skip_api_build: true
           is_static_export: true
+          output_location: "wwwroot"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
