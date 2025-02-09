@@ -34,6 +34,9 @@ jobs:
         
       - name: Build Solution
         run: dotnet build src/ClearBlazorTest.sln --configuration Release
+        
+      - name: Publish Web Test Project
+        run: dotnet publish src/ClearBlazorTest.Web/ClearBlazorTest.Web.csproj --configuration Release
       
       - name: Build And Deploy
         id: builddeploy
@@ -42,7 +45,7 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BRAVE_SKY_0982BFC10 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          app_location: "src/ClearBlazorTest.Web/bin/Release/net9.0/wwwroot"
+          app_location: "src/ClearBlazorTest.Web/bin/Release/net9.0/publish/wwwroot"
           skip_app_build: true
           skip_api_build: true
 
