@@ -45,8 +45,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.66" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
+		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.68" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.1" />
 		<PackageReference Include="SkiaSharp.Views.Blazor" Version="3.116.1" />
 	</ItemGroup>
 

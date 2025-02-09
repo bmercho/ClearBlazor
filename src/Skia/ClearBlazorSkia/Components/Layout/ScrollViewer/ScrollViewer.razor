@@ -1,0 +1,19 @@
+﻿@namespace ClearBlazor
+@inherits PanelBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Grid Columns=@($"{_scrollbarWidth},*,{_scrollbarWidth}")
+          Rows=@($"{_scrollbarWidth},*,{_scrollbarWidth}")
+          OnClick=HandleClick
+          OnPointerMove=HandlePointerMove
+          OnPointerDown=HandlePointerDown
+          OnPointerUp=HandlePointerUp
+          OnPointerEnter=HandlePointerEnter
+          OnPointerLeave=HandlePointerLeave>
+          <Grid Row=@GetContentRow() Column=@GetContentColumn()
+                RowSpan=@GetContentRowSpan() ColumnSpan=@GetContentColumnSpan()>
+            @ChildContent
+        </Grid>
+    </Grid>
+</CascadingValue>
+
