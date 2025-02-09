@@ -16,14 +16,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-    <PackageReference Include="LoremNET" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.1" PrivateAssets="all" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ClearBlazorTestCore\ClearBlazorTestCore.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\ClearBlazorSkia\ClearBlazorSkia.csproj" />
+	  <ProjectReference Include="..\ClearBlazorSkia.Tests\ClearBlazorSkia.Tests.csproj" />
+	</ItemGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 	  <NoWarn>1701;1702;1591</NoWarn>
