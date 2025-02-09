@@ -252,3 +252,6 @@ ModelManifest.xml
 # SQLite files
 *.sqlite-shm
 *.sqlite-wal
+
+# MacOS system files
+.DS_Store
