@@ -29,6 +29,12 @@ jobs:
         with:
           global-json-file: src/global.json
           
+      - name: dotnet workload restore
+        run: dotnet workload restore src/ClearBlazorTest.sln
+        
+      - name: dotnet restore
+        run: dotnet restore src/ClearBlazorTest.sln
+        
       - name: Build Solution
         run: dotnet build src/ClearBlazorTest.sln --configuration Release
       
