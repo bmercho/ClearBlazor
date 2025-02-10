@@ -38,14 +38,14 @@
             else
             {
                 <TableView BorderThickness=1 CornerRadius=4 HorizontalGridLines=GridLines.All
-                           Items=@MethodApi Padding=5 RowSpacing=10 ColumnDefs="auto,auto,*" ColumnSpacing=20>
-                    <TableColumn Label="Method signature" TItem=ApiComponentInfo Field=@(x =>x.Name) />
-                    <TableColumn Label="Return type" TItem=ApiComponentInfo Field=@(x =>x.Type)>
+                           Items=@MethodApi Padding=5 RowSpacing=10 ColumnSpacing=20>
+                    <TableColumn Label="Method signature" TItem=ApiComponentInfo Field=@(x =>x.Name) ColumnDefinition=auto />
+                    <TableColumn Label="Return type" TItem=ApiComponentInfo Field=@(x =>x.Type) ColumnDefinition=auto>
                         <DataTemplate Context=Item>
                             <TextBlock>@GetMarkupString(Item.Type)</TextBlock>
                         </DataTemplate>
                     </TableColumn>
-                    <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description)>
+                    <TableColumn Label="Description" TItem=ApiComponentInfo Field=@(x =>x.Description) ColumnDefinition=*>
                         <DataTemplate Context=Item>
                             <TextBlock>@GetMarkupString(Item.Description)</TextBlock>
                         </DataTemplate>

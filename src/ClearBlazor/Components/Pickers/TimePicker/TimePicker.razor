@@ -39,7 +39,7 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <DrawingCanvas @ref="MyCanvas" Padding=10 
+            <DrawingCanvas @ref="MyCanvas" Padding=10 style="overflow-y:hidden; " 
                            Width=@GetPickerBodySize() Height=@GetPickerBodySize() 
                            OnCanvasSizeChange=@CanvasSizeChange
                            OnPaint=@PaintCanvas
