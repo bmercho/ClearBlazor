@@ -1,5 +1,12 @@
 # ClearBlazor
 
+## 0.0.17
+
+### Patch Changes
+
+- e76abfb: DemoFixes
+- 9e3c00e: Skia work
+
 ## 0.0.16
 
 ### Patch Changes
