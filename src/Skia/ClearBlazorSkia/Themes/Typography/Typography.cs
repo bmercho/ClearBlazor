@@ -6,7 +6,7 @@
         public TypographyBase Default { get; set; } = new TypographyBase
         {
             FontFamily = new[] { "Roboto", "Helvetica", "Arial", "sans-serif" },
-            FontSize = ".875rem",
+            FontSize = 14,
             FontWeight = 400,
             LineHeight = 1.43,
             LetterSpacing = ".01071em",
@@ -14,7 +14,7 @@
 
         public TypographyBase H1 { get; set; } = new TypographyBase
         {
-            FontSize = "6rem",
+            FontSize = 96,
             FontWeight = 300,
             LineHeight = 1.167,
             LetterSpacing = "-.01562em"
@@ -22,7 +22,7 @@
 
         public TypographyBase H2 { get; set; } = new TypographyBase
         {
-            FontSize = "3.75rem",
+            FontSize = 60,
             FontWeight = 300,
             LineHeight = 1.2,
             LetterSpacing = "-.00833em"
@@ -30,7 +30,7 @@
 
         public TypographyBase H3 { get; set; } = new TypographyBase
         {
-            FontSize = "3rem",
+            FontSize = 48,
             FontWeight = 400,
             LineHeight = 1.167,
             LetterSpacing = "0"
@@ -38,7 +38,7 @@
 
         public TypographyBase H4 { get; set; } = new TypographyBase
         {
-            FontSize = "2.125rem",
+            FontSize = 34,
             FontWeight = 400,
             LineHeight = 1.235,
             LetterSpacing = ".00735em"
@@ -46,7 +46,7 @@
 
         public TypographyBase H5 { get; set; } = new TypographyBase
         {
-            FontSize = "1.5rem",
+            FontSize = 24,
             FontWeight = 400,
             LineHeight = 1.334,
             LetterSpacing = "0"
@@ -54,7 +54,7 @@
 
         public TypographyBase H6 { get; set; } = new TypographyBase
         {
-            FontSize = "1.25rem",
+            FontSize = 20,
             FontWeight = 500,
             LineHeight = 1.6,
             LetterSpacing = ".0075em"
@@ -62,7 +62,7 @@
 
         public TypographyBase Subtitle1 { get; set; } = new TypographyBase
         {
-            FontSize = "1rem",
+            FontSize = 16,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".0938em"
@@ -70,7 +70,7 @@
 
         public TypographyBase Subtitle2 { get; set; } = new TypographyBase
         {
-            FontSize = ".875rem",
+            FontSize = 14,
             FontWeight = 500,
             LineHeight = 1.57,
             LetterSpacing = ".00714em"
@@ -78,7 +78,7 @@
 
         public TypographyBase Body1 { get; set; } = new TypographyBase
         {
-            FontSize = "1rem",
+            FontSize = 16,
             FontWeight = 400,
             LineHeight = 1.5,
             LetterSpacing = ".00938em"
@@ -86,7 +86,7 @@
 
         public TypographyBase Body2 { get; set; } = new TypographyBase
         {
-            FontSize = ".875rem",
+            FontSize = 14,
             FontWeight = 400,
             LineHeight = 1.43,
             LetterSpacing = ".01071em"
@@ -94,7 +94,7 @@
 
         public TypographyBase ButtonVerySmall { get; set; } = new TypographyBase
         {
-            FontSize = ".78rem",
+            FontSize = 12,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -102,7 +102,7 @@
         };
         public TypographyBase ButtonSmall { get; set; } = new TypographyBase
         {
-            FontSize = ".8125rem",
+            FontSize = 13,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -110,7 +110,7 @@
         };
         public TypographyBase ButtonNormal { get; set; } = new TypographyBase
         {
-            FontSize = ".875rem",
+            FontSize = 14,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -118,7 +118,7 @@
         };
         public TypographyBase ButtonLarge { get; set; } = new TypographyBase
         {
-            FontSize = ".9375rem",
+            FontSize = 15,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -126,7 +126,7 @@
         };
         public TypographyBase ButtonVeryLarge { get; set; } = new TypographyBase
         {
-            FontSize = "1.0rem",
+            FontSize = 16,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -135,7 +135,7 @@
 
         public TypographyBase AvatarVerySmall { get; set; } = new TypographyBase
         {
-            FontSize = ".78rem",
+            FontSize = 12,
             FontWeight = 700,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -144,7 +144,7 @@
 
         public TypographyBase AvatarSmall { get; set; } = new TypographyBase
         {
-            FontSize = ".875rem",
+            FontSize = 14,
             FontWeight = 700,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -152,7 +152,7 @@
         };
         public TypographyBase AvatarNormal { get; set; } = new TypographyBase
         {
-            FontSize = ".9375rem",
+            FontSize = 15,
             FontWeight = 700,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -160,7 +160,7 @@
         };
         public TypographyBase AvatarLarge { get; set; } = new TypographyBase
         {
-            FontSize = "1.0rem",
+            FontSize = 16,
             FontWeight = 700,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -168,7 +168,7 @@
         };
         public TypographyBase AvatarVeryLarge { get; set; } = new TypographyBase
         {
-            FontSize = "1.0675rem",
+            FontSize = 17,
             FontWeight = 700,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -177,7 +177,7 @@
 
         public TypographyBase ListItemVerySmall { get; set; } = new TypographyBase
         {
-            FontSize = ".78rem",
+            FontSize = 12,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -186,7 +186,7 @@
 
         public TypographyBase ListItemSmall { get; set; } = new TypographyBase
         {
-            FontSize = ".8125rem",
+            FontSize = 13,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -194,7 +194,7 @@
         };
         public TypographyBase ListItemNormal { get; set; } = new TypographyBase
         {
-            FontSize = ".875rem",
+            FontSize = 14,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -202,7 +202,7 @@
         };
         public TypographyBase ListItemLarge { get; set; } = new TypographyBase
         {
-            FontSize = ".9375rem",
+            FontSize = 15,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -210,7 +210,7 @@
         };
         public TypographyBase ListItemVeryLarge { get; set; } = new TypographyBase
         {
-            FontSize = "1.0rem",
+            FontSize = 16,
             FontWeight = 500,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -219,7 +219,7 @@
 
         public TypographyBase Caption { get; set; } = new TypographyBase
         {
-            FontSize = ".75rem",
+            FontSize = 12,
             FontWeight = 400,
             LineHeight = 1.66,
             LetterSpacing = ".03333em"
@@ -227,7 +227,7 @@
 
         public TypographyBase Overline { get; set; } = new TypographyBase
         {
-            FontSize = ".75rem",
+            FontSize = 12,
             FontWeight = 400,
             LineHeight = 2.66,
             LetterSpacing = ".08333em"
@@ -235,7 +235,7 @@
 
         public TypographyBase InputVerySmall { get; set; } = new TypographyBase
         {
-            FontSize = ".78rem",
+            FontSize = 12,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -243,7 +243,7 @@
         };
         public TypographyBase InputSmall { get; set; } = new TypographyBase
         {
-            FontSize = ".875rem",
+            FontSize = 14,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -251,7 +251,7 @@
         };
         public TypographyBase InputNormal { get; set; } = new TypographyBase
         {
-            FontSize = "1rem",
+            FontSize = 16,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -259,7 +259,7 @@
         };
         public TypographyBase InputLarge { get; set; } = new TypographyBase
         {
-            FontSize = "1.25rem",
+            FontSize = 20,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -267,7 +267,7 @@
         };
         public TypographyBase InputVeryLarge { get; set; } = new TypographyBase
         {
-            FontSize = "1.5rem",
+            FontSize = 24,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -276,7 +276,7 @@
 
         public TypographyBase InputLabelVerySmall { get; set; } = new TypographyBase
         {
-            FontSize = ".60rem",
+            FontSize = 7,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -284,7 +284,7 @@
         };
         public TypographyBase InputLabelSmall { get; set; } = new TypographyBase
         {
-            FontSize = ".775rem",
+            FontSize = 12,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -292,7 +292,7 @@
         };
         public TypographyBase InputLabelNormal { get; set; } = new TypographyBase
         {
-            FontSize = "0.9rem",
+            FontSize = 14,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -300,7 +300,7 @@
         };
         public TypographyBase InputLabelLarge { get; set; } = new TypographyBase
         {
-            FontSize = "1.05rem",
+            FontSize = 17,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",
@@ -308,7 +308,7 @@
         };
         public TypographyBase InputLabelVeryLarge { get; set; } = new TypographyBase
         {
-            FontSize = "1.15rem",
+            FontSize = 18,
             FontWeight = 400,
             LineHeight = 1.75,
             LetterSpacing = ".02857em",

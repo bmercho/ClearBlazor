@@ -290,6 +290,7 @@ namespace ClearBlazor
         internal double Top { get; set; } = 0;
         internal double Left { get; set; } = 0;
         internal Size DesiredSize { get; set; }
+        internal Size AvailableSize { get; set; }
 
         internal double _prevActualHeight = 0;
         internal double _prevActualWidth = 0;
@@ -731,29 +732,31 @@ namespace ClearBlazor
         public void PaintAll(SKCanvas canvas)
         {
             canvas.ResetMatrix();
+            canvas.Save();
             _xOffset += Left;
             _yOffset += Top;
-            double yOffset = 0;
-            double xOffset = 0;
-            if (Parent != null && Parent.Parent != null && Parent.Parent.Parent != null &&
-                Parent.Parent.Parent is ScrollViewer)
-            {
-                yOffset = 200;
-                xOffset = 0;
-                _yOffset += yOffset;
-                _xOffset += xOffset; 
-            }
+            //double yOffset = 0;
+            //double xOffset = 0;
+            //if (Parent != null && Parent.Parent != null && Parent.Parent.Parent != null &&
+            //    Parent.Parent.Parent is ScrollViewer)
+            //{
+            //    yOffset = 200;
+            //    xOffset = 0;
+            //    _yOffset += yOffset;
+            //    _xOffset += xOffset; 
+            //}
 
             canvas.Translate((float)_xOffset, (float)_yOffset);
             var clipRect = new SKRect(0, 0, (float)ActualWidth, (float)ActualHeight);
-
+            canvas.ClipRect(clipRect);
             DoPaint(canvas);
             foreach (var child in Children)
             {
                 child.PaintAll(canvas);
             }
-            _xOffset -= Left+xOffset;
-            _yOffset -= Top+yOffset;
+            _xOffset -= Left;// +xOffset;
+            _yOffset -= Top;// +yOffset;
+            canvas.Restore();
         }
 
         protected virtual void DoPaint(SKCanvas canvas)

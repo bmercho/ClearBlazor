@@ -42,7 +42,7 @@ namespace ClearBlazorSkia.Tests
                                                        TestType = type });
             }
 
-            int group = 1;
+            int group = 3;
             int num = 1;
             
             int testNum = group * 1000 + num;

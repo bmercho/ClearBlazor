@@ -4,7 +4,9 @@
 @inherits TestBase
 <RootComponent @ref=_rootComponent Width=800 Height=600 
 BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
-    <StackPanel Orientation=StackOrientation.Vertical BackgroundColor=@Color.Custom("red")>
+    <StackPanel Margin=10 BorderThickness=5 Padding=10 
+                Orientation =StackOrientation.Vertical 
+                BackgroundColor=@Color.Custom("red")>
         <Grid Height=300 BackgroundColor=@Color.Custom("yellow")/>
         <Grid Height=200 BackgroundColor=@Color.Custom("blue")/>
         <Grid Height=150 BackgroundColor=@Color.Custom("pink") />

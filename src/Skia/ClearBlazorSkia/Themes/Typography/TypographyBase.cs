@@ -6,7 +6,7 @@
 
         public int FontWeight { get; set; } = 400;
 
-        public string FontSize { get; set; } = ".875rem";
+        public double FontSize { get; set; } = 14;
 
         public FontStyle FontStyle { get; set; } = FontStyle.Normal;
 
