@@ -2,9 +2,10 @@
 @using ClearBlazor
 @using ClearBlazorSkia.Tests.Tests
 @inherits TestBase
-<RootComponent @ref=_rootComponent Width=800 Height=600 
-BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
-    <StackPanel Margin=10 BorderThickness=5 Padding=10 
+<RootComponent @ref=_rootComponent Width=800 Height=600
+               BackgroundColor=@Color.Custom("green")  LayoutComplete=@LayoutComplete>
+    <StackPanel Height=500
+                VerticalAlignment=Alignment.Start
                 Orientation =StackOrientation.Vertical 
                 BackgroundColor=@Color.Custom("red")>
         <Grid Height=300 BackgroundColor=@Color.Custom("yellow")/>
@@ -26,7 +27,7 @@ BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
         if (_rootComponent.Children.Count != 1 || !(stackPanel is StackPanel))
             testPassed = false;
 
-        testPassed &= CheckComponentLocation(stackPanel, 800, 650, 0, 0);
+        testPassed &= CheckComponentLocation(stackPanel, 800, 500, 0, 0);
 
         var child1 = stackPanel.Children[0];
         var child2 = stackPanel.Children[1];

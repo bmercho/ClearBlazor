@@ -1,0 +1,71 @@
+﻿@namespace ClearBlazorTest
+@using Microsoft.JSInterop
+@using Topten.RichTextKit
+
+<Grid BorderThickness=5 Padding=10 Width=500 Height=500 BackgroundColor=@Color.Custom("lightblue")>
+    <ScrollViewer VerticalScrollMode=@_verticalScrollMode
+                  HorizontalScrollMode=@_horizontalScrollMode
+                  VerticalGutter=@_scrollbarGutter
+                  VerticalOverscrollBehaviour=@_verticalOverscrollBehaviour
+                  HorizontalOverscrollBehaviour=@_horizontalOverscrollBehaviour>
+        <Grid Height=800 BackgroundColor=@Color.Custom("red")>
+            <Grid Height=900 BackgroundColor=@Color.Custom("pink")></Grid>
+
+        </Grid>
+@*         <StackPanel Orientation=StackOrientation.Vertical>
+            @if (_verticalOverflowText)
+            {
+                if (_horizontalOverflowText)
+                {
+                    @for (int i = 1; i <= 200; i++)
+                    {
+                        int row = i;
+                        <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false
+                                   Text=@($"Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ") />
+                    }
+                }
+                else
+                {
+                    @for (int i = 1; i <= 200; i++)
+                    {
+                        int row = i;
+                        <TextBlock Text=@($"Line{row}") />
+                    }
+                }
+            }
+            else
+            {
+                if (_horizontalOverflowText)
+                {
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        int row = i;
+                        <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false
+                                   Text=@($"Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ") />
+                    }
+                }
+                else
+                {
+                    @for (int i = 1; i <= 6; i++)
+                    {
+                        int row = i;
+                        <TextBlock Text=@($"Line{row}") />
+                    }
+                }
+            }
+        </StackPanel>
+ *@    </ScrollViewer>
+
+</Grid>
+
+@code {
+    private ScrollMode _verticalScrollMode = ScrollMode.Auto;
+    private ScrollMode _horizontalScrollMode = ScrollMode.Auto;
+    private ScrollbarGutter _scrollbarGutter = ScrollbarGutter.OnlyWhenOverflowed;
+    private OverscrollBehaviour _verticalOverscrollBehaviour = OverscrollBehaviour.None;
+    private OverscrollBehaviour _horizontalOverscrollBehaviour = OverscrollBehaviour.None;
+    private bool _verticalOverflowText = true;
+    private bool _horizontalOverflowText = true;
+}
+
+

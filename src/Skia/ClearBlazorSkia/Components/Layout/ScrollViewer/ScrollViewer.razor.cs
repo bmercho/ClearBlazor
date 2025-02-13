@@ -151,10 +151,10 @@ namespace ClearBlazor
                 Children[0].Children[0].Children.Count != 1)
                 return false;
 
-            var stackPanel = Children[0]?.Children[0]?.Children[0] as StackPanel;
-            if (stackPanel == null)
+            var contentChild = Children[0]?.Children[0]?.Children[0];
+            if (contentChild == null)
                 return false;
-            if (VerticalScrollMode == ScrollMode.Auto && stackPanel.ActualHeight > ActualHeight)
+            if (VerticalScrollMode == ScrollMode.Auto && contentChild.ContentSize.Height > ActualHeight)
                 return true;
 
             return false;

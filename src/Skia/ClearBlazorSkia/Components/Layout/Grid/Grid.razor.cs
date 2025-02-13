@@ -353,6 +353,8 @@ namespace ClearBlazor
 
             MeasureCellsGroup(_cellGroup4, constraint, false, false);
 
+            //ContentSize = new Size(stackDesiredSize.Width, stackDesiredSize.Height);
+
             resultSize = new Size(
                             CalculateDesiredSize(_definitionsH),
                             CalculateDesiredSize(_definitionsV));

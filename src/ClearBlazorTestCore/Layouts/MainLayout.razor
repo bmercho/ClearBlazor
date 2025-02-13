@@ -7,7 +7,19 @@
 @inherits LayoutComponentBase
 @inject NavigationManager NavManager
 
-<RootComponent>
+<RootComponent >
+    <StackPanel Margin=10 BorderThickness=5 Padding=10 Height=500 Style="overflow-y:hidden;"
+                VerticalAlignment=Alignment.Start
+                Orientation=Orientation.Portrait
+                BackgroundColor=@Color.Custom("red")>
+        <Grid Height=300 BackgroundColor=@Color.Custom("yellow") />
+        <Grid Height=200 BackgroundColor=@Color.Custom("blue") />
+        <Grid Height=150 BackgroundColor=@Color.Custom("pink") />
+    </StackPanel>
+
+</RootComponent>
+
+@* <RootComponent>
     <Grid Rows="auto,*">
          <AppBar Row="0" Padding="10" BackgroundColor="Color.BackgroundGrey">
             <IconButton Dock="Dock.Left" Icon="@Icons.Material.Filled.Menu" OnClicked=@MenuClicked />
@@ -98,7 +110,7 @@
         </Drawer>
     </Grid>
  </RootComponent>
- 
+ *@ 
 
  @code {
     Drawer Drawer;

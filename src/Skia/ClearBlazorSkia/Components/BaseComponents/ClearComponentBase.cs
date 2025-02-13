@@ -292,6 +292,8 @@ namespace ClearBlazor
         internal Size DesiredSize { get; set; }
         internal Size AvailableSize { get; set; }
 
+        internal Size ContentSize { get; set; } = new Size();
+
         internal double _prevActualHeight = 0;
         internal double _prevActualWidth = 0;
         internal double _prevTop = 0; 

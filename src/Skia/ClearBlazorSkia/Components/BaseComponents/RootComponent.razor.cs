@@ -16,6 +16,8 @@ namespace ClearBlazor
         private bool LoadingComplete = false;
         SkiaDrawingCanvas _canvasView = null!;
         //private string _canvasId = Guid.NewGuid().ToString();
+        double _width = 0;
+        double _height = 0;
 
         public RootComponent()
         {
@@ -60,7 +62,7 @@ namespace ClearBlazor
                     // PerformLayout may change _isVisualTreeDirty to true in which case
                     // this will be executed again.
                     _isVisualTreeDirty = false; 
-                    PerformLayout(Width, Height);
+                    PerformLayout(_width, _height);
                     StateHasChanged();
                     if (!_isVisualTreeDirty)
                         await LayoutComplete.InvokeAsync();
@@ -70,7 +72,7 @@ namespace ClearBlazor
 
         private string GetStyle()
         {
-            return $"overflow: hidden; position: relative;height:{Height}px; width:{Width}px; ";
+            return $"overflow: hidden; position: relative;height:{_height}px; width:{_width}px; ";
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -102,7 +104,6 @@ namespace ClearBlazor
                 throw new Exception("The RootComponent can only have a single child.");
 
             Rect boundRect = new Rect(finalSize);
-
             if (Children.Count == 1)
             {
                 var panel = Children[0] as PanelBase;
@@ -147,11 +148,16 @@ namespace ClearBlazor
             if (browserSizeInfo.BrowserHeight == 0 || browserSizeInfo.BrowserWidth == 0)
                 return;
 
-            if (Height == double.PositiveInfinity)
-                Height = browserSizeInfo.BrowserHeight;
-            if (Width == double.PositiveInfinity)
-                Width = browserSizeInfo.BrowserWidth;
+            if (double.IsNaN(Height))
+                _height = browserSizeInfo.BrowserHeight;
+            else
+                _height = Height;
+            if (double.IsNaN(Width))
+                _width = browserSizeInfo.BrowserWidth;
+            else
+                _width = Width;
             LoadingComplete = true;
+            _isVisualTreeDirty = true;
             StateHasChanged();
         }
 

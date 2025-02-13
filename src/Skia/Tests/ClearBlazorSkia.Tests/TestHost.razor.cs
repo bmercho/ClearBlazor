@@ -43,7 +43,7 @@ namespace ClearBlazorSkia.Tests
             }
 
             int group = 3;
-            int num = 1;
+            int num = 2;
             
             int testNum = group * 1000 + num;
             _testIndex = _tests.IndexOfKey(testNum);

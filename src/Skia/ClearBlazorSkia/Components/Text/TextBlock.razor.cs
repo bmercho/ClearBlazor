@@ -122,6 +122,7 @@ namespace ClearBlazor
             }
 
             _richString = new RichString();
+            _richString.EllipsisEnabled = true;
             //if (BackgroundColor != null)
             //_richString.BackgroundColor(@Color.BackgroundGrey.ToSKColor());
             if (Color != null)
@@ -156,7 +157,8 @@ namespace ClearBlazor
 
             _richString.Add(Text, fontItalic: true);
 
-            _richString.MaxWidth = (float)availableSize.Width;
+            if (TextWrapping == TextWrap.Wrap)
+                _richString.MaxWidth = (float)availableSize.Width;
             Size textSize = new Size(availableSize.Width, availableSize.Height);
 
             switch (HorizontalAlignment)
@@ -166,7 +168,8 @@ namespace ClearBlazor
                     if (double.IsPositiveInfinity(availableSize.Width))
                     {
                         textSize.Width = _richString.MeasuredWidth;
-                        _richString.MaxWidth = _richString.MeasuredWidth;
+                        if (TextWrapping == TextWrap.Wrap)
+                            _richString.MaxWidth = _richString.MeasuredWidth;
                     }
                     break;
                 case Alignment.Start:

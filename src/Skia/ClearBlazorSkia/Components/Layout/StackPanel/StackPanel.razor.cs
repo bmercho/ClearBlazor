@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using SkiaSharp;
+using System.Data;
 
 namespace ClearBlazor
 {
@@ -75,6 +76,13 @@ namespace ClearBlazor
                         break;
                 }
             }
+
+            ContentSize = new Size(stackDesiredSize.Width, stackDesiredSize.Height);
+
+            // Since we can offset and clip our content, we never need to be larger than the parent suggestion.
+            // If we returned the full size of the content, we would always be so big we didn't need to scroll.  :)
+            stackDesiredSize.Width = Math.Min(stackDesiredSize.Width, availableSize.Width);
+            stackDesiredSize.Height = Math.Min(stackDesiredSize.Height, availableSize.Height);
 
             return stackDesiredSize;
         }
