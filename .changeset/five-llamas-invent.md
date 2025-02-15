@@ -2,4 +2,4 @@
 "ClearBlazor": patch
 ---
 
-Align dotnet versions and fix build
+Fix build by ensuring the correct dotnet sdk is installed
