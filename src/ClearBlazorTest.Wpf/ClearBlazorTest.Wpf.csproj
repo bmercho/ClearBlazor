@@ -6,8 +6,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
-	<RootNamespace>ClearBlazorTest.Wpf</RootNamespace>
-	<AssemblyName>ClearBlazorTest.Wpf</AssemblyName>
+    <RootNamespace>ClearBlazorTest.Wpf</RootNamespace>
+    <AssemblyName>ClearBlazorTest.Wpf</AssemblyName>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
 
   <ItemGroup>
