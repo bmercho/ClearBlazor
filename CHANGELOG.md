@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.18
+
+### Patch Changes
+
+- 05558dc: Fix build by ensuring the correct dotnet sdk is installed
+
 ## 0.0.17
 
 ### Patch Changes
