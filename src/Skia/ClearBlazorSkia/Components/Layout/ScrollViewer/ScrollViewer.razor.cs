@@ -109,9 +109,7 @@ namespace ClearBlazor
             return resultSize;
         }
 
-        protected override Size ArrangeOverride(Size finalSize,
-                                                double offsetHeight,
-                                                double offsetWidth)
+        protected override Size ArrangeOverride(Size finalSize)
         {
             if (Children.Count > 1)
                 throw new Exception("The ScrollViewer can only have a single child.");

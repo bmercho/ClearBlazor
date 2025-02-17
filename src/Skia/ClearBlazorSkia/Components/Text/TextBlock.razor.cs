@@ -193,9 +193,7 @@ namespace ClearBlazor
             return textSize;
         }
 
-        protected override Size ArrangeOverride(Size arrangeSize,
-                                                double offsetHeight,
-                                                double offsetWidth)
+        protected override Size ArrangeOverride(Size arrangeSize)
         {
             return arrangeSize;
         }
