@@ -361,9 +361,7 @@ namespace ClearBlazor
             return resultSize;
         }
 
-        protected override Size ArrangeOverride(Size arrangeSize,
-                                                double offsetHeight,
-                                                double offsetWidth)
+        protected override Size ArrangeOverride(Size arrangeSize)
         {
             try
             {
@@ -388,8 +386,8 @@ namespace ClearBlazor
                         GetFinalSizeForRange(_definitionsH, columnIndex, columnSpan),
                         GetFinalSizeForRange(_definitionsV, rowIndex, rowSpan));
 
-                    cellRect.Top += offsetHeight;
-                    cellRect.Left += offsetWidth;
+                    //cellRect.Top += offsetHeight;
+                    //cellRect.Left += offsetWidth;
 
                     cell.Arrange(cellRect);
                 }

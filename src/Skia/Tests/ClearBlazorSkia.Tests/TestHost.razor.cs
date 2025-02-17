@@ -1,16 +1,19 @@
 using Microsoft.AspNetCore.Components;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 
 namespace ClearBlazorSkia.Tests
 {
-    public partial class TestHost:ComponentBase
+    public partial class TestHost : ComponentBase
     {
         private Type? _testType { get; set; } = null;
         private int _testIndex = 1;
         private TestInfo? _currentTest = null;
+        private bool _auto = false;
+        private string TestName { get; set; }
 
         private Dictionary<string, object> _params = new Dictionary<string, object>();
-        private SortedList<int,TestInfo> _tests = new SortedList<int,TestInfo>();
+        private SortedList<int, TestInfo> _tests = new SortedList<int, TestInfo>();
 
         protected override void OnInitialized()
         {
@@ -36,15 +39,18 @@ namespace ClearBlazorSkia.Tests
                 var groupTestNumber = int.Parse(numString.Split("_")[1]);
 
                 int testNumber = groupNumber * 1000 + groupTestNumber;
-                _tests.Add(testNumber, new TestInfo() {GroupNumber=groupNumber,
-                                                       GroupTestNumber=groupTestNumber,
-                                                       TestName= type.Name, 
-                                                       TestType = type });
+                _tests.Add(testNumber, new TestInfo()
+                {
+                    GroupNumber = groupNumber,
+                    GroupTestNumber = groupTestNumber,
+                    TestName = type.Name,
+                    TestType = type
+                });
             }
 
-            int group = 3;
-            int num = 2;
-            
+            int group = 1;
+            int num = 1;
+
             int testNum = group * 1000 + num;
             _testIndex = _tests.IndexOfKey(testNum);
             _currentTest = GetTest(_testIndex);
@@ -61,8 +67,13 @@ namespace ClearBlazorSkia.Tests
         public TestInfo? GetTest(int testIndex)
         {
             if (_tests.Values.Count <= testIndex)
+            {
+                TestName = "";
                 return null;
-            return _tests.Values.ElementAt(testIndex);
+            }
+            TestInfo info = _tests.Values.ElementAt(testIndex);
+            TestName = info.TestName;
+            return info;
         }
 
         private async Task TestComplete(bool passed)
@@ -70,10 +81,22 @@ namespace ClearBlazorSkia.Tests
             if (_currentTest != null)
             {
                 _currentTest.TestState = passed;
-                Console.WriteLine($"{_currentTest.TestName}: {(passed ? "Passed" : "Failed")} ");
+                Console.WriteLine($"{_currentTest.TestName}: {(passed ? "Passed" : "Failed")} \n");
             }
             await Task.Delay(250);
             _testIndex++;
+            if (!_auto)
+                return;
+            _currentTest = GetTest(_testIndex);
+            if (_currentTest == null)
+                return;
+            else
+                _testType = _currentTest.TestType;
+            StateHasChanged();
+        }
+
+        private void OnClick()
+        {
             _currentTest = GetTest(_testIndex);
             if (_currentTest == null)
                 return;
@@ -89,6 +112,6 @@ namespace ClearBlazorSkia.Tests
         public int GroupTestNumber { get; set; }
         public string TestName { get; set; } = string.Empty;
         public Type? TestType { get; set; } = null;
-        public bool? TestState { get; set; } = null; 
+        public bool? TestState { get; set; } = null;
     }
 }

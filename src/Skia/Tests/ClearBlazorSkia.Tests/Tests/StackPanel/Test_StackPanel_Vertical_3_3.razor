@@ -2,14 +2,14 @@
 @using ClearBlazor
 @using ClearBlazorSkia.Tests.Tests
 @inherits TestBase
-<RootComponent @ref=_rootComponent Width=800 Height=600 
-BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
-    <StackPanel Margin=10 BorderThickness=5 Padding=10 
+<RootComponent Name="Root" @ref=_rootComponent Width=800 Height=600 
+               BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
+    <StackPanel Name="Stack1" Margin=10 BorderThickness=5 Padding=10 
                 Orientation=StackOrientation.Vertical 
                 BackgroundColor=@Color.Custom("red")>
-        <Grid Height=50 BackgroundColor=@Color.Custom("yellow")/>
-         <Grid Height=100 BackgroundColor=@Color.Custom("blue")/>
-               <Grid Height=75 BackgroundColor=@Color.Custom("pink") />
+        <Grid Name="Grid1" Height=50 BackgroundColor=@Color.Custom("yellow")/>
+        <Grid Name="Grid2" Height=100 BackgroundColor=@Color.Custom("blue")/>
+        <Grid Name="Grid3" Height=75 BackgroundColor=@Color.Custom("pink") />
     </StackPanel>
 </RootComponent>
 

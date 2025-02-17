@@ -77,6 +77,9 @@ namespace ClearBlazor
 
         protected override Size MeasureOverride(Size availableSize)
         {
+            Console.WriteLine($"{Name}: MeasureConstraint:{availableSize.Width}-{availableSize.Height}");
+
+
             Size resultSize = new Size(0, 0);
 
             if (Children.Count > 1)
@@ -92,14 +95,14 @@ namespace ClearBlazor
                     resultSize.Height = child.DesiredSize.Height;
                 }
             }
+            Console.WriteLine($"{Name}: MeasureResult:{resultSize.Width}-{resultSize.Height}");
 
             return resultSize;
         }
 
-        protected override Size ArrangeOverride(Size finalSize, 
-                                                double offsetHeight, 
-                                                double offsetWidth)
+        protected override Size ArrangeOverride(Size finalSize)
         {
+            Console.WriteLine($"{Name}: ArrangeSize:{finalSize.Width}-{finalSize.Height}");
             if (Children.Count > 1)
                 throw new Exception("The RootComponent can only have a single child.");
 
@@ -110,6 +113,8 @@ namespace ClearBlazor
                 if (panel != null)
                     panel.Arrange(boundRect);
             }
+            Console.WriteLine($"{Name}: ArrangeResult:{finalSize.Width}-{finalSize.Height}");
+
 
             return finalSize;
         }

@@ -54,9 +54,6 @@ namespace ClearBlazor
 
             foreach (ClearComponentBase child in Children)
             {
-                //if (child is not PanelBase panel)
-                //    continue;
-
                 child.Measure(layoutSlotSize);
                 Size childDesiredSize = child.DesiredSize;
 
@@ -87,22 +84,13 @@ namespace ClearBlazor
             return stackDesiredSize;
         }
 
-        protected override Size ArrangeOverride(Size arrangeSize,
-                                                double offsetHeight,
-                                                double offsetWidth)
-
+        protected override Size ArrangeOverride(Size arrangeSize)
         {
             Rect rcChild = new Rect(new Size(arrangeSize.Width, arrangeSize.Height));
             double previousChildSize = 0.0;
 
-            rcChild.Top += offsetHeight;
-            rcChild.Left += offsetWidth;
-
             foreach (ClearComponentBase child in Children)
             {
-                //if (child is not PanelBase panel)
-                //    continue;
-
                 switch (Orientation)
                 {
                     case StackOrientation.Vertical:
