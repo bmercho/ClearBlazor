@@ -290,9 +290,9 @@ namespace ClearBlazor
         internal double Top { get; set; } = 0;
         internal double Left { get; set; } = 0;
         internal Size DesiredSize { get; set; }
-        internal Size AvailableSize { get; set; }
         internal Rect FinalRect { get; set; } = new Rect();
         internal Size ContentSize { get; set; } = new Size();
+        internal SKRect ClipRect { get; set; } = new SKRect();
 
         internal bool _needsClipBounds = false;
         internal double _prevActualHeight = 0;
@@ -306,11 +306,6 @@ namespace ClearBlazor
         internal Size? _unclippedDesiredSizeField = null;
 
         internal Size RenderSize = new Size(0, 0);
-
-        //        internal double ContentWidth { get; set; } = 0;
-        //        internal double ContentHeight { get; set; } = 0;
-        //        internal double ContentLeft { get; set; } = 0;
-        //        internal double ContentTop { get; set; } = 0;
 
         internal Thickness _borderThickness;
         internal Thickness _marginThickness;
@@ -651,6 +646,8 @@ namespace ClearBlazor
             }
             Left = offset.X;
             Top = offset.Y;
+
+            ClipRect = GetClipRect(new Size(FinalRect.Width, FinalRect.Height));
         }
 
         private Vector ComputeAlignmentOffset(Size clientSize, Size inkSize)
@@ -751,14 +748,11 @@ namespace ClearBlazor
             _yOffset += Top;
 
             canvas.Translate((float)_xOffset, (float)_yOffset);
-            Console.WriteLine($"{Name}: Translate:{_xOffset} {_yOffset} ");
+            //Console.WriteLine($"{Name}: Translate:{_xOffset} {_yOffset} ");
 
             DoPaint(canvas);
-            //var clipRect = new SKRect(0, 0, (float)ActualWidth, (float)ActualHeight);
-            //canvas.ClipRect(clipRect);
-            var clip = GetClipRect(new Size(FinalRect.Width, FinalRect.Height));
-            //Console.WriteLine($"{Name}: Clip:{clip.Left} {clip.Top} {clip.Width} {clip.Height}");
-            canvas.ClipRect(GetClipRect(new Size(FinalRect.Width, FinalRect.Height)));
+            //Console.WriteLine($"{Name}: Clip:{ClipRect.Left} {ClipRect.Top} {ClipRect.Width} {ClipRect.Height}");
+            canvas.ClipRect(ClipRect);
 
             foreach (var child in Children)
             {

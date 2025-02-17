@@ -19,7 +19,7 @@ LayoutComplete=@LayoutComplete>
 
     private async Task LayoutComplete()
     {
-        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0);
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
         if (_rootComponent.Children.Count != 1)
         {
             testPassed = false;
@@ -40,11 +40,11 @@ LayoutComplete=@LayoutComplete>
             return;
         }
 
-        testPassed &= CheckComponentLocation(grid1, 310, 210, 480, 380 );
+        testPassed &= CheckComponentLocation(grid1, 310, 210, 480, 380,0,0,310,210 );
 
         testPassed &= CheckComponentBorder(grid1, 5, 5, 5, 5); 
 
-        testPassed &= CheckComponentLocation(grid2, 300, 200, 5, 5 );
+        testPassed &= CheckComponentLocation(grid2, 300, 200, 5, 5,0,0,300,200 );
 
         await TestComplete.InvokeAsync(testPassed);
     }

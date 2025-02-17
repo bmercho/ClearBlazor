@@ -15,7 +15,7 @@ namespace ClearBlazor
     {
         protected override Size MeasureOverride(Size constraint)
         {
-            Console.WriteLine($"{Name}: MeasureConstraint:{constraint.Width}-{constraint.Height}");
+            //Console.WriteLine($"{Name}: MeasureConstraint:{constraint.Width}-{constraint.Height}");
 
             var paddingThickness = Thickness.Parse(Padding);
             var borderThickness = Thickness.Parse(BorderThickness);
@@ -34,12 +34,7 @@ namespace ClearBlazor
                 var child = Children[0] as PanelBase;
                 if (child != null)
                 {
-                    // Combine into total decorating size
-                    Size combined = new Size(border.Width + padding.Width, border.Height + padding.Height);
-
                     // Remove size of border only from child's reference size.
-//                    Size childConstraint = new Size(Math.Max(0.0, constraint.Width - combined.Width),
-  //                                                  Math.Max(0.0, constraint.Height - combined.Height));
                     Size childConstraint = new Size(Math.Max(0.0, constraint.Width),
                                                     Math.Max(0.0, constraint.Height));
 
@@ -47,33 +42,27 @@ namespace ClearBlazor
                     Size childSize = child.DesiredSize;
 
                     // Now use the returned size to drive our size, by adding back the margins, etc.
-//                    resultSize.Width = childSize.Width + combined.Width;
-  //                  resultSize.Height = childSize.Height + combined.Height;
                     resultSize.Width = childSize.Width;
                     resultSize.Height = childSize.Height;
                 }
                 else
                 {
                     // Combine into total decorating size
-                    //resultSize = new Size(border.Width + padding.Width, border.Height + padding.Height);
                     resultSize = new Size(0, 0);
                 }
             }
-            Console.WriteLine($"{Name}: MeasureResult:{resultSize.Width}-{resultSize.Height}");
+            //Console.WriteLine($"{Name}: MeasureResult:{resultSize.Width}-{resultSize.Height}");
 
             return resultSize;
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            Console.WriteLine($"{Name}: ArrangeSize:{finalSize.Width}-{finalSize.Height}");
+            //Console.WriteLine($"{Name}: ArrangeSize:{finalSize.Width}-{finalSize.Height}");
             if (Children.Count > 1)
                 throw new Exception("The RootComponent can only have a single child.");
 
-            //var borderThickness = Thickness.Parse(BorderThickness);
-            //var paddingThickness = Thickness.Parse(Padding);
             Rect innerRect = new Rect(finalSize);
-            //Rect innerRect = HelperDeflateRect(boundRect, borderThickness);
 
             if (Children.Count == 1)
             {
@@ -84,7 +73,7 @@ namespace ClearBlazor
                     panel.Arrange(childRect);
                 }
             }
-            Console.WriteLine($"{Name}: ArrangeResult:{finalSize.Width}-{finalSize.Height}");
+//            Console.WriteLine($"{Name}: ArrangeResult:{finalSize.Width}-{finalSize.Height}");
 
             return finalSize;
         }

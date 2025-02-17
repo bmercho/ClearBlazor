@@ -15,16 +15,16 @@
 
     private async Task LayoutComplete()
     {
-        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0);
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
         var border1 = _rootComponent.Children[0];
         if (_rootComponent.Children.Count != 1 || !(border1 is Border))
             testPassed = false;
 
-        testPassed &= CheckComponentLocation(border1, 780, 580, 10, 10);
+        testPassed &= CheckComponentLocation(border1, 780, 580, 10, 10,0,0,780,580);
         var border2 = _rootComponent.Children[0].Children[0];
         if (_rootComponent.Children[0].Children.Count != 1 || !(border2 is Border))
             testPassed = false;
-        testPassed &= CheckComponentLocation(border2, 780, 580, 10, 10);
+        testPassed &= CheckComponentLocation(border2, 750, 550, 15, 15,0,0,750,550);
 
         await TestComplete.InvokeAsync(testPassed);
     }

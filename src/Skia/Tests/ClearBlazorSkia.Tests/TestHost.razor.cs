@@ -9,7 +9,7 @@ namespace ClearBlazorSkia.Tests
         private Type? _testType { get; set; } = null;
         private int _testIndex = 1;
         private TestInfo? _currentTest = null;
-        private bool _auto = false;
+        private bool _auto = true;
         private string TestName { get; set; }
 
         private Dictionary<string, object> _params = new Dictionary<string, object>();
@@ -81,7 +81,7 @@ namespace ClearBlazorSkia.Tests
             if (_currentTest != null)
             {
                 _currentTest.TestState = passed;
-                Console.WriteLine($"{_currentTest.TestName}: {(passed ? "Passed" : "Failed")} \n");
+                Console.WriteLine($"{_currentTest.TestName}: {(passed ? "Passed" : "Failed")}");
             }
             await Task.Delay(250);
             _testIndex++;

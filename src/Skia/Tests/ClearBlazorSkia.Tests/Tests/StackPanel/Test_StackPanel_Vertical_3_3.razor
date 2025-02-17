@@ -19,12 +19,12 @@
 
     private async Task LayoutComplete()
     {
-        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0);
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
         var stackPanel = _rootComponent.Children[0];
         if (_rootComponent.Children.Count != 1 || !(stackPanel is StackPanel))
             testPassed = false;
 
-        testPassed &= CheckComponentLocation(stackPanel, 780, 580, 10, 10);
+        testPassed &= CheckComponentLocation(stackPanel, 780, 580, 10, 10,0,0,780,580);
 
         var child1 = stackPanel.Children[0];
         var child2 = stackPanel.Children[1];
@@ -35,9 +35,9 @@
             !(child3 is Grid))
             testPassed = false;
 
-        testPassed &= CheckComponentLocation(child1, 750, 50, 15, 15);
-        testPassed &= CheckComponentLocation(child2, 750, 100, 15, 65);
-        testPassed &= CheckComponentLocation(child3, 750, 75, 15, 165);
+        testPassed &= CheckComponentLocation(child1, 750, 50, 15, 15,0,0,750,50);
+        testPassed &= CheckComponentLocation(child2, 750, 100, 15, 65,0,0,750,100);
+        testPassed &= CheckComponentLocation(child3, 750, 75, 15, 165,0,0,750,75);
         await TestComplete.InvokeAsync(testPassed);
     }
 }

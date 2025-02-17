@@ -166,10 +166,14 @@ namespace ClearBlazor
             if (HorizontalScrollMode == ScrollMode.Enabled)
                 return true;
 
-            if (Children == null || Children.Count != 1)
+            if (Children == null || Children.Count != 1 || Children[0].Children.Count != 1 ||
+                Children[0].Children[0].Children.Count != 1)
                 return false;
 
-            if (HorizontalScrollMode == ScrollMode.Auto && Children[0].ActualWidth > ActualWidth)
+            var contentChild = Children[0]?.Children[0]?.Children[0];
+            if (contentChild == null)
+                return false;
+            if (HorizontalScrollMode == ScrollMode.Auto && contentChild.ContentSize.Width > ActualWidth)
                 return true;
 
             return false;

@@ -17,10 +17,10 @@ BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
 
     private async Task LayoutComplete()
     {
-        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0);
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
         if (_rootComponent.Children.Count != 1 || !(_rootComponent.Children[0] is Grid))
             testPassed = false;
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 780, 580, 10, 10);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 780, 580, 10, 10,0,0,780,580);
 
         testPassed &= CheckComponentBorder(_rootComponent.Children[0], 5, 5, 5, 5);
 
@@ -29,9 +29,9 @@ BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
             !(_rootComponent.Children[0].Children[1] is StackPanel))
             testPassed = false;
 
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[0], 100, 460, 10, 10);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[0], 100, 460, 10, 10,0,0,100,460);
 
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[1], 100, 100, 10, 470);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[1], 100, 100, 10, 470,0,0,100,100);
 
         await TestComplete.InvokeAsync(testPassed);
     }

@@ -17,10 +17,10 @@
 
     private async Task LayoutComplete()
     {
-        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0);
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
         if (_rootComponent.Children.Count != 1 || !(_rootComponent.Children[0] is Grid))
             testPassed = false;
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 10, 10, 395, 295);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 10, 10, 395, 295,0,0,10,10);
 
         testPassed &= CheckComponentBorder(_rootComponent.Children[0], 5, 5, 5, 5); 
         await TestComplete.InvokeAsync(testPassed);
