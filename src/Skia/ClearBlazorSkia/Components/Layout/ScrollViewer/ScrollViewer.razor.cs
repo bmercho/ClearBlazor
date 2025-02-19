@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using SkiaSharp;
-using System.Data.Common;
 
 namespace ClearBlazor
 {
@@ -56,6 +55,10 @@ namespace ClearBlazor
         private static List<IObserver<bool>> _observers = new List<IObserver<bool>>();
         //private bool _doRender = true;
         private int _scrollbarWidth = 0;
+        private double _topBarWidthAllowance = 0;
+        private double _leftBarWidthAllowance = 0;
+        private double _bottomBarWidthAllowance = 0;
+        private double _rightBarWidthAllowance = 0;
 
         protected override void OnInitialized()
         {
@@ -95,12 +98,20 @@ namespace ClearBlazor
             if (Children.Count > 1)
                 throw new Exception("The ScrollViewer can only have a single child.");
 
+            GetBarWidthAllowances();
+
             if (Children.Count == 1)
             {
                 var child = Children[0] as PanelBase;
                 if (child != null)
                 {
-                    child.Measure(availableSize);
+                    availableSize.Width -= _leftBarWidthAllowance + _rightBarWidthAllowance;
+                    availableSize.Height -= _topBarWidthAllowance + _bottomBarWidthAllowance;
+
+                    Size childConstraint = new Size(Math.Max(0.0, availableSize.Width),
+                                Math.Max(0.0, availableSize.Height));
+
+                    child.Measure(childConstraint);
                     resultSize.Width = child.DesiredSize.Width;
                     resultSize.Height = child.DesiredSize.Height;
                 }
@@ -116,6 +127,10 @@ namespace ClearBlazor
 
             Rect boundRect = new Rect(finalSize);
 
+            boundRect.Left = _leftBarWidthAllowance;
+            boundRect.Top = _topBarWidthAllowance;
+            boundRect.Width -= _leftBarWidthAllowance + _rightBarWidthAllowance;
+            boundRect.Height -= _topBarWidthAllowance + _bottomBarWidthAllowance;
             if (Children.Count == 1)
             {
                 var panel = Children[0] as PanelBase;
@@ -137,6 +152,41 @@ namespace ClearBlazor
                 observer.OnNext(true);
         }
 
+        private void GetBarWidthAllowances()
+        {
+            _topBarWidthAllowance = 0;
+            _bottomBarWidthAllowance = 0;
+            _leftBarWidthAllowance = 0;
+            _rightBarWidthAllowance = 0;
+
+            if (UseOverlayScrollbars)
+                return;
+
+            if (VerticalScrollMode != ScrollMode.Disabled)
+            {
+                if (VerticalGutter == ScrollbarGutter.Always)
+                    _rightBarWidthAllowance = _scrollbarWidth;
+                else if (VerticalGutter == ScrollbarGutter.AlwaysBothEdges)
+                {
+                    _leftBarWidthAllowance = _scrollbarWidth;
+                    _rightBarWidthAllowance = _scrollbarWidth;
+                }
+                else if (ShowVerticalScrollBar())
+                    _rightBarWidthAllowance = _scrollbarWidth;
+            }
+            if (HorizontalScrollMode != ScrollMode.Disabled)
+            {
+                if (HorizontalGutter == ScrollbarGutter.Always)
+                    _bottomBarWidthAllowance = _scrollbarWidth;
+                else if (HorizontalGutter == ScrollbarGutter.AlwaysBothEdges)
+                {
+                    _topBarWidthAllowance = _scrollbarWidth;
+                    _bottomBarWidthAllowance = _scrollbarWidth;
+                }
+                else if (ShowHorizontalScrollBar())
+                    _bottomBarWidthAllowance = _scrollbarWidth;
+            }
+        }
         private bool ShowVerticalScrollBar()
         {
             if (VerticalScrollMode == ScrollMode.Disabled)
@@ -145,14 +195,14 @@ namespace ClearBlazor
             if (VerticalScrollMode == ScrollMode.Enabled)
                 return true;
 
-            if (Children == null || Children.Count != 1 || Children[0].Children.Count != 1 ||
-                Children[0].Children[0].Children.Count != 1)
+            if (Children == null || Children.Count != 1)
                 return false;
 
-            var contentChild = Children[0]?.Children[0]?.Children[0];
+            var contentChild = Children[0];
             if (contentChild == null)
                 return false;
-            if (VerticalScrollMode == ScrollMode.Auto && contentChild.ContentSize.Height > ActualHeight)
+            if (VerticalScrollMode == ScrollMode.Auto && 
+                contentChild.ContentSize.Height > ActualHeight)
                 return true;
 
             return false;
@@ -166,14 +216,14 @@ namespace ClearBlazor
             if (HorizontalScrollMode == ScrollMode.Enabled)
                 return true;
 
-            if (Children == null || Children.Count != 1 || Children[0].Children.Count != 1 ||
-                Children[0].Children[0].Children.Count != 1)
+            if (Children == null || Children.Count != 1)
                 return false;
 
-            var contentChild = Children[0]?.Children[0]?.Children[0];
+            var contentChild = Children[0];
             if (contentChild == null)
                 return false;
-            if (HorizontalScrollMode == ScrollMode.Auto && contentChild.ContentSize.Width > ActualWidth)
+            if (HorizontalScrollMode == ScrollMode.Auto && 
+                contentChild.ContentSize.Width > ActualWidth)
                 return true;
 
             return false;

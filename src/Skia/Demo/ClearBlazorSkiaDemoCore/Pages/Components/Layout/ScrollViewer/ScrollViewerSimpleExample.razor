@@ -2,18 +2,22 @@
 @using Microsoft.JSInterop
 @using Topten.RichTextKit
 
-<Grid BorderThickness=5 Padding=10 Width=500 Height=500 BackgroundColor=@Color.Custom("lightblue")>
-    <ScrollViewer VerticalScrollMode=@_verticalScrollMode
-                  HorizontalScrollMode=@_horizontalScrollMode
-                  VerticalGutter=@_scrollbarGutter
-                  VerticalOverscrollBehaviour=@_verticalOverscrollBehaviour
-                  HorizontalOverscrollBehaviour=@_horizontalOverscrollBehaviour>
-        <Grid Height=800 BackgroundColor=@Color.Custom("red")>
-            <Grid Height=900 BackgroundColor=@Color.Custom("pink")></Grid>
+<Border @ref="Border1" OnMouseDown=MouseDown>
+@*     <ScrollViewer BorderThickness=0 Padding=0
+    BackgroundColor=@Color.Custom("red")
+    VerticalScrollMode=@_verticalScrollMode
+    HorizontalScrollMode=@_horizontalScrollMode
+    VerticalGutter=@_verticalScrollbarGutter
+    HorizontalGutter=@_horizontalScrollbarGutter
+    VerticalOverscrollBehaviour=@_verticalOverscrollBehaviour
+    HorizontalOverscrollBehaviour=@_horizontalOverscrollBehaviour>
+ *@    <Border>
+        <StackPanel Orientation=StackOrientation.Vertical BackgroundColor=@Color.Custom("lightgreen")>
+            <Grid Name="Grid1" Height="300" Width="900" BackgroundColor=@Color.Custom("yellow") />
+            <Grid Name="Grid2" Height="200" BackgroundColor=@Color.Custom("blue") />
+            <Grid Name="Grid3" Height="800" BackgroundColor=@Color.Custom("pink") />
 
-        </Grid>
-@*         <StackPanel Orientation=StackOrientation.Vertical>
-            @if (_verticalOverflowText)
+            @*             @if (_verticalOverflowText)
             {
                 if (_horizontalOverflowText)
                 {
@@ -53,19 +57,28 @@
                     }
                 }
             }
-        </StackPanel>
- *@    </ScrollViewer>
-
-</Grid>
+ *@        </StackPanel>
+        </Border>
+    @* </ScrollViewer> *@
+</Border>
 
 @code {
     private ScrollMode _verticalScrollMode = ScrollMode.Auto;
     private ScrollMode _horizontalScrollMode = ScrollMode.Auto;
-    private ScrollbarGutter _scrollbarGutter = ScrollbarGutter.OnlyWhenOverflowed;
+    private ScrollbarGutter _verticalScrollbarGutter = ScrollbarGutter.OnlyWhenOverflowed;
+    private ScrollbarGutter _horizontalScrollbarGutter = ScrollbarGutter.OnlyWhenOverflowed;
     private OverscrollBehaviour _verticalOverscrollBehaviour = OverscrollBehaviour.None;
     private OverscrollBehaviour _horizontalOverscrollBehaviour = OverscrollBehaviour.None;
     private bool _verticalOverflowText = true;
     private bool _horizontalOverflowText = true;
+
+    private Border Border1 = null!;
+
+    private void MouseDown()
+    {
+
+    }
+
 }
 
 

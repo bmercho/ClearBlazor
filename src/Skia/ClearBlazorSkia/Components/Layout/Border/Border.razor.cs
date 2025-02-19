@@ -17,13 +17,6 @@ namespace ClearBlazor
         {
             //Console.WriteLine($"{Name}: MeasureConstraint:{constraint.Width}-{constraint.Height}");
 
-            var paddingThickness = Thickness.Parse(Padding);
-            var borderThickness = Thickness.Parse(BorderThickness);
-
-            // Compute the chrome size added by the various elements
-            Size border = HelperCollapseThickness(borderThickness);
-            Size padding = HelperCollapseThickness(paddingThickness);
-
             Size resultSize = new Size(0, 0);
 
             if (Children.Count > 1)
@@ -34,7 +27,6 @@ namespace ClearBlazor
                 var child = Children[0] as PanelBase;
                 if (child != null)
                 {
-                    // Remove size of border only from child's reference size.
                     Size childConstraint = new Size(Math.Max(0.0, constraint.Width),
                                                     Math.Max(0.0, constraint.Height));
 
@@ -68,10 +60,7 @@ namespace ClearBlazor
             {
                 var panel = Children[0] as PanelBase;
                 if (panel != null)
-                {
-                    Rect childRect = innerRect;
-                    panel.Arrange(childRect);
-                }
+                    panel.Arrange(innerRect);
             }
 //            Console.WriteLine($"{Name}: ArrangeResult:{finalSize.Width}-{finalSize.Height}");
 
