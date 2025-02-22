@@ -1,7 +1,10 @@
 ﻿@namespace ClearBlazorSkia.Tests
 @inherits ComponentBase
-@if (_testType != null)
-{
-    <DynamicComponent Type=@_testType Parameters=@_params />
-}
 
+<div onclick=@OnClick>
+    @if (_testType != null)
+    {
+        <div style="margin:10px; ">@TestName</div>
+        <DynamicComponent Type=@_testType Parameters=@_params />
+    }
+</div>

@@ -1,0 +1,40 @@
+﻿@namespace ClearBlazorSkia.Tests
+@using ClearBlazor
+@using ClearBlazorSkia.Tests.Tests
+@inherits TestBase
+<RootComponent Name="Root" @ref=_rootComponent Width=800 Height=600
+               BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
+    <Grid Name="Grid1" BorderThickness=5 Padding=10 Width=500 Height=500 
+          BackgroundColor=@Color.Custom("lightblue")>
+         <StackPanel Name="Stack1" Orientation=StackOrientation.Vertical>
+            <Grid Name="Grid2" Height=400 BackgroundColor=@Color.Custom("pink") />
+        </StackPanel>
+    </Grid>
+</RootComponent>
+
+
+@code {
+
+    RootComponent _rootComponent = null!;
+
+    private async Task LayoutComplete()
+    {
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
+        if (_rootComponent.Children.Count != 1 || !(_rootComponent.Children[0] is Grid))
+            testPassed = false;
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 500, 500, 150, 50,15,15,470,470);
+
+        if (_rootComponent.Children[0].Children.Count != 1 ||
+            !(_rootComponent.Children[0].Children[0] is StackPanel))
+            testPassed = false;
+
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[0], 470, 470, 15, 15,0,0,470,470);
+        if (_rootComponent.Children[0].Children[0].Children.Count != 1 ||
+            !(_rootComponent.Children[0].Children[0].Children[0] is Grid))
+            testPassed = false;
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[0].Children[0], 
+                                             470, 400, 0, 0,0,0,470,400);
+
+        await TestComplete.InvokeAsync(testPassed);
+    }
+}

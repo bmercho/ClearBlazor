@@ -33,6 +33,7 @@
          @ontouchcancel=OnTouchCancel
          @ontouchmove:preventDefault
          @ontouchmove:stopPropagation>
+        @* <SKGLView @ref="_canvasView" id=@_canvasId OnPaintSurface="OnPaintSurface" /> *@
         <SKCanvasView @ref="_canvasView" id=@_canvasId OnPaintSurface="OnPaintSurface" />
     </div>
 </CascadingValue>

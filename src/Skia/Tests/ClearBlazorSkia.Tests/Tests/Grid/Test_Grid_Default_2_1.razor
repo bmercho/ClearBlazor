@@ -2,9 +2,9 @@
 @using ClearBlazor
 @using ClearBlazorSkia.Tests.Tests
 @inherits TestBase
-<RootComponent @ref=_rootComponent Width=800 Height=600 
-               BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
-    <Grid BackgroundColor=@Color.Custom("red")/>
+<RootComponent Name="Root" @ref=_rootComponent Width=800 Height=600 
+BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
+    <Grid Name="Grid" BackgroundColor=@Color.Custom("red")/>
 </RootComponent>
 
 
@@ -14,10 +14,11 @@
 
     private async Task LayoutComplete()
     {
-        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0);
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0, 0, 0, 800, 600);
         if (_rootComponent.Children.Count != 1 || !(_rootComponent.Children[0] is Grid))
             testPassed = false;
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 800, 600, 0, 0);
+        Grid grid = (Grid)_rootComponent.Children[0];
+        testPassed &= CheckComponentLocation(grid, 800, 600, 0, 0, 0, 0, 800, 600);
         await TestComplete.InvokeAsync(testPassed);
     }
 }

@@ -12,7 +12,7 @@
         ///     20,10 - top and bottom borders are 10, left and right borders are 10
         ///     20,10,30,40 - top is 20px, right is 10px, bottom is 30px and left is 40px
         /// </summary>
-        public string? BorderThickness { get; set; }
+        public string BorderThickness { get; set; }
 
         /// <summary>
         /// The color of the border

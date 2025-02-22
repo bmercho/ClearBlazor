@@ -184,6 +184,7 @@ namespace ClearBlazor
         [Parameter]
         public EventCallback<CanvasTouchEventArgs> OnCanvasTouchCancel { get; set; }
 
+//        SKGLView _canvasView = null!;
         SKCanvasView _canvasView = null!;
         private string _canvasId = Guid.NewGuid().ToString();
         private string _id = Guid.NewGuid().ToString();
@@ -218,6 +219,7 @@ namespace ClearBlazor
 
             }
         }
+ //       private void OnPaintSurface(SKPaintGLSurfaceEventArgs e)
         private void OnPaintSurface(SKPaintSurfaceEventArgs e)
         {
             var clipBounds = e.Surface.Canvas.DeviceClipBounds;

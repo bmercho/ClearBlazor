@@ -30,10 +30,10 @@ OnPointerDown=PointerDown>
 
     private async Task LayoutComplete()
     {
-        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0);
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
         if (_rootComponent.Children.Count != 1 || !(_rootComponent.Children[0] is Grid))
             testPassed = false;
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 780, 580, 10, 10);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 780, 580, 10, 10,0,0,780,580);
 
         testPassed &= CheckComponentBorder(_rootComponent.Children[0], 5, 5, 5, 5);
 
@@ -44,13 +44,13 @@ OnPointerDown=PointerDown>
             !(_rootComponent.Children[0].Children[3] is StackPanel))
             testPassed = false;
 
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[0], 380, 280, 10, 10);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[0], 380, 280, 10, 10,0,0,380,280);
 
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[1], 380, 280, 10, 290);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[1], 380, 280, 10, 290,0,0,380,280);
 
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[2], 380, 280, 390, 10);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[2], 380, 280, 390, 10,0,0,380,280);
 
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[3], 380, 280, 390, 290);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0].Children[3], 380, 280, 390, 290,0,0,380,280);
 
         await TestComplete.InvokeAsync(testPassed);
     }

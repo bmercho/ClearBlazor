@@ -1,7 +1,14 @@
 ﻿@namespace ClearBlazorDemo
 @using Topten.RichTextKit
-<StackPanel Orientation=StackOrientation.Vertical BackgroundColor=@Color.Custom("red")>
-    <TextBlock TextAlignment=TextAlignment.Center Typo=Typo.H1/>
+<StackPanel Height=300
+            VerticalAlignment=Alignment.Start 
+            Orientation=StackOrientation.Vertical BackgroundColor=@Color.Tertiary>
+    <TextBlock BackgroundColor=@Color.Custom("yellow") TextAlignment=TextAlignment.Center Typo=Typo.H1 Text="H1.Heading"/>
+    <TextBlock BackgroundColor=@Color.Custom("yellow") TextAlignment=TextAlignment.Center Typo=Typo.H2 Text="H2.Heading"/>
+    <TextBlock BackgroundColor=@Color.Custom("yellow") TextAlignment=TextAlignment.Center Typo=Typo.H3 Text="H3.Heading"/>
+    <TextBlock BackgroundColor=@Color.Custom("yellow") TextAlignment=TextAlignment.Center Typo=Typo.H4 Text="H4.Heading"/>
+    <TextBlock BackgroundColor=@Color.Custom("yellow") TextAlignment=TextAlignment.Center Typo=Typo.H5 Text="H5.Heading"/>
+    <TextBlock BackgroundColor=@Color.Custom("yellow") TextAlignment=TextAlignment.Center Typo=Typo.H6 Text="H6.Heading"/>
 @*     <TextBlock Typo=Typo.H2>H2.Heading</TextBlock>
     <TextBlock Typo=Typo.H3>H3.Heading</TextBlock>
     <TextBlock Typo=Typo.H4>H4.Heading</TextBlock>

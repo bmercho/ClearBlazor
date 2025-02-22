@@ -1,0 +1,31 @@
+﻿@namespace ClearBlazorSkia.Tests
+@using ClearBlazor
+@using ClearBlazorSkia.Tests.Tests
+@inherits TestBase
+<RootComponent Name="Root" @ref=_rootComponent Width=800 Height=600 
+               BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
+    <Border Name="Border1" Margin=10 BorderThickness=5 Padding=10 BackgroundColor=@Color.Custom("red")>
+        <Border Name="Border2" BackgroundColor=@Color.Custom("pink")/>
+    </Border>
+</RootComponent>
+
+@code {
+
+    RootComponent _rootComponent = null!;
+
+    private async Task LayoutComplete()
+    {
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
+        var border1 = _rootComponent.Children[0];
+        if (_rootComponent.Children.Count != 1 || !(border1 is Border))
+            testPassed = false;
+
+        testPassed &= CheckComponentLocation(border1, 780, 580, 10, 10,0,0,780,580);
+        var border2 = _rootComponent.Children[0].Children[0];
+        if (_rootComponent.Children[0].Children.Count != 1 || !(border2 is Border))
+            testPassed = false;
+        testPassed &= CheckComponentLocation(border2, 750, 550, 15, 15,0,0,750,550);
+
+        await TestComplete.InvokeAsync(testPassed);
+    }
+}

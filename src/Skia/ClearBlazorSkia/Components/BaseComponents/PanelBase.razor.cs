@@ -19,7 +19,7 @@ namespace ClearBlazor
         /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
-        public string? BorderThickness { get; set; }
+        public string BorderThickness { get; set; } = "0";
 
         /// <summary>
         /// See <a href="IBorderApi">IBorder</a>

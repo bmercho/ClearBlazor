@@ -1,0 +1,5 @@
+---
+"ClearBlazor": patch
+---
+
+Skia mods

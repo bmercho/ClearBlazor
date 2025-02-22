@@ -5,7 +5,7 @@ using Topten.RichTextKit;
 
 namespace ClearBlazor
 {
-    public partial class TextBlock : ClearComponentBase, IBackground
+    public partial class RichTextBlock : ClearComponentBase, IBackground
     {
         [Parameter]
         public string? Text { get; set; } = null;
@@ -29,19 +29,19 @@ namespace ClearBlazor
         public double? FontSize { get; set; } = null;
 
         [Parameter]
-        public int? FontWeight { get; set; }
+        public int? FontWeight { get; set; } = null;
 
         [Parameter]
         public FontStyle? FontStyle { get; set; } = null;
 
-        //[Parameter]
-        //public double? LineHeight { get; set; } = null;
+        [Parameter]
+        public double? LineHeight { get; set; } = null;
 
-        //[Parameter]
-        //public string? LetterSpacing { get; set; } = null;
+        [Parameter]
+        public string? LetterSpacing { get; set; } = null;
 
-        //[Parameter]
-        //public TextTransform? TextTransform { get; set; } = null;
+        [Parameter]
+        public TextTransform? TextTransform { get; set; } = null;
 
         [Parameter]
         public TextWrap? TextWrapping { get; set; } = null;
@@ -65,9 +65,7 @@ namespace ClearBlazor
         [Parameter]
         public bool Clickable { get; set; } = false;
 
-        SKPaint _paint = new SKPaint();
-        SKFont _font = new SKFont();
-        SKRect bounds;
+        RichString _richString = new RichString();
         protected override Size MeasureOverride(Size availableSize)
         {
             TypographyBase typo = ThemeManager.CurrentTheme.Typography.Default;
@@ -122,97 +120,75 @@ namespace ClearBlazor
             {
                 typo = Typography;
             }
-            _paint = new()
-            {
-                Color = SKColors.Yellow,
-                IsAntialias = true,
-            };
 
-            string family;
-            if (FontFamily != null)
-                family = FontFamily;
-            else
-                family = string.Join(",", typo.FontFamily);
-
-            float size;
-            if (FontSize != null)
-                size = (float)FontSize;
-            else
-                size = (float)typo.FontSize;
-
-            SKFontStyleWeight weight;
-            if (FontWeight != null)
-                weight = (SKFontStyleWeight)FontWeight;
-            else
-                weight = SKFontStyleWeight.Normal;// typo.FontWeight;
-
-
-            //if (FontStyle != null)
-            //{
-            //    if (FontStyle == ClearBlazor.FontStyle.Italic)
-            //        _richString.FontItalic(true);
-            //}
-            //else
-            //    if (typo.FontStyle == ClearBlazor.FontStyle.Italic)
-            //        _richString.FontItalic(true);
-
-            _font = new()
-            {
-                Size = size,
-                Typeface = SKTypeface.FromFamilyName(
-                                 family, weight,
-                                 SKFontStyleWidth.Normal,
-                                 SKFontStyleSlant.Italic)
-            };
-            _font.MeasureText(Text, out bounds, _paint );
-
-//            _richString.EllipsisEnabled = true;
+            _richString = new RichString();
+            _richString.EllipsisEnabled = true;
             //if (BackgroundColor != null)
             //_richString.BackgroundColor(@Color.BackgroundGrey.ToSKColor());
-//            if (Color != null)
-//                _richString.TextColor(Color.ToSKColor());
-//            else
-//                _richString.TextColor(ThemeManager.CurrentPalette.TextPrimary.ToSKColor());
+            if (Color != null)
+                _richString.TextColor(Color.ToSKColor());
+            else
+                _richString.TextColor(ThemeManager.CurrentPalette.TextPrimary.ToSKColor());
+
+            if (FontFamily != null)
+                _richString.FontFamily(FontFamily);
+            else
+                _richString.FontFamily(string.Join(",", typo.FontFamily));
+
+            if (FontSize != null)
+                _richString.FontSize((float)FontSize);
+            else
+                _richString.FontSize((float)typo.FontSize);
+
+            if (FontWeight != null)
+                _richString.FontWeight((int)FontWeight);
+            else
+                _richString.FontWeight((int)typo.FontWeight);
 
 
+            if (FontStyle != null)
+            {
+                if (FontStyle == ClearBlazor.FontStyle.Italic)
+                    _richString.FontItalic(true);
+            }
+            else
+                if (typo.FontStyle == ClearBlazor.FontStyle.Italic)
+                    _richString.FontItalic(true);
 
+            _richString.Add(Text, fontItalic: true);
 
-            //_richString.Add(Text, fontItalic: true);
-
-            //if (TextWrapping == TextWrap.Wrap)
-            //    _richString.MaxWidth = (float)availableSize.Width;
+            if (TextWrapping == TextWrap.Wrap)
+                _richString.MaxWidth = (float)availableSize.Width;
             Size textSize = new Size(availableSize.Width, availableSize.Height);
-            textSize.Width = bounds.Width;
 
-            //switch (HorizontalAlignment)
-            //{
-            //    case Alignment.Stretch:
-            //    case Alignment.Center:
-            //        if (double.IsPositiveInfinity(availableSize.Width))
-            //        {
-            //            textSize.Width = bounds.Width;
-            //            //if (TextWrapping == TextWrap.Wrap)
-            //            //    _richString.MaxWidth = bounds.Width;
-            //        }
-            //        break;
-            //    case Alignment.Start:
-            //    case Alignment.End:
-            //        textSize.Width = bounds.Width;
-            //        break;
-            //}
-            textSize.Height = bounds.Height;
-            //switch (VerticalAlignment)
-            //{
-            //    case Alignment.Stretch:
-            //    case Alignment.Center:
-            //        if (double.IsPositiveInfinity(availableSize.Height))
-            //            textSize.Height = bounds.Height;
-            //        break;
-            //    case Alignment.Start:
-            //    case Alignment.End:
-            //        textSize.Height = bounds.Height;
-            //        break;
-            //}
+            switch (HorizontalAlignment)
+            {
+                case Alignment.Stretch:
+                case Alignment.Center:
+                    if (double.IsPositiveInfinity(availableSize.Width))
+                    {
+                        textSize.Width = _richString.MeasuredWidth;
+                        if (TextWrapping == TextWrap.Wrap)
+                            _richString.MaxWidth = _richString.MeasuredWidth;
+                    }
+                    break;
+                case Alignment.Start:
+                case Alignment.End:
+                    textSize.Width = _richString.MeasuredWidth;
+                    break;
+            }
+            switch (VerticalAlignment)
+            {
+                case Alignment.Stretch:
+                case Alignment.Center:
+                    if (double.IsPositiveInfinity(availableSize.Height))
+                        textSize.Height = _richString.MeasuredHeight;
+                    break;
+                case Alignment.Start:
+                case Alignment.End:
+                    textSize.Height = _richString.MeasuredHeight;
+                    break;
+            }
 
             return textSize;
         }
@@ -226,8 +202,7 @@ namespace ClearBlazor
         {
             base.DoPaint(canvas);
 
-            canvas.DrawText(Text, 0, bounds.Height, _font, _paint);
-            //_richString.Paint(canvas, new SKPoint(0,0));
+            _richString.Paint(canvas, new SKPoint(0,0));
         }
 
     }

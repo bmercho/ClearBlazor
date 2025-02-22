@@ -4,9 +4,9 @@
 @inherits TestBase
 <RootComponent Name="Root" @ref=_rootComponent Width=800 Height=600 
                BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
-    <Grid Name="Grid" BackgroundColor=@Color.Custom("red") Margin=10,5,15,20/>
+    <StackPanel Name="Stack1" Margin=10 BorderThickness=5 Padding=10 BackgroundColor=@Color.Custom("red")>
+    </StackPanel>
 </RootComponent>
-
 
 @code {
 
@@ -14,10 +14,13 @@
 
     private async Task LayoutComplete()
     {
-        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0, 0, 0, 800, 600);
-        if (_rootComponent.Children.Count != 1 || !(_rootComponent.Children[0] is Grid))
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
+        var stackPanel = _rootComponent.Children[0];
+        if (_rootComponent.Children.Count != 1 || !(stackPanel is StackPanel))
             testPassed = false;
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 775, 575, 20, 10, 0, 0, 775, 575);
+
+        testPassed &= CheckComponentLocation(stackPanel, 780, 580, 10, 10,0,0,780,580);
+
         await TestComplete.InvokeAsync(testPassed);
     }
 }

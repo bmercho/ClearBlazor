@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using SkiaSharp;
+using System.Data;
 
 namespace ClearBlazor
 {
@@ -34,6 +35,8 @@ namespace ClearBlazor
 
         protected override Size MeasureOverride(Size availableSize)
         {
+            Console.WriteLine($"Name:{Name}: Measure in:{availableSize.Width}-{availableSize.Height}");
+            _measureIn = availableSize;
             Size stackDesiredSize = new Size(0, 0);
 
             Size layoutSlotSize = availableSize;
@@ -53,9 +56,6 @@ namespace ClearBlazor
 
             foreach (ClearComponentBase child in Children)
             {
-                //if (child is not PanelBase panel)
-                //    continue;
-
                 child.Measure(layoutSlotSize);
                 Size childDesiredSize = child.DesiredSize;
 
@@ -76,25 +76,25 @@ namespace ClearBlazor
                 }
             }
 
+            // Since we can offset and clip our content, we never need to be larger than the parent suggestion.
+            // If we returned the full size of the content, we would always be so big we didn't need to scroll.  :)
+            //stackDesiredSize.Width = Math.Min(stackDesiredSize.Width, availableSize.Width);
+            //stackDesiredSize.Height = Math.Min(stackDesiredSize.Height, availableSize.Height);
+
+            Console.WriteLine($"Name:{Name}: Measure out:{stackDesiredSize.Width}-{stackDesiredSize.Height}");
+            _measureOut = stackDesiredSize;
             return stackDesiredSize;
         }
 
-        protected override Size ArrangeOverride(Size arrangeSize,
-                                                double offsetHeight,
-                                                double offsetWidth)
-
+        protected override Size ArrangeOverride(Size arrangeSize)
         {
+            Console.WriteLine($"Name:{Name}: Arrange in:{arrangeSize.Width}-{arrangeSize.Height}");
+            _arrangeIn = arrangeSize;
             Rect rcChild = new Rect(new Size(arrangeSize.Width, arrangeSize.Height));
             double previousChildSize = 0.0;
 
-            rcChild.Top += offsetHeight;
-            rcChild.Left += offsetWidth;
-
             foreach (ClearComponentBase child in Children)
             {
-                //if (child is not PanelBase panel)
-                //    continue;
-
                 switch (Orientation)
                 {
                     case StackOrientation.Vertical:
@@ -114,6 +114,8 @@ namespace ClearBlazor
                 }
                 child.Arrange(rcChild);
             }
+            Console.WriteLine($"Name:{Name}: Arrange out:{arrangeSize.Width}-{arrangeSize.Height}");
+            _arrangeOut = arrangeSize;
             return arrangeSize;
         }
     }
