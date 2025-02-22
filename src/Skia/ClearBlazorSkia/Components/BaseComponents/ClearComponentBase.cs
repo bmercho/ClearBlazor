@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using SkiaSharp;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ClearBlazor
 {
@@ -302,6 +304,12 @@ namespace ClearBlazor
         private double _absoluteTop = 0;
         private double _absoluteLeft = 0;
 
+        // These are temporary
+        // Remove when all working
+        internal Size _measureIn = new Size();
+        internal Size _measureOut = new Size();
+        internal Size _arrangeIn = new Size();
+        internal Size _arrangeOut = new Size();
 
         internal Size? _unclippedDesiredSizeField = null;
 
@@ -311,7 +319,7 @@ namespace ClearBlazor
         internal Thickness _marginThickness;
         internal Thickness _paddingThickness;
 
-        protected static bool _isVisualTreeDirty = false;
+        internal static bool _isVisualTreeDirty = false;
         protected bool _isDirty = false;
 
 
@@ -404,7 +412,7 @@ namespace ClearBlazor
                           Math.Max(availableSize.Height - marginHeight, 0));
 
             MinMax mm = new MinMax(this);
-
+            Console.WriteLine($"Name:{Name} in measure: {mm.ToString()}");
             frameworkAvailableSize.Width = Math.Max(mm.minWidth, Math.Min(frameworkAvailableSize.Width, mm.maxWidth));
             frameworkAvailableSize.Height = Math.Max(mm.minHeight, Math.Min(frameworkAvailableSize.Height, mm.maxHeight));
 
@@ -575,6 +583,7 @@ namespace ClearBlazor
             }
 
             MinMax mm = new MinMax(this);
+            Console.WriteLine($"Name:{Name} in arrange: {mm.ToString()}");
 
             //we have to choose max between UnclippedDesiredSize and Max here, because
             //otherwise setting of max property could cause arrange at less then unclippedDS.
@@ -622,6 +631,7 @@ namespace ClearBlazor
             Size clippedInkSize = new Size(Math.Min(innerInkSize.Width, mm.maxWidth),
                                            Math.Min(innerInkSize.Height, mm.maxHeight));
 
+            ContentSize = clippedInkSize;
             //remember we have to clip if Max properties limit the inkSize
             _needsClipBounds |=
                     DoubleUtils.LessThan(clippedInkSize.Width, innerInkSize.Width)
@@ -647,7 +657,7 @@ namespace ClearBlazor
             Left = offset.X;
             Top = offset.Y;
 
-            ClipRect = GetClipRect(new Size(FinalRect.Width, FinalRect.Height));
+            ClipRect = GetClipRect(new Size(clippedInkSize.Width, clippedInkSize.Height));
         }
 
         private Vector ComputeAlignmentOffset(Size clientSize, Size inkSize)
@@ -783,7 +793,7 @@ namespace ClearBlazor
                         Style = SKPaintStyle.Fill,
                         Color = background!.BackgroundColor.ToSKColor()
                     };
-                    canvas.DrawRect(0, 0, (float)ActualWidth, (float)ActualHeight, fillPaint);
+                    canvas.DrawRect(0, 0, (float)ContentSize.Width, (float)ContentSize.Height, fillPaint);
                     //canvas.Clear(background!.BackgroundColor.ToSKColor());
                 }
             }
@@ -807,29 +817,29 @@ namespace ClearBlazor
             if (_borderThickness.Top > 0)
                 canvas.DrawLine(0,
                                 (float)(_borderThickness.Top / 2),
-                                (float)(ActualWidth),
+                                (float)(ContentSize.Width),
                                 (float)(_borderThickness.Top / 2), 
                                 strokePaint1);
             strokePaint1.StrokeWidth = (float)_borderThickness.Right;
             if (_borderThickness.Right > 0)
-                canvas.DrawLine((float)(ActualWidth - _borderThickness.Right / 2),
+                canvas.DrawLine((float)(ContentSize.Width - _borderThickness.Right / 2),
                                 0,
-                                (float)(ActualWidth - _borderThickness.Right / 2),
-                                (float)ActualHeight, 
+                                (float)(ContentSize.Width - _borderThickness.Right / 2),
+                                (float)ContentSize.Height, 
                                 strokePaint1);
             strokePaint1.StrokeWidth = (float)_borderThickness.Bottom;
             if (_borderThickness.Bottom > 0)
                 canvas.DrawLine(0,
-                                (float)(ActualHeight -_borderThickness.Bottom/2),
-                                (float)(ActualWidth),
-                                (float)(ActualHeight - _borderThickness.Bottom / 2), 
+                                (float)(ContentSize.Height - _borderThickness.Bottom/2),
+                                (float)(ContentSize.Width),
+                                (float)(ContentSize.Height - _borderThickness.Bottom / 2), 
                                 strokePaint1);
             strokePaint1.StrokeWidth = (float)_borderThickness.Left;
             if (_borderThickness.Left > 0)
                 canvas.DrawLine((float)(_borderThickness.Left / 2),
                                 0,
                                 (float)(_borderThickness.Left / 2),
-                                (float)ActualHeight,
+                                (float)ContentSize.Height,
                                 strokePaint1);
 
         }
@@ -1143,6 +1153,14 @@ namespace ClearBlazor
 
                 width = (DoubleUtils.IsNaN(l) ? 0 : l);
                 minWidth = Math.Max(Math.Min(maxWidth, width), minWidth);
+
+                
+            }
+
+            public override string ToString()
+            {
+                return $"MinWidth:{minWidth} MaxWidth:{maxWidth} " +
+                       $"MinHeight:{minHeight} MaxHeight:{maxHeight}";
             }
 
             internal double minWidth;

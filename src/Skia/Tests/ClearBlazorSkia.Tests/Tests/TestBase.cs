@@ -48,8 +48,6 @@ namespace ClearBlazorSkia.Tests.Tests
             if (!_hideAllLogs && _showComponentLayoutParams)
                 ShowComponentLayoutParams(component);
 
-            bool close = !DoubleUtils.AreClose((double)component.ClipRect.Width, clipWidth);
-
             if (component == null ||
                 !DoubleUtils.AreClose(component.ActualHeight, actualHeight) ||
                 !DoubleUtils.AreClose(component.ActualWidth, actualWidth) ||
@@ -62,6 +60,51 @@ namespace ClearBlazorSkia.Tests.Tests
                 return false;
             return true;
         }
+
+        protected bool CheckIntermediateValues(ClearComponentBase component,
+                                               double measureInWidth,
+                                               double measureInHeight,
+                                               double measureOutWidth,
+                                               double measureOutHeight,
+                                               double arrangeInWidth,
+                                               double arrangeInHeight,
+                                               double arrangeOutWidth,
+                                               double arrangeOutHeight)
+        {
+            string name = "";
+            if (string.IsNullOrEmpty(component.Name))
+                name = component.GetType().Name;
+            else
+                name = component.Name;
+
+
+            if (!_hideAllLogs && _showCheckLocationLogs)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"CheckIntermediateValues: Name: {name} \n" +
+                                  $"    MeasureIn:{component._measureIn.Height}-{component._measureIn.Width} " +
+                                  $"MeasureOut:{component._measureOut.Width}-{measureOutWidth} ");
+                Console.WriteLine($"    measureIn:{measureInWidth}:{measureInHeight} " +
+                                  $"measureOut:{measureOutWidth}:{measureOutHeight} ");
+                Console.WriteLine($"    ArrangeIn:{component._arrangeIn.Height}:{component._arrangeIn.Width} " +
+                                  $"ArrangeOut:{component._arrangeOut.Width}:{component._arrangeOut.Width} ");
+                Console.WriteLine($"    arrangeIn:{arrangeInWidth}:{arrangeInHeight} " +
+                                  $"arrangeOut:{arrangeOutWidth}:{arrangeOutHeight} \n");
+            }
+
+            if (component == null ||
+                !DoubleUtils.AreClose(component._measureIn.Height, measureInHeight) ||
+                !DoubleUtils.AreClose(component._measureIn.Width, measureInWidth) ||
+                !DoubleUtils.AreClose(component._measureOut.Height, measureOutHeight) ||
+                !DoubleUtils.AreClose(component._measureOut.Width, measureOutWidth) ||
+                !DoubleUtils.AreClose(component._arrangeIn.Height, arrangeInHeight) ||
+                !DoubleUtils.AreClose(component._arrangeIn.Width, arrangeInWidth) ||
+                !DoubleUtils.AreClose(component._arrangeOut.Height, arrangeOutHeight) ||
+                !DoubleUtils.AreClose(component._arrangeOut.Width, arrangeOutWidth))
+                return false;
+            return true;
+        }
+
         protected bool CheckComponentBorder(ClearComponentBase component,
                                             double borderTop,
                                             double borderRight,

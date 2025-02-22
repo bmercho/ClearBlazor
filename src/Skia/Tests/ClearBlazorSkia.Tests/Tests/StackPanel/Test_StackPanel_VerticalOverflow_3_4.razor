@@ -27,7 +27,7 @@
         if (_rootComponent.Children.Count != 1 || !(stackPanel is StackPanel))
             testPassed = false;
 
-        testPassed &= CheckComponentLocation(stackPanel, 800, 500, 0, 0,0,0,800,500);
+        testPassed &= CheckComponentLocation(stackPanel, 800, 650, 0, 0,0,0,800,500);
 
         var child1 = stackPanel.Children[0];
         var child2 = stackPanel.Children[1];

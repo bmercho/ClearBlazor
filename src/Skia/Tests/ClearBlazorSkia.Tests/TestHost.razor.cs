@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
 
 namespace ClearBlazorSkia.Tests
 {

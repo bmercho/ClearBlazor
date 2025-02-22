@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using SkiaSharp;
+using System.Data;
 
 namespace ClearBlazor
 {
@@ -93,12 +94,13 @@ namespace ClearBlazor
 
         protected override Size MeasureOverride(Size availableSize)
         {
+            Console.WriteLine($"Name:{Name}: Measure in:{availableSize.Width}-{availableSize.Height}");
+            _measureIn = availableSize;
+
             Size resultSize = new Size(0, 0);
 
             if (Children.Count > 1)
                 throw new Exception("The ScrollViewer can only have a single child.");
-
-            GetBarWidthAllowances();
 
             if (Children.Count == 1)
             {
@@ -111,19 +113,36 @@ namespace ClearBlazor
                     Size childConstraint = new Size(Math.Max(0.0, availableSize.Width),
                                 Math.Max(0.0, availableSize.Height));
 
+                    // Not sure about next lines
+                    //if (VerticalScrollMode != ScrollMode.Disabled)
+                    //    childConstraint.Height = double.PositiveInfinity;
+                    //if (HorizontalScrollMode != ScrollMode.Disabled)
+                    //    childConstraint.Width = double.PositiveInfinity;
+
                     child.Measure(childConstraint);
+
+                    GetBarWidthAllowances();
+
                     resultSize.Width = child.DesiredSize.Width;
                     resultSize.Height = child.DesiredSize.Height;
+                    resultSize.Width += _leftBarWidthAllowance + _rightBarWidthAllowance;
+                    resultSize.Height += _topBarWidthAllowance + _bottomBarWidthAllowance;
                 }
             }
 
+            Console.WriteLine($"Name:{Name}: Measure out:{resultSize.Width}-{resultSize.Height}");
+            _measureOut = resultSize;
             return resultSize;
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
+            Console.WriteLine($"Name:{Name}: Arrange in:{finalSize.Width}-{finalSize.Height}");
+            _arrangeIn = finalSize;
             if (Children.Count > 1)
                 throw new Exception("The ScrollViewer can only have a single child.");
+
+            GetBarWidthAllowances();
 
             Rect boundRect = new Rect(finalSize);
 
@@ -138,6 +157,8 @@ namespace ClearBlazor
                     panel.Arrange(boundRect);
             }
 
+            Console.WriteLine($"Name:{Name}: Arrange out:{boundRect.Width}-{boundRect.Height}");
+            _arrangeOut = finalSize;
             return finalSize;
         }
 
@@ -154,10 +175,10 @@ namespace ClearBlazor
 
         private void GetBarWidthAllowances()
         {
-            _topBarWidthAllowance = 0;
-            _bottomBarWidthAllowance = 0;
-            _leftBarWidthAllowance = 0;
-            _rightBarWidthAllowance = 0;
+            //_topBarWidthAllowance = 0;
+            //_bottomBarWidthAllowance = 0;
+            //_leftBarWidthAllowance = 0;
+            //_rightBarWidthAllowance = 0;
 
             if (UseOverlayScrollbars)
                 return;
@@ -198,11 +219,14 @@ namespace ClearBlazor
             if (Children == null || Children.Count != 1)
                 return false;
 
-            var contentChild = Children[0];
-            if (contentChild == null)
-                return false;
-            if (VerticalScrollMode == ScrollMode.Auto && 
-                contentChild.ContentSize.Height > ActualHeight)
+            //var contentChild = Children[0];
+            //if (contentChild == null)
+            //    return false;
+            double height = 0;
+            if (_unclippedDesiredSizeField != null)
+                height = ((Size)_unclippedDesiredSizeField).Height;
+            if (VerticalScrollMode == ScrollMode.Auto &&
+                height > ActualHeight)
                 return true;
 
             return false;
@@ -219,11 +243,14 @@ namespace ClearBlazor
             if (Children == null || Children.Count != 1)
                 return false;
 
-            var contentChild = Children[0];
-            if (contentChild == null)
-                return false;
-            if (HorizontalScrollMode == ScrollMode.Auto && 
-                contentChild.ContentSize.Width > ActualWidth)
+            //var contentChild = Children[0];
+            //if (contentChild == null)
+            //    return false;
+            double width = 0;
+            if (_unclippedDesiredSizeField != null)
+                width = ((Size)_unclippedDesiredSizeField).Width;
+            if (HorizontalScrollMode == ScrollMode.Auto &&
+                width > ActualWidth)
                 return true;
 
             return false;

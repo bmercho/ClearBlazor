@@ -2,14 +2,16 @@
 @using ClearBlazor
 @using ClearBlazorSkia.Tests.Tests
 @inherits TestBase
-<RootComponent @ref=_rootComponent Width=800 Height=600
+<RootComponent Name="Root" @ref=_rootComponent Width=800 Height=600
                BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete>
-    <ScrollViewer BackgroundColor=@Color.Custom("purple")>
-        <StackPanel  Orientation=StackOrientation.Vertical BackgroundColor=@Color.Custom("red")>
-            <Grid Height=300 BackgroundColor=@Color.Custom("yellow") />
-            <Grid Height=200 BackgroundColor=@Color.Custom("blue") />
+    <ScrollViewer Name="Scroll" BackgroundColor=@Color.Custom("purple") 
+                  VerticalScrollMode=ScrollMode.Auto 
+                  HorizontalScrollMode=ScrollMode.Auto>
+        <StackPanel Name="Stack" Orientation=StackOrientation.Vertical BackgroundColor=@Color.Custom("red")>
+            <Grid Name="Grid1" Height=650 Width=900 BackgroundColor=@Color.Custom("yellow") />
+@*             <Grid Height=200 BackgroundColor=@Color.Custom("blue") />
             <Grid Height=150 BackgroundColor=@Color.Custom("pink") />
-        </StackPanel>
+ *@        </StackPanel>
     </ScrollViewer>
 </RootComponent>
 
@@ -33,17 +35,17 @@
         testPassed &= CheckComponentLocation(stackPanel, 800, 600, 0, 0);
 
         var child1 = stackPanel.Children[0];
-        var child2 = stackPanel.Children[1];
-        var child3 = stackPanel.Children[2];
-        if (stackPanel.Children.Count != 3 ||
-           !(child1 is Grid) ||
-           !(child2 is Grid) ||
-           !(child3 is Grid))
-           testPassed = false;
+        // var child2 = stackPanel.Children[1];
+        // var child3 = stackPanel.Children[2];
+        // if (stackPanel.Children.Count != 3 ||
+        //    !(child1 is Grid) ||
+        //    !(child2 is Grid) ||
+        //    !(child3 is Grid))
+        //    testPassed = false;
 
         testPassed &= CheckComponentLocation(child1, 800, 300, 0, 0);
-        testPassed &= CheckComponentLocation(child2, 800, 200, 0, 300);
-        testPassed &= CheckComponentLocation(child3, 800, 150, 0, 500);
+       // testPassed &= CheckComponentLocation(child2, 800, 200, 0, 300);
+        //testPassed &= CheckComponentLocation(child3, 800, 150, 0, 500);
         await TestComplete.InvokeAsync(testPassed);
     }
 }

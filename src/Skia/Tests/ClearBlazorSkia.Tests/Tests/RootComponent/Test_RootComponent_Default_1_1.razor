@@ -2,8 +2,8 @@
 @using ClearBlazor
 @using ClearBlazorSkia.Tests.Tests
 @inherits TestBase
-<RootComponent @ref=_rootComponent Width=800 Height=600 
-               BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete />
+<RootComponent Name="Root" @ref=_rootComponent Width=800 Height=600 
+BackgroundColor=@Color.Custom("green") LayoutComplete=@LayoutComplete />
 
 @code {
 
@@ -11,7 +11,7 @@
 
     private async Task LayoutComplete()
     {
-        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
+        bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0, 0, 0, 800, 600);
         await TestComplete.InvokeAsync(testPassed);
     }
 }

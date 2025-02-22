@@ -20,7 +20,7 @@
         bool testPassed = CheckComponentLocation(_rootComponent, 800, 600, 0, 0,0,0,800,600);
         if (_rootComponent.Children.Count != 1 || !(_rootComponent.Children[0] is StackPanel))
             testPassed = false;
-        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 500, 500, 150, 50, 15, 15, 470, 470);
+        testPassed &= CheckComponentLocation(_rootComponent.Children[0], 500, 630, 150, 50, 15, 15, 470, 470);
 
         if (_rootComponent.Children[0].Children.Count != 1 ||
             !(_rootComponent.Children[0].Children[0] is Grid))

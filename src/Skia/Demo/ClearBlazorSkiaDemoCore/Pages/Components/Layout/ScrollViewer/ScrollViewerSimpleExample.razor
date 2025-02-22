@@ -3,7 +3,7 @@
 @using Topten.RichTextKit
 
 <Border @ref="Border1" OnMouseDown=MouseDown>
-@*     <ScrollViewer BorderThickness=0 Padding=0
+@*     <ScrollViewer Name="Scroll1" BorderThickness=0 Padding=0
     BackgroundColor=@Color.Custom("red")
     VerticalScrollMode=@_verticalScrollMode
     HorizontalScrollMode=@_horizontalScrollMode
@@ -12,7 +12,7 @@
     VerticalOverscrollBehaviour=@_verticalOverscrollBehaviour
     HorizontalOverscrollBehaviour=@_horizontalOverscrollBehaviour>
  *@    <Border>
-        <StackPanel Orientation=StackOrientation.Vertical BackgroundColor=@Color.Custom("lightgreen")>
+        <StackPanel Name="Stack1" Orientation=StackOrientation.Vertical BackgroundColor=@Color.Custom("lightgreen")>
             <Grid Name="Grid1" Height="300" Width="900" BackgroundColor=@Color.Custom("yellow") />
             <Grid Name="Grid2" Height="200" BackgroundColor=@Color.Custom("blue") />
             <Grid Name="Grid3" Height="800" BackgroundColor=@Color.Custom("pink") />

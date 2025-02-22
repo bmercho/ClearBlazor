@@ -123,6 +123,9 @@ namespace ClearBlazor
 
         protected override Size MeasureOverride(Size constraint)
         {
+            Console.WriteLine($"Name:{Name}: Measure in:{constraint.Width}-{constraint.Height}");
+            _measureIn = constraint;
+
             Size resultSize = new Size(0, 0);
 
             _columnDefinitions = GetColumnDefinitions(Columns);
@@ -358,6 +361,8 @@ namespace ClearBlazor
             resultSize = new Size(
                             CalculateDesiredSize(_definitionsH),
                             CalculateDesiredSize(_definitionsV));
+            Console.WriteLine($"Name:{Name}: Measure out:{resultSize.Width}-{resultSize.Height}");
+            _measureOut = resultSize;
             return resultSize;
         }
 
@@ -365,6 +370,8 @@ namespace ClearBlazor
         {
             try
             {
+                Console.WriteLine($"Name:{Name}: Arrange in:{arrangeSize.Width}-{arrangeSize.Height}");
+                _arrangeIn = arrangeSize;
                 SetFinalSize(_definitionsH, arrangeSize.Width, true);
                 SetFinalSize(_definitionsV, arrangeSize.Height, false);
                 for (int currentCell = 0; currentCell < _cellCachesCollection.Length; ++currentCell)
@@ -396,7 +403,9 @@ namespace ClearBlazor
             {
                 SetValid();
             }
-            return (arrangeSize);
+            Console.WriteLine($"Name:{Name}: Arrange out:{arrangeSize.Width}-{arrangeSize.Height}");
+            _arrangeOut = arrangeSize;
+            return arrangeSize;
         }
 
         /// <summary>
