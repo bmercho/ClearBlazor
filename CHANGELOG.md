@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.19
+
+### Patch Changes
+
+- 7fa378c: Skia mods
+
 ## 0.0.18
 
 ### Patch Changes
