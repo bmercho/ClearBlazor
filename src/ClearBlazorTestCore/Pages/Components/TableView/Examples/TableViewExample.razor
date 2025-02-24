@@ -59,7 +59,7 @@
                 @($"Virtualize mode of {_virtualizeMode} is not available for TableView.")
             </TextBlock>
         }
-        @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+        @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
         {
             <StackPanel Column=1 Margin=5 Spacing=5>
                 <RadioGroup Label="Virtualization mode" @bind-Value=_virtualizeMode

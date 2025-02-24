@@ -34,7 +34,7 @@
                     NumPagesShown=4
                     SelectedPageChanged=@PageChanged />
         <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @(_list.CurrentPageNum()) of @(_list.NumPages())</TextBlock>
-        @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+        @if (BrowserSizeService.DeviceSize >= DeviceSize.Compact)
         {
             <StackPanel Column=1>
                 <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode

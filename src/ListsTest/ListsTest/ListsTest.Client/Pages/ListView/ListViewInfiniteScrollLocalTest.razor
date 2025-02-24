@@ -31,7 +31,7 @@
             </RowTemplate>
         </ListView>
 
-        @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+        @if (BrowserSizeService.DeviceSize >= DeviceSize.Compact)
         {
             <StackPanel Column=1>
                 <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode

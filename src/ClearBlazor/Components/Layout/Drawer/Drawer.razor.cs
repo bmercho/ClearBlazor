@@ -259,7 +259,7 @@ namespace ClearBlazor
             if (DrawerMode == DrawerMode.Responsive)
             {
                 var currentDrawerMode = _drawerMode;
-                if (browserSizeInfo.DeviceSize < DeviceSize.Medium)
+                if (browserSizeInfo.DeviceSize < DeviceSize.Expanded)
                 {
                     _drawerMode = DrawerMode.Temporary;
                     Open = false;

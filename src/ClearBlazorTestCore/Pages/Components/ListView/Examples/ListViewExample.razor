@@ -41,7 +41,7 @@
             <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @_selectedPage of @_numPages</TextBlock>
         }
 
-        @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+        @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
         {
             <StackPanel Column=1>
                 <RadioGroup Label="Virtualization mode" @bind-Value=_virtualizeMode

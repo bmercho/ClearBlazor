@@ -43,12 +43,12 @@ namespace ClearBlazor
 
         private DeviceSize GetDeviceSize(int browserWidth)
         {
-            if (browserWidth < (int)DeviceSize.Small)
-                DeviceSize = DeviceSize.ExtraSmall;
-            else if (browserWidth < (int)DeviceSize.Medium)
-                DeviceSize = DeviceSize.Small;
-            else if (browserWidth < (int)DeviceSize.Large)
+            if (browserWidth < (int)DeviceSize.Medium)
+                DeviceSize = DeviceSize.Compact;
+            else if (browserWidth < (int)DeviceSize.Expanded)
                 DeviceSize = DeviceSize.Medium;
+            else if (browserWidth < (int)DeviceSize.Large)
+                DeviceSize = DeviceSize.Expanded;
             else if (browserWidth < (int)DeviceSize.ExtraLarge)
                 DeviceSize = DeviceSize.Large;
             else
