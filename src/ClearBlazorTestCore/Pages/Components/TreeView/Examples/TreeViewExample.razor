@@ -8,7 +8,7 @@ Orientation=Orientation.Portrait>
               @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_feeds>
         <NodeTemplate Context=node>
             <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
-                <MaterialIcon Icon=@node.Icon Color=Color.Custom(Colors.Yellow.Darken1) />
+                <Icon IconName=@node.Icon Color=Color.Custom(Colors.Yellow.Darken1) />
                 <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
                     @node.Id
                 </TextBlock>

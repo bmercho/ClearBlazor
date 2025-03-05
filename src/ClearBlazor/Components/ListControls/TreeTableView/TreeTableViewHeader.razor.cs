@@ -154,7 +154,7 @@ namespace ClearBlazor
             string css = string.Empty;
             css += $"align-self:start; border-width:1px 0 0 0; border-style:solid; z-index:1; " +
                    $"grid-area: 2 / 1 / span 1 / span {columnCount}; " +
-                   $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                   $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
             return css;
         }
 
@@ -163,7 +163,7 @@ namespace ClearBlazor
             string css = $"justify-self:start; z-index:1; border-width:0 0 0 1px; " +
                          $"border-style:solid; margin:0 0 0 -1px; "+
                          $"grid-area: 1 / {column} / span 1 / span 1; " +
-                         $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                         $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
             return css;
         }
     }

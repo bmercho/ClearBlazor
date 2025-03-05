@@ -6,15 +6,29 @@
     @if (Clickable)
     {
         <div id="@Id" class="@Classes" style="@ComputeStyle()" @onclick="OnElementClicked"
-             data-toggle="tooltip" title="@ToolTip" data-data-placement="auto">
-            @ChildContent
+        data-toggle="tooltip" title="@ToolTip" data-data-placement="auto">
+            @if(Text == null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                <div>@Text</div>
+            }
         </div>
     }
     else
     {
         <div id="@Id" class="@Classes" style="@ComputeStyle()"
              data-toggle="tooltip" title="@ToolTip" data-data-placement="auto">
-            @ChildContent
+            @if (Text == null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                <div>@Text</div>
+            }
         </div>
     }
 </CascadingValue>

@@ -23,7 +23,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Values", "List<TListBox?>?", "null", ""),
             new ApiComponentInfo("ValuesChanged", "EventCallback<List<TListBox?>>", "", ""),
             new ApiComponentInfo("ListData", "List<ListDataItem<TListBox>>?", "null", ""),
-            new ApiComponentInfo("BackgroundColor", "Color?", "Color.Transparent", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
             new ApiComponentInfo("BorderThickness", "string?", "null", ""),
             new ApiComponentInfo("BorderColor", "Color?", "null", ""),
             new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", ""),

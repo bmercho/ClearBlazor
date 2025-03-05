@@ -195,7 +195,7 @@ namespace ClearBlazor
                 return css;
 
             if (MouseOverMonth == month)
-                return css + $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
+                return css + $"background-color: {ThemeManager.CurrentColorScheme.ListBackgroundColor.Value}; ";
 
             return css;
         }

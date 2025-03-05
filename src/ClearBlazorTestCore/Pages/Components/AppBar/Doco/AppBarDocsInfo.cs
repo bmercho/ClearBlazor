@@ -12,11 +12,9 @@ namespace ClearBlazorTest
         public (string, string) InheritsLink {get; set; } = ("DockPanel", "DockPanelApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
-            ("IColor", "IColorApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("Color", "Color?", "null", "The foreground color of the AppBar\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

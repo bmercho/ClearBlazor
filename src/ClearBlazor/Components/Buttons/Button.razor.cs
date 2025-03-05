@@ -286,34 +286,34 @@ namespace ClearBlazor
         private Color GetFilledBackgroundColor(Color? color)
         {
             if (Disabled)
-                return ThemeManager.CurrentPalette.BackgroundDisabled;
+                return ThemeManager.CurrentColorScheme.BackgroundDisabled;
             if (color == null)
-                return _mouseOver ? ThemeManager.CurrentPalette.Primary.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Primary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Primary;
             if (color == Color.Primary)
-                return _mouseOver ? ThemeManager.CurrentPalette.Primary.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Primary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Primary;
             if (color == Color.Secondary)
-                return _mouseOver ? ThemeManager.CurrentPalette.Secondary.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Secondary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Secondary.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Secondary;
             if (color == Color.Tertiary)
-                return _mouseOver ? ThemeManager.CurrentPalette.Tertiary.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Tertiary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Tertiary.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Tertiary;
             if (color == Color.Info)
-                return _mouseOver ? ThemeManager.CurrentPalette.Info.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Info;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Info.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Info;
             if (color == Color.Success)
-                return _mouseOver ? ThemeManager.CurrentPalette.Success.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Success;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Success.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Success;
             if (color == Color.Warning)
-                return _mouseOver ? ThemeManager.CurrentPalette.Warning.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Warning;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Warning.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Warning;
             if (color == Color.Error)
-                return _mouseOver ? ThemeManager.CurrentPalette.Error.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Error;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Error.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Error;
             if (color == Color.Dark)
-                return _mouseOver ? ThemeManager.CurrentPalette.Dark.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Dark;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Dark.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Dark;
 
             return _mouseOver ? color.Darken(.2) : color;
         }
@@ -321,32 +321,32 @@ namespace ClearBlazor
         private Color GetFilledTextColor(Color? color)
         {
             if (Disabled)
-                return ThemeManager.CurrentPalette.TextDisabled;
+                return ThemeManager.CurrentColorScheme.TextDisabled;
             return Color.GetAssocTextColor(color);
         }
 
         private Color GetTextOrOutlinedTextColor(Color? color)
         {
             if (Disabled)
-                return ThemeManager.CurrentPalette.TextDisabled;
+                return ThemeManager.CurrentColorScheme.TextDisabled;
             if (color == null)
-                return _mouseOver ? ThemeManager.CurrentPalette.Primary.Darken(.1) : ThemeManager.CurrentPalette.Primary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) : ThemeManager.CurrentColorScheme.Primary;
             if (color == Color.Primary)
-                return _mouseOver ? ThemeManager.CurrentPalette.Primary.Darken(.1) : ThemeManager.CurrentPalette.Primary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) : ThemeManager.CurrentColorScheme.Primary;
             if (color == Color.Secondary)
-                return _mouseOver ? ThemeManager.CurrentPalette.Secondary.Darken(.1) : ThemeManager.CurrentPalette.Secondary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Secondary.Darken(.1) : ThemeManager.CurrentColorScheme.Secondary;
             if (color == Color.Tertiary)
-                return _mouseOver ? ThemeManager.CurrentPalette.Tertiary.Darken(.1) : ThemeManager.CurrentPalette.Tertiary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Tertiary.Darken(.1) : ThemeManager.CurrentColorScheme.Tertiary;
             if (color == Color.Info)
-                return _mouseOver ? ThemeManager.CurrentPalette.Info.Darken(.1) : ThemeManager.CurrentPalette.Info;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Info.Darken(.1) : ThemeManager.CurrentColorScheme.Info;
             if (color == Color.Success)
-                return _mouseOver ? ThemeManager.CurrentPalette.Success.Darken(.1) : ThemeManager.CurrentPalette.Success;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Success.Darken(.1) : ThemeManager.CurrentColorScheme.Success;
             if (color == Color.Warning)
-                return _mouseOver ? ThemeManager.CurrentPalette.Warning.Darken(.1) : ThemeManager.CurrentPalette.Warning;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Warning.Darken(.1) : ThemeManager.CurrentColorScheme.Warning;
             if (color == Color.Error)
-                return _mouseOver ? ThemeManager.CurrentPalette.Error.Darken(.1) : ThemeManager.CurrentPalette.Error;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Error.Darken(.1) : ThemeManager.CurrentColorScheme.Error;
             if (color == Color.Dark)
-                return _mouseOver ? ThemeManager.CurrentPalette.Dark.Darken(.1) : ThemeManager.CurrentPalette.Dark;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Dark.Darken(.1) : ThemeManager.CurrentColorScheme.Dark;
 
             return _mouseOver ? color.Darken(.1) : color;
         }
@@ -355,7 +355,7 @@ namespace ClearBlazor
         {
             if (Disabled)
                 return Color.Transparent;
-            return _mouseOver ? ThemeManager.CurrentPalette.GrayLighter.SetAlpha(.2) :
+            return _mouseOver ? ThemeManager.CurrentColorScheme.GrayLighter.SetAlpha(.2) :
                                 Color.Transparent;
         }
 
@@ -370,37 +370,37 @@ namespace ClearBlazor
             if (Disabled)
             {
                 if (Parent is ButtonGroup)
-                    return color == null? ThemeManager.CurrentPalette.Primary : (Color)color;
-                return ThemeManager.CurrentPalette.TextDisabled;
+                    return color == null? ThemeManager.CurrentColorScheme.Primary : (Color)color;
+                return ThemeManager.CurrentColorScheme.TextDisabled;
             }
 
             if (color == null)
-                return _mouseOver ? ThemeManager.CurrentPalette.Primary.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Primary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Primary;
             if (color == Color.Primary)
-                return _mouseOver ? ThemeManager.CurrentPalette.Primary.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Primary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Primary;
             if (color == Color.Secondary)
-                return _mouseOver ? ThemeManager.CurrentPalette.Secondary.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Secondary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Secondary.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Secondary;
             if (color == Color.Tertiary)
-                return _mouseOver ? ThemeManager.CurrentPalette.Tertiary.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Tertiary;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Tertiary.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Tertiary;
             if (color == Color.Info)
-                return _mouseOver ? ThemeManager.CurrentPalette.Info.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Info;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Info.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Info;
             if (color == Color.Success)
-                return _mouseOver ? ThemeManager.CurrentPalette.Success.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Success;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Success.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Success;
             if (color == Color.Warning)
-                return _mouseOver ? ThemeManager.CurrentPalette.Warning.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Warning;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Warning.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Warning;
             if (color == Color.Error)
-                return _mouseOver ? ThemeManager.CurrentPalette.Error.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Error;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Error.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Error;
             if (color == Color.Dark)
-                return _mouseOver ? ThemeManager.CurrentPalette.Dark.Darken(.1) :
-                                    ThemeManager.CurrentPalette.Dark;
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Dark.Darken(.1) :
+                                    ThemeManager.CurrentColorScheme.Dark;
 
 
             return _mouseOver ? color.Darken(.1) : color;

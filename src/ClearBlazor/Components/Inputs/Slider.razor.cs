@@ -46,9 +46,9 @@ namespace ClearBlazor
         [Parameter]
         public string? BackgroundGradient2 { get; set; } = null;
 
-        private Color BackgroundTrackColor = ThemeManager.CurrentPalette.BackgroundDisabled;
-        private Color TrackColor = ThemeManager.CurrentPalette.Primary.Lighten(.3);
-        private Color ThumbColor = ThemeManager.CurrentPalette.Primary;
+        private Color BackgroundTrackColor = ThemeManager.CurrentColorScheme.BackgroundDisabled;
+        private Color TrackColor = ThemeManager.CurrentColorScheme.Primary.Lighten(.3);
+        private Color ThumbColor = ThemeManager.CurrentColorScheme.Primary;
         private int TrackHeight = 10;
         private double TrackWidth = 0;
         private string TrackMargin = "5px";
@@ -90,8 +90,8 @@ namespace ClearBlazor
 
             if (IsDisabled)
             {
-                ThumbColor = ThemeManager.CurrentPalette.GrayLight;
-                TrackColor = ThemeManager.CurrentPalette.BackgroundDisabled;
+                ThumbColor = ThemeManager.CurrentColorScheme.GrayLight;
+                TrackColor = ThemeManager.CurrentColorScheme.BackgroundDisabled;
 
             }
             else if (Color != null)
@@ -100,7 +100,7 @@ namespace ClearBlazor
                 TrackColor = Color.Lighten(.3);
             }
             if (ContrastTrackBackground)
-                BackgroundTrackColor = ThemeManager.CurrentPalette.BackgroundDisabled;
+                BackgroundTrackColor = ThemeManager.CurrentColorScheme.BackgroundDisabled;
             else
                 BackgroundTrackColor = TrackColor;
             switch (Size)

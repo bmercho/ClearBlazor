@@ -8,6 +8,7 @@ namespace ClearBlazor
     /// Defines a flexible grid area that consists of columns and rows.
     /// By default a grid will occupy all of the available space given by its parent.
     /// In other words HorizontalAlignment and VerticalAlignment are both by default 'Stretch'.
+    /// By default the background is transparent and there is no border.
     /// </summary>
     public partial class Grid:ClearComponentBase,IBackground,IBoxShadow, IBorder, IBackgroundGradient
     {

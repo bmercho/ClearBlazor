@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record GridDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "Grid";
-        public string Description {get; set; } = "Defines a flexible grid area that consists of columns and rows.\rBy default a grid will occupy all of the available space given by its parent.\rIn other words HorizontalAlignment and VerticalAlignment are both by default 'Stretch'.\r";
+        public string Description {get; set; } = "Defines a flexible grid area that consists of columns and rows.\rBy default a grid will occupy all of the available space given by its parent.\rIn other words HorizontalAlignment and VerticalAlignment are both by default 'Stretch'.\rBy default the background is transparent and there is no border.\r";
         public (string, string) ApiLink  {get; set; } = ("API", "GridApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "Grid");
         public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");

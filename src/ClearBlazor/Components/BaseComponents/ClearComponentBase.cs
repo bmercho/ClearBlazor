@@ -177,6 +177,8 @@ namespace ClearBlazor
 
         private bool _doubleClickRaised = false;
 
+        public static bool RenderAll { get; internal set; } = false;
+
         public ClearComponentBase()
         {
             Class = String.Empty;
@@ -469,8 +471,7 @@ namespace ClearBlazor
 
             if (!InScrollerX())
                 css += $"overflow-x:hidden; ";
-//            if (!InScrollerY() || this is Avatar || this is Image || this is MaterialIcon)
-            if (this is Avatar || this is Image || this is MaterialIcon || this is ToolTip)
+            if (!InScrollerY() || this is Avatar || this is Image || this is Icon || this is ToolTip)
                 // The line below affected images in a scroll viewer
                 // but is required for text in a scroll viewer
                 css += $"overflow-y:hidden; ";
@@ -488,7 +489,7 @@ namespace ClearBlazor
                 if (border.BorderColor != null)
                     css += $"border-color: {border.BorderColor.Value}; ";
                 else
-                    css += $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                    css += $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
 
 
                 if (border.BorderThickness != null)
@@ -552,11 +553,6 @@ namespace ClearBlazor
 
             if (background.BackgroundColor != null)
                 css += $"background-color: {background.BackgroundColor.Value}; ";
-            else if (this is Grid || this is StackPanel ||
-                     this is DockPanel || this is UniformGrid || this is WrapPanel || this is Tabs ||
-                     this is Drawer)
-                css += $"background-color: {ThemeManager.CurrentPalette.Background.Value}; ";
-
             return css;
         }
 

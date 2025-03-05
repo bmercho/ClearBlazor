@@ -1,5 +1,5 @@
 ﻿@namespace ClearBlazorTest
-<Grid Rows=@_rows Columns=@_columns HorizontalAlignment=Alignment.Start BoxShadow=4>
+<Grid Rows=@_rows Columns=@_columns HorizontalAlignment=Alignment.Start BorderThickness=1>
     <Drawer @ref=Drawer BackgroundColor=Color.BackgroundGrey
             @bind-Open=Open
             DrawerLocation=@_drawerLocation
@@ -7,7 +7,7 @@
             OverlayEnabled=@_showOverlay>
         <DrawerContent>
             <Grid CornerRadius=4>
-                <ListBox TListBox=string BackgroundColor=Color.Primary>
+                <ListBox TListBox=string>
                     <ListBoxItem Text="Item1" Icon=@Icons.Material.Filled.AddHome OnClicked=@Close />
                     <ListBoxItem Text="Item2" Icon=@Icons.Material.Filled.DeleteForever InitiallyExpanded="true">
                         <ListBoxItem Text="Item3" Icon=@Icons.Material.Filled.Delete OnClicked=@Close />

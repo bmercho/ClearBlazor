@@ -1,9 +1,18 @@
+using Microsoft.AspNetCore.Components;
 using System.Text;
 
 namespace ClearBlazor
 {
     public partial class IconButton : Button
     {
+        /// <summary>
+        /// Used when the IconButton is inside an AppBar
+        /// Indicates if this icon is a leading icon. (otherwise its a trailing icon)
+        /// Leading and trailing icons get slightly different colors.
+        /// </summary>
+        [Parameter]
+        public bool LeadingIcon { get; set; } = true;
+
         protected Size IconSize { get; set; }
         protected override void OnParametersSet()
         {

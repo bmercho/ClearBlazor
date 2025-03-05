@@ -17,7 +17,7 @@
                   Items=@_localListData>
             <RowTemplate Context=row>
                 <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
-                    <MaterialIcon Icon=@row.IconName Margin=0,5,0,0 />
+                    <Icon IconName=@row.IconName Margin=0,5,0,0 />
                     <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
                         @(row.ToString() + $"({row.ItemIndex})")
                     </TextBlock>

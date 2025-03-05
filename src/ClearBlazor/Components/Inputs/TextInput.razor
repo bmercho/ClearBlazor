@@ -43,8 +43,8 @@
                 }
                 @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                 {
-                    <MaterialIcon Column=2 Icon="@Icons.Material.Filled.FmdBad" 
-                                  Size=@Size ToolTip=@ValidationMessage Color=@Color.Error />
+                    <Icon Column=2 IconName="@Icons.Material.Filled.FmdBad"
+                          Size=@Size ToolTip=@ValidationMessage Color=@Color.Error />
                 }
             </Grid>
             @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)

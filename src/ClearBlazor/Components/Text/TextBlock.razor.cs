@@ -2,10 +2,13 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class TextBlock : ClearComponentBase, IBackground,IColor
+    public partial class TextBlock : ClearComponentBase, IBackground, IColor
     {
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
+
+        [Parameter]
+        public string? Text { get; set; }
 
         [Parameter]
         public EventCallback<MouseOverEventArgs> OnMouseOver { get; set; }
@@ -41,6 +44,10 @@ namespace ClearBlazor
         public string? LetterSpacing { get; set; } = null;
 
         [Parameter]
+        public TextDecoration? TextDecoration { get; set; } = null;
+
+
+        [Parameter]
         public TextTransform? TextTransform { get; set; } = null;
 
         [Parameter]
@@ -65,13 +72,12 @@ namespace ClearBlazor
         [Parameter]
         public bool Clickable { get; set; } = false;
 
+        internal Color? ColorOverride { get; set; } = null;
+
 
         protected override string UpdateStyle(string css)
         {
-            if (Color != null)
-                css += $"color: {Color.Value}; ";
-            else
-                css += $"color: {ThemeManager.CurrentPalette.TextPrimary.Value}; ";
+            css += $"color: {GetColor().Value}; ";
 
             TypographyBase typo = ThemeManager.CurrentTheme.Typography.Default;
             if (Typo != null)
@@ -124,10 +130,10 @@ namespace ClearBlazor
             else if (Typography != null)
             {
                 typo = Typography;
-            } 
+            }
 
             if (FontFamily != null)
-                css += $"font-family: {string.Join(",",FontFamily)}; ";
+                css += $"font-family: {string.Join(",", FontFamily)}; ";
             else
                 css += $"font-family: {string.Join(",", typo.FontFamily)}; ";
 
@@ -160,7 +166,7 @@ namespace ClearBlazor
                 css += $"text-transform: {GetTextTransform((TextTransform)TextTransform)}; ";
             else
                 if (typo.TextTransform != null)
-                    css += $"text-transform: {typo.TextTransform}; ";
+                css += $"text-transform: {typo.TextTransform}; ";
             switch (TextAlignment)
             {
                 case Alignment.Stretch:
@@ -184,7 +190,7 @@ namespace ClearBlazor
                         css += $"white-space: normal; ";
                         break;
                     case TextWrap.NoWrap:
-                        css += $"white-space: nowrap; "; 
+                        css += $"white-space: nowrap; ";
                         break;
                     case TextWrap.WrapOnNewLines:
                         css += $"white-space: pre; ";
@@ -216,7 +222,34 @@ namespace ClearBlazor
             }
             else
                 if (typo.TextTrimming)
-                    css += $"white-space: nowrap;overflow:hidden; text-overflow: ellipsis; ";
+                css += $"white-space: nowrap;overflow:hidden; text-overflow: ellipsis; ";
+
+            switch (TextDecoration)
+            {
+                case ClearBlazor.TextDecoration.Overline:
+                case ClearBlazor.TextDecoration.OverlineUnderline:
+                    // Remove overflow-x, if it exists, as it stops overline showing ??
+                    if (css.Contains("overflow-x"))
+                    {
+                        var index1 = css.IndexOf("overflow-x");
+                        var index2 = css.IndexOf(';', index1) + 1;
+                        if (index1 >= 0 && index2 >= 0)
+                            css = css.Substring(0, index1) + css.Substring(index2, css.Length - index2);
+                    }
+                    if (TextDecoration == ClearBlazor.TextDecoration.Overline)
+                        css += $"text-decoration: overline; ";
+                    else
+                        css += $"text-decoration: underline overline; ";
+                    break;
+                case ClearBlazor.TextDecoration.LineThrough:
+                    css += $"text-decoration: line-through; ";
+                    break;
+                case ClearBlazor.TextDecoration.Underline:
+                    css += $"text-decoration: underline; ";
+                    break;
+                case null:
+                    break;
+            }
 
             if (!IsTextSelectionEnabled)
                 css += "user-select: none; -ms-user-select: none; " +
@@ -227,6 +260,17 @@ namespace ClearBlazor
                 css += "cursor:pointer; ";
 
             return css;
+        }
+
+        internal Color GetColor()
+        {
+            if (Color != null)
+                return Color;
+
+            if (ColorOverride != null)
+                return ColorOverride;
+
+            return TextBlockTokens.TextColor;
         }
     }
 }

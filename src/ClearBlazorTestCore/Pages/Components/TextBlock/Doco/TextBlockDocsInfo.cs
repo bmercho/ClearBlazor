@@ -13,11 +13,12 @@ namespace ClearBlazorTest
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
             (" IBackground", " IBackgroundApi"),
-            ("IColor", "IColorApi"),
+            (" IColor", " IColorApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
             new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
+            new ApiComponentInfo("Text", "string?", "null", ""),
             new ApiComponentInfo("OnMouseOver", "EventCallback<MouseOverEventArgs>", "", ""),
             new ApiComponentInfo("Color", "Color?", "null", ""),
             new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
@@ -29,6 +30,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("FontStyle", "<a href=FontStyleApi>FontStyle?</a>", "null", ""),
             new ApiComponentInfo("LineHeight", "double?", "null", ""),
             new ApiComponentInfo("LetterSpacing", "string?", "null", ""),
+            new ApiComponentInfo("TextDecoration", "<a href=TextDecorationApi>TextDecoration?</a>", "null", ""),
             new ApiComponentInfo("TextTransform", "<a href=TextTransformApi>TextTransform?</a>", "null", ""),
             new ApiComponentInfo("TextWrapping", "<a href=TextWrapApi>TextWrap?</a>", "null", ""),
             new ApiComponentInfo("TextTrimming", "bool?", "null", ""),

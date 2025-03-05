@@ -34,7 +34,8 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            css += $"display:grid; grid-template-columns: {ColumnsStyle}; grid-template-rows: {RowsStyle};";
+            css += $"display:grid; grid-template-columns: {ColumnsStyle}; " +
+                   $"grid-template-rows: {RowsStyle};";
 
             return css;
         }

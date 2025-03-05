@@ -9,11 +9,10 @@ namespace ClearBlazor
 
         public static Theme CurrentTheme { get; set; } = null!;
 
-        public static Palette CurrentPalette { get; set; } = null!;
+        public static IColorScheme CurrentColorScheme { get; set; } = null!;
 
-        public static RootComponent RootComponent { get; set; }
+        public static RootComponent? RootComponent { get; set; }
 
-        //private IJSObjectReference? _scrollbarModule = null;
         public static bool IsDarkMode
         {
             get => _isDarkMode;
@@ -21,14 +20,10 @@ namespace ClearBlazor
             {
                 if (IsDarkMode != value)
                 {
-                    IsDarkMode = _isDarkMode = value;
-                    if (IsDarkMode)
-                        CurrentPalette = CurrentTheme.PaletteDark;
-                    else
-                        CurrentPalette = CurrentTheme.PaletteLight;
 
-                    Color.SetColors();
-                    RootComponent.Refresh();
+                    IsDarkMode = _isDarkMode = value;
+                    SetColorScheme();
+                    RootComponent?.Refresh();
                 }
             }
         }
@@ -38,24 +33,36 @@ namespace ClearBlazor
             RootComponent = rootComponent;
             IsDarkMode = useDarkMode;
 
-            CurrentTheme = new Theme("DefaultTheme");// { PaletteDark = new PaletteDark(), PaletteLight = new PaletteLight() };
+            CurrentTheme = new Theme("DefaultTheme");
 
-            if (IsDarkMode)
-                CurrentPalette = CurrentTheme.PaletteDark;
-            else
-                CurrentPalette = CurrentTheme.PaletteLight;
-
-            Color.SetColors();
+            SetColorScheme();
 
             AddTheme(CurrentTheme);
         }
 
-        public void AddTheme(Theme theme)
+        private static void SetColorScheme()
         {
-            _themes.Add(theme);
+            if (IsDarkMode)
+                CurrentColorScheme = CurrentTheme.DarkColorScheme;
+            else
+                CurrentColorScheme = CurrentTheme.LightColorScheme;
+            Color.SetColors();
         }
 
-        public async Task UpdateTheme(IJSRuntime jsRuntime)
+        public bool AddTheme(Theme theme)
+        {
+            if (_themes.Select(t => t.ThemeName).Contains(theme.ThemeName))
+                return false;
+            _themes.Add(theme);
+            return true;
+        }
+
+        public Theme? GetTheme(string themeName)
+        {
+            return _themes.FirstOrDefault(t => t.ThemeName == themeName);
+        }
+
+        internal async Task UpdateTheme(IJSRuntime jsRuntime)
         {
                 string width = "16px";
                 string height = "16px";
@@ -87,9 +94,9 @@ namespace ClearBlazor
                 }
 
             await jsRuntime.InvokeVoidAsync("window.scrollbar.setScrollBarProperties", width, height, borderRadius,
-                                                       CurrentPalette.ScrollbarBackgroundColor.Value,
-                                                       CurrentPalette.ScrollbarThumbColor.Value,
-                                                       CurrentPalette.ScrollbarThumbColor.Darken(0.1).Value,
+                                                       ScrollViewerTokens.ScrollbarContainerColor.Value,
+                                                       ScrollViewerTokens.ScrollbarThumbColor.Value,
+                                                       ScrollViewerTokens.ScrollbarThumbHoverColor.Value,
                                                        thumbBorder);
         }
     }

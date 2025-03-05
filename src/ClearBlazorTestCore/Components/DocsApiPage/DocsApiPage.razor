@@ -6,12 +6,31 @@
         <StackPanel Padding="20" Spacing="20">
             <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>API</TextBlock>
             <DocsHeader DocsName=@DocsInfo?.Name DocsDescription=@DocsInfo?.Description ForApi=true />
-            <TextBlock>@GetExamplesLink()</TextBlock>
+            <Link HRef=@GetExamplesHRef()>@GetExamplesLinkName()</Link>
             <ApiComponent ParameterApi=@DocsInfo?.ParameterApi
-                          MethodApi=@DocsInfo?.MethodApi/>
-
-            <TextBlock>@GetInheritLink()</TextBlock>
-            <TextBlock>@GetImplementsLink()</TextBlock>
+            MethodApi=@DocsInfo?.MethodApi />
+            <StackPanel Orientation=Orientation.Landscape>
+                <TextBlock Text="Inherits from:&nbsp;&nbsp;" />
+                @if (ShowInheritsAsLink())
+                {
+                    <ClearBlazor.Link HRef=@GetInheritHRef()>@GetInheritLinkName()</ClearBlazor.Link>
+                }
+                else
+                {
+                    <TextBlock>@GetInheritLinkName()</TextBlock>
+                }
+            </StackPanel>
+            @if (HasImplementLink())
+            {
+                <StackPanel Orientation=Orientation.Landscape>
+                    <TextBlock Text="Implements:&nbsp;" />
+                    @foreach (var link in DocsInfo!.ImplementsLinks)
+                    {
+                        <TextBlock Text="&nbsp;" />
+                        <ClearBlazor.Link HRef=@link.Item2>@($" {link.Item1}")</ClearBlazor.Link>
+                    }
+                </StackPanel>
+            }
         </StackPanel>
     </ScrollViewer>
 </div>

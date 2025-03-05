@@ -23,7 +23,7 @@ namespace ClearBlazor
         public List<ListDataItem<TListBox>>? ListData { get; set; } = null;
 
         [Parameter]
-        public Color? BackgroundColor { get; set; } = Color.Transparent;
+        public Color? BackgroundColor { get; set; }
 
         [Parameter]
         public string? BorderThickness { get; set; }
@@ -72,16 +72,18 @@ namespace ClearBlazor
 
         private ListBoxItem<TListBox>? SelectedParentItem { get; set; } = null;
 
-        protected override async Task OnInitializedAsync()
-        {
-            await base.OnInitializedAsync();
-        }
-
+        bool? _backgroundIsNull = null;
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
             if (HorizontalAlignment == null)
                 HorizontalAlignment = Alignment.Stretch;
+
+            if (_backgroundIsNull == null)
+                _backgroundIsNull = BackgroundColor == null;
+
+            if (_backgroundIsNull == true)
+                BackgroundColor = AppBarTokens.ContainerColor;
         }
 
         internal async Task HandleChild(ListBoxItem<TListBox> item)

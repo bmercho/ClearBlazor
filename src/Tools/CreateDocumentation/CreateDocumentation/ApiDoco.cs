@@ -1,4 +1,5 @@
-﻿using ClearBlazor.Common;
+﻿using ClearBlazor;
+using ClearBlazor.Common;
 
 namespace CreateDocumentation
 {
@@ -313,7 +314,7 @@ namespace CreateDocumentation
         }
 
         private bool GetNextComponentApi(IComponentDocsInfo info, string[] lines, ref int line)
-        {
+        { 
             while (line < lines.Count())
             {
                 var trimmedLine = lines[line].Trim();   
@@ -328,12 +329,15 @@ namespace CreateDocumentation
                             line++;
                             continue;
                         }
-                            
-                        var index1 = lines[line].Trim().IndexOf(values[2]);
+                        int startIndex = 1;
+                        if (values[1] == "static")
+                            startIndex++;
+
+                        var index1 = lines[line].Trim().IndexOf(values[startIndex+1]);
                         var index2 = lines[line].Trim().IndexOf(')', index1);
                         var methodSignature = lines[line].Trim().Substring(index1, index2 - index1+1);
 
-                        var typ = values[1];
+                        var typ = values[startIndex];
                         typ.Replace("<", "&lt");
                         typ.Replace(">", "&gt");
 

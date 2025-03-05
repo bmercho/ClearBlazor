@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace ClearBlazorInternal
 {
-    public class ListBase<TItem> : ClearComponentBase, IBorder, IBackground, IBoxShadow
+    public class ListBase<TItem> : ClearComponentBase, IBorder, IBoxShadow
            where TItem : ListItem
     {
         /// <summary>
@@ -112,12 +112,6 @@ namespace ClearBlazorInternal
         /// </summary>
         [Parameter]
         public int? BoxShadow { get; set; }
-
-        /// <summary>
-        /// See <a href="IBackgroundApi">IBackground</a>
-        /// </summary>
-        [Parameter]
-        public Color? BackgroundColor { get; set; } = ThemeManager.CurrentPalette.Background;
 
         internal int _totalNumItems = 0;
         private int _lastSelectedRow = 0;

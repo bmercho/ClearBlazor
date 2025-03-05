@@ -14,7 +14,7 @@ namespace ClearBlazor
         public string ToolTip { get; set; } = "";
 
         [Parameter]
-        public Color? Color { get; set; } = null;
+        public Color? Color { get; set; }
 
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
@@ -85,7 +85,7 @@ namespace ClearBlazor
         {
             string css = string.Empty;
             if (IsDisabled)
-                css += $"color: {ThemeManager.CurrentPalette.BackgroundDisabled.Value}; ";
+                css += $"color: {ThemeManager.CurrentColorScheme.BackgroundDisabled.Value}; ";
             else if (!IsValid)
                 css += $"color: {Color.Error.Value}; ";
             //else if (Color != null)

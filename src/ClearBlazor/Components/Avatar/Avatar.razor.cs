@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Components;
-using System.Drawing;
 
 namespace ClearBlazor
 {
@@ -24,7 +23,7 @@ namespace ClearBlazor
         public ContainerShape Shape { get; set; } = ContainerShape.Circle;
 
         [Parameter]
-        public Color Color { get; set; } = ThemeManager.CurrentPalette.Primary;
+        public Color Color { get; set; } = AvatarTokens.Color;
 
         [Parameter]
         public string Text { get; set; } = string.Empty;
@@ -32,7 +31,7 @@ namespace ClearBlazor
         [Parameter]
         public Color? IconColor { get; set; } = null;
 
-        public Color TextColor { get; set; } = ThemeManager.CurrentPalette.PrimaryContrastText;
+        public Color TextColor { get; set; } = AvatarTokens.Color;
         
         public string FontSize { get; set; } = "";
         public string FontFamily { get; set; } = "";
@@ -72,7 +71,7 @@ namespace ClearBlazor
             {
                 case TextEditFillMode.None:
                     TextColor = Color;
-                    css += $"background: {ThemeManager.CurrentPalette.AvatarBackgroundColor.Value}; ";
+                    css += $"background: {AvatarTokens.ContainerColor.Value}; ";
                     break;
                 case TextEditFillMode.Filled:
                     TextColor = Color.GetAssocTextColor(Color);
@@ -81,7 +80,7 @@ namespace ClearBlazor
                 case TextEditFillMode.Outline:
                     TextColor = Color;
                     css += $"border-width: 1px; border-style: solid; border-color: {Color.Value}; ";
-                    css += $"background: {ThemeManager.CurrentPalette.AvatarBackgroundColor.Value}; ";
+                    css += $"background: {AvatarTokens.ContainerColor.Value}; ";
                     break;
             }
 
@@ -96,11 +95,11 @@ namespace ClearBlazor
                 {
                     case TextEditFillMode.Filled:
                     case TextEditFillMode.None:
-                        return ThemeManager.CurrentPalette.Dark;
+                        return Color.ContrastingColor(Color);
                     case TextEditFillMode.Outline:
                         return Color;
                 }
-                return ThemeManager.CurrentPalette.Dark;
+                return Color.ContrastingColor(Color);
             }
             else 
                 return IconColor;

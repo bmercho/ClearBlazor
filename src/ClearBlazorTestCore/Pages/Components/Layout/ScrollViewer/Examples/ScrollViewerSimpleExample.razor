@@ -15,20 +15,13 @@
                 {
                     if (_horizontalOverflowText)
                     {
-                        <Grid Rows="Auto" Columns="50,*">
-
                         @for (int i = 1; i <= 200; i++)
                         {
                             int row = i;
-                                <Grid Row=@i Column=1>
                             <TextBlock  TextWrapping=TextWrap.NoWrap TextTrimming=false>
                                 @($"Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ")
                             </TextBlock>
-
-                                </Grid>
                             }
-                        </Grid>
-
                     }
                     else
                     {

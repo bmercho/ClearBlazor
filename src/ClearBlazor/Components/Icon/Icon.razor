@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@inherits ClearComponentBase
+
+@if (!string.IsNullOrEmpty(IconName))
+{
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <svg style=@GetIconStyle() transform="@GetTransform()" focusable="false" viewBox="@ViewBox" aria-hidden="true"
+             @onmouseenter="OnMouseEnter"
+             @onmouseleave="OnMouseLeave">
+            @((MarkupString)IconName)
+        </svg>
+        @if (ToolTip != null && ToolTip != string.Empty)
+        {
+            <ToolTip @ref="ToolTipElement" Size=@Size Text=@ToolTip 
+                     Position=@ToolTipPosition Delay=@ToolTipDelay />
+        }
+    </div>
+}
+
+

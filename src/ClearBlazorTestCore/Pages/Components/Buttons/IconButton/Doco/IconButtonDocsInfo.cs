@@ -15,6 +15,7 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("LeadingIcon", "bool", "true", "Used when the IconButton is inside an AppBar\rIndicates if this icon is a leading icon. (otherwise its a trailing icon)\rLeading and trailing icons get slightly different colors.\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

@@ -35,6 +35,7 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockDecorationsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\ScrollViewer\Code\ScrollViewerWithScrollbarsSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\DrawingCanvas\Code\SkiaDrawingCanvasExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TreeTableView\Code\TreeTableViewVirtualizeExampleCode.html" />
@@ -53,9 +54,6 @@
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\InfiniteScrollListViewExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\Code\NonVirtualizedTreeVariableRowSizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\Code\NonVirtualizedTreeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\Code\NonVirtualizedTreeDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerReadOnlyDisabledExampleCode.html" />
@@ -176,11 +174,11 @@
 	<EmbeddedResource Include="Pages\Components\Popup\Code\PopupSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Popup\Code\PopupLocationExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Popup\Code\PopupHorizontalFlipExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconStyleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconSizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconCustomExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconColorExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconStyleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconSizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconCustomExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconColorExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListSizeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListMultiSelectExampleCode.html" />

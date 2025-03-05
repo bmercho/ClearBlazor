@@ -16,7 +16,7 @@ namespace ClearBlazorTest
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
             new ApiComponentInfo("HorizontalScrollMode", "<a href=ScrollModeApi>ScrollMode</a>", "ScrollMode.Disabled", "The horizontal scroll mode.\r"),
-            new ApiComponentInfo("VerticalScrollMode", "<a href=ScrollModeApi>ScrollMode</a>", "ScrollMode.Auto", "The horizontal scroll mode.\r"),
+            new ApiComponentInfo("VerticalScrollMode", "<a href=ScrollModeApi>ScrollMode</a>", "ScrollMode.Auto", "The vertical scroll mode.\r"),
             new ApiComponentInfo("VerticalOverscrollBehaviour", "<a href=OverscrollBehaviourApi>OverscrollBehaviour</a>", "OverscrollBehaviour.Auto", "Defines what happens when the boundary of a scrolling area is reached in the vertical direction. \r"),
             new ApiComponentInfo("HorizontalOverscrollBehaviour", "<a href=OverscrollBehaviourApi>OverscrollBehaviour</a>", "OverscrollBehaviour.Auto", "Defines what happens when the boundary of a scrolling area is reached in the horizontal direction. \r"),
             new ApiComponentInfo("ScrollBarGutter", "<a href=ScrollbarGutterApi>ScrollbarGutter</a>", "ScrollbarGutter.OnlyWhenOverflowed", "Indicates when the scrollbar gutter exists\r"),
@@ -24,7 +24,7 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("IDisposable Subscribe(IObserver<bool> observer)", "static", "", ""),
+            new ApiComponentInfo("Subscribe(IObserver<bool> observer)", "IDisposable", "", ""),
             new ApiComponentInfo("observers, IObserver<bool> observer)", "Unsubscriber(List<IObserver<bool>>", "", ""),
             new ApiComponentInfo("Dispose()", "void", "", ""),
         };

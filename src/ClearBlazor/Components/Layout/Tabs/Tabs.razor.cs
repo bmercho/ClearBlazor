@@ -74,6 +74,18 @@ namespace ClearBlazor
 
         private List<Tab> _pages = new List<Tab>();
 
+        bool? _backgroundIsNull = null;
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+
+            if (_backgroundIsNull == null)
+                _backgroundIsNull = BackgroundColor == null;
+
+            if (_backgroundIsNull == true)
+                BackgroundColor = TabsTokens.ContainerColor;
+        }
+
         internal void AddPage(Tab tabPage)
         {
             _pages.Add(tabPage);
@@ -97,14 +109,12 @@ namespace ClearBlazor
             if (page == _activePage)
             {
                 if (Color == null)
-                    return ThemeManager.CurrentPalette.Primary;
+                    return TabsTokens.ActiveColor;
                 return Color;
             }
             else
             {
-                if (Color == null)
-                    return ThemeManager.CurrentPalette.Primary.Darken(.25);
-                return Color.Darken(.25);
+                return TabsTokens.InactiveColor;
             }
         }
 

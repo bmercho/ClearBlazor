@@ -218,10 +218,10 @@ namespace ClearBlazor
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
             if (_mouseOver)
-                css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.ListBackgroundColor.Value}; ";
 
             if (NodeData.IsSelected)
-                css += $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.ListSelectedColor.Value}; ";
 
             return css;
         }
@@ -240,7 +240,7 @@ namespace ClearBlazor
             string css =  $"display:grid; " +
                    $"border-width:0 0 0 1px; border-style:solid; " +
                    $"grid-area: 1 / 2 / span 3 / span 1; " +
-                   $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                   $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
             return css;
         }
 
@@ -255,7 +255,7 @@ namespace ClearBlazor
                 css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"display:grid; grid-template-columns: subgrid; " +
                        $"grid-area: 2 / 1 /span 1 / span {Columns.Count};  " +
-                       $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                       $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
                 css += $"justify-self:start; position:relative; " +
                        $"top:{(_parent._skipItems + Index) * (_parent._rowHeight + RowSpacing)}px;";
 
@@ -264,7 +264,7 @@ namespace ClearBlazor
             {
                 css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"grid-area: {row} / 1 / span 1 / span {columnCount}; " +
-                       $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                       $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
             }
             return css;
         }

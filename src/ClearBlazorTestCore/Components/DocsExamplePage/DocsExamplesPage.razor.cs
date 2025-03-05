@@ -25,10 +25,14 @@ namespace ClearBlazorTest
             return css + "display:grid; "; 
         }
 
-        private MarkupString GetApiLink()
+        private string GetLinkName()
         {
-            return new MarkupString($"<a href={(DocsInfo == null ? string.Empty : DocsInfo.ApiLink.Item2)}>{DocsInfo.ApiLink.Item1}</a>");
+            return DocsInfo == null ? string.Empty : DocsInfo.ApiLink.Item1;
         }
 
+        private string GetHRef()
+        {
+            return DocsInfo == null ? string.Empty : DocsInfo.ApiLink.Item2;
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace ClearBlazor
                 Subscribe(browserSizeService);
                 StateHasChanged();
             }
-
+            ClearComponentBase.RenderAll = false;
         }
         private string GetStyle()
         {
@@ -78,10 +78,12 @@ namespace ClearBlazor
             return css;
         }
 
-        public void Refresh()
+        public async Task Refresh()
         {
             try
             {
+                await ThemeManager.UpdateTheme(JSRuntime);
+                ClearComponentBase.RenderAll = true;
                 StateHasChanged();
             }
             catch

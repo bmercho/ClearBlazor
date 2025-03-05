@@ -1,0 +1,295 @@
+﻿@using Bdziam.UI.Theming.MaterialColors.ColorSpace
+@using Bdziam.UI.Theming.MaterialColors.Palettes
+@using Bdziam.UI.Theming.MaterialColors.Scheme
+@inherits LayoutComponentBase
+<RootComponent>
+    <StackPanel Orientation=Orientation.Portrait>
+        <IconButton OnClicked=@OnClicked Icon=@GetIcon() />
+        <Grid Padding=40 CornerRadius=10 Width=900 Height=700 RowSpacing=5 ColumnSpacing=5
+        BackgroundColor=@Color.Custom("#F8F2FA")
+        Columns=*,*,*,*,*,*,*,*
+        Rows=4*,4*,3*,4*,3*,5*,3*,4*,3*,3*,3*,3*,3*>
+            <Grid Row=0 Column=2 ColumnSpan=4 BackgroundColor=@GetColor(sourceColor)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnPrimary)>
+                    Source Color
+                </TextBlock>
+            </Grid>
+            <Grid Row=1 Column=0 ColumnSpan=2 BackgroundColor=@GetColor(scheme.Primary)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnPrimary)>
+                    Primary
+                </TextBlock>
+            </Grid>
+            <Grid Row=1 Column=2 ColumnSpan=2 BackgroundColor=@GetColor(scheme.Secondary)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnSecondary)>
+                    Secondary
+                </TextBlock>
+            </Grid>
+            <Grid Row=1 Column=4 ColumnSpan=2 BackgroundColor=@GetColor(scheme.Tertiary)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnTertiary)>
+                    Tertiary
+                </TextBlock>
+            </Grid>
+            <Grid Row=1 Column=6 ColumnSpan=2 BackgroundColor=@GetColor(scheme.Error)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnError)>
+                    Error
+                </TextBlock>
+            </Grid>
+            <Grid Row=2 Column=0 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnPrimary)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.Primary)>
+                    On Primary
+                </TextBlock>
+            </Grid>
+            <Grid Row=2 Column=2 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnSecondary)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.Secondary)>
+                    On Secondary
+                </TextBlock>
+            </Grid>
+            <Grid Row=2 Column=4 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnTertiary)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.Tertiary)>
+                    On Tertiary
+                </TextBlock>
+            </Grid>
+            <Grid Row=2 Column=6 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnError)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.Error)>
+                    On Error
+                </TextBlock>
+            </Grid>
+            <Grid Row=3 Column=0 ColumnSpan=2 BackgroundColor=@GetColor(scheme.PrimaryContainer)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnPrimaryContainer)>
+                    Primary Container
+                </TextBlock>
+            </Grid>
+            <Grid Row=3 Column=2 ColumnSpan=2 BackgroundColor=@GetColor(scheme.SecondaryContainer)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnSecondaryContainer)>
+                    Secondary Container
+                </TextBlock>
+            </Grid>
+            <Grid Row=3 Column=4 ColumnSpan=2 BackgroundColor=@GetColor(scheme.TertiaryContainer)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnTertiaryContainer)>
+                    Tertiary Container
+                </TextBlock>
+            </Grid>
+            <Grid Row=3 Column=6 ColumnSpan=2 BackgroundColor=@GetColor(scheme.ErrorContainer)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnErrorContainer)>
+                    Error Container
+                </TextBlock>
+            </Grid>
+            <Grid Row=4 Column=0 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnPrimaryContainer)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.PrimaryContainer)>
+                    On Primary Container
+                </TextBlock>
+            </Grid>
+            <Grid Row=4 Column=2 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnSecondaryContainer)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.SecondaryContainer)>
+                    On Secondary Container
+                </TextBlock>
+            </Grid>
+            <Grid Row=4 Column=4 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnTertiaryContainer)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.TertiaryContainer)>
+                    On Tertiary Container
+                </TextBlock>
+            </Grid>
+            <Grid Row=4 Column=6 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnErrorContainer)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.ErrorContainer)>
+                    On Error Container
+                </TextBlock>
+            </Grid>
+            <Grid Row=5 Column=0 BackgroundColor=@GetColor(scheme.PrimaryFixed)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnPrimaryFixed)>
+                    Primary Fixed
+                </TextBlock>
+            </Grid>
+            <Grid Row=5 Column=1 BackgroundColor=@GetColor(scheme.PrimaryFixedDim)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnPrimaryFixed)>
+                    Primary Fixed Dim
+                </TextBlock>
+            </Grid>
+            <Grid Row=5 Column=2 BackgroundColor=@GetColor(scheme.SecondaryFixed)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnSecondaryFixed)>
+                    Secondary Fixed
+                </TextBlock>
+            </Grid>
+            <Grid Row=5 Column=3 BackgroundColor=@GetColor(scheme.SecondaryFixedDim)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnSecondaryFixed)>
+                    Secondary Fixed Dim
+                </TextBlock>
+            </Grid>
+            <Grid Row=5 Column=4 BackgroundColor=@GetColor(scheme.TertiaryFixed)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnTertiaryFixed)>
+                    Tertiary Fixed
+                </TextBlock>
+            </Grid>
+            <Grid Row=5 Column=5 BackgroundColor=@GetColor(scheme.TertiaryFixedDim)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnTertiaryFixed)>
+                    Tertiary Fixed Dim
+                </TextBlock>
+            </Grid>
+            <Grid Row=6 Column=0 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnPrimaryFixed)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.PrimaryFixed)>
+                    On Primary Fixed
+                </TextBlock>
+            </Grid>
+            <Grid Row=6 Column=2 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnSecondaryFixed)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.PrimaryFixed)>
+                    On Secondary Fixed
+                </TextBlock>
+            </Grid>
+            <Grid Row=6 Column=4 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnTertiaryFixed)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.TertiaryFixed)>
+                    On Tertiary Fixed
+                </TextBlock>
+            </Grid>
+            <Grid Row=7 Column=0 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnPrimaryFixedVariant)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.PrimaryFixed)>
+                    On Primary Fixed Variant
+                </TextBlock>
+            </Grid>
+            <Grid Row=7 Column=2 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnSecondaryFixedVariant)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.PrimaryFixed)>
+                    On Secondary Fixed Variant
+                </TextBlock>
+            </Grid>
+            <Grid Row=7 Column=4 ColumnSpan=2 BackgroundColor=@GetColor(scheme.OnTertiaryFixedVariant)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.TertiaryFixed)>
+                    On Tertiary Fixed Variant
+                </TextBlock>
+            </Grid>
+            <Grid Row=8 RowSpan=2 Column=0 ColumnSpan=2 BackgroundColor=@GetColor(scheme.SurfaceDim)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnSurface)>
+                    Surface Dim
+                </TextBlock>
+            </Grid>
+            <Grid Row=8 RowSpan=2 Column=2 ColumnSpan=2 BackgroundColor=@GetColor(scheme.Surface)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnSurface)>
+                    Surface
+                </TextBlock>
+            </Grid>
+            <Grid Row=8 RowSpan=2 Column=4 ColumnSpan=2 BackgroundColor=@GetColor(scheme.SurfaceBright)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.OnSurface)>
+                    Surface Bright
+                </TextBlock>
+            </Grid>
+            <Grid Row=8 Column=6 ColumnSpan=2 BackgroundColor=@GetColor(scheme.InverseSurface)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.InverseOnSurface)>
+                    Inverse Surface
+                </TextBlock>
+            </Grid>
+            <Grid Row=9 Column=6 ColumnSpan=2 BackgroundColor=@GetColor(scheme.InverseOnSurface)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.InverseSurface)>
+                    Inverse On Surface
+                </TextBlock>
+            </Grid>
+            <Grid Row=10 RowSpan=2 Column=0 ColumnSpan=6 Columns=*,*,*,*,*
+            BackgroundColor=@Color.Custom("#F8F2FA")>
+                <Grid Column=0 BackgroundColor=@GetColor(scheme.SurfaceContainerLowest)>
+                    <TextBlock Margin=10 Color=@GetColor(scheme.OnSurface)>
+                        Surface Container Lowest
+                    </TextBlock>
+                </Grid>
+                <Grid Column=1 BackgroundColor=@GetColor(scheme.SurfaceContainerLow)>
+                    <TextBlock Margin=10 Color=@GetColor(scheme.OnSurface)>
+                        Surface Container Low
+                    </TextBlock>
+                </Grid>
+                <Grid Column=2 BackgroundColor=@GetColor(scheme.SurfaceContainer)>
+                    <TextBlock Margin=10 Color=@GetColor(scheme.OnSurface)>
+                        Surface Container
+                    </TextBlock>
+                </Grid>
+                <Grid Column=3 BackgroundColor=@GetColor(scheme.SurfaceContainerHigh)>
+                    <TextBlock Margin=10 Color=@GetColor(scheme.OnSurface)>
+                        Surface Container High
+                    </TextBlock>
+                </Grid>
+                <Grid Column=4 BackgroundColor=@GetColor(scheme.SurfaceContainerHighest)>
+                    <TextBlock Margin=10 Color=@GetColor(scheme.OnSurface)>
+                        Surface Container Highest
+                    </TextBlock>
+                </Grid>
+            </Grid>
+            <Grid Row=10 Column=6 ColumnSpan=2 BackgroundColor=@GetColor(scheme.InversePrimary)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.InverseSurface)>
+                    Inverse Primary
+                </TextBlock>
+            </Grid>
+            <Grid Row=12 Column=0 ColumnSpan=6 Columns=*,*,*,* BackgroundColor=@Color.Custom("#F8F2FA")>
+                <Grid Column=0 BackgroundColor=@GetColor(scheme.OnSurface)>
+                    <TextBlock Margin=10 Color=@GetColor(scheme.Surface)>
+                        On Surface
+                    </TextBlock>
+                </Grid>
+                <Grid Column=1 BackgroundColor=@GetColor(scheme.OnSurfaceVariant)>
+                    <TextBlock Margin=10 Color=@GetColor(scheme.Surface)>
+                        On Surface Variant
+                    </TextBlock>
+                </Grid>
+                <Grid Column=2 BackgroundColor=@GetColor(scheme.Outline)>
+                    <TextBlock Margin=10 Color=@GetColor(scheme.Surface)>
+                        Outline
+                    </TextBlock>
+                </Grid>
+                <Grid Column=3 BackgroundColor=@GetColor(scheme.OutlineVariant)>
+                    <TextBlock Margin=10 Color=@GetColor(scheme.OnPrimary)>
+                        Outline Variant
+                    </TextBlock>
+                </Grid>
+            </Grid>
+            <Grid Row=12 Column=6 BackgroundColor=@GetColor(scheme.Scrim)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.Surface)>
+                    Scrim
+                </TextBlock>
+            </Grid>
+            <Grid Row=12 Column=7 BackgroundColor=@GetColor(scheme.Shadow)>
+                <TextBlock Margin=10 Color=@GetColor(scheme.Surface)>
+                    Shadow
+                </TextBlock>
+            </Grid>
+
+        </Grid>
+        <Grid Width=100 Height=100/>
+    </StackPanel>
+</RootComponent>
+
+
+@code {
+    bool dark = false;
+    ContentScheme scheme = null!;
+    uint sourceColor = 0xff769cdf;
+
+
+    protected override void OnInitialized()
+    {
+        GetScheme();
+        base.OnInitialized();
+    }
+
+    private Color GetColor(uint color)
+    {
+        var colorString = color.ToString("X");
+        var alpha = colorString.Substring(0, 2);
+
+        return Color.Custom("#" + colorString.Substring(2, 6) + alpha);
+    }
+
+    private void GetScheme()
+    {
+        var htc = Hct.FromInt(sourceColor);
+        scheme = new ContentScheme(htc, dark, 0);
+
+    }
+
+    private void OnClicked()
+    {
+        dark = !dark;
+        GetScheme();
+        StateHasChanged();
+    }
+    private string GetIcon()
+    {
+        if (ThemeManager.IsDarkMode)
+            return Icons.Material.Filled.LightMode;
+        else
+            return Icons.Material.Filled.DarkMode;
+    }
+
+}

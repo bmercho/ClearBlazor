@@ -4,7 +4,7 @@
 <CascadingValue Value=this IsFixed=false>
     <div id=@Id class=@Classes style=@ComputeStyle()>
         <ButtonGroup ButtonStyle=TextEditFillMode.Outline Size=@Size 
-        OutlineColor=@ThemeManager.CurrentPalette.TextDisabled>
+        OutlineColor=@ThemeManager.CurrentColorScheme.TextDisabled>
             @if(ShowFirstAndLastButtons)
             {
                 <IconButton Tag=1 Disabled=@_atStart OnClicked=@GotoStart

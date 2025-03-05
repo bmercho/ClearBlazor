@@ -213,10 +213,10 @@ namespace ClearBlazor
             _scrollbarWidth = ThemeManager.CurrentTheme.ScrollbarWidth;
             _scrollbarBackgroundBoxShadowWidth = ThemeManager.CurrentTheme.ScrollbarBackgroundBoxShadowWidth;
             _scrollbarCornerRadius = ThemeManager.CurrentTheme.ScrollbarCornerRadius;
-            _scrollbarBackgroundColor = ThemeManager.CurrentPalette.ScrollbarBackgroundColor;
-            _scrollbarThumbColor = ThemeManager.CurrentPalette.ScrollbarThumbColor;
-            _scrollbarBackgroundBoxShadowColor = ThemeManager.CurrentPalette.ScrollbarBackgroundBoxShadowColor;
-            _scrollbarOverlayThumbColor = ThemeManager.CurrentPalette.ScrollbarOverlayThumbColor;
+            _scrollbarBackgroundColor = ScrollViewerTokens.ScrollbarContainerColor;
+            _scrollbarThumbColor = ScrollViewerTokens.ScrollbarThumbColor;
+            _scrollbarBackgroundBoxShadowColor = ScrollViewerTokens.ScrollbarContainerBoxShadowColor;
+            _scrollbarOverlayThumbColor = ScrollViewerTokens.ScrollbarOverlayThumbColor;
         }
 
         protected override void OnParametersSet()

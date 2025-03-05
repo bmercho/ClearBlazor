@@ -85,6 +85,11 @@ namespace ClearBlazor
                 HorizontalAlignment = Alignment.Stretch;
         }
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+        }
+
         protected override void ComputeOwnClasses(StringBuilder sb)
         {
             base.ComputeOwnClasses(sb);
@@ -109,10 +114,19 @@ namespace ClearBlazor
 
             css += "display: grid; ";
 
-            RowStyle = IsSelected && HasChildren ? $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; " :
-                      IsSelected ? $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; " :
-                      MouseOver ? $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; " :
-                               string.Empty;
+            RowStyle = string.Empty;
+            if (IsSelected)
+                if (MouseOver)
+                    RowStyle = $"background-color: {ListBoxTokens.SelectedRowContainerColor.SetAlpha(.8).Value}; ";
+                else
+                    RowStyle = $"background-color: {ListBoxTokens.SelectedRowContainerColor.Value}; ";
+            else
+            {
+                if (MouseOver)
+                    RowStyle = $"background-color: {ListBoxTokens.RowContainerColor.SetAlpha(.8).Value}; ";
+                else
+                    RowStyle = string.Empty;
+            }
             RowStyle += $"height:{GetRowHeight()}; ";
             return css;
         }
@@ -199,20 +213,22 @@ namespace ClearBlazor
         }
         public async Task OnListItemClicked(MouseEventArgs e)
         {
-            if (HRef != null)
-                NavManager.NavigateTo(HRef);
-
             if (HasChildren)
             {
                 IsExpanded = !IsExpanded;
                 IsVisible = IsExpanded;
             }
+            else
+            {
 
-            ListBox<TListBox>? parent = FindParent<ListBox<TListBox>>(Parent);
-            if (parent != null)
-                IsSelected = await parent.SetSelected(this);
-            await OnClicked.InvokeAsync();
+                ListBox<TListBox>? parent = FindParent<ListBox<TListBox>>(Parent);
+                if (parent != null)
+                    IsSelected = await parent.SetSelected(this);
+            }
             StateHasChanged();
+            await OnClicked.InvokeAsync();
+            if (HRef != null)
+                NavManager.NavigateTo(HRef);
         }
 
         public void Unselect()
@@ -340,13 +356,13 @@ namespace ClearBlazor
         }
         private Color? GetColor()
         {
-            //if (Color != null)
-            //    return Color;
+            if (Color != null)
+                return Color;
 
-            //if (ColorOverride != null)
-            //    return ColorOverride;
+            if (ColorOverride != null)
+                return ColorOverride;
 
-            return Color.Dark;
+            return ListBoxTokens.RowColor;
         }
     }
 }

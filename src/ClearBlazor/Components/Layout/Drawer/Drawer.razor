@@ -3,16 +3,18 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <Grid style="overflow:hidden; " Columns=@_columns Rows=@_rows BorderThickness=0 BackgroundColor=@BackgroundColor>
-            <Grid Column=@_drawerContentColumn Row=@_drawerContentRow @ref=_content
+        <Grid style="overflow:hidden; " Columns=@_columns Rows=@_rows BorderThickness=0>
+            <Grid Column=@_drawerContentColumn Row=@_drawerContentRow @ref=_content 
+                  BackgroundColor=@DrawerTokens.DrawerContainerColor
                   Class="drawer-transition" Margin=@_drawerMargin Style="z-index:3; ">
                 @DrawerContent
             </Grid>
-            <Grid Column=@_drawerBodyColumn Row=@_drawerBodyRow ColumnSpan=@_drawerBodyColumnSpan>
+            <Grid Column=@_drawerBodyColumn Row=@_drawerBodyRow ColumnSpan=@_drawerBodyColumnSpan
+                  BackgroundColor=@DrawerTokens.BodyContainerColor>
                 @DrawerBody
                 @if (_showOverlay)
                 {
-                    <Grid BackgroundColor=Color.Dark.SetAlpha(0.6) Style="z-index:2; " OnClicked=@OverlayClicked />
+                    <Grid BackgroundColor=@DrawerTokens.OverlayColor Style="z-index:2; " OnClicked=@OverlayClicked />
                 }
             </Grid>
         </Grid>

@@ -793,7 +793,7 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            return css + $"display: grid; ";
+            return css + $"display: grid; background-color: {ListControlTokens.ContainerColor.Value}";
         }
 
         private string GetTransformStyle()
@@ -869,12 +869,12 @@ namespace ClearBlazor
                     return $"display:grid; z-index:1; width:1px; " +
                            $"border-width:0 0 0 1px; border-style:solid; " +
                            $"grid-area: 1 / {column} / span {_items.Count + 1} / span 1; " +
-                           $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                           $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
                 case VirtualizeMode.Virtualize:
                     return $"display:grid; z-index:1;width:1px; " +
                            $"border-width:0 0 0 1px; border-style:solid; " +
                            $"grid-area: 2 / {column} / span {_takeItems - 1} / span 1; " +
-                           $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                           $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
             }
             return string.Empty;
         }
