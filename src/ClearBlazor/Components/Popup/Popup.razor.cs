@@ -9,6 +9,9 @@ namespace ClearBlazor
         [Parameter]
         public bool UseTransition { get; set; } = true;
 
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 

@@ -4,56 +4,90 @@ using System.Text;
 
 namespace ClearBlazor
 {
-    public partial class Button : ClearComponentBase, IColor
+    /// <summary>
+    /// Represents a button for actions, links, and commands.
+    /// </summary>
+    public partial class Button : ClearComponentBase
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
+        /// <summary>
+        /// Defines the button style.
+        /// </summary>
         [Parameter]
-        public TextEditFillMode? ButtonStyle { get; set; } = null;
+        public ButtonStyle? ButtonStyle { get; set; } = null;
 
+        /// <summary>
+        /// The color used for the button. What gets this color (background, text or outline)
+        /// depends on the button style.
+        /// </summary>
         [Parameter]
         public Color? Color { get; set; } = null;
 
-        [Parameter]
-        public Color? OutlineColor { get; set; } = null;
-
-        [Parameter]
-        public bool DisableBoxShadow { get; set; } = false;
-
+        /// <summary>
+        /// The size of the button
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
+        /// <summary>
+        /// The shape of the button
+        /// </summary>
         [Parameter]
-        public ContainerShape Shape { get; set; } = ContainerShape.SquareRounded;
+        public ContainerShape Shape { get; set; } = ContainerShape.FullyRounded;
 
+        /// <summary>
+        /// The icon to be shown within the button
+        /// </summary>
         [Parameter]
         public string? Icon { get; set; } = null; 
 
+        /// <summary>
+        /// The color of the icon within the button
+        /// </summary>
         [Parameter]
         public Color? IconColor { get; set; } = null;
 
+        /// <summary>
+        /// The location of the icon within the button
+        /// </summary>
         [Parameter]
         public IconLocation IconLocation { get; set; } = IconLocation.Start;
 
+        /// <summary>
+        /// Tooltip string for the button
+        /// </summary>
         [Parameter]
         public string? ToolTip { get; set; } = null;
 
+        /// <summary>
+        /// Tooltip position (when shown)
+        /// </summary>
         [Parameter]
         public ToolTipPosition? ToolTipPosition { get; set; } = null;
 
-
+        /// <summary>
+        /// The delay in milliseconds before the tooltip is shown
+        /// </summary>
         [Parameter]
-        public int? ToolTipDelay { get; set; } = null; // Milliseconds
+        // Milliseconds
+        public int? ToolTipDelay { get; set; } = null; 
 
+        /// <summary>
+        /// Indicates if button is disabled.
+        /// </summary>
         [Parameter]
         public bool Disabled { get; set; } = false;
 
 
-        public string LabelStyle = string.Empty;
+        private string LabelStyle = string.Empty;
 
-        public int Spacing { get; set; } = 5;
-        internal TextEditFillMode? ButtonStyleOverride { get; set; } = null;
+        private int Spacing { get; set; } = 5;
+        internal ButtonStyle? StyleOverride { get; set; } = null;
         internal Color? ColorOverride { get; set; } = null;
         internal Color? _outlineColorOverride { get; set; } = null;
         internal Size? SizeOverride { get; set; } = null;
@@ -83,7 +117,7 @@ namespace ClearBlazor
             css += "display:flex; ";
             css += "align-items: center; justify-content: center; ";
             var buttonStyle = GetButtonStyle();
-            if (buttonStyle == TextEditFillMode.Filled && !DisableBoxShadow)
+            if (buttonStyle == ClearBlazor.ButtonStyle.Elevated)
                 if (_mouseOver && !Disabled)
                     css += GetBoxShadowCss(3);
                 else
@@ -101,17 +135,22 @@ namespace ClearBlazor
             var color = GetColor();
             switch (buttonStyle)
             {
-                case TextEditFillMode.Filled:
+                case ClearBlazor.ButtonStyle.Filled:
                     css += $"background: {GetFilledBackgroundColor(color).Value}; ";
                     textColor = GetFilledTextColor(color);
                     css += $"color: {GetFilledTextColor(color).Value}; ";
                     break;
-                case TextEditFillMode.Outline:
+                case ClearBlazor.ButtonStyle.Elevated:
+                    css += $"background: {GetElevatedBackgroundColor(color).Value}; ";
+                    textColor = GetElevatedTextColor(color);
+                    css += $"color: {GetElevatedTextColor(color).Value}; ";
+                    break;
+                case ClearBlazor.ButtonStyle.Outlined:
                     textColor = GetTextOrOutlinedTextColor(color);
                     css += $"color: {GetTextOrOutlinedTextColor(color).Value}; ";
                     css += $"background: {GetTextOrOutlinedBackgroundColor().Value}; ";
                     break;
-                case TextEditFillMode.None:
+                case ClearBlazor.ButtonStyle.LabelOnly:
                     textColor = GetTextOrOutlinedTextColor(color);
                     css += $"color: {GetTextOrOutlinedTextColor(color).Value}; ";
                     css += $"background: {GetTextOrOutlinedBackgroundColor().Value}; ";
@@ -197,12 +236,13 @@ namespace ClearBlazor
                     return "border-radius:50%; ";
                 case ContainerShape.Square:
                     return "";
-                case ContainerShape.SquareRounded:
+                case ContainerShape.Rounded:
                     return "border-radius:4px; ";
+                case ContainerShape.FullyRounded:
+                    return $"border-radius:{GetPxHeight(Size)/2}px; ";
             }
             return "";
         }
-
 
         protected virtual string GetIconSize(Size size)
         {
@@ -233,36 +273,42 @@ namespace ClearBlazor
 
         protected virtual string GetHeight(Size size)
         {
+            return $"height:{GetPxHeight(size)}px; ";
+        }
+
+        protected virtual int GetPxHeight(Size size)
+        {
             switch (size)
             {
                 case Size.VerySmall:
-                    return "height:30px; ";
+                    return 30;
                 case Size.Small:
-                    return "height:34px; ";
+                    return 34;
                 case Size.Normal:
-                    return "height:38px; ";
+                    return 38;
                 case Size.Large:
-                    return "height:43px; ";
+                    return 43;
                 case Size.VeryLarge:
-                    return "height:50px; ";
+                    return 50;
                 default:
-                    return "height:38px; ";
+                    return 38;
             }
         }
 
-        protected virtual string GetBorder(TextEditFillMode buttonStyle, Color color)
+        protected virtual string GetBorder(ButtonStyle buttonStyle, Color color)
         {
             switch (buttonStyle)
             {
-                case TextEditFillMode.Filled:
-                    return $"border-width: 0px; ";
-                case TextEditFillMode.Outline:
+                case ClearBlazor.ButtonStyle.Filled:
+                case ClearBlazor.ButtonStyle.Elevated:
+                    return string.Empty;
+                case ClearBlazor.ButtonStyle.Outlined:
                     return $"border-width: 1px; border-style: solid; border-color: " +
                            $"{GetOutlineColor(color)}; ";
-                case TextEditFillMode.None:
-                    return $"border-width: 0px; ";
+                case ClearBlazor.ButtonStyle.LabelOnly:
+                    return string.Empty;
             }
-            return $"border-width: 0px; ";
+            return string.Empty;
         }
 
         protected async Task OnMouseEnter(MouseEventArgs e)
@@ -286,68 +332,44 @@ namespace ClearBlazor
         private Color GetFilledBackgroundColor(Color? color)
         {
             if (Disabled)
-                return ThemeManager.CurrentColorScheme.BackgroundDisabled;
+                return ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.12);
             if (color == null)
                 return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) :
                                     ThemeManager.CurrentColorScheme.Primary;
-            if (color == Color.Primary)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Primary;
-            if (color == Color.Secondary)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Secondary.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Secondary;
-            if (color == Color.Tertiary)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Tertiary.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Tertiary;
-            if (color == Color.Info)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Info.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Info;
-            if (color == Color.Success)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Success.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Success;
-            if (color == Color.Warning)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Warning.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Warning;
-            if (color == Color.Error)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Error.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Error;
-            if (color == Color.Dark)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Dark.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Dark;
+            return _mouseOver ? color.Darken(.1) : color;
+        }
 
-            return _mouseOver ? color.Darken(.2) : color;
+        private Color GetElevatedBackgroundColor(Color? color)
+        {
+            if (Disabled)
+                return ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.12);
+            return _mouseOver ? ThemeManager.CurrentColorScheme.SurfaceContainer :
+                                ThemeManager.CurrentColorScheme.SurfaceContainerLow;
         }
 
         private Color GetFilledTextColor(Color? color)
         {
             if (Disabled)
-                return ThemeManager.CurrentColorScheme.TextDisabled;
+                return ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.38);
             return Color.GetAssocTextColor(color);
+        }
+
+        private Color GetElevatedTextColor(Color? color)
+        {
+            if (Disabled)
+                return ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.38);
+            if (color == null)
+                return ThemeManager.CurrentColorScheme.Primary;
+            return color;
         }
 
         private Color GetTextOrOutlinedTextColor(Color? color)
         {
             if (Disabled)
-                return ThemeManager.CurrentColorScheme.TextDisabled;
+                return ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.38);
             if (color == null)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) : ThemeManager.CurrentColorScheme.Primary;
-            if (color == Color.Primary)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) : ThemeManager.CurrentColorScheme.Primary;
-            if (color == Color.Secondary)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Secondary.Darken(.1) : ThemeManager.CurrentColorScheme.Secondary;
-            if (color == Color.Tertiary)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Tertiary.Darken(.1) : ThemeManager.CurrentColorScheme.Tertiary;
-            if (color == Color.Info)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Info.Darken(.1) : ThemeManager.CurrentColorScheme.Info;
-            if (color == Color.Success)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Success.Darken(.1) : ThemeManager.CurrentColorScheme.Success;
-            if (color == Color.Warning)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Warning.Darken(.1) : ThemeManager.CurrentColorScheme.Warning;
-            if (color == Color.Error)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Error.Darken(.1) : ThemeManager.CurrentColorScheme.Error;
-            if (color == Color.Dark)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Dark.Darken(.1) : ThemeManager.CurrentColorScheme.Dark;
-
+                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) : 
+                                    ThemeManager.CurrentColorScheme.Primary;
             return _mouseOver ? color.Darken(.1) : color;
         }
 
@@ -355,7 +377,7 @@ namespace ClearBlazor
         {
             if (Disabled)
                 return Color.Transparent;
-            return _mouseOver ? ThemeManager.CurrentColorScheme.GrayLighter.SetAlpha(.2) :
+            return _mouseOver ? ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.38) :
                                 Color.Transparent;
         }
 
@@ -364,59 +386,31 @@ namespace ClearBlazor
             if (_outlineColorOverride != null)
                 return _outlineColorOverride;
 
-            if (OutlineColor != null)
-                return OutlineColor;
-
             if (Disabled)
             {
                 if (Parent is ButtonGroup)
                     return color == null? ThemeManager.CurrentColorScheme.Primary : (Color)color;
-                return ThemeManager.CurrentColorScheme.TextDisabled;
+                return ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.38);
             }
 
             if (color == null)
                 return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) :
                                     ThemeManager.CurrentColorScheme.Primary;
-            if (color == Color.Primary)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Primary.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Primary;
-            if (color == Color.Secondary)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Secondary.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Secondary;
-            if (color == Color.Tertiary)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Tertiary.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Tertiary;
-            if (color == Color.Info)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Info.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Info;
-            if (color == Color.Success)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Success.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Success;
-            if (color == Color.Warning)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Warning.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Warning;
-            if (color == Color.Error)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Error.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Error;
-            if (color == Color.Dark)
-                return _mouseOver ? ThemeManager.CurrentColorScheme.Dark.Darken(.1) :
-                                    ThemeManager.CurrentColorScheme.Dark;
-
 
             return _mouseOver ? color.Darken(.1) : color;
         }
 
         protected bool GetDisabledState() => Disabled;
 
-        private TextEditFillMode GetButtonStyle()
+        private ButtonStyle GetButtonStyle()
         {
             if (ButtonStyle != null)
-                return (TextEditFillMode)ButtonStyle;
+                return (ButtonStyle)ButtonStyle;
 
-            if (ButtonStyleOverride != null)
-                return (TextEditFillMode)ButtonStyleOverride;
+            if (StyleOverride != null)
+                return (ButtonStyle)StyleOverride;
 
-            return TextEditFillMode.Filled;
+            return ClearBlazor.ButtonStyle.Filled;
         }
         internal Color? GetColor()
         {

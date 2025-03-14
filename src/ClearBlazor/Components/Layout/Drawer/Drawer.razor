@@ -5,16 +5,17 @@
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         <Grid style="overflow:hidden; " Columns=@_columns Rows=@_rows BorderThickness=0>
             <Grid Column=@_drawerContentColumn Row=@_drawerContentRow @ref=_content 
-                  BackgroundColor=@DrawerTokens.DrawerContainerColor
+                  BackgroundColor=@ThemeManager.CurrentColorScheme.Surface
                   Class="drawer-transition" Margin=@_drawerMargin Style="z-index:3; ">
                 @DrawerContent
             </Grid>
             <Grid Column=@_drawerBodyColumn Row=@_drawerBodyRow ColumnSpan=@_drawerBodyColumnSpan
-                  BackgroundColor=@DrawerTokens.BodyContainerColor>
+                  BackgroundColor=@ThemeManager.CurrentColorScheme.Surface>
                 @DrawerBody
                 @if (_showOverlay)
                 {
-                    <Grid BackgroundColor=@DrawerTokens.OverlayColor Style="z-index:2; " OnClicked=@OverlayClicked />
+                    <Grid BackgroundColor=@ThemeManager.CurrentColorScheme.Scrim 
+                          Style="z-index:2; " OnClicked=@OverlayClicked />
                 }
             </Grid>
         </Grid>

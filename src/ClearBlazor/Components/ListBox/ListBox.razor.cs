@@ -4,6 +4,9 @@ namespace ClearBlazor
 {
     public partial class ListBox<TListBox> : InputBase, IBackground, IBorder
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
@@ -83,7 +86,7 @@ namespace ClearBlazor
                 _backgroundIsNull = BackgroundColor == null;
 
             if (_backgroundIsNull == true)
-                BackgroundColor = AppBarTokens.ContainerColor;
+                BackgroundColor = ThemeManager.CurrentColorScheme.SurfaceContainerLow;
         }
 
         internal async Task HandleChild(ListBoxItem<TListBox> item)

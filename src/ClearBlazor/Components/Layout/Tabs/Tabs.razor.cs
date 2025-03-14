@@ -83,7 +83,7 @@ namespace ClearBlazor
                 _backgroundIsNull = BackgroundColor == null;
 
             if (_backgroundIsNull == true)
-                BackgroundColor = TabsTokens.ContainerColor;
+                BackgroundColor = ThemeManager.CurrentColorScheme.Surface;
         }
 
         internal void AddPage(Tab tabPage)
@@ -109,12 +109,12 @@ namespace ClearBlazor
             if (page == _activePage)
             {
                 if (Color == null)
-                    return TabsTokens.ActiveColor;
+                    return ThemeManager.CurrentColorScheme.Primary;
                 return Color;
             }
             else
             {
-                return TabsTokens.InactiveColor;
+                return ThemeManager.CurrentColorScheme.OnSurfaceVariant;
             }
         }
 

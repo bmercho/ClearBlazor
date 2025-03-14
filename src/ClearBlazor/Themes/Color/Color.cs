@@ -58,10 +58,6 @@ public class Color:IEquatable<Color>
             return ThemeManager.CurrentColorScheme.OnWarning;
         if (color.Equals(Color.Error))
             return ThemeManager.CurrentColorScheme.OnError;
-        //if (color == Color.Dark)
-        //    return ThemeManager.CurrentColorScheme.DarkContrastText;
-        //if (color == Color.Light)
-        //    return ThemeManager.CurrentColorScheme.GrayLighterContrastText;
 
         return ContrastingColor(color);
     }

@@ -18,7 +18,8 @@
         InitialIndex=@((0, Alignment.Start)) 
         Items=@_localListData>
             <RowTemplate Context=row>
-                <Grid Columns="auto,*" Rows="auto,auto" Margin=10 Padding=10 CornerRadius=8 BorderThickness=1>
+                <Grid Columns="auto,*" Rows="auto,auto" Margin=10 
+                      Padding=10 CornerRadius=8 BorderThickness=1>
                     <Icon IconName=@row.IconName VerticalAlignment=Alignment.Center />
                     <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
                         @($"{row.ToString()} ({row.ItemIndex})")

@@ -379,7 +379,8 @@ namespace CreateDocumentation
                     line--;
                     var comment = GetAssociatedComment(lines, line);
                     line++;
-                    info.ParameterApi.Add(new ApiComponentInfo(values[2], typ, def, comment));
+                    if (values.Length > 2)
+                        info.ParameterApi.Add(new ApiComponentInfo(values[2], typ, def, comment));
                     return true;
                 }
                 line++;

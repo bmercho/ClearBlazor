@@ -3,8 +3,8 @@
 
 <CascadingValue Value=this IsFixed=false>
     <div id=@Id class=@Classes style=@ComputeStyle()>
-        <ButtonGroup ButtonStyle=TextEditFillMode.Outline Size=@Size 
-        OutlineColor=@ThemeManager.CurrentColorScheme.TextDisabled>
+        <ButtonGroup ButtonStyle=ClearBlazor.ButtonStyle.Outlined Size=@Size
+                     OutlineColor=@ThemeManager.CurrentColorScheme.TextDisabled>
             @if(ShowFirstAndLastButtons)
             {
                 <IconButton Tag=1 Disabled=@_atStart OnClicked=@GotoStart
@@ -20,7 +20,7 @@
             @foreach (var page in _shownPages)
             {
                 <Button Tag=0 ButtonStyle=@(SelectedPage == page ?
-                         TextEditFillMode.Filled : TextEditFillMode.Outline)
+                        ButtonStyle.Filled : ButtonStyle.Outlined)
                         OnClicked=@(() => SelectPage(page))>
                     @(page.ToString())
                 </Button>

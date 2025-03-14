@@ -14,8 +14,12 @@
         /// </summary>
         Square,
         /// <summary>
-        /// Square but with rounded corners
+        /// Has rounded corners
         /// </summary>
-        SquareRounded
+        Rounded,
+        /// <summary>
+        /// Quarter circle corners
+        /// </summary>
+        FullyRounded
     }
 }

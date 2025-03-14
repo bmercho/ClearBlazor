@@ -68,10 +68,7 @@
 
         Color TextDisabled { get; }
 
-        Color ToolTipBackgroundColor { get; }
         Color ToolTipTextColor { get; }
-
-        Color TextPrimary { get; }
 
         Color ListBackgroundColor { get; }
         Color ListSelectedColor { get; }

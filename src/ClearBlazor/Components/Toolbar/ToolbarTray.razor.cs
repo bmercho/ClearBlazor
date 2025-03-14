@@ -4,6 +4,9 @@ namespace ClearBlazor
 {
     public partial class ToolbarTray:ClearComponentBase, IBackground
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 

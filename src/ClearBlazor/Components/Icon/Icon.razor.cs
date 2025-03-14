@@ -3,41 +3,79 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Used to show Material Icons and Custom Icons
+    /// </summary>
     public partial class Icon : ClearComponentBase
     {
+        /// <summary>
+        /// The name of the icon
+        /// </summary>
         [Parameter]
         public string IconName { get; set; } = string.Empty;
 
+        /// <summary>
+        /// The size of the icon
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
+        /// <summary>
+        /// The rotation angle of the icon, in degrees
+        /// </summary>
         [Parameter]
         public double Rotation { get; set; } = 0.0;
 
+        /// <summary>
+        /// The color used for the icon.
+        /// </summary>
         [Parameter]
-        public Color Color { get; set; } = ThemeManager.CurrentColorScheme.Dark;
+        public Color? Color { get; set; } = null;
 
+        /// <summary>
+        /// The containing box for the icon
+        /// </summary>
         [Parameter]
         public string ViewBox { get; set; } = "0 0 24 24";
 
+        /// <summary>
+        /// Tooltip string for the button
+        /// </summary>
         [Parameter]
         public string? ToolTip { get; set; } = null;
 
-        internal ToolTip? ToolTipElement { get; set; } = null;
-
+        /// <summary>
+        /// Tooltip position (when shown)
+        /// </summary>
         [Parameter]
         public ToolTipPosition? ToolTipPosition { get; set; } = null;
 
-
+        /// <summary>
+        /// The delay in milliseconds before the tooltip is shown
+        /// </summary>
         [Parameter]
-        public int? ToolTipDelay { get; set; } = null; // Milliseconds
+        // Milliseconds
+        public int? ToolTipDelay { get; set; } = null;
+
+        internal ToolTip? ToolTipElement { get; set; } = null;
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            if (Name == "Icon1")
+            {
+
+            }
+        }
 
         protected string GetIconStyle()
         {
             if (Color == null)
-                return $"font-size:{GetIconSize()}rem; height:1em; vertical-align: middle;";
+                return $"fill:{ThemeManager.CurrentColorScheme.OnSurface.Value}; " +
+                       $"font-size:{GetIconSize()}rem; height:1em; vertical-align: middle;";
             else
-                return $"fill:{Color.Value}; font-size:{GetIconSize()}rem; height:1em; vertical-align: middle;";
+                return $"fill:{Color.Value}; " +
+                       $"font-size:{GetIconSize()}rem; height:1em; vertical-align: middle;";
         }
 
         protected string GetTransform()

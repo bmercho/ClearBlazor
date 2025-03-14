@@ -66,9 +66,7 @@
         public Color Dark { get; set; } = new(Colors.Grey.Darken3);
         public Color TextDisabled { get; set; } = new Color("#b0b0b0");
 
-        public Color ToolTipBackgroundColor { get; set; } = new(Colors.Grey.Darken3);
         public Color ToolTipTextColor { get; set; } = new Color(Colors.Green.Lighten2);
-        public Color TextPrimary { get; set; } = new(Colors.Grey.Darken3);
         public Color ListBackgroundColor { get; set; } = new(Colors.Grey.Lighten2);
         public Color ListSelectedColor { get; set; } = new(Colors.Blue.Lighten5);
 

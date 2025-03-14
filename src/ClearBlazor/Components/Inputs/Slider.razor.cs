@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace ClearBlazor
 {
-    public partial class Slider<TItem> : InputBase, IBackgroundGradient where TItem : struct, INumber<TItem>
+    public partial class Slider<TItem> : InputBase where TItem : struct, INumber<TItem>
     {
         [Parameter]
         public TItem? Value { get; set; } = default;

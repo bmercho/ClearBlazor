@@ -19,7 +19,7 @@ namespace ClearBlazorTest
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
             new ApiComponentInfo("UseTransition", "bool", "true", ""),
-            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
+            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
             new ApiComponentInfo("Open", "bool", "false", ""),
             new ApiComponentInfo("CloseOnOutsideClick", "bool", "true", ""),
             new ApiComponentInfo("AllowVerticalFlip", "bool", "true", ""),

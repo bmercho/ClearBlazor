@@ -9,10 +9,9 @@ namespace ClearBlazorTest
         public string Description {get; set; } = "";
         public (string, string) ApiLink  {get; set; } = ("API", "SliderApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "Slider");
-        public (string, string) InheritsLink {get; set; } = ("InputBase", "InputBaseApi");
+        public (string, string) InheritsLink {get; set; } = ("InputBase where TItem", "InputBase where TItemApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
-            (" IBackgroundGradient where TItem", " IBackgroundGradient where TItemApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {

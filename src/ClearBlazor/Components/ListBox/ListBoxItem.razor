@@ -6,7 +6,7 @@
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         <StackPanel Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch>
             <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=@ContentAlignment 
-                        Spacing=20 CornerRadius=@ListBoxTokens.RowCornerRadius
+                        Spacing=20 CornerRadius=20
                         Padding=@LinePadding Class=@RowClasses
                         Style=@RowStyle
                         OnElementMouseEnter=@OnMouseEnter
@@ -34,7 +34,7 @@
                 else if (Avatar != null)
                 {
                     <Avatar HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center
-                            AvatarStyle=TextEditFillMode.None Size=@RowSize Icon=@Avatar Color=@GetColor()
+                            AvatarStyle=AvatarStyle.LabelOnly Size=@RowSize Icon=@Avatar Color=@GetColor()
                             IconColor=@GetColor() />
                 }
 

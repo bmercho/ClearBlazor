@@ -2,57 +2,106 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class TextBlock : ClearComponentBase, IBackground, IColor
+    /// <summary>
+    /// A control that shows text.
+    /// </summary>
+    public partial class TextBlock : ClearComponentBase, IBackground
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
+        /// <summary>
+        /// The text to be displayed. If null the control show the ChildContent
+        /// </summary>
         [Parameter]
         public string? Text { get; set; }
 
-        [Parameter]
-        public EventCallback<MouseOverEventArgs> OnMouseOver { get; set; }
-
+        /// <summary>
+        /// The color of the text
+        /// </summary>
         [Parameter]
         public Color? Color { get; set; } = null;
 
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
 
+        /// <summary>
+        /// Defines a predefined topography for the text to be shown.
+        /// Generally this is all that is required to define the topography
+        /// of the text. 
+        /// </summary>
         [Parameter]
         public Typo? Typo { get; set; } = null;
 
+        /// <summary>
+        /// Defines the topography for the text to be shown
+        /// </summary>
         [Parameter]
         public TypographyBase? Typography { get; set; } = null;
 
+        /// <summary>
+        /// The font family of the text
+        /// </summary>
         [Parameter]
         public string? FontFamily { get; set; } = null;
 
+        /// <summary>
+        /// The font size of the text
+        /// </summary>
         [Parameter]
         public string? FontSize { get; set; } = null;
 
+        /// <summary>
+        /// The font weight of the text
+        /// </summary>
         [Parameter]
         public int? FontWeight { get; set; } = null;
 
+        /// <summary>
+        /// The font style of the text
+        /// </summary>
         [Parameter]
         public FontStyle? FontStyle { get; set; } = null;
 
+        /// <summary>
+        /// The line height of the text
+        /// </summary>
         [Parameter]
         public double? LineHeight { get; set; } = null;
 
+        /// <summary>
+        /// The letter spacing of the text
+        /// </summary>
         [Parameter]
         public string? LetterSpacing { get; set; } = null;
 
+        /// <summary>
+        /// The text decoration of the text
+        /// </summary>
         [Parameter]
         public TextDecoration? TextDecoration { get; set; } = null;
 
-
+        /// <summary>
+        /// The transform applied to the text
+        /// </summary>
         [Parameter]
         public TextTransform? TextTransform { get; set; } = null;
 
+        /// <summary>
+        /// The text wrapping of the text
+        /// </summary>
         [Parameter]
         public TextWrap? TextWrapping { get; set; } = null;
 
+        /// <summary>
+        /// The text trimming of the text
+        /// </summary>
         [Parameter]
         public bool? TextTrimming { get; set; } = null;
 
@@ -63,12 +112,21 @@ namespace ClearBlazor
         [Parameter]
         public Alignment TextAlignment { get; set; } = Alignment.Start;
 
+        /// <summary>
+        /// Indicates if the text can be selected
+        /// </summary>
         [Parameter]
         public bool IsTextSelectionEnabled { get; set; } = false;
 
+        /// <summary>
+        /// The tooltip string
+        /// </summary>
         [Parameter]
         public string ToolTip { get; set; } = "";
 
+        /// <summary>
+        /// Indicates if the text can be clicked
+        /// </summary>
         [Parameter]
         public bool Clickable { get; set; } = false;
 
@@ -270,7 +328,7 @@ namespace ClearBlazor
             if (ColorOverride != null)
                 return ColorOverride;
 
-            return TextBlockTokens.TextColor;
+            return ThemeManager.CurrentColorScheme.OnSurfaceVariant;
         }
     }
 }

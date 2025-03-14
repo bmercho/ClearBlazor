@@ -3,6 +3,9 @@ using System.Text;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A button that shows an icon and possibly text.
+    /// </summary>
     public partial class IconButton : Button
     {
         /// <summary>
@@ -19,7 +22,7 @@ namespace ClearBlazor
             base.OnParametersSet();
             
             if (ButtonStyle == null)
-                ButtonStyle = TextEditFillMode.None;
+                ButtonStyle = ClearBlazor.ButtonStyle.LabelOnly;
         }
 
         protected override string GetBorderRadius()
@@ -30,7 +33,9 @@ namespace ClearBlazor
                     return "border-radius:50%; ";
                 case ContainerShape.Square:
                     return "";
-                case ContainerShape.SquareRounded:
+                case ContainerShape.Rounded:
+                    return "border-radius:4px; ";
+                case ContainerShape.FullyRounded:
                     return "border-radius:4px; ";
             }
             return "";

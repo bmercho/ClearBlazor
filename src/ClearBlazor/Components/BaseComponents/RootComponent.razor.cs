@@ -5,11 +5,17 @@ namespace ClearBlazor
 {
     public partial class RootComponent : ComponentBase, IObserver<BrowserSizeInfo>
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
         [Inject]
         IJSRuntime JSRuntime { get; set; } = null!;
+
+        [Inject]
+        NavigationManager NavManager { get; set; } = null!;
 
         ThemeManager ThemeManager { get; set; }
         private ElementReference Element;
@@ -78,13 +84,31 @@ namespace ClearBlazor
             return css;
         }
 
-        public async Task Refresh()
+        public void Refresh()
+        {
+            try
+            {
+                ClearComponentBase.RenderAll = true;
+                StateHasChanged();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// The theme has changed so re-navigate to the current uri to allow 
+        /// new theme to take affect 
+        /// </summary>
+        /// <returns></returns>
+        public async Task ThemeChanged()
         {
             try
             {
                 await ThemeManager.UpdateTheme(JSRuntime);
-                ClearComponentBase.RenderAll = true;
-                StateHasChanged();
+                var uri = NavManager.Uri;
+                NavManager.NavigateTo("/");
+                NavManager.NavigateTo(uri);
             }
             catch
             {

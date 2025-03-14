@@ -15,7 +15,7 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
+            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
             new ApiComponentInfo("Model", "object", "null!", ""),
             new ApiComponentInfo("ReadOnly", "bool", "false", ""),
             new ApiComponentInfo("ValidationErrorLocation", "<a href=ValidationErrorLocationApi>ValidationErrorLocation</a>", "ValidationErrorLocation.ErrorIcon", ""),

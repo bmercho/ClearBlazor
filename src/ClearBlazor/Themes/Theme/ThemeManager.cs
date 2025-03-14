@@ -23,7 +23,7 @@ namespace ClearBlazor
 
                     IsDarkMode = _isDarkMode = value;
                     SetColorScheme();
-                    RootComponent?.Refresh();
+                    RootComponent?.ThemeChanged();
                 }
             }
         }
@@ -94,9 +94,9 @@ namespace ClearBlazor
                 }
 
             await jsRuntime.InvokeVoidAsync("window.scrollbar.setScrollBarProperties", width, height, borderRadius,
-                                                       ScrollViewerTokens.ScrollbarContainerColor.Value,
-                                                       ScrollViewerTokens.ScrollbarThumbColor.Value,
-                                                       ScrollViewerTokens.ScrollbarThumbHoverColor.Value,
+                                                       ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value,
+                                                       ThemeManager.CurrentColorScheme.Outline.Value,
+                                                       ThemeManager.CurrentColorScheme.SurfaceContainerHighest.Value,
                                                        thumbBorder);
         }
     }

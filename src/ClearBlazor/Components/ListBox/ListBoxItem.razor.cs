@@ -9,6 +9,9 @@ namespace ClearBlazor
         [Parameter]
         public TListBox? Value { get; set; }
 
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
@@ -117,13 +120,13 @@ namespace ClearBlazor
             RowStyle = string.Empty;
             if (IsSelected)
                 if (MouseOver)
-                    RowStyle = $"background-color: {ListBoxTokens.SelectedRowContainerColor.SetAlpha(.8).Value}; ";
+                    RowStyle = $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.SetAlpha(.8).Value}; ";
                 else
-                    RowStyle = $"background-color: {ListBoxTokens.SelectedRowContainerColor.Value}; ";
+                    RowStyle = $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.Value}; ";
             else
             {
                 if (MouseOver)
-                    RowStyle = $"background-color: {ListBoxTokens.RowContainerColor.SetAlpha(.8).Value}; ";
+                    RowStyle = $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8).Value}; ";
                 else
                     RowStyle = string.Empty;
             }
@@ -362,7 +365,7 @@ namespace ClearBlazor
             if (ColorOverride != null)
                 return ColorOverride;
 
-            return ListBoxTokens.RowColor;
+            return ThemeManager.CurrentColorScheme.OnSurface;
         }
     }
 }

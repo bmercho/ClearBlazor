@@ -6,14 +6,14 @@ namespace ClearBlazorTest
     public record SizeDocsInfo:IOtherDocsInfo
     {
         public string Name { get; set; } = "Size";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "Defines the size of a component.\r";
         public List<ApiFieldInfo> FieldApi {get; set; } = new List<ApiFieldInfo>
         {
-            new ApiFieldInfo("VerySmall", "Size", ""),
-            new ApiFieldInfo("Small", "Size", ""),
-            new ApiFieldInfo("Normal", "Size", ""),
-            new ApiFieldInfo("Large", "Size", ""),
-            new ApiFieldInfo("VeryLarge", "Size", ""),
+            new ApiFieldInfo("VerySmall", "Size", "Very small\r"),
+            new ApiFieldInfo("Small", "Size", "Small\r"),
+            new ApiFieldInfo("Normal", "Size", "Normal\r"),
+            new ApiFieldInfo("Large", "Size", "Large\r"),
+            new ApiFieldInfo("VeryLarge", "Size", "Very large\r"),
         };
     }
 }

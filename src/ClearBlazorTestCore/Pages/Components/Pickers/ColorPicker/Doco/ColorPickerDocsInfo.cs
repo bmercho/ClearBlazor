@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record ColorPickerDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "ColorPicker";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "A control for selecting a color.\r";
         public (string, string) ApiLink  {get; set; } = ("API", "ColorPickerApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "ColorPicker");
         public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");
@@ -16,9 +16,9 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
-            new ApiComponentInfo("Color", "Color?", "null", ""),
-            new ApiComponentInfo("ColorChanged", "EventCallback<Color>", "", ""),
+            new ApiComponentInfo("Color", "Color?", "null", "The initial selected color\r"),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
+            new ApiComponentInfo("ColorChanged", "EventCallback<Color>", "", "An event raised when the selected color is changed\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

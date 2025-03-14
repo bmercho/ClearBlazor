@@ -4,27 +4,45 @@ namespace ClearBlazor
 {
     public partial class ButtonGroup : ClearComponentBase
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
+        /// <summary>
+        ///  The button style for all the buttons in the button group
+        /// </summary>
         [Parameter]
-        public TextEditFillMode? ButtonStyle { get; set; } = null;
+        public ButtonStyle? ButtonStyle { get; set; } = null;
 
+        /// <summary>
+        /// Orientation of the button group
+        /// </summary>
         [Parameter]
         public Orientation Orientation { get; set; } = Orientation.Landscape;
 
+        /// <summary>
+        ///  The color used for all the buttons in the button group
+        /// </summary>
         [Parameter]
         public Color? Color { get; set; } = null;
 
+        /// <summary>
+        ///  The outline colour used all the buttons in the button group
+        /// </summary>
         [Parameter]
         public Color? OutlineColor { get; set; } = null;
 
-        [Parameter]
-        public bool DisableBoxShadow { get; set; } = false;
-
+        /// <summary>
+        ///  The button size used for all the buttons in the button group
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
+        /// <summary>
+        ///  The icon location used for all the buttons in the button group
+        /// </summary>
         [Parameter]
         public IconLocation IconLocation { get; set; } = IconLocation.Start;
 
@@ -48,7 +66,7 @@ namespace ClearBlazor
             {
                 var btn = (Button)child;
                 if (ButtonStyle != null)
-                    btn.ButtonStyleOverride = ButtonStyle;
+                    btn.StyleOverride = ButtonStyle;
                 if (Color != null)
                     btn.ColorOverride = Color;
                 btn._outlineColorOverride = OutlineColor;
@@ -80,7 +98,7 @@ namespace ClearBlazor
                     if (Orientation == Orientation.Landscape)
                     {
                         css = UpdateBorderRadius(css, "border-radius:0 4px 4px 0; ");
-                        if (ButtonStyle == TextEditFillMode.None)
+                        if (ButtonStyle == ClearBlazor.ButtonStyle.LabelOnly)
                             css += "border-width: 0 0 0 1px; border-style: solid; ";
                         else
                             css = UpdateBorderWidth(css, 
@@ -90,7 +108,7 @@ namespace ClearBlazor
                     else
                     {
                         css = UpdateBorderRadius(css, "border-radius: 0 0 4px 4px; ");
-                        if (ButtonStyle == TextEditFillMode.None)
+                        if (ButtonStyle == ClearBlazor.ButtonStyle.LabelOnly)
                             css += "border-width: 1px 0 0 0; border-style: solid; ";
                         else
                             css = UpdateBorderWidth(css, 
@@ -101,14 +119,14 @@ namespace ClearBlazor
                 {
                     css = UpdateBorderRadius(css, "border-radius:0; ");
                     if (Orientation == Orientation.Landscape)
-                        if (ButtonStyle == TextEditFillMode.None)
+                        if (ButtonStyle == ClearBlazor.ButtonStyle.LabelOnly)
                             css += "border-width: 0 0 0 1px; border-style: solid; ";
                         else
                             css = UpdateBorderWidth(css, 
                                 "border-width: 1px 0 1px 1px; border-style:solid; " +
                                 $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value};");
                     else
-                        if (ButtonStyle == TextEditFillMode.None)
+                        if (ButtonStyle == ClearBlazor.ButtonStyle.LabelOnly)
                             css += "border-width: 1px 0 0 0; border-style: solid; ";
                         else
                             css = UpdateBorderWidth(css, 

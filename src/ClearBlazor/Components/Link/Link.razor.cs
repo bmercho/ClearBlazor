@@ -6,6 +6,9 @@ namespace ClearBlazor
 {
     public partial class Link : ClearComponentBase
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 

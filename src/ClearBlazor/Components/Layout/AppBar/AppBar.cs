@@ -14,7 +14,7 @@ namespace ClearBlazor
                 _backgroundIsNull = BackgroundColor == null;
 
             if (_backgroundIsNull == true)
-                BackgroundColor = AppBarTokens.ContainerColor;
+                BackgroundColor = ThemeManager.CurrentColorScheme.SurfaceContainerLow;
         }
 
         protected override void UpdateChildParams(ClearComponentBase child, int level)
@@ -22,15 +22,15 @@ namespace ClearBlazor
             if (level == 1 && child is TextBlock)
             {
                 var text = (TextBlock)child;
-                text.ColorOverride = AppBarTokens.TextColor;
+                text.ColorOverride = ThemeManager.CurrentColorScheme.OnSurface;
             }
             if (level == 1 && child is IconButton)
             {
                 var icon = (IconButton)child;
                 if (icon.LeadingIcon)
-                    icon.ColorOverride = AppBarTokens.LeadingIconColor;
+                    icon.ColorOverride = ThemeManager.CurrentColorScheme.OnSurface;
                 else
-                    icon.ColorOverride = AppBarTokens.TrailingIconColor;
+                    icon.ColorOverride = ThemeManager.CurrentColorScheme.OnSurfaceVariant;
             }
         }
     }

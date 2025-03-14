@@ -2,41 +2,66 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Represents a component which displays circular user profile pictures, icons or text.
+    /// </summary>
     public partial class Avatar : ClearComponentBase
     {
+        /// <summary>
+        /// The icon to be shown within the avatar
+        /// </summary>
         [Parameter]
         public string Icon { get; set; } = string.Empty;
 
+        /// <summary>
+        /// The image to be shown within the avatar
+        /// </summary>
         [Parameter]
         public string Image { get; set; } = string.Empty;
 
-        [Parameter]
-        public string Alt { get; set; } = string.Empty;
-
+        /// <summary>
+        /// The size of the avatar
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
+        /// <summary>
+        /// The style of the avatar
+        /// </summary>
         [Parameter]
-        public TextEditFillMode AvatarStyle { get; set; } = TextEditFillMode.Filled;
+        public AvatarStyle AvatarStyle { get; set; } = AvatarStyle.Filled;
 
+        /// <summary>
+        /// The shape of the avatar
+        /// </summary>
         [Parameter]
         public ContainerShape Shape { get; set; } = ContainerShape.Circle;
 
+        /// <summary>
+        /// The color used for the button. What gets this color (background, text or outline)
+        /// depends on the button style.
+        /// </summary>
         [Parameter]
-        public Color Color { get; set; } = AvatarTokens.Color;
+        public Color Color { get; set; } = Color.Primary;
 
+        /// <summary>
+        /// The text to be shown within the avatar
+        /// </summary>
         [Parameter]
         public string Text { get; set; } = string.Empty;
 
+        /// <summary>
+        /// The color of the icon within the avatar
+        /// </summary>
         [Parameter]
         public Color? IconColor { get; set; } = null;
 
-        public Color TextColor { get; set; } = AvatarTokens.Color;
-        
-        public string FontSize { get; set; } = "";
-        public string FontFamily { get; set; } = "";
-        public int FontWeight { get; set; } = 0;
-        public FontStyle FontStyle { get; set; } = FontStyle.Normal;
+        private Color TextColor { get; set; } = Color.Primary;
+
+        private string FontSize { get; set; } = "";
+        private string FontFamily { get; set; } = "";
+        private int FontWeight { get; set; } = 0;
+        private FontStyle FontStyle { get; set; } = FontStyle.Normal;
         protected override string UpdateStyle(string css)
         {
             FontSize = GetFontSize();
@@ -69,18 +94,18 @@ namespace ClearBlazor
             IconColor = GetIconColor();
             switch (AvatarStyle)
             {
-                case TextEditFillMode.None:
+                case AvatarStyle.LabelOnly:
                     TextColor = Color;
-                    css += $"background: {AvatarTokens.ContainerColor.Value}; ";
+                    css += $"background: {Color.SurfaceContainerHigh.Value}; ";
                     break;
-                case TextEditFillMode.Filled:
+                case AvatarStyle.Filled:
                     TextColor = Color.GetAssocTextColor(Color);
                     css += $"background: {Color.Value}; ";
                     break;
-                case TextEditFillMode.Outline:
+                case AvatarStyle.Outlined:
                     TextColor = Color;
                     css += $"border-width: 1px; border-style: solid; border-color: {Color.Value}; ";
-                    css += $"background: {AvatarTokens.ContainerColor.Value}; ";
+                    css += $"background: {Color.SurfaceContainerHigh.Value}; ";
                     break;
             }
 
@@ -93,10 +118,10 @@ namespace ClearBlazor
             {
                 switch (AvatarStyle)
                 {
-                    case TextEditFillMode.Filled:
-                    case TextEditFillMode.None:
+                    case AvatarStyle.Filled:
+                    case AvatarStyle.LabelOnly:
                         return Color.ContrastingColor(Color);
-                    case TextEditFillMode.Outline:
+                    case AvatarStyle.Outlined:
                         return Color;
                 }
                 return Color.ContrastingColor(Color);
@@ -115,7 +140,9 @@ namespace ClearBlazor
                     return "border-radius:50%; ";
                 case ContainerShape.Square:
                     return "";
-                case ContainerShape.SquareRounded:
+                case ContainerShape.Rounded:
+                    return "border-radius:4px; ";
+                case ContainerShape.FullyRounded:
                     return "border-radius:4px; ";
             }
             return "";

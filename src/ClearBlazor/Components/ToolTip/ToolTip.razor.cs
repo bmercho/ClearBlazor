@@ -1,25 +1,42 @@
-using ClearBlazor.Components.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A control that provides additional context for a UI element. 
+    /// </summary>
     public partial class ToolTip : ClearComponentBase
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
+        /// <summary>
+        /// Text shown in tooltip
+        /// </summary>
         [Parameter]
         public string? Text { get; set; } = null;
 
+        /// <summary>
+        /// Size of tooltip
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
+        /// <summary>
+        /// Position of tooltip
+        /// </summary>
         [Parameter]
         public ToolTipPosition? Position { get; set; } = null;
 
+        /// <summary>
+        /// The delay in milliseconds before the tooltip is shown
+        /// </summary>
         [Parameter]
-        public int? Delay { get; set; } = null; // Milliseconds
+        public int? Delay { get; set; } = null; 
 
         private ElementReference ToolTipElement;
 
@@ -34,8 +51,8 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            css += $"color: {ThemeManager.CurrentColorScheme.ToolTipTextColor.Value}; ";
-            css += $"background-color: {ThemeManager.CurrentColorScheme.ToolTipBackgroundColor.Value}; ";
+            css += $"color: {ThemeManager.CurrentColorScheme.OnInverseSurface.Value}; ";
+            css += $"background-color: {ThemeManager.CurrentColorScheme.InverseSurface.Value}; ";
             css += ToolTipVisible ? "visibility: visible; opacity: 1; " : "visibility: hidden; opacity: 0; ";
             css += GetLocationCss(Position);
             css += GetFontSize();
@@ -43,7 +60,7 @@ namespace ClearBlazor
             return css;
         }
 
-        public string GetClasses()
+        private string GetClasses()
         {
             if (Position == null)
                 Position = ToolTipPosition.Bottom;
@@ -64,6 +81,10 @@ namespace ClearBlazor
             return "tooltip tooltip-top";
         }
 
+        /// <summary>
+        /// Shows the tooltip
+        /// </summary>
+        /// <returns></returns>
         public async Task ShowToolTip()
         {
             ToolTipHidden = false;
@@ -78,6 +99,9 @@ namespace ClearBlazor
             }
         }
 
+        /// <summary>
+        /// Hides the tooltip
+        /// </summary>
         public void HideToolTip()
         {
             ToolTipVisible = false;

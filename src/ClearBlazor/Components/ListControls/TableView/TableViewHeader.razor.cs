@@ -98,7 +98,7 @@ namespace ClearBlazor
             if (_parent == null)
                 return string.Empty;
 
-            string css = $"background-color:{TableViewTokens.TableHeaderContainerColor.Value};  z-index:1;";
+            string css = $"background-color:{ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value};  z-index:1;";
             css += $"display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr; " +
                    $"grid-area: 1 / 1 /span 1 / span {Columns.Count}; ";
             if (StickyHeader)

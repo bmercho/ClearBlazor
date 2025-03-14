@@ -793,7 +793,7 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            return css + $"display: grid; background-color: {ListControlTokens.ContainerColor.Value}";
+            return css + $"display: grid; background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}";
         }
 
         private string GetTransformStyle()

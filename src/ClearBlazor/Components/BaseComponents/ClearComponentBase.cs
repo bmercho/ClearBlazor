@@ -237,6 +237,11 @@ namespace ClearBlazor
             UpdateClasses();
         }
 
+        //protected override bool ShouldRender()
+        //{
+        //    return RenderAll;
+        //}
+
         protected virtual bool HaveParametersChanged(ClearComponentBase child, ParameterView parameters)
         {
             return false;

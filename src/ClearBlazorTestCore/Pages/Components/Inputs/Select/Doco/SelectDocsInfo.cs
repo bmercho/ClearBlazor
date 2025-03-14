@@ -15,7 +15,7 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
+            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
             new ApiComponentInfo("SelectData", "List<ListDataItem<TItem>>?", "null", ""),
             new ApiComponentInfo("Values", "List<TItem?>?", "null", ""),
             new ApiComponentInfo("ValuesChanged", "EventCallback<List<TItem?>>", "", ""),

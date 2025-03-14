@@ -14,12 +14,12 @@ namespace ClearBlazor
         [Parameter]
         public bool IsLastTab { get; set; } = false;
 
-        protected override string GetBorder(TextEditFillMode buttonStyle, Color color)
+        protected override string GetBorder(ButtonStyle buttonStyle, Color color)
         {
             switch (buttonStyle)
             {
-                case TextEditFillMode.Filled:
-                case TextEditFillMode.None:
+                case ClearBlazor.ButtonStyle.Filled:
+                case ClearBlazor.ButtonStyle.LabelOnly:
                     if (IsActive)
                         if (IsFirstTab)
                             return $"border-width: 0 0 2px 0; border-style: solid; border-color: {color.Value};  border-radius: 4px 0 0 0; ";
@@ -27,7 +27,7 @@ namespace ClearBlazor
                             return $"border-width: 0 0 2px 0; border-style: solid; border-color: {color.Value};  border-radius: 0; ";
                     else
                         return $"border-radius: 0; ";
-                case TextEditFillMode.Outline:
+                case ClearBlazor.ButtonStyle.Outlined:
                     return $"border-width: 1px; border-style: solid; border-color: {color.Value}; border-radius: 0; ";
             }
             return string.Empty;

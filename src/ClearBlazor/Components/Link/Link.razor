@@ -5,7 +5,8 @@
 <div id=@Id style=@ComputeStyle() 
      @onmouseenter="OnMouseEnter"
      @onmouseleave="OnMouseLeave">
-    <TextBlock Clickable=true Color=@LinkTokens.TextColor TextDecoration=@GetTextDecoration() 
+    <TextBlock Clickable=true Color=@ThemeManager.CurrentColorScheme.Primary 
+               TextDecoration=@GetTextDecoration() 
                OnClicked=@OnLinkClicked>
         @ChildContent
     </TextBlock>
