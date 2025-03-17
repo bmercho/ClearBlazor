@@ -2,17 +2,12 @@
 <div class="html"><pre>
 <span class="atSign">&#64;</span>using ClearBlazor
 
-<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Pagination</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Primary</span> <span class="htmlAttributeName">ShowFirstAndLastButtons</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">true</span> 
-            <span class="htmlAttributeName">SelectedPage</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">3</span> <span class="htmlAttributeName">NumPages</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">NumPagesShown</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">3</span>
-            <span class="htmlAttributeName">SelectedPageChanged</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>PageChanged</span><span class="htmlTagDelimiter">/&gt;</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Pagination</span> <span class="htmlAttributeName">ShowFirstAndLastButtons</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">true</span>
+            <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-SelectedPage</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">selectedPage</span> <span class="htmlAttributeName">NumPages</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">NumPagesShown</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">3</span><span class="htmlTagDelimiter">/&gt;</span>
 </pre></div>
 <div class="csharp"><pre>
 <span class="atSign">&#64;</span>code {
-
-    <span class="keyword">void</span> PageChanged(<span class="keyword">int</span> page)
-    {
-        
-    }
+    <span class="keyword">int</span> selectedPage = <span class="number">3</span>;
 }
 </pre></div>
 </div>

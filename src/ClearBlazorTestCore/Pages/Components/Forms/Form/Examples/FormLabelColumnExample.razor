@@ -20,14 +20,14 @@
                 <Radio Label="Item4" Value=@("Item4") />
             </RadioGroup>
             <TextBlock Column="0" Row="5" VerticalAlignment=Alignment.Center>Select</TextBlock>
-            <Select Column="1" Row="5" TextEditFillMode=TextEditFillMode.Underline @bind-Value=EnumValue FieldName="EnumValue">
+            <Select Column="1" Row="5" InputContainerStyle=InputContainerStyle.Underlined @bind-Value=EnumValue FieldName="EnumValue">
                 <SelectItem Value=TestEnum.Enum1 Text="Item1" Icon=@Icons.Material.Filled.HeartBroken />
                 <SelectItem Value=TestEnum.Enum2 Text="Item2" Icon=@Icons.Material.Filled.HeartBroken />
                 <SelectItem Value=TestEnum.Enum3 Text="Item3" Icon=@Icons.Material.Filled.HeartBroken />
                 <SelectItem Value=TestEnum.Enum4 Text="Item4" Icon=@Icons.Material.Filled.HeartBroken />
             </Select>
             <TextBlock Column="0" Row="6" VerticalAlignment=Alignment.Center>MultiSelect</TextBlock>
-            <Select Column="1" Row="6" TextEditFillMode=TextEditFillMode.Underline @bind-Value=Days MultiSelect=true FieldName="Days">
+            <Select Column="1" Row="6" InputContainerStyle=InputContainerStyle.Underlined @bind-Value=Days MultiSelect=true FieldName="Days">
                 @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
                 {
                     <SelectItem Text=@item.ToString() Value="@item" />

@@ -4,8 +4,16 @@ using System.Text;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// An item that can be a child of ListBox.
+    /// Can be text, icon or avatar
+    /// </summary>
+    /// <typeparam name="TListBox"></typeparam>
     public partial class ListBoxItem<TListBox> : ClearComponentBase, IBackground, IColor
     {
+        /// <summary>
+        /// The value of the list box item.
+        /// </summary>
         [Parameter]
         public TListBox? Value { get; set; }
 
@@ -15,28 +23,51 @@ namespace ClearBlazor
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
+        /// <summary>
+        /// The horizontal alignment of the item
+        /// </summary>
         [Parameter]
         public Alignment ContentAlignment { get; set; } = Alignment.Stretch;
 
+        /// <summary>
+        /// The text to be shown
+        /// </summary>
         [Parameter]
         public string? Text { get; set; } = null;
 
+        /// <summary>
+        /// The icon to be shown
+        /// </summary>
         [Parameter]
         public string? Icon { get; set; } = null;
 
+        /// <summary>
+        /// The avatar to be shown
+        /// </summary>
         [Parameter]
         public string? Avatar { get; set; } = null;
 
+        /// <summary>
+        /// The color of the item
+        /// </summary>
         [Parameter]
         public Color? Color { get; set; } = null;
 
+        /// <summary>
+        /// The background color of the item
+        /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
 
-
+        /// <summary>
+        /// The href to navigate to when clicked
+        /// </summary>
         [Parameter]
         public string? HRef { get; set; } = null;
 
+        /// <summary>
+        /// Indicates if the item is initially expanded
+        /// </summary>
         [Parameter]
         public bool InitiallyExpanded { get; set; } = true;
 
@@ -214,7 +245,7 @@ namespace ClearBlazor
             await Task.CompletedTask;
             StateHasChanged();
         }
-        public async Task OnListItemClicked(MouseEventArgs e)
+        private async Task OnListItemClicked(MouseEventArgs e)
         {
             if (HasChildren)
             {
@@ -234,12 +265,12 @@ namespace ClearBlazor
                 NavManager.NavigateTo(HRef);
         }
 
-        public void Unselect()
+        internal void Unselect()
         {
             IsSelected = false;
             StateHasChanged();
         }
-        public void Select()
+        internal void Select()
         {
             IsSelected = true;
             StateHasChanged();

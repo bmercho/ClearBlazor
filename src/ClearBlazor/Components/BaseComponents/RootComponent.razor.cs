@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Drawing;
 
 namespace ClearBlazor
 {
-    public partial class RootComponent : ComponentBase, IObserver<BrowserSizeInfo>
+    public partial class RootComponent : ComponentBase, IObserver<BrowserSizeInfo>,IBackground
     {
         /// <summary>
         /// The child content of this control.
@@ -13,6 +14,12 @@ namespace ClearBlazor
 
         [Inject]
         IJSRuntime JSRuntime { get; set; } = null!;
+
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; }
 
         [Inject]
         NavigationManager NavManager { get; set; } = null!;
@@ -27,6 +34,18 @@ namespace ClearBlazor
         public RootComponent()
         {
             ThemeManager = new ThemeManager(this, false);
+        }
+
+        bool? _backgroundIsNull = null;
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+
+            if (_backgroundIsNull == null)
+                _backgroundIsNull = BackgroundColor == null;
+
+            if (_backgroundIsNull == true)
+                BackgroundColor = ThemeManager.CurrentColorScheme.Surface;
         }
 
         protected override async  Task OnAfterRenderAsync(bool firstRender)
@@ -70,8 +89,10 @@ namespace ClearBlazor
                 LoadingComplete = true;
 
                 Subscribe(browserSizeService);
+
                 StateHasChanged();
             }
+
             ClearComponentBase.RenderAll = false;
         }
         private string GetStyle()
@@ -81,6 +102,9 @@ namespace ClearBlazor
                 css += $"overflow: hidden; position: relative;height:{Height}px; width:{Width}px; ";
             else
                 css += $"height: 100vh; overflow: hidden; position: relative; ";
+
+            if (BackgroundColor != null)
+                css += $"background-color: {BackgroundColor.Value} ;";   
             return css;
         }
 

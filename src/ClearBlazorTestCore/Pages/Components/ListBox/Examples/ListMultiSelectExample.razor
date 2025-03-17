@@ -1,5 +1,5 @@
 ﻿@namespace ClearBlazorTest
-<ListBox @bind-Values=StringValues MultiSelect=true Width=300 BorderThickness="1"
+<ListBox HorizontalAlignment=Alignment.Start @bind-Values=StringValues MultiSelect=true Width=300 BorderThickness="1"
          BorderColor="Color.Dark" CornerRadius="4">
     <ListBoxItem Value=@("Apple")/>
     <ListBoxItem Value=@("Apricot") />
@@ -12,7 +12,7 @@
 </ListBox>
 <TextBlock HorizontalAlignment=Alignment.Center >String values = @string.Join(", ",StringValues)</TextBlock>
 
-<ListBox @bind-Values=DoubleValues MultiSelect=true Width=300 BorderThickness="1" BorderColor="Color.Dark" CornerRadius="4">
+<ListBox HorizontalAlignment=Alignment.Start @bind-Values=DoubleValues MultiSelect=true Width=300 BorderThickness="1" BorderColor="Color.Dark" CornerRadius="4">
     <ListBoxItem Value=5.3 />
     <ListBoxItem Value=2.45 />
     <ListBoxItem Value=4.0 />

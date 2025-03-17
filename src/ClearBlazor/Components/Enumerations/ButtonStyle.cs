@@ -1,5 +1,8 @@
 ﻿namespace ClearBlazor
 {
+    /// <summary>
+    /// The style of the button 
+    /// </summary>
     public enum ButtonStyle
     {
         /// <summary>

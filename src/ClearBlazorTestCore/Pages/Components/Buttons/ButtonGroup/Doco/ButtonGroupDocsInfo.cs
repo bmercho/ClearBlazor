@@ -19,7 +19,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("ButtonStyle", "<a href=ButtonStyleApi>ButtonStyle?</a>", "null", " The button style for all the buttons in the button group\r"),
             new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Landscape", "Orientation of the button group\r"),
             new ApiComponentInfo("Color", "Color?", "null", " The color used for all the buttons in the button group\r"),
-            new ApiComponentInfo("OutlineColor", "Color?", "null", " The outline colour used all the buttons in the button group\r"),
+            new ApiComponentInfo("OutlineColor", "Color?", "ThemeManager.CurrentColorScheme.Outline", " The outline colour used by all the buttons in the button group\r"),
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", " The button size used for all the buttons in the button group\r"),
             new ApiComponentInfo("IconLocation", "<a href=IconLocationApi>IconLocation</a>", "IconLocation.Start", " The icon location used for all the buttons in the button group\r"),
         };

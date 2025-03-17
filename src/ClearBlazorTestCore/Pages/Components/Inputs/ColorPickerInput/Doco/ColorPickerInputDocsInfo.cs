@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record ColorPickerInputDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "ColorPickerInput";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "A color picker input component\r";
         public (string, string) ApiLink  {get; set; } = ("API", "ColorPickerInputApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "ColorPickerInput");
         public (string, string) InheritsLink {get; set; } = ("ContainerInputBase<Color>", "ContainerInputBase<Color>Api");
@@ -17,7 +17,7 @@ namespace ClearBlazorTest
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
             new ApiComponentInfo("ShowHex", "bool", "false", ""),
-            new ApiComponentInfo("BackgroundColor", "Color?", "null", ""),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
             new ApiComponentInfo("Position", "<a href=PopupPositionApi>PopupPosition</a>", "PopupPosition.BottomLeft", ""),
             new ApiComponentInfo("Transform", "<a href=PopupTransformApi>PopupTransform</a>", "PopupTransform.TopLeft", ""),
             new ApiComponentInfo("AllowVerticalFlip", "bool", "true", ""),

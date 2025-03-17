@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record SwitchDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "Switch";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "A switch input component\r";
         public (string, string) ApiLink  {get; set; } = ("API", "SwitchApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "Switch");
         public (string, string) InheritsLink {get; set; } = ("InputBase", "InputBaseApi");

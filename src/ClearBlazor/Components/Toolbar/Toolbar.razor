@@ -6,9 +6,9 @@
         <StackPanel Orientation=@Orientation>
             @if (@IsInToolbarTray)
             {
-                <Grid BorderThickness="0" Margin="12,0,12,0" BackgroundColor=@Color.Transparent>
-                    <IconButton Style="cursor: move; " IconColor=@Color.Dark Icon="@Icons.Material.Filled.DragIndicator" />
-                </Grid>
+                <IconButton Style="cursor: move; " 
+                            IconColor=@ThemeManager.CurrentColorScheme.OnSurface 
+                            Icon="@Icons.Material.Filled.DragIndicator" />
             }
             @ChildContent
         </StackPanel>

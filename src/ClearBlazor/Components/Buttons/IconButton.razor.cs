@@ -22,7 +22,7 @@ namespace ClearBlazor
             base.OnParametersSet();
             
             if (ButtonStyle == null)
-                ButtonStyle = ClearBlazor.ButtonStyle.LabelOnly;
+                StyleOverride = ClearBlazor.ButtonStyle.LabelOnly;
         }
 
         protected override string GetBorderRadius()

@@ -14,7 +14,7 @@ namespace ClearBlazor
         public string LabelValueCols { get; set; } = "*,*";
 
         [Parameter]
-        public TextEditFillMode TextEditFillMode { get; set; } = TextEditFillMode.Underline;
+        public InputContainerStyle TextEditFillMode { get; set; } = InputContainerStyle.Underlined;
 
         [Parameter]
         public Size Size { get; set; } = Size.Normal;

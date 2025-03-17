@@ -29,10 +29,10 @@ namespace ClearBlazor
         public Color? Color { get; set; } = null;
 
         /// <summary>
-        ///  The outline colour used all the buttons in the button group
+        ///  The outline colour used by all the buttons in the button group
         /// </summary>
         [Parameter]
-        public Color? OutlineColor { get; set; } = null;
+        public Color? OutlineColor { get; set; } = ThemeManager.CurrentColorScheme.Outline;
 
         /// <summary>
         ///  The button size used for all the buttons in the button group
@@ -78,19 +78,40 @@ namespace ClearBlazor
         {
             if (child is Button)
             {
-                var btn = (Button) child;
-                if (IsFirst(btn))
+                var btn = (Button)child;
+                if (IsFirst(btn) && IsLast(btn))
+                {
+                    if (Orientation == Orientation.Landscape)
+                    {
+                        css = UpdateBorderRadius(css, "border-radius:4px 4px 4px 4px; ");
+                        if (ButtonStyle != ClearBlazor.ButtonStyle.LabelOnly)
+                            css = UpdateBorderWidth(css,
+                                $"border-width: 1px 0 1px 1px; border-style:solid; " +
+                                $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value}; ");
+                    }
+                    else
+                    {
+                        css = UpdateBorderRadius(css, "border-radius:4px 4px 4px 4px; ");
+                        if (ButtonStyle != ClearBlazor.ButtonStyle.LabelOnly)
+                            css = UpdateBorderWidth(css,
+                                 "border-width: 1px 1px 0 1px; border-style:solid; " +
+                                 $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value}; ");
+                    }
+                }
+                else if (IsFirst(btn))
                     if (Orientation == Orientation.Landscape)
                     {
                         css = UpdateBorderRadius(css, "border-radius:4px 0 0 4px; ");
-                        css = UpdateBorderWidth(css, 
+                        if (ButtonStyle != ClearBlazor.ButtonStyle.LabelOnly)
+                            css = UpdateBorderWidth(css,
                                 $"border-width: 1px 0 1px 1px; border-style:solid; " +
                                 $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value}; ");
                     }
                     else
                     {
                         css = UpdateBorderRadius(css, "border-radius:4px 4px 0 0; ");
-                        css = UpdateBorderWidth(css, 
+                        if (ButtonStyle != ClearBlazor.ButtonStyle.LabelOnly)
+                            css = UpdateBorderWidth(css,
                                  "border-width: 1px 1px 0 1px; border-style:solid; " +
                                  $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value}; ");
                     }
@@ -99,19 +120,23 @@ namespace ClearBlazor
                     {
                         css = UpdateBorderRadius(css, "border-radius:0 4px 4px 0; ");
                         if (ButtonStyle == ClearBlazor.ButtonStyle.LabelOnly)
-                            css += "border-width: 0 0 0 1px; border-style: solid; ";
-                        else
-                            css = UpdateBorderWidth(css, 
-                                "border-width: 1px 1px 1px 1px; border-style:solid;  " +
+                            css = UpdateBorderWidth(css,
+                                "border-width: 0px 0px 0px 1px; border-style:solid;  " +
                                 $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value};");
+                        else
+                            css = UpdateBorderWidth(css,
+                                        "border-width: 1px 1px 1px 1px; border-style:solid;  " +
+                                        $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value};");
                     }
                     else
                     {
                         css = UpdateBorderRadius(css, "border-radius: 0 0 4px 4px; ");
                         if (ButtonStyle == ClearBlazor.ButtonStyle.LabelOnly)
-                            css += "border-width: 1px 0 0 0; border-style: solid; ";
+                            css = UpdateBorderWidth(css,
+                                "border-width: 1px 0 0 0; border-style:solid;  " +
+                                $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value};");
                         else
-                            css = UpdateBorderWidth(css, 
+                            css = UpdateBorderWidth(css,
                                 "border-width: 1px 1px 1px 1px; border-style:solid; " +
                                 $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value}; ");
                     }
@@ -119,19 +144,28 @@ namespace ClearBlazor
                 {
                     css = UpdateBorderRadius(css, "border-radius:0; ");
                     if (Orientation == Orientation.Landscape)
+                    {
                         if (ButtonStyle == ClearBlazor.ButtonStyle.LabelOnly)
-                            css += "border-width: 0 0 0 1px; border-style: solid; ";
+                            css = UpdateBorderWidth(css,
+                                "border-width: 0 0 0 1px; border-style:solid; " +
+                                $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value};");
                         else
-                            css = UpdateBorderWidth(css, 
+                            css = UpdateBorderWidth(css,
                                 "border-width: 1px 0 1px 1px; border-style:solid; " +
                                 $"border-color:{btn.GetOutlineColor(btn.GetColor()).Value};");
+                    }
                     else
+                    {
                         if (ButtonStyle == ClearBlazor.ButtonStyle.LabelOnly)
-                            css += "border-width: 1px 0 0 0; border-style: solid; ";
+                            css = UpdateBorderWidth(css,
+                                "border-width: 1px 0 0 0; border-style:solid; " +
+                                $"border-color:{btn.GetOutlineColor(btn.GetColor())}.Value;");
                         else
-                            css = UpdateBorderWidth(css, 
+                            css = UpdateBorderWidth(css,
                                 "border-width: 1px 1px 0 1px; border-style:solid; " +
                                 $"border-color:{btn.GetOutlineColor(btn.GetColor())}.Value;");
+
+                    }
                 }
             }
             return css;
@@ -187,8 +221,8 @@ namespace ClearBlazor
                     }
                 }
             }
-            catch(Exception) 
-            { 
+            catch (Exception)
+            {
             }
             return css;
         }
@@ -207,9 +241,11 @@ namespace ClearBlazor
                         return css.Remove(startIndex, length + 1).Insert(startIndex, newBorder);
                     }
                 }
+                else
+                    return css += newBorder;
             }
-            catch (Exception) 
-            { 
+            catch (Exception)
+            {
             }
 
             return css;

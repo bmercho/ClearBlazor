@@ -9,8 +9,8 @@
             {
                 <div style=@GetLabelStyle()>@Label</div>
             }
-            <Grid Columns="*,auto" BackgroundColor=Color.Transparent>
-                <StackPanel Orientation=@Orientation Spacing=@Spacing BackgroundColor=Color.Transparent>
+            <Grid Columns="*,auto">
+                <StackPanel Orientation=@Orientation Spacing=@Spacing>
                     @ChildContent
                     @if (RadioGroupData != null)
                     {

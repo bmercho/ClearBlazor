@@ -1,7 +1,7 @@
 ﻿@using System.ComponentModel.DataAnnotations
 
 @namespace ClearBlazorTest
-<ColorPicker @bind-Color=Color />
+<ColorPicker @bind-Color=Color BorderThickness=1 />
 <div style="width:200px;height:200px;background:@Color.Value"></div>
 
 @code {

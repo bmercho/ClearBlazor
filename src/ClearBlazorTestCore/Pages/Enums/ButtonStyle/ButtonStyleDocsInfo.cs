@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record ButtonStyleDocsInfo:IOtherDocsInfo
     {
         public string Name { get; set; } = "ButtonStyle";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "The style of the button \r";
         public List<ApiFieldInfo> FieldApi {get; set; } = new List<ApiFieldInfo>
         {
             new ApiFieldInfo("Filled", "ButtonStyle", "The button has a background fill color\r"),

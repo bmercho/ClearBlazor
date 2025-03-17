@@ -144,7 +144,7 @@ namespace ClearBlazor
             StateHasChanged();
         }
 
-        public override async Task<bool> ValidateField()
+        internal override async Task<bool> ValidateField()
         {
             IsValid = true;
             ValidationErrorMessages.Clear();

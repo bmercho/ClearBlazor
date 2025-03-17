@@ -1,0 +1,57 @@
+﻿@page "/RadioGroup"
+@using ClearBlazorTest
+<DocsExamplesPage DocsInfo=@(new RadioGroupDocsInfo())>
+    <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Radio Buttons</TextBlock>
+    <StackPanel Padding="20" Spacing="30">
+        <CodeSnippet Title="Basic" Code=@(typeof(RadioGroupSimpleExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupSimpleExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Orientation" Code=@(typeof(RadioGroupOrientationExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupOrientationExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Spacing" Code=@(typeof(RadioGroupSpacingExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupSpacingExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Size" Code=@(typeof(RadioGroupSizeExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupSizeExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Type" Code=@(typeof(RadioGroupTypeExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupTypeExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Nullable Type" Code=@(typeof(RadioGroupNullableTypeExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupNullableTypeExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Data" Code=@(typeof(RadioGroupDataExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupDataExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Color" Code=@(typeof(RadioGroupColorExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupColorExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Readonly" Code=@(typeof(RadioGroupReadonlyExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupReadonlyExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Disabled" Code=@(typeof(RadioGroupDisabledExample).Name)>
+            <StackPanel Margin="10" Spacing="20">
+                <RadioGroupDisabledExample />
+            </StackPanel>
+        </CodeSnippet>
+    </StackPanel>
+</DocsExamplesPage>

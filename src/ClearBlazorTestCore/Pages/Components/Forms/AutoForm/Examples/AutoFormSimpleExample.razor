@@ -5,7 +5,7 @@
 <StackPanel Orientation=Orientation.Portrait Spacing="10" Margin="10">
     <AutoForm @ref="form" HasLabelColumn=true LabelValueCols="*,3*" 
               ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Immediate=true 
-              TextEditFillMode=TextEditFillMode.Outline Model=@this />
+              TextEditFillMode=InputContainerStyle.Outlined Model=@this />
     <Button HorizontalAlignment=Alignment.Start OnClicked=@(() => form.Validate())>Validate</Button>
     <Button HorizontalAlignment=Alignment.Start OnClicked=@Save>Save</Button>
 </StackPanel>

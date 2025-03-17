@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Components\Inputs\Radio\Code\**" />
+    <Content Remove="Pages\Components\Inputs\Radio\Code\**" />
+    <EmbeddedResource Remove="Pages\Components\Inputs\Radio\Code\**" />
+    <None Remove="Pages\Components\Inputs\Radio\Code\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Pages\Components\TreeView\Examples\NonVirtualizedTreeDataProviderExample.razor" />
     <Content Remove="Pages\Components\TreeView\Examples\NonVirtualizedTreeVariableRowSizeExample.razor" />
   </ItemGroup>
@@ -31,10 +38,27 @@
     <Folder Include="Pages\Components\AppBar\Code\" />
     <Folder Include="Pages\Components\AppBar\Doco\" />
     <Folder Include="Pages\Components\Avatar\Doco\" />
+    <Folder Include="Pages\Components\Inputs\RadioGroup\" />
+    <Folder Include="Pages\Components\InputBase\" />
+    <Folder Include="Pages\Components\ContainerInputBase\" />
     <Folder Include="Pages\Enums\Alignment\" />
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupTypeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupSpacingExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupSizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupReadonlyExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupOrientationExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupNullableTypeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupDisabledExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupDataExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupColorExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\ColorPickerInput\Code\ColorPickerInputHexExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ToolbarTray\Code\ToolbarTrayExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePicker24HourExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerMinuteStepExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsShadowExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockDecorationsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\ScrollViewer\Code\ScrollViewerWithScrollbarsSimpleExampleCode.html" />
@@ -118,16 +142,6 @@
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectMultiselectStringExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectIconAvatarExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectDataExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioTypeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioSpacingExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioSizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioReadonlyExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioOrientationExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioNullableTypeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioDisabledExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioDataExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioColorExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputTypeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputSpinButtonsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputSimpleExampleCode.html" />

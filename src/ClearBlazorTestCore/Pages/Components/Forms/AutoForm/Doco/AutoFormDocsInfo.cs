@@ -17,7 +17,7 @@ namespace ClearBlazorTest
         {
             new ApiComponentInfo("HasLabelColumn", "bool", "false", ""),
             new ApiComponentInfo("LabelValueCols", "string", "*,*", ""),
-            new ApiComponentInfo("TextEditFillMode", "<a href=TextEditFillModeApi>TextEditFillMode</a>", "TextEditFillMode.Underline", ""),
+            new ApiComponentInfo("TextEditFillMode", "<a href=InputContainerStyleApi>InputContainerStyle</a>", "InputContainerStyle.Underlined", ""),
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
             new ApiComponentInfo("Immediate", "bool", "false", ""),
         };

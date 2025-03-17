@@ -10,12 +10,13 @@
             }
             <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
                   BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
-                <div @ref="PickerElement" style="display:grid; ">
+                <div style="display:grid; ">
                     <Grid MinWidth=200 Columns="*,auto" OnClicked=@TogglePopup>
                         <Grid BackgroundColor=@Value />
                         @if(ShowHex)
                         {
-                            <TextBlock Style="@ComputeInputStyle()" Color=@Color.ContrastingColor(Value) 
+                            <TextBlock Style="@ComputeInputStyle()" 
+                                       Color=@(Value == null ? Color.Surface : Color.ContrastingColor(Value)) 
                                        VerticalAlignment=Alignment.Center>@Value?.Value</TextBlock>
                         }
                         <IconButton Size=Size.Small Color=Color.Dark Column=1 Icon=@Icons.Material.Outlined.Palette />
@@ -25,7 +26,7 @@
                            AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
                            
                            @bind-Open=PopupOpen>
-                        <Grid Margin=0,20,20,20 BoxShadow=2>
+                        <Grid Margin=0,20,20,20 BorderThickness=1>
                                <ColorPicker @bind-Color=Value @bind-Color:after=OnColorChanged />
                            </Grid>
                     </Popup>

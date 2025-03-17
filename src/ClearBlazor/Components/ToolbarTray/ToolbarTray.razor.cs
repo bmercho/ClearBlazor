@@ -2,6 +2,9 @@ using global::Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A control that holds a number of toolbars, that can be reordered and placed on new lines.
+    /// </summary>
     public partial class ToolbarTray:ClearComponentBase, IBackground
     {
         /// <summary>
@@ -10,6 +13,9 @@ namespace ClearBlazor
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
 
@@ -22,9 +28,9 @@ namespace ClearBlazor
             return css;
         }
  
-        public bool FirstTime { get; set; } = true;
+        private bool FirstTime { get; set; } = true;
 
-        public int GetTrayOrder(Toolbar toolbar)
+        internal int GetTrayOrder(Toolbar toolbar)
         {
             var toolbars = Toolbars.OrderBy(t => t.TrayOrder).ToList();
             int trayOrder = 1;
@@ -42,13 +48,13 @@ namespace ClearBlazor
             return 0;
         }
 
-        public void AddToolbar(Toolbar toolbar)
+        internal void AddToolbar(Toolbar toolbar)
         {
             if (!Toolbars.Contains(toolbar))
                 Toolbars.Add(toolbar);
         }
 
-        public void OnDragOver()
+        private void OnDragOver()
         {
 
         }

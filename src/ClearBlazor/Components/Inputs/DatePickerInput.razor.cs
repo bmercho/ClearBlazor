@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A date picker input component
+    /// </summary>
     public partial class DatePickerInput : ContainerInputBase<DateOnly?>, IBackground
     {
         [Parameter]
@@ -11,8 +13,12 @@ namespace ClearBlazor
         [Parameter]
         public Orientation Orientation { get; set; } = Orientation.Portrait;
 
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
         [Parameter]
-        public Color? BackgroundColor { get; set; } = null;
+        public Color? BackgroundColor { get; set; }
+
         [Parameter]
         public PopupPosition Position { get; set; } = PopupPosition.BottomLeft;
         [Parameter]
@@ -33,24 +39,6 @@ namespace ClearBlazor
             await base.OnAfterRenderAsync(firstRender);
            if (CurrentDate == null)
                 CurrentDate = Value;
-        }
-
-        private string GetSize()
-        {
-            switch (Size)
-            {
-                case Size.VerySmall:
-                    return "width:100px;height:100px; ";
-                case Size.Small:
-                    return "width:100px;height:100px; ";
-                case Size.Normal:
-                    return "width:350px;height:350px; ";
-                case Size.Large:
-                    return "width:100px;height:100px; ";
-                case Size.VeryLarge:
-                    return "width:100px;height:100px; ";
-            }
-            return "width:350px;height:350px; ";
         }
 
         private bool IsMouseNotOver()

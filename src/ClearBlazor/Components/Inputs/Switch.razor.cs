@@ -1,20 +1,34 @@
 using global::Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using System.Text;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A switch input component
+    /// </summary>
     public partial class Switch : InputBase
     {
+        /// <summary>
+        /// Indicates whether the switch is checked. 
+        /// </summary>
         [Parameter]
         public bool Checked { get; set; }
 
+        /// <summary>
+        /// Represents a callback that is triggered when the checked state changes. 
+        /// </summary>
         [Parameter]
         public EventCallback<bool> CheckedChanged { get; set; }
 
+        /// <summary>
+        /// Specifies the location of the label, defaulting to the end position.
+        /// </summary>
         [Parameter]
         public LabelLocation LabelLocation { get; set; } = LabelLocation.End;
 
+        /// <summary>
+        /// Represents the color used when an option is unchecked. 
+        /// </summary>
         [Parameter]
         public Color? UncheckedColor { get; set; } = null;
 

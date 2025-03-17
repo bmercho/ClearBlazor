@@ -2,7 +2,14 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class ListBox<TListBox> : InputBase, IBackground, IBorder
+    /// <summary>
+    /// A control that contains a list of ListBoxItems. 
+    /// A ListBoxItem can consist of text, icon or am avatar.
+    /// The list can be hierarchical.
+    /// If custom UI is required for list items use the ListView control instead.
+    /// </summary>
+    /// <typeparam name="TListBox"></typeparam>
+    public partial class ListBox<TListBox> : InputBase, IBackground, IBorder, IBoxShadow
     {
         /// <summary>
         /// The child content of this control.
@@ -10,63 +17,117 @@ namespace ClearBlazor
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
+        /// <summary>
+        /// The selected value of the list box.
+        /// </summary>
         [Parameter]
         public TListBox? Value { get; set; }
 
+        /// <summary>
+        /// Event that is raised when the Value changes
+        /// </summary>
         [Parameter]
         public EventCallback<TListBox?> ValueChanged { get; set; }
 
+        /// <summary>
+        /// The selected values of the list box. (when MultiSelect is true)
+        /// </summary>
         [Parameter]
         public List<TListBox?>? Values { get; set; } = null;
 
+        /// <summary>
+        /// Event that is raised when Values changes
+        /// </summary>
         [Parameter]
         public EventCallback<List<TListBox?>> ValuesChanged { get; set; }
 
+        /// <summary>
+        /// Provides the data for list. If not null this is used instead of the ChildContent 
+        /// </summary>
         [Parameter]
         public List<ListDataItem<TListBox>>? ListData { get; set; } = null;
 
-        [Parameter]
-        public Color? BackgroundColor { get; set; }
-
-        [Parameter]
-        public string? BorderThickness { get; set; }
-
-        [Parameter]
-        public Color? BorderColor { get; set; }
-
-        [Parameter]
-        public BorderStyle? BorderStyle { get; set; }
-
-        [Parameter]
-        public string? CornerRadius { get; set; }
-
-
-        [Parameter]
-        public int? BoxShadow { get; set; } = null;
-
-        [Parameter]
-        public Orientation Orientation { get; set; } = Orientation.Portrait;
-
+        /// <summary>
+        /// Used when ListData is not null to horizontally align the content of items
+        /// </summary>
         [Parameter]
         public Alignment ContentAlignment { get; set; } = Alignment.Stretch;
 
+        /// <summary>
+        /// The spacing between item
+        /// </summary>
         [Parameter]
         public double Spacing { get; set; } = 0;
 
+        /// <summary>
+        /// The row size for each item
+        /// </summary>
         [Parameter]
         public Size RowSize { get; set; } = Size.Normal;
 
+        /// <summary>
+        /// Indicates if row items are clickable
+        /// </summary>
         [Parameter]
         public bool Clickable { get; set; } = true;
 
+        /// <summary>
+        /// Indicates if 
+        /// </summary>
         [Parameter]
         public bool MultiSelect { get; set; } = false;
 
+        /// <summary>
+        /// Allows a single selection to be toggled off as well as on 
+        /// </summary>
         [Parameter]
         public bool AllowSelectionToggle { get; set; } = false;
 
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? BorderThickness { get; set; }
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public Color? BorderColor { get; set; }
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public BorderStyle? BorderStyle { get; set; }
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
+        /// <summary>
+        /// See <a href="IBoxShadowApi">IBoxShadow</a>
+        /// </summary>
+        [Parameter]
+        public int? BoxShadow { get; set; }
+
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; }
+
+        /// <summary>
+        /// Event raised when the selection is changed
+        /// </summary>
         [Parameter]
         public EventCallback<ListDataItem<TListBox>> OnSelectionChanged { get; set; }
+
+        /// <summary>
+        /// Event raised when selections ar changed
+        /// </summary>
         [Parameter]
         public EventCallback<List<ListDataItem<TListBox>>> OnSelectionsChanged { get; set; }
 
@@ -133,7 +194,7 @@ namespace ClearBlazor
             }
         }
 
-        public async Task<bool> SetSelected(ListBoxItem<TListBox> item)
+        internal async Task<bool> SetSelected(ListBoxItem<TListBox> item)
         {
             bool selected = false;
 

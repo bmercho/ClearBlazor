@@ -6,7 +6,7 @@ namespace ClearBlazor
     /// <summary>
     /// Control to select a date.
     /// </summary>
-    public partial class DatePicker : InputBase,IBorder
+    public partial class DatePicker : InputBase,IBorder,IBackground, IBoxShadow
     {
         public enum DatePickerMode
         {
@@ -20,10 +20,16 @@ namespace ClearBlazor
         public DateOnly? Date { get; set; }
 
         /// <summary>
-        /// Event raised when the date selection has changed
+        /// Event raised when the date selection has changed.Used for two way binding.
         /// </summary>
         [Parameter]
         public EventCallback<DateOnly?> DateChanged { get; set; }
+
+        /// <summary>
+        /// Event raised when the date selection has changed.
+        /// </summary>
+        [Parameter]
+        public EventCallback DateSelected { get; set; }
 
         /// <summary>
         /// Customizes what the first day of the week is. Normally either Sun or Mon.
@@ -57,6 +63,12 @@ namespace ClearBlazor
         public CultureInfo Culture { get; set; } = CultureInfo.InvariantCulture;
 
         /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; } = ThemeManager.CurrentColorScheme.SurfaceContainerHighest;
+
+        /// <summary>
         /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
@@ -80,6 +92,12 @@ namespace ClearBlazor
         [Parameter]
         public string? CornerRadius { get; set; }
 
+        /// <summary>
+        /// See <a href="IBoxShadowApi">IBoxShadow</a>
+        /// </summary>
+        [Parameter]
+        public int? BoxShadow { get; set; }
+
         const int ControlWidthPortrait = 270;
         const int ControlHeightPortrait = 430;
         const int BodyHeightPortrait = 310;
@@ -92,7 +110,7 @@ namespace ClearBlazor
 
         private int? MouseOverMonth = null;
         private DayOfWeek FirstDayOfWeek = DayOfWeek.Monday;
-        private DateOnly SelectedDate;
+        internal DateOnly SelectedDate;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -270,17 +288,6 @@ namespace ClearBlazor
             return $"{Culture.DateTimeFormat.GetMonthName(SelectedDate.Month)} {SelectedDate.ToString("yyyy")}";
         }
 
-        private string GetMonthSize(int month)
-        {
-            if (Date == null)
-                return "16px";
-
-            if (month == Date?.Month)
-                return "22px";
-
-            return "16px";
-        }
-
         private bool IsDayIndexValid(int dayIndex)
         {
             if (Date == null)
@@ -324,7 +331,7 @@ namespace ClearBlazor
             SelectedDate = (DateOnly)Date;
             await DateChanged.InvokeAsync(Date);
             StateHasChanged();
-
+            await DateSelected.InvokeAsync();
         }
 
         private ButtonStyle GetDayButtonStyle(int dayIndex)

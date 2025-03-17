@@ -2,26 +2,50 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A pagination control component.
+    /// </summary>
     public partial class Pagination:ClearComponentBase
     {
+        /// <summary>
+        /// The size of the component.
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
+        /// <summary>
+        /// The color of the component.
+        /// </summary>
         [Parameter]
         public Color? Color { get; set; } = null;
 
+        /// <summary>
+        /// The number of pages.
+        /// </summary>
         [Parameter]
         public int NumPages { get; set; } = 0;
 
+        /// <summary>
+        /// The number of pages shown.
+        /// </summary>
         [Parameter]
         public int NumPagesShown { get; set; } = 0;
 
+        /// <summary>
+        /// Whether to show the first and last buttons.
+        /// </summary>
         [Parameter]
         public bool ShowFirstAndLastButtons { get; set; } = false;
 
+        /// <summary>
+        /// The selected page.
+        /// </summary>
         [Parameter]
         public int SelectedPage { get; set; } = 1;
 
+        /// <summary>
+        /// The event that is raised when the selected page changes.
+        /// </summary>
         [Parameter]
         public EventCallback<int> SelectedPageChanged { get; set; }
 

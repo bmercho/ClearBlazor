@@ -1,0 +1,10 @@
+﻿@namespace ClearBlazorTest
+<ColorPickerInput @bind-Value=Color @bind-Value:after=OnChange ShowHex=true />
+
+@code {
+    public Color? Color { get; set; } = Color.Secondary;
+
+    private void OnChange()
+    {
+    }
+}

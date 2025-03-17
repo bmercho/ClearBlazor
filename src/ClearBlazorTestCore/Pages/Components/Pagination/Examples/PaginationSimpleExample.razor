@@ -1,14 +1,9 @@
 ﻿@using ClearBlazor
 @namespace ClearBlazorTest
 
-<Pagination Color=Color.Primary ShowFirstAndLastButtons=true 
-            SelectedPage=3 NumPages=10 NumPagesShown=3
-            SelectedPageChanged=@PageChanged/>
+<Pagination ShowFirstAndLastButtons=true
+            @bind-SelectedPage=selectedPage NumPages=10 NumPagesShown=3/>
 
 @code {
-
-    void PageChanged(int page)
-    {
-        
-    }
+    int selectedPage = 3;
 }

@@ -7,7 +7,7 @@ namespace ClearBlazor
     /// <summary>
     /// A control for selecting a color.
     /// </summary>
-    public partial class ColorPicker : ClearComponentBase, IBackground
+    public partial class ColorPicker : ClearComponentBase, IBorder, IBackground, IBoxShadow
     {
         /// <summary>
         /// The initial selected color
@@ -19,7 +19,37 @@ namespace ClearBlazor
         /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
-        public Color? BackgroundColor { get; set; } = null;
+        public Color? BackgroundColor { get; set; } = ThemeManager.CurrentColorScheme.SurfaceContainerHighest;
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? BorderThickness { get; set; }
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public Color? BorderColor { get; set; }
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public BorderStyle? BorderStyle { get; set; }
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
+        /// <summary>
+        /// See <a href="IBoxShadowApi">IBoxShadow</a>
+        /// </summary>
+        [Parameter]
+        public int? BoxShadow { get; set; }
 
         /// <summary>
         /// An event raised when the selected color is changed
