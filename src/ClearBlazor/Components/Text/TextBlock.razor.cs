@@ -316,7 +316,6 @@ namespace ClearBlazor
 
             if (Clickable)
                 css += "cursor:pointer; ";
-
             return css;
         }
 

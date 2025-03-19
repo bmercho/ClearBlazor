@@ -15,7 +15,8 @@
                 <div @ref="SelectElement" style="display:grid; ">
                     <Grid Columns="*,auto" OnClicked=@ToggleDropdown>
                         <TextBlock Style=@ComputeInputStyle() VerticalAlignment=Alignment.Center>@SelectionText</TextBlock>
-                        <IconButton Column=1 Icon=@Icons.Material.Filled.KeyboardArrowDown />
+                        <IconButton VerticalAlignment=Alignment.Center 
+                                    Column=1 Icon=@Icons.Material.Filled.KeyboardArrowDown Size=GetIconSize() />
                     </Grid>
                     <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="1,-20,-20,-20"
                            Position=Position Transform=Transform
@@ -24,7 +25,7 @@
                         <ListBox TListBox=TItem @bind-Value=Value @bind-Values=Values
                                  MultiSelect=@MultiSelect RowSize=Size
                                  Color=Color Margin="0,20,20,20" Padding="10,0,10,0"
-                                 BackgroundColor=Color.Background BoxShadow="2" CornerRadius="4"
+                                 BorderThickness=1 CornerRadius="4"
                                  OnSelectionChanged=@OnListSelectionChanged
                                  OnSelectionsChanged=@OnListSelectionsChanged>
                             @if (SelectData == null)

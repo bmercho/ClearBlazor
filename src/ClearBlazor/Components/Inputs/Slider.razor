@@ -20,12 +20,12 @@
                 }
                 @if (BackgroundGradient1 != null)
                 {
-                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColor=@Color.Transparent
+                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius
                             BackgroundGradient1=@BackgroundGradient1 OnClicked=@OnTrackClicked />
                 }
                 @if (BackgroundGradient2 != null)
                 {
-                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColor=@Color.Transparent
+                    <Grid Height=@TrackHeight CornerRadius=@CornerRadius
                             BackgroundGradient2=@BackgroundGradient2 OnClicked=@OnTrackClicked />
                 }
                 @if (ShowTickMarks && Step != null)
@@ -52,7 +52,7 @@
                 {
                     <Popup Position=PopupPosition.TopLeft Transform=PopupTransform.TopLeft Margin=@GetValueMargin()
                            @bind-Open=DropdownOpen CloseOnOutsideClick=false>
-                        <Grid BorderThickness=1 BackgroundColor=Color.BackgroundGrey CornerRadius=2>
+                        <Grid BorderThickness=1 CornerRadius=2>
                             <TextBlock Typography=@GetTypograghy() VerticalAlignment=Alignment.Center 
                                        Margin="0,5,0,5" >@ValueLabel</TextBlock>
                         </Grid>

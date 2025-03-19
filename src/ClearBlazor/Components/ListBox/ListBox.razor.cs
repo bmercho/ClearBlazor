@@ -192,6 +192,7 @@ namespace ClearBlazor
                     StateHasChanged();
                 }
             }
+            await Task.CompletedTask;
         }
 
         internal async Task<bool> SetSelected(ListBoxItem<TListBox> item)

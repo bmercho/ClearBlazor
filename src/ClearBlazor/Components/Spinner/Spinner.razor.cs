@@ -2,8 +2,20 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Represents a spinner component.
+    /// </summary>
     public partial class Spinner:ClearComponentBase
     {
+        /// <summary>
+        /// Color of spinner.
+        /// </summary>
+        [Parameter]
+        public Color? Color { get; set; }
+
+        /// <summary>
+        /// Size of spinner.
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
@@ -34,12 +46,23 @@ namespace ClearBlazor
                     size = 30;
                     break;
             }
-            css += $"border: {borderSize}px solid silver; border-top: {borderSize}px solid #337AB7; " +
+            css += $"border: {borderSize}px solid {GetBackground().Value}; border-top: {borderSize}px solid {GetColor().Value}; " +
                    $"border-radius: 50%; width: {size}px; height: {size}px; " +
                    $"animation: spin 700ms linear infinite; top: 40 %;";
 
             return css;
         }
 
-}
+        private Color GetColor()
+        {
+            if (Color == null)
+                return Color.Primary;
+            else
+                return Color;
+        }
+        private Color GetBackground()
+        {
+            return Color.ContrastingColor(GetColor());    
+        }
+    }
 }

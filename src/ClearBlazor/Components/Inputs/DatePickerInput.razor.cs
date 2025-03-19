@@ -7,9 +7,15 @@ namespace ClearBlazor
     /// </summary>
     public partial class DatePickerInput : ContainerInputBase<DateOnly?>, IBackground
     {
+        /// <summary>
+        /// Specifies the format for the date. The default format is 'dd MMM yyyy'.
+        /// </summary>
         [Parameter]
         public string DateFormat { get; set; } = "dd MMM yyyy";
 
+        /// <summary>
+        /// Orientation of the component. Defaults to portrait.
+        /// </summary>
         [Parameter]
         public Orientation Orientation { get; set; } = Orientation.Portrait;
 
@@ -19,12 +25,27 @@ namespace ClearBlazor
         [Parameter]
         public Color? BackgroundColor { get; set; }
 
+        /// <summary>
+        /// Defines the position of a popup, defaulting to the bottom left corner.
+        /// </summary>
         [Parameter]
         public PopupPosition Position { get; set; } = PopupPosition.BottomLeft;
+
+        /// <summary>
+        /// Defines the position of a popup relative to its target. The default position is set to the top-left corner.
+        /// </summary>
         [Parameter]
         public PopupTransform Transform { get; set; } = PopupTransform.TopLeft;
+
+        /// <summary>
+        /// Indicates whether vertical flipping is permitted. Defaults to true.
+        /// </summary>
         [Parameter]
         public bool AllowVerticalFlip { get; set; } = true;
+
+        /// <summary>
+        /// Indicates whether horizontal flipping is permitted. Defaults to true.
+        /// </summary>
         [Parameter]
         public bool AllowHorizontalFlip { get; set; } = true;
 
@@ -55,11 +76,6 @@ namespace ClearBlazor
         protected override async Task ClearEntry()
         {
             await Task.CompletedTask;
-        }
-        protected override string ComputeInputStyle()
-        {
-            string css = base.ComputeInputStyle();
-            return css;
         }
 
         protected override string GetInputType()

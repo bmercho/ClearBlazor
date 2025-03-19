@@ -8,37 +8,37 @@
         @if (_virtualizeModeAvailable)
         {
             <TableView @ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Padding=10 Margin=10
-            RowSpacing=@_rowSpacing
-            ColumnSpacing=@_columnSpacing
-            @bind-SelectedItem=_selectedItem
-            @bind-SelectedItems=_selectedItems
-            SelectionMode=@_selectionMode
-            AllowSelectionToggle=@_allowSelectionToggle
-            HoverHighlight=@_hoverHighlight
-            HorizontalScrollbar=@_horizontalScrollbar
-            OverscrollBehaviour=OverscrollBehaviour.Auto
-            HorizontalGridLines=@_horizontalGridLines
-            VerticalGridLines=@_verticalGridLines
-            VirtualizeMode=@_virtualizeMode
-            InitialIndex=@((0, Alignment.Start))
-            ShowHeader=@_showHeader
-            StickyHeader=@_stickyHeader
-            PageSize=@GetPageSize()
-            Items=@_localListData>
-                <TableColumn Label="Index" TItem=TestListRow Field=@(x =>x.ItemIndex) ColumnDefinition="70" />
-                <TableColumn Label="First Name" TItem=TestListRow Field=@(x =>x.FirstName) ColumnDefinition="120" />
-                <TableColumn Label="Last Name" TItem=TestListRow Field=@(x =>x.LastName) ColumnDefinition="120" />
-                <TableColumn Label="Product" TItem=TestListRow Field=@(x =>x.Product) ColumnDefinition="120" />
-                <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x =>x.UnitPrice) ColumnDefinition="90">
+                       RowSpacing=@_rowSpacing
+                       ColumnSpacing=@_columnSpacing
+                       @bind-SelectedItem=_selectedItem
+                       @bind-SelectedItems=_selectedItems
+                       SelectionMode=@_selectionMode
+                       AllowSelectionToggle=@_allowSelectionToggle
+                       HoverHighlight=@_hoverHighlight
+                       HorizontalScrollbar=@_horizontalScrollbar
+                       OverscrollBehaviour=OverscrollBehaviour.Auto
+                       HorizontalGridLines=@_horizontalGridLines
+                       VerticalGridLines=@_verticalGridLines
+                       VirtualizeMode=@_virtualizeMode
+                       InitialIndex=@((0, Alignment.Start))
+                       ShowHeader=@_showHeader
+                       StickyHeader=@_stickyHeader
+                       PageSize=@GetPageSize()
+                       Items=@_localListData>
+                <TableColumn Label="Index" TItem=TestListRow Field=@(x => x.ItemIndex) ColumnDefinition="70" />
+                <TableColumn Label="First Name" TItem=TestListRow Field=@(x => x.FirstName) ColumnDefinition="120" />
+                <TableColumn Label="Last Name" TItem=TestListRow Field=@(x => x.LastName) ColumnDefinition="120" />
+                <TableColumn Label="Product" TItem=TestListRow Field=@(x => x.Product) ColumnDefinition="120" />
+                <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x => x.UnitPrice) ColumnDefinition="90">
                     <DataTemplate Context=item>
                         <TextBlock VerticalAlignment=Alignment.Start
-                        TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+                                   TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
                     </DataTemplate>
                 </TableColumn>
-                <TableColumn Label="Notes" TItem=TestListRow Field=@(x =>x.Notes) ColumnDefinition="*">
+                <TableColumn Label="Notes" TItem=TestListRow Field=@(x => x.Notes) ColumnDefinition="*">
                     <DataTemplate Context=item>
                         <TextBlock TextWrapping=@GetTextWrap()
-                        TextTrimming=@GetTextTrimming()>@(item.Notes)</TextBlock>
+                                   TextTrimming=@GetTextTrimming()>@(item.Notes)</TextBlock>
                     </DataTemplate>
                 </TableColumn>
             </TableView>
@@ -63,14 +63,14 @@
         {
             <StackPanel Column=1 Margin=5 Spacing=5>
                 <RadioGroup Label="Virtualization mode" @bind-Value=_virtualizeMode
-                @bind-Value:after=@Refresh>
+                            @bind-Value:after=@Refresh>
                     @foreach (VirtualizeMode mode in Enum.GetValues(typeof(VirtualizeMode)))
                     {
                         <Radio Label=@mode.ToString() Value="@mode" />
                     }
                 </RadioGroup>
                 <RadioGroup Label="Selection mode" @bind-Value=_selectionMode
-                @bind-Value:after=@SelectionModeChanged>
+                            @bind-Value:after=@SelectionModeChanged>
                     @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
                     {
                         <Radio Label=@mode.ToString() Value="@mode" />
@@ -85,14 +85,14 @@
                 <NumericInput Label="Column spacing" @bind-Value=_columnSpacing @bind-Value:after=Refresh Immediate=false />
 
                 <RadioGroup Label="Horizontal grid lines" @bind-Value=_horizontalGridLines
-                @bind-Value:after=@Refresh>
+                            @bind-Value:after=@Refresh>
                     @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
                     {
                         <Radio Label=@gridLines.ToString() Value="@gridLines" />
                     }
                 </RadioGroup>
                 <RadioGroup Label="Vertical grid lines" @bind-Value=_verticalGridLines
-                @bind-Value:after=@Refresh>
+                            @bind-Value:after=@Refresh>
                     @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
                     {
                         <Radio Label=@gridLines.ToString() Value="@gridLines" />
@@ -146,7 +146,7 @@
             }
         </WrapPanel>
         @if (_virtualizeMode == VirtualizeMode.None ||
-            _virtualizeMode == VirtualizeMode.Virtualize)
+                _virtualizeMode == VirtualizeMode.Virtualize)
         {
             <WrapPanel Row=4 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
                 <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
@@ -285,9 +285,9 @@
         else
             _virtualizeModeAvailable = true;
 
-         StateHasChanged();
-         await _table.GotoStart();
-         await _table.RefreshAll();
+        StateHasChanged();
+        await _table.GotoStart();
+        await _table.RefreshAll();
         //await _table.ResetComponent();
 
         //NavManager.NavigateTo($"/TableView");

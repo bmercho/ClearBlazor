@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Runtime.InteropServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClearBlazor;
 
@@ -13,7 +15,6 @@ public class Color:IEquatable<Color>
     public static Color Success { get; private set; } = null!;
     public static Color Warning { get; private set; } = null!;
     public static Color Error { get; private set; } = null!;
-    public static Color Dark { get; private set; } = null!;
     public static Color Light { get; private set; } = null!;
     public static Color Transparent { get; private set; } = null!;
     public static Color Background { get; set; } = null!;
@@ -30,14 +31,9 @@ public class Color:IEquatable<Color>
         Success = ThemeManager.CurrentColorScheme.Success;
         Warning = ThemeManager.CurrentColorScheme.Warning;
         Error = ThemeManager.CurrentColorScheme.Error;
-        Dark = ThemeManager.CurrentColorScheme.Dark;
-        Light = ThemeManager.CurrentColorScheme.GrayLighter;
-        Transparent = new("#00000000");
-
-        Background = ThemeManager.CurrentColorScheme.Background;
-        BackgroundGrey = ThemeManager.CurrentColorScheme.BackgroundGrey;
         Surface = ThemeManager.CurrentColorScheme.Surface;
         SurfaceContainerHigh = ThemeManager.CurrentColorScheme.SurfaceContainerHigh;
+        Transparent = new("#00000000");
     }
 
     public static Color GetAssocTextColor(Color? color)
@@ -178,14 +174,22 @@ public class Color:IEquatable<Color>
 
     public static Color ContrastingColor(Color color)
     {
-        if (color.A == 0)
-            return Color.Dark;
-
-        int nThreshold = 105;
-        int bgDelta = Convert.ToInt32((color.R * 0.299) + (color.G * 0.587) +
-                                      (color.B * 0.114));
-
-        return (255 - bgDelta < nThreshold) ? Color.Dark : Color.Light;
+        const double minContrast = 128;
+        const double maxContrast = 255;
+        double y = Math.Round(0.299 * color.R + 0.587 * color.G + 0.114 * color.B); // luma
+        double oy = 255 - y; // opposite
+        double dy = oy - y; // delta
+        if (Math.Abs(dy) > maxContrast)
+        {
+            dy = Math.Sign(dy) * maxContrast;
+            oy = y + dy;
+        }
+        else if (Math.Abs(dy) < minContrast)
+        {
+            dy = Math.Sign(dy) * minContrast;
+            oy = y + dy;
+        }
+        return new Color((byte)oy,(byte)oy,(byte)oy,255);
     }
 
     private void GetRGBAFromValue(string value)

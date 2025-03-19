@@ -152,10 +152,10 @@ namespace ClearBlazorInternal
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
             if (_mouseOver)
-                css += $"background-color: {ThemeManager.CurrentColorScheme.ListBackgroundColor.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}; ";
 
             if (RowData.IsSelected)
-                css += $"background-color: {ThemeManager.CurrentColorScheme.ListSelectedColor.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.Value}; ";
 
             return css;
         }
@@ -212,13 +212,13 @@ namespace ClearBlazorInternal
                 css += $"z-order:1; align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"display:grid; grid-template-columns: subgrid; " +
                        $"grid-area: {Index + 2 + header} / 1 /span 1 / span {Columns.Count};  " +
-                       $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
+                       $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             }
             else
             {
                 css += $"z-order:1; align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"grid-area: {row} / 1 / span 1 / span {columnCount}; " +
-                       $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
+                       $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             }
             return css;
         }

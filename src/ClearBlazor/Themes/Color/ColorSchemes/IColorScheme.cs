@@ -59,24 +59,5 @@
         Color OutlineVariant { get; }
         Color Scrim { get; }
         Color Shadow { get; }
-
-
-        // To be deleted
-        Color BackgroundDisabled { get; }
-        Color GrayLight { get; }
-        Color Dark { get; }
-
-        Color TextDisabled { get; }
-
-        Color ToolTipTextColor { get; }
-
-        Color ListBackgroundColor { get; }
-        Color ListSelectedColor { get; }
-
-        Color GrayLighter { get; }
-
-        Color BackgroundGrey { get; }
-
-        Color Background { get; }
     }
 }

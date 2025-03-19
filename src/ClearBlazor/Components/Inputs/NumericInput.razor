@@ -22,7 +22,7 @@
                 @if (Clearable && StringValue?.Length > 0)
                 {
                     <IconButton Column=1 Icon="@Icons.Material.Filled.Close"
-                                Size=@Size Color=@Color.Dark OnClicked="ClearEntry" />
+                                Size=@Size OnClicked="ClearEntry" />
                 }
                 @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                 {

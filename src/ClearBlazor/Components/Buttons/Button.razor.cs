@@ -377,7 +377,7 @@ namespace ClearBlazor
         {
             if (Disabled)
                 return Color.Transparent;
-            return _mouseOver ? ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.38) :
+            return _mouseOver ? ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8) :
                                 Color.Transparent;
         }
 

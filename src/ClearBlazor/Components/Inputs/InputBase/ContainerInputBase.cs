@@ -189,7 +189,7 @@ namespace ClearBlazor
                     else if (HasFocus)
                         return Color.Primary;
                     else if (MouseOver)
-                        return ThemeManager.CurrentColorScheme.Outline.Darken(0.5);
+                        return ThemeManager.CurrentColorScheme.Outline.Darken(0.1);
                     else
                         return ThemeManager.CurrentColorScheme.Outline;
                 case InputContainerStyle.Filled:
@@ -218,7 +218,7 @@ namespace ClearBlazor
         {
             string css = string.Empty;
             if (IsDisabled)
-                css += $"color: {ThemeManager.CurrentColorScheme.BackgroundDisabled.Value}; ";
+                css += $"color: {ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.12).Value}; ";
             else if (!IsValid)
                 css += $"color: {Color.Error.Value}; ";
             else

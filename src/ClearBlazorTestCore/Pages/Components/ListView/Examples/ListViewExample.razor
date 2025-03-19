@@ -6,26 +6,26 @@
     <TextBlock HorizontalAlignment=Alignment.Start>@GetTitle()></TextBlock>
     <Grid Columns="400,auto" Rows="600,auto,auto,auto" RowSpacing=20>
         <ListView @ref=_list CornerRadius=4 BorderThickness=1 Margin=5 Padding=5
-        @bind-SelectedItem=_selectedItem
-        @bind-SelectedItems=_selectedItems
-        RowHeight=@GetRowHeight()
-        SelectionMode=@_selectionMode
-        AllowSelectionToggle=@_allowSelectionToggle
-        HoverHighlight=@_hoverHighlight 
-        OverscrollBehaviour=OverscrollBehaviour.None
-        VirtualizeMode=@_virtualizeMode
-        HorizontalScrollbar=@_horizontalScrollbar
-        InitialIndex=@((0, Alignment.Start)) 
-        Items=@_localListData>
+                  @bind-SelectedItem=_selectedItem
+                  @bind-SelectedItems=_selectedItems
+                  RowHeight=@GetRowHeight()
+                  SelectionMode=@_selectionMode
+                  AllowSelectionToggle=@_allowSelectionToggle
+                  HoverHighlight=@_hoverHighlight
+                  OverscrollBehaviour=OverscrollBehaviour.None
+                  VirtualizeMode=@_virtualizeMode
+                  HorizontalScrollbar=@_horizontalScrollbar
+                  InitialIndex=@((_startIndex, Alignment.Start))
+                  Items=@_localListData>
             <RowTemplate Context=row>
-                <Grid Columns="auto,*" Rows="auto,auto" Margin=10 
+                <Grid Columns="auto,*" Rows="auto,auto" Margin=10
                       Padding=10 CornerRadius=8 BorderThickness=1>
                     <Icon IconName=@row.IconName VerticalAlignment=Alignment.Center />
                     <TextBlock Column=1 Typo=Typo.H6 TextWrapping=TextWrap.Wrap Margin="0,0,10,10">
                         @($"{row.ToString()} ({row.ItemIndex})")
                     </TextBlock>
                     <TextBlock Column=1 Row=1 TextWrapping=@GetTextWrap()
-                    TextTrimming=@GetTextTrimming() Margin="0,0,0,10">
+                               TextTrimming=@GetTextTrimming() Margin="0,0,0,10">
                         @row.Notes
                     </TextBlock>
                 </Grid>
@@ -34,26 +34,27 @@
         @if (_virtualizeMode == VirtualizeMode.Pagination)
         {
             <Pagination HorizontalAlignment=Alignment.Center Row=1
-            ShowFirstAndLastButtons=true
-            SelectedPage=@_selectedPage
-            NumPages=@_numPages
-            NumPagesShown=4
-            SelectedPageChanged=@PageChanged />
-            <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @_selectedPage of @_numPages</TextBlock>
+                        ShowFirstAndLastButtons=true
+                        SelectedPage=@_selectedPage
+                        NumPages=@_numPages
+                        NumPagesShown=4
+                        SelectedPageChanged=@PageChanged />
+            <TextBlock HorizontalAlignment=Alignment.Center 
+                       Row=2 Margin=10>Page @_selectedPage of @_numPages</TextBlock>
         }
 
         @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
         {
             <StackPanel Column=1>
                 <RadioGroup Label="Virtualization mode" @bind-Value=_virtualizeMode
-                @bind-Value:after=@Refresh>
+                            @bind-Value:after=@Refresh>
                     @foreach (VirtualizeMode mode in Enum.GetValues(typeof(VirtualizeMode)))
                     {
                         <Radio Label=@mode.ToString() Value="@mode" />
                     }
                 </RadioGroup>
                 <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
-                @bind-Value:after=@SelectionModeChanged>
+                            @bind-Value:after=@SelectionModeChanged>
                     @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
                     {
                         <Radio Label=@mode.ToString() Value="@mode" />
@@ -101,6 +102,7 @@
     private VirtualizeMode _virtualizeMode = VirtualizeMode.None;
     private int _selectedPage = 3;
     private int _numPages = 0;
+    private int _startIndex = 0;
 
     protected override void OnInitialized()
     {
@@ -203,6 +205,7 @@
         else
             _localListData = ClientData.LocalTestListRows5000;
 
+        _selectedPage = 1;
         await _list.ResetComponent();
 
         NavManager.NavigateTo($"/ListView");

@@ -16,12 +16,12 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("ShowHex", "bool", "false", ""),
+            new ApiComponentInfo("ShowHex", "bool", "false", "Indicates whether to display the color in hexadecimal format. Defaults to false.\r"),
             new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
-            new ApiComponentInfo("Position", "<a href=PopupPositionApi>PopupPosition</a>", "PopupPosition.BottomLeft", ""),
-            new ApiComponentInfo("Transform", "<a href=PopupTransformApi>PopupTransform</a>", "PopupTransform.TopLeft", ""),
-            new ApiComponentInfo("AllowVerticalFlip", "bool", "true", ""),
-            new ApiComponentInfo("AllowHorizontalFlip", "bool", "true", ""),
+            new ApiComponentInfo("Position", "<a href=PopupPositionApi>PopupPosition</a>", "PopupPosition.BottomLeft", "Defines the position of a popup, defaulting to the bottom left corner. \r"),
+            new ApiComponentInfo("Transform", "<a href=PopupTransformApi>PopupTransform</a>", "PopupTransform.TopLeft", "Defines the position of a popup relative to its target. The default position is set to the top-left corner.\r"),
+            new ApiComponentInfo("AllowVerticalFlip", "bool", "true", "Indicates whether vertical flipping is permitted. Defaults to true.\r"),
+            new ApiComponentInfo("AllowHorizontalFlip", "bool", "true", "Indicates whether horizontal flipping is permitted. Defaults to true.\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

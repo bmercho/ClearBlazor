@@ -5,10 +5,18 @@ Orientation=Orientation.Portrait>
               Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
               HorizontalContentAlignment=Alignment.Start
               VirtualizeMode=@VirtualizeMode.None
+              SelectionMode=SelectionMode.Single
               @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_feeds>
         <NodeTemplate Context=node>
             <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
-                <Icon IconName=@node.Icon Color=Color.Custom(Colors.Yellow.Darken1) />
+                @if (node.IsExpanded)
+                {
+                    <Icon IconName=@node.OpenIcon Color=Color.Secondary />
+                }
+                else
+                {
+                    <Icon IconName=@node.Icon Color=Color.Secondary />
+                }
                 <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
                     @node.Id
                 </TextBlock>
@@ -18,13 +26,13 @@ Orientation=Orientation.Portrait>
     <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
         <Button OnClicked=@CollapseAll>Collapse all</Button>
         <Button OnClicked=@ExpandAll>Expand all</Button>
-        <Button OnClicked=@Up1>Scroll +1</Button>
+@*         <Button OnClicked=@Up1>Scroll +1</Button>
         <Button OnClicked=@Up5>Scroll +5</Button>
         <Button OnClicked=@Up10>Scroll +10</Button>
         <Button OnClicked=@Down1>Scroll -1</Button>
         <Button OnClicked=@Down5>Scroll -5</Button>
         <Button OnClicked=@Down10>Scroll -10</Button>
-        @*         <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+ *@        @*         <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
         <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
     <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
     <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
@@ -43,6 +51,7 @@ Orientation=Orientation.Portrait>
         public string Id { get; set; } = string.Empty;
         public string Title { get; set; } = string.Empty;
         public string Icon { get; set; } = string.Empty;
+        public string OpenIcon { get; set; } = string.Empty;
     }
 
     TreeView<Feed> List = null!;
@@ -141,19 +150,34 @@ Orientation=Orientation.Portrait>
         int count = 0;
         for (int i = 0; i <= 4; i++)
         {
-            var item = new Feed { Id = $"{i + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+            var item = new Feed
+                {
+                    Id = $"{i + 1}",
+                    Icon = Icons.Material.TwoTone.Folder,
+                    OpenIcon = Icons.Material.TwoTone.FolderOpen,
+                    Children = new()
+                };
             _feeds.Add(item);
             count++;
             for (int j = 0; j <= 4; j++)
             {
-                var item1 = new Feed { Id = $"{i + 1}.{j + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+                var item1 = new Feed
+                    {
+                        Id = $"{i + 1}.{j + 1}",
+                        Icon = Icons.Material.TwoTone.Folder,
+                        OpenIcon = Icons.Material.TwoTone.FolderOpen,
+                        Children = new()
+                    };
                 item.Children.Add(item1);
                 count++;
                 if (count >= maxNum)
                     return;
                 for (int k = 0; k <= 3; k++)
                 {
-                    var item2 = new Feed { Id = $"{i + 1}.{j + 1}.{k + 1}", Icon = Icons.Material.TwoTone.Folder, Children = new() };
+                    var item2 = new Feed { Id = $"{i + 1}.{j + 1}.{k + 1}", 
+                                           Icon = Icons.Material.TwoTone.Folder, 
+                                           OpenIcon = Icons.Material.TwoTone.FolderOpen,
+                                           Children = new() };
                     item1.Children.Add(item2);
                     count++;
                     if (count >= maxNum)

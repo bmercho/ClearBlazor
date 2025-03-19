@@ -1,6 +1,7 @@
 using ClearBlazorInternal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using System.Threading.Tasks;
 
 namespace ClearBlazor
 {
@@ -112,7 +113,7 @@ namespace ClearBlazor
             await _parent.HandleRowSelection(NodeData, RowIndex, ctrlDown, shiftDown);
         }
 
-        public void OnNodeClicked(MouseEventArgs args, TItem item)
+        public async Task OnNodeClicked(MouseEventArgs args, TItem item)
         {
             if (_parent == null)
                 return;
@@ -132,6 +133,7 @@ namespace ClearBlazor
                 var treeViewBase = _parent as TreeViewBase<TItem>;
                 treeViewBase?.Refresh();
             }
+            Refresh();
         }
 
         private void MakeVisible(TItem item)
@@ -166,8 +168,7 @@ namespace ClearBlazor
             int margin = item.Level * 5;
             if (!item.HasChildren)
                 margin += item.Level * 20 + (int)_parent._iconWidth;
-            var css = $"margin-left:{margin}px; align-self:start; " +
-                      $"background-color:transparent; ";
+            var css = $"margin-left:{margin}px; align-self:start; ";
             switch (_parent._horizontalContentAlignment)
             {
                 case Alignment.Stretch:
@@ -218,10 +219,10 @@ namespace ClearBlazor
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
             if (_mouseOver)
-                css += $"background-color: {ThemeManager.CurrentColorScheme.ListBackgroundColor.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}; ";
 
             if (NodeData.IsSelected)
-                css += $"background-color: {ThemeManager.CurrentColorScheme.ListSelectedColor.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainer.Value}; ";
 
             return css;
         }
@@ -240,7 +241,7 @@ namespace ClearBlazor
             string css =  $"display:grid; " +
                    $"border-width:0 0 0 1px; border-style:solid; " +
                    $"grid-area: 1 / 2 / span 3 / span 1; " +
-                   $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
+                   $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             return css;
         }
 
@@ -255,7 +256,7 @@ namespace ClearBlazor
                 css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"display:grid; grid-template-columns: subgrid; " +
                        $"grid-area: 2 / 1 /span 1 / span {Columns.Count};  " +
-                       $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
+                       $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
                 css += $"justify-self:start; position:relative; " +
                        $"top:{(_parent._skipItems + Index) * (_parent._rowHeight + RowSpacing)}px;";
 
@@ -264,7 +265,7 @@ namespace ClearBlazor
             {
                 css += $"align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"grid-area: {row} / 1 / span 1 / span {columnCount}; " +
-                       $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
+                       $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             }
             return css;
         }

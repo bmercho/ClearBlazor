@@ -17,6 +17,12 @@ namespace ClearBlazor
         public bool LeadingIcon { get; set; } = true;
 
         protected Size IconSize { get; set; }
+
+        protected override void OnInitialized()
+        {
+            Shape = ContainerShape.Circle;
+            base.OnInitialized();
+        }
         protected override void OnParametersSet()
         {
             base.OnParametersSet();

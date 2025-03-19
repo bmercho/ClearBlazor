@@ -15,10 +15,10 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("Checked", "bool", "null", ""),
-            new ApiComponentInfo("CheckedChanged", "EventCallback<bool>", "", ""),
-            new ApiComponentInfo("LabelLocation", "<a href=LabelLocationApi>LabelLocation</a>", "LabelLocation.End", ""),
-            new ApiComponentInfo("UncheckedColor", "Color?", "null", ""),
+            new ApiComponentInfo("Checked", "bool", "null", "Indicates whether the switch is checked. \r"),
+            new ApiComponentInfo("CheckedChanged", "EventCallback<bool>", "", "Represents a callback that is triggered when the checked state changes. \r"),
+            new ApiComponentInfo("LabelLocation", "<a href=LabelLocationApi>LabelLocation</a>", "LabelLocation.End", "Specifies the location of the label, defaulting to the end position.\r"),
+            new ApiComponentInfo("UncheckedColor", "Color?", "null", "Represents the color used when an option is unchecked. \r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

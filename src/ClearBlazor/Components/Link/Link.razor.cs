@@ -25,7 +25,7 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            css += $"color: {ThemeManager.CurrentColorScheme.ToolTipTextColor.Value}; ";
+            css += $"color: {ThemeManager.CurrentColorScheme.OnInverseSurface.Value}; ";
             return css;
         }
 

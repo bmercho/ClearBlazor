@@ -102,7 +102,7 @@ namespace ClearBlazor
         {
             string css = string.Empty;
             if (IsDisabled)
-                css += $"background-color:{ThemeManager.CurrentColorScheme.TextDisabled.Lighten(.2).Value};";
+                css += $"background-color:{ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.08).Value};";
             else if (Checked)
                 css += $"background-color:{Color!.Lighten(.3).Value};";
             else
@@ -123,7 +123,7 @@ namespace ClearBlazor
             string css = string.Empty;
 
             if (IsDisabled)
-                css += $"background-color:{ThemeManager.CurrentColorScheme.TextDisabled.Value};";
+                css += $"background-color:{ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.12).Value};";
             else if (Checked)
                 css += $"background-color:{Color!.Value}; ";
             else
@@ -148,9 +148,7 @@ namespace ClearBlazor
             double diameter = height;
             css += $"width:{diameter}px; height:{diameter}px; border-radius:50%; ";
             if (MouseOver)
-                css += $"background-color: {ThemeManager.CurrentColorScheme.GrayLighter.SetAlpha(.5).Value}; ";
-            else
-                css += $"background-color: {Color.Transparent.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.12).Value}; ";
             if (Checked)
                 css += $"margin-left:{width-height}px; ";
             else

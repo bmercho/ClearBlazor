@@ -1,6 +1,6 @@
 ﻿@namespace ClearBlazorTest
 <Grid Rows=@_rows Columns=@_columns HorizontalAlignment=Alignment.Start BorderThickness=1>
-    <Drawer @ref=Drawer BackgroundColor=Color.BackgroundGrey
+    <Drawer @ref=Drawer
             @bind-Open=Open
             DrawerLocation=@_drawerLocation
             DrawerMode=@_drawerMode
@@ -28,7 +28,6 @@
 
     <StackPanel Orientation=Orientation.Portrait BackgroundColor=Color.Light Row=1>
         <RadioGroup Margin=20 Label="Drawer location" BackgroundColor=Color.Transparent
-                    Color=Color.Dark
                     @bind-Value=_drawerLocation @bind-Value:after=@LocationChanged>
             @foreach (DrawerLocation item in Enum.GetValues(typeof(DrawerLocation)))
             {
@@ -36,7 +35,6 @@
             }
         </RadioGroup>
         <RadioGroup Margin=20 Label="Drawer mode" BackgroundColor=Color.Transparent
-                    Color=Color.Dark
                     @bind-Value=_drawerMode @bind-Value:after=@ModeChanged>
             @foreach (DrawerMode item in Enum.GetValues(typeof(DrawerMode)))
             {
@@ -44,9 +42,7 @@
             }
         </RadioGroup>
         <CheckBox Margin=20 Label="Show overlay (only for temporary mode)"
-                  BackgroundColor=Color.Transparent 
-            Color=Color.Dark
-            @bind-Checked=@_showOverlay />
+                  @bind-Checked=@_showOverlay />
     </StackPanel>
 </Grid>
 

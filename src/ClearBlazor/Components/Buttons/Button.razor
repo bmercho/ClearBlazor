@@ -11,8 +11,7 @@
             <ToolTip @ref="ToolTipElement" Text=@ToolTip Position=@ToolTipPosition Delay=@ToolTipDelay />
         }
         <StackPanel Orientation="Orientation.Landscape" 
-                    Spacing="@Spacing" VerticalAlignment="Alignment.Center" 
-                    BackgroundColor=@Color.Transparent>
+                    Spacing="@Spacing" VerticalAlignment="Alignment.Center">
             @if (Icon != null && IconLocation == IconLocation.Start)
             {
                 <Icon Color="@_iconColor" Size=@GetSize() IconName="@Icon" />

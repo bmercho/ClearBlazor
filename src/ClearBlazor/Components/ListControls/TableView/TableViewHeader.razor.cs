@@ -98,7 +98,7 @@ namespace ClearBlazor
             if (_parent == null)
                 return string.Empty;
 
-            string css = $"background-color:{ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value};  z-index:1;";
+            string css = $"background-color:{ThemeManager.CurrentColorScheme.Surface.Value};  z-index:1;";
             css += $"display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr; " +
                    $"grid-area: 1 / 1 /span 1 / span {Columns.Count}; ";
             if (StickyHeader)
@@ -156,7 +156,7 @@ namespace ClearBlazor
             string css = string.Empty;
             css += $"align-self:start; border-width:1px 0 0 0; border-style:solid; z-index:1; " +
                    $"grid-area: 2 / 1 / span 1 / span {columnCount}; " +
-                   $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
+                   $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             return css;
         }
         private string GetVerticalGridLineStyle(int column)
@@ -164,7 +164,7 @@ namespace ClearBlazor
             return $"display:grid; z-index:1;" +
                    $"border-width:0 0 0 1px; border-style:solid; " +
                    $"grid-area: 1 / {column} / 1 / span 1; " +
-                   $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
+                   $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
         }
 
     }

@@ -59,20 +59,5 @@
         public Color OutlineVariant => new Color("#434750FF");
         public Color Scrim => new Color("#000000FF");
         public Color Shadow => new Color("#000000FF");
-
-        //To be deleted
-        public Color BackgroundDisabled { get; set; } = new Color(Colors.Shades.Black).SetAlpha(0.12);
-        public Color GrayLight { get; set; } = new(Colors.Grey.Lighten1);
-        public Color Dark { get; set; } = new(Colors.Grey.Darken3);
-        public Color TextDisabled { get; set; } = new Color("#b0b0b0");
-
-        public Color ToolTipTextColor { get; set; } = new Color(Colors.Green.Lighten2);
-        public Color ListBackgroundColor { get; set; } = new(Colors.Grey.Lighten2);
-        public Color ListSelectedColor { get; set; } = new(Colors.Blue.Lighten5);
-
-        public Color GrayLighter { get; set; } = new(Colors.Grey.Lighten2);
-        public Color Background { get; set; } = new(Colors.Shades.White);
-        public Color BackgroundGrey { get; set; } = new(Colors.Grey.Lighten4);
-
     }
 }

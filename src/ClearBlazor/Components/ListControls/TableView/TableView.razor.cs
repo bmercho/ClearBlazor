@@ -257,6 +257,10 @@ namespace ClearBlazor
             }
         }
 
+        /// <summary>
+        /// Scrolls the content by a given amount.
+        /// </summary>
+        /// <param name="value">Specifies the number of pixels to scroll the content vertically.</param>
         public async Task Scroll(int value)
         {
             var scrollTop = await JSRuntime.InvokeAsync<double>("window.scrollbar.GetScrollTop", _scrollViewer.Id);
@@ -793,7 +797,7 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            return css + $"display: grid; background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}";
+            return css + $"display: grid; background-color: {ThemeManager.CurrentColorScheme.Surface.Value}";
         }
 
         private string GetTransformStyle()
@@ -869,12 +873,12 @@ namespace ClearBlazor
                     return $"display:grid; z-index:1; width:1px; " +
                            $"border-width:0 0 0 1px; border-style:solid; " +
                            $"grid-area: 1 / {column} / span {_items.Count + 1} / span 1; " +
-                           $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
+                           $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
                 case VirtualizeMode.Virtualize:
                     return $"display:grid; z-index:1;width:1px; " +
                            $"border-width:0 0 0 1px; border-style:solid; " +
                            $"grid-area: 2 / {column} / span {_takeItems - 1} / span 1; " +
-                           $"border-color: {ThemeManager.CurrentColorScheme.GrayLight.Value}; ";
+                           $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             }
             return string.Empty;
         }
