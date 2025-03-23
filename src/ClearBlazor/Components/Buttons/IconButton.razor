@@ -8,7 +8,7 @@
             @onmouseleave=@OnMouseLeave>
         @if (ToolTip != null && ToolTip != string.Empty)
         {
-            <ToolTip @ref="ToolTipElement" Text=@ToolTip Position=@ToolTipPosition 
+            <ToolTip @ref="ToolTipElement" Text=@ToolTip TooltipPosition=@ToolTipPosition 
                      Delay=@ToolTipDelay />
         }
         <Icon Color=@_iconColor Size=@IconSize IconName="@Icon" />

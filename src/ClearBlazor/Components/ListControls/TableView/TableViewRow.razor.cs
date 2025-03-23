@@ -152,7 +152,7 @@ namespace ClearBlazorInternal
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
             if (_mouseOver)
-                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8).Value}; ";
 
             if (RowData.IsSelected)
                 css += $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.Value}; ";

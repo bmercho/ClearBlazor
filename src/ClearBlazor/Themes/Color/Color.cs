@@ -15,13 +15,10 @@ public class Color:IEquatable<Color>
     public static Color Success { get; private set; } = null!;
     public static Color Warning { get; private set; } = null!;
     public static Color Error { get; private set; } = null!;
-    public static Color Light { get; private set; } = null!;
-    public static Color Transparent { get; private set; } = null!;
-    public static Color Background { get; set; } = null!;
-    public static Color BackgroundGrey { get; set; } = null!;
     public static Color Surface { get; set; } = null!;
     public static Color SurfaceContainerHigh { get; set; } = null!;
-    
+    public static Color Transparent { get; private set; } = null!;
+
     public static void SetColors()
     {
         Primary = ThemeManager.CurrentColorScheme.Primary;

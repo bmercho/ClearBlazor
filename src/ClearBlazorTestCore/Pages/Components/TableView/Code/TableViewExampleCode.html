@@ -9,37 +9,37 @@
         <span class="atSign">&#64;</span>if (_virtualizeModeAvailable)
         {
             &lt;TableView <span class="atSign">&#64;</span>ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Padding=10 Margin=10
-            RowSpacing=<span class="atSign">&#64;</span>_rowSpacing
-            ColumnSpacing=<span class="atSign">&#64;</span>_columnSpacing
-            <span class="atSign">&#64;</span>bind-SelectedItem=_selectedItem
-            <span class="atSign">&#64;</span>bind-SelectedItems=_selectedItems
-            SelectionMode=<span class="atSign">&#64;</span>_selectionMode
-            AllowSelectionToggle=<span class="atSign">&#64;</span>_allowSelectionToggle
-            HoverHighlight=<span class="atSign">&#64;</span>_hoverHighlight
-            HorizontalScrollbar=<span class="atSign">&#64;</span>_horizontalScrollbar
-            OverscrollBehaviour=OverscrollBehaviour.Auto
-            HorizontalGridLines=<span class="atSign">&#64;</span>_horizontalGridLines
-            VerticalGridLines=<span class="atSign">&#64;</span>_verticalGridLines
-            VirtualizeMode=<span class="atSign">&#64;</span>_virtualizeMode
-            InitialIndex=<span class="atSign">&#64;</span>((0, Alignment.Start))
-            ShowHeader=<span class="atSign">&#64;</span>_showHeader
-            StickyHeader=<span class="atSign">&#64;</span>_stickyHeader
-            PageSize=<span class="atSign">&#64;</span>GetPageSize()
-            Items=<span class="atSign">&#64;</span>_localListData&gt;
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Index&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt;x.ItemIndex) ColumnDefinition=&quot;70</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">First Name&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt;x.FirstName) ColumnDefinition=&quot;120</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Last Name&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt;x.LastName) ColumnDefinition=&quot;120</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Product&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt;x.Product) ColumnDefinition=&quot;120</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">UnitPrice&quot; HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt;x.UnitPrice) ColumnDefinition=&quot;90</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+                       RowSpacing=<span class="atSign">&#64;</span>_rowSpacing
+                       ColumnSpacing=<span class="atSign">&#64;</span>_columnSpacing
+                       <span class="atSign">&#64;</span>bind-SelectedItem=_selectedItem
+                       <span class="atSign">&#64;</span>bind-SelectedItems=_selectedItems
+                       SelectionMode=<span class="atSign">&#64;</span>_selectionMode
+                       AllowSelectionToggle=<span class="atSign">&#64;</span>_allowSelectionToggle
+                       HoverHighlight=<span class="atSign">&#64;</span>_hoverHighlight
+                       HorizontalScrollbar=<span class="atSign">&#64;</span>_horizontalScrollbar
+                       OverscrollBehaviour=OverscrollBehaviour.Auto
+                       HorizontalGridLines=<span class="atSign">&#64;</span>_horizontalGridLines
+                       VerticalGridLines=<span class="atSign">&#64;</span>_verticalGridLines
+                       VirtualizeMode=<span class="atSign">&#64;</span>_virtualizeMode
+                       InitialIndex=<span class="atSign">&#64;</span>((0, Alignment.Start))
+                       ShowHeader=<span class="atSign">&#64;</span>_showHeader
+                       StickyHeader=<span class="atSign">&#64;</span>_stickyHeader
+                       PageSize=<span class="atSign">&#64;</span>GetPageSize()
+                       Items=<span class="atSign">&#64;</span>_localListData&gt;
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Index&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt; x.ItemIndex) ColumnDefinition=&quot;70</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">First Name&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt; x.FirstName) ColumnDefinition=&quot;120</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Last Name&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt; x.LastName) ColumnDefinition=&quot;120</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Product&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt; x.Product) ColumnDefinition=&quot;120</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">UnitPrice&quot; HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt; x.UnitPrice) ColumnDefinition=&quot;90</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
                     <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DataTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">item</span><span class="htmlTagDelimiter">&gt;</span>
                         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span>
-                        <span class="htmlAttributeName">TextAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span><span class="htmlTagDelimiter">&gt;</span>$<span class="atSign">&#64;</span>(item.UnitPrice.ToString(&quot;0.00&quot;))<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                                   <span class="htmlAttributeName">TextAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span><span class="htmlTagDelimiter">&gt;</span>$<span class="atSign">&#64;</span>(item.UnitPrice.ToString(&quot;0.00&quot;))<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
                     <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">DataTemplate</span><span class="htmlTagDelimiter">&gt;</span>
                 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TableColumn</span><span class="htmlTagDelimiter">&gt;</span>
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Notes&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt;x.Notes) ColumnDefinition=&quot;*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TableColumn</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Notes&quot; TItem=TestListRow Field=<span class="atSign">&#64;</span>(x =&gt; x.Notes) ColumnDefinition=&quot;*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
                     <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DataTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">item</span><span class="htmlTagDelimiter">&gt;</span>
                         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>GetTextWrap()</span>
-                        <span class="htmlAttributeName">TextTrimming</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>GetTextTrimming()</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>(item.Notes)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                                   <span class="htmlAttributeName">TextTrimming</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>GetTextTrimming()</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>(item.Notes)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
                     <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">DataTemplate</span><span class="htmlTagDelimiter">&gt;</span>
                 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TableColumn</span><span class="htmlTagDelimiter">&gt;</span>
             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TableView</span><span class="htmlTagDelimiter">&gt;</span>
@@ -64,14 +64,14 @@
         {
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span> <span class="htmlAttributeName">Spacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span><span class="htmlTagDelimiter">&gt;</span>
                 &lt;RadioGroup Label=&quot;Virtualization mode&quot; <span class="atSign">&#64;</span>bind-Value=_virtualizeMode
-                <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Refresh&gt;
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Refresh&gt;
                     <span class="atSign">&#64;</span>foreach (VirtualizeMode mode in Enum.GetValues(typeof(VirtualizeMode)))
                     {
                         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
                     }
                 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
                 &lt;RadioGroup Label=&quot;Selection mode&quot; <span class="atSign">&#64;</span>bind-Value=_selectionMode
-                <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>SelectionModeChanged&gt;
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>SelectionModeChanged&gt;
                     <span class="atSign">&#64;</span>foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
                     {
                         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>mode.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>mode</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
@@ -86,14 +86,14 @@
                 &lt;NumericInput Label=&quot;Column spacing&quot; <span class="atSign">&#64;</span>bind-Value=_columnSpacing <span class="atSign">&#64;</span>bind-Value:after=Refresh Immediate=false /&gt;
 
                 &lt;RadioGroup Label=&quot;Horizontal grid lines&quot; <span class="atSign">&#64;</span>bind-Value=_horizontalGridLines
-                <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Refresh&gt;
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Refresh&gt;
                     <span class="atSign">&#64;</span>foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
                     {
                         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>gridLines.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>gridLines</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
                     }
                 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
                 &lt;RadioGroup Label=&quot;Vertical grid lines&quot; <span class="atSign">&#64;</span>bind-Value=_verticalGridLines
-                <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Refresh&gt;
+                            <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>Refresh&gt;
                     <span class="atSign">&#64;</span>foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
                     {
                         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Radio</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>gridLines.ToString()</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="sharpVariable"><span class="atSign">&#64;</span>gridLines</span><span class="quot">&quot;</span> <span class="htmlTagDelimiter">/&gt;</span>
@@ -147,7 +147,7 @@
             }
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="atSign">&#64;</span>if (_virtualizeMode == VirtualizeMode.None ||
-            _virtualizeMode == VirtualizeMode.Virtualize)
+                _virtualizeMode == VirtualizeMode.Virtualize)
         {
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">4</span> <span class="htmlAttributeName">ColumnSpan</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">2</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span><span class="htmlTagDelimiter">&gt;</span>
                 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnAddNewItemGotoEndIfAtEnd</span><span class="htmlTagDelimiter">&gt;</span>Add new item and goto end if at end<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
@@ -288,9 +288,9 @@
         <span class="keyword">else</span>
             _virtualizeModeAvailable = <span class="keyword">true</span>;
 
-         StateHasChanged();
-         <span class="keyword">await</span> _table.GotoStart();
-         <span class="keyword">await</span> _table.RefreshAll();
+        StateHasChanged();
+        <span class="keyword">await</span> _table.GotoStart();
+        <span class="keyword">await</span> _table.RefreshAll();
         <span class="comment">//await _table.ResetComponent();</span>
 
         <span class="comment">//NavManager.NavigateTo($&quot;/TableView&quot;);</span>

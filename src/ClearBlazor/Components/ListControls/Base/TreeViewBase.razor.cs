@@ -206,8 +206,9 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            css += $"display: grid;";
-
+            css += $"display: grid; ";
+            if (BackgroundColor == null)
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}";
             return css;
         }
 
@@ -338,6 +339,7 @@ namespace ClearBlazor
                 return;
 
             bool changed = false;
+            double prevIconWidth = _iconWidth;
             foreach (var observedSize in observedSizes)
             {
                 if (observedSize.TargetId == Id)
@@ -354,6 +356,7 @@ namespace ClearBlazor
                     if (observedSize.ElementWidth > 0 && _iconWidth != observedSize.ElementWidth)
                     {
                         _iconWidth = observedSize.ElementWidth;
+                        _iconHeight = observedSize.ElementHeight;
                         changed = true;
                     }
                 }
@@ -385,8 +388,11 @@ namespace ClearBlazor
             }
             if (changed)
             {
-                if (_iconWidth > 0)
+                if (prevIconWidth != _iconWidth)
+                {
                     StateHasChanged();
+                    RefreshAllRows();
+                }
                 if (VirtualizeMode == VirtualizeMode.Virtualize)
                 {
                     if (_scrollViewerHeight > 0 && _initializing)

@@ -20,13 +20,13 @@
             </Grid>
         </DrawerContent>
         <DrawerBody>
-            <Grid BackgroundColor=Color.Light>
+            <Grid>
                 <Button HorizontalAlignment=Alignment.Center Margin=5 OnClicked=@Toggle>Toggle</Button>
             </Grid>
         </DrawerBody>
     </Drawer>
 
-    <StackPanel Orientation=Orientation.Portrait BackgroundColor=Color.Light Row=1>
+    <StackPanel Orientation=Orientation.Portrait Row=1>
         <RadioGroup Margin=20 Label="Drawer location" BackgroundColor=Color.Transparent
                     @bind-Value=_drawerLocation @bind-Value:after=@LocationChanged>
             @foreach (DrawerLocation item in Enum.GetValues(typeof(DrawerLocation)))

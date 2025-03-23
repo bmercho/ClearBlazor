@@ -37,6 +37,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Task RowAdded(Guid listItemId)", "async", "", "Indicates that a row has been added to the top of the list.\rOnly used if VirtualizationMode is InfiniteScroll or InfiniteScrollReverse\r"),
             new ApiComponentInfo("Task<bool> AtEnd()", "async", "", "Returns true if the list is at the end. \r"),
             new ApiComponentInfo("Task<bool> AtStart()", "async", "", "Returns true if the list is at the start. \r"),
+            new ApiComponentInfo("Task HandleScrollEvent(ScrollState scrollState)", "async", "", ""),
         };
     }
 }

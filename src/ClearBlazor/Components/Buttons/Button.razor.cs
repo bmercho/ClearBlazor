@@ -102,11 +102,13 @@ namespace ClearBlazor
         {
             base.OnParametersSet();
         }
-        protected override void ComputeOwnClasses(StringBuilder sb)
+        private string GetClasses()
         {
-            base.ComputeOwnClasses(sb); 
             if (!Disabled)
-                sb.Append("clear-ripple tooltip-wrapper ");
+                return "clear-ripple ";
+
+            return string.Empty;
+
         }
 
         protected override string UpdateStyle(string css)
@@ -317,7 +319,7 @@ namespace ClearBlazor
             if (ToolTipElement == null)
                 await Task.CompletedTask;
             else
-                await ToolTipElement.ShowToolTip();
+                ToolTipElement.ShowToolTip();
             StateHasChanged();
         }
 

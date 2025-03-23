@@ -8,9 +8,9 @@
         @onmouseleave="OnMouseLeave">
         @if (ToolTip != null && ToolTip != string.Empty)
         {
-            <ToolTip @ref="ToolTipElement" Text=@ToolTip Position=@ToolTipPosition Delay=@ToolTipDelay />
+            <ToolTip @ref="ToolTipElement" Text=@ToolTip ToolTipPosition=@ToolTipPosition Delay=@ToolTipDelay />
         }
-        <StackPanel Orientation="Orientation.Landscape" 
+        <StackPanel Orientation="Orientation.Landscape" Class=@GetClasses()
                     Spacing="@Spacing" VerticalAlignment="Alignment.Center">
             @if (Icon != null && IconLocation == IconLocation.Start)
             {

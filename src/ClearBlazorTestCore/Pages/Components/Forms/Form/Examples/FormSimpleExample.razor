@@ -1,43 +1,44 @@
 @using System.ComponentModel.DataAnnotations
 
 @namespace ClearBlazorTest
-<StackPanel Orientation=Orientation.Portrait Spacing="10" Margin="10">
-    <Form @ref="form" ValidationErrorLocation=ValidationErrorLocation.ErrorIcon  Model=@this >
-        <StackPanel Orientation=Orientation.Portrait Spacing="25" Margin=20>
-            <TextInput InputContainerStyle=InputContainerStyle.Underlined Label="Name" @bind-Value="TextValue" FieldName="TextValue" Immediate="true" />
-            <NumericInput InputContainerStyle=InputContainerStyle.Underlined Label="Value" @bind-Value="IntValue" FieldName="IntValue" Immediate="true" />
-            <CheckBox Label="I agree" @bind-Checked=BoolValue FieldName="BoolValue" />
-             <Switch Label="I agree" @bind-Checked=SwitchValue FieldName="SwitchValue" />
-            <RadioGroup Label="Radio Group" @bind-Value=RadioValue FieldName="RadioValue">
-                <Radio Label="Item1" Value=@("Item1") />
-                <Radio Label="Item2" Value=@("Item2") />
-                <Radio Label="Item3" Value=@("Item3") />
-                <Radio Label="Item4" Value=@("Item4") />
-            </RadioGroup>
-            <Select InputContainerStyle=InputContainerStyle.Underlined Label="Select" @bind-Value=EnumValue FieldName="EnumValue">
-                <SelectItem Value=TestEnum.Enum1 Text="Item1" Icon=@Icons.Material.Filled.HeartBroken/>
-                <SelectItem Value=TestEnum.Enum2 Text="Item2" Icon=@Icons.Material.Filled.HeartBroken />
-                <SelectItem Value=TestEnum.Enum3 Text="Item3" Icon=@Icons.Material.Filled.HeartBroken />
-                <SelectItem Value=TestEnum.Enum4 Text="Item4" Icon=@Icons.Material.Filled.HeartBroken />
-            </Select>
+<StackPanel Orientation=Orientation.Portrait Spacing="10">
+    <Grid Margin="10" Width=400 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
+        <Form @ref="form" ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
+            <StackPanel Orientation=Orientation.Portrait Spacing="25" Margin=20>
+                <TextInput InputContainerStyle=InputContainerStyle.Underlined Label="Name" @bind-Value="TextValue" FieldName="TextValue" Immediate="true" />
+                <NumericInput InputContainerStyle=InputContainerStyle.Underlined Label="Value" @bind-Value="IntValue" FieldName="IntValue" Immediate="true" />
+                <CheckBox Label="I agree" @bind-Checked=BoolValue FieldName="BoolValue" />
+                <Switch Label="I agree" @bind-Checked=SwitchValue FieldName="SwitchValue" />
+                <RadioGroup Label="Radio Group" @bind-Value=RadioValue FieldName="RadioValue">
+                    <Radio Label="Item1" Value=@("Item1") />
+                    <Radio Label="Item2" Value=@("Item2") />
+                    <Radio Label="Item3" Value=@("Item3") />
+                    <Radio Label="Item4" Value=@("Item4") />
+                </RadioGroup>
+                <Select InputContainerStyle=InputContainerStyle.Underlined Label="Select" @bind-Value=EnumValue FieldName="EnumValue">
+                    <SelectItem Value=TestEnum.Enum1 Text="Item1" Icon=@Icons.Material.Filled.HeartBroken />
+                    <SelectItem Value=TestEnum.Enum2 Text="Item2" Icon=@Icons.Material.Filled.HeartBroken />
+                    <SelectItem Value=TestEnum.Enum3 Text="Item3" Icon=@Icons.Material.Filled.HeartBroken />
+                    <SelectItem Value=TestEnum.Enum4 Text="Item4" Icon=@Icons.Material.Filled.HeartBroken />
+                </Select>
 
-            <Select InputContainerStyle=InputContainerStyle.Underlined Label="MultiSelect-flags enum" @bind-Value=Days MultiSelect=true FieldName="Days">
-                @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
-                {
-                    <SelectItem Text=@item.ToString() Value="@item" />
-                }
-            </Select>
+                <Select InputContainerStyle=InputContainerStyle.Underlined Label="MultiSelect-flags enum" @bind-Value=Days MultiSelect=true FieldName="Days">
+                    @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
+                    {
+                        <SelectItem Text=@item.ToString() Value="@item" />
+                    }
+                </Select>
 
-            <Slider Label="Simple slider" @bind-Value=SliderValue FieldName="SliderValue" />
-          
-            <ColorPickerInput @bind-Value=ColorValue FieldName="ColorValue" />
-            <DatePickerInput @bind-Value=DateValue FieldName="DateValue" />
-            <TimePickerInput @bind-Value=TimeValue FieldName="TimeValue" />
+                <Slider Label="Simple slider" @bind-Value=SliderValue FieldName="SliderValue" />
 
-        </StackPanel>
-    </Form>
+                <ColorPickerInput @bind-Value=ColorValue FieldName="ColorValue" />
+                <DatePickerInput @bind-Value=DateValue FieldName="DateValue" />
+                <TimePickerInput @bind-Value=TimeValue FieldName="TimeValue" />
+
+            </StackPanel>
+        </Form>
+    </Grid>
     <Button HorizontalAlignment=Alignment.Start OnClicked=@(() => form.Validate())>Validate</Button>
-    <Button HorizontalAlignment=Alignment.Start OnClicked=@Save>Save</Button>
 </StackPanel>
 
 @code {
@@ -66,7 +67,7 @@
     public double SliderValue { get; set; } = 50;
     public Color? ColorValue { get; set; } = Color.Secondary;
     public DateOnly? DateValue { get; set; } = DateOnly.FromDateTime(DateTime.Now);
-    public TimeOnly? TimeValue { get; set; } = new TimeOnly(22,15);
+    public TimeOnly? TimeValue { get; set; } = new TimeOnly(22, 15);
 
     Form form;
 
@@ -75,13 +76,4 @@
     {
         base.OnAfterRender(firstRender);
     }
-    private async Task Save()
-    {
-        bool valid = await form.Validate();
-        if (valid)
-        {
-            // Do Save
-        }
-    }
-
 }

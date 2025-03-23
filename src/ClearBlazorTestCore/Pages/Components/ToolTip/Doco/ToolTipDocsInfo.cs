@@ -15,15 +15,14 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
             new ApiComponentInfo("Text", "string?", "null", "Text shown in tooltip\r"),
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", "Size of tooltip\r"),
-            new ApiComponentInfo("Position", "<a href=ToolTipPositionApi>ToolTipPosition?</a>", "null", "Position of tooltip\r"),
+            new ApiComponentInfo("ToolTipPosition", "<a href=ToolTipPositionApi>ToolTipPosition?</a>", "null", "Position of tooltip\r"),
             new ApiComponentInfo("Delay", "int?", "null", "The delay in milliseconds before the tooltip is shown\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("Task ShowToolTip()", "async", "", "Shows the tooltip\r"),
+            new ApiComponentInfo("ShowToolTip()", "void", "", "Shows the tooltip\r"),
             new ApiComponentInfo("HideToolTip()", "void", "", "Hides the tooltip\r"),
         };
     }

@@ -147,7 +147,6 @@ namespace ClearBlazor
             if (UseTransition)
                 css += "transition: opacity .2s ease-in-out; ";
             css += "display: grid; ";
-            css += Open ? "opacity: 1; " : "opacity: 0; ";
             css += GetLocationCss(Position, Transform);
             css += GetFontSize();
             if (SizeInfo != null)

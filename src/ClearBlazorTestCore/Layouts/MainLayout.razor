@@ -8,15 +8,12 @@
 @inject NavigationManager NavManager
 
 @* <RootComponent>
-    <StackPanel Spacing=10>
-    <IconButton OnClicked=@OnClicked Icon=@GetIcon() ToolTip="Toggle Light/Dark Mode" Margin="0,10,0,0" />
-        <TextInput Placeholder="None" InputContainerStyle="InputContainerStyle.LabelOnly" @bind-Value="TextValue" />
-        <TextInput Placeholder="Underlined" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" />
-        <TextInput Placeholder="Outlined" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" />
-        <TextInput Placeholder="Filled" InputContainerStyle="InputContainerStyle.Filled" @bind-Value="TextValue" />
-    </StackPanel>
+    <Grid Margin=50>
+                    <Icon Column=2 IconName="@Icons.Material.Filled.FmdBad"
+                          ToolTip="Tooltip" Color=@Color.Error />
+    </Grid>
 </RootComponent>
- *@
+ *@  
 <RootComponent>
     <Grid Rows="auto,*">
         <AppBar Row="0" Padding="10">
@@ -79,13 +76,13 @@
                                 <ListBoxItem Text="Date Picker" HRef="/DatePickerInput" OnClicked=@Close />
                                 <ListBoxItem Text="Time Picker" HRef="/TimePickerInput" OnClicked=@Close />
                             </ListBoxItem>
-                            <ListBoxItem Text="List type controls" InitiallyExpanded=true>
+                            <ListBoxItem Text="List type controls" InitiallyExpanded=false>
                                 <ListBoxItem Text="ListView" HRef="/ListView" OnClicked=@Close />
                                 <ListBoxItem Text="Table View" HRef="/TableView" OnClicked=@Close />
                                 <ListBoxItem Text="TreeView" HRef="/TreeView" OnClicked=@Close />
                                 <ListBoxItem Text="TreeTableView" HRef="/TreeTableView" OnClicked=@Close />
                             </ListBoxItem>
-                            <ListBoxItem Text="Forms" InitiallyExpanded=false>
+                            <ListBoxItem Text="Forms" InitiallyExpanded=true>
                                 <ListBoxItem Text="Form" HRef="/Form" OnClicked=@Close />
                                 <ListBoxItem Text="Auto Form" HRef="/AutoForm" OnClicked=@Close />
                             </ListBoxItem>

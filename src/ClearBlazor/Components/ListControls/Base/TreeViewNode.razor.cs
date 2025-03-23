@@ -156,7 +156,11 @@ namespace ClearBlazor
 
         protected string GetExpandStyle(TItem item)
         {
-            var css = $"margin-left:{item.Level * 20}px; align-self:start;margin-top:-5px;";
+            string css = string.Empty;
+            if (_parent is TreeView<TItem>)
+                css += $"margin-left:{item.Level * 20}px; align-self:center;";
+            else
+                css += $"margin-left:{item.Level * 20}px; align-self:start;";
             return css;
         }
 
@@ -168,22 +172,26 @@ namespace ClearBlazor
             int margin = item.Level * 5;
             if (!item.HasChildren)
                 margin += item.Level * 20 + (int)_parent._iconWidth;
-            var css = $"margin-left:{margin}px; align-self:start; ";
+            string css = string.Empty;  
+            if (_parent is TreeView<TItem>)
+                css += $"margin-left:{margin}px; align-self:center; ";
+            else
+                css += $"margin-left:{margin}px; align-self:start; ";
             switch (_parent._horizontalContentAlignment)
-            {
-                case Alignment.Stretch:
-                    css += $"justify-self:stretch; width:{Width}px; ";
-                    break;
-                case Alignment.Start:
-                    css += "justify-self:start; ";
-                    break;
-                case Alignment.Center:
-                    css += "justify-self:center; ";
-                    break;
-                case Alignment.End:
-                    css += "justify-self:end; ";
-                    break;
-            }
+                {
+                    case Alignment.Stretch:
+                        css += $"justify-self:stretch; ";
+                        break;
+                    case Alignment.Start:
+                        css += "justify-self:start; ";
+                        break;
+                    case Alignment.Center:
+                        css += "justify-self:center; ";
+                        break;
+                    case Alignment.End:
+                        css += "justify-self:end; ";
+                        break;
+                }
             return css;
         }
 
@@ -219,10 +227,11 @@ namespace ClearBlazor
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
             if (_mouseOver)
-                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8).Value}; ";
 
-            if (NodeData.IsSelected)
-                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainer.Value}; ";
+            if (RowData.IsSelected)
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.Value}; ";
+
 
             return css;
         }

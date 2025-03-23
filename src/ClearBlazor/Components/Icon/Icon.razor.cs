@@ -110,7 +110,7 @@ namespace ClearBlazor
             if (ToolTipElement == null)
                 await Task.CompletedTask;
             else
-                await ToolTipElement.ShowToolTip();
+                ToolTipElement.ShowToolTip();
             StateHasChanged();
         }
 

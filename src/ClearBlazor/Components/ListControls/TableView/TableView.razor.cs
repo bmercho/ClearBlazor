@@ -553,10 +553,8 @@ namespace ClearBlazor
                                           $" scrollState.ScrollHeight:{scrollState.ScrollHeight}");
                         if (Math.Ceiling(scrollState.ClientHeight + scrollState.ScrollTop) >= scrollState.ScrollHeight)
                         {
-                            Console.WriteLine($"A************");
                             if (scrollState.ScrollHeight > _pageOffsets[_pageOffsets.Count - 1])
                             {
-                                Console.WriteLine($"B************");
                                 // If only one page loaded, now that we know the offset of that page, load the second page.
                                 // From now on two pages will always be loaded.
                                 if (_pageOffsets.Count == 1)
@@ -797,7 +795,10 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            return css + $"display: grid; background-color: {ThemeManager.CurrentColorScheme.Surface.Value}";
+            css += $"display: grid; ";
+            if (BackgroundColor == null)
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}; ";
+            return css;
         }
 
         private string GetTransformStyle()

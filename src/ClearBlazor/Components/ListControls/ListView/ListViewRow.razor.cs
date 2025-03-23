@@ -138,7 +138,7 @@ namespace ClearBlazor
                 css += $"position:absolute; height: {_parent.RowHeight}px; width: {_parent._itemWidth}px; " +
                        $"top: {(_parent._skipItems + Index) * _parent.RowHeight}px;";
             if (_mouseOver)
-                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8).Value}; ";
 
             if (RowData.IsSelected)
                 css += $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.Value}; ";

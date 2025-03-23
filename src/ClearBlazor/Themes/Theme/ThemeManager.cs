@@ -94,7 +94,7 @@ namespace ClearBlazor
                 }
 
             await jsRuntime.InvokeVoidAsync("window.scrollbar.setScrollBarProperties", width, height, borderRadius,
-                                                       ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value,
+                                                       ThemeManager.CurrentColorScheme.SurfaceContainer.Value,
                                                        ThemeManager.CurrentColorScheme.Outline.Value,
                                                        ThemeManager.CurrentColorScheme.SurfaceContainerHighest.Value,
                                                        thumbBorder);

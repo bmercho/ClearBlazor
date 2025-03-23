@@ -623,7 +623,11 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            return css + $"display: grid; background-color: {ThemeManager.CurrentColorScheme.Surface.Value}; ";
+
+            css += $"display: grid; ";
+            if (BackgroundColor == null)
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}; ";  
+            return css;
         }
 
         private string GetScrollViewerStyle()

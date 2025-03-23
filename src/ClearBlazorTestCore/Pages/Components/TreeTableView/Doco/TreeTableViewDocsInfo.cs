@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record TreeTableViewDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "TreeTableView<TItem>";
-        public string Description {get; set; } = "";
+        public string Description {get; set; } = "Represents a tree table view that can display hierarchical data with customizable options for headers and grid\rlines.\r";
         public (string, string) ApiLink  {get; set; } = ("API", "TreeTableViewApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "TreeTableView");
         public (string, string) InheritsLink {get; set; } = ("TreeViewBase<TItem>", "TreeViewBase<TItem>Api");

@@ -1,17 +1,26 @@
 <div>
 <div class="html"><pre>
+<span class="atSign">&#64;</span>using Data
 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">Spacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span>
-<span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span><span class="htmlTagDelimiter">&gt;</span>
     &lt;TreeView Height=300 Width=600 CornerRadius=4 BorderThickness=1
-    Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
-    HorizontalContentAlignment=Alignment.Start
-    VirtualizeMode=<span class="atSign">&#64;</span>VirtualizeMode.Virtualize
-    <span class="atSign">&#64;</span>ref=&quot;List&quot; InitialIndex=<span class="atSign">&#64;</span>((20, Alignment.Center)) Items=<span class="atSign">&#64;</span>_feeds&gt;
+              Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+              HorizontalContentAlignment=Alignment.Start
+              VirtualizeMode=<span class="atSign">&#64;</span>VirtualizeMode.Virtualize
+              SelectionMode=SelectionMode.Single
+              <span class="atSign">&#64;</span>ref=&quot;List&quot; InitialIndex=<span class="atSign">&#64;</span>((20, Alignment.Center)) Items=<span class="atSign">&#64;</span>_localTreeData&gt;
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">NodeTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">node</span><span class="htmlTagDelimiter">&gt;</span>
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span><span class="htmlTagDelimiter">&gt;</span>
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Icon</span> <span class="htmlAttributeName">IconName</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>node.Icon</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Custom(Colors.Yellow.Darken1)</span> <span class="htmlTagDelimiter">/&gt;</span>
+                <span class="atSign">&#64;</span>if (node.IsExpanded)
+                {
+                    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Icon</span> <span class="htmlAttributeName">IconName</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>node.OpenIconName</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Secondary</span> <span class="htmlTagDelimiter">/&gt;</span>
+                }
+                else
+                {
+                    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Icon</span> <span class="htmlAttributeName">IconName</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>node.IconName</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Secondary</span> <span class="htmlTagDelimiter">/&gt;</span>
+                }
                 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">TextWrap.NoWrap</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">5</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
-                    <span class="atSign">&#64;</span>node.Id
+                    <span class="atSign">&#64;</span>node.NodeId
                 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">NodeTemplate</span><span class="htmlTagDelimiter">&gt;</span>
@@ -19,45 +28,14 @@
     <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>CollapseAll</span><span class="htmlTagDelimiter">&gt;</span>Collapse all<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>ExpandAll</span><span class="htmlTagDelimiter">&gt;</span>Expand all<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Up1</span><span class="htmlTagDelimiter">&gt;</span>Scroll +1<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Up5</span><span class="htmlTagDelimiter">&gt;</span>Scroll +5<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Up10</span><span class="htmlTagDelimiter">&gt;</span>Scroll +10<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Down1</span><span class="htmlTagDelimiter">&gt;</span>Scroll -1<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Down5</span><span class="htmlTagDelimiter">&gt;</span>Scroll -5<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Down10</span><span class="htmlTagDelimiter">&gt;</span>Scroll -10<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="atSign">&#64;</span>*         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto50Center</span><span class="htmlTagDelimiter">&gt;</span>Goto 50 (center)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto10Start</span><span class="htmlTagDelimiter">&gt;</span>Goto 10 (start)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto50Center</span><span class="htmlTagDelimiter">&gt;</span>Goto 50 (center)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGoto70End</span><span class="htmlTagDelimiter">&gt;</span>Goto 70 (end)<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnAddNewItem</span><span class="htmlTagDelimiter">&gt;</span>Add new item<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoEnd</span><span class="htmlTagDelimiter">&gt;</span>Goto end<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnGotoStart</span><span class="htmlTagDelimiter">&gt;</span>Goto start<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>OnAddNewItemGotoEndIfAtEnd</span><span class="htmlTagDelimiter">&gt;</span>Add new item and goto end if at end<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
- *<span class="atSign">&#64;</span>    
     <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
-
 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
 <div class="csharp"><pre>
 <span class="atSign">&#64;</span>code {
-    <span class="keyword">private</span> <span class="keyword">class</span> Feed : TreeItem&lt;Feed&gt;
-    {
-        <span class="keyword">public</span> <span class="keyword">string</span> Id { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="keyword">string</span>.Empty;
-        <span class="keyword">public</span> <span class="keyword">string</span> Title { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="keyword">string</span>.Empty;
-        <span class="keyword">public</span> <span class="keyword">string</span> Icon { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="keyword">string</span>.Empty;
-    }
+    TreeView&lt;TestTreeRow&gt; List = <span class="keyword">null</span>!;
 
-    TreeView&lt;Feed&gt; List = <span class="keyword">null</span>!;
-    Random random = <span class="keyword">new</span> Random();
-
-    List&lt;Feed&gt; _feeds = <span class="keyword">new</span> List&lt;Feed&gt;();
-
-    <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
-    {
-        <span class="keyword">base</span>.OnInitialized();
-
-        InitialiseData(<span class="number">100000</span>);
-    }
+    List&lt;TestTreeRow&gt; _localTreeData = ClientData.LocalTestTreeRows5000;
 
     <span class="keyword">async</span> Task CollapseAll()
     {
@@ -66,119 +44,6 @@
     <span class="keyword">async</span> Task ExpandAll()
     {
         <span class="keyword">await</span> List.ExpandAll();
-    }
-    <span class="comment">// async Task OnGoto10Start()</span>
-    <span class="comment">// {</span>
-    <span class="comment">//     await List.GotoIndex(10, Alignment.Start);</span>
-    <span class="comment">// }</span>
-
-    <span class="comment">// async Task OnGoto50Center()</span>
-    <span class="comment">// {</span>
-    <span class="comment">//     await List.GotoIndex(50, Alignment.Center);</span>
-    <span class="comment">// }</span>
-
-    <span class="comment">// async Task OnGoto70End()</span>
-    <span class="comment">// {</span>
-    <span class="comment">//     await List.GotoIndex(70, Alignment.End);</span>
-    <span class="comment">// }</span>
-
-    <span class="comment">// async Task OnAddNewItem()</span>
-    <span class="comment">// {</span>
-    <span class="comment">//     var index = _feeds.Count;</span>
-    <span class="comment">//     _feeds.Add(new Feed(index % 1000, $&quot;Record #{index}&quot;, &quot;This is a message&quot;));</span>
-    <span class="comment">//     await List.Refresh();</span>
-    <span class="comment">// }</span>
-
-    <span class="comment">// async Task OnGotoEnd()</span>
-    <span class="comment">// {</span>
-    <span class="comment">//     await List.GotoEnd();</span>
-    <span class="comment">// }</span>
-
-    <span class="comment">// async Task OnGotoStart()</span>
-    <span class="comment">// {</span>
-    <span class="comment">//     await List.GotoStart();</span>
-    <span class="comment">// }</span>
-
-    <span class="comment">// async Task OnAddNewItemGotoEndIfAtEnd()</span>
-    <span class="comment">// {</span>
-    <span class="comment">//     var atEnd = await List.AtEnd();</span>
-
-    <span class="comment">//     var index = _feeds.Count;</span>
-    <span class="comment">//     _feeds.Add(new Feed(index % 1000, $&quot;Record #{index}&quot;, &quot;This is a message&quot;));</span>
-    <span class="comment">//     await List.Refresh();</span>
-    <span class="comment">//     if (atEnd)</span>
-    <span class="comment">//         await List.GotoEnd();</span>
-    <span class="comment">// }</span>
-    <span class="keyword">private</span> <span class="keyword">async</span> Task Up1()
-    {
-        <span class="keyword">await</span> List.Scroll(<span class="number">1</span>);
-    }
-    <span class="keyword">private</span> <span class="keyword">async</span> Task Up5()
-    {
-        <span class="keyword">await</span> List.Scroll(<span class="number">5</span>);
-
-    }
-    <span class="keyword">private</span> <span class="keyword">async</span> Task Up10()
-    {
-        <span class="keyword">await</span> List.Scroll(<span class="number">10</span>);
-
-    }
-    <span class="keyword">private</span> <span class="keyword">async</span> Task Down1()
-    {
-        <span class="keyword">await</span> List.Scroll(-<span class="number">1</span>);
-
-    }
-    <span class="keyword">private</span> <span class="keyword">async</span> Task Down5()
-    {
-        <span class="keyword">await</span> List.Scroll(-<span class="number">5</span>);
-
-    }
-    <span class="keyword">private</span> <span class="keyword">async</span> Task Down10()
-    {
-        <span class="keyword">await</span> List.Scroll(-<span class="number">10</span>);
-
-    }
-
-    <span class="keyword">private</span> <span class="keyword">void</span> InitialiseData(<span class="keyword">int</span> maxNum)
-    {
-        <span class="keyword">int</span> count = <span class="number">0</span>;
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; i++)
-        {
-            <span class="keyword">var</span> item = <span class="keyword">new</span> Feed { Id = $<span class="string">&quot;{i + 1}&quot;</span>, Icon = Icons.Material.TwoTone.Folder, Children = <span class="keyword">new</span>() };
-            _feeds.Add(item);
-            count++;
-            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt;= <span class="number">9</span>; j++)
-            {
-                <span class="keyword">var</span> item1 = <span class="keyword">new</span> Feed { Id = $<span class="string">&quot;{i + 1}.{j + 1}&quot;</span>, Icon = Icons.Material.TwoTone.Folder, Children = <span class="keyword">new</span>() };
-                item.Children.Add(item1);
-                count++;
-                <span class="keyword">if</span> (count &gt;= maxNum)
-                    <span class="keyword">return</span>;
-
-                <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt;= <span class="number">9</span>; k++)
-                {
-                    <span class="keyword">var</span> item2 = <span class="keyword">new</span> Feed { Id = $<span class="string">&quot;{i + 1}.{j + 1}.{k + 1}&quot;</span>, Icon = Icons.Material.TwoTone.Folder, Children = <span class="keyword">new</span>() };
-                    item1.Children.Add(item2);
-                    count++;
-                    <span class="keyword">if</span> (count &gt;= maxNum)
-                        <span class="keyword">return</span>;
-
-                    <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l &lt;= <span class="number">9</span>; l++)
-                    {
-                        <span class="keyword">var</span> item3 = <span class="keyword">new</span> Feed { Id = $<span class="string">&quot;{i + 1}.{j + 1}.{k + 1}.{l + 1}&quot;</span>, Icon = Icons.Material.TwoTone.Folder, Children = <span class="keyword">new</span>() };
-                        item2.Children.Add(item3);
-                        <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt;= <span class="number">10</span>; m++)
-                        {
-                            <span class="keyword">var</span> item4 = <span class="keyword">new</span> Feed { Id = $<span class="string">&quot;{i + 1}.{j + 1}.{k + 1}.{l + 1}.{m + 1}&quot;</span>, Icon = Icons.Material.TwoTone.Folder, Children = <span class="keyword">new</span>() };
-                            item3.Children.Add(item4);
-                            count++;
-                            <span class="keyword">if</span> (count &gt;= maxNum)
-                                <span class="keyword">return</span>;
-                        }
-                    }
-                }
-            }
-        }
     }
 }
 </pre></div>

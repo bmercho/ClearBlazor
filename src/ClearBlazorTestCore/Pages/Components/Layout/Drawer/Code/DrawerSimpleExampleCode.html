@@ -1,7 +1,7 @@
 <div>
 <div class="html"><pre>
 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Rows</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_rows</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_columns</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Drawer</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Drawer</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.BackgroundGrey</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Drawer</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Drawer</span>
             <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Open</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Open</span>
             <span class="htmlAttributeName">DrawerLocation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_drawerLocation</span>
             <span class="htmlAttributeName">DrawerMode</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_drawerMode</span>
@@ -21,15 +21,14 @@
             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">DrawerContent</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DrawerBody</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Light</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
                 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Center</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span> <span class="htmlAttributeName">OnClicked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>Toggle</span><span class="htmlTagDelimiter">&gt;</span>Toggle<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">DrawerBody</span><span class="htmlTagDelimiter">&gt;</span>
     <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Drawer</span><span class="htmlTagDelimiter">&gt;</span>
 
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Light</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
         &lt;RadioGroup Margin=20 Label=&quot;Drawer location&quot; BackgroundColor=Color.Transparent
-                    Color=Color.Dark
                     <span class="atSign">&#64;</span>bind-Value=_drawerLocation <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>LocationChanged&gt;
             <span class="atSign">&#64;</span>foreach (DrawerLocation item in Enum.GetValues(typeof(DrawerLocation)))
             {
@@ -37,7 +36,6 @@
             }
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
         &lt;RadioGroup Margin=20 Label=&quot;Drawer mode&quot; BackgroundColor=Color.Transparent
-                    Color=Color.Dark
                     <span class="atSign">&#64;</span>bind-Value=_drawerMode <span class="atSign">&#64;</span>bind-Value:after=<span class="atSign">&#64;</span>ModeChanged&gt;
             <span class="atSign">&#64;</span>foreach (DrawerMode item in Enum.GetValues(typeof(DrawerMode)))
             {
@@ -45,9 +43,7 @@
             }
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">RadioGroup</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CheckBox</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span> <span class="htmlAttributeName">Label</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Show overlay (only for temporary mode)</span><span class="quot">&quot;</span>
-                  <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span> 
-            <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Dark</span>
-            <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Checked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_showOverlay</span> <span class="htmlTagDelimiter">/&gt;</span>
+                  <span class="htmlAttributeName"><span class="atSign">&#64;</span>bind-Checked</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>_showOverlay</span> <span class="htmlTagDelimiter">/&gt;</span>
     <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
