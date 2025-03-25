@@ -155,18 +155,21 @@
     <span class="comment">// }</span>
     <span class="keyword">private</span> <span class="keyword">async</span> Task AddItem()
     {
+        <span class="keyword">await</span> Task.CompletedTask;
         <span class="comment">//var item = new Feed { Id = $&quot;New&quot;, Icon = Icons.Material.TwoTone.Folder, Children = new() };</span>
         <span class="comment">//_feeds[0].Children[0].Children[0].Children[0].Children.Add(item);</span>
         <span class="comment">//await List.FullRefresh();</span>
     }
     <span class="keyword">private</span> <span class="keyword">async</span> Task DeleteItem()
     {
+        <span class="keyword">await</span> Task.CompletedTask;
         <span class="comment">//var item = _feeds[0].Children[0].Children[0].Children[0].Children.Last();</span>
         <span class="comment">//_feeds[0].Children[0].Children[0].Children[0].Children.Remove(item);</span>
         <span class="comment">//await List.FullRefresh();</span>
     }
     <span class="keyword">private</span> <span class="keyword">async</span> Task ModifyItem()
     {
+        <span class="keyword">await</span> Task.CompletedTask;
         <span class="comment">//var item = _feeds[0].Children[0].Children[0].Children[0].Children.Last();</span>
         <span class="comment">//item.Id = &quot;Modified&quot;;</span>
         <span class="comment">//await List.FullRefresh();</span>

@@ -85,6 +85,10 @@ namespace ClearBlazorTest
 
             return new MarkupString(implementsString);
         }
+        private MarkupString GetMarkupString(string value)
+        {
+            return new MarkupString(value);
+        }
 
     }
 }

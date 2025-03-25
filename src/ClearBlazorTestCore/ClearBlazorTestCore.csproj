@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Remove="Pages\Components\Inputs\Radio\Code\**" />
     <Content Remove="Pages\Components\Inputs\Radio\Code\**" />
+	<EmbeddedResource Include="Pages\Components\Forms\AutoForm\Code\AutoFormNoLabelColumnAndUnderlinedExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsVariantExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsShapeExampleCode.html" />

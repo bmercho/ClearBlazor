@@ -426,7 +426,7 @@ namespace CreateDocumentation
             lines.Add($"    public record {componentName}DocsInfo:IComponentDocsInfo");
             lines.Add("    {");
             lines.Add("        public string Name { get; set; } = " + $"\"{docInfo.Name}\";");
-            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description}\";");
+            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description.Replace("\"", "\\\"")}\";");
             lines.Add("        public (string, string) ApiLink  {get; set; } = " + $"(\"{docInfo.ApiLink.Item1}\", \"{docInfo.ApiLink.Item2}\");");
             lines.Add("        public (string, string) ExamplesLink {get; set; } = " + $"(\"{docInfo.ExamplesLink.Item1}\", \"{docInfo.ExamplesLink.Item2}\");");
             lines.Add("        public (string, string) InheritsLink {get; set; } = " + $"(\"{docInfo.InheritsLink.Item1}\", \"{docInfo.InheritsLink.Item2}\");");
@@ -469,7 +469,7 @@ namespace CreateDocumentation
             lines.Add($"    public record {name}DocsInfo:IOtherDocsInfo");
             lines.Add("    {");
             lines.Add("        public string Name { get; set; } = " + $"\"{docInfo.Name}\";");
-            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description}\";");
+            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description.Replace("\"", "\\\"")}\";");
             lines.Add("        public List<ApiFieldInfo> FieldApi {get; set; } = " + $"new List<ApiFieldInfo>");
             lines.Add("        {");
             foreach (var info in docInfo.FieldApi)

@@ -20,12 +20,12 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", "The size of tab header\r"),
             new ApiComponentInfo("Color", "Color?", "null", "The color of the tab header\r"),
             new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
-            new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=IBorderApi>IBorder</a>\r"),
-            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=IBackgroundApi>IBackground</a>\r"),
+            new ApiComponentInfo("BorderThickness", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BorderColor", "Color?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BorderStyle", "<a href=BorderStyleApi>BorderStyle?</a>", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
             new ApiComponentInfo("OnTabChanged", "EventCallback<Tab>", "", "An event that is raised when the Tab is changed.\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
