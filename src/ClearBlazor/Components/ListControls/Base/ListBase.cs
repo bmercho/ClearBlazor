@@ -468,7 +468,7 @@ namespace ClearBlazorInternal
             }
             return new List<TItem>();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new List<TItem>();
             }

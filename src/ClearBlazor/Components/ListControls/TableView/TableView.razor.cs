@@ -576,7 +576,7 @@ namespace ClearBlazor
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -633,7 +633,7 @@ namespace ClearBlazor
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -722,7 +722,7 @@ namespace ClearBlazor
                 }
                 return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

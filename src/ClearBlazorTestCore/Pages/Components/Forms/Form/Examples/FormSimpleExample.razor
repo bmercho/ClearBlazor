@@ -3,37 +3,51 @@
 @namespace ClearBlazorTest
 <StackPanel Orientation=Orientation.Portrait Spacing="10">
     <Grid Margin="10" Width=400 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
-        <Form @ref="form" ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
+        <Form @ref="form" ShowLabels=true ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@TestModel>
             <StackPanel Orientation=Orientation.Portrait Spacing="25" Margin=20>
-                <TextInput InputContainerStyle=InputContainerStyle.Underlined Label="Name" @bind-Value="TextValue" FieldName="TextValue" Immediate="true" />
-                <NumericInput InputContainerStyle=InputContainerStyle.Underlined Label="Value" @bind-Value="IntValue" FieldName="IntValue" Immediate="true" />
-                <CheckBox Label="I agree" @bind-Checked=BoolValue FieldName="BoolValue" />
-                <Switch Label="I agree" @bind-Checked=SwitchValue FieldName="SwitchValue" />
-                <RadioGroup Label="Radio Group" @bind-Value=RadioValue FieldName="RadioValue">
+                <TextInput InputContainerStyle=InputContainerStyle.Underlined 
+                           @bind-Value=TestModel.TextValue Placeholder="Name"
+                           FieldName="TextValue" 
+                           Immediate="true" />
+                <NumericInput InputContainerStyle=InputContainerStyle.Underlined 
+                              @bind-Value=TestModel.IntValue 
+                              FieldName="IntValue" 
+                              Immediate="true" />
+                <CheckBox @bind-Checked=TestModel.BoolValue 
+                          FieldName="BoolValue" />
+                <Switch @bind-Checked=TestModel.SwitchValue 
+                        FieldName="SwitchValue" />
+                <RadioGroup @bind-Value=TestModel.RadioValue 
+                            FieldName="RadioValue">
                     <Radio Label="Item1" Value=@("Item1") />
                     <Radio Label="Item2" Value=@("Item2") />
                     <Radio Label="Item3" Value=@("Item3") />
                     <Radio Label="Item4" Value=@("Item4") />
                 </RadioGroup>
-                <Select InputContainerStyle=InputContainerStyle.Underlined Label="Select" @bind-Value=EnumValue FieldName="EnumValue">
+                <Select InputContainerStyle=InputContainerStyle.Underlined 
+                        @bind-Value=TestModel.EnumValue 
+                        FieldName="EnumValue">
                     <SelectItem Value=TestEnum.Enum1 Text="Item1" Icon=@Icons.Material.Filled.HeartBroken />
                     <SelectItem Value=TestEnum.Enum2 Text="Item2" Icon=@Icons.Material.Filled.HeartBroken />
                     <SelectItem Value=TestEnum.Enum3 Text="Item3" Icon=@Icons.Material.Filled.HeartBroken />
                     <SelectItem Value=TestEnum.Enum4 Text="Item4" Icon=@Icons.Material.Filled.HeartBroken />
                 </Select>
 
-                <Select InputContainerStyle=InputContainerStyle.Underlined Label="MultiSelect-flags enum" @bind-Value=Days MultiSelect=true FieldName="Days">
+                <Select InputContainerStyle=InputContainerStyle.Underlined 
+                        @bind-Value=TestModel.Days
+                        MultiSelect=true FieldName="Days">
                     @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
                     {
                         <SelectItem Text=@item.ToString() Value="@item" />
                     }
                 </Select>
 
-                <Slider Label="Simple slider" @bind-Value=SliderValue FieldName="SliderValue" />
+                <Slider @bind-Value=TestModel.SliderValue 
+                        FieldName="SliderValue" />
 
-                <ColorPickerInput @bind-Value=ColorValue FieldName="ColorValue" />
-                <DatePickerInput @bind-Value=DateValue FieldName="DateValue" />
-                <TimePickerInput @bind-Value=TimeValue FieldName="TimeValue" />
+                <ColorPickerInput @bind-Value=TestModel.ColorValue FieldName="ColorValue" />
+                <DatePickerInput @bind-Value=TestModel.DateValue FieldName="DateValue" />
+                <TimePickerInput @bind-Value=TestModel.TimeValue FieldName="TimeValue" />
 
             </StackPanel>
         </Form>
@@ -42,38 +56,6 @@
 </StackPanel>
 
 @code {
-    public enum TestEnum
-    {
-        Enum1, Enum2, Enum3, Enum4
-    }
-    [Flags]
-    enum DaysOfWeek
-    {
-        Monday = 1, Tuesday = 2, Wednesday = 4, Thursday = 8, Friday = 16, Saturday = 32, Sunday = 64
-    }
-
-    DaysOfWeek Days = DaysOfWeek.Wednesday | DaysOfWeek.Friday;
-
-    [Required(ErrorMessage = "A value is required.")]
-    [MaxLength(10, ErrorMessage = "The maximum length is 10.")]
-    public string TextValue { get; set; } = string.Empty;
-
-    public int IntValue { get; set; }
-    public bool BoolValue { get; set; } = true;
-    public bool SwitchValue { get; set; } = true;
-    [Required(ErrorMessage = "A selection is required.")]
-    public string? RadioValue { get; set; } = null;
-    public TestEnum EnumValue { get; set; } = TestEnum.Enum2;
-    public double SliderValue { get; set; } = 50;
-    public Color? ColorValue { get; set; } = Color.Secondary;
-    public DateOnly? DateValue { get; set; } = DateOnly.FromDateTime(DateTime.Now);
-    public TimeOnly? TimeValue { get; set; } = new TimeOnly(22, 15);
-
-    Form form;
-
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        base.OnAfterRender(firstRender);
-    }
+    Form form = null!;
+    private TestModel TestModel { get; set; } = new TestModel();    
 }

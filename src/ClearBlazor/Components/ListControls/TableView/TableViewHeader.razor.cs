@@ -128,22 +128,6 @@ namespace ClearBlazor
         {
             string css = string.Empty;
 
-            string justify = "start";
-            switch (Columns[column - 1].HorizontalHeaderAlignment)
-            {
-                case Alignment.Stretch:
-                    justify = "stretch";
-                    break;
-                case Alignment.Start:
-                    justify = "start";
-                    break;
-                case Alignment.Center:
-                    justify = "center";
-                    break;
-                case Alignment.End:
-                    justify = "end";
-                    break;
-            }
             css += $"display:grid; " +
                    $"padding:{RowSpacing / 2}px {ColumnSpacing / 2}px {RowSpacing / 2}px {ColumnSpacing / 2}px;" +
                    $"grid-area: 1 / {column} /span 1 /span 1; justify-self: stretch;" +

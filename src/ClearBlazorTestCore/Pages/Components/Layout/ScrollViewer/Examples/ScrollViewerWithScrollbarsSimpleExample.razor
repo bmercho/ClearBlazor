@@ -147,7 +147,7 @@
 
     public virtual void OnNext(bool hasScrolled)
     {
-       // Console.WriteLine("HasScrolled");
+        // Console.WriteLine("HasScrolled");
     }
 
     public virtual void Subscribe(IObservable<bool> provider)
@@ -169,9 +169,8 @@
 
     private async Task ScrollCallBack(ScrollState scrollState)
     {
+        await Task.CompletedTask;
         //Console.WriteLine($"HandleScrollEvent: ScrollTop:{scrollState.ScrollTop}");
-        //if (scrollState.ScrollTop == 0)
-        //    await _scrollViewer.SetScrollTop(800);
     }
 
     private void Changed()

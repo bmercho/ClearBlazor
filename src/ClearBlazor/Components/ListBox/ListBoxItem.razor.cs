@@ -84,7 +84,6 @@ namespace ClearBlazor
         private int FontWeight = 0;
         private FontStyle FontStyle = FontStyle.Normal;
         private string RowStyle = string.Empty;
-        private double RowHeight = 0;
         private string LinePadding = string.Empty;
         private string RowClasses = string.Empty;
         private bool IsExpanded = true;

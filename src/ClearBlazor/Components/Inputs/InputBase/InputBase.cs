@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
@@ -67,6 +68,8 @@ namespace ClearBlazor
             if (ParentForm == null)
                 return;
 
+            Label = GetLabel();
+
             ParentForm.AddPage(this);
 
             ValidationErrorLocation = ParentForm.ValidationErrorLocation;
@@ -105,6 +108,23 @@ namespace ClearBlazor
             if (attrib == null)
                 return (defaultRequired, null);
             return (!attrib.AllowEmptyStrings, attrib.ErrorMessage);
+        }
+
+        protected string? GetLabel()
+        {
+            if (Label != null)
+                return Label;
+
+            if (ParentForm == null || ParentForm.Model == null || !ParentForm.ShowLabels)
+                return Label;
+
+            var prop = ParentForm.Model.GetType().GetProperty(FieldName);
+            if (prop == null)
+                return FieldName;
+            var attrib = prop.GetCustomAttribute<DisplayNameAttribute>(true);
+            if (attrib == null)
+                return prop.Name;
+            return attrib.DisplayName;
         }
 
         protected string GetLabelStyle()

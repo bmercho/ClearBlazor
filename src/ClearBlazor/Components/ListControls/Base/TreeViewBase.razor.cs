@@ -256,7 +256,7 @@ namespace ClearBlazor
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

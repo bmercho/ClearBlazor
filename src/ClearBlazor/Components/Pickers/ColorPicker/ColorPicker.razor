@@ -25,33 +25,33 @@
                     <Slider Size=Size.Large Margin="0,0,12,0" @bind-Value=AValue 
                             Color=@ThemeManager.CurrentColorScheme.Outline.Lighten(.2) Min=0 Max=255
                             BackgroundGradient1="url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAGElEQVQYlWNgYGCQwoKxgqGgcJA5h3yFAAs8BRWVSwooAAAAAElFTkSuQmCC) repeat; "
-                            BackgroundGradient2="linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1)); " />
+                            BackgroundGradient2=@GetGradientStr()/>
                 </StackPanel>
                 <Grid Margin=10 CornerRadius=4 Column=1 Width=36 BackgroundColor=@Color />
             </Grid>
             <Grid Row=2 Columns="2*,*,*,*,*,*">
                 <NumericInput IsReadOnly=true Size=Size.Small Margin="0,5,0,5" Label="Hex" 
-                              Column=0 Value=@Color?.Value />
+                              Column=0 Value=@Color?.Value ShowLabel=true />
                 @if (hlsMode)
                 {
                     <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="H" 
-                                  Column=1 @bind-Value=HValue />
-                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="S" 
-                                  Column=2 @bind-Value=SValue />
-                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="L" 
-                                  Column=3 @bind-Value=LValue />
+                                  Column=1 @bind-Value=HValue ShowLabel=true />
+                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="S"
+                                  Column=2 @bind-Value=SValue ShowLabel=true />
+                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="L"
+                                  Column=3 @bind-Value=LValue ShowLabel=true />
                 }
                 else
                 {
-                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="R" 
-                                  Column=1 @bind-Value=RValue />
-                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="G" 
-                                  Column=2 @bind-Value=GValue />
-                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="B" 
-                                  Column=3 @bind-Value=BValue />
+                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="R"
+                                  Column=1 @bind-Value=RValue ShowLabel=true />
+                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="G"
+                                  Column=2 @bind-Value=GValue ShowLabel=true />
+                    <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="B"
+                                  Column=3 @bind-Value=BValue ShowLabel=true />
                 }
                 <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="A" 
-                              Column=4 @bind-Value=AValue />
+                              Column=4 @bind-Value=AValue ShowLabel=true />
                 <IconButton Margin="7,10,0,0" VerticalAlignment=Alignment.Center
                             Color=@ThemeManager.CurrentColorScheme.OnSurface
                             Column=5 Size=Size.Large Icon=@Icons.Material.Filled.Height

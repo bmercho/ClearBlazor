@@ -208,7 +208,7 @@ namespace ClearBlazor
         }
 
         // The instance of the property
-        public object Instance
+        public object? Instance
         {
             get
             {
@@ -326,33 +326,83 @@ namespace ClearBlazor
 
         public void GetEditorTypeAndParameters()
         {
-            InputParameters = new Dictionary<string, object?>();
+            object? callback;
 
-            //if (ItemType == ItemType.CollectionTableHeader)
-            //{
-            //    InputType = typeof(InputTableEditor);
-            //    return;
-            //}
+            if (_propertyType == null)
+                return;
 
-            InputParameters.Add("FieldName", PropertyInfo?.Name);
+            InputParameters = new Dictionary<string, object?>
+            {
+                { "FieldName", PropertyInfo?.Name }
+            };
+
+            if (PropertyInfo?.GetCustomAttribute<UseSliderAttribute>() != null && IsNumberType(_propertyType))
+            {
+                var sliderAttrib = PropertyInfo?.GetCustomAttribute<UseSliderAttribute>();
+                InputParameters.Add("Label", _autoForm.HasLabelColumn ? null: DisplayName);
+                InputParameters.Add("Size", _autoForm.Size);
+                InputParameters.Add("IsReadOnly", IsReadOnly);
+                InputParameters.Add("Value", Value);
+                callback = typeof(AutoFormField)
+                              .GetMethod("CreateCallback")?
+                              .MakeGenericMethod(_propertyType)
+                              .Invoke(this, null);
+
+                if (callback != null)
+                    InputParameters.Add("ValueChanged", callback);
+
+                if (sliderAttrib != null)
+                {
+                    InputParameters.Add("Max", sliderAttrib.Max);
+                    InputParameters.Add("Min", sliderAttrib.Min);
+                    InputParameters.Add("Step", sliderAttrib.Step);
+                    InputParameters.Add("ShowTickMarkLabels", sliderAttrib.ShowTickMarkLabels);
+                    InputParameters.Add("ShowTickMarks", sliderAttrib.ShowTickMarks);
+                }
+                else
+                {
+                    InputParameters.Add("Max", 0);
+                    InputParameters.Add("Min", 100);
+                    InputParameters.Add("Step", 1);
+                    InputParameters.Add("ShowTickMarkLabels", true);
+                    InputParameters.Add("ShowTickMarks", true);
+                }
+
+                InputType = typeof(Slider<>).MakeGenericType(_propertyType);
+
+                return;
+            }
 
             if (_propertyType == typeof(bool))
             {
-                InputParameters.Add("Label", _autoForm.HasLabelColumn ? string.Empty : DisplayName);
-                var tristate = PropertyInfo?.GetCustomAttribute<CheckBoxTriStateAttribute>();
-                InputParameters.Add("Size", _autoForm.Size);
-                InputParameters.Add("IsReadOnly", IsReadOnly);
-                InputParameters.Add("CheckedChanged", EventCallback.Factory.Create<bool>(this, ValueChanged));
-                InputParameters.Add("Checked", Value);
+                if (PropertyInfo?.GetCustomAttribute<UseSwitchAttribute>() != null)
+                {
+                    InputParameters.Add("Label", _autoForm.HasLabelColumn ? null : DisplayName);
+                    InputParameters.Add("Size", _autoForm.Size);
+                    InputParameters.Add("IsReadOnly", IsReadOnly);
+                    InputParameters.Add("CheckedChanged", EventCallback.Factory.Create<bool>(this, ValueChanged));
+                    InputParameters.Add("Checked", Value);
+                    InputType = typeof(Switch);
+                }
+                else
+                {
 
-                AddToolTipParameter();
-                InputType = typeof(CheckBox<bool>);
+                    InputParameters.Add("Label", _autoForm.HasLabelColumn ? null : DisplayName);
+                    var tristate = PropertyInfo?.GetCustomAttribute<CheckBoxTriStateAttribute>();
+                    InputParameters.Add("Size", _autoForm.Size);
+                    InputParameters.Add("IsReadOnly", IsReadOnly);
+                    InputParameters.Add("CheckedChanged", EventCallback.Factory.Create<bool>(this, ValueChanged));
+                    InputParameters.Add("Checked", Value);
+
+                    AddToolTipParameter();
+                    InputType = typeof(CheckBox<bool>);
+                }
                 return;
             }
 
             if (_propertyType == typeof(bool?))
             {
-                InputParameters.Add("Label", _autoForm.HasLabelColumn ? string.Empty : DisplayName);
+                InputParameters.Add("Label", _autoForm.HasLabelColumn ? null : DisplayName);
                 var tristate = PropertyInfo?.GetCustomAttribute<CheckBoxTriStateAttribute>();
                 if (tristate != null)
                     InputParameters.Add("TriState", true);
@@ -511,24 +561,25 @@ namespace ClearBlazor
                 return;
             }
 
-            if (_propertyType == null)
-                return;
-
+            Type dataType = null!;
+            IList? data;
+           
             if (_propertyType.IsEnum || IsNullableEnum(_propertyType))
             {
                 bool nullable = IsNullableEnum(_propertyType);
 
                 if (_propertyType.IsDefined(typeof(FlagsAttribute), inherit: true))
                 {
-                    Type dataType = typeof(ListDataItem<>).MakeGenericType(_propertyType);
-                    var data = GetEnumData(dataType, _propertyType);
+                    dataType = typeof(ListDataItem<>).MakeGenericType(_propertyType);
+                    data = GetEnumData(dataType, _propertyType);
 
                     InputParameters.Add("SelectData", data);
                     InputParameters.Add("MultiSelect", true);
+                    InputParameters.Add("InputContainerStyle", _autoForm.InputContainerStyle);
                     InputParameters.Add("Value", Value);
                     InputType = typeof(Select<>).MakeGenericType(_propertyType);
 
-                    var callback = typeof(AutoFormField)
+                    callback = typeof(AutoFormField)
                         .GetMethod("CreateCallback")?
                         .MakeGenericMethod(_propertyType)
                         .Invoke(this, null);
@@ -538,19 +589,17 @@ namespace ClearBlazor
                     return;
 
                 }
-                else
+                if (PropertyInfo?.GetCustomAttribute<UseDropDownAttribute>() != null)
                 {
-                    Type dataType = typeof(RadioGroupDataItem<>).MakeGenericType(_propertyType);
-                    var data = GetEnumData(dataType, _propertyType);
+                    dataType = typeof(ListDataItem<>).MakeGenericType(_propertyType);
+                    data = GetEnumData(dataType, _propertyType);
 
-                    InputParameters.Add("RadioGroupData", data);
-
+                    InputParameters.Add("SelectData", data);
                     InputParameters.Add("Value", Value);
-                    InputParameters.Add("Label", _autoForm.HasLabelColumn ? string.Empty : DisplayName);
+                    InputParameters.Add("InputContainerStyle", _autoForm.InputContainerStyle);
+                    InputType = typeof(Select<>).MakeGenericType(_propertyType);
 
-                    InputType = typeof(RadioGroup<>).MakeGenericType(_propertyType);
-
-                    var callback = typeof(AutoFormField)
+                    callback = typeof(AutoFormField)
                         .GetMethod("CreateCallback")?
                         .MakeGenericMethod(_propertyType)
                         .Invoke(this, null);
@@ -560,99 +609,84 @@ namespace ClearBlazor
                     return;
 
                 }
+
+                dataType = typeof(RadioGroupDataItem<>).MakeGenericType(_propertyType);
+                data = GetEnumData(dataType, _propertyType);
+
+                InputParameters.Add("RadioGroupData", data);
+
+                InputParameters.Add("Value", Value);
+                InputParameters.Add("Label", _autoForm.HasLabelColumn ? null : DisplayName);
+
+                InputType = typeof(RadioGroup<>).MakeGenericType(_propertyType);
+
+                callback = typeof(AutoFormField)
+                    .GetMethod("CreateCallback")?
+                    .MakeGenericMethod(_propertyType)
+                    .Invoke(this, null);
+
+                if (callback != null)
+                    InputParameters.Add("ValueChanged", callback);
+                return;
             }
 
-            //if (_propertyType == typeof(DateTime) || _propertyType == typeof(DateTime?))
-            //{
-            //    CheckFormatAttribute();
-            //    if (_propertyType == typeof(DateTime))
-            //        InputType = typeof(InputDateEditor<DateTime>);
-            //    else
-            //        InputType = typeof(InputDateEditor<DateTime?>);
-            //    CheckPlaceholderAttribute();
-            //    AddToolTipParameter();
-            //    return;
-            //}
+            if (_propertyType == typeof(Color))
+            {
+                InputParameters.Add("Value", Value);
+                InputParameters.Add("ValueChanged", EventCallback.Factory.Create<Color>(this, ValueChanged));
+                InputParameters.Add("Immediate", _autoForm.Immediate);
+                InputParameters.Add("InputContainerStyle", _autoForm.InputContainerStyle);
+                if (PropertyInfo?.GetCustomAttribute<ShowHexColorAttribute>() != null)
+                    InputParameters.Add("ShowHex", true);
 
-            //if (_propertyType == typeof(TimeSpan) || _propertyType == typeof(TimeSpan?))
-            //{
-            //    CheckFormatAttribute();
-            //    if (_propertyType == typeof(TimeSpan))
-            //        InputType = typeof(InputTimeEditor<TimeSpan>);
-            //    else
-            //        InputType = typeof(InputTimeEditor<TimeSpan?>);
-            //    CheckPlaceholderAttribute();
-            //    AddToolTipParameter();
-            //    return;
-            //}
+                InputType = typeof(ColorPickerInput);
+                return;
+            }
 
-            //if (_propertyType == typeof(DateTime) || _propertyType == typeof(DateTime?))
-            //{
-            //    CheckFormatAttribute();
-            //    var dataType = PropertyInfo?.GetCustomAttribute<DataTypeAttribute>();
-            //    if (dataType != null)
-            //    {
-            //        if (dataType.DataType == DataType.DateTime)
-            //        {
-            //            InputParameters.Add("ShowDate", true);
-            //            InputParameters.Add("ShowTime", true);
-            //            if (_propertyType == typeof(DateTime))
-            //                InputType = typeof(InputDateTimeEditor<DateTime>);
-            //            else
-            //                InputType = typeof(InputDateTimeEditor<DateTime?>);
-            //            return;
-            //        }
-            //        else if (dataType.DataType == DataType.Time)
-            //        {
-            //            InputParameters.Add("ShowTime", true);
-            //            if (_propertyType == typeof(DateTime))
-            //                InputType = typeof(InputDateTimeEditor<DateTime>);
-            //            else
-            //                InputType = typeof(InputDateTimeEditor<DateTime?>);
-            //            return;
-            //        }
-            //    }
-            //    InputParameters.Add("ShowDate", true);
-            //    if (_propertyType == typeof(DateTime))
-            //        InputType = typeof(InputDateTimeEditor<DateTime>);
-            //    else
-            //        InputType = typeof(InputDateTimeEditor<DateTime?>);
-            //    return;
-            //}
+            if (_propertyType == typeof(DateOnly) || _propertyType == typeof(DateOnly?))
+            {
+                InputParameters.Add("Value", Value);
+                if (_propertyType == typeof(DateOnly))
+                    InputParameters.Add("ValueChanged", EventCallback.Factory.Create<DateOnly>(this, ValueChanged));
+                else
+                    InputParameters.Add("ValueChanged", EventCallback.Factory.Create<DateOnly?>(this, ValueChanged));
+                InputParameters.Add("Immediate", _autoForm.Immediate);
+                InputParameters.Add("InputContainerStyle", _autoForm.InputContainerStyle);
+                var dateFormatAttrib = PropertyInfo?.GetCustomAttribute<DateFormatAttribute>();
+                if (dateFormatAttrib != null)
+                    InputParameters.Add("DateFormat", dateFormatAttrib.DateFormat);
+                var orientationAttrib = PropertyInfo?.GetCustomAttribute<OrientationAttribute>();
+                if (orientationAttrib != null)
+                    InputParameters.Add("Orientation", orientationAttrib.Orientation);
 
+                InputType = typeof(DatePickerInput);
+                return;
+            }
 
-            //if (_propertyType == typeof(DateTimeOffset) || (_propertyType == typeof(DateTimeOffset?)))
-            //{
-            //    CheckFormatAttribute();
-            //    var dataType = PropertyInfo?.GetCustomAttribute<DataTypeAttribute>();
-            //    if (dataType != null)
-            //    {
-            //        if (dataType.DataType == DataType.DateTime)
-            //        {
-            //            InputParameters.Add("ShowTime", true);
-            //            if (_propertyType == typeof(DateTimeOffset))
-            //                InputType = typeof(InputDateTimeEditor<DateTimeOffset>);
-            //            else
-            //                InputType = typeof(InputDateTimeEditor<DateTimeOffset?>);
-            //            return;
-            //        }
-            //        else if (dataType.DataType == DataType.Time)
-            //        {
-            //            InputParameters.Add("ShowTime", true);
-            //            InputParameters.Add("TimeOnly", true);
-            //            if (_propertyType == typeof(DateTimeOffset))
-            //                InputType = typeof(InputDateTimeEditor<DateTimeOffset>);
-            //            else
-            //                InputType = typeof(InputDateTimeEditor<DateTimeOffset?>);
-            //            return;
-            //        }
-            //    }
-            //    if (_propertyType == typeof(DateTimeOffset))
-            //        InputType = typeof(InputDateTimeEditor<DateTimeOffset>);
-            //    else
-            //        InputType = typeof(InputDateTimeEditor<DateTimeOffset?>);
-            //    return;
-            //}
+            if (_propertyType == typeof(TimeOnly) || _propertyType == typeof(TimeOnly?))
+            {
+                InputParameters.Add("Value", Value);
+                if (_propertyType == typeof(TimeOnly))
+                    InputParameters.Add("ValueChanged", EventCallback.Factory.Create<TimeOnly>(this, ValueChanged));
+                else
+                    InputParameters.Add("ValueChanged", EventCallback.Factory.Create<TimeOnly?>(this, ValueChanged));
+                InputParameters.Add("Immediate", _autoForm.Immediate);
+                InputParameters.Add("InputContainerStyle", _autoForm.InputContainerStyle);
+                var timeFormatAttrib = PropertyInfo?.GetCustomAttribute<TimeFormatAttribute>();
+                if (timeFormatAttrib != null)
+                    InputParameters.Add("TimeFormat", timeFormatAttrib.TimeFormat);
+                var orientationAttrib = PropertyInfo?.GetCustomAttribute<OrientationAttribute>();
+                if (orientationAttrib != null)
+                    InputParameters.Add("Orientation", orientationAttrib.Orientation);
+                if (PropertyInfo?.GetCustomAttribute<Hours24Attribute>() != null)
+                    InputParameters.Add("Hours24", true);
+                var minuteStepAttrib = PropertyInfo?.GetCustomAttribute<MinuteStepAttribute>();
+                if (minuteStepAttrib != null)
+                    InputParameters.Add("MinuteStep", minuteStepAttrib.MinuteStep);
+
+                InputType = typeof(TimePickerInput);
+                return;
+            }
 
             if (_propertyType == typeof(string))
             {
@@ -701,7 +735,7 @@ namespace ClearBlazor
             }
 
             InputType = typeof(TextInput);
-            InputParameters.Add("Label", _autoForm.HasLabelColumn ? string.Empty : DisplayName);
+            InputParameters.Add("Label", _autoForm.HasLabelColumn ? null : DisplayName);
             InputParameters.Add("IsReadOnly", IsReadOnly);
             var numRowsAttrib = PropertyInfo?.GetCustomAttribute<NumRowsAttribute>();
             if (numRowsAttrib != null)
@@ -714,7 +748,7 @@ namespace ClearBlazor
             //    InputParameters.Add("IsRequired", !requiredAttribute.AllowEmptyStrings);
             //}
             InputParameters.Add("Size", _autoForm.Size);
-            InputParameters.Add("TextEditFillMode", _autoForm.TextEditFillMode);
+            InputParameters.Add("InputContainerStyle", _autoForm.InputContainerStyle);
             InputParameters.Add("Immediate", _autoForm.Immediate);
             InputParameters.Add("Value", Value);
             InputParameters.Add("ValueChanged", EventCallback.Factory.Create<string>(this, ValueChanged));
@@ -755,14 +789,17 @@ namespace ClearBlazor
 
                     if (data != null)
                     {
-                        foreach (var item in Enum.GetValues(propertyType))
+                        Type t = propertyType;
+                        if (propertyType.IsGenericType)
+                            t = propertyType.GenericTypeArguments[0];
+                        foreach (var item in Enum.GetValues(t))
                             if (item != null)
                             {
                                 dynamic? o = Activator.CreateInstance(dataType);
                                 if (o != null)
                                 {
                                     o.Name = item.ToString();
-                                    o.Value = (dynamic)Convert.ChangeType(item, propertyType);
+                                    o.Value = (dynamic)Convert.ChangeType(item, t);
                                     data.Add(o);
                                 }
                             }
@@ -774,10 +811,10 @@ namespace ClearBlazor
         private void GetNumericEdit(Type t)
         {
             CheckPlaceholderAttribute();
-            InputParameters?.Add("Label", _autoForm.HasLabelColumn ? string.Empty : DisplayName);
+            InputParameters?.Add("Label", _autoForm.HasLabelColumn ? null : DisplayName);
             InputParameters?.Add("IsReadOnly", IsReadOnly);
             InputParameters?.Add("Size", _autoForm.Size);
-            InputParameters?.Add("TextEditFillMode", _autoForm.TextEditFillMode);
+            InputParameters?.Add("InputContainerStyle", _autoForm.InputContainerStyle);
             InputParameters?.Add("Immediate", _autoForm.Immediate);
             InputParameters?.Add("Value", Value);
             AddToolTipParameter();
@@ -798,6 +835,32 @@ namespace ClearBlazor
                 InputParameters?.Add("Placeholder", placeholder.Placeholder);
         }
 
+        public static bool IsNumberType(Type? type)
+        {
+            if (type == null) 
+                return false;
+
+            switch (Type.GetTypeCode(type))
+            {
+                case TypeCode.Byte:
+                case TypeCode.Decimal:
+                case TypeCode.Double:
+                case TypeCode.Int16:
+                case TypeCode.Int32:
+                case TypeCode.Int64:
+                case TypeCode.SByte:
+                case TypeCode.Single:
+                case TypeCode.UInt16:
+                case TypeCode.UInt32:
+                case TypeCode.UInt64:
+                    return true;
+                case TypeCode.Object:
+                    if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        return IsNumberType(Nullable.GetUnderlyingType(type)!);
+                    return false;
+            }
+            return false;
+        }
 
         private void AddToolTipParameter()
         {

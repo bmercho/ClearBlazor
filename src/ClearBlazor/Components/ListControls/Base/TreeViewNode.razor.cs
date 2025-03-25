@@ -134,6 +134,7 @@ namespace ClearBlazor
                 treeViewBase?.Refresh();
             }
             Refresh();
+            await Task.CompletedTask;
         }
 
         private void MakeVisible(TItem item)

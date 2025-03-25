@@ -74,7 +74,6 @@ namespace ClearBlazor
         private Color ThumbColor = ThemeManager.CurrentColorScheme.Primary;
         private int TrackHeight = 10;
         private double TrackWidth = 0;
-        private string TrackMargin = "5px";
         private string CornerRadius = "4";
         private int ThumbDiameter = 20;
         private string ThumbMargin = "0";
@@ -141,31 +140,26 @@ namespace ClearBlazor
                 case Size.VerySmall:
                     TrackHeight = 2;
                     CornerRadius = "1";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 10;
                     break;
                 case Size.Small:
                     TrackHeight = 6;
                     CornerRadius = "3";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 14;
                     break;
                 case Size.Normal:
                     TrackHeight = 10;
                     CornerRadius = "5";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 20;
                     break;
                 case Size.Large:
                     TrackHeight = 14;
                     CornerRadius = "7";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 24;
                     break;
                 case Size.VeryLarge:
                     TrackHeight = 18;
                     CornerRadius = "9";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 30;
                     break;
             }

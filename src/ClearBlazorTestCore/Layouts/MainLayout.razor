@@ -7,13 +7,6 @@
 @inherits LayoutComponentBase
 @inject NavigationManager NavManager
 
-@* <RootComponent>
-    <Grid Margin=50>
-                    <Icon Column=2 IconName="@Icons.Material.Filled.FmdBad"
-                          ToolTip="Tooltip" Color=@Color.Error />
-    </Grid>
-</RootComponent>
- *@  
 <RootComponent>
     <Grid Rows="auto,*">
         <AppBar Row="0" Padding="10">
@@ -87,7 +80,10 @@
                                 <ListBoxItem Text="Auto Form" HRef="/AutoForm" OnClicked=@Close />
                             </ListBoxItem>
                             <ListBoxItem Text="Spinner" HRef="/Spinner" OnClicked=@Close />
-                            <ListBoxItem Text="Logs" HRef="/Logs" OnClicked=@Close />
+                            @if(IsDebug())
+                            {
+                                <ListBoxItem Text="Logs" HRef="/Logs" OnClicked=@Close />
+                            }
                         </ListBoxItem>
                     </ListBox>
                 </ScrollViewer>
@@ -145,129 +141,12 @@
         NavManager.NavigateTo($"/{page}");
     }
 
-    private void CheckedChanged()
+    private bool IsDebug()
     {
-        StateHasChanged();
+#if DEBUG
+      return true;
+#else
+        return false;
+#endif
     }
-
-    public enum TestEnum
-    {
-        Enum1, Enum2, Enum3, Enum4
-    }
-
-    public TestEnum EnumValue { get; set; } = TestEnum.Enum2;
-
-
-    List<string> StringValues = new() { "Potato", "Apricot" };
-    List<double> DoubleValues = new() { 5.6, 4.0 };
-
-    public List<string> Values { get; set; } = new() { "String2", "String3" };
-
-    void Clicked()
-    {
-        StateHasChanged();
-    }
-
-
-    private List<TestViewItem> _testData = new();
-
-    private class TestViewItem : ListItem
-    {
-        public string Name { get; set; } = string.Empty;
-        public string IconName { get; set; } = string.Empty;
-
-        public override string ToString()
-        {
-            return Name;
-        }
-    }
-
-    private TestViewItem _selectedItem = null!;
-    private List<TestViewItem> _selectedItems = new();
-    private SelectionMode _selectionMode = SelectionMode.None;
-    private bool _allowSelectionToggle = false;
-    private bool _hoverHighlight = true;
-    private ListView<TestViewItem>? _list;
-    private bool _atEnd = false;
-    private bool _atStart = true;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        for (int i = 0; i < 10000; i++)
-        {
-            _testData?.Add(new TestViewItem { Name = $"Item # {i} sfsadfasd sadfsdafasdfa sadfsadfsafdsdaf", IconName = GetIconName(i) });
-        }
-    }
-
-    private string GetIconName(int i)
-    {
-        switch (i % 5)
-        {
-            case 0:
-                return Icons.Material.Filled.Add;
-            case 1:
-                return Icons.Material.Filled.AccessAlarm;
-            case 2:
-                return Icons.Material.Filled.Deck;
-            case 3:
-                return Icons.Material.Filled.Landscape;
-            case 4:
-                return Icons.Material.Filled.Airlines;
-        }
-        return Icons.Material.Filled.Add;
-    }
-
-    async Task OnGoto1000Start()
-    {
-        if (_list == null)
-            return;
-        await _list.GotoIndex(1000, Alignment.Start);
-    }
-
-    async Task OnGoto5000Center()
-    {
-        if (_list == null)
-            return;
-        await _list.GotoIndex(5000, Alignment.Center);
-    }
-
-    async Task OnGoto7000End()
-    {
-        if (_list == null)
-            return;
-        await _list.GotoIndex(7000, Alignment.End);
-    }
-
-    async Task OnGotoEnd()
-    {
-        if (_list == null)
-            return;
-        await _list.GotoEnd();
-    }
-
-    async Task OnGotoStart()
-    {
-        if (_list == null)
-            return;
-        await _list.GotoStart();
-    }
-
-    private async Task SelectionModeChanged()
-    {
-        if (_list == null)
-            return;
-        await _list.RemoveAllSelections();
-        StateHasChanged();
-    }
-
-    private async Task ClearSelections()
-    {
-        await _list.RemoveAllSelections();
-        StateHasChanged();
-    }
-
-    public string TextValue { get; set; } = "Testing 1 2 3";
-
 }

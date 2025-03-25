@@ -131,7 +131,7 @@ namespace ClearBlazor
         [Parameter]
         public int RowSpan { get; set; } = 1;
         /// <summary>
-        /// Applies to children of a <a href=GridPage>Grid</a>. Indicates how many columns of the grid that the child will occupy (starting at Column). 
+        /// Applies to children of a <a href="GridPage">Grid</a>. Indicates how many columns of the grid that the child will occupy (starting at Column). 
         /// </summary>
         [Parameter]
         public int ColumnSpan { get; set; } = 1;
@@ -139,7 +139,7 @@ namespace ClearBlazor
 
         // For DockPanel children
         /// <summary>
-        /// Applies to children of a <a href=GridPage>DockPanel</a>. 
+        /// Applies to children of a <a href="GridPage">DockPanel</a>. 
         /// Indicates how the component will dock in its parent.
         /// </summary>
         [Parameter]

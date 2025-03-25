@@ -187,6 +187,12 @@ namespace ClearBlazor
             }
         }
 
+        private string GetGradientStr()
+        {
+            return $"linear-gradient(to right, rgba({RValue},{GValue},{BValue},0), " +
+                   $"rgba({RValue},{GValue},{BValue},1)); ";
+        }
+
         private void UpdateColorSelectorBasedOnRgb()
         {
             var hueValue = (int)((HValue / 360.0) * 6.0 * 255.0);
@@ -440,7 +446,7 @@ namespace ClearBlazor
             var g = gx * yRatio;
             var b = bx * yRatio;
 
-            Color = new Color((byte)r, (byte)g, (byte)b, Color);
+            Color = new Color((byte)r, (byte)g, (byte)b, Color ?? new Color(0,0,0,255));
             hValue = Color.H;
             sValue = Color.S;
             lValue = Color.L;

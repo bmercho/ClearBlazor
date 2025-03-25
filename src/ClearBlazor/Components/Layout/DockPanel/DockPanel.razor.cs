@@ -5,7 +5,7 @@ namespace ClearBlazor
     /// <summary>
     /// A Dock Panel is used to dock child elements in the left, right, top, and bottom positions of the panel. 
     /// The position of child elements is determined by the Dock property of the respective child elements
-    /// If a child does not have a <a href=DockApi>Dock</a> property it uses the remaining available space of the panel.
+    /// If a child does not have a <a href="DockApi">Dock</a> property it uses the remaining available space of the panel.
     /// </summary>
     public partial class DockPanel : ClearComponentBase, IBackground
     {
@@ -16,7 +16,7 @@ namespace ClearBlazor
         public RenderFragment? ChildContent { get; set; } = null;
 
         /// <summary>
-        /// See <a href=IBackgroundApi>IBackground</a>
+        /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;

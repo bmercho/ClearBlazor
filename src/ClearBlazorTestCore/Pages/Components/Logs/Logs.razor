@@ -1,17 +1,16 @@
 ﻿@page "/Logs"
 
 @namespace ClearBlazorTest
-<Grid Margin=10 BorderThickness="1" CornerRadius="4">
-@*     <VirtualizedList Items=@Data ItemHeight=20>
+<Grid Margin=10 BorderThickness=1 CornerRadius=4>
+     <ListView Items=@Data RowHeight=20>
         <RowTemplate Context=item>
-            @item
+            @item.Message
         </RowTemplate>
-    </VirtualizedList>
- *@</Grid>
+    </ListView>
+</Grid>
 
 @code {
-    ScrollViewer ScrollViewer = null!;
-    List<string> Data = new List<string>();
+    List<LogItem> Data = new List<LogItem>();
 
     protected override void OnInitialized()
     {

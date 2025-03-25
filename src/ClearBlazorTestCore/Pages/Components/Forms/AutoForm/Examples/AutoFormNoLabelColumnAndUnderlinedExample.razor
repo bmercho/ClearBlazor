@@ -4,9 +4,9 @@
 
 <StackPanel Orientation=Orientation.Portrait Spacing="10">
     <Grid Margin="10" Width=600 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
-        <AutoForm @ref="form" HasLabelColumn=true LabelValueCols="*,3*" Margin=20 ShowLabels=false
+        <AutoForm @ref="form" HasLabelColumn=false LabelValueCols="*,3*" Margin=20 ShowLabels=true
                   ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Immediate=true
-                  InputContainerStyle=InputContainerStyle.Outlined Model=@TestModel />
+                  InputContainerStyle=InputContainerStyle.Underlined Model=@TestModel />
     </Grid>
     <Button HorizontalAlignment=Alignment.Start OnClicked=@(() => form.Validate())>Validate</Button>
     <Button HorizontalAlignment=Alignment.Start OnClicked=@Save>Save</Button>

@@ -26,7 +26,7 @@ namespace ClearBlazorTest
                 LocalTestTreeRowsFlat5000 = Data.TestData.GetTestTreeRowsFlat(LocalTestTreeRows5000);
                 LocalTestTreeRowsFlat100 = Data.TestData.GetTestTreeRowsFlat(LocalTestTreeRows100);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }

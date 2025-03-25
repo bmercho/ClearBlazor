@@ -5,20 +5,43 @@ using System.Reflection;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// AutoForm is a form component that dynamically generates fields based on a model's properties. It supports
+    /// various configurations like label columns and input styles.
+    /// </summary>
     public partial class AutoForm : Form
     {
+        /// <summary>
+        /// Indicates whether a label column is present. Defaults to false.
+        /// </summary>
         [Parameter]
         public bool HasLabelColumn { get; set; } = false;
 
+        /// <summary>
+        /// Defines the columns for label values in a string format, defaulting to '*,*'. This allows for flexible
+        /// column configuration.
+        /// </summary>
         [Parameter]
         public string LabelValueCols { get; set; } = "*,*";
 
+        /// <summary>
+        /// Defines the style of the input container, defaulting to 'Underlined'. It allows customization of the input's
+        /// appearance.
+        /// </summary>
         [Parameter]
-        public InputContainerStyle TextEditFillMode { get; set; } = InputContainerStyle.Underlined;
+        public InputContainerStyle InputContainerStyle { get; set; } = InputContainerStyle.Underlined;
 
+        /// <summary>
+        /// Defines the size of a component, with a default value of 'Normal'. 
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
+        /// <summary>
+        /// Indicates whether the input is immediate. ie Changes the Value as soon as input is received,
+        /// otherwise, Value is updated when the user presses Enter or the input loses focus.
+        /// Defaults to false.
+        /// </summary>
         [Parameter]
         public bool Immediate { get; set; } = false;
 
@@ -43,7 +66,7 @@ namespace ClearBlazor
 
         }
 
-        public TypographyBase GetLabelTypography()
+        private TypographyBase GetLabelTypography()
         {
             switch (Size)
             {
@@ -61,13 +84,13 @@ namespace ClearBlazor
             return ThemeManager.CurrentTheme.Typography.InputLabelNormal;
         }
 
-        public string GetMargin(AutoFormField field)
+        private string GetMargin(AutoFormField field)
         {
             var margin = 24 * (field.Depth - 1);// + 25;
             return $"10,0,0,{margin}";
         }
 
-        public int GetFieldIndex(AutoFormField field)
+        private int GetFieldIndex(AutoFormField field)
         {
             int index = 0;
             foreach (var f in Fields)
@@ -92,7 +115,7 @@ namespace ClearBlazor
         }
 
         // Recursively parse all the children of the given object
-        private async Task ParseChildren(AutoFormField? parent, object parentObj, int depth, bool readOnly)
+        private async Task ParseChildren(AutoFormField? parent, object? parentObj, int depth, bool readOnly)
         {
             if (parentObj == null)
                 return;
@@ -117,14 +140,17 @@ namespace ClearBlazor
                         {
                             object? v = prop.GetValue(parentObj, null);
 
-                            if (prop.PropertyType == typeof(string))// || prop.PropertyType == typeof(FontFamily) || prop.PropertyType == typeof(ColorContext))
+                            if (prop.PropertyType == typeof(string) || prop.PropertyType == typeof(Color))
                             {
                                 field = new AutoFormField(this, parent, ItemType.ClassItem, prop.Name,
                                                            GetDisplayName(prop, props, parentObj),
                                                            GetDescriptionAttribute(prop),
                                                            depth, prop, parentObj,
                                                            v, -1, readOnly || IsReadOnly(prop), false);
-                                AddField(parent, field);
+                                if (parent != null)
+                                    AddField(parent, field);
+                                if (v is Color)
+                                    continue;
                                 await ParseChildren(field, v, depth + 1, readOnly);
                             }
                             else
@@ -135,7 +161,8 @@ namespace ClearBlazor
                     }
                     else if (prop.PropertyType.IsValueType && !(parentObj is string))
                     {
-                        await ParseSimpleType(parent, parentObj, depth, readOnly, prop);
+                        if (parent != null)
+                            await ParseSimpleType(parent, parentObj, depth, readOnly, prop);
                     }
                 }
             }
@@ -152,7 +179,7 @@ namespace ClearBlazor
                 depth, prop, obj, v, -1,
                 readOnly || IsReadOnly(prop), false));
             int index = AddField(parent, field);
-            if (v is DateTime || v is Color)
+            if (v is DateOnly || v is TimeOnly || v is DateTime || v is Color)
                 return;
             await ParseChildren(Fields[index], v, depth + 1, readOnly);
         }
@@ -218,12 +245,16 @@ namespace ClearBlazor
                                           depth, prop, v, "(Collection)", -1,
                                           readOnly || IsReadOnly(prop),
                                           false);
-            int index = AddField(parent, field);
-            var parentPropInfo = Fields[index];
-
-            if (!tableView)
+            if (parent != null)
             {
-                await ParseListOrArrayItems(parentPropInfo, arr, depth + 1, readOnly, prop);
+                int index = AddField(parent, field);
+                var parentPropInfo = Fields[index];
+
+                if (!tableView)
+                {
+                    if (arr != null)
+                        await ParseListOrArrayItems(parentPropInfo, arr, depth + 1, readOnly, prop);
+                }
             }
         }
 
@@ -282,8 +313,8 @@ namespace ClearBlazor
             bool result = false;
             if (prop != null)
             {
-                var attribs = prop.GetCustomAttributes(true);
-                foreach (var attrib in attribs)
+                var attributes = prop.GetCustomAttributes(true);
+                foreach (var attrib in attributes)
                 {
                     var a = attrib as TableViewAttribute;
                     if (a != null)
@@ -370,7 +401,7 @@ namespace ClearBlazor
         }
 
         //Gets the group header property name for the given property
-        private string GetGroupHeader(object? element)
+        private string? GetGroupHeader(object? element)
         {
             string? result = null;
             if (element != null)
@@ -381,8 +412,8 @@ namespace ClearBlazor
 
                 foreach (var prop in props)
                 {
-                    var attribs = prop.GetCustomAttributes(true);
-                    foreach (var attrib in attribs)
+                    var attributes = prop.GetCustomAttributes(true);
+                    foreach (var attrib in attributes)
                     {
                         var a = attrib as GroupHeaderAttribute;
                         if (a != null)
@@ -402,11 +433,11 @@ namespace ClearBlazor
         }
 
         // Gets the display name for the property
-        private string? GetDisplayNameAttribute(PropertyInfo prop)
+        private string GetDisplayNameAttribute(PropertyInfo prop)
         {
             string? result = null;
-            var attribs = prop.GetCustomAttributes(true);
-            foreach (var attrib in attribs)
+            var attributes = prop.GetCustomAttributes(true);
+            foreach (var attrib in attributes)
             {
                 var a = attrib as DisplayNameAttribute;
                 if (a != null)
@@ -415,16 +446,16 @@ namespace ClearBlazor
                     break;
                 }
             }
-            return result;
+            return result ?? string.Empty;
 
         }
 
         // Gets the description for the property
-        private string? GetDescriptionAttribute(PropertyInfo prop)
+        private string GetDescriptionAttribute(PropertyInfo prop)
         {
             string? result = null;
-            object[]? attribs = prop.GetCustomAttributes(true);
-            foreach (var attrib in attribs)
+            object[]? attributes = prop.GetCustomAttributes(true);
+            foreach (var attrib in attributes)
             {
                 var a = attrib as DescriptionAttribute;
                 if (a != null)
@@ -433,7 +464,7 @@ namespace ClearBlazor
                     break;
                 }
             }
-            return result;
+            return result ?? string.Empty;
         }
 
         // Returns true if the property is Browsable
@@ -442,8 +473,8 @@ namespace ClearBlazor
             bool result = true;
             if (prop != null)
             {
-                var attribs = prop.GetCustomAttributes(true);
-                foreach (var attrib in attribs)
+                var attributes = prop.GetCustomAttributes(true);
+                foreach (var attrib in attributes)
                 {
                     var a = attrib as BrowsableAttribute;
                     if (a != null)
@@ -479,8 +510,8 @@ namespace ClearBlazor
             bool result = false;
             if (prop != null)
             {
-                var attribs = prop.GetCustomAttributes(true);
-                foreach (var attrib in attribs)
+                var attributes = prop.GetCustomAttributes(true);
+                foreach (var attrib in attributes)
                 {
                     var a = attrib as ReadOnlyAttribute;
                     if (a != null)

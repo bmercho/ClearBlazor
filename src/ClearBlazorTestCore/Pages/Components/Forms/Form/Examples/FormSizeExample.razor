@@ -4,7 +4,7 @@
 
 <StackPanel Orientation=Orientation.Portrait Spacing="10">
     <Grid Margin="10" Width=350 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
-        <Form @ref="form1" ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
+        <Form ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
             <StackPanel Orientation=Orientation.Portrait Spacing="10" Margin="10">
                 <TextInput Size=Size.Small Label="Name" @bind-Value="TextValue1" FieldName="TextValue1" Immediate="true" />
                 <NumericInput Size=Size.Small Label="Value" @bind-Value="IntValue1" FieldName="IntValue1" Immediate="true" />
@@ -14,7 +14,7 @@
     </Grid>
 
     <Grid Margin="10" Width=350 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
-        <Form @ref="form2" ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
+        <Form ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
             <StackPanel Orientation=Orientation.Portrait Spacing="10" Margin="10">
                 <TextInput Size=Size.Large Label="Name" @bind-Value="TextValue2" FieldName="TextValue2" Immediate="true" />
                 <NumericInput Size=Size.Large Label="Value" @bind-Value="IntValue2" FieldName="IntValue2" Immediate="true" />
@@ -36,8 +36,4 @@
     public string TextValue2 { get; set; } = string.Empty;
     public int IntValue2 { get; set; }
     public bool BoolValue2 { get; set; } = true;
-
-    Form form1;
-    Form form2;
-
 }
