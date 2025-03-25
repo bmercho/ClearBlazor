@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.22
+
+### Patch Changes
+
+- 45350fa: Delete ClearBlazorSkia
+
 ## 0.0.21
 
 ### Patch Changes

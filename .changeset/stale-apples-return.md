@@ -1,5 +1,0 @@
----
-"ClearBlazor": patch
----
-
-Delete ClearBlazorSkia
