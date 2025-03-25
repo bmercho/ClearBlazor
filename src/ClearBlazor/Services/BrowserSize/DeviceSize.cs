@@ -2,11 +2,10 @@
 {
     public enum DeviceSize
     {
-        ExtraSmall=0,
-        Small=600,
-        Medium=960,
-        Large=1280,
-        ExtraLarge=1920,
-        ExtraExtraLarge=2560
+        Compact=0,
+        Medium=600,
+        Expanded=840,
+        Large=1200,
+        ExtraLarge=1600,
     }
 }

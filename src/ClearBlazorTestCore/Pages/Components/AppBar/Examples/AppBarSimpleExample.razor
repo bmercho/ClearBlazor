@@ -1,11 +1,10 @@
 ﻿@namespace ClearBlazorTest
-<Grid CornerRadius="4" BorderThickness="0" BoxShadow="4" Margin=40>
-    <AppBar>
-        <IconButton Dock="Dock.Left" Icon="@Icons.Material.Filled.Menu" Color=Color.Light/>
-        <IconButton Dock="Dock.Right" Icon="@Icons.Material.Filled.Favorite" Color=Color.Light />
-        <IconButton Dock="Dock.Right" Icon="@Icons.Material.Filled.AddBox" Color=Color.Light />
+<Grid CornerRadius="4" BorderThickness="1" Margin=40>
+    <AppBar Name="AppBarTest">
+        <IconButton Dock="Dock.Left" Icon="@Icons.Material.Filled.Menu" LeadingIcon=true />
+        <IconButton Dock="Dock.Right" Icon="@Icons.Material.Filled.Favorite" LeadingIcon=false />
+        <IconButton Dock="Dock.Right" Icon="@Icons.Material.Filled.AddBox" LeadingIcon=false />
         <TextBlock Typo="Typo.H6" HorizontalAlignment="Alignment.Center" 
-                   Color=Color.Light
                    VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
     </AppBar>
 </Grid>

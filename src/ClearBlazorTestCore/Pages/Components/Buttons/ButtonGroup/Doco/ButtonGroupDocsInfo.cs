@@ -15,14 +15,13 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", ""),
-            new ApiComponentInfo("ButtonStyle", "<a href=TextEditFillModeApi>TextEditFillMode?</a>", "null", ""),
-            new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Landscape", ""),
-            new ApiComponentInfo("Color", "Color?", "null", ""),
-            new ApiComponentInfo("OutlineColor", "Color?", "null", ""),
-            new ApiComponentInfo("DisableBoxShadow", "bool", "false", ""),
-            new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", ""),
-            new ApiComponentInfo("IconLocation", "<a href=IconLocationApi>IconLocation</a>", "IconLocation.Start", ""),
+            new ApiComponentInfo("ChildContent", "RenderFragment?", "null", "The child content of this control.\r"),
+            new ApiComponentInfo("ButtonStyle", "<a href=ButtonStyleApi>ButtonStyle?</a>", "null", " The button style for all the buttons in the button group\r"),
+            new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Landscape", "Orientation of the button group\r"),
+            new ApiComponentInfo("Color", "Color?", "null", " The color used for all the buttons in the button group\r"),
+            new ApiComponentInfo("OutlineColor", "Color?", "ThemeManager.CurrentColorScheme.Outline", " The outline colour used by all the buttons in the button group\r"),
+            new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", " The button size used for all the buttons in the button group\r"),
+            new ApiComponentInfo("IconLocation", "<a href=IconLocationApi>IconLocation</a>", "IconLocation.Start", " The icon location used for all the buttons in the button group\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

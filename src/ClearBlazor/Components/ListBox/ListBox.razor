@@ -16,7 +16,8 @@
             {
                 @foreach (var item in ListData!)
                 {
-                    <SelectItem ContentAlignment=@ContentAlignment Value=@item.Value Text=@item.Name Icon=@item.Icon Avatar=@item.Avatar />
+                    <SelectItem ContentAlignment=@ContentAlignment Value=@item.Value 
+                                Text=@item.Name Icon=@item.Icon Avatar=@item.Avatar />
                 }
             }
         </StackPanel>

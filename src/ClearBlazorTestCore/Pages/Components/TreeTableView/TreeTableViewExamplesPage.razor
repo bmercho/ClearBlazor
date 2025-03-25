@@ -1,16 +1,14 @@
 ﻿@page "/TreeTableView"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new NonVirtualizedTreeDocsInfo())>
-    <CodeSnippet Title="Basic non virtualized tree (with 100 items)" 
+<DocsExamplesPage DocsInfo=@(new TreeTableViewDocsInfo())>
+    <CodeSnippet Title="Basic example (with 100 items)" 
                  Description="Note: The initial is delay is the test data being created"
-                 Code=@(typeof(TreeTableViewExample).Name)
-                 BackgroundColor="@Color.BackgroundGrey">
+                 Code=@(typeof(TreeTableViewExample).Name)>
         <TreeTableViewExample />
     </CodeSnippet>
-    <CodeSnippet Title="Virtualized tree (with 100000 items)" 
+    <CodeSnippet Title="Virtualized example (with 100000 items)" 
                  Description="Note: The initial is delay is the test data being created"
-                 Code=@(typeof(TreeTableViewVirtualizeExample).Name)
-                 BackgroundColor="@Color.BackgroundGrey">
+                 Code=@(typeof(TreeTableViewVirtualizeExample).Name)>
         <TreeTableViewVirtualizeExample />
     </CodeSnippet>
 </DocsExamplesPage>

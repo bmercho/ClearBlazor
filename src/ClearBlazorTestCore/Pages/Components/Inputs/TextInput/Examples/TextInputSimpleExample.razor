@@ -1,10 +1,10 @@
 ﻿@using System.ComponentModel.DataAnnotations
 
 @namespace ClearBlazorTest
-<TextInput Placeholder="None" TextEditFillMode="TextEditFillMode.None" @bind-Value="TextValue" />
-<TextInput Placeholder="Underlined" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="TextValue" />
-<TextInput Placeholder="Outlined" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" />
-<TextInput Placeholder="Filled" TextEditFillMode="TextEditFillMode.Filled" @bind-Value="TextValue" />
+<TextInput Placeholder="None" InputContainerStyle="InputContainerStyle.LabelOnly" @bind-Value="TextValue" />
+<TextInput Placeholder="Underlined" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" />
+<TextInput Placeholder="Outlined" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" />
+<TextInput Placeholder="Filled" InputContainerStyle="InputContainerStyle.Filled" @bind-Value="TextValue" />
 
 @code {
     public string TextValue { get; set; } = "Testing 1 2 3";

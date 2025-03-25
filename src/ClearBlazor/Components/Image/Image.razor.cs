@@ -1,34 +1,41 @@
 using Microsoft.AspNetCore.Components;
-using System.Text;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A control thats shows an image
+    /// </summary>
     public partial class Image : ClearComponentBase,IBackground
     {
+        /// <summary>
+        /// The source uri of the image
+        /// </summary>
         [Parameter]
         public string Source { get; set; } = string.Empty;
 
+        /// <summary>
+        /// The alternative string show if the source does not exist
+        /// </summary>
         [Parameter]
         public string Alternative { get; set; } = string.Empty;
 
+        /// <summary>
+        /// How the image is shown in regard to aspect ratio and stretching
+        /// </summary>
         [Parameter]
         public ImageStretch Stretch { get; set; } = ImageStretch.Uniform;
 
-        [Parameter]
-        public StretchDirection StretchDirection { get; set; } = StretchDirection.Both;
-
-        [Parameter]
-        public string ImageId { get; set; } = string.Empty;
-
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; }
+
         private string ImageStyle { get; set; } = string.Empty;
 
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
-            //if (string.IsNullOrEmpty(Source))
-            //    Source = "./AppData/Default.png";
         }
 
         protected override string UpdateStyle(string css)

@@ -39,12 +39,12 @@
                 @if (Clearable && StringValue?.Length > 0)
                 {
                     <IconButton Column=1 Icon="@Icons.Material.Filled.Close" 
-                                Size=@Size Color=@Color.Dark  OnClicked="ClearEntry" />
+                                Size=@Size OnClicked="ClearEntry" />
                 }
                 @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                 {
-                    <MaterialIcon Column=2 Icon="@Icons.Material.Filled.FmdBad" 
-                                  Size=@Size ToolTip=@ValidationMessage Color=@Color.Error />
+                    <Icon Column=2 IconName="@Icons.Material.Filled.FmdBad"
+                          Size=@Size ToolTip=@ValidationMessage Color=@Color.Error />
                 }
             </Grid>
             @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)

@@ -2,30 +2,53 @@ using global::Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
-    public partial class CheckBox<TItem> : InputBase,IBackground
+    /// <summary>
+    /// A checkbox component
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
+    public partial class CheckBox<TItem> : InputBase
     {
+        /// <summary>
+        /// The value of the checkbox
+        /// </summary>
         [Parameter]
         public TItem? Checked { get; set; }
 
+        /// <summary>
+        /// Event that is triggered when the checkbox is checked or unchecked
+        /// </summary>
         [Parameter]
         public EventCallback<TItem> CheckedChanged { get; set; }
 
+        /// <summary>
+        /// The location of the label
+        /// </summary>
         [Parameter]
         public LabelLocation LabelLocation { get; set; } = LabelLocation.End;
 
+        /// <summary>
+        /// The icon to display when the checkbox is checked
+        /// </summary>
         [Parameter]
         public string CheckedIcon { get; set; } = Icons.Material.Filled.CheckBox;
 
+        /// <summary>
+        /// The icon to display when the checkbox is unchecked
+        /// </summary>
         [Parameter]
         public string UncheckedIcon { get; set; } = Icons.Material.Filled.CheckBoxOutlineBlank;
 
+        /// <summary>
+        /// The icon to display when the checkbox is in an indeterminate state
+        /// </summary>
         [Parameter]
         public string IndeterminateIcon { get; set; } = Icons.Material.Filled.IndeterminateCheckBox;
 
+        /// <summary>
+        /// Indicates whether the checkbox can show an indeterminate state
+        /// </summary>
         [Parameter]
         public bool TriState { get; set; } = false;
-        [Parameter]
-        public Color? BackgroundColor { get; set; } = null;
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
@@ -71,7 +94,7 @@ namespace ClearBlazor
             object? value = Checked;
             if (Checked == null)
                 return IndeterminateIcon;
-            else if ((bool)value == true)
+            else if (value is bool && (bool)value == true)
                 return CheckedIcon;
             else
                 return UncheckedIcon;

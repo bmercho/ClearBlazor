@@ -5,17 +5,32 @@ using System.Reflection;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Represents a text input field
+    /// </summary>
     public partial class TextInput:ContainerInputBase<string>
     {
+        /// <summary>
+        /// When used in a form, indicates if the field is required
+        /// </summary>
         [Parameter]
         public bool Required { get; set; } = false;
 
+        /// <summary>
+        /// Specifies the maximum length of a value. It can be set to a nullable integer, allowing for no limit if null.
+        /// </summary>
         [Parameter]
         public int? MaxLength { get; set; } = null;
 
+        /// <summary>
+        /// Specifies the number of lines, allowing for a nullable integer value. Defaults to 1 if not set.
+        /// </summary>
         [Parameter]
         public int? Lines { get; set; } = 1;
 
+        /// <summary>
+        /// Indicates whether the input field is for a password. Defaults to false.
+        /// </summary>
         [Parameter]
         public bool IsPassword { get; set; } = false;
 
@@ -95,7 +110,7 @@ namespace ClearBlazor
             await TextInput.FocusAsync();
         }
 
-        public override async Task<bool> ValidateField()
+        internal override async Task<bool> ValidateField()
         {
             IsValid = true;
             ValidationErrorMessages.Clear();

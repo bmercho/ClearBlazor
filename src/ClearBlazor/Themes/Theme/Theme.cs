@@ -5,14 +5,14 @@
         public string ThemeName { get; set; }
 
         /// <summary>
-        /// Gets or sets the palette for the light theme.
+        /// Gets or sets the light color scheme.
         /// </summary>
-        public Palette PaletteLight { get; set; }
+        public IColorScheme LightColorScheme { get; set; }
 
         /// <summary>
-        /// Gets or sets the palette for the dark theme.
+        /// Gets or sets the dark color scheme.
         /// </summary>
-        public Palette PaletteDark { get; set; }
+        public IColorScheme DarkColorScheme { get; set; }
 
         public Typography Typography { get; set; }
 
@@ -29,47 +29,16 @@
         public virtual int ScrollbarThumbCornerRadius { get; set; } = 5;
 
         //
-
         public virtual int TextEntryDebounceInterval { get; set; } = 100;
 
-        ///// <summary>
-        ///// Gets or sets the shadow settings.
-        ///// </summary>
-        //public Shadow Shadows { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets the typography settings.
-        ///// </summary>
-        //public Typography Typography { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets the layout properties.
-        ///// </summary>
-        //public LayoutProperties LayoutProperties { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets the z-index values.
-        ///// </summary>
-        //public ZIndex ZIndex { get; set; }
-
-        ///// <summary>
-        ///// Gets or sets the pseudo CSS styles.
-        ///// </summary>
-        //public PseudoCss PseudoCss { get; set; }
 
         public Theme(string themeName)
         {
-            PaletteLight = new PaletteLight();
-            PaletteDark = new PaletteDark();
+            LightColorScheme = new LightColorScheme();
+            DarkColorScheme = new DarkColorScheme();
             Typography = new Typography();
             ThemeName = themeName;
-
-        //Shadows = new Shadow();
-        //Typography = new Typography();
-        //LayoutProperties = new LayoutProperties();
-        //ZIndex = new ZIndex();
-        //PseudoCss = new PseudoCss();
-    }
+        }
 
         public (int width, int height, int borderRadius, int thumbBorderWidth) GetScrollBarProperties()
         {

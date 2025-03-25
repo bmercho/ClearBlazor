@@ -1,12 +1,12 @@
 ﻿@page "/DrawingCanvas"
 @using ClearBlazorTest
 <DocsExamplesPage DocsInfo=@(new DrawingCanvasDocsInfo())>
-    <CodeSnippet Title="Html Canvas (click on canvas)" Code=@(typeof(CanvasSimpleExample).Name) BackgroundColor="@Color.BackgroundGrey">
+    <CodeSnippet Title="Html Canvas (click on canvas)" Code=@(typeof(CanvasSimpleExample).Name)>
         <WrapPanel ColumnSpacing="20" RowSpacing="20">
             <CanvasSimpleExample />
         </WrapPanel>
     </CodeSnippet>
-    <CodeSnippet Title="SkiaSharp (click on canvas)" Code=@(typeof(SkiaDrawingCanvasExample).Name) BackgroundColor="@Color.BackgroundGrey">
+    <CodeSnippet Title="SkiaSharp (click on canvas)" Code=@(typeof(SkiaDrawingCanvasExample).Name)>
         <WrapPanel ColumnSpacing="20" RowSpacing="20">
             <SkiaDrawingCanvasExample />
         </WrapPanel>

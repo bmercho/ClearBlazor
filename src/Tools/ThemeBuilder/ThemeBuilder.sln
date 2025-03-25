@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.35806.103
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemeBuilder", "ThemeBuilder\ThemeBuilder.csproj", "{295E2B4E-C5E9-4941-8F9A-521381B1F24F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClearBlazor", "..\..\ClearBlazor\ClearBlazor.csproj", "{10EBD4AC-0400-644E-EA70-3EAA4DC5C8C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bdziam.DynamicColor", "MaterialColorUtilities\Bdziam.DynamicColor.csproj", "{F1DED9B5-8620-4E8B-9622-3612FF72B2A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThemeBuilderConsole", "ThemeBuilderConsole\ThemeBuilderConsole.csproj", "{41069A77-AA74-4465-900D-EE5C21059710}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{295E2B4E-C5E9-4941-8F9A-521381B1F24F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{295E2B4E-C5E9-4941-8F9A-521381B1F24F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{295E2B4E-C5E9-4941-8F9A-521381B1F24F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{295E2B4E-C5E9-4941-8F9A-521381B1F24F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10EBD4AC-0400-644E-EA70-3EAA4DC5C8C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10EBD4AC-0400-644E-EA70-3EAA4DC5C8C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10EBD4AC-0400-644E-EA70-3EAA4DC5C8C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10EBD4AC-0400-644E-EA70-3EAA4DC5C8C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1DED9B5-8620-4E8B-9622-3612FF72B2A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1DED9B5-8620-4E8B-9622-3612FF72B2A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1DED9B5-8620-4E8B-9622-3612FF72B2A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1DED9B5-8620-4E8B-9622-3612FF72B2A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41069A77-AA74-4465-900D-EE5C21059710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41069A77-AA74-4465-900D-EE5C21059710}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41069A77-AA74-4465-900D-EE5C21059710}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41069A77-AA74-4465-900D-EE5C21059710}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {542E9E32-D8A7-40C9-A3D1-41EC4EC75893}
+	EndGlobalSection
+EndGlobal

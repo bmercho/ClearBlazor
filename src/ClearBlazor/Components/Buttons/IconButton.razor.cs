@@ -1,16 +1,34 @@
+using Microsoft.AspNetCore.Components;
 using System.Text;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A button that shows an icon and possibly text.
+    /// </summary>
     public partial class IconButton : Button
     {
+        /// <summary>
+        /// Used when the IconButton is inside an AppBar
+        /// Indicates if this icon is a leading icon. (otherwise its a trailing icon)
+        /// Leading and trailing icons get slightly different colors.
+        /// </summary>
+        [Parameter]
+        public bool LeadingIcon { get; set; } = true;
+
         protected Size IconSize { get; set; }
+
+        protected override void OnInitialized()
+        {
+            Shape = ContainerShape.Circle;
+            base.OnInitialized();
+        }
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
             
             if (ButtonStyle == null)
-                ButtonStyle = TextEditFillMode.None;
+                StyleOverride = ClearBlazor.ButtonStyle.LabelOnly;
         }
 
         protected override string GetBorderRadius()
@@ -21,7 +39,9 @@ namespace ClearBlazor
                     return "border-radius:50%; ";
                 case ContainerShape.Square:
                     return "";
-                case ContainerShape.SquareRounded:
+                case ContainerShape.Rounded:
+                    return "border-radius:4px; ";
+                case ContainerShape.FullyRounded:
                     return "border-radius:4px; ";
             }
             return "";

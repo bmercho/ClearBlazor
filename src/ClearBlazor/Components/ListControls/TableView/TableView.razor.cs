@@ -257,6 +257,10 @@ namespace ClearBlazor
             }
         }
 
+        /// <summary>
+        /// Scrolls the content by a given amount.
+        /// </summary>
+        /// <param name="value">Specifies the number of pixels to scroll the content vertically.</param>
         public async Task Scroll(int value)
         {
             var scrollTop = await JSRuntime.InvokeAsync<double>("window.scrollbar.GetScrollTop", _scrollViewer.Id);
@@ -549,10 +553,8 @@ namespace ClearBlazor
                                           $" scrollState.ScrollHeight:{scrollState.ScrollHeight}");
                         if (Math.Ceiling(scrollState.ClientHeight + scrollState.ScrollTop) >= scrollState.ScrollHeight)
                         {
-                            Console.WriteLine($"A************");
                             if (scrollState.ScrollHeight > _pageOffsets[_pageOffsets.Count - 1])
                             {
-                                Console.WriteLine($"B************");
                                 // If only one page loaded, now that we know the offset of that page, load the second page.
                                 // From now on two pages will always be loaded.
                                 if (_pageOffsets.Count == 1)
@@ -574,7 +576,7 @@ namespace ClearBlazor
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -631,7 +633,7 @@ namespace ClearBlazor
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -720,7 +722,7 @@ namespace ClearBlazor
                 }
                 return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -793,7 +795,10 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            return css + $"display: grid; ";
+            css += $"display: grid; ";
+            if (BackgroundColor == null)
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}; ";
+            return css;
         }
 
         private string GetTransformStyle()
@@ -869,12 +874,12 @@ namespace ClearBlazor
                     return $"display:grid; z-index:1; width:1px; " +
                            $"border-width:0 0 0 1px; border-style:solid; " +
                            $"grid-area: 1 / {column} / span {_items.Count + 1} / span 1; " +
-                           $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                           $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
                 case VirtualizeMode.Virtualize:
                     return $"display:grid; z-index:1;width:1px; " +
                            $"border-width:0 0 0 1px; border-style:solid; " +
                            $"grid-area: 2 / {column} / span {_takeItems - 1} / span 1; " +
-                           $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                           $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             }
             return string.Empty;
         }

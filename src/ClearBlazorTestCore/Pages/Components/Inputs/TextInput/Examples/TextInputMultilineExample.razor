@@ -1,8 +1,8 @@
 ﻿@namespace ClearBlazorTest
-<TextInput Label="None" TextEditFillMode="TextEditFillMode.None" @bind-Value="Value" Lines="5" TextWrapping="TextWrap.Wrap" />
-<TextInput Label="Underlined" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="Value" Lines="10" TextWrapping="TextWrap.Wrap" />
-<TextInput Label="Outlined" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="Value" Lines="2" TextWrapping="TextWrap.Wrap" />
+<TextInput Label="None" InputContainerStyle="InputContainerStyle.LabelOnly" @bind-Value="Value" Lines="5" TextWrapping="TextWrap.Wrap" />
+<TextInput Label="Underlined" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="Value" Lines="10" TextWrapping="TextWrap.Wrap" />
+<TextInput Label="Outlined" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="Value" Lines="2" TextWrapping="TextWrap.Wrap" />
 
 @code {
-    public string Value { get; set; }
+    public string Value { get; set; } = string.Empty;
 }

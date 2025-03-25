@@ -2,16 +2,16 @@
 @using System.Globalization
 
 @namespace ClearBlazorTest
-<DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date1 StartYear=1800 EndYear=3000/>
-<TextBlock>@Date1</TextBlock>
+<StackPanel Spacing=20>
+    <StackPanel Orientation=Orientation.Landscape Spacing=20>
+        <DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date1 FirstYear=1800 LastYear=3000 />
+        <DatePicker Orientation=Orientation.Landscape BorderThickness=1 CornerRadius=4
+                    @bind-Date=Date1 FirstYear=1800 LastYear=3000 />
+    </StackPanel>
+    <TextBlock>@Date1</TextBlock>
+</StackPanel>
 
-@* <ScrollViewer HorizontalScrollMode=ScrollMode.Auto>
-    <DatePicker Margin="0,0,10,0" BorderThickness=1 CornerRadius=4 Orientation=Orientation.Landscape @bind-Date=Date2 />
-</ScrollViewer>
-<TextBlock>@Date2</TextBlock>
-
- *@
- @code {
+@code {
     DateOnly? Date1 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(5));
     DateOnly? Date2 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
 }

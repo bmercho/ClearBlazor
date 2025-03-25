@@ -1,27 +1,54 @@
 using Microsoft.AspNetCore.Components;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Base class for all input components
+    /// </summary>
     public abstract class InputBase: ClearComponentBase
     {
+        /// <summary>
+        /// The label of the input
+        /// </summary>
         [Parameter]
         public string? Label { get; set; } = null;
+
+        /// <summary>
+        /// The name of the field in the model
+        /// </summary>
         [Parameter]
         public string FieldName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// The tooltip of the input    
+        /// </summary>
         [Parameter]
         public string ToolTip { get; set; } = "";
 
+        /// <summary>
+        /// The color of the input
+        /// </summary>
         [Parameter]
-        public Color? Color { get; set; } = null;
+        public Color? Color { get; set; }
 
+        /// <summary>
+        /// The size of the input
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
+        /// <summary>
+        /// Indicates whether the input is disabled
+        /// </summary>
         [Parameter]
         public bool IsDisabled { get; set; } = false;
 
+        /// <summary>
+        /// Indicates whether the input is read only
+        /// </summary>
         [Parameter]
         public bool IsReadOnly { get; set; } = false;
 
@@ -41,12 +68,14 @@ namespace ClearBlazor
             if (ParentForm == null)
                 return;
 
+            Label = GetLabel();
+
             ParentForm.AddPage(this);
 
             ValidationErrorLocation = ParentForm.ValidationErrorLocation;
         }
 
-        public virtual async Task<bool> ValidateField()
+        internal virtual async Task<bool> ValidateField()
         {
             ValidationErrorMessages.Clear();
             IsValid = true;
@@ -81,15 +110,28 @@ namespace ClearBlazor
             return (!attrib.AllowEmptyStrings, attrib.ErrorMessage);
         }
 
+        protected string? GetLabel()
+        {
+            if (Label != null)
+                return Label;
+
+            if (ParentForm == null || ParentForm.Model == null || !ParentForm.ShowLabels)
+                return Label;
+
+            var prop = ParentForm.Model.GetType().GetProperty(FieldName);
+            if (prop == null)
+                return FieldName;
+            var attrib = prop.GetCustomAttribute<DisplayNameAttribute>(true);
+            if (attrib == null)
+                return prop.Name;
+            return attrib.DisplayName;
+        }
+
         protected string GetLabelStyle()
         {
             string css = string.Empty;
-            if (IsDisabled)
-                css += $"color: {ThemeManager.CurrentPalette.BackgroundDisabled.Value}; ";
-            else if (!IsValid)
+            if (!IsValid)
                 css += $"color: {Color.Error.Value}; ";
-            //else if (Color != null)
-            //    css += $"color: {Color.Value}; ";
 
             TypographyBase typo = ThemeManager.CurrentTheme.Typography.InputLabelNormal;
             switch (Size)

@@ -1,8 +1,8 @@
 ﻿@namespace ClearBlazorTest
-<NumericInput Label="None" TextEditFillMode="TextEditFillMode.None" @bind-Value="IntValue" />
-<NumericInput Label="Underlined" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="IntValue" />
-<NumericInput Label="Outlined" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="IntValue" />
-<NumericInput Label="Filled" TextEditFillMode="TextEditFillMode.Filled" @bind-Value="IntValue" />
+<NumericInput Label="None" InputContainerStyle="InputContainerStyle.LabelOnly" @bind-Value="IntValue" />
+<NumericInput Label="Underlined" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="IntValue" />
+<NumericInput Label="Outlined" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="IntValue" />
+<NumericInput Label="Filled" InputContainerStyle="InputContainerStyle.Filled" @bind-Value="IntValue" />
 
 @code {
     public int IntValue { get; set; }

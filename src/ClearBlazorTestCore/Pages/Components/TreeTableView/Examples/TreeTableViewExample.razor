@@ -24,7 +24,7 @@
                        Items=@_localTreeData>
             <NodeTemplate Context=node>
                 <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
-                    <MaterialIcon Icon=@node.IconName Color=Color.Custom(Colors.Yellow.Darken1) />
+                    <Icon IconName=@node.IconName Color=Color.Secondary />
                     <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
                         @node.NodeId
                     </TextBlock>
@@ -63,13 +63,13 @@
         <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
             <Button OnClicked=@CollapseAll>Collapse all</Button>
             <Button OnClicked=@ExpandAll>Expand all</Button>
-            <Button OnClicked=@Up1>Scroll +1</Button>
+@*             <Button OnClicked=@Up1>Scroll +1</Button>
             <Button OnClicked=@Up5>Scroll +5</Button>
             <Button OnClicked=@Up10>Scroll +10</Button>
             <Button OnClicked=@Down1>Scroll -1</Button>
             <Button OnClicked=@Down5>Scroll -5</Button>
             <Button OnClicked=@Down10>Scroll -10</Button>
-            @*         <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
+          <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
         <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
     <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
     <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
@@ -192,7 +192,5 @@
     {
         await _tree.RemoveAllSelections();
     }
-}
-
 }
 

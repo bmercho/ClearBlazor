@@ -3,35 +3,71 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Base class for all container input components   
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
     public abstract class ContainerInputBase<TItem>: InputBase
     {
+        /// <summary>
+        /// The value of the input
+        /// </summary>
         [Parameter]
         public TItem? Value { get; set; } = default;
 
+        /// <summary>
+        /// Event callback when the value changes
+        /// </summary>
         [Parameter]
         public EventCallback<TItem> ValueChanged { get; set; }
 
+        /// <summary>
+        /// Indicates whether the input is immediate. ie Changes the Value as soon as input is received,
+        /// otherwise, Value is updated when the user presses Enter or the input loses focus.
+        /// Defaults to false.
+        /// </summary>
         [Parameter]
         public bool Immediate { get; set; } = false;
 
+        /// <summary>
+        /// The fill mode of the text edit
+        /// </summary>
         [Parameter]
-        public TextEditFillMode TextEditFillMode { get; set; } = TextEditFillMode.Outline;
+        public InputContainerStyle InputContainerStyle { get; set; } = InputContainerStyle.Outlined;
 
+        /// <summary>
+        /// The text wrapping of the text edit
+        /// </summary>
         [Parameter]
         public TextWrap TextWrapping { get; set; } = TextWrap.NoWrap;
 
+        /// <summary>
+        /// The text trimming of the text edit
+        /// </summary>
         [Parameter]
         public TextTrimming TextTrimming { get; set; } = TextTrimming.None;
 
+        /// <summary>
+        /// Indicates whether text selection is enabled
+        /// </summary>
         [Parameter]
         public bool IsTextSelectionEnabled { get; set; } = false;
 
+        /// <summary>
+        /// The placeholder of the input    
+        /// </summary>
         [Parameter]
         public string Placeholder { get; set; } = "";
 
+        /// <summary>
+        /// Indicates whether the input is clearable via a clear button
+        /// </summary>
         [Parameter]
         public bool Clearable { get; set; } = false;
 
+        /// <summary>
+        /// The debounce interval in milliseconds. Defaults to null (effectively 0).
+        /// </summary>
         [Parameter]
         public int? DebounceInterval { get; set; } = null;
 
@@ -62,23 +98,20 @@ namespace ClearBlazor
                 _debounceInterval = (int)DebounceInterval;
         }
 
-        protected Color GetBackgroundColor()
+        protected Color? GetBackgroundColor()
         {
-            switch (TextEditFillMode)
+            switch (InputContainerStyle)
             {
-                case TextEditFillMode.None:
-                    return Color.Background;
-                case TextEditFillMode.Underline:
-                    return Color.Background;
-                case TextEditFillMode.Filled:
-                    if (MouseOver && !IsDisabled)
-                        return Color.BackgroundGrey.Darken(0.2);
-                    else
-                        return Color.BackgroundGrey.Darken(0.1);
-                case TextEditFillMode.Outline:
-                    return Color.Background;
+                case InputContainerStyle.LabelOnly:
+                case InputContainerStyle.Underlined:
+                case InputContainerStyle.Outlined:
+                    return null;
+                case InputContainerStyle.Filled:
+                    if (IsDisabled)
+                        return ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.12);
+                    return ThemeManager.CurrentColorScheme.SurfaceContainerHighest;
                 default:
-                    return Color.Background;
+                    return null;
             }
         }
 
@@ -116,81 +149,64 @@ namespace ClearBlazor
 
         protected string GetBorderThickness()
         {
-            switch (TextEditFillMode)
+            switch (InputContainerStyle)
             {
-                case TextEditFillMode.None:
+                case InputContainerStyle.LabelOnly:
                     return "0";
-                case TextEditFillMode.Underline:
+                case InputContainerStyle.Underlined:
                     if (HasFocus && !IsDisabled)
                         return "0,0,2,0";
                     else
                         return "0,0,1,0";
                 default:
-                case TextEditFillMode.Filled:
+                case InputContainerStyle.Outlined:
                     if (HasFocus && !IsDisabled)
                         return "2";
                     return "1";
-                case TextEditFillMode.Outline:
-                    if (HasFocus && !IsDisabled)
-                        return "2";
-                    return "1";
+                case InputContainerStyle.Filled:
+                    return "0";
             }
         }
-        protected Color GetBorderColor()
+        protected Color? GetBorderColor()
         {
             if (IsDisabled)
             {
-                if (TextEditFillMode == TextEditFillMode.None)
-                    return Color.Transparent;
-                return Color.BackgroundGrey.Darken(0.3);
+                if (InputContainerStyle == InputContainerStyle.LabelOnly)
+                    return null;
+                return ThemeManager.CurrentColorScheme.OnSurface;
             }
 
-            switch (TextEditFillMode)
+            switch (InputContainerStyle)
             {
-                case TextEditFillMode.None:
-                    return Color.Transparent;
-                case TextEditFillMode.Underline:
-                    if (!IsValid)
-                        return Color.Error;
-                    else if (HasFocus)
-                        return Color.Primary;
-                    else if (MouseOver)
-                        return Color.BackgroundGrey.Darken(0.5);
-                    else
-                        return Color.BackgroundGrey.Darken(0.3);
-                case TextEditFillMode.Filled:
+                case InputContainerStyle.LabelOnly:
+                    return null;
+                case InputContainerStyle.Underlined:
+                case InputContainerStyle.Outlined:
                 default:
                     if (!IsValid)
                         return Color.Error;
                     else if (HasFocus)
                         return Color.Primary;
                     else if (MouseOver)
-                        return Color.BackgroundGrey.Darken(0.5);
+                        return ThemeManager.CurrentColorScheme.Outline.Darken(0.1);
                     else
-                        return Color.BackgroundGrey.Darken(0.3);
-                case TextEditFillMode.Outline:
-                    if (!IsValid)
-                        return Color.Error;
-                    else if (HasFocus)
-                        return Color.Primary;
-                    else if (MouseOver)
-                        return Color.BackgroundGrey.Darken(0.5);
-                    else
-                        return Color.BackgroundGrey.Darken(0.3);
+                        return ThemeManager.CurrentColorScheme.Outline;
+                case InputContainerStyle.Filled:
+                    return null;
             }
         }
 
         protected string GetCornerRadius()
         {
-            switch (TextEditFillMode)
+            switch (InputContainerStyle)
             {
-                case TextEditFillMode.None:
+                case InputContainerStyle.LabelOnly:
                     return "0";
-                case TextEditFillMode.Underline:
+                case InputContainerStyle.Underlined:
                     return "0";
-                case TextEditFillMode.Filled:
+                case InputContainerStyle.Filled:
                     return "4";
-                case TextEditFillMode.Outline:
+                case InputContainerStyle.Outlined:
                     return "4";
                 default:
                     return "4";
@@ -201,11 +217,17 @@ namespace ClearBlazor
         {
             string css = string.Empty;
             if (IsDisabled)
-                css += $"color: {ThemeManager.CurrentPalette.BackgroundDisabled.Value}; ";
+                css += $"color: {ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.12).Value}; ";
             else if (!IsValid)
                 css += $"color: {Color.Error.Value}; ";
-            else if (Color != null)
-                css += $"color: {Color.Value}; ";
+            else
+            {
+                var color = GetBackgroundColor();
+                if (color == null)
+                    css += $"color: {ThemeManager.CurrentColorScheme.OnSurfaceVariant.Value}; ";
+                else
+                    css += $"color: {Color.GetAssocTextColor(color).Value}; ";
+            }
 
             TypographyBase typo = ThemeManager.CurrentTheme.Typography.InputNormal;
             switch (Size)
@@ -242,12 +264,11 @@ namespace ClearBlazor
             if (!IsTextSelectionEnabled)
                 css += "user-select: none; -ms-user-select: none; cursor: default; ";
 
-            css += "border:0; background:{transparent}; outline:none; ";
+            css += "border:0; background-color:transparent; outline:none; ";
 
             css += $"padding: {GetPadding()};";
             return css;
         }
-
 
         protected string GetPadding()
         {
@@ -256,47 +277,47 @@ namespace ClearBlazor
                 case Size.VerySmall:
                     if (HasFocus && !IsDisabled)
                     {
-                        if (TextEditFillMode == TextEditFillMode.Underline)
-                            return "2px 2px 2px 1px";
-                        else if (TextEditFillMode == TextEditFillMode.Outline || TextEditFillMode == TextEditFillMode.Filled)
-                            return "2px 2px 2px 1px";
+                        if (InputContainerStyle == InputContainerStyle.Underlined)
+                            return "2px 2px 1px 2px";
+                        else if (InputContainerStyle == InputContainerStyle.Outlined)
+                            return "1px 2px 2px 1px";
                     }
-                    return "4px";
+                    return "2px";
                 case Size.Small:
                     if (HasFocus && !IsDisabled)
                     {
-                        if (TextEditFillMode == TextEditFillMode.Underline)
-                            return "4px 4px 4px 3px";
-                        else if (TextEditFillMode == TextEditFillMode.Outline || TextEditFillMode == TextEditFillMode.Filled)
-                            return "4px 4px 4px 2px";
+                        if (InputContainerStyle == InputContainerStyle.Underlined)
+                            return "4px 4px 3px 4px";
+                        else if (InputContainerStyle == InputContainerStyle.Outlined)
+                            return "3px 4px 4px 3px";
                     }
                     return "4px";
                 case Size.Normal:
                 default:
                     if (HasFocus && !IsDisabled)
                     {
-                        if (TextEditFillMode == TextEditFillMode.Underline)
-                            return "6px 6px 6px 5px";
-                        else if (TextEditFillMode == TextEditFillMode.Outline || TextEditFillMode == TextEditFillMode.Filled)
-                            return "6px 6px 6px 4px";
+                        if (InputContainerStyle == InputContainerStyle.Underlined)
+                            return "6px 6px 5px 6px";
+                        else if (InputContainerStyle == InputContainerStyle.Outlined)
+                            return "5px 6px 6px 5px";
                     }
                     return "6px";
                 case Size.Large:
                     if (HasFocus && !IsDisabled)
                     {
-                        if (TextEditFillMode == TextEditFillMode.Underline)
-                            return "8px 8px 8px 7px";
-                        else if (TextEditFillMode == TextEditFillMode.Outline || TextEditFillMode == TextEditFillMode.Filled)
-                            return "8px 8px 8px 6px";
+                        if (InputContainerStyle == InputContainerStyle.Underlined)
+                            return "8px 8px 7px 8px";
+                        else if (InputContainerStyle == InputContainerStyle.Outlined)
+                            return "7px 8px 8px 7px";
                     }
                     return "8px";
                 case Size.VeryLarge:
                     if (HasFocus && !IsDisabled)
                     {
-                        if (TextEditFillMode == TextEditFillMode.Underline)
-                            return "10px 10px 10px 9px";
-                        else if (TextEditFillMode == TextEditFillMode.Outline || TextEditFillMode == TextEditFillMode.Filled)
-                            return "10px 10px 10px 8px";
+                        if (InputContainerStyle == InputContainerStyle.Underlined)
+                            return "10px 10px 9px 10px";
+                        else if (InputContainerStyle == InputContainerStyle.Outlined)
+                            return "9px 10px 10px 9px";
                     }
                     return "10px";
             }
@@ -308,7 +329,7 @@ namespace ClearBlazor
             if (ToolTipElement == null)
                 await Task.CompletedTask;
             else
-                await ToolTipElement.ShowToolTip();
+                ToolTipElement.ShowToolTip();
             StateHasChanged();
         }
 
@@ -324,12 +345,14 @@ namespace ClearBlazor
         {
             HasFocus = true;
             await Task.CompletedTask;
+            StateHasChanged();
         }
 
         protected async Task OnFocusOut(FocusEventArgs e)
         {
             HasFocus = false;
             await ValidateField();
+            StateHasChanged();
         }
     }
 }

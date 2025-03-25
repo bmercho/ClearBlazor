@@ -5,23 +5,46 @@ using System.Numerics;
 
 namespace ClearBlazor
 {
-    public partial class Slider<TItem> : InputBase, IBackgroundGradient where TItem : struct, INumber<TItem>
+    /// <summary>
+    /// A slider component that allows users to select a value within a specified range using a thumb control.
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
+    public partial class Slider<TItem> : InputBase where TItem : struct, INumber<TItem>
     {
+        /// <summary>
+        /// Represents an optional value of type TItem. It can be set to null or a default value.
+        /// </summary>
         [Parameter]
         public TItem? Value { get; set; } = default;
 
+        /// <summary>
+        /// Represents a callback that is invoked when the value changes. It allows for handling updates to the value in
+        /// a component.
+        /// </summary>
         [Parameter]
         public EventCallback<TItem> ValueChanged { get; set; }
 
+        /// <summary>
+        /// Defines a minimum value of type TItem, initialized to TItem.Zero.
+        /// </summary>
         [Parameter]
         public TItem Min { get; set; } = TItem.Zero;
 
+        /// <summary>
+        /// Defines a maximum value of type TItem, initialized to a truncating value of 100. 
+        /// </summary>
         [Parameter]
         public TItem Max { get; set; } = TItem.CreateTruncating(100);
 
+        /// <summary>
+        /// Represents a step value of type TItem, initialized to a truncating value of 1. It can be nullable.
+        /// </summary>
         [Parameter]
         public TItem? Step { get; set; } = TItem.CreateTruncating(1);
 
+        /// <summary>
+        /// Indicates whether to track the background contrast. Defaults to false.
+        /// </summary>
         [Parameter]
         public bool ContrastTrackBackground { get; set; } = false;
 
@@ -46,12 +69,11 @@ namespace ClearBlazor
         [Parameter]
         public string? BackgroundGradient2 { get; set; } = null;
 
-        private Color BackgroundTrackColor = ThemeManager.CurrentPalette.BackgroundDisabled;
-        private Color TrackColor = ThemeManager.CurrentPalette.Primary.Lighten(.3);
-        private Color ThumbColor = ThemeManager.CurrentPalette.Primary;
+        private Color BackgroundTrackColor = ThemeManager.CurrentColorScheme.OutlineVariant;
+        private Color TrackColor = ThemeManager.CurrentColorScheme.Primary.Lighten(.3);
+        private Color ThumbColor = ThemeManager.CurrentColorScheme.Primary;
         private int TrackHeight = 10;
         private double TrackWidth = 0;
-        private string TrackMargin = "5px";
         private string CornerRadius = "4";
         private int ThumbDiameter = 20;
         private string ThumbMargin = "0";
@@ -67,7 +89,6 @@ namespace ClearBlazor
         private double StepDouble = 0;
         private TItem? CurrentValue = default;
         private bool MouseDown = false;
-        private double Offset = 0;
         private string ValueLabel = string.Empty;
         private bool Initialising = true;
 
@@ -90,17 +111,28 @@ namespace ClearBlazor
 
             if (IsDisabled)
             {
-                ThumbColor = ThemeManager.CurrentPalette.GrayLight;
-                TrackColor = ThemeManager.CurrentPalette.BackgroundDisabled;
+                ThumbColor = ThemeManager.CurrentColorScheme.OutlineVariant;
+                TrackColor = ThemeManager.CurrentColorScheme.OutlineVariant;
 
             }
             else if (Color != null)
             {
                 ThumbColor = Color;
-                TrackColor = Color.Lighten(.3);
+                if (ThemeManager.IsDarkMode)
+                    TrackColor = Color.Darken(.6);
+                else
+                    TrackColor = Color.Lighten(.3);
+            }
+            else
+            {
+                if (ThemeManager.IsDarkMode)
+                    TrackColor = ThemeManager.CurrentColorScheme.Primary.Darken(.6);
+                else
+                    TrackColor = ThemeManager.CurrentColorScheme.Primary.Lighten(.3);
+                ThumbColor = ThemeManager.CurrentColorScheme.Primary;
             }
             if (ContrastTrackBackground)
-                BackgroundTrackColor = ThemeManager.CurrentPalette.BackgroundDisabled;
+                BackgroundTrackColor = ThemeManager.CurrentColorScheme.OutlineVariant;
             else
                 BackgroundTrackColor = TrackColor;
             switch (Size)
@@ -108,31 +140,26 @@ namespace ClearBlazor
                 case Size.VerySmall:
                     TrackHeight = 2;
                     CornerRadius = "1";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 10;
                     break;
                 case Size.Small:
                     TrackHeight = 6;
                     CornerRadius = "3";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 14;
                     break;
                 case Size.Normal:
                     TrackHeight = 10;
                     CornerRadius = "5";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 20;
                     break;
                 case Size.Large:
                     TrackHeight = 14;
                     CornerRadius = "7";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 24;
                     break;
                 case Size.VeryLarge:
                     TrackHeight = 18;
                     CornerRadius = "9";
-                    TrackMargin = "0 5px 0 5px";
                     ThumbDiameter = 30;
                     break;
             }
@@ -303,7 +330,6 @@ namespace ClearBlazor
             await JSRuntime.InvokeVoidAsync("CaptureMouse", ThumbElementId, 1);
 
             MouseDown = true;
-            Offset = e.ClientX;
             DropdownOpen = true;
             StateHasChanged();
         }

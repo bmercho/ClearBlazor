@@ -4,14 +4,56 @@ using Microsoft.JSInterop;
 
 namespace ClearBlazor
 {
-    public partial class ColorPicker : ClearComponentBase, IBackground
+    /// <summary>
+    /// A control for selecting a color.
+    /// </summary>
+    public partial class ColorPicker : ClearComponentBase, IBorder, IBackground, IBoxShadow
     {
-        [Parameter]
-        public Color? BackgroundColor { get; set; } = null;
-
+        /// <summary>
+        /// The initial selected color
+        /// </summary>
         [Parameter]
         public Color? Color { get; set; } = null;
 
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; } = ThemeManager.CurrentColorScheme.SurfaceContainerHighest;
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? BorderThickness { get; set; }
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public Color? BorderColor { get; set; }
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public BorderStyle? BorderStyle { get; set; }
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
+        [Parameter]
+        public string? CornerRadius { get; set; }
+
+        /// <summary>
+        /// See <a href="IBoxShadowApi">IBoxShadow</a>
+        /// </summary>
+        [Parameter]
+        public int? BoxShadow { get; set; }
+
+        /// <summary>
+        /// An event raised when the selected color is changed
+        /// </summary>
         [Parameter]
         public EventCallback<Color> ColorChanged { get; set; }
 
@@ -38,7 +80,7 @@ namespace ClearBlazor
         private double DragMarginTop = 0;
 
 
-        public double HValue
+        private double HValue
         {
             get { return hValue; }
             set
@@ -47,7 +89,7 @@ namespace ClearBlazor
                 GetNewColor(true);
             }
         }
-        public double SValue
+        private double SValue
         {
             get { return sValue; }
             set
@@ -56,7 +98,7 @@ namespace ClearBlazor
                 GetNewColor(true);
             }
         }
-        public double LValue
+        private double LValue
         {
             get { return lValue; }
             set
@@ -65,7 +107,7 @@ namespace ClearBlazor
                 GetNewColor(true);
             }
         }
-        public byte RValue
+        private byte RValue
         {
             get { return rValue; }
             set
@@ -74,7 +116,7 @@ namespace ClearBlazor
                 GetNewColor(false);
             }
         }
-        public byte GValue
+        private byte GValue
         {
             get { return gValue; }
             set
@@ -83,7 +125,7 @@ namespace ClearBlazor
                 GetNewColor(false);
             }
         }
-        public byte BValue
+        private byte BValue
         {
             get { return bValue; }
             set
@@ -92,7 +134,7 @@ namespace ClearBlazor
                 GetNewColor(false);
             }
         }
-        public int AValue
+        private int AValue
         {
             get { return aValue; }
             set
@@ -143,6 +185,12 @@ namespace ClearBlazor
                 }
                 StateHasChanged();
             }
+        }
+
+        private string GetGradientStr()
+        {
+            return $"linear-gradient(to right, rgba({RValue},{GValue},{BValue},0), " +
+                   $"rgba({RValue},{GValue},{BValue},1)); ";
         }
 
         private void UpdateColorSelectorBasedOnRgb()
@@ -303,10 +351,10 @@ namespace ClearBlazor
         private string GetDragStyle()
         {
             string css = string.Empty;
-            css += $"display:grid;height:{DragDiameter}px;width:{DragDiameter}px;border-width:{DragBorderWidth}px;border-style:solid;" +
+            css += $"display:grid;height:{DragDiameter}px;" +
+                   $"width:{DragDiameter}px;border-width:{DragBorderWidth}px;border-style:solid;" +
                    $"margin-left:{DragMarginLeft}px; margin-top:{DragMarginTop}px;" +
-                   $"border-radius:50%;border-color:{Color.Dark.Value};" +
-                   $"background-color:{Color.Transparent}; ";
+                   $"border-radius:50%;border-color:{ThemeManager.CurrentColorScheme.OnSurface.Value};";
             return css;
         }
 
@@ -314,7 +362,7 @@ namespace ClearBlazor
         {
             string css = string.Empty;
             css += $"border-width:{DragBorderWidth}px; border-radius:50%; border-style:solid; " +
-                   $"border-color:{Color.Light.Value}; ";
+                   $"border-color:{ThemeManager.CurrentColorScheme.Surface.Value}; ";
             return css;
         }
 
@@ -398,7 +446,7 @@ namespace ClearBlazor
             var g = gx * yRatio;
             var b = bx * yRatio;
 
-            Color = new Color((byte)r, (byte)g, (byte)b, Color);
+            Color = new Color((byte)r, (byte)g, (byte)b, Color ?? new Color(0,0,0,255));
             hValue = Color.H;
             sValue = Color.S;
             lValue = Color.L;

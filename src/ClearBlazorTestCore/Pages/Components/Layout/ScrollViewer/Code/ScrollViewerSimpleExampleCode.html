@@ -16,20 +16,13 @@
                 {
                     if (_horizontalOverflowText)
                     {
-                        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Rows</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">Auto</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Columns</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">50,*</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
-
                         <span class="atSign">&#64;</span>for (int i = 1; i &lt;= 200; i++)
                         {
                             int row = i;
-                                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Grid</span> <span class="htmlAttributeName">Row</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>i</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span><span class="htmlTagDelimiter">&gt;</span>
                             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span>  <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">TextWrap.NoWrap</span> <span class="htmlAttributeName">TextTrimming</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">false</span><span class="htmlTagDelimiter">&gt;</span>
                                 <span class="atSign">&#64;</span>($&quot;Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur &quot;)
                             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
-
-                                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
                             }
-                        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
-
                     }
                     else
                     {
@@ -63,7 +56,7 @@
                 }
             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">ScrollViewer</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="atSign">&#64;</span>if (BrowserSizeService.DeviceSize &gt;= DeviceSize.Small)
+        <span class="atSign">&#64;</span>if (BrowserSizeService.DeviceSize &gt;= DeviceSize.Medium)
         {
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">30</span> <span class="htmlAttributeName">Spacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span><span class="htmlTagDelimiter">&gt;</span>
                 &lt;RadioGroup Label=&quot;Vertical Scroll mode&quot; <span class="atSign">&#64;</span>bind-Value=_verticalScrollMode

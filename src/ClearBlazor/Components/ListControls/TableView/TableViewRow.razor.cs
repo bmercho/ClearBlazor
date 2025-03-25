@@ -152,10 +152,10 @@ namespace ClearBlazorInternal
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
             if (_mouseOver)
-                css += $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8).Value}; ";
 
             if (RowData.IsSelected)
-                css += $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.Value}; ";
 
             return css;
         }
@@ -167,7 +167,7 @@ namespace ClearBlazorInternal
 
             return $"display:grid; grid-column: {column} /span 1; justify-self: stretch; " +
                          $"grid-template-rows: {RowSpacing / 2}px 1fr {RowSpacing / 2}px; " +
-                         $"padding:0px 0px 0px {ColumnSpacing / 2}px;";
+                         $"padding:0px {ColumnSpacing / 2}px 0px {ColumnSpacing / 2}px;";
 
         }
 
@@ -212,13 +212,13 @@ namespace ClearBlazorInternal
                 css += $"z-order:1; align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"display:grid; grid-template-columns: subgrid; " +
                        $"grid-area: {Index + 2 + header} / 1 /span 1 / span {Columns.Count};  " +
-                       $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                       $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             }
             else
             {
                 css += $"z-order:1; align-self:start; border-width:1px 0 0 0; border-style:solid;" +
                        $"grid-area: {row} / 1 / span 1 / span {columnCount}; " +
-                       $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                       $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             }
             return css;
         }

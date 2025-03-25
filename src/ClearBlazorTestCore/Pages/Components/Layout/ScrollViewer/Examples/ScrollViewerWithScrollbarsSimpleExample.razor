@@ -58,7 +58,7 @@
                 }
             </ScrollViewerWithScrollBars>
         </Grid>
-        @if (BrowserSizeService.DeviceSize >= DeviceSize.Small)
+        @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
         {
             <StackPanel Column=1 Margin=30 Spacing=5>
                 <RadioGroup Label="Vertical Scroll mode" @bind-Value=_verticalScrollMode
@@ -147,7 +147,7 @@
 
     public virtual void OnNext(bool hasScrolled)
     {
-       // Console.WriteLine("HasScrolled");
+        // Console.WriteLine("HasScrolled");
     }
 
     public virtual void Subscribe(IObservable<bool> provider)
@@ -169,9 +169,8 @@
 
     private async Task ScrollCallBack(ScrollState scrollState)
     {
+        await Task.CompletedTask;
         //Console.WriteLine($"HandleScrollEvent: ScrollTop:{scrollState.ScrollTop}");
-        //if (scrollState.ScrollTop == 0)
-        //    await _scrollViewer.SetScrollTop(800);
     }
 
     private void Changed()

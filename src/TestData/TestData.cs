@@ -12,14 +12,17 @@
 
         public static List<TestTreeRow> GetTestTreeRows(int num)
         {
+            int levelCount = num / 30;
+            if (levelCount > 10)
+                levelCount = 10;
             List<TestTreeRow> treeRows = new();
             int count = 0;
-            for (int i = 0; i <= 9; i++)
+            for (int i = 0; i <= levelCount; i++)
             {
                 var item = TestTreeRow.GetNewTestTreeRow($"{i + 1}");
                 treeRows.Add(item);
                 count++;
-                for (int j = 0; j <= 9; j++)
+                for (int j = 0; j <= levelCount; j++)
                 {
                     var item1 = TestTreeRow.GetNewTestTreeRow($"{i + 1}.{j + 1}");
                     item.Children.Add(item1);
@@ -27,7 +30,7 @@
                     if (count >= num)
                         return treeRows;
 
-                    for (int k = 0; k <= 9; k++)
+                    for (int k = 0; k <= levelCount; k++)
                     {
                         var item2 = TestTreeRow.GetNewTestTreeRow($"{i + 1}.{j + 1}.{k + 1}");
                         item1.Children.Add(item2);
@@ -35,18 +38,13 @@
                         if (count >= num)
                             return treeRows;
 
-                        for (int l = 0; l <= 9; l++)
+                        for (int l = 0; l <= levelCount; l++)
                         {
                             var item3 = TestTreeRow.GetNewTestTreeRow($"{i + 1}.{j + 1}.{k + 1}.{l + 1}");
                             item2.Children.Add(item3);
-                            for (int m = 0; m <= 10; m++)
-                            {
-                                var item4 = TestTreeRow.GetNewTestTreeRow($"{i + 1}.{j + 1}.{k + 1}.{l + 1}.{m + 1}");
-                                item3.Children.Add(item4);
-                                count++;
-                                if (count >= num)
-                                    return treeRows;
-                            }
+                            count++;
+                            if (count >= num)
+                                return treeRows;
                         }
                     }
                 }

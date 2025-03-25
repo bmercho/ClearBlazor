@@ -1,7 +1,7 @@
 ﻿@namespace ClearBlazorTest
-<TextInput Label="Normal" Placeholder="Normal" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" />
-<TextInput Label="Immediate" Placeholder="Immediate" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" Immediate="true" DebounceInterval="0"/>
-<TextInput Label="Immediate and debounced" Placeholder="Debounced" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" Immediate="true" DebounceInterval="500"/>
+<TextInput Label="Normal" Placeholder="Normal" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" />
+<TextInput Label="Immediate" Placeholder="Immediate" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Immediate="true" DebounceInterval="0"/>
+<TextInput Label="Immediate and debounced" Placeholder="Debounced" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Immediate="true" DebounceInterval="500"/>
 <TextBlock VerticalAlignment="Alignment.Center" >@TextValue</TextBlock>
 
 @code {

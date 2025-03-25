@@ -1,15 +1,28 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Drawing;
 
 namespace ClearBlazor
 {
-    public partial class RootComponent : ComponentBase, IObserver<BrowserSizeInfo>
+    public partial class RootComponent : ComponentBase, IObserver<BrowserSizeInfo>,IBackground
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
         [Inject]
         IJSRuntime JSRuntime { get; set; } = null!;
+
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; }
+
+        [Inject]
+        NavigationManager NavManager { get; set; } = null!;
 
         ThemeManager ThemeManager { get; set; }
         private ElementReference Element;
@@ -21,6 +34,18 @@ namespace ClearBlazor
         public RootComponent()
         {
             ThemeManager = new ThemeManager(this, false);
+        }
+
+        bool? _backgroundIsNull = null;
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+
+            if (_backgroundIsNull == null)
+                _backgroundIsNull = BackgroundColor == null;
+
+            if (_backgroundIsNull == true)
+                BackgroundColor = ThemeManager.CurrentColorScheme.Surface;
         }
 
         protected override async  Task OnAfterRenderAsync(bool firstRender)
@@ -64,9 +89,11 @@ namespace ClearBlazor
                 LoadingComplete = true;
 
                 Subscribe(browserSizeService);
+
                 StateHasChanged();
             }
 
+            ClearComponentBase.RenderAll = false;
         }
         private string GetStyle()
         {
@@ -75,6 +102,9 @@ namespace ClearBlazor
                 css += $"overflow: hidden; position: relative;height:{Height}px; width:{Width}px; ";
             else
                 css += $"height: 100vh; overflow: hidden; position: relative; ";
+
+            if (BackgroundColor != null)
+                css += $"background-color: {BackgroundColor.Value} ;";   
             return css;
         }
 
@@ -82,7 +112,27 @@ namespace ClearBlazor
         {
             try
             {
+                ClearComponentBase.RenderAll = true;
                 StateHasChanged();
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// The theme has changed so re-navigate to the current uri to allow 
+        /// new theme to take affect 
+        /// </summary>
+        /// <returns></returns>
+        public async Task ThemeChanged()
+        {
+            try
+            {
+                await ThemeManager.UpdateTheme(JSRuntime);
+                var uri = NavManager.Uri;
+                NavManager.NavigateTo("/");
+                NavManager.NavigateTo(uri);
             }
             catch
             {

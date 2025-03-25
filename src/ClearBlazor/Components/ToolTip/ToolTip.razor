@@ -2,5 +2,11 @@
 @namespace ClearBlazor
 @inherits ClearComponentBase
 
-<span class=@GetClasses() @ref="ToolTipElement" style=@ComputeStyle() >@Text</span>
+<Popup Position=@GetPopupPosition() Transform=@GetPopupTransform() @bind-Open=@Open
+       AllowHorizontalFlip=false AllowVerticalFlip=false Size=@Size>
+    <Grid BackgroundColor=@ThemeManager.CurrentColorScheme.InverseSurface
+          CornerRadius=8 Margin=5>
+        <TextBlock Margin=5 Color=@ThemeManager.CurrentColorScheme.OnInverseSurface>@Text</TextBlock>
+    </Grid>
+</Popup>
 

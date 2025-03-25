@@ -3,24 +3,67 @@ using Microsoft.JSInterop;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Represents a selectable input control that can display a list of items and allows for single or multiple
+    /// selections.
+    /// </summary>
+    /// <typeparam name="TItem">Represents the type of items that can be selected within the control.</typeparam>
     public partial class Select<TItem> : ContainerInputBase<TItem>
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
+
+        /// <summary>
+        /// Holds a list of selectable data items of type TItem. It can be null and is used for data binding in
+        /// components.
+        /// </summary>
         [Parameter]
         public List<ListDataItem<TItem>>? SelectData { get; set; } = null;
+
+        /// <summary>
+        /// A list of nullable items of type TItem. It can be set to null and is used to hold multiple values.
+        /// </summary>
         [Parameter]
         public List<TItem?>? Values { get; set; } = null;
+
+        /// <summary>
+        /// An event callback that triggers when the list of values changes. It allows for handling updates to the list
+        /// of items.
+        /// </summary>
         [Parameter]
         public EventCallback<List<TItem?>> ValuesChanged { get; set; }
+
+        /// <summary>
+        /// Indicates whether multiple selections are allowed. Defaults to false.
+        /// </summary>
         [Parameter]
         public bool MultiSelect { get; set; } = false;
+
+        /// <summary>
+        /// Defines the position of a popup, defaulting to the bottom left corner. It uses the PopupPosition enumeration
+        /// for various placement options.
+        /// </summary>
         [Parameter]
         public PopupPosition Position { get; set; } = PopupPosition.BottomLeft;
+
+        /// <summary>
+        /// 
+        /// </summary>
         [Parameter]
         public PopupTransform Transform { get; set; } = PopupTransform.TopLeft;
+
+        /// <summary>
+        /// Indicates whether vertical flipping is permitted. Defaults to true.
+        /// </summary>
         [Parameter]
         public bool AllowVerticalFlip { get; set; } = true;
+
+        /// <summary>
+        /// Indicates whether horizontal flipping is permitted. Defaults to true.
+        /// </summary>
         [Parameter]
         public bool AllowHorizontalFlip { get; set; } = true;
 
@@ -76,6 +119,24 @@ namespace ClearBlazor
                     return $"min-width: {MaximumWidth * 1.6}ch; ";
             }
             return $"min-width: {MaximumWidth * 1.2}ch; ";
+        }
+
+        private Size GetIconSize()
+        {
+            switch (Size)
+            {
+                case Size.VerySmall:
+                    return Size.VerySmall;
+                case Size.Small:
+                    return Size.Small;
+                case Size.Normal:
+                    return Size.Small;
+                case Size.Large:
+                    return Size.Normal;
+                case Size.VeryLarge:
+                    return Size.Large;
+            }
+            return Size.Small;
         }
 
         protected override void OnParametersSet()
@@ -141,7 +202,7 @@ namespace ClearBlazor
             StateHasChanged();
         }
 
-        public override async Task<bool> ValidateField()
+        internal override async Task<bool> ValidateField()
         {
             IsValid = true;
             ValidationErrorMessages.Clear();

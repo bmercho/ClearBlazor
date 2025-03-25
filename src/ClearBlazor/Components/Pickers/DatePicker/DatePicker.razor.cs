@@ -1,65 +1,116 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
 using System.Globalization;
 
 namespace ClearBlazor
 {
-    public partial class DatePicker : InputBase,IBorder
+    /// <summary>
+    /// Control to select a date.
+    /// </summary>
+    public partial class DatePicker : InputBase,IBorder,IBackground, IBoxShadow
     {
         public enum DatePickerMode
         {
             Year,Month,Day
         }
 
+        /// <summary>
+        /// The initially selected date 
+        /// </summary>
         [Parameter]
         public DateOnly? Date { get; set; }
+
+        /// <summary>
+        /// Event raised when the date selection has changed.Used for two way binding.
+        /// </summary>
         [Parameter]
         public EventCallback<DateOnly?> DateChanged { get; set; }
 
+        /// <summary>
+        /// Event raised when the date selection has changed.
+        /// </summary>
         [Parameter]
         public EventCallback DateSelected { get; set; }
 
+        /// <summary>
+        /// Customizes what the first day of the week is. Normally either Sun or Mon.
+        /// Default is Sun.
+        /// </summary>
         [Parameter]
         public FirstDayOfTheWeek? FirstDayOfTheWeek { get; set; }
-        [Parameter]
-        public int? StartYear { get; set; }
-        [Parameter]
-        public int? EndYear { get; set; }
 
+        /// <summary>
+        /// First year available for selection
+        /// </summary>
+        [Parameter]
+        public int? FirstYear { get; set; }
 
+       /// <summary>
+       /// Last year available for selection
+       /// </summary>
+        [Parameter]
+        public int? LastYear { get; set; }
+
+        /// <summary>
+        /// The orientation of the control
+        /// </summary>
         [Parameter]
         public Orientation Orientation { get; set; } = Orientation.Portrait;
 
+        /// <summary>
+        /// The culture for the control. Affects the names of the days of the week.
+        /// </summary>
         [Parameter]
         public CultureInfo Culture { get; set; } = CultureInfo.InvariantCulture;
 
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; } = ThemeManager.CurrentColorScheme.SurfaceContainerHighest;
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
         [Parameter]
         public string? BorderThickness { get; set; }
 
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
         [Parameter]
         public Color? BorderColor { get; set; }
 
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
 
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
         [Parameter]
         public string? CornerRadius { get; set; }
 
-
+        /// <summary>
+        /// See <a href="IBoxShadowApi">IBoxShadow</a>
+        /// </summary>
         [Parameter]
-        public int? BoxShadow { get; set; } = null;
+        public int? BoxShadow { get; set; }
 
         const int ControlWidthPortrait = 270;
+        const int ControlHeightPortrait = 430;
+        const int BodyHeightPortrait = 310;
+        const int ControlHeightLandscape = 310;
         const int ControlWidthLandscape = 420;
+        const int BodyWidthLandscape = 270;
 
         private DatePickerMode Mode = DatePickerMode.Day;
         private List<YearItem> YearList { get; set; } = new();
 
-        ScrollViewer ScrollViewer = null!;
         private int? MouseOverMonth = null;
-        private int? MouseOverDay = null;
         private DayOfWeek FirstDayOfWeek = DayOfWeek.Monday;
-        private DateOnly SelectedDate;
+        internal DateOnly SelectedDate;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -68,7 +119,7 @@ namespace ClearBlazor
                 Color = Color.Primary;
             if (Date == null)   
                 Date = DateOnly.FromDateTime(DateTime.Now);
-            AddYearRange(StartYear, EndYear);
+            AddYearRange(FirstYear, LastYear);
 
             FirstDayOfWeek = GetFirstDayOfWeek();
             DateOnly date = (DateOnly)Date;
@@ -79,14 +130,14 @@ namespace ClearBlazor
         {
             int? year = Date?.Year;
 
-            int startYear;
-            if (StartYear == null)
-                startYear = DateTime.Now.AddYears(-100).Year;
+            int firstYear;
+            if (FirstYear == null)
+                firstYear = DateTime.Now.AddYears(-100).Year;
             else
-                startYear = (int)StartYear;
+                firstYear = (int)FirstYear;
 
             if (year != null)
-                return  (int)year - startYear + 1;
+                return  (int)year - firstYear + 1;
             return 0;
 
         }
@@ -94,9 +145,13 @@ namespace ClearBlazor
         protected override string UpdateStyle(string css)
         {
             if (Orientation == Orientation.Portrait)
-                css += $"display : grid; width:{ControlWidthPortrait}px; ";
+                css += $"display : grid; " +
+                       $"height:{ControlHeightPortrait}px; " +
+                       $"width:{ControlWidthPortrait}px; ";
             else
-                css += $"display : grid; width:{ControlWidthLandscape}px; ";
+                css += $"display : grid; " +
+                       $"height:{ControlHeightLandscape}px; " +
+                       $"width:{ControlWidthLandscape}px;  ";
             return css;
         }
 
@@ -127,7 +182,7 @@ namespace ClearBlazor
             if (year == SelectedDate.Year)
                 return Color!;
             else
-                return Color.Dark;
+                return ThemeManager.CurrentColorScheme.OnSurface;
         }
 
         private Color GetMonthColor(int month)
@@ -135,13 +190,13 @@ namespace ClearBlazor
             if (month == SelectedDate.Month)
                 return Color!;
             else
-                return Color.Dark;
+                return ThemeManager.CurrentColorScheme.OnSurface;
         }
 
         private Color GetDayColor(int dayIndex)
         {
             if (Date == null)
-                return Color.Dark;
+                return ThemeManager.CurrentColorScheme.OnSurface;
 
             var date = (DateOnly)Date;
 
@@ -156,7 +211,7 @@ namespace ClearBlazor
                 DateTime.Now.Date.Day == dayIndex - firstValidIndex + 1)
                 return Color!;
 
-            return Color.Dark;
+            return ThemeManager.CurrentColorScheme.OnSurface;
         }
 
         private string GetYearStyle()
@@ -195,7 +250,7 @@ namespace ClearBlazor
                 return css;
 
             if (MouseOverMonth == month)
-                return css + $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; ";
+                return css + $"background-color: {ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.38).Value}; ";
 
             return css;
         }
@@ -210,13 +265,22 @@ namespace ClearBlazor
             StateHasChanged();
         }
 
+        private ButtonStyle GetMonthButtonStyle(int monthIndex)
+        {
+            if (Date == null)
+                return ButtonStyle.LabelOnly;
+
+            var date = (DateOnly)Date;
+
+            if (SelectedDate.Month == monthIndex)
+                return ButtonStyle.Filled;
+
+            return ButtonStyle.LabelOnly;
+        }
+
         private string GetMonthName(int month)
         {
             return Culture.DateTimeFormat.GetAbbreviatedMonthName(month);
-        }
-        private string GetMonthName()
-        {
-            return Culture.DateTimeFormat.GetAbbreviatedMonthName(SelectedDate.Month);
         }
 
         private string GetMonthYear()
@@ -224,23 +288,12 @@ namespace ClearBlazor
             return $"{Culture.DateTimeFormat.GetMonthName(SelectedDate.Month)} {SelectedDate.ToString("yyyy")}";
         }
 
-        private string GetMonthSize(int month)
-        {
-            if (Date == null)
-                return "16px";
-
-            if (month == Date?.Month)
-                return "22px";
-
-            return "16px";
-        }
-
         private bool IsDayIndexValid(int dayIndex)
         {
             if (Date == null)
                 return false;
 
-            DateOnly date = (DateOnly)Date;
+            DateOnly date = (DateOnly)SelectedDate;
 
             (int firstValidIndex, int lastValidIndex) = GetValidIndexRange(date);
             if (dayIndex >= firstValidIndex && dayIndex <= lastValidIndex)
@@ -279,13 +332,12 @@ namespace ClearBlazor
             await DateChanged.InvokeAsync(Date);
             StateHasChanged();
             await DateSelected.InvokeAsync();
-
         }
 
-        private TextEditFillMode GetDayButtonStyle(int dayIndex)
+        private ButtonStyle GetDayButtonStyle(int dayIndex)
         {
             if (Date == null)
-                return TextEditFillMode.None;
+                return ButtonStyle.LabelOnly;
 
             var date = (DateOnly)Date;
 
@@ -295,13 +347,13 @@ namespace ClearBlazor
 
             if (SelectedDate.Year == date.Year && SelectedDate.Month == date.Month &&
                 date.Day == dayIndex - firstValidIndex+1)
-                return TextEditFillMode.Filled;
+                return ButtonStyle.Filled;
 
             if (SelectedDate.Year == DateTime.Now.Date.Year && SelectedDate.Month == DateTime.Now.Date.Month &&
                 DateTime.Now.Date.Day == dayIndex - firstValidIndex + 1)
-                return TextEditFillMode.Outline;
+                return ButtonStyle.Outlined;
 
-            return TextEditFillMode.None;
+            return ButtonStyle.LabelOnly;
         }
 
         private string GetDay(int dayIndex)
@@ -358,19 +410,27 @@ namespace ClearBlazor
 
         private void OnGotoMonths()
         {
+            if (IsReadOnly || IsDisabled)
+                return;
+
             Mode = DatePickerMode.Month;
             StateHasChanged();
         }
-
         
         private int GetBodyWidth()
         {
-            return ControlWidthPortrait;
+            if (Orientation == Orientation.Landscape)
+                return BodyWidthLandscape;
+            else
+                return ControlWidthPortrait;
         }
 
         private int GetBodyHeight()
         {
-            return ControlWidthPortrait;
+            if (Orientation == Orientation.Landscape)
+                return ControlHeightLandscape;
+            else
+                return BodyHeightPortrait;
         }
 
         private void OnDateClicked()
@@ -390,16 +450,6 @@ namespace ClearBlazor
         private void OnMouseLeaveMonth()
         {
             MouseOverMonth = null;
-            StateHasChanged();
-        }
-        private void OnMouseEnterDay(int dayIndex)
-        {
-            MouseOverDay = dayIndex;
-            StateHasChanged();
-        }
-        private void OnMouseLeaveDay()
-        {
-            MouseOverDay = null;
             StateHasChanged();
         }
 

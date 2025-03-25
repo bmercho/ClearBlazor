@@ -27,37 +27,37 @@ namespace ClearBlazor
         public RenderFragment? ChildContent { get; set; } = null;
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public string? BorderThickness { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public Color? BorderColor { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public string? CornerRadius { get; set; }
 
         /// <summary>
-        /// See <a href=IBorderApi>IBorder</a>
+        /// See <a href="IBorderApi">IBorder</a>
         /// </summary>
         [Parameter]
         public int? BoxShadow { get; set; } = null;
 
         /// <summary>
-        /// See <a href=IBackgroundApi>IBackground</a>
+        /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
@@ -73,6 +73,18 @@ namespace ClearBlazor
         internal Tab? _activePage { get; set; } = null;
 
         private List<Tab> _pages = new List<Tab>();
+
+        bool? _backgroundIsNull = null;
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+
+            if (_backgroundIsNull == null)
+                _backgroundIsNull = BackgroundColor == null;
+
+            if (_backgroundIsNull == true)
+                BackgroundColor = ThemeManager.CurrentColorScheme.Surface;
+        }
 
         internal void AddPage(Tab tabPage)
         {
@@ -97,14 +109,12 @@ namespace ClearBlazor
             if (page == _activePage)
             {
                 if (Color == null)
-                    return ThemeManager.CurrentPalette.Primary;
+                    return ThemeManager.CurrentColorScheme.Primary;
                 return Color;
             }
             else
             {
-                if (Color == null)
-                    return ThemeManager.CurrentPalette.Primary.Darken(.25);
-                return Color.Darken(.25);
+                return ThemeManager.CurrentColorScheme.OnSurfaceVariant;
             }
         }
 

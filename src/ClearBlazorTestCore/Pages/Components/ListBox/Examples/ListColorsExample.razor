@@ -1,5 +1,7 @@
 ﻿@namespace ClearBlazorTest
-<ListBox TListBox=string Color=Color.Primary Width=300 RowSize=Size.Normal BorderThickness="1" BorderColor="Color.Dark" CornerRadius="4">
+<ListBox HorizontalAlignment=Alignment.Start TListBox=string Color=Color.Primary Width=300 RowSize=Size.Normal 
+         BorderThickness="1" 
+         CornerRadius="4">
     <ListBoxItem Text="Delete" Icon=@Icons.Material.Filled.Delete Color=Color.Error BackgroundColor=Color.Info />
     <ListBoxItem Text="Alarm" Icon=@Icons.Material.Filled.AccessAlarm />
     <Divider />
@@ -7,7 +9,8 @@
     <ListBoxItem Text="Send" Icon=@Icons.Material.Filled.Send />
 </ListBox>
 
-<ListBox TListBox=string Color=Color.Secondary Width=300 RowSize=Size.Normal BorderThickness="1" BorderColor="Color.Dark" CornerRadius="4">
+<ListBox HorizontalAlignment=Alignment.Start TListBox=string Color=Color.Secondary Width=300 RowSize=Size.Normal 
+         BorderThickness="1" CornerRadius="4">
     <ListBoxItem Text="Delete" Avatar=@Icons.Material.Filled.Delete/>
     <ListBoxItem Text="Alarm" Avatar=@Icons.Material.Filled.AccessAlarm />
     <Divider />

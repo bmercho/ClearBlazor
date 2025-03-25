@@ -1,20 +1,34 @@
 using global::Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using System.Text;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A switch input component
+    /// </summary>
     public partial class Switch : InputBase
     {
+        /// <summary>
+        /// Indicates whether the switch is checked. 
+        /// </summary>
         [Parameter]
         public bool Checked { get; set; }
 
+        /// <summary>
+        /// Represents a callback that is triggered when the checked state changes. 
+        /// </summary>
         [Parameter]
         public EventCallback<bool> CheckedChanged { get; set; }
 
+        /// <summary>
+        /// Specifies the location of the label, defaulting to the end position.
+        /// </summary>
         [Parameter]
         public LabelLocation LabelLocation { get; set; } = LabelLocation.End;
 
+        /// <summary>
+        /// Represents the color used when an option is unchecked. 
+        /// </summary>
         [Parameter]
         public Color? UncheckedColor { get; set; } = null;
 
@@ -88,7 +102,7 @@ namespace ClearBlazor
         {
             string css = string.Empty;
             if (IsDisabled)
-                css += $"background-color:{ThemeManager.CurrentPalette.TextDisabled.Lighten(.2).Value};";
+                css += $"background-color:{ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.08).Value};";
             else if (Checked)
                 css += $"background-color:{Color!.Lighten(.3).Value};";
             else
@@ -109,7 +123,7 @@ namespace ClearBlazor
             string css = string.Empty;
 
             if (IsDisabled)
-                css += $"background-color:{ThemeManager.CurrentPalette.TextDisabled.Value};";
+                css += $"background-color:{ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.12).Value};";
             else if (Checked)
                 css += $"background-color:{Color!.Value}; ";
             else
@@ -134,9 +148,7 @@ namespace ClearBlazor
             double diameter = height;
             css += $"width:{diameter}px; height:{diameter}px; border-radius:50%; ";
             if (MouseOver)
-                css += $"background-color: {ThemeManager.CurrentPalette.GrayLighter.SetAlpha(.5).Value}; ";
-            else
-                css += $"background-color: {Color.Transparent.Value}; ";
+                css += $"background-color: {ThemeManager.CurrentColorScheme.OnSurface.SetAlpha(0.12).Value}; ";
             if (Checked)
                 css += $"margin-left:{width-height}px; ";
             else
@@ -184,7 +196,7 @@ namespace ClearBlazor
             if (ToolTipElement == null)
                 await Task.CompletedTask;
             else
-                await ToolTipElement.ShowToolTip();
+                ToolTipElement.ShowToolTip();
             StateHasChanged();
         }
 

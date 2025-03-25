@@ -1,7 +1,7 @@
 ﻿@namespace ClearBlazorTest
-<NumericInput Label="Allow Negative Numbers(default)" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="DoubleValue1"
+<NumericInput Label="Allow Negative Numbers(default)" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="DoubleValue1"
               Immediate="true" />
-<NumericInput Label="Disallow Negative Numbers" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="DoubleValue2" 
+<NumericInput Label="Disallow Negative Numbers" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="DoubleValue2" 
               Immediate="true" AllowNegativeNumbers="false"/>
 
 @code {

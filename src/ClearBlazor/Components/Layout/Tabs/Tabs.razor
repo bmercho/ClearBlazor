@@ -8,7 +8,7 @@
             <WrapPanel CornerRadius=@_gridCornerRadius VerticalAlignment="Alignment.Start">
                 @foreach (Tab tabPage in _pages)
                 {
-                    <TabButton Size=@Size ButtonStyle="TextEditFillMode.None" IsFirstTab=@(_pages.First()==tabPage)
+                    <TabButton Size=@Size ButtonStyle=ButtonStyle.LabelOnly IsFirstTab=@(_pages.First()==tabPage)
                                IsLastTab=@(_pages.Last()==tabPage)
                                Icon=@tabPage.Icon
                                IconColor=@GetButtonColor(tabPage)

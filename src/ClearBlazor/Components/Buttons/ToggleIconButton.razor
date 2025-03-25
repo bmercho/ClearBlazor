@@ -2,16 +2,13 @@
 @namespace ClearBlazor
 @inherits Button
 <CascadingValue Value="this" IsFixed="false">
-    <StackPanel Orientation="Orientation.Landscape">
-        <IconButton Icon=@(toggled ? ToggledIcon : Icon)
-                    IconColor=@(toggled ? ToggledIconColor : IconColor)
-                    Color=@(toggled ? ToggledIconColor : IconColor) 
-                    OnClicked=@Clicked Size=@Size />
-        <TextBlock VerticalAlignment="Alignment.Center" Margin="0,0,0,10" Size=@Size
-                   Color=@(toggled ? ToggledIconColor : IconColor )>
-            @(toggled ? ToggledText : Text)
-        </TextBlock>
-    </StackPanel>
-
+    <Button ButtonStyle=ClearBlazor.ButtonStyle.LabelOnly
+            Icon=@(toggled? ToggledIcon : Icon) 
+            IconColor=@(toggled? ToggledIconColor : IconColor) 
+            Color=@(toggled ? ToggledIconColor : IconColor) 
+            Size=Size
+            OnClicked=@Clicked>
+        @(toggled? ToggledText : Text)
+    </Button>
 </CascadingValue>
 

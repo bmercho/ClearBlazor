@@ -18,22 +18,55 @@ namespace ClearBlazorTest
         private readonly List<string> ImplementsExclusions = new List<string>() 
             { "IDisposable", "IHandleEvent", "IObserver<BrowserSizeInfo>"  };
 
-        private MarkupString GetExamplesLink()
+        private string GetExamplesHRef()
         {
-            return new MarkupString($"<a href={(DocsInfo == null ? string.Empty : DocsInfo.ExamplesLink.Item2)}>" +
-                $"{(DocsInfo == null ? string.Empty : DocsInfo.ExamplesLink.Item1)}</a>");
+            return DocsInfo == null ? string.Empty : DocsInfo.ExamplesLink.Item2;
+        }
+        private string GetExamplesLinkName()
+        {
+            return DocsInfo == null ? string.Empty : DocsInfo.ExamplesLink.Item1;
         }
 
-        private MarkupString GetInheritLink()
+        private bool ShowInheritsAsLink()
         {
             if (DocsInfo == null || DocsInfo?.InheritsLink.Item1 == string.Empty)
-                return new MarkupString(string.Empty);
+                return false;
 
             if (InheritExclusions.Contains(DocsInfo!.InheritsLink.Item1))
-                return new MarkupString($"Inherits from: {DocsInfo!.InheritsLink.Item1.Trim()}");
-            else
-                return new MarkupString($"Inherits from: <a href={(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item2)}>" +
-                                        $" {(DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item1)}</a>");
+                return false;
+
+            return true;
+        }
+
+        private string GetInheritHRef()
+        {
+            return DocsInfo == null ? string.Empty : DocsInfo.InheritsLink.Item2;
+        }
+
+        private string GetInheritLinkName()
+        {
+            if (DocsInfo == null || DocsInfo?.InheritsLink.Item1 == string.Empty)
+                return string.Empty;
+
+            return $"  {DocsInfo!.InheritsLink.Item1.Trim()}";
+        }
+
+        private string @GetImplementsHRef()
+        {
+            return "";
+        }
+        private string @GetImplementsLinkName()
+        {
+            if (DocsInfo == null || DocsInfo.ImplementsLinks == null || DocsInfo.ImplementsLinks.Count == 0)
+                return string.Empty;
+            return "";
+        }   
+        
+        private bool HasImplementLink()
+        {
+            if (DocsInfo == null || DocsInfo.ImplementsLinks == null || DocsInfo.ImplementsLinks.Count == 0)
+                return false;
+            return true;
         }
 
         private MarkupString GetImplementsLink()
@@ -51,6 +84,10 @@ namespace ClearBlazorTest
             }
 
             return new MarkupString(implementsString);
+        }
+        private MarkupString GetMarkupString(string value)
+        {
+            return new MarkupString(value);
         }
 
     }

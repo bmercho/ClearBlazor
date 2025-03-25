@@ -4,36 +4,37 @@
 @inherits ClearComponentBase
 <CascadingValue Value=this IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <StackPanel Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch BackgroundColor=@Color.Transparent>
-            <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=@ContentAlignment Spacing=20
+        <StackPanel Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch>
+            <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=@ContentAlignment 
+                        Spacing=20 CornerRadius=20
                         Padding=@LinePadding Class=@RowClasses
                         Style=@RowStyle
                         OnElementMouseEnter=@OnMouseEnter
                         OnElementMouseLeave=@OnMouseLeave
-                OnClicked=@OnListItemClicked>
+                        OnClicked=@OnListItemClicked>
                 @if (Multiselect && !HasChildren)
                 {
                     @if (IsSelected)
                     {
-                        <MaterialIcon VerticalAlignment=Alignment.Center Size=@RowSize
-                                      Color=@GetColor() Icon=@Icons.Material.Filled.CheckBox />
+                        <Icon VerticalAlignment=Alignment.Center Size=@RowSize
+                              Color=@GetColor() IconName=@Icons.Material.Filled.CheckBox />
                     }
                     else
                     {
-                        <MaterialIcon VerticalAlignment=Alignment.Center Size=@RowSize
-                                      Color=@GetColor() Icon=@Icons.Material.Filled.CheckBoxOutlineBlank />
+                        <Icon VerticalAlignment=Alignment.Center Size=@RowSize
+                              Color=@GetColor() IconName=@Icons.Material.Filled.CheckBoxOutlineBlank />
                     }
                 }
 
                 @if (Icon != null)
                 {
-                    <MaterialIcon Margin="0,7,0,7" Size=@RowSize Icon=@Icon Color=@GetColor()
+                    <Icon Margin="0,7,0,7" Size=@RowSize IconName=@Icon Color=@GetColor()
                                   HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center />
                 }
                 else if (Avatar != null)
                 {
                     <Avatar HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center
-                            AvatarStyle=TextEditFillMode.None Size=@RowSize Icon=@Avatar Color=@GetColor()
+                            AvatarStyle=AvatarStyle.LabelOnly Size=@RowSize Icon=@Avatar Color=@GetColor()
                             IconColor=@GetColor() />
                 }
 
@@ -53,11 +54,13 @@
                 {
                     @if (IsExpanded)
                     {
-                        <MaterialIcon Color=@GetColor() Size=Size.Normal Icon=@Icons.Material.Filled.ExpandLess VerticalAlignment=Alignment.Center />
+                        <Icon Color=@GetColor() Size=Size.Normal IconName=@Icons.Material.Filled.ExpandLess
+                              VerticalAlignment=Alignment.Center />
                     }
                     else
                     {
-                        <MaterialIcon Color=@GetColor() Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore VerticalAlignment=Alignment.Center />
+                        <Icon Color=@GetColor() Size=Size.Normal IconName=@Icons.Material.Filled.ExpandMore
+                              VerticalAlignment=Alignment.Center />
                     }
                 }
             </StackPanel>

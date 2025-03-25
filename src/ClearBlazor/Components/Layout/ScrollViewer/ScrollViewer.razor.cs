@@ -14,7 +14,7 @@ namespace ClearBlazor
         public ScrollMode HorizontalScrollMode { get; set; } = ScrollMode.Disabled;
 
         /// <summary>
-        /// The horizontal scroll mode.
+        /// The vertical scroll mode.
         /// </summary>
         [Parameter]
         public ScrollMode VerticalScrollMode { get; set; } = ScrollMode.Auto;

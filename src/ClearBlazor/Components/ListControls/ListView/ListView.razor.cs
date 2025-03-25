@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using ClearBlazorInternal;
-using System.Reflection.PortableExecutable;
 
 namespace ClearBlazor
 {
@@ -201,6 +200,10 @@ namespace ClearBlazor
             }
         }
 
+        /// <summary>
+        /// Scrolls the content by a given amount.
+        /// </summary>
+        /// <param name="value">Specifies the number of pixels to scroll the content vertically.</param>
         public async Task Scroll(int value)
         {
             var scrollTop = await JSRuntime.InvokeAsync<double>("window.scrollbar.GetScrollTop", 
@@ -482,7 +485,7 @@ namespace ClearBlazor
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
             }
@@ -555,7 +558,7 @@ namespace ClearBlazor
                 }
                 return false;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -620,7 +623,11 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
-            return css + $"display: grid; ";
+
+            css += $"display: grid; ";
+            if (BackgroundColor == null)
+                css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerLow.Value}; ";  
+            return css;
         }
 
         private string GetScrollViewerStyle()
@@ -919,7 +926,7 @@ namespace ClearBlazor
 
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
             return false;

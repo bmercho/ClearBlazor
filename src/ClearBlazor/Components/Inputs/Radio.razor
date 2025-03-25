@@ -6,16 +6,15 @@
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
         <StackPanel Orientation="Orientation.Landscape"
                     HorizontalAlignment=Alignment.Start 
-                    VerticalAlignment=Alignment.Start
-                    BackgroundColor=Color.Transparent>
+                    VerticalAlignment=Alignment.Start>
             @if (Label != null && LabelLocation == LabelLocation.Start)
             {
-                <TextBlock Color=@GetColor() VerticalAlignment=Alignment.Center>@Label</TextBlock>
+                <TextBlock VerticalAlignment=Alignment.Center>@Label</TextBlock>
             }
             <IconButton  Disabled=@IsDisabled IconColor=@GetColor() Icon=@GetIcon() Size="@Size" OnClicked=@OnIconClicked />
             @if (Label != null && LabelLocation == LabelLocation.End)
             {
-                <TextBlock Color=@GetColor() VerticalAlignment=Alignment.Center>@Label</TextBlock>
+                <TextBlock VerticalAlignment=Alignment.Center>@Label</TextBlock>
             }
         </StackPanel>
     </div>

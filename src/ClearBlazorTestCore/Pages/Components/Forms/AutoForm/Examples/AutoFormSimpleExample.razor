@@ -2,45 +2,22 @@
 @using System.ComponentModel.DataAnnotations
 @using System.ComponentModel
 
-<StackPanel Orientation=Orientation.Portrait Spacing="10" Margin="10">
-    <AutoForm @ref="form" HasLabelColumn=true LabelValueCols="*,3*" 
-              ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Immediate=true 
-              TextEditFillMode=TextEditFillMode.Outline Model=@this />
+<StackPanel Orientation=Orientation.Portrait Spacing="10">
+    <Grid Margin="10" Width=600 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
+        <AutoForm @ref="form" HasLabelColumn=true LabelValueCols="*,3*" Margin=20 ShowLabels=false
+                  ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Immediate=true
+                  InputContainerStyle=InputContainerStyle.Outlined Model=@TestModel />
+    </Grid>
     <Button HorizontalAlignment=Alignment.Start OnClicked=@(() => form.Validate())>Validate</Button>
     <Button HorizontalAlignment=Alignment.Start OnClicked=@Save>Save</Button>
 </StackPanel>
 
 @code {
-    [Flags]
-    public enum DaysOfWeek
-    {
-        Monday = 1, Tuesday = 2, Wednesday = 4, Thursday = 8, Friday = 16, Saturday = 32, Sunday = 64
-    }
-
-    [DisplayName("Name")]
-    [Required(ErrorMessage = "A value is required.")]
-    [MaxLength(20, ErrorMessage = "The maximum length is 20.")]
-    public string TextValue { get; set; } = "Testing 1 2 3";
-
-    [DisplayName("Value")]
-    public int IntValue { get; set; } = 5;
-    [DisplayName("I agree!")]
-    public bool BoolValue { get; set; } = true;
-    [DisplayName("Enum Value")]
-    public TestEnum EnumValue { get; set; } = TestEnum.Enum2;
-    [DisplayName("Enter days of week")]
-    public DaysOfWeek Days { get; set; } = DaysOfWeek.Wednesday | DaysOfWeek.Friday;
-
-
-    Form form;
+    Form form = null!;
+    private AutoFormTestModel TestModel { get; set; } = new AutoFormTestModel();
 
     private void Save()
     {
-        
-    }
 
-    public enum TestEnum
-    {
-         Enum1, Enum2, Enum3, Enum4
     }
 }

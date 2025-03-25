@@ -45,7 +45,7 @@ namespace ClearBlazor
         public bool OverlayEnabled { get; set; } = true;
 
         /// <summary>
-        /// See <a href=IBackgroundApi>IBackground</a>
+        /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
@@ -69,7 +69,7 @@ namespace ClearBlazor
         private bool _gotSize = false;
         private DrawerMode _drawerMode = DrawerMode.Responsive;
         private bool _showOverlay = false;
-        private IDisposable _unsubscriber;
+        private IDisposable _unsubscriber = null!;
 
         protected override void OnInitialized()
         {
@@ -217,6 +217,9 @@ namespace ClearBlazor
 
         private void SetMargin()
         {
+            if (_elementSize == null)
+                return;
+
             switch (DrawerLocation)
             {
                 case DrawerLocation.Left:
@@ -259,7 +262,7 @@ namespace ClearBlazor
             if (DrawerMode == DrawerMode.Responsive)
             {
                 var currentDrawerMode = _drawerMode;
-                if (browserSizeInfo.DeviceSize < DeviceSize.Medium)
+                if (browserSizeInfo.DeviceSize < DeviceSize.Expanded)
                 {
                     _drawerMode = DrawerMode.Temporary;
                     Open = false;

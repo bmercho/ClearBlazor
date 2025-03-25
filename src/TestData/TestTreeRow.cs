@@ -10,6 +10,7 @@ namespace Data
         public int ImageId { get; set; }
 
         public string IconName { get; set; } = string.Empty;
+        public string OpenIconName { get; set; } = string.Empty;
 
         public string FirstName { get; set; } = string.Empty;
 
@@ -44,7 +45,8 @@ namespace Data
             {
                 NodeId = nodeId,
                 ImageId = RandomTestData.GetRandomInt(1,80),
-                IconName = RandomTestData.GetIconName(),
+                IconName = Icons.Material.TwoTone.Folder,
+                OpenIconName = Icons.Material.TwoTone.FolderOpen,
                 FirstName = RandomTestData.GetRandomFirstName(),
                 LastName = RandomTestData.GetRandomSurname(),
                 Product = RandomTestData.GetRandomProduct(),

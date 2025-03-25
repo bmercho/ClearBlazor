@@ -24,7 +24,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("DrawerBody", "RenderFragment?", "null", "The content of the drawer body\r"),
             new ApiComponentInfo("Open", "bool", "false", "Indicates if the drawer is open\r"),
             new ApiComponentInfo("OverlayEnabled", "bool", "true", "Indicates if an overlay will be shown over the container of the drawer\r"),
-            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=IBackgroundApi>IBackground</a>\r"),
+            new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
             new ApiComponentInfo("OpenChanged", "EventCallback<bool>", "", "Event that is raised when the drawer is opened or closed.\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>

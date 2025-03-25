@@ -9,6 +9,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Components\Inputs\Radio\Code\**" />
+    <Content Remove="Pages\Components\Inputs\Radio\Code\**" />
+	<EmbeddedResource Include="Pages\Components\Forms\AutoForm\Code\AutoFormNoLabelColumnAndUnderlinedExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsVariantExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsShapeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsToggleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsTextExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsSizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsShapeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsShadowExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsOutlineExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsIconExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsFilledExampleCode.html" />
+    <EmbeddedResource Remove="Pages\Components\Inputs\Radio\Code\**" />
+    <None Remove="Pages\Components\Inputs\Radio\Code\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Pages\Components\TreeView\Examples\NonVirtualizedTreeDataProviderExample.razor" />
     <Content Remove="Pages\Components\TreeView\Examples\NonVirtualizedTreeVariableRowSizeExample.razor" />
   </ItemGroup>
@@ -18,7 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,10 +50,30 @@
     <Folder Include="Pages\Components\AppBar\Code\" />
     <Folder Include="Pages\Components\AppBar\Doco\" />
     <Folder Include="Pages\Components\Avatar\Doco\" />
+    <Folder Include="Pages\Components\Buttons\Button\Code\" />
+    <Folder Include="Pages\Components\Buttons\IconButton\Code\" />
+    <Folder Include="Pages\Components\Inputs\RadioGroup\" />
+    <Folder Include="Pages\Components\InputBase\" />
+    <Folder Include="Pages\Components\ContainerInputBase\" />
     <Folder Include="Pages\Enums\Alignment\" />
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupTypeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupSpacingExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupSizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupReadonlyExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupOrientationExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupNullableTypeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupDisabledExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupDataExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupColorExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\ColorPickerInput\Code\ColorPickerInputHexExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\ToolbarTray\Code\ToolbarTrayExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePicker24HourExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerMinuteStepExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\TextBlock\Code\TextBlockDecorationsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\ScrollViewer\Code\ScrollViewerWithScrollbarsSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Layout\DrawingCanvas\Code\SkiaDrawingCanvasExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\TreeTableView\Code\TreeTableViewVirtualizeExampleCode.html" />
@@ -53,9 +92,6 @@
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\ListViewDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListView\Code\InfiniteScrollListViewExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\Code\NonVirtualizedTreeVariableRowSizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\Code\NonVirtualizedTreeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\TreeView\Code\NonVirtualizedTreeDataProviderExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DatePicker\Code\DatePickerReadOnlyDisabledExampleCode.html" />
@@ -119,16 +155,6 @@
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectMultiselectStringExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectIconAvatarExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\Select\Code\SelectDataExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioTypeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioSpacingExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioSizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioReadonlyExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioOrientationExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioNullableTypeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioDisabledExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioDataExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Inputs\Radio\Code\RadioColorExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputTypeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputSpinButtonsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Inputs\NumericInput\Code\NumericInputSimpleExampleCode.html" />
@@ -148,20 +174,9 @@
 	<EmbeddedResource Include="Pages\Components\Forms\Form\Code\FormLabelColumnExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Forms\AutoForm\Code\AutoFormSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\ToggleIconButton\Code\ToggleIconButtonsExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsVariantExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\IconButton\Code\IconButtonsShapeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\ButtonGroup\Code\ButtonGroupVerticalExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\ButtonGroup\Code\ButtonGroupIconsExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Buttons\ButtonGroup\Code\ButtonGroupHorizontalExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsToggleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsTextExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsSizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsShapeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsOutlineExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsNoShadowExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsIconExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\Buttons\Button\Code\ButtonsFilledExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ToolTip\Code\ToolTipSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Toolbar\Code\ToolbarTrayExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Toolbar\Code\ToolbarSimpleExampleCode.html" />
@@ -176,11 +191,11 @@
 	<EmbeddedResource Include="Pages\Components\Popup\Code\PopupSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Popup\Code\PopupLocationExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Popup\Code\PopupHorizontalFlipExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconStyleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconSizeExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconSimpleExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconCustomExampleCode.html" />
-	<EmbeddedResource Include="Pages\Components\MaterialIcon\Code\IconColorExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconStyleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconSizeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconCustomExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Icon\Code\IconColorExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListSizeExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\ListBox\Code\ListMultiSelectExampleCode.html" />

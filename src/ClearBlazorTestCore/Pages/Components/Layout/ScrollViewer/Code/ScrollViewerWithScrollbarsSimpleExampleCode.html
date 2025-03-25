@@ -59,7 +59,7 @@
                 }
             <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">ScrollViewerWithScrollBars</span><span class="htmlTagDelimiter">&gt;</span>
         <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Grid</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="atSign">&#64;</span>if (BrowserSizeService.DeviceSize &gt;= DeviceSize.Small)
+        <span class="atSign">&#64;</span>if (BrowserSizeService.DeviceSize &gt;= DeviceSize.Medium)
         {
             <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Column</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">30</span> <span class="htmlAttributeName">Spacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">5</span><span class="htmlTagDelimiter">&gt;</span>
                 &lt;RadioGroup Label=&quot;Vertical Scroll mode&quot; <span class="atSign">&#64;</span>bind-Value=_verticalScrollMode
@@ -149,7 +149,7 @@
 
     <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> OnNext(<span class="keyword">bool</span> hasScrolled)
     {
-       <span class="comment">// Console.WriteLine(&quot;HasScrolled&quot;);</span>
+        <span class="comment">// Console.WriteLine(&quot;HasScrolled&quot;);</span>
     }
 
     <span class="keyword">public</span> <span class="keyword">virtual</span> <span class="keyword">void</span> Subscribe(IObservable&lt;<span class="keyword">bool</span>&gt; provider)
@@ -171,9 +171,8 @@
 
     <span class="keyword">private</span> <span class="keyword">async</span> Task ScrollCallBack(ScrollState scrollState)
     {
+        <span class="keyword">await</span> Task.CompletedTask;
         <span class="comment">//Console.WriteLine($&quot;HandleScrollEvent: ScrollTop:{scrollState.ScrollTop}&quot;);</span>
-        <span class="comment">//if (scrollState.ScrollTop == 0)</span>
-        <span class="comment">//    await _scrollViewer.SetScrollTop(800);</span>
     }
 
     <span class="keyword">private</span> <span class="keyword">void</span> Changed()

@@ -13,8 +13,10 @@
         {
             <TextBlock FontSize="16px" Margin="10,0,10,0">@Description</TextBlock>
         }
-        <Grid Padding="20" BorderThickness=@GetBorderThickness() CornerRadius=@GetCornerRadius() BackgroundColor=@BackgroundColor>
-            @ChildContent
+        <Grid Padding="5" BorderThickness=@GetBorderThickness() CornerRadius=@GetCornerRadius() BackgroundColor=@BackgroundColor>
+            <Grid Margin=20>
+                @ChildContent
+            </Grid>
             @if (ShowCode)
             {
                 <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
@@ -29,7 +31,7 @@
         </Grid>
         @if (ShowCode)
         {
-            <Grid CornerRadius="0,0,8,8" BorderThickness="1" BackgroundColor="@Color.BackgroundGrey" Padding="20">
+            <Grid CornerRadius="0,0,8,8" BorderThickness="1" Padding="20">
                 <ScrollViewer HorizontalScrollMode="ScrollMode.Auto" VerticalScrollMode="ScrollMode.Disabled">
                     @CodeComponent(Code)
                 </ScrollViewer>

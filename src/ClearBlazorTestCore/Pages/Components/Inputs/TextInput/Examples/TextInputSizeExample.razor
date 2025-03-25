@@ -1,9 +1,9 @@
 ﻿@namespace ClearBlazorTest
-<TextInput Placeholder="VerySmall" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="TextValue" Size="Size.VerySmall" />
-<TextInput Placeholder="Small" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="TextValue" Size="Size.Small" />
-<TextInput Placeholder="Normal" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="TextValue" Size="Size.Normal" />
-<TextInput Placeholder="Large" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="TextValue" Size="Size.Large" />
-<TextInput Placeholder="Very Large" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="TextValue" Size="Size.VeryLarge" />
+<TextInput Placeholder="VerySmall" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.VerySmall" />
+<TextInput Placeholder="Small" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.Small" />
+<TextInput Placeholder="Normal" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.Normal" />
+<TextInput Placeholder="Large" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.Large" />
+<TextInput Placeholder="Very Large" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.VeryLarge" />
 
 @code {
     public string TextValue { get; set; } = string.Empty;

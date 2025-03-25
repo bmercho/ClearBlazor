@@ -1,11 +1,15 @@
 ﻿@page "/ColorPickerInput"
 @using ClearBlazorTest
 <DocsExamplesPage DocsInfo=@(new ColorPickerInputDocsInfo())>
-    <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Switch</TextBlock>
     <StackPanel Padding="20" Spacing="30">
         <CodeSnippet Title="Basic" Code=@(typeof(ColorPickerInputSimpleExample).Name)>
             <WrapPanel Margin="10" ColumnSpacing="20">
-                <ColorPickerInputSimpleExample />
+                <ColorPickerInputSimpleExample/>
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Show Hex value" Code=@(typeof(ColorPickerInputHexExample).Name)>
+            <WrapPanel Margin="10" ColumnSpacing="20">
+                <ColorPickerInputHexExample />
             </WrapPanel>
         </CodeSnippet>
     </StackPanel>

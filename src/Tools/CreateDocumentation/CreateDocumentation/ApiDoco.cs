@@ -1,4 +1,5 @@
-﻿using ClearBlazor.Common;
+﻿using ClearBlazor;
+using ClearBlazor.Common;
 
 namespace CreateDocumentation
 {
@@ -313,7 +314,7 @@ namespace CreateDocumentation
         }
 
         private bool GetNextComponentApi(IComponentDocsInfo info, string[] lines, ref int line)
-        {
+        { 
             while (line < lines.Count())
             {
                 var trimmedLine = lines[line].Trim();   
@@ -328,12 +329,15 @@ namespace CreateDocumentation
                             line++;
                             continue;
                         }
-                            
-                        var index1 = lines[line].Trim().IndexOf(values[2]);
+                        int startIndex = 1;
+                        if (values[1] == "static")
+                            startIndex++;
+
+                        var index1 = lines[line].Trim().IndexOf(values[startIndex+1]);
                         var index2 = lines[line].Trim().IndexOf(')', index1);
                         var methodSignature = lines[line].Trim().Substring(index1, index2 - index1+1);
 
-                        var typ = values[1];
+                        var typ = values[startIndex];
                         typ.Replace("<", "&lt");
                         typ.Replace(">", "&gt");
 
@@ -375,7 +379,8 @@ namespace CreateDocumentation
                     line--;
                     var comment = GetAssociatedComment(lines, line);
                     line++;
-                    info.ParameterApi.Add(new ApiComponentInfo(values[2], typ, def, comment));
+                    if (values.Length > 2)
+                        info.ParameterApi.Add(new ApiComponentInfo(values[2], typ, def, comment));
                     return true;
                 }
                 line++;
@@ -421,7 +426,7 @@ namespace CreateDocumentation
             lines.Add($"    public record {componentName}DocsInfo:IComponentDocsInfo");
             lines.Add("    {");
             lines.Add("        public string Name { get; set; } = " + $"\"{docInfo.Name}\";");
-            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description}\";");
+            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description.Replace("\"", "\\\"")}\";");
             lines.Add("        public (string, string) ApiLink  {get; set; } = " + $"(\"{docInfo.ApiLink.Item1}\", \"{docInfo.ApiLink.Item2}\");");
             lines.Add("        public (string, string) ExamplesLink {get; set; } = " + $"(\"{docInfo.ExamplesLink.Item1}\", \"{docInfo.ExamplesLink.Item2}\");");
             lines.Add("        public (string, string) InheritsLink {get; set; } = " + $"(\"{docInfo.InheritsLink.Item1}\", \"{docInfo.InheritsLink.Item2}\");");
@@ -464,7 +469,7 @@ namespace CreateDocumentation
             lines.Add($"    public record {name}DocsInfo:IOtherDocsInfo");
             lines.Add("    {");
             lines.Add("        public string Name { get; set; } = " + $"\"{docInfo.Name}\";");
-            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description}\";");
+            lines.Add("        public string Description {get; set; } = " + $"\"{docInfo.Description.Replace("\"", "\\\"")}\";");
             lines.Add("        public List<ApiFieldInfo> FieldApi {get; set; } = " + $"new List<ApiFieldInfo>");
             lines.Add("        {");
             foreach (var info in docInfo.FieldApi)

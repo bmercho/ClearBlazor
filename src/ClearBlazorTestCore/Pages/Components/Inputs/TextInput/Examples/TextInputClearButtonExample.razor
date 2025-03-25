@@ -1,13 +1,13 @@
 ﻿@namespace ClearBlazorTest
-<TextInput Placeholder="None" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" Size=@Size.VerySmall
+<TextInput Placeholder="None" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Size=@Size.VerySmall
            Clearable="true" />
-<TextInput Placeholder="None" TextEditFillMode="TextEditFillMode.None" @bind-Value="TextValue" Size=@Size.Small 
+<TextInput Placeholder="None" InputContainerStyle="InputContainerStyle.LabelOnly" @bind-Value="TextValue" Size=@Size.Small 
            Clearable="true" />
-<TextInput Placeholder="Underlined" TextEditFillMode="TextEditFillMode.Underline" @bind-Value="TextValue" Size=@Size.Normal 
+<TextInput Placeholder="Underlined" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size=@Size.Normal 
            Clearable="true" />
-<TextInput Placeholder="Outlined" TextEditFillMode="TextEditFillMode.Outline" @bind-Value="TextValue" Size=@Size.Large 
+<TextInput Placeholder="Outlined" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Size=@Size.Large 
            Clearable="true" />
-<TextInput Placeholder="Filled" TextEditFillMode="TextEditFillMode.Filled" @bind-Value="TextValue" Size=@Size.VeryLarge 
+<TextInput Placeholder="Filled" InputContainerStyle="InputContainerStyle.Filled" @bind-Value="TextValue" Size=@Size.VeryLarge 
            Clearable="true" />
   
  @code {

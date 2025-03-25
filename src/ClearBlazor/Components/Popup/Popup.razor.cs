@@ -4,50 +4,83 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A popup control that can be used to display additional information.
+    /// </summary>
     public partial class Popup : ClearComponentBase, IDisposable, IObserver<BrowserSizeInfo>, IObserver<bool>
     {
-        [Parameter]
-        public bool UseTransition { get; set; } = true;
-
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
 
+        /// <summary>
+        /// Indicates whether to use a transition when opening or closing the popup.
+        /// </summary>
+        [Parameter]
+        public bool UseTransition { get; set; } = true;
+
+        /// <summary>
+        /// Indicates whether the popup is open or closed.
+        /// </summary>
         [Parameter]
         public bool Open { get; set; } = false;
 
+        /// <summary>
+        /// Indicates whether the popup should close when the user clicks outside of it.
+        /// </summary>
         [Parameter]
         public bool CloseOnOutsideClick { get; set; } = true;
 
+        /// <summary>
+        /// Indicates whether the popup should allow vertical flipping.
+        /// </summary>
         [Parameter]
         public bool AllowVerticalFlip { get; set; } = true;
 
+        /// <summary>
+        /// Indicates whether the popup should allow horizontal flipping.
+        /// </summary>
         [Parameter]
         public bool AllowHorizontalFlip { get; set; } = true;
 
+        /// <summary>
+        /// Event that is raised when the popup is opened or closed.
+        /// </summary>
         [Parameter]
         public EventCallback<bool> OpenChanged { get; set; }
 
-        [Parameter]
-        public string? Text { get; set; } = null;
-
+        /// <summary>
+        /// The size of the popup.
+        /// </summary>
         [Parameter]
         public Size Size { get; set; } = Size.Normal;
 
+        /// <summary>
+        /// The position of the popup.
+        /// </summary>
         [Parameter]
         public PopupPosition Position { get; set; } = PopupPosition.BottomCentre;
 
+        /// <summary>
+        /// The transform of the popup.
+        /// </summary>
         [Parameter]
         public PopupTransform Transform { get; set; } = PopupTransform.TopCentre;
 
+        /// <summary>
+        /// The delay before the popup is displayed. (in milliseconds)
+        /// </summary>
         [Parameter]
-        public int? Delay { get; set; } = null; // Milliseconds
+        public int? Delay { get; set; } = null;
 
         private ElementReference PopupElement;
 
         private SizeInfo? SizeInfo = null;
         private bool _mouseOver = false;
-        private IDisposable ScrollViewUnsubscriber;
-        private IDisposable unsubscriber;
+        private IDisposable ScrollViewUnsubscriber = null!;
+        private IDisposable unsubscriber = null!;
 
         protected override void OnInitialized()
         {
@@ -108,19 +141,12 @@ namespace ClearBlazor
                 StateHasChanged();
         }
 
-        private void Something(object g)
-        {
-
-        }
-
         protected override string UpdateStyle(string css)
         {
-            css += $"color: {ThemeManager.CurrentPalette.ToolTipTextColor.Value}; ";
             css += "z-index:100;";
             if (UseTransition)
                 css += "transition: opacity .2s ease-in-out; ";
             css += "display: grid; ";
-            css += Open ? "opacity: 1; " : "opacity: 0; ";
             css += GetLocationCss(Position, Transform);
             css += GetFontSize();
             if (SizeInfo != null)

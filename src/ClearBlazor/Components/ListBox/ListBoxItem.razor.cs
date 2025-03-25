@@ -4,36 +4,70 @@ using System.Text;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// An item that can be a child of ListBox.
+    /// Can be text, icon or avatar
+    /// </summary>
+    /// <typeparam name="TListBox"></typeparam>
     public partial class ListBoxItem<TListBox> : ClearComponentBase, IBackground, IColor
     {
+        /// <summary>
+        /// The value of the list box item.
+        /// </summary>
         [Parameter]
         public TListBox? Value { get; set; }
 
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
+        /// <summary>
+        /// The horizontal alignment of the item
+        /// </summary>
         [Parameter]
         public Alignment ContentAlignment { get; set; } = Alignment.Stretch;
 
+        /// <summary>
+        /// The text to be shown
+        /// </summary>
         [Parameter]
         public string? Text { get; set; } = null;
 
+        /// <summary>
+        /// The icon to be shown
+        /// </summary>
         [Parameter]
         public string? Icon { get; set; } = null;
 
+        /// <summary>
+        /// The avatar to be shown
+        /// </summary>
         [Parameter]
         public string? Avatar { get; set; } = null;
 
+        /// <summary>
+        /// The color of the item
+        /// </summary>
         [Parameter]
         public Color? Color { get; set; } = null;
 
+        /// <summary>
+        /// The background color of the item
+        /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
 
-
+        /// <summary>
+        /// The href to navigate to when clicked
+        /// </summary>
         [Parameter]
         public string? HRef { get; set; } = null;
 
+        /// <summary>
+        /// Indicates if the item is initially expanded
+        /// </summary>
         [Parameter]
         public bool InitiallyExpanded { get; set; } = true;
 
@@ -50,7 +84,6 @@ namespace ClearBlazor
         private int FontWeight = 0;
         private FontStyle FontStyle = FontStyle.Normal;
         private string RowStyle = string.Empty;
-        private double RowHeight = 0;
         private string LinePadding = string.Empty;
         private string RowClasses = string.Empty;
         private bool IsExpanded = true;
@@ -85,6 +118,11 @@ namespace ClearBlazor
                 HorizontalAlignment = Alignment.Stretch;
         }
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+        }
+
         protected override void ComputeOwnClasses(StringBuilder sb)
         {
             base.ComputeOwnClasses(sb);
@@ -109,10 +147,19 @@ namespace ClearBlazor
 
             css += "display: grid; ";
 
-            RowStyle = IsSelected && HasChildren ? $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; " :
-                      IsSelected ? $"background-color: {ThemeManager.CurrentPalette.ListSelectedColor.Value}; " :
-                      MouseOver ? $"background-color: {ThemeManager.CurrentPalette.ListBackgroundColor.Value}; " :
-                               string.Empty;
+            RowStyle = string.Empty;
+            if (IsSelected)
+                if (MouseOver)
+                    RowStyle = $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.SetAlpha(.8).Value}; ";
+                else
+                    RowStyle = $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.Value}; ";
+            else
+            {
+                if (MouseOver)
+                    RowStyle = $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8).Value}; ";
+                else
+                    RowStyle = string.Empty;
+            }
             RowStyle += $"height:{GetRowHeight()}; ";
             return css;
         }
@@ -197,30 +244,32 @@ namespace ClearBlazor
             await Task.CompletedTask;
             StateHasChanged();
         }
-        public async Task OnListItemClicked(MouseEventArgs e)
+        private async Task OnListItemClicked(MouseEventArgs e)
         {
-            if (HRef != null)
-                NavManager.NavigateTo(HRef);
-
             if (HasChildren)
             {
                 IsExpanded = !IsExpanded;
                 IsVisible = IsExpanded;
             }
+            else
+            {
 
-            ListBox<TListBox>? parent = FindParent<ListBox<TListBox>>(Parent);
-            if (parent != null)
-                IsSelected = await parent.SetSelected(this);
-            await OnClicked.InvokeAsync();
+                ListBox<TListBox>? parent = FindParent<ListBox<TListBox>>(Parent);
+                if (parent != null)
+                    IsSelected = await parent.SetSelected(this);
+            }
             StateHasChanged();
+            await OnClicked.InvokeAsync();
+            if (HRef != null)
+                NavManager.NavigateTo(HRef);
         }
 
-        public void Unselect()
+        internal void Unselect()
         {
             IsSelected = false;
             StateHasChanged();
         }
-        public void Select()
+        internal void Select()
         {
             IsSelected = true;
             StateHasChanged();
@@ -340,13 +389,13 @@ namespace ClearBlazor
         }
         private Color? GetColor()
         {
-            //if (Color != null)
-            //    return Color;
+            if (Color != null)
+                return Color;
 
-            //if (ColorOverride != null)
-            //    return ColorOverride;
+            if (ColorOverride != null)
+                return ColorOverride;
 
-            return Color.Dark;
+            return ThemeManager.CurrentColorScheme.OnSurface;
         }
     }
 }

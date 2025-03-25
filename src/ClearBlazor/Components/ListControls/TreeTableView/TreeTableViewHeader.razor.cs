@@ -98,7 +98,7 @@ namespace ClearBlazor
             if (_parent == null)
                 return string.Empty;
 
-            string css = "background-color:white;  z-index:1;";
+            string css = $"background-color:{ThemeManager.CurrentColorScheme.Surface.Value}; z-index:1;";
             css += $"display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr; " +
                    $"grid-area: 1 / 1 /span 1 / span {Columns.Count}; ";
             if (StickyHeader)
@@ -126,22 +126,6 @@ namespace ClearBlazor
         {
             string css = string.Empty;
 
-            string justify = "start";
-            switch (Columns[column - 1].HorizontalHeaderAlignment)
-            {
-                case Alignment.Stretch:
-                    justify = "stretch";
-                    break;
-                case Alignment.Start:
-                    justify = "start";
-                    break;
-                case Alignment.Center:
-                    justify = "center";
-                    break;
-                case Alignment.End:
-                    justify = "end";
-                    break;
-            }
             css += $"display:grid; " +
                    $"padding:{RowSpacing / 2}px {ColumnSpacing / 2}px {RowSpacing / 2}px {ColumnSpacing / 2}px;" +
                    $"grid-area: 1 / {column} /span 1 /span 1; justify-self: stretch;" +
@@ -154,7 +138,7 @@ namespace ClearBlazor
             string css = string.Empty;
             css += $"align-self:start; border-width:1px 0 0 0; border-style:solid; z-index:1; " +
                    $"grid-area: 2 / 1 / span 1 / span {columnCount}; " +
-                   $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                   $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             return css;
         }
 
@@ -163,7 +147,7 @@ namespace ClearBlazor
             string css = $"justify-self:start; z-index:1; border-width:0 0 0 1px; " +
                          $"border-style:solid; margin:0 0 0 -1px; "+
                          $"grid-area: 1 / {column} / span 1 / span 1; " +
-                         $"border-color: {ThemeManager.CurrentPalette.GrayLight.Value}; ";
+                         $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             return css;
         }
     }

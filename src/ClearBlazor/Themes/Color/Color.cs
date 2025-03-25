@@ -1,4 +1,6 @@
 ﻿using System.Globalization;
+using System.Runtime.InteropServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ClearBlazor;
 
@@ -13,58 +15,48 @@ public class Color:IEquatable<Color>
     public static Color Success { get; private set; } = null!;
     public static Color Warning { get; private set; } = null!;
     public static Color Error { get; private set; } = null!;
-    public static Color Dark { get; private set; } = null!;
-    public static Color Light { get; private set; } = null!;
+    public static Color Surface { get; set; } = null!;
+    public static Color SurfaceContainerHigh { get; set; } = null!;
     public static Color Transparent { get; private set; } = null!;
-    public static Color Background { get; set; } = null!;
-    public static Color BackgroundGrey { get; set; } = null!;
 
     public static void SetColors()
     {
-        Primary = ThemeManager.CurrentPalette.Primary;
-        Secondary = ThemeManager.CurrentPalette.Secondary;
-        Tertiary = ThemeManager.CurrentPalette.Tertiary;
-        Info = ThemeManager.CurrentPalette.Info;
-        Success = ThemeManager.CurrentPalette.Success;
-        Warning = ThemeManager.CurrentPalette.Warning;
-        Error = ThemeManager.CurrentPalette.Error;
-        Dark = ThemeManager.CurrentPalette.Dark;
-        Light = ThemeManager.CurrentPalette.GrayLighter;
+        Primary = ThemeManager.CurrentColorScheme.Primary;
+        Secondary = ThemeManager.CurrentColorScheme.Secondary;
+        Tertiary = ThemeManager.CurrentColorScheme.Tertiary;
+        Info = ThemeManager.CurrentColorScheme.Info;
+        Success = ThemeManager.CurrentColorScheme.Success;
+        Warning = ThemeManager.CurrentColorScheme.Warning;
+        Error = ThemeManager.CurrentColorScheme.Error;
+        Surface = ThemeManager.CurrentColorScheme.Surface;
+        SurfaceContainerHigh = ThemeManager.CurrentColorScheme.SurfaceContainerHigh;
         Transparent = new("#00000000");
-
-        Background = ThemeManager.CurrentPalette.Background;
-        BackgroundGrey = ThemeManager.CurrentPalette.BackgroundGrey;
     }
 
     public static Color GetAssocTextColor(Color? color)
     {
         if (color == null)
-            return ThemeManager.CurrentPalette.PrimaryContrastText;
-        if (color == Color.Primary)
-            return ThemeManager.CurrentPalette.PrimaryContrastText;
-        if (color == Color.Secondary)
-            return ThemeManager.CurrentPalette.SecondaryContrastText;
-        if (color == Color.Tertiary)
-            return ThemeManager.CurrentPalette.TertiaryContrastText;
-        if (color == Color.Info)
-            return ThemeManager.CurrentPalette.InfoContrastText;
-        if (color == Color.Success)
-            return ThemeManager.CurrentPalette.SuccessContrastText;
-        if (color == Color.Warning)
-            return ThemeManager.CurrentPalette.WarningContrastText;
-        if (color == Color.Error)
-            return ThemeManager.CurrentPalette.ErrorContrastText;
-        if (color == Color.Dark)
-            return ThemeManager.CurrentPalette.DarkContrastText;
-        if (color == Color.Light)
-            return ThemeManager.CurrentPalette.GrayLighterContrastText;
+            return ThemeManager.CurrentColorScheme.OnPrimary;
+        if (color.Equals(Color.Primary))
+            return ThemeManager.CurrentColorScheme.OnPrimary;
+        if (color.Equals(Color.Secondary))
+            return ThemeManager.CurrentColorScheme.OnSecondary;
+        if (color.Equals(Color.Tertiary))
+            return ThemeManager.CurrentColorScheme.OnTertiary;
+        if (color.Equals(Color.Info))
+            return ThemeManager.CurrentColorScheme.OnInfo;
+        if (color.Equals(Color.Success))
+            return ThemeManager.CurrentColorScheme.OnSuccess;
+        if (color.Equals(Color.Warning))
+            return ThemeManager.CurrentColorScheme.OnWarning;
+        if (color.Equals(Color.Error))
+            return ThemeManager.CurrentColorScheme.OnError;
 
         return ContrastingColor(color);
     }
 
     public static Color Custom(string colorValue)
     {
-        var color = new Color(colorValue);
         return new Color(colorValue);
     }
 
@@ -177,17 +169,24 @@ public class Color:IEquatable<Color>
     public Color RgbLighten() => Lighten(0.075);
     public Color RgbDarken() => Darken(0.075);
 
-
     public static Color ContrastingColor(Color color)
     {
-        if (color.A == 0)
-            return Color.Dark;
-
-        int nThreshold = 105;
-        int bgDelta = Convert.ToInt32((color.R * 0.299) + (color.G * 0.587) +
-                                      (color.B * 0.114));
-
-        return (255 - bgDelta < nThreshold) ? Color.Dark : Color.Light;
+        const double minContrast = 128;
+        const double maxContrast = 255;
+        double y = Math.Round(0.299 * color.R + 0.587 * color.G + 0.114 * color.B); // luma
+        double oy = 255 - y; // opposite
+        double dy = oy - y; // delta
+        if (Math.Abs(dy) > maxContrast)
+        {
+            dy = Math.Sign(dy) * maxContrast;
+            oy = y + dy;
+        }
+        else if (Math.Abs(dy) < minContrast)
+        {
+            dy = Math.Sign(dy) * minContrast;
+            oy = y + dy;
+        }
+        return new Color((byte)oy,(byte)oy,(byte)oy,255);
     }
 
     private void GetRGBAFromValue(string value)

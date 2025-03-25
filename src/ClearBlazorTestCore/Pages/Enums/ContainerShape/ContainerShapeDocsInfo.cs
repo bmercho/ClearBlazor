@@ -11,7 +11,8 @@ namespace ClearBlazorTest
         {
             new ApiFieldInfo("Circle", "ContainerShape", "Circle shape\r"),
             new ApiFieldInfo("Square", "ContainerShape", "Square shape\r"),
-            new ApiFieldInfo("SquareRounded", "ContainerShape", "Square but with rounded corners\r"),
+            new ApiFieldInfo("Rounded", "ContainerShape", "Has rounded corners\r"),
+            new ApiFieldInfo("FullyRounded", "ContainerShape", "Quarter circle corners\r"),
         };
     }
 }

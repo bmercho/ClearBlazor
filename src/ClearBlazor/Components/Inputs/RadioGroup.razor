@@ -9,8 +9,8 @@
             {
                 <div style=@GetLabelStyle()>@Label</div>
             }
-            <Grid Columns="*,auto" BackgroundColor=Color.Transparent>
-                <StackPanel Orientation=@Orientation Spacing=@Spacing BackgroundColor=Color.Transparent>
+            <Grid Columns="*,auto">
+                <StackPanel Orientation=@Orientation Spacing=@Spacing>
                     @ChildContent
                     @if (RadioGroupData != null)
                     {
@@ -22,7 +22,7 @@
                 </StackPanel>
                 @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                 {
-                    <MaterialIcon Column=1 Icon="@Icons.Material.Filled.FmdBad" Size=@Size ToolTip=@ValidationMessage
+                    <Icon Column=1 IconName="@Icons.Material.Filled.FmdBad" Size=@Size ToolTip=@ValidationMessage
                                   Color=@Color.Error />
                 }
 

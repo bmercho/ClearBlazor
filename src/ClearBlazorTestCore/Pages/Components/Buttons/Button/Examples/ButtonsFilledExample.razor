@@ -1,8 +1,8 @@
 ﻿@namespace ClearBlazorTest
-<Button ButtonStyle=TextEditFillMode.Filled OnClicked="@Clicked">Default</Button>
-<Button ButtonStyle=TextEditFillMode.Filled Color="@Color.Primary" OnClicked="@Clicked">Primary</Button>
-<Button ButtonStyle=TextEditFillMode.Filled Color="@Color.Secondary">Secondary</Button>
-<Button ButtonStyle=TextEditFillMode.Filled Disabled=true>Disabled</Button>
+<Button ButtonStyle=ButtonStyle.Filled OnClicked="@Clicked">Default</Button>
+<Button ButtonStyle=ButtonStyle.Filled Color="@Color.Primary" OnClicked="@Clicked">Primary</Button>
+<Button ButtonStyle=ButtonStyle.Filled Color="@Color.Error">Error</Button>
+<Button ButtonStyle=ButtonStyle.Filled Disabled=true>Disabled</Button>
 
 @code {
 

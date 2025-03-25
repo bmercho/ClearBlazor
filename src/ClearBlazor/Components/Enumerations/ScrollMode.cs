@@ -6,7 +6,7 @@
     public enum ScrollMode
     {
         /// <summary>
-        /// No scroll bar will be shown
+        /// No scroll bar is shown
         /// </summary>
         Disabled, 
         /// <summary>
@@ -14,7 +14,7 @@
         /// </summary>
         Enabled, 
         /// <summary>
-        /// Scroll bar will be shown when container overflowed.
+        /// Scroll bar will be shown only when container has overflowed.
         /// </summary>
         Auto
     }

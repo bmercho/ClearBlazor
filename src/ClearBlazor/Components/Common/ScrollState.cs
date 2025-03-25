@@ -11,6 +11,8 @@
 
         public bool Equals(ScrollState? other)
         {
+            if (other == null)
+                return false;
             if (ScrollTop != other.ScrollTop ||
                 ScrollLeft != other.ScrollLeft ||
                 ScrollHeight != other.ScrollHeight ||

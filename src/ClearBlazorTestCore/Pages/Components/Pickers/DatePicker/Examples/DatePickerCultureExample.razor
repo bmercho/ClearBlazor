@@ -2,17 +2,9 @@
 @using System.Globalization
 
 @namespace ClearBlazorTest
-<TextBlock>Local Culture</TextBlock>
-<DatePicker BorderThickness=2 CornerRadius=4 @bind-Date=Date1 />
-<TextBlock>@Date1</TextBlock>
-
 <TextBlock>Local Culture - First day of week overridden to Monday</TextBlock>
 <DatePicker BorderThickness=2 CornerRadius=4 @bind-Date=Date1 FirstDayOfTheWeek=ClearBlazor.FirstDayOfTheWeek.Monday />
 <TextBlock>@Date1</TextBlock>
-
-<TextBlock>Local Culture - US</TextBlock>
-<DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date2 Culture=@(new CultureInfo("en-US")) />
-<TextBlock>@Date2</TextBlock>
 
 <TextBlock>Local Culture - France</TextBlock>
 <DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date3 Culture=@(new CultureInfo("fr-FR")) />

@@ -16,11 +16,13 @@
         }
         else if (!string.IsNullOrEmpty(Icon))
         {
-            <MaterialIcon Size=@Size Icon=@Icon Color=@IconColor HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center/>
+            <Icon Size=@Size IconName=@Icon Color=@IconColor HorizontalAlignment=Alignment.Center
+                  VerticalAlignment=Alignment.Center/>
         }
         else if (!string.IsNullOrEmpty(Image))
         {
-            <Image VerticalAlignment="Alignment.Center" HorizontalAlignment="Alignment.Center" Stretch="ImageStretch.UniformToFill" Source="@Image" />
+            <Image VerticalAlignment="Alignment.Center" HorizontalAlignment="Alignment.Center" 
+                   Stretch="ImageStretch.UniformToFill" Source="@Image" />
         }
     </div>
 

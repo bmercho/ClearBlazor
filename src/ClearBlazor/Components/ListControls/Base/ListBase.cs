@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace ClearBlazorInternal
 {
-    public class ListBase<TItem> : ClearComponentBase, IBorder, IBackground, IBoxShadow
+    public class ListBase<TItem> : ClearComponentBase, IBorder, IBoxShadow, IBackground
            where TItem : ListItem
     {
         /// <summary>
@@ -117,7 +117,7 @@ namespace ClearBlazorInternal
         /// See <a href="IBackgroundApi">IBackground</a>
         /// </summary>
         [Parameter]
-        public Color? BackgroundColor { get; set; } = ThemeManager.CurrentPalette.Background;
+        public Color? BackgroundColor { get; set; }
 
         internal int _totalNumItems = 0;
         private int _lastSelectedRow = 0;
@@ -128,6 +128,7 @@ namespace ClearBlazorInternal
         internal bool _showHeader = true;
         internal Alignment _horizontalContentAlignment = Alignment.Stretch;
         internal double _iconWidth = 0;
+        internal double _iconHeight = 0;
         internal GridLines _horizontalGridLines = GridLines.None;
         internal GridLines _verticalGridLines = GridLines.None;
         internal ListRowBase<TItem>? _highlightedItem = null;
@@ -467,7 +468,7 @@ namespace ClearBlazorInternal
             }
             return new List<TItem>();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new List<TItem>();
             }

@@ -1,24 +1,48 @@
 using global::Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Primitives;
 
 namespace ClearBlazor
 {
-    public partial class Radio<TItem> : InputBase
+    /// <summary>
+    /// A radio button input component
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
+    public partial class Radio<TItem> : InputBase,IBackground
     {
+        /// <summary>
+        /// Indicates whether the radio button is checked   
+        /// </summary>
         [Parameter]
         public bool Checked { get; set; } = false;
 
+        /// <summary>
+        /// The value of the radio button
+        /// </summary>
         [Parameter]
         public TItem? Value { get; set; }
 
+        /// <summary>
+        /// The location of the label
+        /// </summary>
         [Parameter]
         public LabelLocation LabelLocation { get; set; } = LabelLocation.End;
 
+        /// <summary>
+        /// The icon to display when the radio button is checked
+        /// </summary>
         [Parameter]
         public string CheckedIcon { get; set; } = Icons.Material.Filled.RadioButtonChecked;
 
+        /// <summary>
+        /// The icon to display when the radio button is unchecked
+        /// </summary>
         [Parameter]
         public string UncheckedIcon { get; set; } = Icons.Material.Filled.RadioButtonUnchecked;
+
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; } = null;
 
         internal Color? ColorOverride { get; set; } = null;
 
@@ -47,13 +71,13 @@ namespace ClearBlazor
             return css;
         }
 
-        public void Check()
+        internal void Check()
         {
             Checked = true;
             StateHasChanged();
         }
 
-        public void Uncheck()
+        internal void Uncheck()
         {
             Checked = false;
             StateHasChanged();

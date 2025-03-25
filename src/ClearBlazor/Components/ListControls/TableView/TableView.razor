@@ -5,7 +5,7 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id class=@Classes style=@ComputeStyle()>
-        <ScrollViewer @ref=_scrollViewer 
+        <ScrollViewer @ref=_scrollViewer
                       VerticalScrollMode=ScrollMode.Auto
                       Style="overflow-anchor: none;"
                       HorizontalScrollMode=@GetHorizontalScrollMode()
@@ -19,35 +19,35 @@
                             @if (ShowHeader)
                             {
                                 <TableViewHeader @ref=_header
-                                TItem=TItem
-                                VirtualizeMode=@VirtualizeMode
-                                HeaderId=@_headerId
-                                RowSpacing=@RowSpacing
-                                ColumnSpacing=@_columnSpacing
-                                HorizontalGridLines=@_horizontalGridLines
-                                VerticalGridLines=@_verticalGridLines
-                                StickyHeader=@_stickyHeader
-                                RowHeight=@RowHeight
-                                Columns=@Columns />
+                                                 TItem=TItem
+                                                 VirtualizeMode=@VirtualizeMode
+                                                 HeaderId=@_headerId
+                                                 RowSpacing=@RowSpacing
+                                                 ColumnSpacing=@_columnSpacing
+                                                 HorizontalGridLines=@_horizontalGridLines
+                                                 VerticalGridLines=@_verticalGridLines
+                                                 StickyHeader=@_stickyHeader
+                                                 RowHeight=@RowHeight
+                                                 Columns=@Columns />
                             }
                             @if (VirtualizeMode == VirtualizeMode.Virtualize)
                             {
-                                <div style=@GetSpacerStyle()/>
+                                <div style=@GetSpacerStyle() />
                             }
 
                             @foreach (var row in _items.Select((item, index) => new { item, index }))
                             {
-                                    <TableViewRow TItem=TItem
-                                                 RowData=@row.item
-                                                 RowIndex=@row.item.ItemIndex
-                                                 Index=row.index
-                                                 RowId=@(_baseRowId + row.index.ToString())
-                                                 RowSpacing=@RowSpacing
-                                                 ColumnSpacing=@_columnSpacing
-                                                 VerticalGridLines=@_verticalGridLines
-                                                 Columns=@Columns />
+                                <TableViewRow TItem=TItem
+                                              RowData=@row.item
+                                              RowIndex=@row.item.ItemIndex
+                                              Index=row.index
+                                              RowId=@(_baseRowId + row.index.ToString())
+                                              RowSpacing=@RowSpacing
+                                              ColumnSpacing=@_columnSpacing
+                                              VerticalGridLines=@_verticalGridLines
+                                              Columns=@Columns />
                             }
-                           
+
 
 
                             @for (int col = 0; col < Columns.Count; col++)
@@ -57,7 +57,7 @@
                                 {
                                     @if (colIndex != Columns.Count - 1)
                                     {
-                                        <div style=@GetVerticalGridLineStyle(colIndex+2) />
+                                        <div style=@GetVerticalGridLineStyle(colIndex + 2) />
                                     }
                                 }
                             }
@@ -68,14 +68,14 @@
             </Grid>
             @if (_loadingUp && ShowLoadingSpinner)
             {
-                <Grid BackgroundColor=Color.Transparent Margin=20 Column=0 ColumnSpan=@Columns.Count
+                <Grid Margin=20 Column=0 ColumnSpan=@Columns.Count
                       HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Start>
                     <Spinner Style="z-index:1;" />
                 </Grid>
             }
             @if (_loadingDown && ShowLoadingSpinner)
             {
-                <Grid BackgroundColor=Color.Transparent Margin=20 Column=0 ColumnSpan=@Columns.Count
+                <Grid Margin=20 Column=0 ColumnSpan=@Columns.Count
                       HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.End>
                     <Spinner />
                 </Grid>

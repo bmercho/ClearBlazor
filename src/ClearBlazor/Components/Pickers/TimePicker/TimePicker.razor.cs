@@ -6,42 +6,83 @@ using Microsoft.JSInterop;
 
 namespace ClearBlazor
 {
-    public partial class TimePicker : InputBase, IBorder
+    /// <summary>
+    /// Control to select a time.
+    /// </summary>
+    public partial class TimePicker : InputBase, IBorder,IBackground, IBoxShadow
     {
+        /// <summary>
+        /// The initially selected time 
+        /// </summary>
         [Parameter]
         public TimeOnly? Time { get; set; } = null;
 
+        /// <summary>
+        /// Event raised when the time selection has changed
+        /// </summary>
         [Parameter]
         public EventCallback<TimeOnly?> TimeChanged { get; set; }
 
+        /// <summary>
+        /// Event raised when the minute value has been selected indicating that 
+        /// the time selection has been completed
+        /// </summary>
         [Parameter]
         public EventCallback MinuteSelected { get; set; }
 
-
+        /// <summary>
+        /// Indicates if the selection mode is 24 hours.
+        /// </summary>
         [Parameter]
         public bool Hours24 { get; set; } = false;
 
+        /// <summary>
+        /// Indicates the step value as the minute handle is dragged or minute clicked  
+        /// </summary>
         [Parameter]
         public MinuteStep MinuteStep { get; set; } = MinuteStep.One;
 
+        /// <summary>
+        /// The orientation of the control
+        /// </summary>
         [Parameter]
         public Orientation Orientation { get; set; } = Orientation.Portrait;
 
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
+        [Parameter]
+        public Color? BackgroundColor { get; set; } = ThemeManager.CurrentColorScheme.SurfaceContainerHighest;
+
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
         [Parameter]
         public string? BorderThickness { get; set; }
 
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
         [Parameter]
         public Color? BorderColor { get; set; }
 
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
         [Parameter]
         public BorderStyle? BorderStyle { get; set; }
 
+        /// <summary>
+        /// See <a href="IBorderApi">IBorder</a>
+        /// </summary>
         [Parameter]
         public string? CornerRadius { get; set; }
 
-
+        /// <summary>
+        /// See <a href="IBoxShadowApi">IBoxShadow</a>
+        /// </summary>
         [Parameter]
-        public int? BoxShadow { get; set; } = null;
+        public int? BoxShadow { get; set; }
 
         public string CanvasId { get; set; } = Guid.NewGuid().ToString();
 
@@ -95,13 +136,13 @@ namespace ClearBlazor
         protected override string UpdateStyle(string css)
         {
             if (Orientation == Orientation.Portrait)
-                css += $"display:grid; background-color:transparent; width:{PickerHeaderSize}px; ";
+                css += $"display:grid; width:{PickerHeaderSize}px; ";
             else
-                css += $"display:grid; align-self:start; background-color:transparent; height:{PickerHeaderSize}px; ";
+                css += $"display:grid; align-self:start; height:{PickerHeaderSize}px; ";
             return css;
         }
 
-        public void SetMode(PickerMode mode)
+        internal void SetMode(PickerMode mode)
         {
             PickerMode = mode;
             MyCanvas?.RefreshCanvas();
@@ -112,7 +153,7 @@ namespace ClearBlazor
             CanvasSize = size;
         }
 
-        public async Task PaintCanvas(Batch2D context)
+        private async Task PaintCanvas(Batch2D context)
         {
             if (CanvasSize == null)
                 return;
@@ -131,7 +172,7 @@ namespace ClearBlazor
         {
             await context.BeginPathAsync();
             await context.ArcAsync(0, 0, radius, 0, 2 * Math.PI);
-            await context.FillStyleAsync(Color.BackgroundGrey.Darken(.1).Value);
+            await context.FillStyleAsync(ThemeManager.CurrentColorScheme.OutlineVariant.Value);
             await context.FillAsync(FillRule.NonZero);
             await context.ClosePathAsync();
 
@@ -210,23 +251,22 @@ namespace ClearBlazor
 
         private async Task DrawNumbers(Batch2D context)
         {
-            await context.FillStyleAsync(Color.Dark.Value);
             var fontFamily = ThemeManager.CurrentTheme.Typography.Default.FontFamily[0];
             await context.TextBaseLineAsync(TextBaseLine.Middle);
             await context.TextAlignAsync(TextAlign.Center);
             for (var num = 1; num < 13; num++)
             {
                 await context.FontAsync($"1rem {fontFamily}");
-                await context.FillStyleAsync(Color.Dark.Value);
+                await context.FillStyleAsync(ThemeManager.CurrentColorScheme.OnSurface.Value);
                 if (PickerMode == PickerMode.Minute)
                 {
                     if (Minute % 60 == num * 5 % 60)
-                        await context.FillStyleAsync(Color.ContrastingColor(Color.Dark).Value);
+                        await context.FillStyleAsync(Color.ContrastingColor(ThemeManager.CurrentColorScheme.OnSurface).Value);
                 }
                 else
                 {
                     if (Hour <= 12 && Hour != 0 && Hour % 12 == num % 12)
-                        await context.FillStyleAsync(Color.ContrastingColor(Color.Dark).Value);
+                        await context.FillStyleAsync(Color.ContrastingColor(ThemeManager.CurrentColorScheme.OnSurface).Value);
                 }
 
                 var ang = num * Math.PI / 6;
@@ -245,9 +285,9 @@ namespace ClearBlazor
                 if (PickerMode == PickerMode.Hour24)
                 {
                     if ((Hour > 12 || Hour == 0) && Hour % 12 == num % 12)
-                        await context.FillStyleAsync(Color.ContrastingColor(Color.Dark).Value);
+                        await context.FillStyleAsync(Color.ContrastingColor(ThemeManager.CurrentColorScheme.OnSurface).Value);
                     else
-                        await context.FillStyleAsync(Color.Dark.Value);
+                        await context.FillStyleAsync(ThemeManager.CurrentColorScheme.OnSurface.Value);
                     await context.FontAsync($"0.8rem {fontFamily}");
                     await context.RotateAsync(ang);
                     await context.TranslateAsync(0, -PickerInnerTextRadius);
@@ -437,7 +477,7 @@ namespace ClearBlazor
                 if (closestNum == 0 || Math.Abs(ang1 - ang) < closestDiff || Math.Abs(ang1 - ang - 360 * Math.PI / 180) < closestDiff)
                 {
                     closestDiff = Math.Abs(ang1 - ang);
-                    if (Hours24)
+                    if (PickerMode != PickerMode.Minute && Hours24)
                         if (Math.Abs(radius - PickerOuterTextRadius) < Math.Abs(radius - PickerInnerTextRadius))
                             closestNum = num;
                         else

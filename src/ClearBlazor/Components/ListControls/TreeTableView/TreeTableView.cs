@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// Represents a tree table view that can display hierarchical data with customizable options for headers and grid
+    /// lines.
+    /// </summary>
     public class TreeTableView<TItem> : TreeViewBase<TItem>  
              where TItem : TreeItem<TItem>
     {

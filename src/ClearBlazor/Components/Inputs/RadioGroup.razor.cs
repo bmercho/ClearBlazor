@@ -2,29 +2,57 @@ using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
 {
+    /// <summary>
+    /// A radio group input component
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
     public partial class RadioGroup<TItem> : InputBase, IBackground
     {
+        /// <summary>
+        /// The child content of this control.
+        /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
+        /// <summary>
+        /// When used in a form, indicates if the field is required
+        /// </summary>
         [Parameter]
         public bool Required { get; set; } = false;
 
+        /// <summary>
+        /// The value of the radio group
+        /// </summary>
         [Parameter]
         public TItem? Value { get; set; }
 
+        /// <summary>
+        /// The data to be displayed in the radio group
+        /// </summary>
         [Parameter]
         public List<RadioGroupDataItem<TItem>> RadioGroupData { get; set; } = new List<RadioGroupDataItem<TItem>>();
 
+        /// <summary>
+        /// The orientation of the radio group
+        /// </summary>
         [Parameter]
         public Orientation Orientation { get; set; } = Orientation.Landscape;
 
+        /// <summary>
+        /// The spacing between the radio buttons
+        /// </summary>
         [Parameter]
         public int Spacing { get; set; } = 0;
 
+        /// <summary>
+        /// Event that is triggered when the value of the radio group changes
+        /// </summary>
         [Parameter]
         public EventCallback<TItem> ValueChanged { get; set; }
 
+        /// <summary>
+        /// See <a href="IBackgroundApi">IBackground</a>
+        /// </summary>
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
 
@@ -64,7 +92,7 @@ namespace ClearBlazor
             return css;
         }
 
-        public async Task SetNewSelection(Radio<TItem> radio, TItem? value)
+        internal async Task SetNewSelection(Radio<TItem> radio, TItem? value)
         {
             if (_selectedRadio != null)
                 _selectedRadio.Uncheck();
@@ -75,7 +103,7 @@ namespace ClearBlazor
             StateHasChanged();
         }
 
-        public override async Task<bool> ValidateField()
+        internal override async Task<bool> ValidateField()
         {
             IsValid = true;
             ValidationErrorMessages.Clear();
@@ -87,22 +115,6 @@ namespace ClearBlazor
             }
             await Task.CompletedTask;
             return IsValid;
-        }
-    }
-
-    public class RadioGroupDataItem<TItem>
-    {
-        public string Name { get; set; } = string.Empty;
-        public TItem? Value { get; set; } = default;
-
-        public RadioGroupDataItem()
-        {
-        }
-
-        public RadioGroupDataItem(string name, TItem value)
-        {
-            Name = name;
-            Value = value;
         }
     }
 }

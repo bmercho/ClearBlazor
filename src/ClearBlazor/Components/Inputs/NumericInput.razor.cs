@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Primitives;
 using Microsoft.JSInterop;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Reflection;
+using System.Numerics;
 
 namespace ClearBlazor
 {
@@ -19,16 +17,11 @@ namespace ClearBlazor
         public bool ShowSpinButtons { get; set; } = false;
 
         [Parameter]
-        public TItem? Step
-        {
-            get => GetValueFromString(_step);
-            set => _step = GetValueAsString(value);
-        }
+        public TItem? Step { get; set; }
 
         [Parameter]
         public CultureInfo Culture { get; set; } = CultureInfo.InvariantCulture;
 
-        private string _step = "1";
 
         protected string? StringValue = null;
 
@@ -40,7 +33,7 @@ namespace ClearBlazor
                 if (StringValue != null &&
                     (StringValue.EndsWith(Culture.NumberFormat.NumberDecimalSeparator) ||
                      StringValue.EndsWith("-") ||
-                GetValueAsString(Value) != StringValue &&
+                GetValueAsString(Value) != StringValue && Value != null &&
                      Value.Equals(GetValueFromString(StringValue))))
                     return;
 
@@ -62,7 +55,7 @@ namespace ClearBlazor
         protected async Task OnInput(ChangeEventArgs e)
         {
             StringValue = e.Value as string;
-            Value = GetValueFromString(StringValue);
+            Value = GetValueFromString(StringValue) ?? GetValueFromString("1"); 
             if (Immediate)
                 await HandleValueChange();
         }
@@ -106,7 +99,7 @@ namespace ClearBlazor
             return value?.ToString() ?? string.Empty;
         }
 
-        public override async Task<bool> ValidateField()
+        internal override async Task<bool> ValidateField()
         {
             IsValid = true;
             ValidationErrorMessages.Clear();

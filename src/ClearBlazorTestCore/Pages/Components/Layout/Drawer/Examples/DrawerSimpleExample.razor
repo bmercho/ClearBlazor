@@ -1,13 +1,13 @@
 ﻿@namespace ClearBlazorTest
-<Grid Rows=@_rows Columns=@_columns HorizontalAlignment=Alignment.Start BoxShadow=4>
-    <Drawer @ref=Drawer BackgroundColor=Color.BackgroundGrey
+<Grid Rows=@_rows Columns=@_columns HorizontalAlignment=Alignment.Start BorderThickness=1>
+    <Drawer @ref=Drawer
             @bind-Open=Open
             DrawerLocation=@_drawerLocation
             DrawerMode=@_drawerMode
             OverlayEnabled=@_showOverlay>
         <DrawerContent>
             <Grid CornerRadius=4>
-                <ListBox TListBox=string BackgroundColor=Color.Primary>
+                <ListBox TListBox=string>
                     <ListBoxItem Text="Item1" Icon=@Icons.Material.Filled.AddHome OnClicked=@Close />
                     <ListBoxItem Text="Item2" Icon=@Icons.Material.Filled.DeleteForever InitiallyExpanded="true">
                         <ListBoxItem Text="Item3" Icon=@Icons.Material.Filled.Delete OnClicked=@Close />
@@ -20,15 +20,14 @@
             </Grid>
         </DrawerContent>
         <DrawerBody>
-            <Grid BackgroundColor=Color.Light>
+            <Grid>
                 <Button HorizontalAlignment=Alignment.Center Margin=5 OnClicked=@Toggle>Toggle</Button>
             </Grid>
         </DrawerBody>
     </Drawer>
 
-    <StackPanel Orientation=Orientation.Portrait BackgroundColor=Color.Light Row=1>
+    <StackPanel Orientation=Orientation.Portrait Row=1>
         <RadioGroup Margin=20 Label="Drawer location" BackgroundColor=Color.Transparent
-                    Color=Color.Dark
                     @bind-Value=_drawerLocation @bind-Value:after=@LocationChanged>
             @foreach (DrawerLocation item in Enum.GetValues(typeof(DrawerLocation)))
             {
@@ -36,7 +35,6 @@
             }
         </RadioGroup>
         <RadioGroup Margin=20 Label="Drawer mode" BackgroundColor=Color.Transparent
-                    Color=Color.Dark
                     @bind-Value=_drawerMode @bind-Value:after=@ModeChanged>
             @foreach (DrawerMode item in Enum.GetValues(typeof(DrawerMode)))
             {
@@ -44,14 +42,12 @@
             }
         </RadioGroup>
         <CheckBox Margin=20 Label="Show overlay (only for temporary mode)"
-                  BackgroundColor=Color.Transparent 
-            Color=Color.Dark
-            @bind-Checked=@_showOverlay />
+                  @bind-Checked=@_showOverlay />
     </StackPanel>
 </Grid>
 
 @code {
-    Drawer Drawer;
+    Drawer Drawer = null!;
 
     DrawerLocation _drawerLocation = DrawerLocation.Left;
     DrawerMode _drawerMode = DrawerMode.Permanent;

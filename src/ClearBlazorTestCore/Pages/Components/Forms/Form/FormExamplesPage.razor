@@ -1,7 +1,6 @@
 ﻿@page "/Form"
 @using ClearBlazorTest
 <DocsExamplesPage DocsInfo=@(new FormDocsInfo())>
-    <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Forms</TextBlock>
     <StackPanel Padding="20" Spacing="30">
         <CodeSnippet Title="Basic" Code=@(typeof(FormSimpleExample).Name)>
             <FormSimpleExample />

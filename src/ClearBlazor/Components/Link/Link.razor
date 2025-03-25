@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<div id=@Id style=@ComputeStyle() 
+     @onmouseenter="OnMouseEnter"
+     @onmouseleave="OnMouseLeave">
+    <TextBlock Clickable=true Color=@ThemeManager.CurrentColorScheme.Primary 
+               TextDecoration=@GetTextDecoration() 
+               OnClicked=@OnLinkClicked>
+        @ChildContent
+    </TextBlock>
+</div>
+
