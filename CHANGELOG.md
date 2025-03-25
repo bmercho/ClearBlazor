@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.21
+
+### Patch Changes
+
+- 26393cd: Bug fixes
+
 ## 0.0.20
 
 ### Patch Changes
