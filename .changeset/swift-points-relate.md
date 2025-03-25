@@ -1,5 +1,0 @@
----
-"ClearBlazor": patch
----
-
-Bug fixes
