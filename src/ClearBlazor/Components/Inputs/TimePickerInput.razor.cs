@@ -69,9 +69,7 @@ namespace ClearBlazor
         private bool PopupOpen = false;
         private SizeInfo? SizeInfo = null;
         private ElementReference PickerElement;
-        private TimeOnly? CurrentTime = null;
         private TimePicker? TimePicker = null;
-
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -80,8 +78,6 @@ namespace ClearBlazor
             if (SizeInfo != null)
                 existing = SizeInfo;
             SizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", PickerElement);
-           if (CurrentTime == null)
-                CurrentTime = Value;
         }
 
         private bool IsMouseNotOver()
@@ -113,7 +109,6 @@ namespace ClearBlazor
                     TimePicker.SetMode(PickerMode.Hour24);
                 else
                     TimePicker.SetMode(PickerMode.Hour12);
-                Value = CurrentTime;
                 await ValueChanged.InvokeAsync(Value);
             }
         }
@@ -122,13 +117,18 @@ namespace ClearBlazor
         {
             PopupOpen = false;
             StateHasChanged();
-            Value = CurrentTime;
             await ValueChanged.InvokeAsync(Value);
             if (TimePicker != null)
                 if (Hours24)
                     TimePicker.SetMode(PickerMode.Hour24);
                 else
                     TimePicker.SetMode(PickerMode.Hour12);
+        }
+
+        private async Task TimeChanged()
+        {
+            await ValueChanged.InvokeAsync(Value);
+            StateHasChanged();
         }
     }
 }

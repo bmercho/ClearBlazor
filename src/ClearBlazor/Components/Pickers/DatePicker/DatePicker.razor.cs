@@ -233,13 +233,16 @@ namespace ClearBlazor
             }
         }
 
-        private void OnYearClicked(YearItem year)
+        private async Task OnYearClicked(YearItem year)
         {
             if (IsReadOnly || IsDisabled)
                 return;
 
             SelectedDate = SelectedDate.AddYears(year.Year - SelectedDate.Year);
             Mode = DatePickerMode.Month;
+
+            Date = SelectedDate;
+            await DateChanged.InvokeAsync(Date);
             StateHasChanged();
         }
 
@@ -255,13 +258,15 @@ namespace ClearBlazor
             return css;
         }
 
-        private void OnMonthClicked(int month)
+        private async Task OnMonthClicked(int month)
         {
             if (IsReadOnly || IsDisabled)
                 return;
 
             SelectedDate = SelectedDate.AddMonths(month - SelectedDate.Month);
             Mode = DatePickerMode.Day;
+            Date = SelectedDate;
+            await DateChanged.InvokeAsync(Date);
             StateHasChanged();
         }
 
@@ -373,38 +378,47 @@ namespace ClearBlazor
                 return names[(day + 1) % 7];
         }
 
-        private void OnAddYear()
-        {            if (IsReadOnly || IsDisabled)
+        private async Task OnAddYear()
+        {            
+            if (IsReadOnly || IsDisabled)
                 return;
 
             SelectedDate = SelectedDate.AddYears(1);
+            Date = SelectedDate;
+            await DateChanged.InvokeAsync(Date);
             StateHasChanged();
         }
 
-        private void OnSubtractYear()
+        private async Task OnSubtractYear()
         {
             if (IsReadOnly || IsDisabled)
                 return;
 
             SelectedDate = SelectedDate.AddYears(-1);
+            Date = SelectedDate;
+            await DateChanged.InvokeAsync(Date);
             StateHasChanged();
         }
 
-        private void OnSubtractMonth()
+        private async Task OnSubtractMonth()
         {
             if (IsReadOnly || IsDisabled)
                 return;
 
             SelectedDate = SelectedDate.AddMonths(-1);
+            Date = SelectedDate;
+            await DateChanged.InvokeAsync(Date);
             StateHasChanged();
         }
 
-        private void OnAddMonth()
+        private async Task OnAddMonth()
         {
             if (IsReadOnly || IsDisabled)
                 return;
 
             SelectedDate = SelectedDate.AddMonths(1);
+            Date = SelectedDate;
+            await DateChanged.InvokeAsync(Date);
             StateHasChanged();
         }
 

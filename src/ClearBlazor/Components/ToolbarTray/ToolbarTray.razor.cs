@@ -4,6 +4,7 @@ namespace ClearBlazor
 {
     /// <summary>
     /// A control that holds a number of toolbars, that can be reordered and placed on new lines.
+    /// ****To be completed****
     /// </summary>
     public partial class ToolbarTray:ClearComponentBase, IBackground
     {
