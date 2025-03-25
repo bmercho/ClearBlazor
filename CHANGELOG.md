@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.20
+
+### Patch Changes
+
+- 0722ebf: Update to material design 3
+
 ## 0.0.19
 
 ### Patch Changes
