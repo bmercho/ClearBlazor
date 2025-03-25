@@ -21,7 +21,8 @@
                            
                            @bind-Open=PopupOpen>
                         <TimePicker @ref="TimePicker" Hours24=@Hours24 MinuteStep=@MinuteStep Orientation=@Orientation
-                                    BorderThickness=1 CornerRadius=4 @bind-Time=CurrentTime MinuteSelected=@MinuteSelected />
+                                    BorderThickness=1 CornerRadius=4 @bind-Time=Value @bind-Time:after=TimeChanged
+                                    MinuteSelected=@MinuteSelected />
                     </Popup>
                      @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                     {

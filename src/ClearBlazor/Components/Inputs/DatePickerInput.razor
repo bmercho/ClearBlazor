@@ -10,7 +10,7 @@
             }
             <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
                   BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
-                <div @ref="PickerElement" style="display:grid; ">
+                <div style="display:grid; ">
                     <Grid MinWidth=200 Columns="*,auto" Margin=5 OnClicked=@TogglePopup>
                         <TextBlock VerticalAlignment=Alignment.Center>@DateString</TextBlock>
                         <IconButton Size=Size.Small Column=1 Icon=@Icons.Material.Outlined.CalendarMonth/>
@@ -20,7 +20,8 @@
                            AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
                            @bind-Open=PopupOpen>
                         <DatePicker Orientation=@Orientation BorderThickness=1 CornerRadius=4 
-                                    @bind-Date=CurrentDate DateSelected=@DateSelected/>
+                                    @bind-Date=Value @bind-Date:after=DateChanged 
+                                    DateSelected=@DateSelected />
                     </Popup>
                      @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                     {

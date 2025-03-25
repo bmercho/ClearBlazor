@@ -52,15 +52,6 @@ namespace ClearBlazor
         private string? DateString => Value == null ? string.Empty : ((DateOnly)Value).ToString(DateFormat);
 
         private bool PopupOpen = false;
-        private ElementReference PickerElement;
-        private DateOnly? CurrentDate = null;
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-           if (CurrentDate == null)
-                CurrentDate = Value;
-        }
 
         private bool IsMouseNotOver()
         {
@@ -85,9 +76,13 @@ namespace ClearBlazor
 
         private async Task DateSelected()
         {
-            Value = CurrentDate;
             await ValueChanged.InvokeAsync(Value);
             PopupOpen = false;
+            StateHasChanged();
+        }
+        private async Task DateChanged()
+        {
+            await ValueChanged.InvokeAsync(Value);
             StateHasChanged();
         }
     }

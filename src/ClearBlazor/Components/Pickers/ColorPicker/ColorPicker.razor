@@ -31,27 +31,27 @@
             </Grid>
             <Grid Row=2 Columns="2*,*,*,*,*,*">
                 <NumericInput IsReadOnly=true Size=Size.Small Margin="0,5,0,5" Label="Hex" 
-                              Column=0 Value=@Color?.Value ShowLabel=true />
+                              Column=0 Value=@Color?.Value/>
                 @if (hlsMode)
                 {
                     <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="H" 
-                                  Column=1 @bind-Value=HValue ShowLabel=true />
+                                  Column=1 @bind-Value=HValue />
                     <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="S"
-                                  Column=2 @bind-Value=SValue ShowLabel=true />
+                                  Column=2 @bind-Value=SValue/>
                     <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="L"
-                                  Column=3 @bind-Value=LValue ShowLabel=true />
+                                  Column=3 @bind-Value=LValue />
                 }
                 else
                 {
                     <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="R"
-                                  Column=1 @bind-Value=RValue ShowLabel=true />
+                                  Column=1 @bind-Value=RValue />
                     <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="G"
-                                  Column=2 @bind-Value=GValue ShowLabel=true />
+                                  Column=2 @bind-Value=GValue />
                     <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="B"
-                                  Column=3 @bind-Value=BValue ShowLabel=true />
+                                  Column=3 @bind-Value=BValue />
                 }
                 <NumericInput Size=Size.Small Immediate=true Margin="0,5,0,0" Label="A" 
-                              Column=4 @bind-Value=AValue ShowLabel=true />
+                              Column=4 @bind-Value=AValue />
                 <IconButton Margin="7,10,0,0" VerticalAlignment=Alignment.Center
                             Color=@ThemeManager.CurrentColorScheme.OnSurface
                             Column=5 Size=Size.Large Icon=@Icons.Material.Filled.Height
