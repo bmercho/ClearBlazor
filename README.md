@@ -24,9 +24,9 @@ Many other controls have also been implemented. See the [DEMO](https://icy-sea-0
 The source code contains 3 simple example projects under the folder 'GettingStartedExamples'. They provide examples for a Blazor WASM project, a Blazor Server project and a Blazor Auto(Wasm and Server) project.
 Note that Static Server Rendering (SSR) is not supported.
 
-Do the the following steps to setup a project for ClearBlazor:
+Perform the the following steps to setup a project for ClearBlazor:
 1. Include the lastest ClearBlazor nuget package
 2. Add '@using ClearBlazor' to the _Imports.razor file
-3. In MainLayout add the RootComponent as the base component and add other ClearBlazor components as required.
+3. In MainLayout.razor add the RootComponent as the base component and add other ClearBlazor components inside the RootComponent as required.
    
 
