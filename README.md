@@ -18,3 +18,15 @@ WPF like layout controls that have been implemented are:
 * ScrollViewer
 
 Many other controls have also been implemented. See the [DEMO](https://icy-sea-0e9ce5410.4.azurestaticapps.net)
+
+# Getting started
+
+The source code contains 3 simple example projects under the folder 'GettingStartedExamples'. They provide examples for a Blazor WASM project, a Blazor Server project and a Blazor Auto(Wasm and Server) project.
+Note that Static Server Rendering (SSR) is not supported.
+
+Do the the following steps to setup a project for ClearBlazor:
+1. Include the lastest ClearBlazor nuget package
+2. Add '@using ClearBlazor' to the _Imports.razor file
+3. In MainLayout add the RootComponent as the base component and add other ClearBlazor components as required.
+   
+
