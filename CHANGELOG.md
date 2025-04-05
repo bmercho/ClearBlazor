@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.0.23
+
+### Patch Changes
+
+- c5f1fd4: Doco and bug fixes
+
 ## 0.0.22
 
 ### Patch Changes
