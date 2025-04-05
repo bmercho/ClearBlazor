@@ -3,7 +3,7 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" class="@Classes" style="@ComputeStyle()">
-        <Grid Columns=@_cols RowSpacing="10">
+        <Grid Columns=@_cols RowSpacing=@RowSpacing>
             @foreach (var field in Fields)
             {
                 @if (field.IsVisible)
@@ -30,14 +30,16 @@
                 @onclick="@(e => AutoFormViewModel.ToggleExpand(field))" />
                 *@
                                     }
-                                    <TextBlock Typography=@GetLabelTypography() ToolTip=@field.TooltipForName>@field.DisplayName</TextBlock>
+                                    <TextBlock Typography=@GetLabelTypography() 
+                                               ToolTip=@field.TooltipForName>@field.DisplayName</TextBlock>
                                 </StackPanel>
                                 break;
                             case ItemType.ClassItem:
                             case ItemType.ListItem:
                                 <StackPanel Column="0" Row="Fields.IndexOf(field)" Orientation="Orientation.Landscape" VerticalAlignment="Alignment.Center">
                                     <TextBlock Margin=@GetMargin(field) />
-                                    <TextBlock Typography=@GetLabelTypography() ToolTip=@field.TooltipForName>@field.DisplayName</TextBlock>
+                                            <TextBlock Typography=@GetLabelTypography() 
+                                               ToolTip=@field.TooltipForName>@field.DisplayName</TextBlock>
                                 </StackPanel>
                                 break;
                             default:
@@ -60,7 +62,7 @@
                                 }
                 *@
                                 <Grid Column="1" Row="GetFieldIndex(field)">
-                                    <TextBlock Typography=@GetLabelTypography()>(Collection)</TextBlock>
+                                    <TextBlock Typography=@GetLabelTypography() >(Collection)</TextBlock>
                                 </Grid>
 @*                                 @if (!_localIsReadOnly)
                                 {
