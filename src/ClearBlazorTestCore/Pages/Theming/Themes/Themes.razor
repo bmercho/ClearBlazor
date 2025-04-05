@@ -1,0 +1,19 @@
+﻿@page "/Themes"
+@namespace ClearBlazorTest
+@using System.IO;
+@using System.Reflection;
+@using ClearBlazor
+
+<MarkdownViewer Margin=20 MarkdownString=@markdownString/>
+
+
+@code {
+        string markdownString = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        markdownString = ResourceFile.ReadResourceFile("Themes.md");
+    }
+}
