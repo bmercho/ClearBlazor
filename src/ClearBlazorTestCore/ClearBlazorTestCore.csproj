@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.40.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
   </ItemGroup>
 
@@ -57,6 +58,7 @@
     <Folder Include="Pages\Components\ContainerInputBase\" />
     <Folder Include="Pages\Enums\Alignment\" />
     <Folder Include="Pages\Interfaces\IBackground\" />
+    <Folder Include="Pages\Theming\Colors\" />
   </ItemGroup>
   <ItemGroup>
 	<EmbeddedResource Include="Pages\Components\Inputs\RadioGroup\Code\RadioGroupTypeExampleCode.html" />
@@ -210,6 +212,9 @@
 	<EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarImageExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Avatar\Code\AvatarIconExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\AppBar\Code\AppBarSimpleExampleCode.html" />
+	<EmbeddedResource Include="Pages\Theming\Themes\Themes.md">
+	  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Update="Pages\Components\TreeView\Examples\TreeViewVirtualizeExample.razor">

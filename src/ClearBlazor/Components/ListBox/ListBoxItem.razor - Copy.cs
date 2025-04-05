@@ -69,7 +69,7 @@ namespace ClearBlazor
         /// Indicates if the item is initially expanded
         /// </summary>
         [Parameter]
-        public bool InitiallyExpanded { get; set; } = false;
+        public bool InitiallyExpanded { get; set; } = true;
 
         [Inject]
         private NavigationManager NavManager { get; set; } = null!;
@@ -86,13 +86,12 @@ namespace ClearBlazor
         private string RowStyle = string.Empty;
         private string LinePadding = string.Empty;
         private string RowClasses = string.Empty;
-        internal bool? IsExpanded = null;
+        private bool IsExpanded = false;
         private bool MouseOver = false;
-        internal bool IsVisible = false;
+        private bool FirstTime = true;
+        private bool IsVisible = false;
         private bool IsSelected = false;
         private bool Multiselect = false;
-        private ListBox<TListBox>? _root;
-
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
@@ -101,36 +100,14 @@ namespace ClearBlazor
                 if (Value != null)
                     Text = Value.ToString();
 
-            _root = FindParent<ListBox<TListBox>>(Parent);
-            if (_root == null)
+            var p = Parent as ListBox<TListBox>;
+
+            var parent = FindParent<ListBox<TListBox>>(Parent);
+            if (parent == null)
                 return;
 
-            ListBoxItem<TListBox>? parent = null;
-            if (Parent != null)
-                parent = Parent.Parent as ListBoxItem<TListBox>;
-
-            Multiselect = _root.MultiSelect;
-
-            if (IsExpanded == null)
-                IsExpanded = InitiallyExpanded;
-            else
-                IsExpanded = false;
-
-            if (parent == null)
-            {
-                IsVisible = true;
-                Level = 1;
-            }
-            else
-            {
-                Level = parent.Level + 1;
-                if (!parent.IsVisible)
-                    IsVisible = false;
-                else
-                    IsVisible = (bool)parent.IsExpanded!;
-            }
-
-            await _root.HandleChild(this);
+            Multiselect = parent.MultiSelect;
+            await parent.HandleChild(this);
         }
 
         protected override void OnParametersSet()
@@ -138,6 +115,11 @@ namespace ClearBlazor
             base.OnParametersSet();
             if (HorizontalAlignment == null)
                 HorizontalAlignment = Alignment.Stretch;
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
         }
 
         protected override void ComputeOwnClasses(StringBuilder sb)
@@ -187,8 +169,16 @@ namespace ClearBlazor
             if (Parent != null)
                 parent = Parent.Parent as ListBoxItem<TListBox>;
 
-            if (!IsVisible)
-                return "0";
+            if (HasChildren)
+            {
+                if (parent != null && !parent.IsVisible)
+                    return "0";
+            }
+            else
+            {
+                if (!IsVisible)
+                    return "0";
+            }
 
             switch (RowSize)
             {
@@ -209,19 +199,43 @@ namespace ClearBlazor
         {
             child.HorizontalAlignmentDefaultOverride = Alignment.Start;
 
-            if (level == 2 && child is ListBoxItem<TListBox>)
+            if (child is ListBoxItem<TListBox>)
             {
                 var listBoxItem = (ListBoxItem<TListBox>)child;
+
+                var parent = FindParent<ListBoxItem<TListBox>>(child.Parent);
+
                 if (listBoxItem != null)
                 {
                     listBoxItem.RowSize = RowSize;
                     listBoxItem.Color = Color;
+                    listBoxItem.Level = parent == null ? 1 : parent.Level + 1;
                     HasChildren = true;
+                    if (FirstTime)
+                    {
+                        IsExpanded = InitiallyExpanded;
+                        FirstTime = false;
+                    }
+                    if (listBoxItem.Text == "ScrollViewer")
+                    {
+
+                    }
+
+                    SetVisibility(this, listBoxItem);
+                    Console.WriteLine($"{listBoxItem.Text}  Level={listBoxItem.Level} " +
+                                      $"HasChildren={listBoxItem.HasChildren}" +
+                                      $" IsExpanded={listBoxItem.IsExpanded}" +
+                                      $" IsVisible={listBoxItem.IsVisible}");
                 }
             }
 
+            Console.WriteLine($"{Text}  Level={Level} " +
+                  $"HasChildren={HasChildren}" +
+                  $" IsExpanded={IsExpanded}" +
+                  $" IsVisible={IsVisible}");
+
             var topBottomPadding = 0;
-            if (!HasChildren && (bool)IsExpanded!)
+            if (!HasChildren && IsExpanded)
                 topBottomPadding = 0;
 
             string padding = $"{topBottomPadding},5,{topBottomPadding},{20 * (Level - 1) + 10}";
@@ -251,10 +265,12 @@ namespace ClearBlazor
             if (HasChildren)
             {
                 IsExpanded = !IsExpanded;
-                SetVisibilityOfChildren(this, (bool)IsExpanded!);
+                IsVisible = IsExpanded;
+                SetVisibilityOfChildren(this, IsVisible);
             }
             else
             {
+
                 ListBox<TListBox>? parent = FindParent<ListBox<TListBox>>(Parent);
                 if (parent != null)
                     IsSelected = await parent.SetSelected(this);
@@ -278,23 +294,38 @@ namespace ClearBlazor
 
         private void SetVisibilityOfChildren(ClearComponentBase parent, bool visibility)
         {
-            var p = (ListBoxItem<TListBox>)parent;
             foreach (var c in parent.Children)
             {
-                foreach (var cc in c.Children)
+                if (c is ListBoxItem<TListBox>)
                 {
-                    if (cc is ListBoxItem<TListBox>)
-                    {
-                        var child = (ListBoxItem<TListBox>)cc;
-                        if (!p.IsVisible)
-                            child.IsVisible = false;
-                        else if (p.IsExpanded == true)
-                            child.IsVisible = visibility;
-                        else
-                            child.IsVisible = false;
-                        SetVisibilityOfChildren(child, visibility);
-                    }
+                    var child = (ListBoxItem<TListBox>)c;
+                    child.IsVisible = visibility;
                 }
+                if (c.Children.Count > 0)
+                    SetVisibilityOfChildren(c, visibility);
+            }
+        }
+
+        private void SetVisibility(ClearComponentBase? parent, ListBoxItem<TListBox> child)
+        {
+            while (parent != null)
+            {
+                var parentItem = parent as ListBoxItem<TListBox>;
+                var parentList = parent as ListBox<TListBox>;
+                if (parentList != null)
+                {
+                    IsVisible = IsExpanded;
+                    return;
+                }
+                else if (parentItem != null)
+                {
+                    if (parentItem.IsVisible && parentItem.IsExpanded)
+                        child.IsVisible = true;
+                    else
+                        child.IsVisible = false;
+                    return;
+                }
+                parent = parent.Parent;
             }
         }
 

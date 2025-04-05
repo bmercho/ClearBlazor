@@ -6,7 +6,7 @@ namespace ClearBlazorTest
     public record ToolbarTrayDocsInfo:IComponentDocsInfo
     {
         public string Name { get; set; } = "ToolbarTray";
-        public string Description {get; set; } = "A control that holds a number of toolbars, that can be reordered and placed on new lines.\r";
+        public string Description {get; set; } = "A control that holds a number of toolbars, that can be reordered and placed on new lines.\r****To be completed****\r";
         public (string, string) ApiLink  {get; set; } = ("API", "ToolbarTrayApi");
         public (string, string) ExamplesLink {get; set; } = ("Examples", "ToolbarTray");
         public (string, string) InheritsLink {get; set; } = ("ClearComponentBase", "ClearComponentBaseApi");

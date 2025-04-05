@@ -126,7 +126,7 @@ namespace ClearBlazor
         public EventCallback<ListDataItem<TListBox>> OnSelectionChanged { get; set; }
 
         /// <summary>
-        /// Event raised when selections ar changed
+        /// Event raised when selections are changed
         /// </summary>
         [Parameter]
         public EventCallback<List<ListDataItem<TListBox>>> OnSelectionsChanged { get; set; }
@@ -135,8 +135,6 @@ namespace ClearBlazor
         private ListBoxItem<TListBox>? SelectedItem = null;
 
         private ListBoxItem<TListBox>? SelectedParentItem { get; set; } = null;
-
-        private TreeItem<ListDataItem<TListBox>> _treeData = new();    
 
         bool? _backgroundIsNull = null;
         protected override async Task OnParametersSetAsync()
@@ -157,6 +155,9 @@ namespace ClearBlazor
             item.HorizontalAlignmentDefaultOverride = Alignment.Start;
             item.RowSize = RowSize;
             item.ColorOverride = Color;
+            //item.Level = 1;
+
+            Console.WriteLine($"HandleChild: {item.Text}");
             if (MultiSelect)
             {
                 if (typeof(TListBox).IsEnum)
@@ -169,6 +170,7 @@ namespace ClearBlazor
                     if ((enumValue1 & enumValue2) == enumValue2)
                     {
                         SelectedItems.Add(item);
+                        //await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
                         item.Select();
                         StateHasChanged();
                     }
@@ -176,6 +178,7 @@ namespace ClearBlazor
                 else if (Values != null && item != null && Values.Contains(item.Value!))
                 {
                     SelectedItems.Add(item);
+                    //await OnSelectionsChanged.InvokeAsync(GetDataItems(SelectedItems));
                     item.Select();
                     StateHasChanged();
                 }
@@ -185,6 +188,8 @@ namespace ClearBlazor
                 if (Value != null && Value.Equals(item.Value))
                 {
                     SelectedItem = item;
+                   // await OnSelectionChanged.InvokeAsync(
+                   //       new ListDataItem<TListBox>(item.Text!, item.Value!, item.Icon, item.Avatar));
                     item.Select();
                     StateHasChanged();
                 }

@@ -10,7 +10,7 @@
     <ListBoxItem Value=@("Potato") />
     <ListBoxItem Value=@("Zucchini") />
 </ListBox>
-<TextBlock HorizontalAlignment=Alignment.Center >String values = @string.Join(", ",StringValues)</TextBlock>
+<TextBlock HorizontalAlignment=Alignment.Start >String values = @string.Join(", ",StringValues)</TextBlock>
 
 <ListBox HorizontalAlignment=Alignment.Start @bind-Values=DoubleValues MultiSelect=true Width=300 BorderThickness="1" 
          CornerRadius="4">
@@ -22,15 +22,16 @@
     <ListBoxItem Value=9.23 />
     <ListBoxItem Value=100.3 />
 </ListBox>
-<TextBlock HorizontalAlignment=Alignment.Center>Double values = @string.Join(", ", DoubleValues)</TextBlock>
+<TextBlock HorizontalAlignment=Alignment.Start>Double values = @string.Join(", ", DoubleValues)</TextBlock>
 
-<ListBox @bind-Value=EnumValue MultiSelect=true Width=300 BorderThickness="1" CornerRadius="4">
+<ListBox HorizontalAlignment=Alignment.Start @bind-Value=EnumValue MultiSelect=true Width=300 
+         BorderThickness="1" CornerRadius="4">
     @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
     {
         <ListBoxItem Text=@item.ToString() Value="@item" />
     }
 </ListBox>
-<TextBlock HorizontalAlignment=Alignment.Center>Enum value = @EnumValue</TextBlock>
+<TextBlock HorizontalAlignment=Alignment.Start>Enum value = @EnumValue</TextBlock>
 @code {
 
     [Flags]

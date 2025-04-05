@@ -18,6 +18,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Components\ListBox\ListBox.razor - Copy.cs" />
+	  <Compile Remove="Components\ListBox\ListBoxItem.razor - Copy.cs" />
 	  <Compile Remove="Components\ListControls\TableView\TableView.cs" />
 	</ItemGroup>
 	<ItemGroup>
@@ -46,6 +48,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.74" />
+		<PackageReference Include="Markdig" Version="0.40.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
 		<PackageReference Include="SkiaSharp.Views.Blazor" Version="3.116.1" />
 	</ItemGroup>

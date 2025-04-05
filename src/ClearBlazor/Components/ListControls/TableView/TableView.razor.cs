@@ -151,7 +151,6 @@ namespace ClearBlazor
                     if (ShowHeader && (StickyHeader || index == 0))
                         headerHeight = ShowHeader ? (int)_headerHeight - 1 : 0;
 
-                    Console.WriteLine($"Index:{index} id:{id}");
                     await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewer.Id,
                                                     id, headerHeight, (int)verticalAlignment);
                     break;
@@ -533,7 +532,6 @@ namespace ClearBlazor
             try
             {
                 var top = scrollState.ScrollTop;
-                Console.WriteLine($"ScrollTop:{top}");
                 if (_scrollTop == top)
                     return;
 
@@ -548,9 +546,6 @@ namespace ClearBlazor
                         break;
                     case VirtualizeMode.InfiniteScroll:
                     case VirtualizeMode.InfiniteScrollReverse:
-                        Console.WriteLine($"scrollState.ClientHeight:{scrollState.ClientHeight} " +
-                                          $" scrollState.ScrollTop:{scrollState.ScrollTop} " +
-                                          $" scrollState.ScrollHeight:{scrollState.ScrollHeight}");
                         if (Math.Ceiling(scrollState.ClientHeight + scrollState.ScrollTop) >= scrollState.ScrollHeight)
                         {
                             if (scrollState.ScrollHeight > _pageOffsets[_pageOffsets.Count - 1])
@@ -588,7 +583,6 @@ namespace ClearBlazor
             try
             {
                 var top = scrollState.ScrollTop;
-                Console.WriteLine($"ScrollTop:{top}");
                 if (_scrollTop == top)
                     return;
 
@@ -603,15 +597,10 @@ namespace ClearBlazor
                         break;
                     case VirtualizeMode.InfiniteScroll:
                     case VirtualizeMode.InfiniteScrollReverse:
-                        Console.WriteLine($"scrollState.ClientHeight:{scrollState.ClientHeight} " +
-                                          $" scrollState.ScrollTop:{scrollState.ScrollTop} " +
-                                          $" scrollState.ScrollHeight:{scrollState.ScrollHeight}");
                         if (Math.Ceiling(scrollState.ClientHeight + scrollState.ScrollTop) >= scrollState.ScrollHeight)
                         {
-                            Console.WriteLine($"A************");
                             if (scrollState.ScrollHeight > _pageOffsets[_pageOffsets.Count - 1])
                             {
-                                Console.WriteLine($"B************");
                                 // If only one page loaded, now that we know the offset of that page, load the second page.
                                 // From now on two pages will always be loaded.
                                 if (_pageOffsets.Count == 1)

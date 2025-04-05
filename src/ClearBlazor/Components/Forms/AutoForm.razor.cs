@@ -25,6 +25,12 @@ namespace ClearBlazor
         public string LabelValueCols { get; set; } = "*,*";
 
         /// <summary>
+        /// Spacing between rows
+        /// </summary>
+        [Parameter]
+        public int RowSpacing { get; set; } = 20;
+
+        /// <summary>
         /// Defines the style of the input container, defaulting to 'Underlined'. It allows customization of the input's
         /// appearance.
         /// </summary>
@@ -108,8 +114,6 @@ namespace ClearBlazor
             Fields.Clear();
             Type modelType = model.GetType();
 
-            PropertyInfo[] props = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
             await ParseChildren(null, model, 1, readOnly);
 
         }
@@ -147,8 +151,7 @@ namespace ClearBlazor
                                                            GetDescriptionAttribute(prop),
                                                            depth, prop, parentObj,
                                                            v, -1, readOnly || IsReadOnly(prop), false);
-                                if (parent != null)
-                                    AddField(parent, field);
+                                AddField(parent, field);
                                 if (v is Color)
                                     continue;
                                 await ParseChildren(field, v, depth + 1, readOnly);
@@ -161,15 +164,14 @@ namespace ClearBlazor
                     }
                     else if (prop.PropertyType.IsValueType && !(parentObj is string))
                     {
-                        if (parent != null)
-                            await ParseSimpleType(parent, parentObj, depth, readOnly, prop);
+                        await ParseSimpleType(parent, parentObj, depth, readOnly, prop);
                     }
                 }
             }
         }
 
         // Recursively parses a simple type object
-        private async Task ParseSimpleType(AutoFormField parent, object obj, int depth, bool readOnly, PropertyInfo prop)
+        private async Task ParseSimpleType(AutoFormField? parent, object obj, int depth, bool readOnly, PropertyInfo prop)
         {
             object? v = prop.GetValue(obj, null);
 
@@ -245,16 +247,13 @@ namespace ClearBlazor
                                           depth, prop, v, "(Collection)", -1,
                                           readOnly || IsReadOnly(prop),
                                           false);
-            if (parent != null)
-            {
-                int index = AddField(parent, field);
-                var parentPropInfo = Fields[index];
+            int index = AddField(parent, field);
+            var parentPropInfo = Fields[index];
 
-                if (!tableView)
-                {
-                    if (arr != null)
-                        await ParseListOrArrayItems(parentPropInfo, arr, depth + 1, readOnly, prop);
-                }
+            if (!tableView)
+            {
+                if (arr != null)
+                    await ParseListOrArrayItems(parentPropInfo, arr, depth + 1, readOnly, prop);
             }
         }
 
@@ -377,7 +376,7 @@ namespace ClearBlazor
         //    return v;
         //}
 
-        private int AddField(AutoFormField parent, AutoFormField newField)
+        private int AddField(AutoFormField? parent, AutoFormField newField)
         {
             var index = GetNextIndexForDepth(parent);
 
@@ -390,7 +389,7 @@ namespace ClearBlazor
             Fields.Insert(index, newField);
         }
 
-        private int GetNextIndexForDepth(AutoFormField field)
+        private int GetNextIndexForDepth(AutoFormField? field)
         {
             var index = field == null ? 0 : Fields.IndexOf(field) + 1;
             var depth = field == null ? 0 : field.Depth;
