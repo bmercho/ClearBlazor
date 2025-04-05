@@ -1,0 +1,9 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<div id=@Id style=@ComputeStyle()>
+    <TextBlock>
+        @((MarkupString)htmlString)
+    </TextBlock>
+</div>
