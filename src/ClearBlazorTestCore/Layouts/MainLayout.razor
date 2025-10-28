@@ -22,7 +22,7 @@
                 <ScrollViewer VerticalScrollMode="ScrollMode.Enabled">
                     <ListBox TListBox="string" Padding="0,10,0,10">
                         <ListBoxItem Text="Home" HRef="/" OnClicked=@Close />
-                        <ListBoxItem Text="Components" InitiallyExpanded=true>
+                        <ListBoxItem Text="Components" InitiallyExpanded=false>
                             <ListBoxItem Text="Layout" InitiallyExpanded=false>
                                 <ListBoxItem Text="ScrollViewer" HRef="/ScrollViewer" OnClicked=@Close />
                                 <ListBoxItem Text="Grid" HRef="/Grid" OnClicked=@Close />
@@ -84,8 +84,8 @@
                                 <ListBoxItem Text="Logs" HRef="/Logs" OnClicked=@Close />
                             }
                         </ListBoxItem>
-                        <ListBoxItem Text="Customization">
-                            <ListBoxItem Text="Theming">
+                        <ListBoxItem Text="Customization" InitiallyExpanded=true>
+                            <ListBoxItem Text="Theming" InitiallyExpanded=true>
                                 <ListBoxItem Text="Themes" HRef="/Themes" OnClicked=@Close />
                                 <ListBoxItem Text="Colors" HRef="/Colors" OnClicked=@Close />
                             </ListBoxItem>

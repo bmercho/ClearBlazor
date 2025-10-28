@@ -1,10 +1,13 @@
-﻿@page "/Themes"
+﻿@page "/Colors"
 @namespace ClearBlazorTest
 @using System.IO;
 @using System.Reflection;
 @using ClearBlazor
 
-<MarkdownViewer Margin=20 MarkdownString=@markdownString/>
+<StackPanel Padding=20 Orientation=Orientation.Portrait>
+    <MarkdownViewer MarkdownString=@markdownString />
+</StackPanel>
+
 
 
 @code {
@@ -14,6 +17,6 @@
     {
         base.OnInitialized();
 
-        markdownString = ResourceFile.ReadResourceFile("Themes.md");
+        markdownString = ResourceFile.ReadResourceFile("Colors.md");
     }
 }

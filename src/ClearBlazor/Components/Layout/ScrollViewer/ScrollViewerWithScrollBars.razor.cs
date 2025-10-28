@@ -653,7 +653,7 @@ namespace ClearBlazor
         }
 
         [JSInvokable]
-        public async Task KeyDown(string key, bool shift, bool ctrl, bool alt)
+        public async Task KeyDown(int keyCode, string key, bool shift, bool ctrl, bool alt)
         {
             if (_processingkey)
                 return;
@@ -705,7 +705,7 @@ namespace ClearBlazor
         }
 
         [JSInvokable]
-        public async Task KeyUp(string key, bool shift, bool ctrl, bool alt)
+        public async Task KeyUp(int code, string key, bool shift, bool ctrl, bool alt)
         {
             await Task.CompletedTask;
         }

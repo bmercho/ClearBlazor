@@ -28,7 +28,7 @@ namespace ClearBlazor
             }
         }
 
-        public ThemeManager(RootComponent rootComponent, bool useDarkMode)
+        public ThemeManager(RootComponent? rootComponent, bool useDarkMode)
         {
             RootComponent = rootComponent;
             IsDarkMode = useDarkMode;

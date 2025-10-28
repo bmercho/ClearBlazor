@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace ClearBlazor
 {
-    public partial class RootComponent : ComponentBase, IObserver<BrowserSizeInfo>,IBackground
+    public partial class RootComponent : ComponentBase, IDisposable, IBackground
     {
         /// <summary>
         /// The child content of this control.
@@ -21,6 +21,13 @@ namespace ClearBlazor
         [Parameter]
         public Color? BackgroundColor { get; set; }
 
+        /// <summary>
+        /// An event that is raised when the loading of all the java script is complete
+        /// </summary>
+        [Parameter]
+        public EventCallback OnLoadingComplete { get; set; }
+
+
         [Inject]
         NavigationManager NavManager { get; set; } = null!;
 
@@ -28,8 +35,8 @@ namespace ClearBlazor
         private ElementReference Element;
         private double? Height = null;
         private double? Width = null;
-        private IDisposable? unsubscriber;
         private bool LoadingComplete = false;
+        BrowserSizeService _browserSizeService = BrowserSizeService.GetInstance();
 
         public RootComponent()
         {
@@ -64,8 +71,6 @@ namespace ClearBlazor
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/ResizeCanvas.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                                 "./_content/ClearBlazor/ResizeListener.js");
-                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/ScrollManager.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/SizeInfo.js");
@@ -81,16 +86,16 @@ namespace ClearBlazor
                                  "./_content/ClearBlazor/StopPropagation.js");
 
                 await ThemeManager.UpdateTheme(JSRuntime);
-                var browserSizeService = new BrowserSizeService();
-                browserSizeService.Init(JSRuntime);
+    
+                _browserSizeService.Init(JSRuntime);
+                _browserSizeService.OnBrowserResize += BrowserResized;
+
                 var resizeObserverService = new ResizeObserverService();
                 await resizeObserverService.Init(JSRuntime);
 
                 LoadingComplete = true;
-
-                Subscribe(browserSizeService);
-
                 StateHasChanged();
+                await OnLoadingComplete.InvokeAsync();
             }
 
             ClearComponentBase.RenderAll = false;
@@ -139,25 +144,7 @@ namespace ClearBlazor
             }
         }
 
-        public virtual void Subscribe(IObservable<BrowserSizeInfo> provider)
-        {
-            unsubscriber = provider.Subscribe(this);
-        }
-
-        public virtual void Unsubscribe()
-        {
-            if (unsubscriber != null)
-                unsubscriber.Dispose();
-        }
-        public virtual void OnCompleted()
-        {
-        }
-
-        public virtual void OnError(Exception error)
-        {
-        }
-
-        public virtual void OnNext(BrowserSizeInfo browserSizeInfo)
+        private async Task BrowserResized(BrowserSizeInfo browserSizeInfo)
         {
             if (browserSizeInfo.BrowserHeight == 0 || browserSizeInfo.BrowserWidth == 0)
                 return;
@@ -165,8 +152,13 @@ namespace ClearBlazor
             Height = browserSizeInfo.BrowserHeight;
             Width = browserSizeInfo.BrowserWidth;
             StateHasChanged();
+            await Task.CompletedTask;
         }
 
+        public void Dispose()
+        {
+            _browserSizeService.OnBrowserResize -= BrowserResized;
+        }
 
     }
 }

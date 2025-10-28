@@ -1,0 +1,25 @@
+﻿@page "/Themes"
+@namespace ClearBlazorTest
+@using System.IO;
+@using System.Reflection;
+@using ClearBlazor
+
+<ScrollViewer>
+    <StackPanel Padding=20 Orientation=Orientation.Portrait>
+        <MarkdownViewer MarkdownString=@markdownString />
+        <CodeSnippet Code=@(typeof(ThemeChangedExample).Name) CodeOnly=true />
+    </StackPanel>
+</ScrollViewer>
+
+
+
+@code {
+    string markdownString = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        markdownString = ResourceFile.ReadResourceFile("Themes.md");
+    }
+}

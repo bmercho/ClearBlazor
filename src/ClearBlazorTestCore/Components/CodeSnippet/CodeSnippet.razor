@@ -5,6 +5,12 @@
 
 <div id="@Id" class="@Classes" style="@ComputeStyle()">
     <StackPanel Orientation="Orientation.Portrait">
+        @if (CodeOnly)
+        {
+            @CodeComponent(Code)
+        }
+        else
+        {
         @if (!string.IsNullOrEmpty(Title))
         {
             <TextBlock FontSize="22px" FontWeight=@((int)FontWeight.Bold) Margin="10,0,10,0">@Title</TextBlock>
@@ -36,6 +42,7 @@
                     @CodeComponent(Code)
                 </ScrollViewer>
             </Grid>
+        }
         }
     </StackPanel>
 </div>

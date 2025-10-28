@@ -153,7 +153,6 @@ namespace ClearBlazor
         {
             if (firstRender)
             {
-                await JSRuntime.InvokeVoidAsync("ResizeCanvas", _canvasId);
                 List<string> elementIds = new List<string>() { Id };
 
                 _resizeObserverId = await ResizeObserverService.Service.
@@ -200,6 +199,7 @@ namespace ClearBlazor
                             _pixelToDeviceX = (float)(_canvasWidth / _deviceWidth);
                             _pixelToDeviceY = (float)(_canvasHeight / _deviceHeight);
                         }
+                        await JSRuntime.InvokeVoidAsync("ResizeCanvas", _canvasId);
                         await OnCanvasSizeChange.InvokeAsync(new CanvasSize(_canvasWidth, _canvasHeight));
                         RefreshCanvas();
                     }

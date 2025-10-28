@@ -7,7 +7,7 @@ namespace ClearBlazor
     /// <summary>
     /// A popup control that can be used to display additional information.
     /// </summary>
-    public partial class Popup : ClearComponentBase, IDisposable, IObserver<BrowserSizeInfo>, IObserver<bool>
+    public partial class Popup : ClearComponentBase, IDisposable, IObserver<bool>
     {
         /// <summary>
         /// The child content of this control.
@@ -80,24 +80,20 @@ namespace ClearBlazor
         private SizeInfo? SizeInfo = null;
         private bool _mouseOver = false;
         private IDisposable ScrollViewUnsubscriber = null!;
-        private IDisposable unsubscriber = null!;
+        BrowserSizeService _browserSizeService = BrowserSizeService.GetInstance();
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            Subscribe(BrowserSizeService.Instance);
+            _browserSizeService.Init(JSRuntime);
+            _browserSizeService.OnBrowserResize += BrowserResized;
             ScrollViewer.Subscribe(this);
         }
 
-        public virtual void Subscribe(IObservable<BrowserSizeInfo> provider)
-        {
-            unsubscriber = provider.Subscribe(this);
-        }
-
-        public virtual void OnNext(BrowserSizeInfo browserSizeInfo)
+        private async Task BrowserResized(BrowserSizeInfo browserSizeInfo)
         {
             Open = false;
-            OpenChanged.InvokeAsync(Open);
+            await OpenChanged.InvokeAsync(Open);
             StateHasChanged();
         }
 
@@ -119,12 +115,6 @@ namespace ClearBlazor
         public virtual void Subscribe(IObservable<bool> provider)
         {
             ScrollViewUnsubscriber = provider.Subscribe(this);
-        }
-
-        public override void Dispose()
-        {
-            unsubscriber?.Dispose();
-            ScrollViewUnsubscriber?.Dispose();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -605,5 +595,11 @@ namespace ClearBlazor
                 StateHasChanged();
             }
         }
+        public override void Dispose()
+        {
+            _browserSizeService.OnBrowserResize -= BrowserResized;
+            ScrollViewUnsubscriber?.Dispose();
+        }
+
     }
 }

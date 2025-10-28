@@ -6,7 +6,7 @@ namespace ClearBlazor
     /// <summary>
     /// A panel docked to a side of the page that slides in and out to shown or hidden.
     /// </summary>
-    public partial class Drawer : ClearComponentBase,IBackground,IDisposable, IObserver<BrowserSizeInfo>
+    public partial class Drawer : ClearComponentBase,IBackground,IDisposable
     {
         /// <summary>
         /// The side that the drawer will reside.
@@ -69,15 +69,16 @@ namespace ClearBlazor
         private bool _gotSize = false;
         private DrawerMode _drawerMode = DrawerMode.Responsive;
         private bool _showOverlay = false;
-        private IDisposable _unsubscriber = null!;
+        BrowserSizeService _browserSizeService = BrowserSizeService.GetInstance();
+
+        public DrawerMode CurrentDrawerMode => _drawerMode;
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            Subscribe(BrowserSizeService.Instance);
+            _browserSizeService.Init(JSRuntime);
+            _browserSizeService.OnBrowserResize += BrowserResized;
         }
-
-        public DrawerMode CurrentDrawerMode => _drawerMode;
 
         protected override async Task OnParametersSetAsync()
         {
@@ -239,25 +240,7 @@ namespace ClearBlazor
             }
         }
 
-        protected virtual void Subscribe(IObservable<BrowserSizeInfo> provider)
-        {
-            _unsubscriber = provider.Subscribe(this);
-        }
-
-        protected virtual void Unsubscribe()
-        {
-            _unsubscriber.Dispose();
-        }
-
-        public virtual void OnCompleted()
-        {
-        }
-
-        public virtual void OnError(Exception error)
-        {
-        }
-
-        public virtual void OnNext(BrowserSizeInfo browserSizeInfo)
+        private async Task BrowserResized(BrowserSizeInfo browserSizeInfo)
         {
             if (DrawerMode == DrawerMode.Responsive)
             {
@@ -266,7 +249,7 @@ namespace ClearBlazor
                 {
                     _drawerMode = DrawerMode.Temporary;
                     Open = false;
-                    OpenChanged.InvokeAsync(Open);
+                    await OpenChanged.InvokeAsync(Open);
                 }
                 else
                     _drawerMode = DrawerMode.Permanent;
@@ -275,14 +258,14 @@ namespace ClearBlazor
                     if (_drawerMode == DrawerMode.Permanent)
                     {
                         Open = true;
-                        OpenChanged.InvokeAsync(Open);
+                        await OpenChanged.InvokeAsync(Open);
                     }
                 }
                 ProcessModeChange();
                 StateHasChanged();
             }
-
         }
+
 
         //private void CheckResponsiveMode()
         //{
@@ -312,8 +295,7 @@ namespace ClearBlazor
 
         public override void Dispose()
         {
-            Unsubscribe();
+            _browserSizeService.OnBrowserResize -= BrowserResized;
         }
-
     }
 }

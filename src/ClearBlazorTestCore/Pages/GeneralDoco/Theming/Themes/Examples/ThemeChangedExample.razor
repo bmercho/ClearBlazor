@@ -1,0 +1,9 @@
+﻿@namespace ClearBlazorTest
+
+@code {
+    public void ThemeChanged1()
+    {
+        var themeManager = new ThemeManager(null, false);
+        themeManager.AddTheme(new Theme("test"));
+    }
+  }

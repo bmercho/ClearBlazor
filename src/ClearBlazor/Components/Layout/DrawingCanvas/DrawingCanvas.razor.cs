@@ -134,7 +134,6 @@ namespace ClearBlazor
         private ElementReference _canvasContainerElement;
         private bool _renderingInProgress = false;
         private SynchronizationContext? _context;
-
         protected override void OnInitialized()
         {
             base.OnInitialized();

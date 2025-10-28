@@ -47,10 +47,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.74" />
-		<PackageReference Include="Markdig" Version="0.40.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
-		<PackageReference Include="SkiaSharp.Views.Blazor" Version="3.116.1" />
+		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.92" />
+		<PackageReference Include="Markdig" Version="0.43.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.10" />
+		<PackageReference Include="SkiaSharp.Views.Blazor" Version="3.119.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Services\BrowserInfo\BrowserInfo.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -67,10 +71,6 @@
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
 		<Content Update="wwwroot\ResizeCanvas.js">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="wwwroot\ResizeListener.js">
 			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>

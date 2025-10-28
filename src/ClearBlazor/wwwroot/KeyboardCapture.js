@@ -15,16 +15,16 @@ window.EnableKeyboardCapture = (dotNetInstance, keys) => {
 }
 
 const keyDownHandler = function (event) {
-    if (_keys.includes(event.key)) {
+    if (_keys == null || _keys.includes(event.code)) {
         event.preventDefault();
-        _dotNetInstance.invokeMethodAsync('KeyDown', event.key, event.shiftKey, event.ctrlKey, event.altKey);
+        _dotNetInstance.invokeMethodAsync('KeyDown', event.keyCode, event.code, event.shiftKey, event.ctrlKey, event.altKey);
     }
 }
 
 const keyUpHandler = function (event) {
-    if (_keys.includes(event.key)) {
+    if (_keys == null || _keys.includes(event.code)) {
         event.preventDefault();
-        _dotNetInstance.invokeMethodAsync('KeyUp', event.key, event.shiftKey, event.ctrlKey, event.altKey);
+        _dotNetInstance.invokeMethodAsync('KeyUp', event.keyCode, event.code, event.shiftKey, event.ctrlKey, event.altKey);
     }
 }
 

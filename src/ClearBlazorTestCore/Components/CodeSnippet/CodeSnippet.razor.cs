@@ -25,6 +25,9 @@ namespace ClearBlazorTest
         [Parameter]
         public string Description { get; set; } = string.Empty;
 
+        [Parameter]
+        public bool CodeOnly { get; set; } = false;
+
         public bool ShowCode { get; set; } = false;
 
         protected override string UpdateStyle(string css)

@@ -2,15 +2,26 @@
 
 namespace ClearBlazor
 {
-    public class BrowserSizeService : IObservable<BrowserSizeInfo>
+    public class BrowserSizeService : IAsyncDisposable
     {
-        private List<IObserver<BrowserSizeInfo>> observers = new List<IObserver<BrowserSizeInfo>>();
-        private IJSRuntime JSRuntime = null!;
-        private BrowserSizeInfo browserSizeInfo = new BrowserSizeInfo();
+        public delegate Task BrowserResizeHandlerAsync(BrowserSizeInfo browserSizeInfo);
+        public event BrowserResizeHandlerAsync OnBrowserResize = null!;
 
-        public static BrowserSizeService Instance { get; private set; } = null!;
+        private IJSObjectReference? module = null;
+
+        //private List<IObserver<BrowserSizeInfo>> observers = new List<IObserver<BrowserSizeInfo>>();
+        private IJSRuntime _JSRuntime = null!;
+        private BrowserSizeInfo browserSizeInfo = new BrowserSizeInfo();
+        private static BrowserSizeService? Instance = null;
+
         public static DeviceSize DeviceSize { get; private set; } = DeviceSize.Large;
 
+        public static BrowserSizeService GetInstance()
+        {
+            if (Instance == null)
+                Instance = new BrowserSizeService();
+            return Instance;
+        }       
         public BrowserSizeService()
         {
             Instance = this;
@@ -18,12 +29,19 @@ namespace ClearBlazor
 
         public async void Init(IJSRuntime js)
         {
-            if (JSRuntime == null)
+            if (js != null)
             {
-                JSRuntime = js;
+                _JSRuntime = js;
 
-                await JSRuntime.InvokeAsync<string>("resizeListener", DotNetObjectReference.Create(this));
+                if (module == null)
+                    module = await _JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                              "./_content/BrowserInfo/ResizeListener.js");
+
             }
+
+            if (module != null)
+                await _JSRuntime.InvokeAsync<string>("resizeListener",
+                                            DotNetObjectReference.Create(this));
         }
 
         [JSInvokable]
@@ -36,8 +54,7 @@ namespace ClearBlazor
                 DeviceSize = GetDeviceSize(jsBrowserWidth)
             };
 
-            foreach (var observer in observers)
-                observer.OnNext(browserSizeInfo);
+            OnBrowserResize?.Invoke(browserSizeInfo);
             await Task.CompletedTask;
         }
 
@@ -56,32 +73,10 @@ namespace ClearBlazor
             return DeviceSize;
         }
 
-        private class Unsubscriber : IDisposable
+        public async ValueTask DisposeAsync()
         {
-            private List<IObserver<BrowserSizeInfo>> _observers;
-            private IObserver<BrowserSizeInfo> _observer;
-
-            public Unsubscriber(List<IObserver<BrowserSizeInfo>> observers, IObserver<BrowserSizeInfo> observer)
-            {
-                _observers = observers;
-                _observer = observer;
-            }
-
-            public void Dispose()
-            {
-                if (!(_observer == null)) _observers.Remove(_observer);
-            }
-        }
-
-        public IDisposable Subscribe(IObserver<BrowserSizeInfo> observer)
-        {
-            if (!observers.Contains(observer))
-            {
-                observers.Add(observer);
-                observer.OnNext(browserSizeInfo);
-            }
-
-            return new Unsubscriber(observers, observer);
+            if (module != null)
+                await module.DisposeAsync();
         }
     }
 }
