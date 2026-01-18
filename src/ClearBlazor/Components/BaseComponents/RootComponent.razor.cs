@@ -84,6 +84,10 @@ namespace ClearBlazor
                                  "./_content/ClearBlazor/InfiniteScrolling.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/StopPropagation.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/Cursor.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/GridSizeInfo.js");
 
                 await ThemeManager.UpdateTheme(JSRuntime);
     

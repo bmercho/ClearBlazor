@@ -125,7 +125,7 @@ namespace ComponentsTest.Wpf
             Resources.Add("services", serviceCollection.BuildServiceProvider());
             DataContext = this;
             InitializeComponent();
-            UniformGridClick(null, null);
+           // UniformGridClick(null, null);
         }
 
         private bool ShowTest(int testNum)

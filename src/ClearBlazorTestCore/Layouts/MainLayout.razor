@@ -22,7 +22,7 @@
                 <ScrollViewer VerticalScrollMode="ScrollMode.Enabled">
                     <ListBox TListBox="string" Padding="0,10,0,10">
                         <ListBoxItem Text="Home" HRef="/" OnClicked=@Close />
-                        <ListBoxItem Text="Components" InitiallyExpanded=false>
+                        <ListBoxItem Text="Components" InitiallyExpanded=true>
                             <ListBoxItem Text="Layout" InitiallyExpanded=false>
                                 <ListBoxItem Text="ScrollViewer" HRef="/ScrollViewer" OnClicked=@Close />
                                 <ListBoxItem Text="Grid" HRef="/Grid" OnClicked=@Close />
@@ -78,6 +78,7 @@
                                 <ListBoxItem Text="Form" HRef="/Form" OnClicked=@Close />
                                 <ListBoxItem Text="Auto Form" HRef="/AutoForm" OnClicked=@Close />
                             </ListBoxItem>
+                            <ListBoxItem Text="GridSplitter" HRef="/GridSplitter" OnClicked=@Close />
                             <ListBoxItem Text="Spinner" HRef="/Spinner" OnClicked=@Close />
                             @if(IsDebug())
                             {
@@ -107,6 +108,13 @@
     Drawer Drawer = null!;
 
     bool Open { get; set; } = false;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        ClientData.LoadTestData();
+    }
+
 
     private void Toggle()
     {

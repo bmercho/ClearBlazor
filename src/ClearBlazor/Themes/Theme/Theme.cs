@@ -16,7 +16,7 @@
 
         public Typography Typography { get; set; }
 
-        public int DefaultCornerRadius { get; set; } = 8;
+        public int DefaultCornerRadius { get; set; } = 4;
 
         public virtual int ToolTipDelay { get; set; } = 30; // Milliseconds
 

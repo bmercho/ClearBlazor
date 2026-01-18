@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using System.Text.RegularExpressions;
 
 namespace ClearBlazor
@@ -112,9 +114,21 @@ namespace ClearBlazor
         [Parameter]
         public string? BackgroundGradient2 { get; set; }
 
-
         private readonly Regex _proportionPattern = new Regex("^[0-9]*\\*$");
         private readonly Regex _fixedSizePattern = new Regex("^[0-9]*$");
+        private string? _columnsOverride = null;
+        private string? _rowsOverride = null;
+
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+
+            if (_columnsOverride != null)
+                Columns = _columnsOverride;
+
+            if (_rowsOverride != null)
+                Rows = _rowsOverride;
+        }
 
         protected override string UpdateStyle(string css)
         {
@@ -243,6 +257,60 @@ namespace ClearBlazor
         protected override string UpdateChildStyle(ClearComponentBase child, string css)
         {
             return css + $"grid-area: {child.Row + 1} / {child.Column + 1} / span {child.RowSpan} / span {child.ColumnSpan};";
+        }
+
+        internal int NumberOfColumns()
+        {
+            return GetColumns().ToList().Count;
+        }
+
+        internal int NumberOfRows()
+        {
+            return GetRows().ToList().Count;
+        }
+
+        internal void AdjustRows(double topRowHeight, double bottomRowHeight)
+        {
+            var tokens = Rows.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            tokens[0] = $"{Math.Round(topRowHeight)}*";
+            tokens[2] = $"{Math.Round(bottomRowHeight)}*";
+            Rows = string.Join(",", tokens);
+            _rowsOverride = Rows;
+        }
+
+        internal void AdjustColumns(double leftColumnWidth, double rightColumnWidth)
+        {
+            var tokens = Columns.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            tokens[0] = $"{Math.Round(leftColumnWidth)}*";
+            tokens[2] = $"{Math.Round(rightColumnWidth)}*";
+            Columns = string.Join(",", tokens);
+            _columnsOverride = Columns;
+        }
+
+        internal async Task<double[]> GetGridColumnSizes()
+        {
+            return await JSRuntime.InvokeAsync<double[]>("GetComputedColumnSizes", Id);
+        }
+
+        internal async Task<double[]> GetGridRowSizes()
+        {
+            return await JSRuntime.InvokeAsync<double[]>("GetComputedRowSizes", Id);
+        }
+
+        internal string GetColumnDefinition(int columnNum)
+        {
+            var cols = GetColumns().ToList();
+            if (cols.Count <= columnNum)
+                return "";
+            return cols[columnNum];
+        }
+
+        internal string GetRowDefinition(int rowNum)
+        {
+            var rows = GetRows().ToList();
+            if (rows.Count <= rowNum)
+                return "";
+            return rows[rowNum];
         }
     }
 }

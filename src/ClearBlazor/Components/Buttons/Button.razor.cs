@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using System.Text;
 
 namespace ClearBlazor
 {
@@ -38,7 +37,7 @@ namespace ClearBlazor
         /// The shape of the button
         /// </summary>
         [Parameter]
-        public ContainerShape Shape { get; set; } = ContainerShape.FullyRounded;
+        public ContainerShape Shape { get; set; } = ContainerShape.Rounded;
 
         /// <summary>
         /// The icon to be shown within the button
@@ -239,7 +238,7 @@ namespace ClearBlazor
                 case ContainerShape.Square:
                     return "";
                 case ContainerShape.Rounded:
-                    return "border-radius:4px; ";
+                    return "border-radius:10px; ";
                 case ContainerShape.FullyRounded:
                     return $"border-radius:{GetPxHeight(Size)/2}px; ";
             }

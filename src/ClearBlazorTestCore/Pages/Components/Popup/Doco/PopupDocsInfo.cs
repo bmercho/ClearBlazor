@@ -13,7 +13,6 @@ namespace ClearBlazorTest
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
             (" IDisposable", " IDisposableApi"),
-            (" IObserver<BrowserSizeInfo>", " IObserver<BrowserSizeInfo>Api"),
             (" IObserver<bool>", " IObserver<bool>Api"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>

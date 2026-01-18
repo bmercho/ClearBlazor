@@ -41,69 +41,79 @@ namespace ClearBlazor
 
         /// <summary>
         /// Defines the topography for the text to be shown
+        /// Not used if typo is not null
         /// </summary>
         [Parameter]
         public TypographyBase? Typography { get; set; } = null;
 
         /// <summary>
         /// The font family of the text
+        /// Overrides the font family defined in Typo or Typography
         /// </summary>
         [Parameter]
         public string? FontFamily { get; set; } = null;
 
         /// <summary>
         /// The font size of the text
+        /// Overrides the font size defined in Typo or Typography
         /// </summary>
         [Parameter]
         public string? FontSize { get; set; } = null;
 
         /// <summary>
         /// The font weight of the text
+        /// Overrides the font weight defined in Typo or Typography
         /// </summary>
         [Parameter]
         public int? FontWeight { get; set; } = null;
 
         /// <summary>
         /// The font style of the text
+        /// Overrides the font style defined in Typo or Typography
         /// </summary>
         [Parameter]
         public FontStyle? FontStyle { get; set; } = null;
 
         /// <summary>
         /// The line height of the text
+        /// Overrides the line height defined in Typo or Typography
         /// </summary>
         [Parameter]
         public double? LineHeight { get; set; } = null;
 
         /// <summary>
         /// The letter spacing of the text
+        /// Overrides the letter spacing defined in Typo or Typography
         /// </summary>
         [Parameter]
         public string? LetterSpacing { get; set; } = null;
 
         /// <summary>
-        /// The text decoration of the text
-        /// </summary>
-        [Parameter]
-        public TextDecoration? TextDecoration { get; set; } = null;
-
-        /// <summary>
         /// The transform applied to the text
+        /// Overrides the text transform defined in Typo or Typography
         /// </summary>
         [Parameter]
         public TextTransform? TextTransform { get; set; } = null;
 
         /// <summary>
         /// The text wrapping of the text
+        /// Overrides the text wrapping defined in Typo or Typography
         /// </summary>
         [Parameter]
         public TextWrap? TextWrapping { get; set; } = null;
 
         /// <summary>
         /// The text trimming of the text
+        /// Overrides the text trimming defined in Typo or Typography
         /// </summary>
         [Parameter]
         public bool? TextTrimming { get; set; } = null;
+
+        /// <summary>
+        /// The text decoration of the text
+        /// </summary>
+        [Parameter]
+        public TextDecoration? TextDecoration { get; set; } = null;
 
         /// <summary>
         /// The horizontal alignment of the text within the TextBlock. 

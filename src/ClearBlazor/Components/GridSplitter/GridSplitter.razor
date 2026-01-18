@@ -1,0 +1,19 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" style="@ComputeStyle()" class="@Classes" 
+         @onmousedown=OnMouseDown @onmouseup=OnMouseUp @onmousemove=OnMouseMove 
+         @onmouseover=OnMouseEnter @onmouseout=OnMouseLeave>
+        @if (Direction == SplitterDirection.Horizontal)
+        {
+            <Grid Height=@Width BackgroundColor=@GetColor() HorizontalAlignment=Alignment.Stretch/>
+        }
+        else
+        {
+            <Grid Width=@Width BackgroundColor=@GetColor() VerticalAlignment=Alignment.Stretch/>
+        }
+    </div>
+</CascadingValue>
+
+

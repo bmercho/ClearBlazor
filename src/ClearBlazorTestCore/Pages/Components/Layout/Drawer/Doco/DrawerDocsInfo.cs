@@ -14,7 +14,6 @@ namespace ClearBlazorTest
         {
             ("IBackground", "IBackgroundApi"),
             ("IDisposable", "IDisposableApi"),
-            (" IObserver<BrowserSizeInfo>", " IObserver<BrowserSizeInfo>Api"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {

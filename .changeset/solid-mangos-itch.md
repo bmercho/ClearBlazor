@@ -1,0 +1,5 @@
+---
+"ClearBlazor": minor
+---
+
+Implemented GridSplitter

@@ -1,0 +1,15 @@
+﻿@page "/GridSplitter"
+
+@using ClearBlazorTest
+
+<DocsExamplesPage DocsInfo=@(new GridSplitterDocsInfo())>
+    <CodeSnippet Title="Vertical Grid Splitter" Code=@(typeof(GridSplitterVerticalExample).Name)>
+        <GridSplitterVerticalExample />
+    </CodeSnippet>
+    <CodeSnippet Title="Horizontal Grid Splitter" Code=@(typeof(GridSplitterHorizontalExample).Name)>
+        <GridSplitterHorizontalExample />
+    </CodeSnippet>
+    <CodeSnippet Title="Both Vertical and Horizontal Grid Splitters" Code=@(typeof(GridSplitterBothExample).Name)>
+        <GridSplitterBothExample />
+    </CodeSnippet>
+</DocsExamplesPage>
