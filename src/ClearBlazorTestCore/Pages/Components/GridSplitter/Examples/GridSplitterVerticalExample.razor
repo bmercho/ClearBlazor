@@ -1,0 +1,10 @@
+﻿@using ClearBlazor
+@namespace ClearBlazorTest
+<Grid Columns="*,5,*" HorizontalAlignment=Alignment.Stretch VerticalAlignment=Alignment.Stretch Height="300">
+    <Grid Column=0 BackgroundColor=@Color.Custom("blue")/>
+    <GridSplitter Column=1 Direction=SplitterDirection.Vertical Width=5 />
+    <Grid Column=2 BackgroundColor=@Color.Custom("red") />
+</Grid>
+
+@code {
+}

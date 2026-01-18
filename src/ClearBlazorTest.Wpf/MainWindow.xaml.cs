@@ -14,8 +14,6 @@ namespace ClearBlazorTest.Wpf
         {
             InitializeComponent();
 
-            ClientData.LoadTestData();
-
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddWpfBlazorWebView();
 

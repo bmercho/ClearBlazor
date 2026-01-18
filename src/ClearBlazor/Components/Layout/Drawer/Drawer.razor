@@ -14,7 +14,7 @@
                 @DrawerBody
                 @if (_showOverlay)
                 {
-                    <Grid BackgroundColor=@ThemeManager.CurrentColorScheme.Scrim 
+                    <Grid BackgroundColor=@ThemeManager.CurrentColorScheme.Scrim.SetAlpha(0.3) 
                           Style="z-index:2; " OnClicked=@OverlayClicked />
                 }
             </Grid>

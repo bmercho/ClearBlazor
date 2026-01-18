@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -42,6 +42,7 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\GridSplitter\Code\GridSplitterSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\GeneralDoco\Theming\Colors\Colors.md" />
 	<EmbeddedResource Include="Pages\GeneralDoco\Theming\Themes\Code\ThemeChangedExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerSimpleExampleCode.html" />

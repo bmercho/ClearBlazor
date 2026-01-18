@@ -237,6 +237,11 @@ namespace ClearBlazor
             UpdateClasses();
         }
 
+        protected void Refresh(ClearComponentBase component)
+        {
+            component.StateHasChanged();
+        }
+
         //protected override bool ShouldRender()
         //{
         //    return RenderAll;
