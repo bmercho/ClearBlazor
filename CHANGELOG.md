@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.1.1
+
+### Patch Changes
+
+- dee5bab: Upgraded to DotNet10
+
 ## 0.1.0
 
 ### Minor Changes
