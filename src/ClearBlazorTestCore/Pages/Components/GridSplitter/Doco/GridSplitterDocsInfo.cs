@@ -15,8 +15,8 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("Direction", "<a href=SplitterDirectionApi>SplitterDirection</a>", "SplitterDirection.Vertical", "The direction of the splitter\r"),
             new ApiComponentInfo("Color", "Color?", "null", "Color of spinner.\r"),
-            new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", "Size of spinner.\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

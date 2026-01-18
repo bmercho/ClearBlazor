@@ -2,15 +2,11 @@
 
 namespace ClearBlazor
 {
-    public class BrowserSizeService : IAsyncDisposable
+    public class BrowserSizeService
     {
         public delegate Task BrowserResizeHandlerAsync(BrowserSizeInfo browserSizeInfo);
         public event BrowserResizeHandlerAsync OnBrowserResize = null!;
 
-        private IJSObjectReference? module = null;
-
-        //private List<IObserver<BrowserSizeInfo>> observers = new List<IObserver<BrowserSizeInfo>>();
-        private IJSRuntime _JSRuntime = null!;
         private BrowserSizeInfo browserSizeInfo = new BrowserSizeInfo();
         private static BrowserSizeService? Instance = null;
 
@@ -29,19 +25,8 @@ namespace ClearBlazor
 
         public async void Init(IJSRuntime js)
         {
-            if (js != null)
-            {
-                _JSRuntime = js;
-
-                if (module == null)
-                    module = await _JSRuntime.InvokeAsync<IJSObjectReference>("import",
-                                              "./_content/BrowserInfo/ResizeListener.js");
-
-            }
-
-            if (module != null)
-                await _JSRuntime.InvokeAsync<string>("resizeListener",
-                                            DotNetObjectReference.Create(this));
+            await js.InvokeAsync<string>("resizeListener",
+                                         DotNetObjectReference.Create(this));
         }
 
         [JSInvokable]
@@ -71,12 +56,6 @@ namespace ClearBlazor
             else
                 DeviceSize = DeviceSize.ExtraLarge;
             return DeviceSize;
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (module != null)
-                await module.DisposeAsync();
         }
     }
 }

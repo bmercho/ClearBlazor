@@ -19,7 +19,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("ButtonStyle", "<a href=ButtonStyleApi>ButtonStyle?</a>", "null", "Defines the button style.\r"),
             new ApiComponentInfo("Color", "Color?", "null", "The color used for the button. What gets this color (background, text or outline)\rdepends on the button style.\r"),
             new ApiComponentInfo("Size", "<a href=SizeApi>Size</a>", "Size.Normal", "The size of the button\r"),
-            new ApiComponentInfo("Shape", "<a href=ContainerShapeApi>ContainerShape</a>", "ContainerShape.FullyRounded", "The shape of the button\r"),
+            new ApiComponentInfo("Shape", "<a href=ContainerShapeApi>ContainerShape</a>", "ContainerShape.Rounded", "The shape of the button\r"),
             new ApiComponentInfo("Icon", "string?", "null", "The icon to be shown within the button\r"),
             new ApiComponentInfo("IconColor", "Color?", "null", "The color of the icon within the button\r"),
             new ApiComponentInfo("IconLocation", "<a href=IconLocationApi>IconLocation</a>", "IconLocation.Start", "The location of the icon within the button\r"),
