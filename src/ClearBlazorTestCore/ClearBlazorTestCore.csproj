@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>ClearBlazorTest</RootNamespace>
@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.43.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +42,9 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\GridSplitter\Code\GridSplitterVerticalExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\GridSplitter\Code\GridSplitterHorizontalExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\GridSplitter\Code\GridSplitterBothExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\GridSplitter\Code\GridSplitterSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\GeneralDoco\Theming\Colors\Colors.md" />
 	<EmbeddedResource Include="Pages\GeneralDoco\Theming\Themes\Code\ThemeChangedExampleCode.html" />

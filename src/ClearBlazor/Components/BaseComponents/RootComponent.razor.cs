@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System.Drawing;
 
 namespace ClearBlazor
 {
@@ -88,6 +87,8 @@ namespace ClearBlazor
                                  "./_content/ClearBlazor/Cursor.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/GridSizeInfo.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/ResizeListener.js");
 
                 await ThemeManager.UpdateTheme(JSRuntime);
     

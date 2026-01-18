@@ -7,7 +7,7 @@ namespace ClearBlazor
     /// <summary>
     /// Represents a GridSplitter component.
     /// </summary>
-    public partial class GridSplitter:ClearComponentBase
+    public partial class GridSplitter:ClearComponentBase, IDisposable
     {
         /// <summary>
         /// The direction of the splitter
@@ -30,6 +30,22 @@ namespace ClearBlazor
         private double RightColumnWidth = 0;
         private double TopRowWidth = 0;
         private double BottomRowWidth = 0;
+        private int SplitterColumn = 0;
+        private int SplitterRow = 0;
+        BrowserSizeService _browserSizeService = BrowserSizeService.GetInstance();
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            _browserSizeService.OnBrowserResize += BrowserResized;
+        }
+
+        private async Task BrowserResized(BrowserSizeInfo browserSizeInfo)
+        {
+            if (ParentGrid == null)
+                return;
+            await GetGridSizes();
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -59,38 +75,51 @@ namespace ClearBlazor
                         {
                             if (child.Column != 1)
                                 throw new Exception("A GridSplitter in vertical mode must be in column 1 of its parent Grid.");
-                            var splitterColumn = child.Column;
-                            var leftColumn = ParentGrid.GetColumnDefinition(splitterColumn - 1);
+                            SplitterColumn = child.Column;
+                            var leftColumn = ParentGrid.GetColumnDefinition(SplitterColumn - 1);
                             if (!leftColumn.Contains("fr"))
                                 throw new Exception("Column must contain a '*' definition with no min or max.");
 
-                            var rightColumn = ParentGrid.GetColumnDefinition(splitterColumn + 1);
+                            var rightColumn = ParentGrid.GetColumnDefinition(SplitterColumn + 1);
                             if (!rightColumn.Contains("fr"))
                                 throw new Exception("Column must contain a '*' definition with no min or max.");
-                            var columnSizes = await ParentGrid.GetGridColumnSizes();
-                            LeftColumnWidth = columnSizes[splitterColumn - 1];
-                            RightColumnWidth = columnSizes[splitterColumn + 1];
                         }
                         else
                         {
                             if (child.Row != 1)
                                 throw new Exception("A GridSplitter in horizontal mode must be in row 1 of its parent Grid.");
-                            var splitterRow = child.Row;
-                            var topRow = ParentGrid.GetRowDefinition(splitterRow - 1);
+                            SplitterRow = child.Row;
+                            var topRow = ParentGrid.GetRowDefinition(SplitterRow - 1);
                             if (!topRow.Contains("fr"))
                                 throw new Exception("Row must contain a '*' definition with no min or max.");
-                            var bottomRow = ParentGrid.GetRowDefinition(splitterRow + 1);
+                            var bottomRow = ParentGrid.GetRowDefinition(SplitterRow + 1);
                             if (!bottomRow.Contains("fr"))
                                 throw new Exception("Row must contain a '*' definition with no min or max.");
-                            var rowSizes = await ParentGrid.GetGridRowSizes();
-                            TopRowWidth = rowSizes[splitterRow - 1];
-                            BottomRowWidth = rowSizes[splitterRow + 1];
                         }
                     }
                 }
+                await GetGridSizes();
             }
         }
 
+        private async Task GetGridSizes()
+        {
+            if (ParentGrid == null)
+                return; 
+
+            if (Direction == SplitterDirection.Vertical)
+            {
+                var columnSizes = await ParentGrid.GetGridColumnSizes();
+                LeftColumnWidth = columnSizes[SplitterColumn - 1];
+                RightColumnWidth = columnSizes[SplitterColumn + 1];
+            }
+            else
+            {
+                var rowSizes = await ParentGrid.GetGridRowSizes();
+                TopRowWidth = rowSizes[SplitterRow - 1];
+                BottomRowWidth = rowSizes[SplitterRow + 1];
+            }
+        }
 
         protected override string UpdateStyle(string css)
         {
@@ -168,6 +197,10 @@ namespace ClearBlazor
                     Refresh(ParentGrid);
                 }
             }
+        }
+        public override void Dispose()
+        {
+            _browserSizeService.OnBrowserResize -= BrowserResized;
         }
     }
 }

@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AssemblyVersion>0.1.0</AssemblyVersion>
@@ -10,86 +10,17 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Components\TableView\**" />
-	  <Content Remove="Components\TableView\**" />
-	  <EmbeddedResource Remove="Components\TableView\**" />
-	  <None Remove="Components\TableView\**" />
-	</ItemGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Components\ListBox\ListBox.razor - Copy.cs" />
-	  <Compile Remove="Components\ListBox\ListBoxItem.razor - Copy.cs" />
-	  <Compile Remove="Components\ListControls\TableView\TableView.cs" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Include="../../README.md" Pack="true" PackagePath="/" />
-	</ItemGroup>
-
-	<PropertyGroup>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-		<NoWarn>1701;1702;1591;</NoWarn>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<NoWarn>1701;1702;1591;</NoWarn>
-	</PropertyGroup>
-
-	<ItemGroup>
-	  <None Remove="Components\Spinner\Spinner.razor.css" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<SupportedPlatform Include="browser" />
-	</ItemGroup>
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Excubo.Blazor.Canvas" Version="3.2.94" />
 		<PackageReference Include="Markdig" Version="0.43.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.10" />
 		<PackageReference Include="SkiaSharp.Views.Blazor" Version="3.119.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.2" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\Services\BrowserInfo\BrowserInfo.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Update="wwwroot\ClearBlazor.js">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="wwwroot\ResizeObserverManager.js">
-		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="wwwroot\MouseCapture.js">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="wwwroot\ResizeCanvas.js">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="wwwroot\ScrollManager.js">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="wwwroot\SetClasses.js">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="wwwroot\SetStyleProperty.js">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-		<Content Update="wwwroot\SizeInfo.js">
-			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-		</Content>
-	</ItemGroup>
 
 </Project>
