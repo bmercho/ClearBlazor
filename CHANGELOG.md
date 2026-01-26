@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.1.2
+
+### Patch Changes
+
+- 79517aa: Implemented Drag and Drop
+
 ## 0.1.1
 
 ### Patch Changes
