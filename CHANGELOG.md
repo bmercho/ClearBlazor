@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.1.3
+
+### Patch Changes
+
+- 76d6405: Fix Azure build problem
+
 ## 0.1.2
 
 ### Patch Changes
