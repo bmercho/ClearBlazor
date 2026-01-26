@@ -2,11 +2,15 @@
 @namespace ClearBlazor
 @inherits ClearComponentBase
 
-<Popup Position=@GetPopupPosition() Transform=@GetPopupTransform() @bind-Open=@Open
-       AllowHorizontalFlip=false AllowVerticalFlip=false Size=@Size>
-    <Grid BackgroundColor=@ThemeManager.CurrentColorScheme.InverseSurface
-          CornerRadius=8 Margin=5>
-        <TextBlock Margin=5 Color=@ThemeManager.CurrentColorScheme.OnInverseSurface>@Text</TextBlock>
-    </Grid>
-</Popup>
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" @attributes=AdditionalAttributes style=@ComputeStyle() class=@Classes>
+        <Popup Position=@GetPopupPosition() Transform=@GetPopupTransform() @bind-Open=@Open
+               AllowHorizontalFlip=false AllowVerticalFlip=false Size=@Size>
+            <Grid BackgroundColor=@ThemeManager.CurrentColorScheme.InverseSurface
+                  CornerRadius=8 Margin=5>
+                <TextBlock Margin=5 Color=@ThemeManager.CurrentColorScheme.OnInverseSurface>@Text</TextBlock>
+            </Grid>
+        </Popup>
+    </div>
+</CascadingValue>
 

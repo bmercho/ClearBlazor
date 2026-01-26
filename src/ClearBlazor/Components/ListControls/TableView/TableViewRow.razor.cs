@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using ClearBlazor;
-using System;
 
 namespace ClearBlazorInternal
 {
-    public partial class TableViewRow<TItem> : ListRowBase<TItem>, IDisposable
+    public partial class TableViewRow<TItem> : ListRowBase<TItem>
            where TItem : ListItem
     {
         [Parameter]
@@ -26,7 +25,9 @@ namespace ClearBlazorInternal
         [Parameter]
         public GridLines VerticalGridLines { get; set; } = GridLines.None;
 
-
+        /// <summary>
+        /// Gets or sets the collection of columns to display in the table.
+        /// </summary>
         [Parameter]
         public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
 
@@ -38,14 +39,17 @@ namespace ClearBlazorInternal
         [Parameter]
         public RenderFragment<TItem>? RowTemplate { get; set; } = null;
 
-        private TableView<TItem>? _parent = null;
-        private TreeItem<TItem>? _nodeData = null;
+        /// <summary>
+        /// Gets or sets a value indicating whether users can reorder rows in the component.
+        /// </summary>
+        [Parameter]
+        public bool AllowRowReordering { get; set; } = false;
 
-        protected override void OnParametersSet()
-        {
-            base.OnParametersSet();
-            _nodeData = RowData as TreeItem<TItem>;
-        }
+
+        internal bool DragOver { get; set; } = false;
+        internal static TableViewRow<TItem>? DragRow { get; set; } = null;
+
+        private TableView<TItem>? _parent = null;
 
         protected override async Task OnInitializedAsync()
         {
@@ -67,14 +71,14 @@ namespace ClearBlazorInternal
                             parameters.TryGetValue<TItem>(nameof(RowData), out var rowData);
                             if (rowData != null)
                                 if (RowData == null || rowData.ListItemId != RowData.ListItemId)
-                                    _doRender = true;
+                                    DoRender = true;
                         break;
                     case VirtualizeMode.Virtualize:
                     case VirtualizeMode.InfiniteScroll:
-                        _doRender = true;
+                        DoRender = true;
                         break;
                     case VirtualizeMode.Pagination:
-                        _doRender = true;
+                        DoRender = true;
                         break;
                 }
             await base.SetParametersAsync(parameters);
@@ -84,35 +88,39 @@ namespace ClearBlazorInternal
         protected override void OnAfterRender(bool firstRender)
         {
             base.OnAfterRender(firstRender);
-            _doRender = false;
+            DoRender = false;
+
+
         }
         protected override bool ShouldRender()
         {
-            return _doRender;
+            return DoRender;
         }
 
-        protected async Task OnMouseEnter()
+        internal override async Task OnPointerEnter(PointerEventArgs args)
         {
+            await base.OnPointerEnter(args);
             if (_parent == null)
                 return;
             if (_parent.HoverHighlight)
             {
-                _mouseOver = true;
+                MouseOver = true;
                 await Task.CompletedTask;
-                _doRender = true;
+                DoRender = true;
                 StateHasChanged();
             }
         }
 
-        protected async Task OnMouseLeave()
+        internal override async Task OnPointerLeave(PointerEventArgs args)
         {
+            await base.OnPointerLeave(args);
             if (_parent == null)
                 return;
             if (_parent.HoverHighlight)
             {
-                _mouseOver = false;
+                MouseOver = false;
                 await Task.CompletedTask;
-                _doRender = true;
+                DoRender = true;
                 StateHasChanged();
             }
         }
@@ -137,26 +145,19 @@ namespace ClearBlazorInternal
             int header = _parent.ShowHeader ? 1 : 0;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
-                //css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
-                //       $"grid-column: 1 / span {Columns.Count}; grid-row: 1/ span 1;";
-                //css += $"justify-self:start; position:relative; " +
-                //       $"top:{(_parent._skipItems + Index + header) * (_parent._rowHeight + RowSpacing)}px;" +
-                //       $" height: {(_parent._rowHeight + RowSpacing)}px;";
-
-                css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
+                css += "display:grid; grid-template-columns: subgrid; grid-template-rows: auto 1fr auto;" +
                        $"grid-area: {Index + 2 + header} / 1 /span 1 / span {Columns.Count}; " +
                        $" height: {(_parent._rowHeight + RowSpacing)}px;";
             }
             else
-                css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
+                css += "display:grid; grid-template-columns: subgrid; grid-template-rows: auto 1fr auto;" +
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
-            if (_mouseOver)
+            if (MouseOver)
                 css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8).Value}; ";
 
             if (RowData.IsSelected)
                 css += $"background-color: {ThemeManager.CurrentColorScheme.SecondaryContainer.Value}; ";
-
             return css;
         }
 
@@ -165,24 +166,9 @@ namespace ClearBlazorInternal
             if (_parent == null)
                 return string.Empty;
 
-            return $"display:grid; grid-column: {column} /span 1; justify-self: stretch; " +
+            return $"display:grid; grid-column: {column} /span 1; grid-row: 2 / span 1; justify-self: stretch; " +
                          $"grid-template-rows: {RowSpacing / 2}px 1fr {RowSpacing / 2}px; " +
                          $"padding:0px {ColumnSpacing / 2}px 0px {ColumnSpacing / 2}px;";
-
-        }
-
-        private string GetContainerDivStyle()
-        {
-            if (_parent == null)
-                return string.Empty;
-
-            string css = "display:grid; grid-template-columns: 1fr auto;";
-            //if (_parent.VirtualizeMode != VirtualizeMode.Virtualize)
-            //    css += $"grid-template-rows: {RowSpacing/2}px 1fr {RowSpacing/2}px; ";
-            //else
-            //    css += $"grid-template-rows: 0px 1fr 0px; ";
-
-            return css;
         }
 
         private string GetContentDivStyle()
@@ -199,33 +185,39 @@ namespace ClearBlazorInternal
             return content == null ? Array.Empty<string>() : content.Split('\r');
         }
 
-        private string GetHorizontalGridLineStyle(int row, int columnCount)
+        private string GetHorizontalGridLineStyle(int columnCount, bool forDrag)
         {
             if (_parent == null)
                 return string.Empty;
 
             int header = _parent.ShowHeader ? 1 : 0;
 
+            int borderWidth = forDrag ? 3 : 1;
+
+            int row = 1;
+            if (forDrag && DragRow != null && DragRow.Index < Index)
+                row = 3;
+
             string css = string.Empty;
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize)
             {
-                css += $"z-order:1; align-self:start; border-width:1px 0 0 0; border-style:solid;" +
+                css += $"z-order:1; align-self:start; border-width:{borderWidth}px 0 0 0; border-style:solid;" +
                        $"display:grid; grid-template-columns: subgrid; " +
-                       $"grid-area: {Index + 2 + header} / 1 /span 1 / span {Columns.Count};  " +
+                       $"grid-area: {row} / 1 /span 1 / span {Columns.Count};  " +
                        $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             }
             else
             {
-                css += $"z-order:1; align-self:start; border-width:1px 0 0 0; border-style:solid;" +
+                css += $"z-order:1; align-self:start; border-width:{borderWidth}px 0 0 0; border-style:solid;" +
                        $"grid-area: {row} / 1 / span 1 / span {columnCount}; " +
                        $"border-color: {ThemeManager.CurrentColorScheme.OutlineVariant.Value}; ";
             }
             return css;
         }
 
-        public override void Dispose()
+        public override async ValueTask DisposeAsync()
         {
-            base.Dispose();
+            await base.DisposeAsync();
             if (_parent != null)
                 _parent.RemoveListRow(this);
         }

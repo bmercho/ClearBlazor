@@ -7,7 +7,7 @@ namespace ClearBlazor
     /// <summary>
     /// Represents a GridSplitter component.
     /// </summary>
-    public partial class GridSplitter:ClearComponentBase, IDisposable
+    public partial class GridSplitter:ClearComponentBase
     {
         /// <summary>
         /// The direction of the splitter
@@ -198,8 +198,9 @@ namespace ClearBlazor
                 }
             }
         }
-        public override void Dispose()
+        public override async ValueTask DisposeAsync()
         {
+            await base.DisposeAsync();
             _browserSizeService.OnBrowserResize -= BrowserResized;
         }
     }

@@ -40,6 +40,13 @@ namespace ClearBlazor
 
         private bool toggled = false;
 
+
+        protected override string UpdateStyle(string css)
+        {
+            css += $"display: grid; background-color:transparent; ";
+            return css;
+        }
+
         /// <summary>
         /// Toggles the button.
         /// </summary>

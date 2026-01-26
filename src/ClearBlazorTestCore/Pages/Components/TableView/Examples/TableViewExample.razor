@@ -23,9 +23,10 @@
                        InitialIndex=@((0, Alignment.Start))
                        ShowHeader=@_showHeader
                        StickyHeader=@_stickyHeader
+                       AllowRowReordering=true
                        PageSize=@GetPageSize()
-                       Items=@_localListData>
-                <TableColumn Label="Index" TItem=TestListRow Field=@(x => x.ItemIndex) ColumnDefinition="70" />
+                       @bind-Items=@_localListData>
+                <TableColumn Label="Index" TItem=TestListRow Field=@(x => x.ItemIndex) ColumnDefinition="70"/>
                 <TableColumn Label="First Name" TItem=TestListRow Field=@(x => x.FirstName) ColumnDefinition="120" />
                 <TableColumn Label="Last Name" TItem=TestListRow Field=@(x => x.LastName) ColumnDefinition="120" />
                 <TableColumn Label="Product" TItem=TestListRow Field=@(x => x.Product) ColumnDefinition="120" />
@@ -101,47 +102,47 @@
 
                 <TextBlock>Selection=@_selectedItem?.FirstName</TextBlock>
                 <TextBlock>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
-                <Button Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
+                <Button Width=150 HorizontalAlignment=Alignment.Start @onclick=@ClearSelections>Clear selections</Button>
             </StackPanel>
         }
         <WrapPanel Row=3 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
             @if (_virtualizeMode == VirtualizeMode.InfiniteScroll)
             {
-                <Button OnClicked=@OnGotoStart>Goto start</Button>
+                <Button @onclick=@OnGotoStart>Goto start</Button>
                 <StackPanel Orientation=Orientation.Landscape>
-                    <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
+                    <Button @onclick=@CheckAtStart>CheckAtStart</Button>
                     <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
                 </StackPanel>
-                <Button OnClicked=@AddToStart>Add to start</Button>
+                <Button @onclick=@AddToStart>Add to start</Button>
             }
             else if (_virtualizeMode != VirtualizeMode.InfiniteScrollReverse)
             {
                 @if (_virtualizeMode == VirtualizeMode.Pagination)
                 {
-                    <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Go to 50 (center)</Button>
-                    <Button OnClicked=@AddToEnd>Add to end</Button>
-                    <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
-                    <Button OnClicked=@ChangeItem>Change first item</Button>
+                    <Button @onclick=@(e => GotoIndex(50, Alignment.Center))>Go to 50 (center)</Button>
+                    <Button @onclick=@AddToEnd>Add to end</Button>
+                    <Button @onclick=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+                    <Button @onclick=@ChangeItem>Change first item</Button>
                     <StackPanel Orientation=Orientation.Landscape>
-                        <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>
+                        <Button @onclick=@CheckAtEnd>CheckAtEnd</Button>
                         <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atEnd</TextBlock>
                     </StackPanel>
                     <StackPanel Orientation=Orientation.Landscape>
-                        <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
+                        <Button @onclick=@CheckAtStart>CheckAtStart</Button>
                         <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
                     </StackPanel>
                 }
                 else
                 {
-                    <Button OnClicked=@(e => GotoIndex(20, Alignment.Start))> Go to 20(start)</Button>
-                    <Button OnClicked=@(e => GotoIndex(50, Alignment.Center))>Go to 50 (center)</Button>
-                    <Button OnClicked=@(e => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
-                    <Button OnClicked=@(e => GotoIndex(5, Alignment.End))>Goto 70 (end)</Button>
-                    <Button OnClicked=@(e => GotoIndex(10, Alignment.End))>Goto 70 (end)</Button>
-                    <Button OnClicked=@(e => GotoIndex(15, Alignment.End))>Goto 70 (end)</Button>
-                    <Button OnClicked=@OnGotoEnd>Go to end</Button>
-                    <Button OnClicked=@OnGotoStart>Go to start</Button>
-                    <Button OnClicked=@AddToEnd>Add to end</Button>
+                    <Button @onclick=@(e => GotoIndex(20, Alignment.Start))> Go to 20(start)</Button>
+                    <Button @onclick=@(e => GotoIndex(50, Alignment.Center))>Go to 50 (center)</Button>
+                    <Button @onclick=@(e => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
+                    <Button @onclick=@(e => GotoIndex(5, Alignment.End))>Goto 70 (end)</Button>
+                    <Button @onclick=@(e => GotoIndex(10, Alignment.End))>Goto 70 (end)</Button>
+                    <Button @onclick=@(e => GotoIndex(15, Alignment.End))>Goto 70 (end)</Button>
+                    <Button @onclick=@OnGotoEnd>Go to end</Button>
+                    <Button @onclick=@OnGotoStart>Go to start</Button>
+                    <Button @onclick=@AddToEnd>Add to end</Button>
                 }
             }
         </WrapPanel>
@@ -149,14 +150,14 @@
                 _virtualizeMode == VirtualizeMode.Virtualize)
         {
             <WrapPanel Row=4 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-                <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
-                <Button OnClicked=@ChangeItem>Change first item</Button>
+                <Button @onclick=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+                <Button @onclick=@ChangeItem>Change first item</Button>
                 <StackPanel Orientation=Orientation.Landscape>
-                    <Button OnClicked=@CheckAtEnd>CheckAtEnd</Button>
+                    <Button @onclick=@CheckAtEnd>CheckAtEnd</Button>
                     <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atEnd</TextBlock>
                 </StackPanel>
                 <StackPanel Orientation=Orientation.Landscape>
-                    <Button OnClicked=@CheckAtStart>CheckAtStart</Button>
+                    <Button @onclick=@CheckAtStart>CheckAtStart</Button>
                     <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
                 </StackPanel>
             </WrapPanel>
@@ -172,12 +173,12 @@
     private bool _hoverHighlight = true;
     private bool _showHeader = true;
     private bool _stickyHeader = true;
-    private int _rowSpacing = 10;
+    private int _rowSpacing = 40;
     private int _columnSpacing = 10;
     private bool _horizontalScrollbar = false;
     private GridLines _horizontalGridLines = GridLines.All;
     private GridLines _verticalGridLines = GridLines.All;
-    private VirtualizeMode _virtualizeMode = VirtualizeMode.Virtualize;
+    private VirtualizeMode _virtualizeMode = VirtualizeMode.None;
     private bool _virtualizeModeAvailable = true;
     private int _selectedPage = 1;
     private bool _atEnd = false;
@@ -192,9 +193,9 @@
     {
         base.OnInitialized();
         if (_virtualizeMode == VirtualizeMode.None)
-            _localListData = ClientData.LocalTestListRows100;
+            _localListData = ClientData.LocalTestListRows5;
         else
-            _localListData = ClientData.LocalTestListRows5000;
+            _localListData = ClientData.LocalTestListRows100;
         _totalNumItems = _localListData.Count;
         _numPages = (int)Math.Ceiling(_totalNumItems / (Double)GetPageSize());
     }
@@ -276,9 +277,9 @@
         _numPages = (int)Math.Ceiling(_totalNumItems / (Double)GetPageSize());
 
         if (_virtualizeMode == VirtualizeMode.None)
-            _localListData = ClientData.LocalTestListRows100;
+            _localListData = ClientData.LocalTestListRows5;
         else
-            _localListData = ClientData.LocalTestListRows5000;
+            _localListData = ClientData.LocalTestListRows100;
 
         if (_virtualizeMode == VirtualizeMode.InfiniteScrollReverse)
             _virtualizeModeAvailable = false;
@@ -288,10 +289,8 @@
         StateHasChanged();
         await _table.GotoStart();
         await _table.RefreshAll();
-        //await _table.ResetComponent();
-
-        //NavManager.NavigateTo($"/TableView");
-
+        await _table.ResetComponent();
+        StateHasChanged();
     }
 
     string GetTitle()

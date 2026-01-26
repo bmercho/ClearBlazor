@@ -108,16 +108,16 @@ namespace ClearBlazor
         protected async Task OnMouseEnter(MouseEventArgs e)
         {
             if (ToolTipElement == null)
-                await Task.CompletedTask;
-            else
-                ToolTipElement.ShowToolTip();
+                return;
+            ToolTipElement.ShowToolTip();
             StateHasChanged();
         }
 
         protected async Task OnMouseLeave(MouseEventArgs e)
         {
+            if (ToolTipElement == null)
+                return;
             ToolTipElement?.HideToolTip();
-            await Task.CompletedTask;
             StateHasChanged();
         }
     }

@@ -42,6 +42,7 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Video\Code\VideoSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\GridSplitter\Code\GridSplitterVerticalExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\GridSplitter\Code\GridSplitterHorizontalExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\GridSplitter\Code\GridSplitterBothExampleCode.html" />

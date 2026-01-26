@@ -320,13 +320,24 @@ namespace ClearBlazor
             }
 
             if (!IsTextSelectionEnabled)
+            {
                 css += "user-select: none; -ms-user-select: none; " +
-                       "-webkit-user-select: none; -moz-user-select: none; " +
-                       "cursor: default; ";
+                       "-webkit-user-select: none; -moz-user-select: none; ";
+                if (!ClearComponentBase.Dragging)
+                    css += "cursor:default; ";
+            }
 
-            if (Clickable)
+
+
+            if (Clickable && !ClearComponentBase.Dragging)
                 css += "cursor:pointer; ";
+
             return css;
+        }
+
+        protected void OnPointerOver()
+        {
+            StateHasChanged();
         }
 
         internal Color GetColor()

@@ -3,7 +3,7 @@
 @typeparam TListBox
 @inherits ClearComponentBase
 <CascadingValue Value=this IsFixed="false">
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
         <StackPanel Orientation=Orientation.Portrait HorizontalAlignment=Alignment.Stretch>
             <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=@ContentAlignment 
                         Spacing=20 CornerRadius=20
@@ -11,7 +11,7 @@
                         Style=@RowStyle
                         OnElementMouseEnter=@OnMouseEnter
                         OnElementMouseLeave=@OnMouseLeave
-                        OnClicked=@OnListItemClicked>
+                        @onclick=@OnListItemClicked>
                 @if (Multiselect && !HasChildren)
                 {
                     @if (IsSelected)

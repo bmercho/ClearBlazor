@@ -124,11 +124,17 @@ namespace ClearBlazor
                 else
                     css += GetBoxShadowCss(2);
 
-            if (Disabled)
-                css += "cursor: default; pointer-events:none; ";
+            if (Dragging)
+            {
+                css += "pointer-events:none; ";
+            }
             else
-                css += "cursor: pointer; ";
-
+            {
+                if (Disabled)
+                    css += "cursor: default; pointer-events:none; ";
+                else
+                    css += "cursor: pointer; ";
+            }
             var size = GetSize();
 
             css += GetBorderRadius();

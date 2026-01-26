@@ -8,8 +8,8 @@
                   ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Immediate=true
                   InputContainerStyle=InputContainerStyle.Underlined Model=@TestModel />
     </Grid>
-    <Button HorizontalAlignment=Alignment.Start OnClicked=@(() => form.Validate())>Validate</Button>
-    <Button HorizontalAlignment=Alignment.Start OnClicked=@Save>Save</Button>
+    <Button HorizontalAlignment=Alignment.Start @onclick=@(() => form.Validate())>Validate</Button>
+    <Button HorizontalAlignment=Alignment.Start @onclick=@Save>Save</Button>
 </StackPanel>
 
 @code {

@@ -1,6 +1,7 @@
+using ClearBlazorInternal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using ClearBlazorInternal;
+using System.Diagnostics;
 
 namespace ClearBlazor
 {
@@ -84,6 +85,13 @@ namespace ClearBlazor
         [Parameter]
         public bool StickyHeader { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether users can reorder rows in the component.
+        /// </summary>
+        [Parameter]
+        public bool AllowRowReordering { get; set; } = false;
+
+
         internal int _columnSpacing = 5;
         internal bool _stickyHeader = true;
 
@@ -128,7 +136,6 @@ namespace ClearBlazor
         internal double _itemWidth = 0;
 
         private bool _inProgress = false;
-
 
         private List<TableColumn<TItem>> Columns { get; } = new List<TableColumn<TItem>>();
         private string _columnDefinitions = string.Empty;
@@ -367,7 +374,7 @@ namespace ClearBlazor
             ListRows.Clear();
             await Refresh();
             RefreshAllRows();
-            _header.Refresh();
+            _header?.Refresh();
         }
 
         /// <summary>
@@ -436,7 +443,7 @@ namespace ClearBlazor
             _verticalGridLines = VerticalGridLines;
             _stickyHeader = StickyHeader;
 
-            if (_items.Count() == 0)
+            //if (_items.Count() == 0)
                 switch (VirtualizeMode)
                 {
                     case VirtualizeMode.None:
@@ -517,6 +524,45 @@ namespace ClearBlazor
             }
         }
 
+        /// <summary>
+        /// Reorders a row by moving the source item to the target item's position.
+        /// </summary>
+        /// <param name="sourceItem">The item being dragged</param>
+        /// <param name="targetItem">The item being dropped onto</param>
+        internal async Task ReorderRow(TItem sourceItem, TItem targetItem)
+        {
+            if (Items == null || sourceItem == null || targetItem == null)
+                return;
+
+            var itemsList = Items.ToList();
+
+            int sourceIndex = itemsList.FindIndex(i => i.ListItemId == sourceItem.ListItemId);
+            int targetIndex = itemsList.FindIndex(i => i.ListItemId == targetItem.ListItemId);
+
+            if (sourceIndex == -1 || targetIndex == -1 || sourceIndex == targetIndex)
+                return;
+
+            // Remove the source item
+            itemsList.RemoveAt(sourceIndex);
+
+            // Insert at the target position
+            itemsList.Insert(targetIndex, sourceItem);
+
+            // Update the Items collection
+            Items = itemsList;
+
+            // Update item indices
+            for (int i = 0; i < itemsList.Count; i++)
+            {
+                itemsList[i].ItemIndex = i;
+            }
+
+            _items = itemsList;
+
+            await NotifyItemsChanged();
+            await Task.CompletedTask;
+        }
+
         protected override void AddChild(ClearComponentBase child)
         {
             TableColumn<TItem>? column = child as TableColumn<TItem>;
@@ -593,7 +639,7 @@ namespace ClearBlazor
                         break;
                     case VirtualizeMode.Virtualize:
                         await CheckForNewRows(_scrollTop, false);
-                        _header.Refresh();
+                        _header?.Refresh();
                         break;
                     case VirtualizeMode.InfiniteScroll:
                     case VirtualizeMode.InfiniteScrollReverse:
@@ -807,17 +853,10 @@ namespace ClearBlazor
         private string GetSpacerStyle()
         {
             int header = ShowHeader ? 1 : 0;
-            double ht = (_skipItems + header) * (_rowHeight + RowSpacing);
             string css = $"display:grid;  grid-template-columns: subgrid; " +
                          $"grid-area: 1 / 1 /span {1 + header} / span {Columns.Count}; ";
             if (VirtualizeMode == VirtualizeMode.Virtualize)
-            {
-                //css += $"transform: translateY({(_skipItems + header) * (_rowHeight + RowSpacing)}px);";
-                //css += $"position:relative; top:{(_skipItems + header) * (_rowHeight + RowSpacing)}px; ";
-
-            }
-            if (VirtualizeMode == VirtualizeMode.Virtualize)
-                css += $"min-height:{(_skipItems + header) * (_rowHeight + RowSpacing)}px; ";
+                css += $"min-height:{_skipItems * (_rowHeight + RowSpacing)}px; ";
             else
                 css += $"min-height:0px; ";
 
@@ -1085,5 +1124,74 @@ namespace ClearBlazor
 
         }
 
+        private async Task DragStarted(DraggingEventArgs e)
+        {
+            e.DragId = "TableRowReorder";
+            e.DragType = DragType.Copy;
+        }
+
+        protected async Task DragEnter(DraggingEventArgs e)
+        {
+            if (e.DragId != "TableRowReorder")
+                return;
+
+            var dragZone = e.DragZone as TableViewRow<TItem>;
+            var dropZone = e.DropZone as TableViewRow<TItem>;
+            if (dragZone == null || dropZone == null)
+                return;
+
+            if (dropZone != dragZone)
+            { 
+                e.AllowDrop = true;
+
+                e.Cursor = "ns-resize";
+
+                if (dropZone != null)
+                {
+                    dropZone.DragOver = true;
+                    dropZone.DoRender = true;
+                }
+                if (dragZone != null)
+                {
+                    TableViewRow<TItem>.DragRow = dragZone;
+                }
+                StateHasChanged();
+            }
+        }
+
+        protected async Task DragLeave(DraggingEventArgs e)
+        {
+            var dropZone = e.DropZone as TableViewRow<TItem>;
+            if (dropZone != null)
+            {
+                dropZone.DragOver = false;
+                dropZone.DoRender = true;
+            }
+            StateHasChanged();
+        }
+
+        protected async Task DragOver(DraggingEventArgs e)
+        {
+            var dropZone = e.DropZone as TableViewRow<TItem>;
+            if (dropZone != null)
+            {
+                dropZone.DragOver = true;
+                dropZone.DoRender = true;
+            }
+            StateHasChanged();
+        }
+
+        protected async Task Drop(DraggingEventArgs e)
+        {
+            var dragZone = e.DragZone as TableViewRow<TItem>;
+            var dropZone = e.DropZone as TableViewRow<TItem>;
+            if (dragZone != null && dropZone != null)
+            {
+                dropZone.DragOver = false;
+                await ReorderRow(dragZone.RowData, dropZone.RowData);
+                TableViewRow<TItem>.DragRow = null;
+            }
+            StateHasChanged();
+        }
     }
 }

@@ -60,7 +60,7 @@
             </Grid>
         </Form>
     </Grid>
-    <Button HorizontalAlignment=Alignment.Start OnClicked=@(() => form.Validate())>Validate</Button>
+    <Button HorizontalAlignment=Alignment.Start @onclick=@(() => form.Validate())>Validate</Button>
 </StackPanel>
 
 @code {

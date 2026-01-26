@@ -2,6 +2,6 @@
 @namespace ClearBlazor
 @inherits ClearComponentBase
 
-<div id="@Id" class="@Classes" style="@ComputeStyle()">
+<div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
     <img style=@ImageStyle src=@Source alt=@Alternative />
 </div>

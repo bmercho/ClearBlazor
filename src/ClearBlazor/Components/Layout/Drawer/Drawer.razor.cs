@@ -6,7 +6,7 @@ namespace ClearBlazor
     /// <summary>
     /// A panel docked to a side of the page that slides in and out to shown or hidden.
     /// </summary>
-    public partial class Drawer : ClearComponentBase,IBackground,IDisposable
+    public partial class Drawer : ClearComponentBase,IBackground
     {
         /// <summary>
         /// The side that the drawer will reside.
@@ -293,8 +293,9 @@ namespace ClearBlazor
         //    }
         //}
 
-        public override void Dispose()
+        public override async ValueTask DisposeAsync()
         {
+            await base.DisposeAsync();
             _browserSizeService.OnBrowserResize -= BrowserResized;
         }
     }

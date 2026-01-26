@@ -260,7 +260,6 @@ namespace ClearBlazor
                     IsSelected = await parent.SetSelected(this);
             }
             StateHasChanged();
-            await OnClicked.InvokeAsync();
             if (HRef != null)
                 NavManager.NavigateTo(HRef);
         }

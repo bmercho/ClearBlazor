@@ -7,9 +7,15 @@
     -webkit-tap-highlight-color: transparent
 }
 
+* {
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
 html {
     overflow: hidden;
     overscroll-behavior: none;
+    user-select:none;
 }
 
 .htmlTagDelimiter {

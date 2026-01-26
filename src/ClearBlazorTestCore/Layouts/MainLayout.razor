@@ -10,10 +10,10 @@
 <RootComponent>
     <Grid Rows="auto,*">
         <AppBar Row="0" Padding="10">
-            <IconButton Dock=Dock.Left Icon="@Icons.Material.Filled.Menu" OnClicked=@MenuClicked />
+            <IconButton Dock=Dock.Left Icon="@Icons.Material.Filled.Menu" @onclick=@MenuClicked />
             <TextBlock Typo=Typo.H6 HorizontalAlignment="Alignment.Center"
                        VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
-            <IconButton Dock=Dock.Right OnClicked=@OnClicked Icon=@GetIcon() ToolTip="Toggle Light/Dark Mode" Margin="0,10,0,0" />
+            <IconButton Dock=Dock.Right @onclick=@OnClicked Icon=@GetIcon() ToolTip="Toggle Light/Dark Mode" Margin="0,10,0,0" />
 
         </AppBar>
         <Drawer @ref=Drawer Row=1 @bind-Open=Open DrawerLocation=DrawerLocation.Left
@@ -21,74 +21,75 @@
             <DrawerContent>
                 <ScrollViewer VerticalScrollMode="ScrollMode.Enabled">
                     <ListBox TListBox="string" Padding="0,10,0,10">
-                        <ListBoxItem Text="Home" HRef="/" OnClicked=@Close />
+                        <ListBoxItem Text="Home" HRef="/" @onclick=Close />
                         <ListBoxItem Text="Components" InitiallyExpanded=true>
                             <ListBoxItem Text="Layout" InitiallyExpanded=false>
-                                <ListBoxItem Text="ScrollViewer" HRef="/ScrollViewer" OnClicked=@Close />
-                                <ListBoxItem Text="Grid" HRef="/Grid" OnClicked=@Close />
-                                <ListBoxItem Text="Stack Panel" HRef="/StackPanel" OnClicked=@Close />
-                                <ListBoxItem Text="Wrap Panel" HRef="/WrapPanel" OnClicked=@Close />
-                                <ListBoxItem Text="Dock Panel" HRef="/DockPanel" OnClicked=@Close />
-                                <ListBoxItem Text="Uniform Grid" HRef="/UniformGrid" OnClicked=@Close />
-                                <ListBoxItem Text="Tabs" HRef="/Tabs" OnClicked=@Close />
-                                <ListBoxItem Text="Drawer" HRef="/Drawer" OnClicked=@Close />
-                                <ListBoxItem Text="Drawing Canvas" HRef="/DrawingCanvas" OnClicked=@Close />
+                                <ListBoxItem Text="ScrollViewer" HRef="/ScrollViewer" @onclick=Close />
+                                <ListBoxItem Text="Grid" HRef="/Grid" @onclick=Close />
+                                <ListBoxItem Text="Stack Panel" HRef="/StackPanel" @onclick=Close />
+                                <ListBoxItem Text="Wrap Panel" HRef="/WrapPanel" @onclick=Close />
+                                <ListBoxItem Text="Dock Panel" HRef="/DockPanel" @onclick=Close />
+                                <ListBoxItem Text="Uniform Grid" HRef="/UniformGrid" @onclick=Close />
+                                <ListBoxItem Text="Tabs" HRef="/Tabs" @onclick=Close />
+                                <ListBoxItem Text="Drawer" HRef="/Drawer" @onclick=Close />
+                                <ListBoxItem Text="Drawing Canvas" HRef="/DrawingCanvas" @onclick=Close />
                              </ListBoxItem>
-                            <ListBoxItem Text="TextBlock" HRef="/TextBlock" OnClicked=@Close />
-                            <ListBoxItem Text="Icons" HRef="/Icon" OnClicked=@Close />
-                            <ListBoxItem Text="Avatars" HRef="/Avatar" OnClicked=@Close />
-                            <ListBoxItem Text="AppBar" HRef="/AppBar" OnClicked=@Close />
-                            <ListBoxItem Text="Images" HRef="/Image" OnClicked=@Close />
+                            <ListBoxItem Text="TextBlock" HRef="/TextBlock" @onclick=Close />
+                            <ListBoxItem Text="Icons" HRef="/Icon" @onclick=Close />
+                            <ListBoxItem Text="Avatars" HRef="/Avatar" @onclick=Close />
+                            <ListBoxItem Text="AppBar" HRef="/AppBar" @onclick=Close />
+                            <ListBoxItem Text="Images" HRef="/Image" @onclick=Close />
+                            @* <ListBoxItem Text="Videos" HRef="/Video" @onclick=Close /> *@
                             <ListBoxItem Text="Buttons" InitiallyExpanded=false>
-                                <ListBoxItem Text="Button" HRef="/Button" OnClicked=@Close />
-                                <ListBoxItem Text="Icon Button" HRef="/IconButton" OnClicked=@Close />
-                                <ListBoxItem Text="Toggle Icon Button" HRef="/ToggleIconButton" OnClicked=@Close />
-                                <ListBoxItem Text="Button Group" HRef="/ButtonGroup" OnClicked=@Close />
+                                <ListBoxItem Text="Button" HRef="/Button" @onclick=Close />
+                                <ListBoxItem Text="Icon Button" HRef="/IconButton" @onclick=Close />
+                                <ListBoxItem Text="Toggle Icon Button" HRef="/ToggleIconButton" @onclick=Close />
+                                <ListBoxItem Text="Button Group" HRef="/ButtonGroup" @onclick=Close />
                             </ListBoxItem>
                             <ListBoxItem Text="Pickers" InitiallyExpanded=false>
-                                <ListBoxItem Text="Color Picker" HRef="/ColorPicker" OnClicked=@Close />
-                                <ListBoxItem Text="Date Picker" HRef="/DatePicker" OnClicked=@Close />
-                                <ListBoxItem Text="Time Picker" HRef="/TimePicker" OnClicked=@Close />
+                                <ListBoxItem Text="Color Picker" HRef="/ColorPicker" @onclick=Close />
+                                <ListBoxItem Text="Date Picker" HRef="/DatePicker" @onclick=Close />
+                                <ListBoxItem Text="Time Picker" HRef="/TimePicker" @onclick=Close />
                             </ListBoxItem>
-                            <ListBoxItem Text="ToolTip" HRef="/ToolTip" OnClicked=@Close />
-                            <ListBoxItem Text="Toolbar" HRef="/Toolbar" OnClicked=@Close />
-                            <ListBoxItem Text="ToolbarTray" HRef="/ToolbarTray" OnClicked=@Close />
-                            <ListBoxItem Text="ListBox" HRef="/ListBox" OnClicked=@Close />
-                            <ListBoxItem Text="Popup" HRef="/Popup" OnClicked=@Close />
-                            <ListBoxItem Text="Pagination" HRef="/Pagination" OnClicked=@Close />
+                            <ListBoxItem Text="ToolTip" HRef="/ToolTip" @onclick=Close />
+                            <ListBoxItem Text="Toolbar" HRef="/Toolbar" @onclick=Close />
+                            <ListBoxItem Text="ToolbarTray" HRef="/ToolbarTray" @onclick=Close />
+                            <ListBoxItem Text="ListBox" HRef="/ListBox" @onclick=Close />
+                            <ListBoxItem Text="Popup" HRef="/Popup" @onclick=Close />
+                            <ListBoxItem Text="Pagination" HRef="/Pagination" @onclick=Close />
                             <ListBoxItem Text="Inputs" InitiallyExpanded=false>
-                                <ListBoxItem Text="Check Box" HRef="/CheckBox" OnClicked=@Close />
-                                <ListBoxItem Text="Switch" HRef="/Switch" OnClicked=@Close />
-                                <ListBoxItem Text="Radio Button" HRef="/RadioGroup" OnClicked=@Close />
-                                <ListBoxItem Text="Text Input" HRef="/TextInput" OnClicked=@Close />
-                                <ListBoxItem Text="Numeric Input" HRef="/NumericInput" OnClicked=@Close />
-                                <ListBoxItem Text="Select" HRef="/Select" OnClicked=@Close />
-                                <ListBoxItem Text="Slider" HRef="/Slider" OnClicked=@Close />
-                                <ListBoxItem Text="Color Picker" HRef="/ColorPickerInput" OnClicked=@Close />
-                                <ListBoxItem Text="Date Picker" HRef="/DatePickerInput" OnClicked=@Close />
-                                <ListBoxItem Text="Time Picker" HRef="/TimePickerInput" OnClicked=@Close />
+                                <ListBoxItem Text="Check Box" HRef="/CheckBox" @onclick=Close />
+                                <ListBoxItem Text="Switch" HRef="/Switch" @onclick=Close />
+                                <ListBoxItem Text="Radio Button" HRef="/RadioGroup" @onclick=Close />
+                                <ListBoxItem Text="Text Input" HRef="/TextInput" @onclick=Close />
+                                <ListBoxItem Text="Numeric Input" HRef="/NumericInput" @onclick=Close />
+                                <ListBoxItem Text="Select" HRef="/Select" @onclick=Close />
+                                <ListBoxItem Text="Slider" HRef="/Slider" @onclick=Close />
+                                <ListBoxItem Text="Color Picker" HRef="/ColorPickerInput" @onclick=Close />
+                                <ListBoxItem Text="Date Picker" HRef="/DatePickerInput" @onclick=Close />
+                                <ListBoxItem Text="Time Picker" HRef="/TimePickerInput" @onclick=Close />
                             </ListBoxItem>
                             <ListBoxItem Text="List type controls" InitiallyExpanded=false>
-                                <ListBoxItem Text="ListView" HRef="/ListView" OnClicked=@Close />
-                                <ListBoxItem Text="Table View" HRef="/TableView" OnClicked=@Close />
-                                <ListBoxItem Text="TreeView" HRef="/TreeView" OnClicked=@Close />
-                                <ListBoxItem Text="TreeTableView" HRef="/TreeTableView" OnClicked=@Close />
+                                <ListBoxItem Text="ListView" HRef="/ListView" @onclick=Close />
+                                <ListBoxItem Text="Table View" HRef="/TableView" @onclick=Close />
+                                <ListBoxItem Text="TreeView" HRef="/TreeView" @onclick=Close />
+                                <ListBoxItem Text="TreeTableView" HRef="/TreeTableView" @onclick=Close />
                             </ListBoxItem>
                             <ListBoxItem Text="Forms" InitiallyExpanded=false>
-                                <ListBoxItem Text="Form" HRef="/Form" OnClicked=@Close />
-                                <ListBoxItem Text="Auto Form" HRef="/AutoForm" OnClicked=@Close />
+                                <ListBoxItem Text="Form" HRef="/Form" @onclick=Close />
+                                <ListBoxItem Text="Auto Form" HRef="/AutoForm" @onclick=Close />
                             </ListBoxItem>
-                            <ListBoxItem Text="GridSplitter" HRef="/GridSplitter" OnClicked=@Close />
-                            <ListBoxItem Text="Spinner" HRef="/Spinner" OnClicked=@Close />
+                            <ListBoxItem Text="GridSplitter" HRef="/GridSplitter" @onclick=Close />
+                            <ListBoxItem Text="Spinner" HRef="/Spinner" @onclick=Close />
                             @if(IsDebug())
                             {
-                                <ListBoxItem Text="Logs" HRef="/Logs" OnClicked=@Close />
+                                <ListBoxItem Text="Logs" HRef="/Logs" @onclick=Close />
                             }
                         </ListBoxItem>
                         <ListBoxItem Text="Customization" InitiallyExpanded=true>
                             <ListBoxItem Text="Theming" InitiallyExpanded=true>
-                                <ListBoxItem Text="Themes" HRef="/Themes" OnClicked=@Close />
-                                <ListBoxItem Text="Colors" HRef="/Colors" OnClicked=@Close />
+                                <ListBoxItem Text="Themes" HRef="/Themes" @onclick=Close />
+                                <ListBoxItem Text="Colors" HRef="/Colors" @onclick=Close />
                             </ListBoxItem>
                         </ListBoxItem>
                     </ListBox>
@@ -109,9 +110,10 @@
 
     bool Open { get; set; } = false;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        base.OnInitialized();
+        await base.OnInitializedAsync();
+
         ClientData.LoadTestData();
     }
 

@@ -63,28 +63,28 @@
             <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
             <TextBlock Margin=20>Selection=@_selectedItem?.FirstName</TextBlock>
             <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
-            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
+            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start @onclick=@ClearSelections>Clear selections</Button>
         </StackPanel>
         <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-            <Button OnClicked=@CollapseAll>Collapse all</Button>
-            <Button OnClicked=@ExpandAll>Expand all</Button>
-@*             <Button OnClicked=@Up1>Scroll +1</Button>
-            <Button OnClicked=@Up5>Scroll +5</Button>
-            <Button OnClicked=@Up10>Scroll +10</Button>
-            <Button OnClicked=@Down1>Scroll -1</Button>
-            <Button OnClicked=@Down5>Scroll -5</Button>
-            <Button OnClicked=@Down10>Scroll -10</Button>
- *@            <Button OnClicked=@AddItem>AddItem</Button>
-            <Button OnClicked=@DeleteItem>DeleteItem</Button>
-            <Button OnClicked=@ModifyItem>ModifyItem</Button>
-            @*         <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
-        <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
-    <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
-    <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
-    <Button OnClicked=@OnAddNewItem>Add new item</Button>
-    <Button OnClicked=@OnGotoEnd>Goto end</Button>
-    <Button OnClicked=@OnGotoStart>Goto start</Button>
-    <Button OnClicked=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+            <Button @onclick=@CollapseAll>Collapse all</Button>
+            <Button @onclick=@ExpandAll>Expand all</Button>
+            @*             <Button @onclick=@Up1>Scroll +1</Button>
+            <Button @onclick=@Up5>Scroll +5</Button>
+            <Button @onclick=@Up10>Scroll +10</Button>
+            <Button @onclick=@Down1>Scroll -1</Button>
+            <Button @onclick=@Down5>Scroll -5</Button>
+            <Button @onclick=@Down10>Scroll -10</Button>
+ *@            <Button @onclick=@AddItem>AddItem</Button>
+            <Button @onclick=@DeleteItem>DeleteItem</Button>
+            <Button @onclick=@ModifyItem>ModifyItem</Button>
+            @*         <Button @onclick=@OnGoto50Center>Goto 50 (center)</Button>
+        <Button @onclick=@OnGoto10Start>Goto 10 (start)</Button>
+    <Button @onclick=@OnGoto50Center>Goto 50 (center)</Button>
+    <Button @onclick=@OnGoto70End>Goto 70 (end)</Button>
+    <Button @onclick=@OnAddNewItem>Add new item</Button>
+    <Button @onclick=@OnGotoEnd>Goto end</Button>
+    <Button @onclick=@OnGotoStart>Goto start</Button>
+    <Button @onclick=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
  *@    
     </WrapPanel>
     </Grid>

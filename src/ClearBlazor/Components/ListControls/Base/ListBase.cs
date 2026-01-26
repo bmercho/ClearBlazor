@@ -52,6 +52,13 @@ namespace ClearBlazorInternal
         public TItem? SelectedItem { get; set; } = default;
 
         /// <summary>
+        /// Event that is raised when the Items are changed. (eg reordering)
+        /// </summary>
+        [Parameter]
+        public EventCallback<List<TItem>> ItemsChanged { get; set; }
+
+
+        /// <summary>
         /// Event that is raised when the SelectedItems is changed.(when in multi select mode)
         /// </summary>
         [Parameter]
@@ -383,6 +390,12 @@ namespace ClearBlazorInternal
         private bool AlreadySelected(TItem item)
         {
             return _selectedItems.FirstOrDefault(s => s.Key == item.ListItemId).Value != null;
+        }
+
+        protected async Task NotifyItemsChanged()
+        {
+            await ItemsChanged.InvokeAsync(Items?.ToList());
+            StateHasChanged();
         }
 
         private async Task NotifySelection()

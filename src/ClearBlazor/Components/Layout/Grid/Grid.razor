@@ -6,8 +6,13 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value=this IsFixed=false>
-    <div id=@Id class=@Classes style=@ComputeStyle()
-         @onclick=OnElementClicked>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()
+         @onpointerdown=OnPointerDown
+         @onpointerup=OnPointerUp
+         @onpointermove=OnPointerMove
+         @onpointerenter=OnPointerEnter
+         @onpointerleave="OnPointerLeave">
+
         @if (BackgroundGradient2 != null)
         {
             <div style="background: @(BackgroundGradient2)}"/>

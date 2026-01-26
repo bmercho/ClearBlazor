@@ -2,7 +2,7 @@
 @inherits Form
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
         <Grid Columns=@_cols RowSpacing=@RowSpacing>
             @foreach (var field in Fields)
             {

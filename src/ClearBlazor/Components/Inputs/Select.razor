@@ -3,7 +3,7 @@
 @inherits ContainerInputBase<TItem>
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id class=@Classes style=@ComputeStyle()
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()
          @onmouseenter="OnMouseEnter" @onmouseleave="OnMouseLeave">
         <StackPanel Style=@SelectWidth Orientation="Orientation.Portrait">
             @if (!string.IsNullOrEmpty(Label))
@@ -13,7 +13,7 @@
             <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
                   BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
                 <div @ref="SelectElement" style="display:grid; ">
-                    <Grid Columns="*,auto" OnClicked=@ToggleDropdown>
+                    <Grid Columns="*,auto" @onclick=@ToggleDropdown>
                         <TextBlock Style=@ComputeInputStyle() VerticalAlignment=Alignment.Center>@SelectionText</TextBlock>
                         <IconButton VerticalAlignment=Alignment.Center 
                                     Column=1 Icon=@Icons.Material.Filled.KeyboardArrowDown Size=GetIconSize() />

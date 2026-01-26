@@ -118,10 +118,10 @@
         }
     </StackPanel>
     <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-        <Button OnClicked=@(e => GotoTop(100))> Goto top 100</Button>
-        <Button OnClicked=@(e => GotoTop(50))> Goto top 50</Button>
-        <Button OnClicked=@(e => GotoLeft(100))> Goto left 100</Button>
-        <Button OnClicked=@(e => GotoLeft(50))> Goto left 50</Button>
+        <Button @onclick=@(e => GotoTop(100))> Goto top 100</Button>
+        <Button @onclick=@(e => GotoTop(50))> Goto top 50</Button>
+        <Button @onclick=@(e => GotoLeft(100))> Goto left 100</Button>
+        <Button @onclick=@(e => GotoLeft(50))> Goto left 50</Button>
     </WrapPanel>
 </StackPanel>
 

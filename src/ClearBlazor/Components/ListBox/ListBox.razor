@@ -6,7 +6,7 @@
 @inherits InputBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
         <StackPanel Orientation="Orientation.Portrait"  Spacing=@Spacing>
             @if (ListData == null)
             {

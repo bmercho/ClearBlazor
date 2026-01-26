@@ -4,7 +4,7 @@
 
 @if (_parent != null && _parent._activePage == this)
 {
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
         @ChildContent
     </div>
 }

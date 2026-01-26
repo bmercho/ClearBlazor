@@ -2,7 +2,7 @@
 @namespace ClearBlazor
 @inherits ClearComponentBase
 
-<div id=@Id @ref="PopupElement" style=@ComputeStyle()
+<div id=@Id @attributes=AdditionalAttributes @ref="PopupElement" style=@ComputeStyle()
      @onmouseenter="OnMouseEnter"
      @onmouseleave="OnMouseLeave">
      @if (Open)

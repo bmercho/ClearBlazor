@@ -2,7 +2,7 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id class=@Classes style=@ComputeStyle()>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()>
         <Grid Rows="*,auto, auto" Width=@GetWidth() BoxShadow="2">
             <div @ref="GridElement" @onclick=OnDragAreaClicked
                  style="height: @GetHeight()px;background:@BaseColor.Value; display:grid; overflow:hidden; ">
@@ -55,7 +55,7 @@
                 <IconButton Margin="7,10,0,0" VerticalAlignment=Alignment.Center
                             Color=@ThemeManager.CurrentColorScheme.OnSurface
                             Column=5 Size=Size.Large Icon=@Icons.Material.Filled.Height
-                            OnClicked=@Clicked />
+                            @onclick=@Clicked />
             </Grid>
         </Grid>
     </div>

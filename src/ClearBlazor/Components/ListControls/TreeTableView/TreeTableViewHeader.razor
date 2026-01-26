@@ -4,7 +4,7 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value=this IsFixed="false">
-    <div id=@HeaderId style=@GetFullHeaderStyle()>
+    <div id=@HeaderId @attributes=AdditionalAttributes style=@GetFullHeaderStyle()>
         @for (int col = 0; col < Columns.Count; col++)
         {
             var colIndex = col;

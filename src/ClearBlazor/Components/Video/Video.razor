@@ -1,0 +1,9 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
+    <video controls style=@VideoStyle>
+        <source src=@Source type="video/mp4" />
+    </video>
+</div>

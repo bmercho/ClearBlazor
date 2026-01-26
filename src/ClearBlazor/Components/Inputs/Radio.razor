@@ -3,7 +3,7 @@
 @inherits InputBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
         <StackPanel Orientation="Orientation.Landscape"
                     HorizontalAlignment=Alignment.Start 
                     VerticalAlignment=Alignment.Start>
@@ -11,7 +11,7 @@
             {
                 <TextBlock VerticalAlignment=Alignment.Center>@Label</TextBlock>
             }
-            <IconButton  Disabled=@IsDisabled IconColor=@GetColor() Icon=@GetIcon() Size="@Size" OnClicked=@OnIconClicked />
+            <IconButton Disabled=@IsDisabled IconColor=@GetColor() Icon=@GetIcon() Size="@Size" @onclick=@OnIconClicked />
             @if (Label != null && LabelLocation == LabelLocation.End)
             {
                 <TextBlock VerticalAlignment=Alignment.Center>@Label</TextBlock>
