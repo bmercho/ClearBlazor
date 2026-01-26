@@ -1,5 +1,11 @@
 # ClearBlazor
 
+## 0.1.6
+
+### Patch Changes
+
+- 82bbdfa: Azure fix
+
 ## 0.1.5
 
 ### Patch Changes
