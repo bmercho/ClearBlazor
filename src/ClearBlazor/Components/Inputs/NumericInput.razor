@@ -3,7 +3,7 @@
 @inherits ContainerInputBase<TItem>
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id class=@Classes style=@ComputeStyle()>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()>
         <StackPanel Orientation="Orientation.Portrait">
             @if (!string.IsNullOrEmpty(Label))
             {
@@ -22,7 +22,7 @@
                 @if (Clearable && StringValue?.Length > 0)
                 {
                     <IconButton Column=1 Icon="@Icons.Material.Filled.Close"
-                                Size=@Size OnClicked="ClearEntry" />
+                                Size=@Size @onclick="ClearEntry" />
                 }
                 @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                 {

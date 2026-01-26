@@ -51,5 +51,12 @@ namespace ClearBlazor
 
             _parent.AddPage(this);
         }
+
+        protected override string UpdateStyle(string css)
+        {
+            css += $"display: grid; ";
+            return css;
+        }
+
     }
 }

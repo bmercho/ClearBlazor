@@ -2,18 +2,18 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value=this IsFixed=false>
-    <div id=@Id class=@Classes style=@ComputeStyle()>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()>
         <ButtonGroup ButtonStyle=ClearBlazor.ButtonStyle.Outlined Size=@Size Color=@Color>
             @if(ShowFirstAndLastButtons)
             {
-                <IconButton Tag=1 Disabled=@_atStart OnClicked=@GotoStart Color=@Color
+                <IconButton Tag=1 Disabled=@_atStart @onclick=@GotoStart Color=@Color
                             Icon=@Icons.Material.Filled.KeyboardDoubleArrowLeft></IconButton>
-                <IconButton Tag=0 Disabled=@_atStart OnClicked=@GotoPrev Color=@Color
+                <IconButton Tag=0 Disabled=@_atStart @onclick=@GotoPrev Color=@Color
                             Icon=@Icons.Material.Filled.ChevronLeft></IconButton>
             }
             else
             {
-                <IconButton Tag=1 Disabled=@_atStart OnClicked=@GotoPrev Color=@Color
+                <IconButton Tag=1 Disabled=@_atStart @onclick=@GotoPrev Color=@Color
                             Icon=@Icons.Material.Filled.ChevronLeft></IconButton>
             }
             @foreach (var page in _shownPages)
@@ -21,20 +21,20 @@
                 <Button Tag=0 ButtonStyle=@(SelectedPage == page ?
                         ButtonStyle.Filled : ButtonStyle.Outlined)
                         Color=@Color
-                        OnClicked=@(() => SelectPage(page))>
+                    @onclick=@(() => SelectPage(page))>
                     @(page.ToString())
                 </Button>
             }
             @if (ShowFirstAndLastButtons)
             {
-                <IconButton Tag=0 Disabled=@_atEnd OnClicked=@GotoNext Color=@Color
+                <IconButton Tag=0 Disabled=@_atEnd @onclick=@GotoNext Color=@Color
                             Icon=@Icons.Material.Filled.ChevronRight></IconButton>
-                <IconButton Tag=2 Disabled=@_atEnd OnClicked=@GotoEnd Color=@Color
+                <IconButton Tag=2 Disabled=@_atEnd @onclick=@GotoEnd Color=@Color
                             Icon=@Icons.Material.Filled.KeyboardDoubleArrowRight></IconButton>
             }
             else
             {
-                <IconButton Tag=0 Disabled=@_atEnd OnClicked=@GotoNext Color=@Color
+                <IconButton Tag=0 Disabled=@_atEnd @onclick=@GotoNext Color=@Color
                             Icon=@Icons.Material.Filled.ChevronRight></IconButton>
             }
         </ButtonGroup>

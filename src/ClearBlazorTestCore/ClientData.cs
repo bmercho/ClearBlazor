@@ -4,6 +4,7 @@ namespace ClearBlazorTest
 {
     public static class ClientData
     {
+        public static List<TestListRow> LocalTestListRows5 { get; set; } = new();
         public static List<TestListRow> LocalTestListRows100 { get; set; } = new();
         public static List<TestListRow> LocalTestListRows500 { get; set; } = new();
         public static List<TestListRow> LocalTestListRows5000 { get; set; } = new();
@@ -21,6 +22,7 @@ namespace ClearBlazorTest
                 LocalTestListRows5000 = Data.TestData.GetTestListRows(5000);
                 LocalTestListRows100 = Data.TestData.GetTestListRows(100);
                 LocalTestListRows500 = Data.TestData.GetTestListRows(500);
+                LocalTestListRows5 = Data.TestData.GetTestListRows(5);
 
                 LocalTestTreeRows5000 = Data.TestData.GetTestTreeRows(5000);
                 LocalTestTreeRows100 = Data.TestData.GetTestTreeRows(100);

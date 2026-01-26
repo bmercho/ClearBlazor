@@ -26,12 +26,12 @@
             @if (ShowCode)
             {
                 <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
-                            Icon=@Icons.Material.Filled.CodeOff OnClicked=@HideTheCode ToolTip="Hide code" />
+                                Icon=@Icons.Material.Filled.CodeOff @onclick=@HideTheCode ToolTip="Hide code" />
             }
             else
             {
                 <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
-                            Icon=@Icons.Material.Filled.Code OnClicked=@ShowTheCode ToolTip="Show Code" />
+                                Icon=@Icons.Material.Filled.Code @onclick=@ShowTheCode ToolTip="Show Code" />
 
             }
         </Grid>

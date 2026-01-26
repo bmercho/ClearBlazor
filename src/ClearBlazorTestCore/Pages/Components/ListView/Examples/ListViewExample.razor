@@ -65,22 +65,22 @@
                 <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=Refresh Label="Horizontal scrollbar" />
                 <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
                 <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
-                <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start OnClicked=@ClearSelections>Clear selections</Button>
+                <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start @onclick=@ClearSelections>Clear selections</Button>
             </StackPanel>
             @if (_virtualizeMode == VirtualizeMode.None || _virtualizeMode == VirtualizeMode.Virtualize)
             {
                 <WrapPanel Row=3 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-                    <Button OnClicked=@OnGoto10Start>Goto 10 (start)</Button>
-                    <Button OnClicked=@OnGoto50Center>Goto 50 (center)</Button>
-                    <Button OnClicked=@OnGoto70End>Goto 70 (end)</Button>
-                    <Button OnClicked=@OnGotoEnd>Goto end</Button>
-                    <Button OnClicked=@OnGotoStart>Goto start</Button>
+                    <Button @onclick=@OnGoto10Start>Goto 10 (start)</Button>
+                    <Button @onclick=@OnGoto50Center>Goto 50 (center)</Button>
+                    <Button @onclick=@OnGoto70End>Goto 70 (end)</Button>
+                    <Button @onclick=@OnGotoEnd>Goto end</Button>
+                    <Button @onclick=@OnGotoStart>Goto start</Button>
                 </WrapPanel>
             }
             else if (_virtualizeMode != VirtualizeMode.Pagination)
             {
                 <WrapPanel Row=3 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-                    <Button OnClicked=@OnGotoStart>Goto start</Button>
+                    <Button @onclick=@OnGotoStart>Goto start</Button>
                 </WrapPanel>
             }
         }

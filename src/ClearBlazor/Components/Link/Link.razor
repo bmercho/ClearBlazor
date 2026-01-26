@@ -2,12 +2,12 @@
 @namespace ClearBlazor
 @inherits ClearComponentBase
 
-<div id=@Id style=@ComputeStyle() 
+<div id=@Id @attributes=AdditionalAttributes style=@ComputeStyle()
      @onmouseenter="OnMouseEnter"
      @onmouseleave="OnMouseLeave">
     <TextBlock Clickable=true Color=@ThemeManager.CurrentColorScheme.Primary 
                TextDecoration=@GetTextDecoration() 
-               OnClicked=@OnLinkClicked>
+               @onclick=@OnLinkClicked>
         @ChildContent
     </TextBlock>
 </div>

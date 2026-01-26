@@ -100,6 +100,7 @@ namespace ClearBlazor
             if (CornerRadius != null)
                 _gridCornerRadius = CornerRadius;
 
+            css += $"display: grid; ";
             return css;
         }
 

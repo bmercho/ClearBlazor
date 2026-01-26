@@ -8,9 +8,12 @@ namespace ClearBlazor
     /// <summary>
     /// An abstract base class for all components.
     /// </summary>
-    public abstract class ClearComponentBase : ComponentBase, IDisposable, IHandleEvent
+    public abstract class ClearComponentBase : ComponentBase, IAsyncDisposable, IHandleEvent
     {
         private bool _preventFromRecursiveSetParameters;
+
+        [Parameter(CaptureUnmatchedValues = true)]
+        public Dictionary<string, object> AdditionalAttributes { get; set; } = [];
 
         [CascadingParameter]
         public ClearComponentBase? Parent { get; set; } = null;
@@ -136,7 +139,6 @@ namespace ClearBlazor
         [Parameter]
         public int ColumnSpan { get; set; } = 1;
 
-
         // For DockPanel children
         /// <summary>
         /// Applies to children of a <a href="GridPage">DockPanel</a>. 
@@ -146,24 +148,52 @@ namespace ClearBlazor
         public Dock? Dock { get; set; } = null;
 
         /// <summary>
+        /// Indicates whether the element can be dragged by the user.
+        /// </summary>
+        [Parameter]
+        public bool IsDraggable { get; set; }
+
+        /// <summary>
         /// Event raised when the component is clicked 
         /// </summary>
-        [Parameter]
-        public virtual EventCallback<MouseEventArgs> OnClicked { get; set; }
+        //[Parameter]
+        //public virtual EventCallback<MouseEventArgs> OnClicked { get; set; }
 
         /// <summary>
-        /// Event raised when the component is double clicked 
+        /// Callback that is invoked when a drag operation is initiated.
         /// </summary>
         [Parameter]
-        public virtual EventCallback<MouseEventArgs> OnDoubleClicked { get; set; }
+        public virtual EventCallback<DraggingEventArgs> OnDragStarted { get; set; }
 
         /// <summary>
-        /// Event raised when the mouse is moved over the component 
+        /// Callback that is invoked when the item is being dragged over a potential drop target. Set AllowDrop to true to 
+        /// the item to be dropped.
         /// </summary>
         [Parameter]
-        public virtual EventCallback<MouseEventArgs> OnMouseMoved { get; set; }
+        public virtual EventCallback<DraggingEventArgs> OnDragOver { get; set; }
+
+        /// <summary>
+        /// Callback that is invoked when the item being dragged enters a valid drop target
+        /// </summary>
+        [Parameter]
+        public virtual EventCallback<DraggingEventArgs> OnDragEnter { get; set; }
+
+        /// <summary>
+        /// Callback that is invoked when the item being dragged leaves a valid drop target
+        /// </summary>
+        [Parameter]
+        public virtual EventCallback<DraggingEventArgs> OnDragLeave { get; set; }
+
+        /// <summary>
+        /// Callback that is invoked when the item is dropped on a valid drop target
+        /// </summary>
+        [Parameter]
+        public virtual EventCallback<DraggingEventArgs> OnDrop { get; set; }
+
 
         public string Id { get; set; }
+
+        private DotNetObjectReference<ClearComponentBase> _dotNetHelper;
 
         internal Alignment? HorizontalAlignmentDefaultOverride { get; set; } = null;
 
@@ -179,6 +209,16 @@ namespace ClearBlazor
 
         public static bool RenderAll { get; internal set; } = false;
 
+        // Drag drop
+        internal static bool Dragging { get; private set; } = false;
+        private static DraggingEventArgs _draggingEventArgs = null!;
+        private static bool _firstTimeDragging = true;
+        private static ClearComponentBase? _currentDropZone = null;
+        private static string _currentCursor = "default";
+
+        internal static string CursorIcon = @Icons.Material.Filled.AddAlarm;
+        internal static bool PopupCursorOpen = false;
+
         public ClearComponentBase()
         {
             Class = String.Empty;
@@ -187,14 +227,16 @@ namespace ClearBlazor
             Classes = String.Empty;
 
             Id = GetType().Name + "-" + Guid.NewGuid().ToString();
+            _dotNetHelper = DotNetObjectReference.Create(this);
         }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             if (Parent != null)
                 Parent.AddChild(this);
 
-            base.OnInitialized();
+            await base.OnInitializedAsync();
+
         }
 
         public override async Task SetParametersAsync(ParameterView parameters)
@@ -237,6 +279,123 @@ namespace ClearBlazor
             UpdateClasses();
         }
 
+
+        //// Drag drop functionality
+
+        internal virtual async Task OnPointerDown(PointerEventArgs args)
+        {
+            if (IsDraggable)
+            {
+                Dragging = true;
+                _firstTimeDragging = true;
+            }
+        }
+
+        internal virtual async Task OnPointerMove(PointerEventArgs args)
+        {
+            if (IsDraggable)
+            {
+                if (Dragging && _firstTimeDragging)
+                {
+                    _draggingEventArgs = new DraggingEventArgs(args);
+                    _draggingEventArgs.DragZone = this;
+                    await OnDragStarted.InvokeAsync(_draggingEventArgs);
+                }
+                _firstTimeDragging = false;
+            }
+
+            if (Dragging)
+            {
+                if (_draggingEventArgs.AllowDrop)
+                {
+                    if (!string.IsNullOrEmpty(_draggingEventArgs.Cursor))
+                    {
+                        await SetCursor(_draggingEventArgs.Cursor);
+                    }
+                    else
+                        switch (_draggingEventArgs.DragType)
+                        {
+                            case DragType.Move:
+                                await SetCursor("alias");
+                                break;
+                            case DragType.Copy:
+                                await SetCursor("copy");
+                                break;
+                        }
+                }
+                else if (_currentDropZone == null)
+                    await SetCursor("no-drop");
+                await OnDragOver.InvokeAsync(_draggingEventArgs);
+            }
+        }
+
+        private async Task SetCursor(string cursor)
+        {
+            if (_currentCursor != cursor)
+            {
+                await JSRuntime.InvokeVoidAsync("Cursor.setCursor", cursor);
+                _currentCursor = cursor;
+            }
+        }
+
+        internal virtual async Task OnPointerEnter(PointerEventArgs args)
+        {
+            if (!Dragging || _draggingEventArgs == null)
+                return;
+
+            _draggingEventArgs.DropZone = this;
+            await OnDragEnter.InvokeAsync(_draggingEventArgs);
+            if (_draggingEventArgs.AllowDrop)
+            {
+                if (!string.IsNullOrEmpty(_draggingEventArgs.Cursor))
+                {
+                    await SetCursor(_draggingEventArgs.Cursor);
+                }
+                else
+                    switch (_draggingEventArgs.DragType)
+                    {
+                        case DragType.Move:
+                            await SetCursor("alias");
+                            break;
+                        case DragType.Copy:
+                            await SetCursor("copy");
+                            break;
+                    }
+                _currentDropZone = this;
+            }
+            else
+            {
+                await SetCursor("no-drop");
+            }
+        }
+
+        internal virtual async Task OnPointerLeave(PointerEventArgs args)
+        {
+            if (!Dragging)
+                return;
+            if (_currentDropZone == this)
+            {
+                await OnDragLeave.InvokeAsync(_draggingEventArgs);
+                _draggingEventArgs.DropZone = null;
+                _draggingEventArgs.AllowDrop = false;
+                if (_currentDropZone == this)
+                    _currentDropZone = null;
+            }
+        }
+        internal virtual async Task OnPointerUp(PointerEventArgs args)
+        {
+            if (!Dragging)
+                return;
+            if (_currentDropZone == this)
+                await OnDrop.InvokeAsync(_draggingEventArgs);
+            Dragging = false;
+            _currentDropZone = null;
+            PopupCursorOpen = false;
+
+            await SetCursor("default");
+        }
+        // End of Drag drop functionality
+
         protected void Refresh(ClearComponentBase component)
         {
             component.StateHasChanged();
@@ -260,7 +419,7 @@ namespace ClearBlazor
         protected T? FindParent<T>(ClearComponentBase? Parent) where T : ClearComponentBase
         {
             ClearComponentBase? parent = Parent;
-            while (parent != null && 
+            while (parent != null &&
                   parent.GetType() != typeof(T) && !parent.GetType().IsSubclassOf(typeof(T)))
                 parent = parent.Parent;
             if (parent == null)
@@ -292,9 +451,6 @@ namespace ClearBlazor
 
             if (this is IBoxShadow)
                 css += CssBuilder((IBoxShadow)this);
-
-            if (this is IDraggable)
-                css += CssBuilder((IDraggable)this);
 
             //if (this is IColor)
             //    SetColor((IColor)this);
@@ -334,24 +490,13 @@ namespace ClearBlazor
             Children.Remove(child);
         }
 
-        protected async Task OnElementClicked(MouseEventArgs e)
-        {
-            _doubleClickRaised = false;
-            await Task.Delay(250);
-            if (!_doubleClickRaised)
-                await OnClicked.InvokeAsync(e);
-        }
-
-        protected async Task OnElementDblClicked(MouseEventArgs e)
-        {
-            _doubleClickRaised = true;
-            await OnDoubleClicked.InvokeAsync(e);
-        }
-
-        protected async Task OnElementMouseMoved(MouseEventArgs e)
-        {
-            await OnMouseMoved.InvokeAsync(e);
-        }
+        //protected async Task OnElementClicked(MouseEventArgs e)
+        //{
+        //    _doubleClickRaised = false;
+        //    await Task.Delay(250);
+        //    if (!_doubleClickRaised)
+        //        await OnClicked.InvokeAsync(e);
+        //}
 
         protected virtual void ComputeOwnClasses(StringBuilder sb)
         {
@@ -525,7 +670,7 @@ namespace ClearBlazor
                         case BorderStyle.Dashed:
                             css += "border-style: dashed; ";
                             break;
-                }
+                    }
             }
 
             if (border.CornerRadius != null)
@@ -572,17 +717,6 @@ namespace ClearBlazor
 
             if (gradient.BackgroundGradient1 != null)
                 css += $"background: {gradient.BackgroundGradient1}";
-
-            return css;
-        }
-
-        private string CssBuilder(IDraggable draggable)
-        {
-            var css = string.Empty;
-            if (draggable.IsDraggable)
-            {
-
-            }
 
             return css;
         }
@@ -741,7 +875,7 @@ namespace ClearBlazor
         Task IHandleEvent.HandleEventAsync(
                   EventCallbackWorkItem callback, object? arg) => callback.InvokeAsync(arg);
 
-        public virtual void Dispose()
+        public virtual async ValueTask DisposeAsync()
         {
             if (Parent != null)
                 Parent.RemoveChild(this);

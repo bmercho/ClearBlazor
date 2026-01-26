@@ -5,7 +5,7 @@
 <CascadingValue Value="this" IsFixed="false">
     @if (Clickable)
     {
-        <div id="@Id" class="@Classes" style="@ComputeStyle()" @onclick="OnElementClicked"
+        <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()" @onpointerover=OnPointerOver
         data-toggle="tooltip" title="@ToolTip" data-data-placement="auto">
             @if(Text == null)
             {
@@ -19,7 +19,7 @@
     }
     else
     {
-        <div id="@Id" class="@Classes" style="@ComputeStyle()"
+        <div id="@Id" class="@Classes" style="@ComputeStyle()" @onpointerover=OnPointerOver
              data-toggle="tooltip" title="@ToolTip" data-data-placement="auto">
             @if (Text == null)
             {

@@ -8,12 +8,12 @@
         <DrawerContent>
             <Grid CornerRadius=4>
                 <ListBox TListBox=string>
-                    <ListBoxItem Text="Item1" Icon=@Icons.Material.Filled.AddHome OnClicked=@Close />
+                    <ListBoxItem Text="Item1" Icon=@Icons.Material.Filled.AddHome @onclick=@Close />
                     <ListBoxItem Text="Item2" Icon=@Icons.Material.Filled.DeleteForever InitiallyExpanded="true">
-                        <ListBoxItem Text="Item3" Icon=@Icons.Material.Filled.Delete OnClicked=@Close />
+                        <ListBoxItem Text="Item3" Icon=@Icons.Material.Filled.Delete @onclick=@Close />
                         <ListBoxItem Text="Item4" Icon=@Icons.Material.Filled.AccessAlarm InitiallyExpanded="true">
-                            <ListBoxItem Text="Item5" Icon=@Icons.Material.Filled.AddCircle OnClicked=@Close />
-                            <ListBoxItem Text="Item6" Icon=@Icons.Material.Filled.Send OnClicked=@Close />
+                            <ListBoxItem Text="Item5" Icon=@Icons.Material.Filled.AddCircle @onclick=@Close />
+                            <ListBoxItem Text="Item6" Icon=@Icons.Material.Filled.Send @onclick=@Close />
                         </ListBoxItem>
                     </ListBoxItem>
                 </ListBox>
@@ -21,7 +21,7 @@
         </DrawerContent>
         <DrawerBody>
             <Grid>
-                <Button HorizontalAlignment=Alignment.Center Margin=5 OnClicked=@Toggle>Toggle</Button>
+                <Button HorizontalAlignment=Alignment.Center Margin=5 @onclick=@Toggle>Toggle</Button>
             </Grid>
         </DrawerBody>
     </Drawer>

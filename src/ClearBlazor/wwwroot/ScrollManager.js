@@ -58,7 +58,7 @@ window.scrollbar = {
     SetScrollLeft: (elementId, scrollLeft) => {
         let element = document.getElementById(elementId);
         if (element) {
-            element.scrollTop(scrollLeft);
+            element.scrollLeft = scrollLeft;
         }
     },
 

@@ -3,7 +3,7 @@ using Microsoft.JSInterop;
 
 namespace ClearBlazor
 {
-    public partial class RootComponent : ComponentBase, IDisposable, IBackground
+    public partial class RootComponent : ClearComponentBase, IDisposable, IBackground
     {
         /// <summary>
         /// The child content of this control.
@@ -11,8 +11,8 @@ namespace ClearBlazor
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
 
-        [Inject]
-        IJSRuntime JSRuntime { get; set; } = null!;
+        //[Inject]
+        //IJSRuntime JSRuntime { get; set; } = null!;
 
         /// <summary>
         /// See <a href="IBackgroundApi">IBackground</a>
@@ -32,8 +32,8 @@ namespace ClearBlazor
 
         ThemeManager ThemeManager { get; set; }
         private ElementReference Element;
-        private double? Height = null;
-        private double? Width = null;
+        //private double? Height = null;
+        //private double? Width = null;
         private bool LoadingComplete = false;
         BrowserSizeService _browserSizeService = BrowserSizeService.GetInstance();
 
@@ -89,7 +89,6 @@ namespace ClearBlazor
                                  "./_content/ClearBlazor/GridSizeInfo.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/ResizeListener.js");
-
                 await ThemeManager.UpdateTheme(JSRuntime);
     
                 _browserSizeService.Init(JSRuntime);
@@ -103,15 +102,16 @@ namespace ClearBlazor
                 await OnLoadingComplete.InvokeAsync();
             }
 
-            ClearComponentBase.RenderAll = false;
+            RenderAll = false;
         }
+
         private string GetStyle()
         {
             string css = string.Empty;
-            if (Height != null)
+            //if (Height != null)
                 css += $"overflow: hidden; position: relative;height:{Height}px; width:{Width}px; ";
-            else
-                css += $"height: 100vh; overflow: hidden; position: relative; ";
+            //else
+            //    css += $"height: 100vh; overflow: hidden; position: relative; ";
 
             if (BackgroundColor != null)
                 css += $"background-color: {BackgroundColor.Value} ;";   

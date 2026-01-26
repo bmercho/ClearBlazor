@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Components
+@using System.Diagnostics
+@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<div id=@Id @attributes=AdditionalAttributes style=@ComputeStyle()>
+     @if (Open)
+     {
+        @ChildContent
+    }
+    else
+    {
+        
+    }
+</div>
+

@@ -92,5 +92,12 @@ namespace ClearBlazor
  
             return css;
         }
+
+        private string GetIconButtonStyle()
+        {
+            if (!Dragging)
+                return "cursor: move; ";
+            return "";
+        }
      }
 }

@@ -4,7 +4,7 @@
 @inherits ListBase<TItem>
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id class=@Classes style=@ComputeStyle()>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()>
         <ScrollViewer @ref=_scrollViewer
                       VerticalScrollMode=ScrollMode.Auto
                       Style="overflow-anchor: none;"
@@ -45,10 +45,15 @@
                                               RowSpacing=@RowSpacing
                                               ColumnSpacing=@_columnSpacing
                                               VerticalGridLines=@_verticalGridLines
-                                              Columns=@Columns />
+                                              Columns=@Columns 
+                                              IsDraggable=AllowRowReordering
+                                              AllowRowReordering=@AllowRowReordering
+                                              OnDragStarted=@DragStarted
+                                              OnDragEnter=@DragEnter
+                                              OnDragLeave=@DragLeave
+                                              OnDragOver=@OnDragOver
+                                              OnDrop=@Drop/>
                             }
-
-
 
                             @for (int col = 0; col < Columns.Count; col++)
                             {

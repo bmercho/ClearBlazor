@@ -3,9 +3,9 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id class="@Classes" style="@ComputeStyle()">
-        <Grid Rows="auto,*" CornerRadius=@_gridCornerRadius BackgroundColor=@BackgroundColor>
-            <WrapPanel CornerRadius=@_gridCornerRadius VerticalAlignment="Alignment.Start">
+    <div id=@Id @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
+        <Grid Rows="auto,*" >
+            <WrapPanel VerticalAlignment="Alignment.Start">
                 @foreach (Tab tabPage in _pages)
                 {
                     <TabButton Size=@Size ButtonStyle=ButtonStyle.LabelOnly IsFirstTab=@(_pages.First()==tabPage)
@@ -15,7 +15,7 @@
                                Color=@GetButtonColor(tabPage)
                                ToolTip=@tabPage.ToolTip
                                IsActive=@(tabPage == _activePage) Disabled="@tabPage.Disabled"
-                               OnClicked="@(e => ActivatePage(tabPage))">
+                               @onclick=@(e => ActivatePage(tabPage))>
                         @tabPage?.Text
                     </TabButton>
                 }

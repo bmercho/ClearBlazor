@@ -2,7 +2,7 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" style="@ComputeStyle()" class="@Classes" 
+    <div id="@Id" @attributes=AdditionalAttributes style="@ComputeStyle()" class="@Classes"
          @onmousedown=OnMouseDown @onmouseup=OnMouseUp @onmousemove=OnMouseMove 
          @onmouseover=OnMouseEnter @onmouseout=OnMouseLeave>
         @if (Direction == SplitterDirection.Horizontal)

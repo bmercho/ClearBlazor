@@ -3,7 +3,7 @@
 @inherits InputBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id class=@Classes style=@ComputeStyle()>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()>
         <StackPanel Orientation=@Orientation>
             <Grid BackgroundColor=@Color>
                 <StackPanel Margin="10" Orientation=Orientation.Portrait 
@@ -11,7 +11,7 @@
                     <Button ButtonStyle=ButtonStyle.LabelOnly
                             Color=@Color.GetAssocTextColor(Color)
                             HorizontalAlignment=Alignment.Center Size=Size.VeryLarge
-                            OnClicked=@OnDateClicked>
+                            @onclick=@OnDateClicked>
                         @Date?.Year
                     </Button>
                     @if (Orientation == Orientation.Portrait)
@@ -56,14 +56,14 @@
                             <DockPanel Margin="10,0,0,0" Dock=ClearBlazor.Dock.Top>
                                 <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Left
                                             Color=@ThemeManager.CurrentColorScheme.OnSurface
-                                            Icon=@Icons.Material.Filled.ArrowLeft OnClicked=@OnSubtractYear />
+                                            Icon=@Icons.Material.Filled.ArrowLeft @onclick=@OnSubtractYear />
                                 <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Right
                                             Color=@ThemeManager.CurrentColorScheme.OnSurface
-                                            Icon=@Icons.Material.Filled.ArrowRight OnClicked=@OnAddYear />
+                                            Icon=@Icons.Material.Filled.ArrowRight @onclick=@OnAddYear />
                                 <Button ButtonStyle=ButtonStyle.LabelOnly
                                         Color=@ThemeManager.CurrentColorScheme.OnSurface
                                         HorizontalAlignment=Alignment.Center Size=Size.VeryLarge
-                                        OnClicked=@OnDateClicked>
+                                        @onclick=@OnDateClicked>
                                     @SelectedDate.Year
                                 </Button>
                             </DockPanel>
@@ -76,7 +76,7 @@
                                             Color=@GetMonthColor(month)
                                             HorizontalAlignment=Alignment.Center
                                             Size=Size.Normal
-                                            OnClicked="@(() => OnMonthClicked(month))">
+                                            @onclick="@(() => OnMonthClicked(month))">
                                         @GetMonthName(month)
                                     </Button>
                                 }
@@ -88,15 +88,15 @@
                             <DockPanel Dock=ClearBlazor.Dock.Top>
                                 <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Left 
                                             Color=@ThemeManager.CurrentColorScheme.OnSurface
-                                            Icon=@Icons.Material.Filled.ArrowLeft OnClicked=@OnSubtractMonth />
+                                            Icon=@Icons.Material.Filled.ArrowLeft @onclick=@OnSubtractMonth />
                                 <IconButton Size=Size.Large Dock=ClearBlazor.Dock.Right
                                             Color=@ThemeManager.CurrentColorScheme.OnSurface
-                                            Icon=@Icons.Material.Filled.ArrowRight OnClicked=@OnAddMonth />
+                                            Icon=@Icons.Material.Filled.ArrowRight @onclick=@OnAddMonth />
                                 <Button Disabled=@IsDisabled
                                         ButtonStyle=ButtonStyle.LabelOnly
                                         Color=@ThemeManager.CurrentColorScheme.OnSurface
                                         HorizontalAlignment=Alignment.Center Size=Size.VeryLarge
-                                        OnClicked=@OnGotoMonths>
+                                        @onclick=@OnGotoMonths>
                                     @GetMonthYear()
                                 </Button>
                             </DockPanel>
@@ -118,7 +118,7 @@
                                     {
                                         <Button Disabled=@IsDisabled Padding=0 ButtonStyle=@GetDayButtonStyle(dayIndex) HorizontalAlignment=Alignment.Stretch
                                                 VerticalAlignment=Alignment.Stretch Shape=ContainerShape.Circle
-                                                Color=@GetDayColor(dayIndex) OnClicked=@(() => OnDayClicked(dayIndex))>
+                                                Color=@GetDayColor(dayIndex) @onclick=@(() => OnDayClicked(dayIndex))>
                                             @GetDay(dayIndex)
                                         </Button>
                                     }

@@ -2,7 +2,8 @@
 @inherits ContainerInputBase<Color>
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id class=@Classes style=@ComputeStyle() @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle() 
+         @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
         <StackPanel Orientation="Orientation.Portrait">
             @if (!string.IsNullOrEmpty(Label))
             {
@@ -11,7 +12,7 @@
             <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
                   BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
                 <div style="display:grid; ">
-                    <Grid MinWidth=200 Columns="*,auto" OnClicked=@TogglePopup>
+                    <Grid MinWidth=200 Columns="*,auto" @onclick=@TogglePopup>
                         <Grid BackgroundColor=@Value />
                         @if(ShowHex)
                         {

@@ -1,5 +1,5 @@
 ﻿@namespace ClearBlazor
-@inherits ComponentBase
+@inherits ClearComponentBase
 @using Microsoft.JSInterop;
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 
@@ -7,7 +7,9 @@
 {
     <div style=@GetStyle()>
         <div style="height: 100%; width:100%; display: grid;">
-            <div @ref="Element" style="display:grid;overflow:hidden;">
+            <div @ref="Element" style="display:grid;overflow:hidden;"
+                 @onpointermove=OnPointerMove 
+                 @onpointerup=OnPointerUp>
                 @ChildContent
             </div>
         </div>

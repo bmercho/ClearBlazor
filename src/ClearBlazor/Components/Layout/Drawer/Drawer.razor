@@ -2,7 +2,7 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
         <Grid style="overflow:hidden; " Columns=@_columns Rows=@_rows BorderThickness=0>
             <Grid Column=@_drawerContentColumn Row=@_drawerContentRow @ref=_content 
                   BackgroundColor=@ThemeManager.CurrentColorScheme.Surface
@@ -15,7 +15,7 @@
                 @if (_showOverlay)
                 {
                     <Grid BackgroundColor=@ThemeManager.CurrentColorScheme.Scrim.SetAlpha(0.3) 
-                          Style="z-index:2; " OnClicked=@OverlayClicked />
+                          Style="z-index:2; " @onclick=@OverlayClicked />
                 }
             </Grid>
         </Grid>

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ClearBlazor
 {
-    public partial class TreeViewNode<TItem> :ListRowBase<TItem>, IDisposable
+    public partial class TreeViewNode<TItem> :ListRowBase<TItem>
            where TItem : TreeItem<TItem>
     {
         [Parameter]
@@ -57,10 +57,10 @@ namespace ClearBlazor
                         break;
                     case VirtualizeMode.Virtualize:
                     case VirtualizeMode.InfiniteScroll:
-                        _doRender = true;
+                        DoRender = true;
                         break;
                     case VirtualizeMode.Pagination:
-                        _doRender = true;
+                        DoRender = true;
                         break;
                 }
             }
@@ -69,11 +69,11 @@ namespace ClearBlazor
         protected override void OnAfterRender(bool firstRender)
         {
             base.OnAfterRender(firstRender);
-            _doRender = false;
+            DoRender = false;
         }
         protected override bool ShouldRender()
         {
-            return _doRender;
+            return DoRender;
         }
 
         protected async Task OnMouseEnter()
@@ -83,9 +83,9 @@ namespace ClearBlazor
             if (_parent.HoverHighlight)
             {
                 _parent.SetHighlightedItem(this);
-                _mouseOver = true;
+                MouseOver = true;
                 await Task.CompletedTask;
-                _doRender = true;
+                DoRender = true;
                 StateHasChanged();
             }
         }
@@ -97,9 +97,9 @@ namespace ClearBlazor
             if (_parent.HoverHighlight)
             {
                 _parent.SetHighlightedItem(null);
-                _mouseOver = false;
+                MouseOver = false;
                 await Task.CompletedTask;
-                _doRender = true;
+                DoRender = true;
                 StateHasChanged();
             }
         }
@@ -227,7 +227,7 @@ namespace ClearBlazor
                 css += "display:grid; grid-template-columns: subgrid; grid-template-rows: 1fr;" +
                              $"grid-area: {Index + 1 + header} / 1 /span 1 / span {Columns.Count}; ";
 
-            if (_mouseOver)
+            if (MouseOver)
                 css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8).Value}; ";
 
             if (RowData.IsSelected)
@@ -296,9 +296,9 @@ namespace ClearBlazor
             return css;
         }
 
-        public override void Dispose()
+        public override async ValueTask DisposeAsync()
         {
-            base.Dispose();
+            await base.DisposeAsync();
             if (_parent != null)
                 _parent.RemoveListRow(this);
         }

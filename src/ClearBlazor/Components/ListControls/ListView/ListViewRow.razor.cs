@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using ClearBlazorInternal;
 namespace ClearBlazor
 {
-    public partial class ListViewRow<TItem> : ListRowBase<TItem>, IDisposable
+    public partial class ListViewRow<TItem> : ListRowBase<TItem>
            where TItem : ListItem
     {
         /// <summary>
@@ -43,14 +43,14 @@ namespace ClearBlazor
                         parameters.TryGetValue<TItem>(nameof(RowData), out var rowData);
                         if (rowData != null)
                             if (RowData == null || rowData.ListItemId != RowData.ListItemId)
-                                _doRender = true;
+                                DoRender = true;
                         break;
                     case VirtualizeMode.Virtualize:
                     case VirtualizeMode.InfiniteScroll:
-                        _doRender = true;
+                        DoRender = true;
                         break;
                     case VirtualizeMode.Pagination:
-                        _doRender = true;
+                        DoRender = true;
                         break;
                 }
             }
@@ -74,12 +74,12 @@ namespace ClearBlazor
                                                                        RowData.ListItemId.ToString());
                 }
             }
-            _doRender = false;
+            DoRender = false;
         }
 
         protected override bool ShouldRender()
         {
-            return _doRender;
+            return DoRender;
         }
 
         protected async Task OnMouseEnter()
@@ -88,9 +88,9 @@ namespace ClearBlazor
                 return;
             if (_parent.HoverHighlight)
             {
-                _mouseOver = true;
+                MouseOver = true;
                 await Task.CompletedTask;
-                _doRender = true;
+                DoRender = true;
                 StateHasChanged();
             }
         }
@@ -101,9 +101,9 @@ namespace ClearBlazor
                 return;
             if (_parent.HoverHighlight)
             {
-                _mouseOver = false;
+                MouseOver = false;
                 await Task.CompletedTask;
-                _doRender = true;
+                DoRender = true;
                 StateHasChanged();
             }
         }
@@ -137,7 +137,7 @@ namespace ClearBlazor
             if (_parent.VirtualizeMode == VirtualizeMode.Virtualize && _parent.RowHeight > 0)
                 css += $"position:absolute; height: {_parent.RowHeight}px; width: {_parent._itemWidth}px; " +
                        $"top: {(_parent._skipItems + Index) * _parent.RowHeight}px;";
-            if (_mouseOver)
+            if (MouseOver)
                 css += $"background-color: {ThemeManager.CurrentColorScheme.SurfaceContainerHighest.SetAlpha(.8).Value}; ";
 
             if (RowData.IsSelected)
@@ -146,9 +146,9 @@ namespace ClearBlazor
             return css;
         }
 
-        public override void Dispose()
+        public override async ValueTask DisposeAsync()
         {
-            base.Dispose();
+            await base.DisposeAsync();
             if (_parent != null)
                 _parent.RemoveListRow(this);
         }

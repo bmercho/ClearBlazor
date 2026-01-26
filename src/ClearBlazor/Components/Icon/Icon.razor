@@ -4,7 +4,7 @@
 
 @if (!string.IsNullOrEmpty(IconName))
 {
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
         <svg style=@GetIconStyle() transform="@GetTransform()" focusable="false" viewBox="@ViewBox" aria-hidden="true"
              @onmouseenter="OnMouseEnter"
              @onmouseleave="OnMouseLeave">

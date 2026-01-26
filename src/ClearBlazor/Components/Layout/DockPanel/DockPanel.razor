@@ -2,5 +2,5 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">@ChildContent</div>
+    <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">@ChildContent</div>
 </CascadingValue>

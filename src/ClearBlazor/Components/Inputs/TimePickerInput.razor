@@ -2,7 +2,7 @@
 @inherits ContainerInputBase<TimeOnly?>
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id class=@Classes style=@ComputeStyle() @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle() @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
         <StackPanel Orientation="Orientation.Portrait">
             @if (!string.IsNullOrEmpty(Label))
             {
@@ -11,7 +11,7 @@
             <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
                   BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
                 <div @ref="PickerElement" style="display:grid; ">
-                    <Grid MinWidth=200 Columns="*,auto" Margin=5 OnClicked=@TogglePopup>
+                    <Grid MinWidth=200 Columns="*,auto" Margin=5 @onclick=@TogglePopup>
                         <TextBlock VerticalAlignment=Alignment.Center>@TimeString</TextBlock>
                         <IconButton Size=Size.Small Column=1 Icon=@Icons.Material.Outlined.Schedule />
                     </Grid>

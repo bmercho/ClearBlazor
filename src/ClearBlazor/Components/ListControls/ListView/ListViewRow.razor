@@ -6,7 +6,7 @@
 <CascadingValue Value=this IsFixed="false">
     @if (RowTemplate != null)
     {
-        <div id=@GetRowId() style=@GetContentStyle()
+        <div id=@GetRowId() @attributes=AdditionalAttributes style=@GetContentStyle()
                 @onmouseenter=OnMouseEnter
                 @onmouseleave=OnMouseLeave
                 @onclick=OnRowClicked>

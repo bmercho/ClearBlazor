@@ -4,7 +4,7 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" class="@Classes" style="@ComputeStyle()"
+    <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()"
          @onclick=OnClick 
          @onmousedown=OnMouseDown
          @onmouseup=OnMouseUp

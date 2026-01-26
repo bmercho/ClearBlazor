@@ -262,7 +262,11 @@ namespace ClearBlazor
                 css += $"text-overflow: ellipsis; ";
 
             if (!IsTextSelectionEnabled)
-                css += "user-select: none; -ms-user-select: none; cursor: default; ";
+            {
+                css += "user-select: none; -ms-user-select: none; ";
+                if (!ClearComponentBase.Dragging)
+                    css += "cursor:default; ";
+            }
 
             css += "border:0; background-color:transparent; outline:none; ";
 

@@ -7,7 +7,7 @@ namespace ClearBlazor
     /// <summary>
     /// A popup control that can be used to display additional information.
     /// </summary>
-    public partial class Popup : ClearComponentBase, IDisposable, IObserver<bool>
+    public partial class Popup : ClearComponentBase, IObserver<bool>
     {
         /// <summary>
         /// The child content of this control.
@@ -595,8 +595,9 @@ namespace ClearBlazor
                 StateHasChanged();
             }
         }
-        public override void Dispose()
+        public override async ValueTask DisposeAsync()
         {
+            await base.DisposeAsync();
             _browserSizeService.OnBrowserResize -= BrowserResized;
             ScrollViewUnsubscriber?.Dispose();
         }

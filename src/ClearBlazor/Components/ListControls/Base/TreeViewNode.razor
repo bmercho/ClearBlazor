@@ -34,13 +34,13 @@
                             {
                                 <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore
                                             VerticalAlignment=Alignment.Start
-                                            OnClicked=@(e => OnNodeClicked(e, NodeData)) />
+                                            @onclick=@(e => OnNodeClicked(e, NodeData)) />
                             }
                             else
                             {
                                 <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ChevronRight
                                             VerticalAlignment=Alignment.Start
-                                            OnClicked=@(e => OnNodeClicked(e, NodeData)) />
+                                            @onclick=@(e => OnNodeClicked(e, NodeData)) />
                             }
                         </div>
                     }
@@ -66,13 +66,13 @@
                                         {
                                             <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ExpandMore
                                                         VerticalAlignment=Alignment.Start
-                                                        OnClicked=@(e => OnNodeClicked(e, NodeData)) />
+                                                        @onclick=@(e => OnNodeClicked(e, NodeData)) />
                                         }
                                         else
                                         {
                                             <IconButton Size=Size.Normal Icon=@Icons.Material.Filled.ChevronRight
                                                         VerticalAlignment=Alignment.Start
-                                                        OnClicked=@(e => OnNodeClicked(e, NodeData)) />
+                                                        @onclick=@(e => OnNodeClicked(e, NodeData)) />
                                         }
                                     </div>
                                 }

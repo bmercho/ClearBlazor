@@ -2,8 +2,7 @@
 @namespace ClearBlazor
 @inherits Button
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" class=@Classes style=@ComputeStyle() disabled=@GetDisabledState()
-            @onclick=@OnElementClicked
+    <div id="@Id" @attributes=AdditionalAttributes class =@Classes style=@ComputeStyle() disabled=@GetDisabledState()
             @onmouseenter=@OnMouseEnter 
             @onmouseleave=@OnMouseLeave>
         @if (ToolTip != null && ToolTip != string.Empty)

@@ -3,7 +3,13 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+    <div id="@Id" @attributes=AdditionalAttributes class ="@Classes" style="@ComputeStyle()"
+         @onpointerdown=OnPointerDown
+         @onpointerup=OnPointerUp
+         @onpointermove=OnPointerMove
+         @onpointerenter=OnPointerEnter
+         @onpointerleave="OnPointerLeave">
+
         @if (!string.IsNullOrEmpty(Text))
         {
             <TextBlock HorizontalAlignment=Alignment.Center 

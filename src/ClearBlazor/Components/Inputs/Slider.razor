@@ -3,7 +3,7 @@
 @typeparam TItem
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id class=@Classes style=@ComputeStyle()>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()>
         <StackPanel Orientation="Orientation.Portrait">
             @if (!string.IsNullOrEmpty(Label))
             {
@@ -14,19 +14,19 @@
                 @if (BackgroundGradient1 == null && BackgroundGradient2 == null)
                 {
                     <Grid Height=@TrackHeight CornerRadius=@CornerRadius BackgroundColor=BackgroundTrackColor
-                            OnClicked=@OnTrackClicked />
+                          @onclick=@OnTrackClicked />
                     <Grid Height=@TrackHeight Width=@TrackWidth HorizontalAlignment=Alignment.Start 
-                          CornerRadius=@CornerRadius BackgroundColor=TrackColor OnClicked=@OnTrackClicked />
+                          CornerRadius=@CornerRadius BackgroundColor=TrackColor @onclick=@OnTrackClicked />
                 }
                 @if (BackgroundGradient1 != null)
                 {
                     <Grid Height=@TrackHeight CornerRadius=@CornerRadius
-                            BackgroundGradient1=@BackgroundGradient1 OnClicked=@OnTrackClicked />
+                          BackgroundGradient1=@BackgroundGradient1 @onclick=@OnTrackClicked />
                 }
                 @if (BackgroundGradient2 != null)
                 {
                     <Grid Height=@TrackHeight CornerRadius=@CornerRadius
-                            BackgroundGradient2=@BackgroundGradient2 OnClicked=@OnTrackClicked />
+                          BackgroundGradient2=@BackgroundGradient2 @onclick=@OnTrackClicked />
                 }
                 @if (ShowTickMarks && Step != null)
                 {

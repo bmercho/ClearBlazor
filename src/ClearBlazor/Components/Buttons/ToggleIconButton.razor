@@ -2,13 +2,20 @@
 @namespace ClearBlazor
 @inherits Button
 <CascadingValue Value="this" IsFixed="false">
-    <Button ButtonStyle=ClearBlazor.ButtonStyle.LabelOnly
-            Icon=@(toggled? ToggledIcon : Icon) 
-            IconColor=@(toggled? ToggledIconColor : IconColor) 
-            Color=@(toggled ? ToggledIconColor : IconColor) 
-            Size=Size
-            OnClicked=@Clicked>
-        @(toggled? ToggledText : Text)
-    </Button>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()
+         @onpointerdown=OnPointerDown
+         @onpointerup=OnPointerUp
+         @onpointermove=OnPointerMove
+         @onpointerenter=OnPointerEnter
+         @onpointerleave="OnPointerLeave">
+        <Button ButtonStyle=ClearBlazor.ButtonStyle.LabelOnly
+                Icon=@(toggled? ToggledIcon : Icon)
+                IconColor=@(toggled? ToggledIconColor : IconColor)
+                Color=@(toggled ? ToggledIconColor : IconColor)
+                Size=Size
+                @onclick=Clicked>
+            @(toggled? ToggledText : Text)
+        </Button>
+    </div>
 </CascadingValue>
 

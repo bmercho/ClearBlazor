@@ -65,10 +65,17 @@ namespace ClearBlazor
             (double height, double width, double margin) = GetSwitchSize();
 
             css += $"width:{width}px; height:{height}px;overflow:visible;";
-            if (IsDisabled)
-                css += "cursor: default; ";
+            if (Dragging)
+            {
+                css += "pointer-events:none; ";
+            }
             else
-                css += "cursor: pointer; ";
+            {
+                if (IsDisabled)
+                    css += "cursor: default; pointer-events:none; ";
+                else
+                    css += "cursor: pointer; ";
+            }
 
             return css;
         }
@@ -153,11 +160,18 @@ namespace ClearBlazor
                 css += $"margin-left:{width-height}px; ";
             else
                 css += $"margin-left:0px; ";
-            if (IsDisabled)
-                css += "cursor: default; { ";
-            else
-                css += "cursor: pointer; ";
 
+            if (Dragging)
+            {
+                css += "pointer-events:none; ";
+            }
+            else
+            {
+                if (IsDisabled)
+                    css += "cursor: default; pointer-events:none; ";
+                else
+                    css += "cursor: pointer; ";
+            }
             return css;
         }
 
