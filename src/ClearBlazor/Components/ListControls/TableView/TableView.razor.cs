@@ -714,8 +714,11 @@ namespace ClearBlazor
         internal override async Task OnPointerEnter(PointerEventArgs args)
         {
             await base.OnPointerEnter(args);
-            string[] keys = {"ArrowLeft","ArrowRight","ArrowUp","ArrowDown",
-                             "PageUp","PageDown","Home","End" };
+            if (VirtualizeMode != VirtualizeMode.None)
+                return;
+            string[] keys = {"ArrowUp","ArrowDown" };
+//            string[] keys = {"ArrowLeft","ArrowRight","ArrowUp","ArrowDown",
+  //                           "PageUp","PageDown","Home","End" };
             await JSRuntime.InvokeVoidAsync("EnableKeyboardCapture", _thisComponent, keys);
         }
 
@@ -882,7 +885,7 @@ namespace ClearBlazor
             int headerHeight = 0;
             if (ShowHeader && (StickyHeader || index == 0))
                 headerHeight = ShowHeader ? (int)_headerHeight : 0;
-            var maxItemsInContainer = (_scrollViewerHeight-headerHeight) / (_rowHeight + RowSpacing);
+            var maxItemsInContainer = _scrollViewerHeight / (_rowHeight + RowSpacing);
 
             switch (verticalAlignment)
             {
@@ -904,7 +907,7 @@ namespace ClearBlazor
                         _skipItems = index;
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
-                    scrollTop = _skipItems * (_rowHeight + RowSpacing) + headerHeight;
+                    scrollTop = _skipItems * (_rowHeight + RowSpacing);
                     break;
                 case Alignment.End:
                     if (index < maxItemsInContainer)
@@ -914,7 +917,7 @@ namespace ClearBlazor
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
                     if (_skipItems < maxItemsInContainer)
-                        scrollTop = _skipItems * (_rowHeight + RowSpacing) + headerHeight;
+                        scrollTop = _skipItems * (_rowHeight + RowSpacing);
                     else
                         if (ShowHeader)
                         scrollTop = (index - maxItemsInContainer + 2) * (_rowHeight + RowSpacing);
