@@ -42,7 +42,8 @@ namespace ClearBlazor
         public EventCallback<List<TListBox?>> ValuesChanged { get; set; }
 
         /// <summary>
-        /// Provides the data for list. If not null this is used instead of the ChildContent 
+        /// Provides the data for list. If not null this is used instead of the ChildContent.
+        /// Note that ListData cannot contain hierachical data. Use TreeView instead in that case.
         /// </summary>
         [Parameter]
         public List<ListDataItem<TListBox>>? ListData { get; set; } = null;
@@ -136,7 +137,7 @@ namespace ClearBlazor
 
         private ListBoxItem<TListBox>? SelectedParentItem { get; set; } = null;
 
-        private TreeItem<ListDataItem<TListBox>> _treeData = new();    
+        private List<ListBoxItem<TListBox>> _itemChildren = new();    
 
         bool? _backgroundIsNull = null;
         protected override async Task OnParametersSetAsync()
@@ -150,6 +151,18 @@ namespace ClearBlazor
 
             if (_backgroundIsNull == true)
                 BackgroundColor = ThemeManager.CurrentColorScheme.SurfaceContainerLow;
+        }
+
+        protected override string UpdateStyle(string css)
+        {
+            css += "display: grid;";
+
+            return css;
+        }
+
+        internal void AddChild(ListBoxItem<TListBox> item)
+        {
+            _itemChildren.Add(item);
         }
 
         internal async Task HandleChild(ListBoxItem<TListBox> item)
@@ -249,6 +262,7 @@ namespace ClearBlazor
                         SelectedItem.Unselect();
 
                     SelectedItem = item;
+                    SelectedItem.Select();
                     selected = true;
                     Value = item.Value;
                 }

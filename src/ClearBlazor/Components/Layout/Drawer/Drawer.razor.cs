@@ -73,10 +73,10 @@ namespace ClearBlazor
 
         public DrawerMode CurrentDrawerMode => _drawerMode;
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            base.OnInitialized();
-            _browserSizeService.Init(JSRuntime);
+            await base.OnInitializedAsync();
+            await BrowserResized(_browserSizeService.GetBrowserSizeInfo());
             _browserSizeService.OnBrowserResize += BrowserResized;
         }
 

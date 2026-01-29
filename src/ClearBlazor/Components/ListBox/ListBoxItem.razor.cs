@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using System.Diagnostics;
 using System.Text;
 
 namespace ClearBlazor
@@ -92,6 +93,10 @@ namespace ClearBlazor
         private bool IsSelected = false;
         private bool Multiselect = false;
         private ListBox<TListBox>? _root;
+        internal bool DoRender { get; set; } = true;
+
+        private List<ListBoxItem<TListBox>> _itemChildren = new();
+        private ListBoxItem<TListBox>? _itemParent = null;
 
         protected override async Task OnInitializedAsync()
         {
@@ -105,9 +110,8 @@ namespace ClearBlazor
             if (_root == null)
                 return;
 
-            ListBoxItem<TListBox>? parent = null;
-            if (Parent != null)
-                parent = Parent.Parent as ListBoxItem<TListBox>;
+            _itemParent = FindParent<ListBoxItem<TListBox>>(Parent);
+
 
             Multiselect = _root.MultiSelect;
 
@@ -116,21 +120,28 @@ namespace ClearBlazor
             else
                 IsExpanded = false;
 
-            if (parent == null)
+            if (_itemParent == null)
             {
+                _root.AddChild(this);
                 IsVisible = true;
                 Level = 1;
             }
             else
             {
-                Level = parent.Level + 1;
-                if (!parent.IsVisible)
+                _itemParent.AddChild(this);
+                Level = _itemParent.Level + 1;
+                if (!_itemParent.IsVisible)
                     IsVisible = false;
                 else
-                    IsVisible = (bool)parent.IsExpanded!;
+                    IsVisible = (bool)_itemParent.IsExpanded!;
             }
 
             await _root.HandleChild(this);
+        }
+
+        internal void AddChild(ListBoxItem<TListBox> item)
+        {
+            _itemChildren.Add(item);
         }
 
         protected override void OnParametersSet()
@@ -140,18 +151,29 @@ namespace ClearBlazor
                 HorizontalAlignment = Alignment.Stretch;
         }
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            DoRender = false;
+            base.OnAfterRender(firstRender);
+
+
+        }
+        protected override bool ShouldRender()
+        {
+            return DoRender;
+        }
+
         protected override void ComputeOwnClasses(StringBuilder sb)
         {
             base.ComputeOwnClasses(sb);
             if (Parent == null)
                 return;
 
-            var list = FindParent<ListBox<TListBox>>(Parent);
-            if (list != null && list.Clickable)
+            if (_root != null && _root.Clickable)
             {
                 RowClasses = "clear-ripple";
             }
-            if (list == null)
+            if (_root == null)
                 RowClasses = "";
         }
 
@@ -183,10 +205,6 @@ namespace ClearBlazor
 
         private string GetRowHeight()
         {
-            ListBoxItem<TListBox>? parent = null;
-            if (Parent != null)
-                parent = Parent.Parent as ListBoxItem<TListBox>;
-
             if (!IsVisible)
                 return "0";
 
@@ -237,6 +255,7 @@ namespace ClearBlazor
         {
             MouseOver = true;
             await Task.CompletedTask;
+            DoRender = true;
             StateHasChanged();
         }
 
@@ -244,6 +263,7 @@ namespace ClearBlazor
         {
             MouseOver = false;
             await Task.CompletedTask;
+            DoRender = true;
             StateHasChanged();
         }
         private async Task OnListItemClicked(MouseEventArgs e)
@@ -255,10 +275,10 @@ namespace ClearBlazor
             }
             else
             {
-                ListBox<TListBox>? parent = FindParent<ListBox<TListBox>>(Parent);
-                if (parent != null)
-                    IsSelected = await parent.SetSelected(this);
+                if (_root != null)
+                    IsSelected = await _root.SetSelected(this);
             }
+            DoRender = true;
             StateHasChanged();
             if (HRef != null)
                 NavManager.NavigateTo(HRef);
@@ -267,12 +287,17 @@ namespace ClearBlazor
         internal void Unselect()
         {
             IsSelected = false;
+            DoRender = true;
             StateHasChanged();
         }
         internal void Select()
         {
             IsSelected = true;
+            DoRender = true;
             StateHasChanged();
+            if (HRef != null)
+                NavManager.NavigateTo(HRef);
+
         }
 
         private void SetVisibilityOfChildren(ClearComponentBase parent, bool visibility)
@@ -291,6 +316,7 @@ namespace ClearBlazor
                             child.IsVisible = visibility;
                         else
                             child.IsVisible = false;
+                        child.DoRender = true;
                         SetVisibilityOfChildren(child, visibility);
                     }
                 }

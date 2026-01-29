@@ -23,20 +23,30 @@ window.scrollbar = {
         let element = document.getElementById(elementId);
         if (!scrollViewer || !element)
             return;
+        console.log("ScrollTop before:" + scrollViewer.scrollTop);
+
         console.log("ElementTop:" + element.offsetTop + " SVTop:" + scrollViewer.offsetTop +
             " ElementHt:" + element.offsetHeight + " SVHt:" + scrollViewer.offsetHeight +
             " HeaderHt:" + headerHeight);
         console.log("ElementClientTop:" + element.clientTop + " SVClientTop:" + scrollViewer.clientTop +
             " ElementClientHt:" + element.clientHeight + " SVClientHt:" + scrollViewer.clientHeight);
-        if (alignment == 2) 
+        if (alignment == 2)
             scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop -
                 scrollViewer.offsetHeight / 2 + element.offsetHeight / 2 - headerHeight / 2;
-        else if (alignment == 3)
-            scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop -
+        else if (alignment == 3) {
+            var scrollTop = element.offsetTop - scrollViewer.offsetTop -
                 scrollViewer.offsetHeight + element.offsetHeight;
-        else
-            scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop - headerHeight;
-        console.log("ScrollTop:" + scrollViewer.scrollTop);
+            if (scrollTop < 0)
+                scrollViewer.scrollTop = 0;
+            else
+                scrollViewer.scrollTop = scrollTop;
+        }
+        else {
+            var scrollTop = element.offsetTop - scrollViewer.offsetTop - headerHeight;
+            if (scrollTop < scrollViewer.scrollTop)
+                scrollViewer.scrollTop = element.offsetTop - scrollViewer.offsetTop - headerHeight;
+        }
+        console.log("ScrollTop after:" + scrollViewer.scrollTop);
     },
 
     SetScrollTop: (elementId, scrollTop) => {

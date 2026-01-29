@@ -168,17 +168,17 @@
     private TableView<TestListRow> _table = null!;
     private TestListRow? _selectedItem = null;
     private List<TestListRow> _selectedItems = new();
-    private SelectionMode _selectionMode = SelectionMode.None;
+    private SelectionMode _selectionMode = SelectionMode.Single;
     private bool _allowSelectionToggle = false;
     private bool _hoverHighlight = true;
     private bool _showHeader = true;
     private bool _stickyHeader = true;
-    private int _rowSpacing = 40;
+    private int _rowSpacing = 10;
     private int _columnSpacing = 10;
     private bool _horizontalScrollbar = false;
     private GridLines _horizontalGridLines = GridLines.All;
     private GridLines _verticalGridLines = GridLines.All;
-    private VirtualizeMode _virtualizeMode = VirtualizeMode.None;
+    private VirtualizeMode _virtualizeMode = VirtualizeMode.Virtualize;
     private bool _virtualizeModeAvailable = true;
     private int _selectedPage = 1;
     private bool _atEnd = false;
@@ -193,9 +193,9 @@
     {
         base.OnInitialized();
         if (_virtualizeMode == VirtualizeMode.None)
-            _localListData = ClientData.LocalTestListRows5;
-        else
             _localListData = ClientData.LocalTestListRows100;
+        else
+            _localListData = ClientData.LocalTestListRows5000;
         _totalNumItems = _localListData.Count;
         _numPages = (int)Math.Ceiling(_totalNumItems / (Double)GetPageSize());
     }
@@ -277,19 +277,23 @@
         _numPages = (int)Math.Ceiling(_totalNumItems / (Double)GetPageSize());
 
         if (_virtualizeMode == VirtualizeMode.None)
-            _localListData = ClientData.LocalTestListRows5;
-        else
             _localListData = ClientData.LocalTestListRows100;
+        else
+            _localListData = ClientData.LocalTestListRows5000;
 
+        _localListData = []; 
         if (_virtualizeMode == VirtualizeMode.InfiniteScrollReverse)
             _virtualizeModeAvailable = false;
         else
             _virtualizeModeAvailable = true;
 
-        StateHasChanged();
         await _table.GotoStart();
         await _table.RefreshAll();
-        await _table.ResetComponent();
+        StateHasChanged();
+        if (_virtualizeMode == VirtualizeMode.None)
+            _localListData = ClientData.LocalTestListRows100;
+        else
+            _localListData = ClientData.LocalTestListRows5000;
         StateHasChanged();
     }
 

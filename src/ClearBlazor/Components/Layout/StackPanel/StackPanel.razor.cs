@@ -61,18 +61,6 @@ namespace ClearBlazor
         [Parameter]
         public Color? BackgroundColor { get; set; } = null;
 
-        /// <summary>
-        /// Event raised when the mouse enters the component 
-        /// </summary>
-        [Parameter]
-        public virtual EventCallback<MouseEventArgs> OnElementMouseEnter { get; set; }
-
-        /// <summary>
-        /// Event raised when the mouse leaves the component 
-        /// </summary>
-        [Parameter]
-        public virtual EventCallback<MouseEventArgs> OnElementMouseLeave { get; set; }
-
         protected override void OnParametersSet()
         {
             base.OnParametersSet();

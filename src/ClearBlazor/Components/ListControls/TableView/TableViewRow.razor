@@ -6,14 +6,13 @@
 @inherits ListRowBase<TItem>
 
 <CascadingValue Value=this IsFixed="false">
-    <div id=@RowId @attributes=AdditionalAttributes style=@GetFullRowStyle()
+    <div id=@RowId @attributes=AdditionalAttributes style=@GetFullRowStyle() tabindex="0"
          @onclick=OnRowClicked
          @onpointerdown=OnPointerDown
          @onpointerup=OnPointerUp
          @onpointermove=OnPointerMove
          @onpointerenter=OnPointerEnter
          @onpointerleave=OnPointerLeave>
-
         @for (int col = 0; col < Columns.Count; col++)
         {
             var colIndex = col;

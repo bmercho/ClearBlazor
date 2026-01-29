@@ -3,6 +3,10 @@
     padding: 0;
 }
 
+*:focus {
+    outline: none;
+}
+
 * {
     -webkit-tap-highlight-color: transparent
 }
@@ -15,7 +19,7 @@
 html {
     overflow: hidden;
     overscroll-behavior: none;
-    user-select:none;
+    user-select: none;
 }
 
 .htmlTagDelimiter {
@@ -80,6 +84,7 @@ html {
 ::placeholder {
     color: darkgray;
 }
+
 textarea {
     resize: none;
 }
@@ -174,6 +179,7 @@ textarea {
     -ms-transition: 200ms linear;
     transition: 200ms linear;
 }
+
 .slider-transition {
     -webkit-transition: 100ms linear;
     -moz-transition: 100ms linear;
@@ -181,6 +187,7 @@ textarea {
     -ms-transition: 100ms linear;
     transition: 100ms linear;
 }
+
 .colorpicker-transition {
     -webkit-transition: 50ms linear;
     -moz-transition: 50ms linear;
@@ -191,8 +198,9 @@ textarea {
 
 @keyframes spin {
     0% {
-        transform:rotate(0deg)
+        transform: rotate(0deg)
     }
+
     100% {
         transform: rotate(360deg)
     }

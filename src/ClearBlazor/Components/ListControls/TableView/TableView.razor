@@ -4,7 +4,9 @@
 @inherits ListBase<TItem>
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()
+         @onpointerenter=OnPointerEnter
+         @onpointerleave=OnPointerLeave>
         <ScrollViewer @ref=_scrollViewer
                       VerticalScrollMode=ScrollMode.Auto
                       Style="overflow-anchor: none;"

@@ -85,7 +85,6 @@ namespace ClearBlazor
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            _browserSizeService.Init(JSRuntime);
             _browserSizeService.OnBrowserResize += BrowserResized;
             ScrollViewer.Subscribe(this);
         }

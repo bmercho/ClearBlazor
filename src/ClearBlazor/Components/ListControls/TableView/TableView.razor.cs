@@ -1,7 +1,10 @@
 using ClearBlazorInternal;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System.Data.Common;
 using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace ClearBlazor
 {
@@ -96,6 +99,7 @@ namespace ClearBlazor
         internal bool _stickyHeader = true;
 
         private bool _initializing = true;
+        private DotNetObjectReference<TableView<TItem>> _thisComponent = null!;
         //private string _scrollViewerId = Guid.NewGuid().ToString();
         private ScrollViewer _scrollViewer = null!;
         private Grid _grid = null!;
@@ -105,7 +109,7 @@ namespace ClearBlazor
         private string _baseRowId = Guid.NewGuid().ToString();
         private double _componentHeight = 0;
         private double _componentWidth = 0;
-        private TableViewHeader<TItem> _header = null!;
+        private TableViewHeader<TItem>? _header = null;
 
         // Used when VirtualizeMode is Virtualize
         private double _height = 0;
@@ -156,7 +160,7 @@ namespace ClearBlazor
 
                     int headerHeight = 0;
                     if (ShowHeader && (StickyHeader || index == 0))
-                        headerHeight = ShowHeader ? (int)_headerHeight - 1 : 0;
+                        headerHeight = ShowHeader ? (int)_headerHeight : 0;
 
                     await JSRuntime.InvokeVoidAsync("window.scrollbar.ScrollIntoView", _scrollViewer.Id,
                                                     id, headerHeight, (int)verticalAlignment);
@@ -378,19 +382,6 @@ namespace ClearBlazor
         }
 
         /// <summary>
-        /// Resets the component to its initial state. Mainly used for testing.
-        /// </summary>
-        /// <returns></returns>
-        public async Task ResetComponent()
-        {
-            await GotoStart();
-            _items.Clear();
-            RowSizes.Clear();
-            RowIds.Clear();
-            ListRows.Clear();
-        }
-
-        /// <summary>
         /// Returns true if the list is at the end. 
         /// </summary>
         /// <returns></returns>
@@ -474,6 +465,9 @@ namespace ClearBlazor
 
             if (firstRender)
             {
+
+                _thisComponent = DotNetObjectReference.Create(this);
+
                 List<string> elementIds = new List<string>() { Id, _scrollViewer.Id,
                                                                _headerId};
                 if (_grid != null)
@@ -522,6 +516,49 @@ namespace ClearBlazor
                 case VirtualizeMode.Pagination:
                     break;
             }
+        }
+
+        internal async Task SelectNextRow()
+        {
+            if (Items == null || SelectedItem == null)
+                return;
+
+            var newRowIndex = SelectedItem.ItemIndex + 1;
+            if (newRowIndex >= Items.Count())
+                return;
+
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                    await HandleRowSelection(Items.ToList()[newRowIndex], newRowIndex, false, false);
+                    await GotoIndex(newRowIndex, Alignment.End);
+                    break;
+                case VirtualizeMode.InfiniteScroll:
+                    break;
+                case VirtualizeMode.InfiniteScrollReverse:
+                    break;
+                case VirtualizeMode.Pagination:
+                    break;
+                case VirtualizeMode.Virtualize:
+                    await GotoIndex(newRowIndex, Alignment.End);
+                    await HandleRowSelection(Items.ToList()[newRowIndex], newRowIndex, false, false);
+                    break;
+            }
+
+        }
+
+        internal async Task SelectPrevRow()
+        {
+            if (Items == null || SelectedItem == null)
+                return;
+
+            if (SelectedItem.ItemIndex == 0)
+                return;
+
+            var newRowIndex = SelectedItem.ItemIndex - 1;
+
+            await HandleRowSelection(Items.ToList()[newRowIndex], newRowIndex, false, false);
+            await GotoIndex(newRowIndex, Alignment.Start);
         }
 
         /// <summary>
@@ -588,7 +625,7 @@ namespace ClearBlazor
                         break;
                     case VirtualizeMode.Virtualize:
                         await CheckForNewRows(_scrollTop, false);
-                        _header.Refresh();
+                        _header?.Refresh();
                         break;
                     case VirtualizeMode.InfiniteScroll:
                     case VirtualizeMode.InfiniteScrollReverse:
@@ -611,7 +648,7 @@ namespace ClearBlazor
                         }
                         else
                             await CheckForNewRows(scrollState.ScrollTop);
-                        _header.Refresh();
+                        _header?.Refresh();
                         break;
                     case VirtualizeMode.Pagination:
                         break;
@@ -662,7 +699,7 @@ namespace ClearBlazor
                         }
                         else
                             await CheckForNewRows(scrollState.ScrollTop);
-                        _header.Refresh();
+                        _header?.Refresh();
                         break;
                     case VirtualizeMode.Pagination:
                         break;
@@ -672,6 +709,68 @@ namespace ClearBlazor
             {
 
             }
+        }
+
+        internal override async Task OnPointerEnter(PointerEventArgs args)
+        {
+            await base.OnPointerEnter(args);
+            string[] keys = {"ArrowLeft","ArrowRight","ArrowUp","ArrowDown",
+                             "PageUp","PageDown","Home","End" };
+            await JSRuntime.InvokeVoidAsync("EnableKeyboardCapture", _thisComponent, keys);
+        }
+
+        internal override async Task OnPointerLeave(PointerEventArgs args)
+        {
+            await base.OnPointerLeave(args);
+            await JSRuntime.InvokeVoidAsync("DisableKeyboardCapture");
+        }
+
+        [JSInvokable]
+        public async Task KeyDown(int keyCode, string key, bool shift, bool ctrl, bool alt)
+        {
+            try
+            {
+                switch (key)
+                {
+                    case "ArrowDown":
+                        await SelectNextRow();
+                        break;
+                    case "ArrowUp":
+                        await SelectPrevRow();
+                        break;
+                    case "ArrowRight":
+                        break;
+                    case "ArrowLeft":
+                        break;
+                    case "PageUp":
+                        break;
+                    case "PageDown":
+                        break;
+                    case "Home":
+                        break;
+                    case "End":
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                // Throttle the keys just a bit
+                //await Task.Delay(0).ContinueWith(t =>
+                //{
+                //    _processingkey = false;
+                //});
+            }
+            await Task.CompletedTask;
+        }
+
+        [JSInvokable]
+        public async Task KeyUp(int code, string key, bool shift, bool ctrl, bool alt)
+        {
+            await Task.CompletedTask;
         }
 
         private async Task<bool> GetFirstPageAsync()
@@ -780,10 +879,10 @@ namespace ClearBlazor
         private async Task GotoVirtualIndex(int index, Alignment verticalAlignment)
         {
             double scrollTop = 0;
-            var maxItemsInContainer = _scrollViewerHeight / (_rowHeight + RowSpacing);
             int headerHeight = 0;
             if (ShowHeader && (StickyHeader || index == 0))
                 headerHeight = ShowHeader ? (int)_headerHeight : 0;
+            var maxItemsInContainer = (_scrollViewerHeight-headerHeight) / (_rowHeight + RowSpacing);
 
             switch (verticalAlignment)
             {
@@ -805,7 +904,7 @@ namespace ClearBlazor
                         _skipItems = index;
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
-                    scrollTop = _skipItems * (_rowHeight + RowSpacing);
+                    scrollTop = _skipItems * (_rowHeight + RowSpacing) + headerHeight;
                     break;
                 case Alignment.End:
                     if (index < maxItemsInContainer)
@@ -815,7 +914,7 @@ namespace ClearBlazor
                     _takeItems = (int)Math.Ceiling(maxItemsInContainer);
 
                     if (_skipItems < maxItemsInContainer)
-                        scrollTop = _skipItems * (_rowHeight + RowSpacing);
+                        scrollTop = _skipItems * (_rowHeight + RowSpacing) + headerHeight;
                     else
                         if (ShowHeader)
                         scrollTop = (index - maxItemsInContainer + 2) * (_rowHeight + RowSpacing);
@@ -855,10 +954,7 @@ namespace ClearBlazor
             int header = ShowHeader ? 1 : 0;
             string css = $"display:grid;  grid-template-columns: subgrid; " +
                          $"grid-area: 1 / 1 /span {1 + header} / span {Columns.Count}; ";
-            if (VirtualizeMode == VirtualizeMode.Virtualize)
-                css += $"min-height:{_skipItems * (_rowHeight + RowSpacing)}px; ";
-            else
-                css += $"min-height:0px; ";
+            css += $"min-height:{_skipItems * (_rowHeight + RowSpacing)}px; ";
 
             return css;
         }

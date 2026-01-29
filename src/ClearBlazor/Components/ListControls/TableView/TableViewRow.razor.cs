@@ -1,6 +1,8 @@
+using ClearBlazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using ClearBlazor;
+using Microsoft.JSInterop;
+using System.Diagnostics;
 
 namespace ClearBlazorInternal
 {
@@ -44,7 +46,6 @@ namespace ClearBlazorInternal
         /// </summary>
         [Parameter]
         public bool AllowRowReordering { get; set; } = false;
-
 
         internal bool DragOver { get; set; } = false;
         internal static TableViewRow<TItem>? DragRow { get; set; } = null;

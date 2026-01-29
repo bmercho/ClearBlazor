@@ -9,8 +9,8 @@
                         Spacing=20 CornerRadius=20
                         Padding=@LinePadding Class=@RowClasses
                         Style=@RowStyle
-                        OnElementMouseEnter=@OnMouseEnter
-                        OnElementMouseLeave=@OnMouseLeave
+                        @onmouseenter=OnMouseEnter
+                        @onmouseleave=@OnMouseLeave
                         @onclick=@OnListItemClicked>
                 @if (Multiselect && !HasChildren)
                 {

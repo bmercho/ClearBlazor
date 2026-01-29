@@ -29,9 +29,19 @@ namespace ClearBlazor
                                          DotNetObjectReference.Create(this));
         }
 
+        public BrowserSizeInfo GetBrowserSizeInfo()
+        {
+            return browserSizeInfo;
+        }
+
         [JSInvokable]
         public async Task NotifyBrowserDimensions(int jsBrowserHeight, int jsBrowserWidth)
         {
+            bool changed = browserSizeInfo.BrowserWidth != jsBrowserWidth ||
+                           browserSizeInfo.BrowserHeight != jsBrowserHeight;
+            if (!changed)
+                return;
+
             browserSizeInfo = new BrowserSizeInfo
             {
                 BrowserWidth = jsBrowserWidth,

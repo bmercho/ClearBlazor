@@ -7,19 +7,21 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
-        <StackPanel Orientation="Orientation.Portrait"  Spacing=@Spacing>
-            @if (ListData == null)
-            {
-                @ChildContent
-            }
-            else
-            {
-                @foreach (var item in ListData!)
+        <ScrollViewer VerticalScrollMode="ScrollMode.Auto">
+            <StackPanel Orientation="Orientation.Portrait" Spacing=@Spacing>
+                @if (ListData == null)
                 {
-                    <SelectItem ContentAlignment=@ContentAlignment Value=@item.Value 
-                                Text=@item.Name Icon=@item.Icon Avatar=@item.Avatar />
+                    @ChildContent
                 }
-            }
-        </StackPanel>
+                else
+                {
+                    @foreach (var item in ListData!)
+                    {
+                        <SelectItem ContentAlignment=@ContentAlignment Value=@item.Value
+                                    Text=@item.Name Icon=@item.Icon Avatar=@item.Avatar />
+                    }
+                }
+            </StackPanel>
+        </ScrollViewer>
     </div>
 </CascadingValue>

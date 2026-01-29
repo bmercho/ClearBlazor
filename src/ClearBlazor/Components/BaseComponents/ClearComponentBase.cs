@@ -280,7 +280,7 @@ namespace ClearBlazor
         }
 
 
-        //// Drag drop functionality
+        // Drag drop functionality
 
         internal virtual async Task OnPointerDown(PointerEventArgs args)
         {

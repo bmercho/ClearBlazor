@@ -149,8 +149,7 @@ namespace ClearBlazor
         private async Task OnMouseEnter(MouseEventArgs e)
         {
             MouseOver = true;
-            Logger.AddLog($"OnMouseOver  MouseOver:{MouseOver}");
-
+            
             if (Direction == SplitterDirection.Vertical)
                 await JSRuntime.InvokeVoidAsync("Cursor.setCursor", "col-resize");
             else
@@ -160,7 +159,6 @@ namespace ClearBlazor
         private async Task OnMouseLeave(MouseEventArgs e)
         {
             MouseOver = false;
-            Logger.AddLog($"OnMouseOut  MouseOver:{MouseOver}");
             await JSRuntime.InvokeVoidAsync("Cursor.resetCursor");
 
         }
@@ -172,8 +170,6 @@ namespace ClearBlazor
 
             if (MouseDown)
             {
-                Logger.AddLog($"OnMouseMove  MouseOver:{MouseOver}");
-
                 if (Direction == SplitterDirection.Vertical)
                 {
                     if (e.MovementX == 0 || 
