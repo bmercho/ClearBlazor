@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace ClearBlazor
@@ -64,6 +65,7 @@ namespace ClearBlazor
                 if (MaxLength != null)
                     await JSRuntime.InvokeVoidAsync("window.clearBlazor.textInput.initialize", id, MaxLength);
             }
+            Debug.WriteLine($"TextInput {Value} rendered");
         }
 
         protected (int, string?) GetMaxLength(int? defaultMaxLength)

@@ -40,6 +40,12 @@ namespace ClearBlazor
 
         private bool toggled = false;
 
+        protected override void OnParametersSet()
+        {
+            base.OnParametersSet();
+            if (ToggledIconColor == null)
+                ToggledIconColor = IconColor;
+        }
 
         protected override string UpdateStyle(string css)
         {
@@ -55,6 +61,7 @@ namespace ClearBlazor
         {
             toggled = !toggled;
             await OnToggleChanged.InvokeAsync(toggled);
+            StateHasChanged();
             return toggled;
         }
 

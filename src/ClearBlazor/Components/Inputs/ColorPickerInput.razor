@@ -12,11 +12,11 @@
             <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
                   BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
                 <div style="display:grid; ">
-                    <Grid MinWidth=200 Columns="*,auto" @onclick=@TogglePopup>
+                    <Grid MinWidth=110 Columns="*,auto" Margin=0 @onclick=@TogglePopup>
                         <Grid BackgroundColor=@Value />
                         @if(ShowHex)
                         {
-                            <TextBlock Name="Text1" 
+                            <TextBlock Margin="0,0,0,5" Name="Text1" 
                                        Color=@(Value == null ? ThemeManager.CurrentColorScheme.OnSurface : 
                                                                Color.ContrastingColor(Value)) 
                                        VerticalAlignment=Alignment.Center>@Value?.Value</TextBlock>

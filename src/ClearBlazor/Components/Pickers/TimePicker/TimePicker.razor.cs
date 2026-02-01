@@ -136,9 +136,9 @@ namespace ClearBlazor
         protected override string UpdateStyle(string css)
         {
             if (Orientation == Orientation.Portrait)
-                css += $"display:grid; width:{PickerHeaderSize}px; ";
+                css += $"display:grid; max-width:{PickerHeaderSize}px; ";
             else
-                css += $"display:grid; align-self:start; height:{PickerHeaderSize}px; ";
+                css += $"display:grid; align-self:start; max-height:{PickerHeaderSize}px; ";
             return css;
         }
 

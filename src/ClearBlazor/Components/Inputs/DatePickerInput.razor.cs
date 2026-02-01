@@ -53,20 +53,33 @@ namespace ClearBlazor
 
         private bool PopupOpen = false;
 
+        private bool DoRender { get; set; } = true;
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+            DoRender = false;
+        }
+        protected override bool ShouldRender()
+        {
+            return DoRender;
+        }
+
         private bool IsMouseNotOver()
         {
             return !MouseOver;
         }
 
-        private void TogglePopup()
+        private async Task TogglePopup()
         {
             PopupOpen = !PopupOpen;
-            StateHasChanged();
+            await DateChanged();
         }
 
         protected override async Task ClearEntry()
         {
-            await Task.CompletedTask;
+            Value = null;
+            await DateChanged();
         }
 
         protected override string GetInputType()
@@ -76,13 +89,13 @@ namespace ClearBlazor
 
         private async Task DateSelected()
         {
-            await ValueChanged.InvokeAsync(Value);
             PopupOpen = false;
-            StateHasChanged();
+            await DateChanged();
         }
         private async Task DateChanged()
         {
             await ValueChanged.InvokeAsync(Value);
+            DoRender = true;
             StateHasChanged();
         }
     }

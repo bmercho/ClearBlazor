@@ -304,7 +304,7 @@ namespace ClearBlazor
                 _firstTimeDragging = false;
             }
 
-            if (Dragging)
+            if (Dragging && _draggingEventArgs != null)
             {
                 if (_draggingEventArgs.AllowDrop)
                 {

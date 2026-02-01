@@ -70,14 +70,21 @@ namespace ClearBlazor
         private SizeInfo? SizeInfo = null;
         private ElementReference PickerElement;
         private TimePicker? TimePicker = null;
+        private bool DoRender { get; set; } = true;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
+            DoRender = false;
             SizeInfo? existing = null;
             if (SizeInfo != null)
                 existing = SizeInfo;
             SizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", PickerElement);
+        }
+
+        protected override bool ShouldRender()
+        {
+            return DoRender;
         }
 
         private bool IsMouseNotOver()
@@ -85,15 +92,16 @@ namespace ClearBlazor
             return !MouseOver;
         }
 
-        private void TogglePopup()
+        private async Task TogglePopup()
         {
             PopupOpen = !PopupOpen;
-            StateHasChanged();
+            await TimeChanged();
         }
 
         protected override async Task ClearEntry()
         {
-            await Task.CompletedTask;
+            Value = null;
+            await TimeChanged();
         }
 
         protected override string GetInputType()
@@ -109,15 +117,14 @@ namespace ClearBlazor
                     TimePicker.SetMode(PickerMode.Hour24);
                 else
                     TimePicker.SetMode(PickerMode.Hour12);
-                await ValueChanged.InvokeAsync(Value);
+                await TimeChanged();
             }
         }
 
         private async Task MinuteSelected()
         {
             PopupOpen = false;
-            StateHasChanged();
-            await ValueChanged.InvokeAsync(Value);
+            await TimeChanged();
             if (TimePicker != null)
                 if (Hours24)
                     TimePicker.SetMode(PickerMode.Hour24);
@@ -128,6 +135,7 @@ namespace ClearBlazor
         private async Task TimeChanged()
         {
             await ValueChanged.InvokeAsync(Value);
+            DoRender = true;    
             StateHasChanged();
         }
     }

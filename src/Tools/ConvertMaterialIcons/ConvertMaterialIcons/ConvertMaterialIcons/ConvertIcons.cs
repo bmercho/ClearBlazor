@@ -100,18 +100,26 @@ namespace ConvertMaterialIcons
         {
             string page = $"https://fonts.gstatic.com/s/i/{family}/{iconName}/v{version}/24px.svg";
 
-            // ... Use HttpClient.
-            using (HttpClient client = new HttpClient())
-            using (HttpResponseMessage response = await client.GetAsync(page))
-            using (HttpContent content = response.Content)
+            try
             {
-                // ... Read the string.
-                string result = await content.ReadAsStringAsync();
 
-                if (result != null)
+                // ... Use HttpClient.
+                using (HttpClient client = new HttpClient())
+                using (HttpResponseMessage response = await client.GetAsync(page))
+                using (HttpContent content = response.Content)
                 {
-                    return result;
+                    // ... Read the string.
+                    string result = await content.ReadAsStringAsync();
+
+                    if (result != null)
+                    {
+                        return result;
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                // Ignore errors
             }
 
             return null;

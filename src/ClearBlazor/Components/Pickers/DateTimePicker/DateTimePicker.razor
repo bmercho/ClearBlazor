@@ -1,0 +1,27 @@
+﻿@namespace ClearBlazor
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@inherits InputBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()>
+        <Grid Columns="*,auto" Rows="auto,*"
+              BackgroundColor=@Color>
+            @if (ShowDatePicker)
+            {
+                <DatePicker Column=0 ColumnSpan=2 Row=0 RowSpan=2 Orientation=@Orientation BorderThickness=1 CornerRadius=4
+                            DateSelected=@DateTimeSelected />
+            }
+            else
+            {
+                <TimePicker Column=0 ColumnSpan=2 Row=0 RowSpan=2 Orientation=@Orientation BorderThickness=1 CornerRadius=4 />
+            }
+
+            <ToggleIconButton Column=1 Row=0 Margin=5 Size=Size.Small
+                              Icon=@Icons.Material.Filled.Schedule
+                              ToggledIcon=@Icons.Material.Filled.CalendarMonth
+                              IconColor=@Color.GetAssocTextColor(Color) OnToggleChanged=@OnToggleChanged />
+        </Grid>
+    </div>
+</CascadingValue>
+
+

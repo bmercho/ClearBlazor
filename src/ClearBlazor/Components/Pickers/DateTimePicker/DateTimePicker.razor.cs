@@ -6,7 +6,7 @@ namespace ClearBlazor
     /// <summary>
     /// Control to select a date.
     /// </summary>
-    public partial class DatePicker : InputBase,IBorder,IBackground, IBoxShadow
+    public partial class DateTimePicker : InputBase,IBorder,IBackground, IBoxShadow
     {
         public enum DatePickerMode
         {
@@ -17,19 +17,19 @@ namespace ClearBlazor
         /// The initially selected date 
         /// </summary>
         [Parameter]
-        public DateOnly? Date { get; set; }
+        public DateTime? DateTime { get; set; }
 
         /// <summary>
         /// Event raised when the date selection has changed.Used for two way binding.
         /// </summary>
         [Parameter]
-        public EventCallback<DateOnly?> DateChanged { get; set; }
+        public EventCallback<DateTime?> DateChanged { get; set; }
 
         /// <summary>
-        /// Event raised when the date selection has changed.
+        /// Event raised when the date/time selection has changed.
         /// </summary>
         [Parameter]
-        public EventCallback DateSelected { get; set; }
+        public EventCallback DateTimeSelected { get; set; }
 
         /// <summary>
         /// Customizes what the first day of the week is. Normally either Sun or Mon.
@@ -49,6 +49,25 @@ namespace ClearBlazor
        /// </summary>
         [Parameter]
         public int? LastYear { get; set; }
+
+        /// <summary>
+        /// Event raised when the minute value has been selected indicating that 
+        /// the time selection has been completed
+        /// </summary>
+        [Parameter]
+        public EventCallback MinuteSelected { get; set; }
+
+        /// <summary>
+        /// Indicates if the selection mode is 24 hours.
+        /// </summary>
+        [Parameter]
+        public bool Hours24 { get; set; } = false;
+
+        /// <summary>
+        /// Indicates the step value as the minute handle is dragged or minute clicked  
+        /// </summary>
+        [Parameter]
+        public MinuteStep MinuteStep { get; set; } = MinuteStep.One;
 
         /// <summary>
         /// The orientation of the control
@@ -99,40 +118,46 @@ namespace ClearBlazor
         public int? BoxShadow { get; set; }
 
         const int ControlWidthPortrait = 270;
-        const int ControlHeightPortrait = 400;
-        const int BodyHeightPortrait = 310;
+        const int ControlHeightPortrait = 402;
         const int ControlHeightLandscape = 320;
         const int ControlWidthLandscape = 360;
-        const int BodyWidthLandscape = 270;
 
         private DatePickerMode Mode = DatePickerMode.Day;
         private List<YearItem> YearList { get; set; } = new();
 
         private int? MouseOverMonth = null;
         private DayOfWeek FirstDayOfWeek = DayOfWeek.Monday;
-        internal DateOnly SelectedDate;
+        internal DateTime SelectedDate;
+
+        private bool ShowDatePicker = true; 
 
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
             if (Color == null)
                 Color = Color.Primary;
-            if (Date == null)   
-                Date = DateOnly.FromDateTime(DateTime.Now);
+            if (DateTime == null)
+                DateTime = System.DateTime.Now;
             AddYearRange(FirstYear, LastYear);
 
             FirstDayOfWeek = GetFirstDayOfWeek();
-            DateOnly date = (DateOnly)Date;
+            DateTime date = (DateTime)DateTime;
             SelectedDate = date;
+        }
+
+        private void OnToggleChanged()
+        {
+            ShowDatePicker = !ShowDatePicker;
+            StateHasChanged();
         }
 
         private int GetYearIndex()
         {
-            int? year = Date?.Year;
+            int? year = DateTime?.Year;
 
             int firstYear;
             if (FirstYear == null)
-                firstYear = DateTime.Now.AddYears(-100).Year;
+                firstYear = System.DateTime.Now.AddYears(-100).Year;
             else
                 firstYear = (int)FirstYear;
 
@@ -144,14 +169,13 @@ namespace ClearBlazor
 
         protected override string UpdateStyle(string css)
         {
+            css += $"display : grid; ";
             if (Orientation == Orientation.Portrait)
-                css += $"display : grid; " +
-                       $"max-height:{ControlHeightPortrait}px; " +
-                       $"max-width:{ControlWidthPortrait}px; ";
+                css += $"height:{ControlHeightPortrait}px; " +
+                       $"width:{ControlWidthPortrait}px; ";
             else
-                css += $"display : grid; " +
-                       $"max-height:{ControlHeightLandscape}px; " +
-                       $"max-width:{ControlWidthLandscape}px;  ";
+                css += $"height:{ControlHeightLandscape}px; " +
+                       $"width:{ControlWidthLandscape}px;  ";
             return css;
         }
 
@@ -195,10 +219,10 @@ namespace ClearBlazor
 
         private Color GetDayColor(int dayIndex)
         {
-            if (Date == null)
+            if (DateTime == null)
                 return ThemeManager.CurrentColorScheme.OnSurface;
 
-            var date = (DateOnly)Date;
+            DateTime date = (DateTime)DateTime;
 
             (int firstValidIndex, int lastValidIndex) = GetValidIndexRange(SelectedDate);
             int day = dayIndex - firstValidIndex + 1;
@@ -207,8 +231,8 @@ namespace ClearBlazor
                 date.Day == dayIndex - firstValidIndex + 1)
                 return Color!;
 
-            if (SelectedDate.Year == DateTime.Now.Date.Year && SelectedDate.Month == DateTime.Now.Date.Month &&
-                DateTime.Now.Date.Day == dayIndex - firstValidIndex + 1)
+            if (SelectedDate.Year == System.DateTime.Now.Date.Year && SelectedDate.Month == System.DateTime.Now.Date.Month &&
+                System.DateTime.Now.Date.Day == dayIndex - firstValidIndex + 1)
                 return Color!;
 
             return ThemeManager.CurrentColorScheme.OnSurface;
@@ -223,9 +247,9 @@ namespace ClearBlazor
         private void AddYearRange(int? startYear, int? endYear)
         {
             if (startYear == null)
-                startYear = DateTime.Now.AddYears(-100).Year;
+                startYear = System.DateTime.Now.AddYears(-100).Year;
             if ( (endYear == null))
-                endYear = DateTime.Now.AddYears(100).Year;
+                endYear = System.DateTime.Now.AddYears(100).Year;
             int index = 0;
             for (int year = (int)startYear; year <= endYear; year++)
             {
@@ -241,15 +265,15 @@ namespace ClearBlazor
             SelectedDate = SelectedDate.AddYears(year.Year - SelectedDate.Year);
             Mode = DatePickerMode.Month;
 
-            Date = SelectedDate;
-            await DateChanged.InvokeAsync(Date);
+            DateTime = SelectedDate;
+            await DateChanged.InvokeAsync(DateTime);
             StateHasChanged();
         }
 
         private string GetMonthStyle(int month)
         {
             var css = "display:flex;justify-content: center; align-self: center; margin:0 10px 0 10px; ";
-            if (Date == null)
+            if (DateTime == null)
                 return css;
 
             if (MouseOverMonth == month)
@@ -265,17 +289,17 @@ namespace ClearBlazor
 
             SelectedDate = SelectedDate.AddMonths(month - SelectedDate.Month);
             Mode = DatePickerMode.Day;
-            Date = SelectedDate;
-            await DateChanged.InvokeAsync(Date);
+            DateTime = SelectedDate;
+            await DateChanged.InvokeAsync(DateTime);
             StateHasChanged();
         }
 
         private ButtonStyle GetMonthButtonStyle(int monthIndex)
         {
-            if (Date == null)
+            if (DateTime == null)
                 return ButtonStyle.LabelOnly;
 
-            var date = (DateOnly)Date;
+            var date = (DateTime)DateTime;
 
             if (SelectedDate.Month == monthIndex)
                 return ButtonStyle.Filled;
@@ -295,10 +319,10 @@ namespace ClearBlazor
 
         private bool IsDayIndexValid(int dayIndex)
         {
-            if (Date == null)
+            if (DateTime == null)
                 return false;
 
-            DateOnly date = (DateOnly)SelectedDate;
+            DateTime date = SelectedDate;
 
             (int firstValidIndex, int lastValidIndex) = GetValidIndexRange(date);
             if (dayIndex >= firstValidIndex && dayIndex <= lastValidIndex)
@@ -307,9 +331,9 @@ namespace ClearBlazor
             return false;
         }
 
-        private (int first,int last) GetValidIndexRange(DateOnly date)
+        private (int first,int last) GetValidIndexRange(DateTime date)
         {
-            var daysInMonth = DateTime.DaysInMonth(date.Year, date.Month);
+            var daysInMonth = System.DateTime.DaysInMonth(date.Year, date.Month);
             var firstDayOfMonth = new DateTime(date.Year, date.Month, 1);
             var dayOfWeek = firstDayOfMonth.Date.DayOfWeek;
             int firstValidIndex = 1;
@@ -332,19 +356,19 @@ namespace ClearBlazor
 
             int day = dayIndex - firstValidIndex + 1;
 
-            Date = SelectedDate.AddDays(day - SelectedDate.Day);
-            SelectedDate = (DateOnly)Date;
-            await DateChanged.InvokeAsync(Date);
+            DateTime = SelectedDate.AddDays(day - SelectedDate.Day);
+            SelectedDate = (DateTime)DateTime;
+            await DateChanged.InvokeAsync(DateTime);
             StateHasChanged();
-            await DateSelected.InvokeAsync();
+            await DateTimeSelected.InvokeAsync();
         }
 
         private ButtonStyle GetDayButtonStyle(int dayIndex)
         {
-            if (Date == null)
+            if (DateTime == null)
                 return ButtonStyle.LabelOnly;
 
-            var date = (DateOnly)Date;
+            var date = (DateTime)DateTime;
 
             (int firstValidIndex, int _) = GetValidIndexRange(SelectedDate);
 
@@ -354,8 +378,8 @@ namespace ClearBlazor
                 date.Day == dayIndex - firstValidIndex+1)
                 return ButtonStyle.Filled;
 
-            if (SelectedDate.Year == DateTime.Now.Date.Year && SelectedDate.Month == DateTime.Now.Date.Month &&
-                DateTime.Now.Date.Day == dayIndex - firstValidIndex + 1)
+            if (SelectedDate.Year == System.DateTime.Now.Date.Year && SelectedDate.Month == System.DateTime.Now.Date.Month &&
+                System.DateTime.Now.Date.Day == dayIndex - firstValidIndex + 1)
                 return ButtonStyle.Outlined;
 
             return ButtonStyle.LabelOnly;
@@ -384,8 +408,8 @@ namespace ClearBlazor
                 return;
 
             SelectedDate = SelectedDate.AddYears(1);
-            Date = SelectedDate;
-            await DateChanged.InvokeAsync(Date);
+            DateTime = SelectedDate;
+            await DateChanged.InvokeAsync(DateTime);
             StateHasChanged();
         }
 
@@ -395,8 +419,8 @@ namespace ClearBlazor
                 return;
 
             SelectedDate = SelectedDate.AddYears(-1);
-            Date = SelectedDate;
-            await DateChanged.InvokeAsync(Date);
+            DateTime = SelectedDate;
+            await DateChanged.InvokeAsync(DateTime);
             StateHasChanged();
         }
 
@@ -406,8 +430,8 @@ namespace ClearBlazor
                 return;
 
             SelectedDate = SelectedDate.AddMonths(-1);
-            Date = SelectedDate;
-            await DateChanged.InvokeAsync(Date);
+            DateTime = SelectedDate;
+            await DateChanged.InvokeAsync(DateTime);
             StateHasChanged();
         }
 
@@ -417,8 +441,8 @@ namespace ClearBlazor
                 return;
 
             SelectedDate = SelectedDate.AddMonths(1);
-            Date = SelectedDate;
-            await DateChanged.InvokeAsync(Date);
+            DateTime = SelectedDate;
+            await DateChanged.InvokeAsync(DateTime);
             StateHasChanged();
         }
 
@@ -431,21 +455,21 @@ namespace ClearBlazor
             StateHasChanged();
         }
         
-        private int GetBodyWidth()
-        {
-            if (Orientation == Orientation.Landscape)
-                return BodyWidthLandscape;
-            else
-                return ControlWidthPortrait;
-        }
+        //private int GetBodyWidth()
+        //{
+        //    if (Orientation == Orientation.Landscape)
+        //        return BodyWidthLandscape;
+        //    else
+        //        return ControlWidthPortrait;
+        //}
 
-        private int GetBodyHeight()
-        {
-            if (Orientation == Orientation.Landscape)
-                return ControlHeightLandscape;
-            else
-                return BodyHeightPortrait;
-        }
+        //private int GetBodyHeight()
+        //{
+        //    if (Orientation == Orientation.Landscape)
+        //        return ControlHeightLandscape;
+        //    else
+        //        return BodyHeightPortrait;
+        //}
 
         private void OnDateClicked()
         {

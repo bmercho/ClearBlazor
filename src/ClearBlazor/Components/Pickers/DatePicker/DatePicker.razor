@@ -5,12 +5,12 @@
 <CascadingValue Value="this" IsFixed="false">
     <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle()>
         <StackPanel Orientation=@Orientation>
-            <Grid BackgroundColor=@Color>
+            <Grid Columns="auto" Rows="auto" BackgroundColor=@Color>
                 <StackPanel Margin="10" Orientation=Orientation.Portrait 
                             VerticalAlignment=Alignment.Center>
                     <Button ButtonStyle=ButtonStyle.LabelOnly
                             Color=@Color.GetAssocTextColor(Color)
-                            HorizontalAlignment=Alignment.Center Size=Size.VeryLarge
+                            HorizontalAlignment=Alignment.Center Size=Size.Normal
                             @onclick=@OnDateClicked>
                         @Date?.Year
                     </Button>
@@ -18,16 +18,16 @@
                     {
                         <TextBlock HorizontalAlignment=Alignment.Center
                                    Color=@Color.GetAssocTextColor(Color)
-                                   Typo=Typo.H4>@Date?.ToString("ddd, dd MMM", Culture) </TextBlock>
+                                   Typo=Typo.H6>@Date?.ToString("ddd, dd MMM", Culture) </TextBlock>
                     }
                     else
                     {
                         <TextBlock HorizontalAlignment=Alignment.Center
                                    Color=@Color.GetAssocTextColor(Color)
-                                   Typo=Typo.H4>@Date?.ToString("ddd, dd", Culture) </TextBlock>
+                                   Typo=Typo.H6>@Date?.ToString("ddd, dd", Culture) </TextBlock>
                         <TextBlock HorizontalAlignment=Alignment.Center
                                    Color=@Color.GetAssocTextColor(Color)
-                                   Typo=Typo.H4>@Date?.ToString("MMM", Culture) </TextBlock>
+                                   Typo=Typo.H6>@Date?.ToString("MMM", Culture) </TextBlock>
                     }
                 </StackPanel>
             </Grid>

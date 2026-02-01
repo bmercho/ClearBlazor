@@ -26,6 +26,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("HorizontalGridLines", "<a href=GridLinesApi>GridLines</a>", "GridLines.None", "Indicates if horizontal grid lines are to be shown.\r"),
             new ApiComponentInfo("VerticalGridLines", "<a href=GridLinesApi>GridLines</a>", "GridLines.None", "Indicates if vertical grid lines are to be shown.\r"),
             new ApiComponentInfo("StickyHeader", "bool", "true", "Indicates if the header row (if shown) is sticky. ie stays at top while other rows are scrolled.\r"),
+            new ApiComponentInfo("AllowRowReordering", "bool", "false", "Gets or sets a value indicating whether users can reorder rows in the component.\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
@@ -40,10 +41,11 @@ namespace ClearBlazorTest
             new ApiComponentInfo("Task GotoPage(int pageNumber)", "async", "", "Goes to the given page number. Used when VirtualizationMode is Pagination\r"),
             new ApiComponentInfo("Task Refresh()", "async", "", "Refresh the list. Call this when items are added to or deleted from the data or if an item has changed.\rWhen VirtualizationMode is None a new object needs to be created with a new Id for \rall items that need re-rendering. This ensures that only the changed items are re-rendered. \r(otherwise it would be expensive)\rOther Virtualized modes re-render all items, which should not be expensive as they are virtualized.\r"),
             new ApiComponentInfo("Task RefreshAll()", "async", "", "Fully refreshes the list \r"),
-            new ApiComponentInfo("Task ResetComponent()", "async", "", "Resets the component to its initial state. Mainly used for testing.\r"),
             new ApiComponentInfo("Task<bool> AtEnd()", "async", "", "Returns true if the list is at the end. \r"),
             new ApiComponentInfo("Task<bool> AtStart()", "async", "", "Returns true if the list is at the start. \r"),
             new ApiComponentInfo("Task HandleScrollEvent(ScrollState scrollState)", "async", "", ""),
+            new ApiComponentInfo("Task KeyDown(int keyCode, string key, bool shift, bool ctrl, bool alt)", "async", "", ""),
+            new ApiComponentInfo("Task KeyUp(int code, string key, bool shift, bool ctrl, bool alt)", "async", "", ""),
         };
     }
 }

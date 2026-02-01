@@ -1,0 +1,15 @@
+﻿@namespace ClearBlazorTest
+<Grid Columns="*,auto">
+<ToggleIconButton Column=0 Icon=@Icons.Material.Filled.AlarmOff ToggledIcon=@Icons.Material.Filled.AlarmOn
+                  IconColor=@Color.Error ToggledIconColor=@Color.Success OnToggleChanged=@OnToggleChanged />
+
+<ToggleIconButton Column=1 Icon=@Icons.Material.Filled.AlarmOff ToggledIcon=@Icons.Material.Filled.AlarmOn
+                  Size=Size.VerySmall
+                  IconColor=@Color.Error ToggledIconColor=@Color.Success OnToggleChanged=@OnToggleChanged />
+</Grid>
+
+@code {
+    private void OnToggleChanged(bool toggled)
+    {
+    }
+}

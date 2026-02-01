@@ -341,11 +341,11 @@ namespace ClearBlazor
             {
                 case VirtualizeMode.None:
                     _items = await GetItems(0, int.MaxValue);
-                    StateHasChanged();
+                    RefreshAllRows();
                     break;
                 case VirtualizeMode.Virtualize:
                     if (await CheckForNewRows(_scrollTop, true))
-                        StateHasChanged();
+                        RefreshAllRows();
                     break;
                 case VirtualizeMode.InfiniteScroll:
                 case VirtualizeMode.InfiniteScrollReverse:
@@ -356,11 +356,11 @@ namespace ClearBlazor
                     }
                     else
                         await GetCurrentPageAsync();
-                    StateHasChanged();
+                    RefreshAllRows();
                     break;
                 case VirtualizeMode.Pagination:
                     await GotoPage(_currentPageNum);
-                    StateHasChanged();
+                    RefreshAllRows();
                     break;
             }
         }

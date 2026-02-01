@@ -12,7 +12,7 @@ namespace ClearBlazorTest
         public (string, string) InheritsLink {get; set; } = ("ComponentBase", "ComponentBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
-            (" IDisposable", " IDisposableApi"),
+            (" IAsyncDisposable", " IAsyncDisposableApi"),
             (" IHandleEvent", " IHandleEventApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
@@ -36,9 +36,12 @@ namespace ClearBlazorTest
             new ApiComponentInfo("RowSpan", "int", "1", "Applies to children of a grid. Indicates how many rows of the grid that the child will occupy (starting at Row). \r"),
             new ApiComponentInfo("ColumnSpan", "int", "1", "Applies to children of a <a href=\"GridPage\">Grid</a>. Indicates how many columns of the grid that the child will occupy (starting at Column). \r"),
             new ApiComponentInfo("Dock", "<a href=DockApi>Dock?</a>", "null", "Applies to children of a <a href=\"GridPage\">DockPanel</a>. \rIndicates how the component will dock in its parent.\r"),
-            new ApiComponentInfo("OnClicked", "EventCallback<MouseEventArgs>", "", "Event raised when the component is clicked \r"),
-            new ApiComponentInfo("OnDoubleClicked", "EventCallback<MouseEventArgs>", "", "Event raised when the component is double clicked \r"),
-            new ApiComponentInfo("OnMouseMoved", "EventCallback<MouseEventArgs>", "", "Event raised when the mouse is moved over the component \r"),
+            new ApiComponentInfo("IsDraggable", "bool", "null", "Indicates whether the element can be dragged by the user.\r"),
+            new ApiComponentInfo("OnDragStarted", "EventCallback<DraggingEventArgs>", "", "Callback that is invoked when a drag operation is initiated.\r"),
+            new ApiComponentInfo("OnDragOver", "EventCallback<DraggingEventArgs>", "", "Callback that is invoked when the item is being dragged over a potential drop target. Set AllowDrop to true to \rthe item to be dropped.\r"),
+            new ApiComponentInfo("OnDragEnter", "EventCallback<DraggingEventArgs>", "", "Callback that is invoked when the item being dragged enters a valid drop target\r"),
+            new ApiComponentInfo("OnDragLeave", "EventCallback<DraggingEventArgs>", "", "Callback that is invoked when the item being dragged leaves a valid drop target\r"),
+            new ApiComponentInfo("OnDrop", "EventCallback<DraggingEventArgs>", "", "Callback that is invoked when the item is dropped on a valid drop target\r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

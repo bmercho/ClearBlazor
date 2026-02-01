@@ -23,7 +23,7 @@ namespace ClearBlazorTest
             new ApiComponentInfo("ValueChanged", "EventCallback<TListBox?>", "", "Event that is raised when the Value changes\r"),
             new ApiComponentInfo("Values", "List<TListBox?>?", "null", "The selected values of the list box. (when MultiSelect is true)\r"),
             new ApiComponentInfo("ValuesChanged", "EventCallback<List<TListBox?>>", "", "Event that is raised when Values changes\r"),
-            new ApiComponentInfo("ListData", "List<ListDataItem<TListBox>>?", "null", "Provides the data for list. If not null this is used instead of the ChildContent \r"),
+            new ApiComponentInfo("ListData", "List<ListDataItem<TListBox>>?", "null", "Provides the data for list. If not null this is used instead of the ChildContent.\rNote that ListData cannot contain hierachical data. Use TreeView instead in that case.\r"),
             new ApiComponentInfo("ContentAlignment", "<a href=AlignmentApi>Alignment</a>", "Alignment.Stretch", "Used when ListData is not null to horizontally align the content of items\r"),
             new ApiComponentInfo("Spacing", "double", "0", "The spacing between item\r"),
             new ApiComponentInfo("RowSize", "<a href=SizeApi>Size</a>", "Size.Normal", "The row size for each item\r"),

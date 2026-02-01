@@ -27,8 +27,6 @@ namespace ClearBlazorTest
             new ApiComponentInfo("CornerRadius", "string?", "null", "See <a href=\"IBorderApi\">IBorder</a>\r"),
             new ApiComponentInfo("BoxShadow", "int?", "null", "See <a href=\"IBoxShadowApi\">IBoxShadow</a>\r"),
             new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
-            new ApiComponentInfo("OnElementMouseEnter", "EventCallback<MouseEventArgs>", "", "Event raised when the mouse enters the component \r"),
-            new ApiComponentInfo("OnElementMouseLeave", "EventCallback<MouseEventArgs>", "", "Event raised when the mouse leaves the component \r"),
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {

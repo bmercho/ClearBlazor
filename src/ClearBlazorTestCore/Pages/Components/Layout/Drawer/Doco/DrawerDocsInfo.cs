@@ -13,7 +13,6 @@ namespace ClearBlazorTest
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
             ("IBackground", "IBackgroundApi"),
-            ("IDisposable", "IDisposableApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {

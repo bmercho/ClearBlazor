@@ -10,18 +10,18 @@
                     <StackPanel Orientation=Orientation.Portrait VerticalAlignment=Alignment.Center
                                 HorizontalAlignment=Alignment.Center>
                         <StackPanel Orientation=Orientation.Landscape HorizontalAlignment=Alignment.Center>
-                            <TextBlock Color=@GetHourColor() Typo=Typo.H2 Clickable=true @onclick=@OnHourClicked>
+                            <TextBlock VerticalAlignment=Alignment.Center Color=@GetHourColor() Typo=Typo.H5 Clickable=true @onclick=@OnHourClicked>
                                 @Hour.ToString("D2")
                             </TextBlock>
-                            <TextBlock Color=@Color.ContrastingColor(Color!) Typo=Typo.H2>:</TextBlock>
-                            <TextBlock Color=@GetMinuteColor() Typo=Typo.H2 Clickable=true @onclick=@OnMinuteClicked>
+                            <TextBlock VerticalAlignment=Alignment.Center  Color=@Color.ContrastingColor(Color!) Typo=Typo.H5>:</TextBlock>
+                            <TextBlock VerticalAlignment=Alignment.Center  Color=@GetMinuteColor() Typo=Typo.H5 Clickable=true @onclick=@OnMinuteClicked>
                                 @Minute.ToString("D2")
                             </TextBlock>
                             @if (!Hours24 && Orientation == Orientation.Portrait)
                             {
                                 <StackPanel Margin="0,0,0,20" Orientation=@Orientation VerticalAlignment=Alignment.Center>
-                                    <TextBlock Color=@GetAMColor() Typo=Typo.H6 Margin="0,0,10,0" Clickable=true @onclick=@OnAMClicked>AM</TextBlock>
-                                    <TextBlock Color=@GetPMColor() Typo=Typo.H6 Clickable=true @onclick=@OnPMClicked>PM</TextBlock>
+                                    <TextBlock Color=@GetAMColor() Typo=Typo.Body2 Margin="0,0,10,0" Clickable=true @onclick=@OnAMClicked>AM</TextBlock>
+                                    <TextBlock Color=@GetPMColor() Typo=Typo.Body2 Clickable=true @onclick=@OnPMClicked>PM</TextBlock>
                                 </StackPanel>
                             }
                         </StackPanel>

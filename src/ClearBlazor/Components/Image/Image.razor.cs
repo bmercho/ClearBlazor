@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using System.Diagnostics;
 
 namespace ClearBlazor
 {
@@ -33,9 +34,39 @@ namespace ClearBlazor
 
         private string ImageStyle { get; set; } = string.Empty;
 
+        private string? _cachedSource = null;
+        private string? _cachedAlternative = null;
+        private ImageStretch? _cachedStretch = null;
+        private Color? _cachedBackgroundColor = null;
+
+        private bool DoRender = false;
+
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
+            if (_cachedSource != Source ||
+                _cachedAlternative != Alternative ||
+                _cachedStretch != Stretch ||
+                _cachedBackgroundColor != BackgroundColor)
+            {
+                _cachedSource = Source;
+                _cachedAlternative = Alternative;
+                _cachedStretch = Stretch;
+                _cachedBackgroundColor = BackgroundColor;
+                DoRender = true;
+            }
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+            DoRender = false;
+            Debug.WriteLine($"Image rendered");
+        }
+
+        protected override bool ShouldRender()
+        {
+            return DoRender;
         }
 
         protected override string UpdateStyle(string css)
