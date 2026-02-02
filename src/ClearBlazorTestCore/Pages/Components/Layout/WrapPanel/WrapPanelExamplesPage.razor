@@ -1,17 +1,20 @@
 ﻿@page "/WrapPanel"
 @using ClearBlazorTest
+@inherits ClearComponentBase
 
-<DocsExamplesPage DocsInfo=@(new WrapPanelDocsInfo())>
-    <CodeSnippet Code="WrapPanelRowExample">
-        <WrapPanelRowExample />
-    </CodeSnippet>
-    <CodeSnippet Code="WrapPanelColumnExample">
-        <WrapPanelColumnExample />
-    </CodeSnippet>
-    <CodeSnippet Code="WrapPanelRowReverseExample">
-        <WrapPanelRowReverseExample />
-    </CodeSnippet>
-    <CodeSnippet Code="WrapPanelColumnReverseExample">
-        <WrapPanelColumnReverseExample />
-    </CodeSnippet>
-</DocsExamplesPage>
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new WrapPanelDocsInfo())>
+        <CodeSnippet Code="WrapPanelRowExample">
+            <WrapPanelRowExample />
+        </CodeSnippet>
+        <CodeSnippet Code="WrapPanelColumnExample">
+            <WrapPanelColumnExample />
+        </CodeSnippet>
+        <CodeSnippet Code="WrapPanelRowReverseExample">
+            <WrapPanelRowReverseExample />
+        </CodeSnippet>
+        <CodeSnippet Code="WrapPanelColumnReverseExample">
+            <WrapPanelColumnReverseExample />
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

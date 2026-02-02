@@ -1,5 +1,10 @@
 ﻿@namespace ClearBlazorTest
-<ColorPickerInput @bind-Value=Color @bind-Value:after=OnChange ShowHex=true />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <ColorPickerInput @bind-Value=Color @bind-Value:after=OnChange ShowHex=true />
+</CascadingValue>
+
 
 @code {
     public Color? Color { get; set; } = Color.Secondary;

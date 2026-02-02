@@ -1,9 +1,13 @@
 ﻿@namespace ClearBlazorTest
-<DatePickerInput @bind-Value=Date @bind-Value:after=OnChange Size=Size.Small />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DatePickerInput @bind-Value=Date @bind-Value:after=OnChange Size=Size.Small />
+</CascadingValue>
 
 
 @code {
-    public DateOnly? Date { get; set; } = new DateOnly(2024,11,24);
+    public DateOnly? Date { get; set; } = new DateOnly(2024, 11, 24);
 
     private void OnChange()
     {

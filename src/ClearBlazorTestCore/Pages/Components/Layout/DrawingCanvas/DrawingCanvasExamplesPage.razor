@@ -1,14 +1,18 @@
 ﻿@page "/DrawingCanvas"
-@using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new DrawingCanvasDocsInfo())>
-    <CodeSnippet Title="Html Canvas (click on canvas)" Code=@(typeof(CanvasSimpleExample).Name)>
-        <WrapPanel ColumnSpacing="20" RowSpacing="20">
-            <CanvasSimpleExample />
-        </WrapPanel>
-    </CodeSnippet>
-@*     <CodeSnippet Title="SkiaSharp (click on canvas)" Code=@(typeof(SkiaDrawingCanvasExample).Name)>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    @using ClearBlazorTest
+    <DocsExamplesPage DocsInfo=@(new DrawingCanvasDocsInfo())>
+        <CodeSnippet Title="Html Canvas (click on canvas)" Code=@(typeof(CanvasSimpleExample).Name)>
+            <WrapPanel ColumnSpacing="20" RowSpacing="20">
+                <CanvasSimpleExample />
+            </WrapPanel>
+        </CodeSnippet>
+        @*     <CodeSnippet Title="SkiaSharp (click on canvas)" Code=@(typeof(SkiaDrawingCanvasExample).Name)>
         <WrapPanel ColumnSpacing="20" RowSpacing="20">
             <SkiaDrawingCanvasExample />
         </WrapPanel>
     </CodeSnippet>
  *@</DocsExamplesPage>
+</CascadingValue>

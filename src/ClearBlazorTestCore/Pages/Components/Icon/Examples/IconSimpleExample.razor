@@ -1,8 +1,14 @@
 ﻿@namespace ClearBlazorTest
-<Icon IconName="@Icons.Material.Filled.AddAlert" Rotation="90" />
-<Icon IconName="@Icons.Material.Filled.AddBox" />
-<Icon IconName="@Icons.Material.Filled.Favorite" />
-<Icon IconName="@Icons.Material.Filled.Girl" />
-<Icon IconName="@Icons.Material.Filled.Airplay" />
-<Icon IconName="@Icons.Material.Filled.BatteryFull" />
-<Icon IconName="@Icons.Material.Filled.Cloud" />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Icon IconName="@Icons.Material.Filled.AddAlert" Rotation="90" />
+    <Icon IconName="@Icons.Material.Filled.AddBox" />
+    <Icon IconName="@Icons.Material.Filled.Favorite" />
+    <Icon IconName="@Icons.Material.Filled.Girl" />
+    <Icon IconName="@Icons.Material.Filled.Airplay" />
+    <Icon IconName="@Icons.Material.Filled.BatteryFull" />
+    <Icon IconName="@Icons.Material.Filled.Cloud" />
+    <Icon IconName="@Icons.Material.Filled.Face" />
+</CascadingValue>
+

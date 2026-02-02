@@ -1,5 +1,9 @@
 ﻿@namespace ClearBlazorTest
-<Slider Label="Readonly" IsReadOnly=true @bind-Value=Value />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Slider Label="Readonly" IsReadOnly=true @bind-Value=Value />
+</CascadingValue>
 @code {
     public double Value { get; set; } = 50;
 }

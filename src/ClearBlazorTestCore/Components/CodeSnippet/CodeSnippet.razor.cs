@@ -97,11 +97,13 @@ namespace ClearBlazorTest
         void ShowTheCode()
         {
             ShowCode = true;
+            DoRender = true;
             StateHasChanged();
         }
         void HideTheCode()
         {
             ShowCode = false;
+            DoRender = true;
             StateHasChanged();
         }
 

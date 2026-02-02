@@ -1,11 +1,14 @@
 ﻿@page "/DockPanel"
 @using ClearBlazorTest
+@inherits ClearComponentBase
 
-<DocsExamplesPage DocsInfo=@(new DockPanelDocsInfo())>
-    <CodeSnippet Code="DockPanelSimpleExample">
-        <Grid Height="700">
-            <DockPanelSimpleExample />
-        </Grid>
-    </CodeSnippet>
-</DocsExamplesPage>
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new DockPanelDocsInfo())>
+        <CodeSnippet Code="DockPanelSimpleExample">
+            <Grid Height="700">
+                <DockPanelSimpleExample />
+            </Grid>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>
 

@@ -1,16 +1,20 @@
 ﻿@namespace ClearBlazorTest
-<Select Position=PopupPosition.TopLeft AllowVerticalFlip="true" @bind-Value=EnumValue>
-    <SelectItem Value=TestEnum.Enum1 Text="Item1"/>
-    <SelectItem Value=TestEnum.Enum2 Text="Item2"/>
-    <SelectItem Value=TestEnum.Enum3 Text="Item3"/>
-    <SelectItem Value=TestEnum.Enum4 Text="Item4"/>
-</Select>
-<Select Position=PopupPosition.CentreRight AllowHorizontalFlip="true" @bind-Value=EnumValue>
-    <SelectItem Value=TestEnum.Enum1 Text="Item1" />
-    <SelectItem Value=TestEnum.Enum2 Text="Item2" />
-    <SelectItem Value=TestEnum.Enum3 Text="Item3" />
-    <SelectItem Value=TestEnum.Enum4 Text="Item4" />
-</Select>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Select Position=PopupPosition.TopLeft AllowVerticalFlip="true" @bind-Value=EnumValue>
+        <SelectItem Value=TestEnum.Enum1 Text="Item1" />
+        <SelectItem Value=TestEnum.Enum2 Text="Item2" />
+        <SelectItem Value=TestEnum.Enum3 Text="Item3" />
+        <SelectItem Value=TestEnum.Enum4 Text="Item4" />
+    </Select>
+    <Select Position=PopupPosition.CentreRight AllowHorizontalFlip="true" @bind-Value=EnumValue>
+        <SelectItem Value=TestEnum.Enum1 Text="Item1" />
+        <SelectItem Value=TestEnum.Enum2 Text="Item2" />
+        <SelectItem Value=TestEnum.Enum3 Text="Item3" />
+        <SelectItem Value=TestEnum.Enum4 Text="Item4" />
+    </Select>
+</CascadingValue>
 @code {
     public enum TestEnum
     {

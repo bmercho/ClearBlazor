@@ -2,8 +2,12 @@
 
 @using ClearBlazorTest
 
-<DocsExamplesPage DocsInfo=@(new VideoDocsInfo())>
-    <CodeSnippet Code="VideoSimpleExample">
-        <VideoSimpleExample />
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new VideoDocsInfo())>
+        <CodeSnippet Code="VideoSimpleExample">
+            <VideoSimpleExample />
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

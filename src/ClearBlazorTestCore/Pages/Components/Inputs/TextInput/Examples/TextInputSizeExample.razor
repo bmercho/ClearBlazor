@@ -1,9 +1,13 @@
 ﻿@namespace ClearBlazorTest
-<TextInput Placeholder="VerySmall" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.VerySmall" />
-<TextInput Placeholder="Small" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.Small" />
-<TextInput Placeholder="Normal" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.Normal" />
-<TextInput Placeholder="Large" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.Large" />
-<TextInput Placeholder="Very Large" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.VeryLarge" />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <TextInput Placeholder="VerySmall" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.VerySmall" />
+    <TextInput Placeholder="Small" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.Small" />
+    <TextInput Placeholder="Normal" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.Normal" />
+    <TextInput Placeholder="Large" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.Large" />
+    <TextInput Placeholder="Very Large" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size="Size.VeryLarge" />
+</CascadingValue>
 
 @code {
     public string TextValue { get; set; } = string.Empty;

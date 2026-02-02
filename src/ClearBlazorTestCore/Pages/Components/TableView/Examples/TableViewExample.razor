@@ -1,126 +1,158 @@
 ﻿@namespace ClearBlazorTest
 @using Data;
 @inject NavigationManager NavManager
-<StackPanel Orientation=Orientation.Portrait Spacing=30>
-    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
-    <TextBlock HorizontalAlignment=Alignment.Start>@GetTitle()></TextBlock>
-    <Grid Columns="800,auto" Rows="700,auto,auto,auto,auto" RowSpacing=20>
-        @if (_virtualizeModeAvailable)
-        {
-            <TableView @ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Padding=10 Margin=10
-                       RowSpacing=@_rowSpacing
-                       ColumnSpacing=@_columnSpacing
-                       @bind-SelectedItem=_selectedItem
-                       @bind-SelectedItems=_selectedItems
-                       SelectionMode=@_selectionMode
-                       AllowSelectionToggle=@_allowSelectionToggle
-                       HoverHighlight=@_hoverHighlight
-                       HorizontalScrollbar=@_horizontalScrollbar
-                       OverscrollBehaviour=OverscrollBehaviour.Auto
-                       HorizontalGridLines=@_horizontalGridLines
-                       VerticalGridLines=@_verticalGridLines
-                       VirtualizeMode=@_virtualizeMode
-                       InitialIndex=@((0, Alignment.Start))
-                       ShowHeader=@_showHeader
-                       StickyHeader=@_stickyHeader
-                       AllowRowReordering=true
-                       PageSize=@GetPageSize()
-                       @bind-Items=@_localListData>
-                <TableColumn Label="Index" TItem=TestListRow Field=@(x => x.ItemIndex) ColumnDefinition="70"/>
-                <TableColumn Label="First Name" TItem=TestListRow Field=@(x => x.FirstName) ColumnDefinition="120" />
-                <TableColumn Label="Last Name" TItem=TestListRow Field=@(x => x.LastName) ColumnDefinition="120" />
-                <TableColumn Label="Product" TItem=TestListRow Field=@(x => x.Product) ColumnDefinition="120" />
-                <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x => x.UnitPrice) ColumnDefinition="90">
-                    <DataTemplate Context=item>
-                        <TextBlock VerticalAlignment=Alignment.Start
-                                   TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
-                    </DataTemplate>
-                </TableColumn>
-                <TableColumn Label="Notes" TItem=TestListRow Field=@(x => x.Notes) ColumnDefinition="*">
-                    <DataTemplate Context=item>
-                        <TextBlock TextWrapping=@GetTextWrap()
-                                   TextTrimming=@GetTextTrimming()>@(item.Notes)</TextBlock>
-                    </DataTemplate>
-                </TableColumn>
-            </TableView>
-            @if (_virtualizeMode == VirtualizeMode.Pagination)
-            {
-                <Pagination HorizontalAlignment=Alignment.Center Row=1
-                            ShowFirstAndLastButtons=true
-                            SelectedPage=@_selectedPage
-                            NumPages=@_numPages
-                            NumPagesShown=4
-                            SelectedPageChanged=@PageChanged />
-                <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @_selectedPage of @_numPages</TextBlock>
-            }
-        }
-        else
-        {
-            <TextBlock HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center Margin=10>
-                @($"Virtualize mode of {_virtualizeMode} is not available for TableView.")
-            </TextBlock>
-        }
-        @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
-        {
-            <StackPanel Column=1 Margin=5 Spacing=5>
-                <RadioGroup Label="Virtualization mode" @bind-Value=_virtualizeMode
-                            @bind-Value:after=@Refresh>
-                    @foreach (VirtualizeMode mode in Enum.GetValues(typeof(VirtualizeMode)))
-                    {
-                        <Radio Label=@mode.ToString() Value="@mode" />
-                    }
-                </RadioGroup>
-                <RadioGroup Label="Selection mode" @bind-Value=_selectionMode
-                            @bind-Value:after=@SelectionModeChanged>
-                    @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
-                    {
-                        <Radio Label=@mode.ToString() Value="@mode" />
-                    }
-                </RadioGroup>
-                <CheckBox @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
-                <CheckBox @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-                <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=Refresh Label="Horizontal scrollbar" />
-                <CheckBox @bind-Checked=_showHeader @bind-Checked:after=Refresh Label="Show header" />
-                <CheckBox @bind-Checked=_stickyHeader @bind-Checked:after=Refresh Label="Sticky header" />
-                <NumericInput Label="Row spacing" @bind-Value=_rowSpacing @bind-Value:after=Refresh Immediate=false />
-                <NumericInput Label="Column spacing" @bind-Value=_columnSpacing @bind-Value:after=Refresh Immediate=false />
+@inherits ClearComponentBase
 
-                <RadioGroup Label="Horizontal grid lines" @bind-Value=_horizontalGridLines
-                            @bind-Value:after=@Refresh>
-                    @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
-                    {
-                        <Radio Label=@gridLines.ToString() Value="@gridLines" />
-                    }
-                </RadioGroup>
-                <RadioGroup Label="Vertical grid lines" @bind-Value=_verticalGridLines
-                            @bind-Value:after=@Refresh>
-                    @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
-                    {
-                        <Radio Label=@gridLines.ToString() Value="@gridLines" />
-                    }
-                </RadioGroup>
-
-                <TextBlock>Selection=@_selectedItem?.FirstName</TextBlock>
-                <TextBlock>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
-                <Button Width=150 HorizontalAlignment=Alignment.Start @onclick=@ClearSelections>Clear selections</Button>
-            </StackPanel>
-        }
-        <WrapPanel Row=3 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-            @if (_virtualizeMode == VirtualizeMode.InfiniteScroll)
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation=Orientation.Portrait Spacing=30>
+        <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>Table View</TextBlock>
+        <TextBlock HorizontalAlignment=Alignment.Start>@GetTitle()></TextBlock>
+        <Grid Columns="800,auto" Rows="700,auto,auto,auto,auto" RowSpacing=20>
+            @if (_virtualizeModeAvailable)
             {
-                <Button @onclick=@OnGotoStart>Goto start</Button>
-                <StackPanel Orientation=Orientation.Landscape>
-                    <Button @onclick=@CheckAtStart>CheckAtStart</Button>
-                    <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
-                </StackPanel>
-                <Button @onclick=@AddToStart>Add to start</Button>
-            }
-            else if (_virtualizeMode != VirtualizeMode.InfiniteScrollReverse)
-            {
+                <TableView @ref=_table TItem=TestListRow CornerRadius=4 BorderThickness=1 Padding=10 Margin=10
+                           RowSpacing=@_rowSpacing
+                           ColumnSpacing=@_columnSpacing
+                           @bind-SelectedItem=_selectedItem
+                           @bind-SelectedItems=_selectedItems
+                           SelectionMode=@_selectionMode
+                           AllowSelectionToggle=@_allowSelectionToggle
+                           HoverHighlight=@_hoverHighlight
+                           HorizontalScrollbar=@_horizontalScrollbar
+                           OverscrollBehaviour=OverscrollBehaviour.Auto
+                           HorizontalGridLines=@_horizontalGridLines
+                           VerticalGridLines=@_verticalGridLines
+                           VirtualizeMode=@_virtualizeMode
+                           InitialIndex=@((0, Alignment.Start))
+                           ShowHeader=@_showHeader
+                           StickyHeader=@_stickyHeader
+                           AllowRowReordering=true
+                           PageSize=@GetPageSize()
+                           @bind-Items=@_localListData>
+                    <TableColumn Label="Index" TItem=TestListRow Field=@(x => x.ItemIndex) ColumnDefinition="70" />
+                    <TableColumn Label="First Name" TItem=TestListRow Field=@(x => x.FirstName) ColumnDefinition="120" />
+                    <TableColumn Label="Last Name" TItem=TestListRow Field=@(x => x.LastName) ColumnDefinition="120" />
+                    <TableColumn Label="Product" TItem=TestListRow Field=@(x => x.Product) ColumnDefinition="120" />
+                    <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestListRow Field=@(x => x.UnitPrice) ColumnDefinition="90">
+                        <DataTemplate Context=item>
+                            <TextBlock VerticalAlignment=Alignment.Start
+                                       TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+                        </DataTemplate>
+                    </TableColumn>
+                    <TableColumn Label="Notes" TItem=TestListRow Field=@(x => x.Notes) ColumnDefinition="*">
+                        <DataTemplate Context=item>
+                            <TextBlock TextWrapping=@GetTextWrap()
+                                       TextTrimming=@GetTextTrimming()>@(item.Notes)</TextBlock>
+                        </DataTemplate>
+                    </TableColumn>
+                </TableView>
                 @if (_virtualizeMode == VirtualizeMode.Pagination)
                 {
-                    <Button @onclick=@(e => GotoIndex(50, Alignment.Center))>Go to 50 (center)</Button>
-                    <Button @onclick=@AddToEnd>Add to end</Button>
+                    <Pagination HorizontalAlignment=Alignment.Center Row=1
+                                ShowFirstAndLastButtons=true
+                                SelectedPage=@_selectedPage
+                                NumPages=@_numPages
+                                NumPagesShown=4
+                                SelectedPageChanged=@PageChanged />
+                    <TextBlock HorizontalAlignment=Alignment.Center Row=2 Margin=10>Page @_selectedPage of @_numPages</TextBlock>
+                }
+            }
+            else
+            {
+                <TextBlock HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center Margin=10>
+                    @($"Virtualize mode of {_virtualizeMode} is not available for TableView.")
+                </TextBlock>
+            }
+            @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
+            {
+                <StackPanel Column=1 Margin=5 Spacing=5>
+                    <RadioGroup Label="Virtualization mode" @bind-Value=_virtualizeMode
+                                @bind-Value:after=@Refresh>
+                        @foreach (VirtualizeMode mode in Enum.GetValues(typeof(VirtualizeMode)))
+                        {
+                            <Radio Label=@mode.ToString() Value="@mode" />
+                        }
+                    </RadioGroup>
+                    <RadioGroup Label="Selection mode" @bind-Value=_selectionMode
+                                @bind-Value:after=@SelectionModeChanged>
+                        @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+                        {
+                            <Radio Label=@mode.ToString() Value="@mode" />
+                        }
+                    </RadioGroup>
+                    <CheckBox @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+                    <CheckBox @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+                    <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=Refresh Label="Horizontal scrollbar" />
+                    <CheckBox @bind-Checked=_showHeader @bind-Checked:after=Refresh Label="Show header" />
+                    <CheckBox @bind-Checked=_stickyHeader @bind-Checked:after=Refresh Label="Sticky header" />
+                    <NumericInput Label="Row spacing" @bind-Value=_rowSpacing @bind-Value:after=Refresh Immediate=false />
+                    <NumericInput Label="Column spacing" @bind-Value=_columnSpacing @bind-Value:after=Refresh Immediate=false />
+
+                    <RadioGroup Label="Horizontal grid lines" @bind-Value=_horizontalGridLines
+                                @bind-Value:after=@Refresh>
+                        @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
+                        {
+                            <Radio Label=@gridLines.ToString() Value="@gridLines" />
+                        }
+                    </RadioGroup>
+                    <RadioGroup Label="Vertical grid lines" @bind-Value=_verticalGridLines
+                                @bind-Value:after=@Refresh>
+                        @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
+                        {
+                            <Radio Label=@gridLines.ToString() Value="@gridLines" />
+                        }
+                    </RadioGroup>
+
+                    <TextBlock>Selection=@_selectedItem?.FirstName</TextBlock>
+                    <TextBlock>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
+                    <Button Width=150 HorizontalAlignment=Alignment.Start @onclick=@ClearSelections>Clear selections</Button>
+                </StackPanel>
+            }
+            <WrapPanel Row=3 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+                @if (_virtualizeMode == VirtualizeMode.InfiniteScroll)
+                {
+                    <Button @onclick=@OnGotoStart>Goto start</Button>
+                    <StackPanel Orientation=Orientation.Landscape>
+                        <Button @onclick=@CheckAtStart>CheckAtStart</Button>
+                        <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
+                    </StackPanel>
+                    <Button @onclick=@AddToStart>Add to start</Button>
+                }
+                else if (_virtualizeMode != VirtualizeMode.InfiniteScrollReverse)
+                {
+                    @if (_virtualizeMode == VirtualizeMode.Pagination)
+                    {
+                        <Button @onclick=@(e => GotoIndex(50, Alignment.Center))>Go to 50 (center)</Button>
+                        <Button @onclick=@AddToEnd>Add to end</Button>
+                        <Button @onclick=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
+                        <Button @onclick=@ChangeItem>Change first item</Button>
+                        <StackPanel Orientation=Orientation.Landscape>
+                            <Button @onclick=@CheckAtEnd>CheckAtEnd</Button>
+                            <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atEnd</TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation=Orientation.Landscape>
+                            <Button @onclick=@CheckAtStart>CheckAtStart</Button>
+                            <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
+                        </StackPanel>
+                    }
+                    else
+                    {
+                        <Button @onclick=@(e => GotoIndex(20, Alignment.Start))> Go to 20(start)</Button>
+                        <Button @onclick=@(e => GotoIndex(50, Alignment.Center))>Go to 50 (center)</Button>
+                        <Button @onclick=@(e => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
+                        <Button @onclick=@(e => GotoIndex(5, Alignment.End))>Goto 70 (end)</Button>
+                        <Button @onclick=@(e => GotoIndex(10, Alignment.End))>Goto 70 (end)</Button>
+                        <Button @onclick=@(e => GotoIndex(15, Alignment.End))>Goto 70 (end)</Button>
+                        <Button @onclick=@OnGotoEnd>Go to end</Button>
+                        <Button @onclick=@OnGotoStart>Go to start</Button>
+                        <Button @onclick=@AddToEnd>Add to end</Button>
+                    }
+                }
+            </WrapPanel>
+            @if (_virtualizeMode == VirtualizeMode.None ||
+                        _virtualizeMode == VirtualizeMode.Virtualize)
+            {
+                <WrapPanel Row=4 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
                     <Button @onclick=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
                     <Button @onclick=@ChangeItem>Change first item</Button>
                     <StackPanel Orientation=Orientation.Landscape>
@@ -131,39 +163,11 @@
                         <Button @onclick=@CheckAtStart>CheckAtStart</Button>
                         <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
                     </StackPanel>
-                }
-                else
-                {
-                    <Button @onclick=@(e => GotoIndex(20, Alignment.Start))> Go to 20(start)</Button>
-                    <Button @onclick=@(e => GotoIndex(50, Alignment.Center))>Go to 50 (center)</Button>
-                    <Button @onclick=@(e => GotoIndex(70, Alignment.End))>Goto 70 (end)</Button>
-                    <Button @onclick=@(e => GotoIndex(5, Alignment.End))>Goto 70 (end)</Button>
-                    <Button @onclick=@(e => GotoIndex(10, Alignment.End))>Goto 70 (end)</Button>
-                    <Button @onclick=@(e => GotoIndex(15, Alignment.End))>Goto 70 (end)</Button>
-                    <Button @onclick=@OnGotoEnd>Go to end</Button>
-                    <Button @onclick=@OnGotoStart>Go to start</Button>
-                    <Button @onclick=@AddToEnd>Add to end</Button>
-                }
+                </WrapPanel>
             }
-        </WrapPanel>
-        @if (_virtualizeMode == VirtualizeMode.None ||
-                _virtualizeMode == VirtualizeMode.Virtualize)
-        {
-            <WrapPanel Row=4 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-                <Button @onclick=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
-                <Button @onclick=@ChangeItem>Change first item</Button>
-                <StackPanel Orientation=Orientation.Landscape>
-                    <Button @onclick=@CheckAtEnd>CheckAtEnd</Button>
-                    <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atEnd</TextBlock>
-                </StackPanel>
-                <StackPanel Orientation=Orientation.Landscape>
-                    <Button @onclick=@CheckAtStart>CheckAtStart</Button>
-                    <TextBlock Margin="0,5,0,5" VerticalAlignment=Alignment.Center>@_atStart</TextBlock>
-                </StackPanel>
-            </WrapPanel>
-        }
-    </Grid>
-</StackPanel>
+        </Grid>
+    </StackPanel>
+</CascadingValue>
 @code {
     private TableView<TestListRow> _table = null!;
     private TestListRow? _selectedItem = null;
@@ -281,7 +285,7 @@
         else
             _localListData = ClientData.LocalTestListRows5000;
 
-        _localListData = []; 
+        _localListData = [];
         if (_virtualizeMode == VirtualizeMode.InfiniteScrollReverse)
             _virtualizeModeAvailable = false;
         else

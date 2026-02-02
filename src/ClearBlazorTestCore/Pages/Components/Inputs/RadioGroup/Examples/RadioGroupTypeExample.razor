@@ -1,29 +1,33 @@
 ﻿@namespace ClearBlazorTest
-<RadioGroup Label="String" @bind-Value=Value>
-    <Radio Label="Item1" Value=@("String1")/>
-    <Radio Label="Item2" Value=@("String2") />
-    <Radio Label="Item3" Value=@("String3") />
-    <Radio Label="Item4" Value=@("String4") />
-</RadioGroup>
+@inherits ClearComponentBase
 
-<RadioGroup Label="Integer" @bind-Value=IntValue>
-    <Radio Label="Int 1" Value=1/>
-    <Radio Label="Int 2" Value=2/>
-    <Radio Label="Int 3" Value=3/>
-    <Radio Label="Int 4" Value=4/>
-</RadioGroup>
+<CascadingValue Value="this" IsFixed="false">
+    <RadioGroup Label="String" @bind-Value=Value>
+        <Radio Label="Item1" Value=@("String1") />
+        <Radio Label="Item2" Value=@("String2") />
+        <Radio Label="Item3" Value=@("String3") />
+        <Radio Label="Item4" Value=@("String4") />
+    </RadioGroup>
 
-<RadioGroup Label="Boolean" @bind-Value=BoolValue>
-    <Radio Label="False" Value=false />
-    <Radio Label="True" Value=true />
-</RadioGroup>
+    <RadioGroup Label="Integer" @bind-Value=IntValue>
+        <Radio Label="Int 1" Value=1 />
+        <Radio Label="Int 2" Value=2 />
+        <Radio Label="Int 3" Value=3 />
+        <Radio Label="Int 4" Value=4 />
+    </RadioGroup>
 
-<RadioGroup Label="Enumeration" @bind-Value=EnumValue>
-    @foreach (TestEnum item in Enum.GetValues(typeof(TestEnum)))
-    {
-        <Radio Label=@item.ToString() Value="@item"/>
-    }
-</RadioGroup>
+    <RadioGroup Label="Boolean" @bind-Value=BoolValue>
+        <Radio Label="False" Value=false />
+        <Radio Label="True" Value=true />
+    </RadioGroup>
+
+    <RadioGroup Label="Enumeration" @bind-Value=EnumValue>
+        @foreach (TestEnum item in Enum.GetValues(typeof(TestEnum)))
+        {
+            <Radio Label=@item.ToString() Value="@item" />
+        }
+    </RadioGroup>
+</CascadingValue>
 
 @code {
     public string Value { get; set; } = "String3";

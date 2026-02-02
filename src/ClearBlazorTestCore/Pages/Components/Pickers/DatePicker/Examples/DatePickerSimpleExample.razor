@@ -1,17 +1,25 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using System.Globalization
-
 @namespace ClearBlazorTest
-<StackPanel Spacing=20>
-    <StackPanel Orientation=Orientation.Landscape Spacing=20>
-        <DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date1 FirstYear=1800 LastYear=3000 />
-        <DatePicker Orientation=Orientation.Landscape BorderThickness=1 CornerRadius=4
-                    @bind-Date=Date1 FirstYear=1800 LastYear=3000 />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Spacing=20>
+        <StackPanel Orientation=Orientation.Landscape Spacing=20>
+            <DatePicker BorderThickness=1 CornerRadius=4 @bind-Date=Date1 FirstYear=1800 LastYear=3000 @bind-Date:after=DateChanged />
+            <DatePicker Orientation=Orientation.Landscape BorderThickness=1 CornerRadius=4
+                        @bind-Date=Date1 FirstYear=1800 LastYear=3000 @bind-Date:after=DateChanged />
+        </StackPanel>
+        <TextBlock>@Date1</TextBlock>
     </StackPanel>
-    <TextBlock>@Date1</TextBlock>
-</StackPanel>
+</CascadingValue>
 
 @code {
     DateOnly? Date1 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(5));
     DateOnly? Date2 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-5));
+
+    private async Task DateChanged()
+    {
+        await Refresh();
+    }
 }

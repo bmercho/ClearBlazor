@@ -1,29 +1,33 @@
 ﻿@namespace ClearBlazorTest
-<Select Label="String" @bind-Value=Value>
-    <SelectItem Value=@("String1") />
-    <SelectItem Value=@("String2") />
-    <SelectItem Text="Item3" Value=@("String3") />
-    <SelectItem Value=@("String4") />
-</Select>
+@inherits ClearComponentBase
 
-<Select Label="Double" @bind-Value=DoubleValue>
-    <SelectItem Value=1.4 />
-    <SelectItem Value=3.6 />
-    <SelectItem Value=5.8 />
-    <SelectItem Value=2.3 />
-</Select>
+<CascadingValue Value="this" IsFixed="false">
+    <Select Label="String" @bind-Value=Value>
+        <SelectItem Value=@("String1") />
+        <SelectItem Value=@("String2") />
+        <SelectItem Text="Item3" Value=@("String3") />
+        <SelectItem Value=@("String4") />
+    </Select>
 
-<Select Label="Boolean" @bind-Value=BoolValue>
-    <SelectItem Text="False" Value=false />
-    <SelectItem Text="True" Value=true />
-</Select>
+    <Select Label="Double" @bind-Value=DoubleValue>
+        <SelectItem Value=1.4 />
+        <SelectItem Value=3.6 />
+        <SelectItem Value=5.8 />
+        <SelectItem Value=2.3 />
+    </Select>
 
-<Select Label="Enumeration" @bind-Value=EnumValue>
-    @foreach (TestEnum item in Enum.GetValues(typeof(TestEnum)))
-    {
-        <SelectItem Text=@item.ToString() Value="@item" />
-    }
-</Select>
+    <Select Label="Boolean" @bind-Value=BoolValue>
+        <SelectItem Text="False" Value=false />
+        <SelectItem Text="True" Value=true />
+    </Select>
+
+    <Select Label="Enumeration" @bind-Value=EnumValue>
+        @foreach (TestEnum item in Enum.GetValues(typeof(TestEnum)))
+        {
+            <SelectItem Text=@item.ToString() Value="@item" />
+        }
+    </Select>
+</CascadingValue>
 @code {
     public string Value { get; set; } = "String3";
     public double DoubleValue { get; set; } = 1.4;

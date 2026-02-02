@@ -1,20 +1,22 @@
 ﻿@page "/ScrollViewer"
 @using ClearBlazorTest
 @namespace ClearBlazorTest
+@inherits ClearComponentBase
 
-<DocsExamplesPage DocsInfo=@(new ScrollViewerDocsInfo())>
-    <CodeSnippet Title="Basic example" Code=@(typeof(ScrollViewerSimpleExample).Name)>
-        <WrapPanel ColumnSpacing="20" RowSpacing="20">
-            <ScrollViewerSimpleExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="Custom Scrollbars Example (experimental)" Code=@(typeof(ScrollViewerWithScrollbarsSimpleExample).Name)>
-        <WrapPanel ColumnSpacing="20" RowSpacing="20">
-            <ScrollViewerWithScrollbarsSimpleExample />
-        </WrapPanel>
-    </CodeSnippet>
-
-</DocsExamplesPage>
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new ScrollViewerDocsInfo())>
+        <CodeSnippet Title="Basic example" Code=@(typeof(ScrollViewerSimpleExample).Name)>
+            <WrapPanel ColumnSpacing="20" RowSpacing="20">
+                <ScrollViewerSimpleExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Custom Scrollbars Example (experimental)" Code=@(typeof(ScrollViewerWithScrollbarsSimpleExample).Name)>
+            <WrapPanel ColumnSpacing="20" RowSpacing="20">
+                <ScrollViewerWithScrollbarsSimpleExample />
+            </WrapPanel>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>
 
 
 

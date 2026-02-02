@@ -1,15 +1,19 @@
 ﻿@page "/Form"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new FormDocsInfo())>
-    <StackPanel Padding="20" Spacing="30">
-        <CodeSnippet Title="Basic" Code=@(typeof(FormSimpleExample).Name)>
-            <FormSimpleExample />
-        </CodeSnippet>
-        <CodeSnippet Title="Label column" Code=@(typeof(FormLabelColumnExample).Name)>
-            <FormLabelColumnExample />
-        </CodeSnippet>
-        <CodeSnippet Title="Size" Code=@(typeof(FormSizeExample).Name)>
-            <FormSizeExample />
-        </CodeSnippet>
-    </StackPanel>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new FormDocsInfo())>
+        <StackPanel Padding="20" Spacing="30">
+            <CodeSnippet Title="Basic" Code=@(typeof(FormSimpleExample).Name)>
+                <FormSimpleExample />
+            </CodeSnippet>
+            <CodeSnippet Title="Label column" Code=@(typeof(FormLabelColumnExample).Name)>
+                <FormLabelColumnExample />
+            </CodeSnippet>
+            <CodeSnippet Title="Size" Code=@(typeof(FormSizeExample).Name)>
+                <FormSizeExample />
+            </CodeSnippet>
+        </StackPanel>
+    </DocsExamplesPage>
+</CascadingValue>

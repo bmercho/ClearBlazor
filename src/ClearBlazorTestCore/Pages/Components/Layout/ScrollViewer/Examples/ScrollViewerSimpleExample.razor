@@ -1,116 +1,119 @@
 ﻿@namespace ClearBlazorTest
+@inherits ClearComponentBase
 @using Microsoft.JSInterop
 @implements IObserver<bool>
 
-<StackPanel Orientation=Orientation.Portrait Spacing=20>
-    <StackPanel Orientation=Orientation.Landscape>
-        <Grid BorderThickness=1 Width=500 Height=500>
-            <ScrollViewer @ref=_scrollViewer
-                          VerticalScrollMode=@_verticalScrollMode
-                          HorizontalScrollMode=@_horizontalScrollMode
-                          ScrollbarGutter=@_scrollbarGutter
-                          VerticalOverscrollBehaviour=@_verticalOverscrollBehaviour
-                          HorizontalOverscrollBehaviour=@_horizontalOverscrollBehaviour>
-                @if (_verticalOverflowText)
-                {
-                    if (_horizontalOverflowText)
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation=Orientation.Portrait Spacing=20>
+        <StackPanel Orientation=Orientation.Landscape>
+            <Grid BorderThickness=1 Width=500 Height=500>
+                <ScrollViewer Name="ScrollViewer1" @ref=_scrollViewer
+                              VerticalScrollMode=@_verticalScrollMode
+                              HorizontalScrollMode=@_horizontalScrollMode
+                              ScrollbarGutter=@_scrollbarGutter
+                              VerticalOverscrollBehaviour=@_verticalOverscrollBehaviour
+                              HorizontalOverscrollBehaviour=@_horizontalOverscrollBehaviour>
+                    @if (_verticalOverflowText)
                     {
-                        @for (int i = 1; i <= 200; i++)
+                        if (_horizontalOverflowText)
                         {
-                            int row = i;
-                            <TextBlock  TextWrapping=TextWrap.NoWrap TextTrimming=false>
-                                @($"Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ")
-                            </TextBlock>
+                            @for (int i = 1; i <= 200; i++)
+                            {
+                                int row = i;
+                                <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false>
+                                    @($"Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ")
+                                </TextBlock>
                             }
-                    }
-                    else
-                    {
-                        @for (int i = 1; i <= 200; i++)
-                        {
-                            int row = i;
-                            <TextBlock>@($"Line{row}")</TextBlock>
                         }
-                    }
-                }
-                else
-                {
-                    if (_horizontalOverflowText)
-                    {
-                        @for (int i = 1; i <= 6; i++)
+                        else
                         {
-                            int row = i;
-                            <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false>
-                                @($"Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ")
-                            </TextBlock>
+                            @for (int i = 1; i <= 200; i++)
+                            {
+                                int row = i;
+                                <TextBlock>@($"Line{row}")</TextBlock>
+                            }
                         }
                     }
                     else
                     {
-                        @for (int i = 1; i <= 6; i++)
+                        if (_horizontalOverflowText)
                         {
-                            int row = i;
-                            <TextBlock>@($"Line{row}")</TextBlock>
+                            @for (int i = 1; i <= 6; i++)
+                            {
+                                int row = i;
+                                <TextBlock TextWrapping=TextWrap.NoWrap TextTrimming=false>
+                                    @($"Line{row} Lorem ipsum dolor, sit amet consectetur adipisicing elit.Dolorem ab, magnam quaerat praesentium delectus iure, consequuntur commodi exercitationem asperiores ad deleniti iste rem eius.Saepe consequatur consequuntur ")
+                                </TextBlock>
+                            }
+                        }
+                        else
+                        {
+                            @for (int i = 1; i <= 6; i++)
+                            {
+                                int row = i;
+                                <TextBlock>@($"Line{row}")</TextBlock>
+                            }
                         }
                     }
-                }
-            </ScrollViewer>
-        </Grid>
-        @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
-        {
-            <StackPanel Column=1 Margin=30 Spacing=5>
-                <RadioGroup Label="Vertical Scroll mode" @bind-Value=_verticalScrollMode
-                            @bind-Value:after=@Changed>
-                    @foreach (ScrollMode mode in Enum.GetValues(typeof(ScrollMode)))
-                    {
-                        <Radio Label=@mode.ToString() Value="@mode" />
-                    }
-                </RadioGroup>
-                <RadioGroup Label="Horizontal Scroll mode" @bind-Value=_horizontalScrollMode
-                            @bind-Value:after=@Changed>
-                    @foreach (ScrollMode mode in Enum.GetValues(typeof(ScrollMode)))
-                    {
-                        <Radio Label=@mode.ToString() Value="@mode" />
-                    }
-                </RadioGroup>
-                <RadioGroup Label="Scrollbar gutter" @bind-Value=_scrollbarGutter
-                            @bind-Value:after=@Changed>
-                    @foreach (ScrollbarGutter mode in Enum.GetValues(typeof(ScrollbarGutter)))
-                    {
-                        <Radio Label=@mode.ToString() Value="@mode" />
-                    }
-                </RadioGroup>
-                <RadioGroup Label="Vertical overscroll behaviour"
-                            @bind-Value=_verticalOverscrollBehaviour
-                            @bind-Value:after=@Changed>
-                    @foreach (OverscrollBehaviour mode in Enum.GetValues(typeof(OverscrollBehaviour)))
-                    {
-                        <Radio Label=@mode.ToString() Value="@mode" />
-                    }
-                </RadioGroup>
-                <RadioGroup Label="Horizontal overscroll behaviour"
-                            @bind-Value=_horizontalOverscrollBehaviour
-                            @bind-Value:after=@Changed>
-                    @foreach (OverscrollBehaviour mode in Enum.GetValues(typeof(OverscrollBehaviour)))
-                    {
-                        <Radio Label=@mode.ToString() Value="@mode" />
-                    }
-                </RadioGroup>
-                <CheckBox @bind-Checked=_verticalOverflowText
-                          @bind-Checked:after=@Changed
-                          Label="Vertical overflow text" />
-                <CheckBox @bind-Checked=_horizontalOverflowText
-                          @bind-Checked:after=@Changed
-                          Label="Horizontal overflow text" />
-            </StackPanel>
-        }
+                </ScrollViewer>
+            </Grid>
+            @if (BrowserSizeService.DeviceSize >= DeviceSize.Medium)
+            {
+                <StackPanel Column=1 Margin=30 Spacing=5>
+                    <RadioGroup Label="Vertical Scroll mode" @bind-Value=_verticalScrollMode
+                                @bind-Value:after=@Changed>
+                        @foreach (ScrollMode mode in Enum.GetValues(typeof(ScrollMode)))
+                        {
+                            <Radio Label=@mode.ToString() Value="@mode" />
+                        }
+                    </RadioGroup>
+                    <RadioGroup Label="Horizontal Scroll mode" @bind-Value=_horizontalScrollMode
+                                @bind-Value:after=@Changed>
+                        @foreach (ScrollMode mode in Enum.GetValues(typeof(ScrollMode)))
+                        {
+                            <Radio Label=@mode.ToString() Value="@mode" />
+                        }
+                    </RadioGroup>
+                    <RadioGroup Label="Scrollbar gutter" @bind-Value=_scrollbarGutter
+                                @bind-Value:after=@Changed>
+                        @foreach (ScrollbarGutter mode in Enum.GetValues(typeof(ScrollbarGutter)))
+                        {
+                            <Radio Label=@mode.ToString() Value="@mode" />
+                        }
+                    </RadioGroup>
+                    <RadioGroup Label="Vertical overscroll behaviour"
+                                @bind-Value=_verticalOverscrollBehaviour
+                                @bind-Value:after=@Changed>
+                        @foreach (OverscrollBehaviour mode in Enum.GetValues(typeof(OverscrollBehaviour)))
+                        {
+                            <Radio Label=@mode.ToString() Value="@mode" />
+                        }
+                    </RadioGroup>
+                    <RadioGroup Label="Horizontal overscroll behaviour"
+                                @bind-Value=_horizontalOverscrollBehaviour
+                                @bind-Value:after=@Changed>
+                        @foreach (OverscrollBehaviour mode in Enum.GetValues(typeof(OverscrollBehaviour)))
+                        {
+                            <Radio Label=@mode.ToString() Value="@mode" />
+                        }
+                    </RadioGroup>
+                    <CheckBox @bind-Checked=_verticalOverflowText
+                              @bind-Checked:after=@Changed
+                              Label="Vertical overflow text" />
+                    <CheckBox @bind-Checked=_horizontalOverflowText
+                              @bind-Checked:after=@Changed
+                              Label="Horizontal overflow text" />
+                </StackPanel>
+            }
+        </StackPanel>
+        <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+            <Button @onclick=@(e => GotoTop(100))> Goto top 100</Button>
+            <Button @onclick=@(e => GotoTop(50))> Goto top 50</Button>
+            <Button @onclick=@(e => GotoLeft(100))> Goto left 100</Button>
+            <Button @onclick=@(e => GotoLeft(50))> Goto left 50</Button>
+        </WrapPanel>
     </StackPanel>
-    <WrapPanel Row=1 ColumnSpan=3 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-        <Button @onclick=@(e => GotoTop(100))> Goto top 100</Button>
-        <Button @onclick=@(e => GotoTop(50))> Goto top 50</Button>
-        <Button @onclick=@(e => GotoLeft(100))> Goto left 100</Button>
-        <Button @onclick=@(e => GotoLeft(50))> Goto left 50</Button>
-    </WrapPanel>
-</StackPanel>
+</CascadingValue>
 
 @code {
     private ScrollViewer _scrollViewer = null!;
@@ -122,9 +125,6 @@
     private bool _verticalOverflowText = true;
     private bool _horizontalOverflowText = true;
     private IDisposable ScrollViewUnsubscriber = null!;
-
-    [Inject]
-    IJSRuntime JSRuntime { get; set; } = null!;
 
     protected override void OnInitialized()
     {
@@ -156,6 +156,7 @@
 
     private void Changed()
     {
+        DoRender = true;
         StateHasChanged();
     }
 

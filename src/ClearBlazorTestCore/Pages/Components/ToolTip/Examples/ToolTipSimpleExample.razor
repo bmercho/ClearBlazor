@@ -1,11 +1,15 @@
 ﻿@namespace ClearBlazorTest
-<Button ToolTipPosition=ToolTipPosition.Top ToolTip="Tooltip">Enter</Button>
-<Button Size=Size.VeryLarge ToolTipPosition=ToolTipPosition.Top ToolTip="Tooltip">Enter</Button>
-<Button ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Bottom>Enter</Button>
-<Button Size=Size.VeryLarge ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Bottom>Enter</Button>
-<Button ToolTipPosition=ToolTipPosition.Left ToolTip="Tooltip">Enter</Button>
-<Button Size=Size.VeryLarge HorizontalAlignment="Alignment.Center" ToolTipPosition=ToolTipPosition.Left ToolTip="Tooltip">Enter</Button>
-<Button ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Right>Enter</Button>
-<Button Size=Size.VeryLarge HorizontalAlignment="Alignment.Center" ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Right>Enter</Button>
-<Icon IconName="@Icons.Material.Filled.Favorite" ToolTip="Favorite" />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Button ToolTipPosition=ToolTipPosition.Top ToolTip="Tooltip">Enter</Button>
+    <Button Size=Size.VeryLarge ToolTipPosition=ToolTipPosition.Top ToolTip="Tooltip">Enter</Button>
+    <Button ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Bottom>Enter</Button>
+    <Button Size=Size.VeryLarge ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Bottom>Enter</Button>
+    <Button ToolTipPosition=ToolTipPosition.Left ToolTip="Tooltip">Enter</Button>
+    <Button Size=Size.VeryLarge HorizontalAlignment="Alignment.Center" ToolTipPosition=ToolTipPosition.Left ToolTip="Tooltip">Enter</Button>
+    <Button ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Right>Enter</Button>
+    <Button Size=Size.VeryLarge HorizontalAlignment="Alignment.Center" ToolTip="Tooltip" ToolTipPosition=ToolTipPosition.Right>Enter</Button>
+    <Icon IconName="@Icons.Material.Filled.Favorite" ToolTip="Favorite" />
+</CascadingValue>
 

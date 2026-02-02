@@ -1,9 +1,20 @@
 ﻿@using System.ComponentModel.DataAnnotations
 
 @namespace ClearBlazorTest
-<ColorPicker @bind-Color=Color BorderThickness=1 />
-<div style="width:200px;height:200px;background:@Color.Value"></div>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation=Orientation.Landscape Spacing=20>
+        <ColorPicker @bind-Color=Color BorderThickness=1 @bind-Color:after=@ColorChanged />
+        <Grid Width=200 Height=200 BackgroundColor=@Color/>
+    </StackPanel>
+</CascadingValue>
 
 @code {
     Color Color { get; set; } = Color.Secondary;
+
+    private async Task ColorChanged()
+    {
+        await Refresh();
+    }
 }

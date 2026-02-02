@@ -1,28 +1,32 @@
 ﻿@namespace ClearBlazorTest
-<StackPanel Orientation="Orientation.Landscape">
-    <NumericInput Label="int" Immediate=true @bind-Value="IntValue" />
-    <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@IntValue</TextBlock>
-</StackPanel>
-<StackPanel Orientation="Orientation.Landscape">
-    <NumericInput Label="int?" Immediate=true @bind-Value="NullableIntValue" />
-    <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@NullableIntValue</TextBlock>
-</StackPanel>
-<StackPanel Orientation="Orientation.Landscape">
-    <NumericInput Label="double" Immediate=true @bind-Value="DoubleValue" />
-    <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@DoubleValue</TextBlock>
-</StackPanel>
-<StackPanel Orientation="Orientation.Landscape">
-    <NumericInput Label="double?" Immediate=true @bind-Value="NullableDoubleValue" />
-    <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@NullableDoubleValue</TextBlock>
-</StackPanel>
-<StackPanel Orientation="Orientation.Landscape">
-    <NumericInput Label="decimal" Immediate=true @bind-Value="DecimalValue" />
-    <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@DecimalValue</TextBlock>
-</StackPanel>
-<StackPanel Orientation="Orientation.Landscape">
-    <NumericInput Label="decimal?" Immediate=true @bind-Value="NullableDecimalValue" />
-    <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@NullableDecimalValue</TextBlock>
-</StackPanel>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation="Orientation.Landscape">
+        <NumericInput Label="int" Immediate=true @bind-Value="IntValue" />
+        <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@IntValue</TextBlock>
+    </StackPanel>
+    <StackPanel Orientation="Orientation.Landscape">
+        <NumericInput Label="int?" Immediate=true @bind-Value="NullableIntValue" />
+        <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@NullableIntValue</TextBlock>
+    </StackPanel>
+    <StackPanel Orientation="Orientation.Landscape">
+        <NumericInput Label="double" Immediate=true @bind-Value="DoubleValue" />
+        <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@DoubleValue</TextBlock>
+    </StackPanel>
+    <StackPanel Orientation="Orientation.Landscape">
+        <NumericInput Label="double?" Immediate=true @bind-Value="NullableDoubleValue" />
+        <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@NullableDoubleValue</TextBlock>
+    </StackPanel>
+    <StackPanel Orientation="Orientation.Landscape">
+        <NumericInput Label="decimal" Immediate=true @bind-Value="DecimalValue" />
+        <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@DecimalValue</TextBlock>
+    </StackPanel>
+    <StackPanel Orientation="Orientation.Landscape">
+        <NumericInput Label="decimal?" Immediate=true @bind-Value="NullableDecimalValue" />
+        <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@NullableDecimalValue</TextBlock>
+    </StackPanel>
+</CascadingValue>
 
 @code {
     public int IntValue { get; set; }

@@ -1,16 +1,20 @@
 ﻿@page "/ColorPickerInput"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new ColorPickerInputDocsInfo())>
-    <StackPanel Padding="20" Spacing="30">
-        <CodeSnippet Title="Basic" Code=@(typeof(ColorPickerInputSimpleExample).Name)>
-            <WrapPanel Margin="10" ColumnSpacing="20">
-                <ColorPickerInputSimpleExample/>
-            </WrapPanel>
-        </CodeSnippet>
-        <CodeSnippet Title="Show Hex value" Code=@(typeof(ColorPickerInputHexExample).Name)>
-            <WrapPanel Margin="10" ColumnSpacing="20">
-                <ColorPickerInputHexExample />
-            </WrapPanel>
-        </CodeSnippet>
-    </StackPanel>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new ColorPickerInputDocsInfo())>
+        <StackPanel Padding="20" Spacing="30">
+            <CodeSnippet Title="Basic" Code=@(typeof(ColorPickerInputSimpleExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <ColorPickerInputSimpleExample />
+                </WrapPanel>
+            </CodeSnippet>
+            <CodeSnippet Title="Show Hex value" Code=@(typeof(ColorPickerInputHexExample).Name)>
+                <WrapPanel Margin="10" ColumnSpacing="20">
+                    <ColorPickerInputHexExample />
+                </WrapPanel>
+            </CodeSnippet>
+        </StackPanel>
+    </DocsExamplesPage>
+</CascadingValue>

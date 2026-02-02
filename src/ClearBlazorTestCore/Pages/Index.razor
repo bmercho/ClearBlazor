@@ -1,7 +1,11 @@
 ﻿@page "/"
 @inject NavigationManager NavManager
+@namespace ClearBlazorTest
 
- <Grid Margin="20">
-    <TextBlock HorizontalAlignment="Alignment.Center"  Typo="Typo.H3">Clear Blazor</TextBlock>
-</Grid>
-  
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Grid Margin="20">
+        <TextBlock HorizontalAlignment="Alignment.Center" Typo="Typo.H3">Clear Blazor</TextBlock>
+    </Grid>
+</CascadingValue>

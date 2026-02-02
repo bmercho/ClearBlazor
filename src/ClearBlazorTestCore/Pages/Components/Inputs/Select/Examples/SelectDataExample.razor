@@ -1,5 +1,9 @@
 ﻿@namespace ClearBlazorTest
-<Select Label="Data" @bind-Value=EnumValue SelectData=@Data />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Select Label="Data" @bind-Value=EnumValue SelectData=@Data />
+</CascadingValue>
 @code {
     public enum TestEnum
     {

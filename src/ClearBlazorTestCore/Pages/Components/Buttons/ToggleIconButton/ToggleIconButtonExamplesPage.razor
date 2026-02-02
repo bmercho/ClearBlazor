@@ -1,12 +1,13 @@
 ﻿@page "/ToggleIconButton"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new ToggleIconButtonDocsInfo())>
-    <CodeSnippet Code="ToggleIconButtonsExample" Title="Toggle Icon Button">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20">
-            <ToggleIconButtonsExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Code="ToggleIconButtonsExample1" Title="Toggle Icon Button">
-            <ToggleIconButtonsExample1 />
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new ToggleIconButtonDocsInfo())>
+        <CodeSnippet Code="ToggleIconButtonsExample" Title="Toggle Icon Button">
+            <StackPanel Orientation="Orientation.Landscape" Spacing="20">
+                <ToggleIconButtonsExample />
+            </StackPanel>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

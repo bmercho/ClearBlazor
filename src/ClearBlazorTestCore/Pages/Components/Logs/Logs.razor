@@ -1,13 +1,17 @@
 ﻿@page "/Logs"
 
 @namespace ClearBlazorTest
-<Grid Margin=10 BorderThickness=1 CornerRadius=4>
-     <ListView Items=@Data RowHeight=20>
-        <RowTemplate Context=item>
-            @item.Message
-        </RowTemplate>
-    </ListView>
-</Grid>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Grid Margin=10 BorderThickness=1 CornerRadius=4>
+        <ListView Items=@Data RowHeight=20>
+            <RowTemplate Context=item>
+                @item.Message
+            </RowTemplate>
+        </ListView>
+    </Grid>
+</CascadingValue>
 
 @code {
     List<LogItem> Data = new List<LogItem>();

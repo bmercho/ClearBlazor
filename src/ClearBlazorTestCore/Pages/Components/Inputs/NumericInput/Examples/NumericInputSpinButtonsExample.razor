@@ -1,7 +1,11 @@
 ﻿@namespace ClearBlazorTest
-<NumericInput Label="int - step 5" Immediate=true @bind-Value="IntValue" ShowSpinButtons="true" Step="5" />
-<NumericInput Label="double - step 0.2" Immediate=true @bind-Value="DoubleValue" ShowSpinButtons="true" Step="0.2"/>
-<NumericInput Label="decimal- step 1" Immediate=true @bind-Value="DecimalValue" ShowSpinButtons="true" />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <NumericInput Label="int - step 5" Immediate=true @bind-Value="IntValue" ShowSpinButtons="true" Step="5" />
+    <NumericInput Label="double - step 0.2" Immediate=true @bind-Value="DoubleValue" ShowSpinButtons="true" Step="0.2" />
+    <NumericInput Label="decimal- step 1" Immediate=true @bind-Value="DecimalValue" ShowSpinButtons="true" />
+</CascadingValue>
 
 @code {
     public int IntValue { get; set; }

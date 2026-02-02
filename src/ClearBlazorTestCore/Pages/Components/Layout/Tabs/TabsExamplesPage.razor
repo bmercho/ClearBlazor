@@ -1,13 +1,15 @@
 ﻿@page "/Tabs"
-
 @using ClearBlazorTest
+@inherits ClearComponentBase
 
-<DocsExamplesPage DocsInfo=@(new TabsDocsInfo())>
-    <CodeSnippet Code="TabPanelSimpleExample">
-        <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
-            <TabPanelSimpleExample />
-        </StackPanel>
-    </CodeSnippet>
-</DocsExamplesPage>
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new TabsDocsInfo())>
+        <CodeSnippet Code="TabPanelSimpleExample">
+            <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
+                <TabPanelSimpleExample />
+            </StackPanel>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>
 
 

@@ -1,6 +1,11 @@
 ﻿@namespace ClearBlazorTest
-<TimePickerInput Hours24=true MinuteStep=MinuteStep.Five
-                 TimeFormat="HH:mm" @bind-Value=Time @bind-Value:after=OnChange/>
+
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <TimePickerInput Hours24=true MinuteStep=MinuteStep.Five
+                     TimeFormat="HH:mm" @bind-Value=Time @bind-Value:after=OnChange />
+</CascadingValue>
 
 
 @code {

@@ -1,8 +1,12 @@
 ﻿@page "/ToolbarTray"
 @using ClearBlazorTest
 
-<DocsExamplesPage DocsInfo=@(new ToolbarTrayDocsInfo())>
-    <CodeSnippet Title="Basic usage" Code="ToolbarTrayExample">
-        <ToolbarTrayExample />
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new ToolbarTrayDocsInfo())>
+        <CodeSnippet Title="Basic usage" Code="ToolbarTrayExample">
+            <ToolbarTrayExample />
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

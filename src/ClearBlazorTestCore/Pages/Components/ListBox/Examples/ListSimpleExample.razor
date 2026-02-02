@@ -1,12 +1,16 @@
 ﻿@namespace ClearBlazorTest
-<ListBox HorizontalAlignment=Alignment.Start TListBox=string Width=300 BorderThickness="1" CornerRadius="4">
-    <ListBoxItem Text="Apple"/>
-    <ListBoxItem Text="Apricot" />
-    <ListBoxItem Text="Banana" />
-    <ListBoxItem Text="Pear" />
-    <Divider />
-    <ListBoxItem Text="Pumpkin" />
-    <ListBoxItem Text="Potato" />
-    <ListBoxItem Text="Zucchini" />
-</ListBox>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <ListBox HorizontalAlignment=Alignment.Start TListBox=string Width=300 BorderThickness="1" CornerRadius="4">
+        <ListBoxItem Text="Apple" />
+        <ListBoxItem Text="Apricot" />
+        <ListBoxItem Text="Banana" />
+        <ListBoxItem Text="Pear" />
+        <Divider />
+        <ListBoxItem Text="Pumpkin" />
+        <ListBoxItem Text="Potato" />
+        <ListBoxItem Text="Zucchini" />
+    </ListBox>
+</CascadingValue>
 

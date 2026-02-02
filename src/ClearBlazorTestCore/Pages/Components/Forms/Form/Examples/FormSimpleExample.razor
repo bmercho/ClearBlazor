@@ -1,61 +1,65 @@
 @using System.ComponentModel.DataAnnotations
 
 @namespace ClearBlazorTest
-<StackPanel Orientation=Orientation.Portrait Spacing="10">
-    <Grid Margin="10" Width=400 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
-        <Form @ref="form" ShowLabels=true ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@TestModel>
-            <StackPanel Orientation=Orientation.Portrait Spacing="25" Margin=20>
-                <TextInput InputContainerStyle=InputContainerStyle.Underlined 
-                           @bind-Value=TestModel.TextValue Placeholder="Name"
-                           FieldName="TextValue" 
-                           Immediate="true" />
-                <NumericInput InputContainerStyle=InputContainerStyle.Underlined 
-                              @bind-Value=TestModel.IntValue 
-                              FieldName="IntValue" 
-                              Immediate="true" />
-                <CheckBox @bind-Checked=TestModel.BoolValue 
-                          FieldName="BoolValue" />
-                <Switch @bind-Checked=TestModel.SwitchValue 
-                        FieldName="SwitchValue" />
-                <RadioGroup @bind-Value=TestModel.RadioValue 
-                            FieldName="RadioValue">
-                    <Radio Label="Item1" Value=@("Item1") />
-                    <Radio Label="Item2" Value=@("Item2") />
-                    <Radio Label="Item3" Value=@("Item3") />
-                    <Radio Label="Item4" Value=@("Item4") />
-                </RadioGroup>
-                <Select InputContainerStyle=InputContainerStyle.Underlined 
-                        @bind-Value=TestModel.EnumValue 
-                        FieldName="EnumValue">
-                    <SelectItem Value=TestEnum.Enum1 Text="Item1" Icon=@Icons.Material.Filled.HeartBroken />
-                    <SelectItem Value=TestEnum.Enum2 Text="Item2" Icon=@Icons.Material.Filled.HeartBroken />
-                    <SelectItem Value=TestEnum.Enum3 Text="Item3" Icon=@Icons.Material.Filled.HeartBroken />
-                    <SelectItem Value=TestEnum.Enum4 Text="Item4" Icon=@Icons.Material.Filled.HeartBroken />
-                </Select>
+@inherits ClearComponentBase
 
-                <Select InputContainerStyle=InputContainerStyle.Underlined 
-                        @bind-Value=TestModel.Days
-                        MultiSelect=true FieldName="Days">
-                    @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
-                    {
-                        <SelectItem Text=@item.ToString() Value="@item" />
-                    }
-                </Select>
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation=Orientation.Portrait Spacing="10">
+        <Grid Margin="10" Width=400 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
+            <Form @ref="form" ShowLabels=true ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@TestModel>
+                <StackPanel Orientation=Orientation.Portrait Spacing="25" Margin=20>
+                    <TextInput InputContainerStyle=InputContainerStyle.Underlined
+                               @bind-Value=TestModel.TextValue Placeholder="Name"
+                               FieldName="TextValue"
+                               Immediate="true" />
+                    <NumericInput InputContainerStyle=InputContainerStyle.Underlined
+                                  @bind-Value=TestModel.IntValue
+                                  FieldName="IntValue"
+                                  Immediate="true" />
+                    <CheckBox @bind-Checked=TestModel.BoolValue
+                              FieldName="BoolValue" />
+                    <Switch @bind-Checked=TestModel.SwitchValue
+                            FieldName="SwitchValue" />
+                    <RadioGroup @bind-Value=TestModel.RadioValue
+                                FieldName="RadioValue">
+                        <Radio Label="Item1" Value=@("Item1") />
+                        <Radio Label="Item2" Value=@("Item2") />
+                        <Radio Label="Item3" Value=@("Item3") />
+                        <Radio Label="Item4" Value=@("Item4") />
+                    </RadioGroup>
+                    <Select InputContainerStyle=InputContainerStyle.Underlined
+                            @bind-Value=TestModel.EnumValue
+                            FieldName="EnumValue">
+                        <SelectItem Value=TestEnum.Enum1 Text="Item1" Icon=@Icons.Material.Filled.HeartBroken />
+                        <SelectItem Value=TestEnum.Enum2 Text="Item2" Icon=@Icons.Material.Filled.HeartBroken />
+                        <SelectItem Value=TestEnum.Enum3 Text="Item3" Icon=@Icons.Material.Filled.HeartBroken />
+                        <SelectItem Value=TestEnum.Enum4 Text="Item4" Icon=@Icons.Material.Filled.HeartBroken />
+                    </Select>
 
-                <Slider @bind-Value=TestModel.SliderValue 
-                        FieldName="SliderValue" />
+                    <Select InputContainerStyle=InputContainerStyle.Underlined
+                            @bind-Value=TestModel.Days
+                            MultiSelect=true FieldName="Days">
+                        @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
+                        {
+                            <SelectItem Text=@item.ToString() Value="@item" />
+                        }
+                    </Select>
 
-                <ColorPickerInput @bind-Value=TestModel.ColorValue FieldName="ColorValue" />
-                <DatePickerInput @bind-Value=TestModel.DateValue FieldName="DateValue" />
-                <TimePickerInput @bind-Value=TestModel.TimeValue FieldName="TimeValue" />
+                    <Slider @bind-Value=TestModel.SliderValue
+                            FieldName="SliderValue" />
 
-            </StackPanel>
-        </Form>
-    </Grid>
-    <Button HorizontalAlignment=Alignment.Start @onclick=@(() => form.Validate())>Validate</Button>
-</StackPanel>
+                    <ColorPickerInput @bind-Value=TestModel.ColorValue FieldName="ColorValue" />
+                    <DatePickerInput @bind-Value=TestModel.DateValue FieldName="DateValue" />
+                    <TimePickerInput @bind-Value=TestModel.TimeValue FieldName="TimeValue" />
+
+                </StackPanel>
+            </Form>
+        </Grid>
+        <Button HorizontalAlignment=Alignment.Start @onclick=@(() => form.Validate())>Validate</Button>
+    </StackPanel>
+</CascadingValue>
 
 @code {
     Form form = null!;
-    private TestModel TestModel { get; set; } = new TestModel();    
+    private TestModel TestModel { get; set; } = new TestModel();
 }

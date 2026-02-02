@@ -2,52 +2,56 @@
 
 @using ClearBlazorTest
 
-<DocsExamplesPage DocsInfo=@(new ListBoxDocsInfo())>
-    <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">ListBox</TextBlock>
-    <CodeSnippet Title="Simple ListBox"
-                 Description=@Description
-                 Code=@(typeof(ListSimpleExample).Name)>
-        <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
-            <ListSimpleExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="ListBox - Icons/Avatars"
-                 Code=@(typeof(ListIconAvatarExample).Name)>
-        <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
-            <ListIconAvatarExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="ListBox - Size"
-                 Code=@(typeof(ListSizeExample).Name)>
-        <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
-            <ListSizeExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="ListBox - Colors"
-                 Code=@(typeof(ListColorsExample).Name)>
-        <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
-            <ListColorsExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="ListBox - Data" Code=@(typeof(ListDataExample).Name)>
-        <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
-            <ListDataExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="ListBox - Binding Single select" Description=@BindingDescription Code=@(typeof(ListBindExample).Name)>
-        <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
-            <ListBindExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="ListBox - Binding Multi select" Code=@(typeof(ListMultiSelectExample).Name)>
-        <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
-            <ListMultiSelectExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="ListBox - Multi level" Code=@(typeof(ListMultiLevelExample).Name)>
-        <ListMultiLevelExample />
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new ListBoxDocsInfo())>
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">ListBox</TextBlock>
+        <CodeSnippet Title="Simple ListBox"
+                     Description=@Description
+                     Code=@(typeof(ListSimpleExample).Name)>
+            <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
+                <ListSimpleExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="ListBox - Icons/Avatars"
+                     Code=@(typeof(ListIconAvatarExample).Name)>
+            <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
+                <ListIconAvatarExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="ListBox - Size"
+                     Code=@(typeof(ListSizeExample).Name)>
+            <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
+                <ListSizeExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="ListBox - Colors"
+                     Code=@(typeof(ListColorsExample).Name)>
+            <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
+                <ListColorsExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="ListBox - Data" Code=@(typeof(ListDataExample).Name)>
+            <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
+                <ListDataExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="ListBox - Binding Single select" Description=@BindingDescription Code=@(typeof(ListBindExample).Name)>
+            <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
+                <ListBindExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="ListBox - Binding Multi select" Code=@(typeof(ListMultiSelectExample).Name)>
+            <StackPanel Orientation="Orientation.Portrait" Spacing="20" Padding="20">
+                <ListMultiSelectExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="ListBox - Multi level" Code=@(typeof(ListMultiLevelExample).Name)>
+            <ListMultiLevelExample />
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>
 @code {
 
     string Description = "A simple list box not bound to values.The typeparam 'TListBox' needs to be defined for the ListBox in this case." +

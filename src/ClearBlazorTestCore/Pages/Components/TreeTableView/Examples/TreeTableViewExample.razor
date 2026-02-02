@@ -1,69 +1,72 @@
 ﻿@using Data
 @namespace ClearBlazorTest
-<StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20
-            Orientation=Orientation.Portrait>
-    <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4> Tree Table View</TextBlock>
-    <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None : local data (100 rows)</TextBlock>
-    <Grid Columns="1000,auto" Rows="450,auto" RowSpacing=20>
-        <TreeTableView @ref=_tree TItem=TestTreeRow CornerRadius=4 BorderThickness=1
-                       Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
-                       RowSpacing=10 ColumnSpacing=10
-                       @bind-SelectedItem=_selectedItem
-                       @bind-SelectedItems=_selectedItems
-                       SelectionMode=@_selectionMode
-                       AllowSelectionToggle=@_allowSelectionToggle
-                       HoverHighlight=@_hoverHighlight
-                       OverscrollBehaviour=OverscrollBehaviour.None
-                       HorizontalContentAlignment=Alignment.Start
-                       HorizontalGridLines=GridLines.All
-                       VerticalGridLines=GridLines.All
-                       ShowHeader=true
-                       StickyHeader=true
-                       VirtualizeMode=@VirtualizeMode.None
-                       InitialIndex=@((20, Alignment.Center))
-                       Items=@_localTreeData>
-            <NodeTemplate Context=node>
-                <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
-                    <Icon IconName=@node.IconName Color=Color.Secondary />
-                    <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
-                        @node.NodeId
-                    </TextBlock>
-                </StackPanel>
-            </NodeTemplate>
-            <ChildContent>
-                <TableColumn Label="Node" HorizontalContentAlignment=Alignment.Start TItem=TestTreeRow Field=@(x =>x.FirstName) ColumnDefinition="auto" />
-                <TableColumn Label="First Name" TItem=TestTreeRow Field=@(x =>x.FirstName) ColumnDefinition="70" />
-                <TableColumn Label="Last Name" TItem=TestTreeRow Field=@(x =>x.LastName) ColumnDefinition="90" />
-                <TableColumn Label="Product" VerticalAlignment=Alignment.Center TItem=TestTreeRow Field=@(x =>x.Product) ColumnDefinition="120" />
-                <TableColumn Label="Available" TItem=TestTreeRow Field=@(x =>x.Available) ColumnDefinition="60" />
-                <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Start TItem=TestTreeRow Field=@(x =>x.Quantity) ColumnDefinition="60" />
-                <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestTreeRow Field=@(x =>x.UnitPrice) ColumnDefinition="80">
-                    <DataTemplate Context=item>
-                        <TextBlock VerticalAlignment=Alignment.Center
-                                   TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
-                    </DataTemplate>
-                </TableColumn>
-                <TableColumn Label="Notes" TItem=TestTreeRow Field=@(x =>x.Notes) ColumnDefinition="*" />
-            </ChildContent>
-        </TreeTableView>
-        <StackPanel Column=1>
-            <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
-                        @bind-Value:after=@SelectionModeChanged>
-                @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
-                {
-                    <Radio Label=@mode.ToString() Value="@mode" />
-                }
-            </RadioGroup>
-            <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
-            <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-            <TextBlock Margin=20>Selection=@_selectedItem?.FirstName</TextBlock>
-            <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
-            <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start @onclick=@ClearSelections>Clear selections</Button>
-        </StackPanel>
-        <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-            <Button @onclick=@CollapseAll>Collapse all</Button>
-            <Button @onclick=@ExpandAll>Expand all</Button>
-            @*             <Button @onclick=@Up1>Scroll +1</Button>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20
+                Orientation=Orientation.Portrait>
+        <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4> Tree Table View</TextBlock>
+        <TextBlock HorizontalAlignment=Alignment.Start>VirtualizationMode:None : local data (100 rows)</TextBlock>
+        <Grid Columns="1000,auto" Rows="450,auto" RowSpacing=20>
+            <TreeTableView @ref=_tree TItem=TestTreeRow CornerRadius=4 BorderThickness=1
+                           Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+                           RowSpacing=10 ColumnSpacing=10
+                           @bind-SelectedItem=_selectedItem
+                           @bind-SelectedItems=_selectedItems
+                           SelectionMode=@_selectionMode
+                           AllowSelectionToggle=@_allowSelectionToggle
+                           HoverHighlight=@_hoverHighlight
+                           OverscrollBehaviour=OverscrollBehaviour.None
+                           HorizontalContentAlignment=Alignment.Start
+                           HorizontalGridLines=GridLines.All
+                           VerticalGridLines=GridLines.All
+                           ShowHeader=true
+                           StickyHeader=true
+                           VirtualizeMode=@VirtualizeMode.None
+                           InitialIndex=@((20, Alignment.Center))
+                           Items=@_localTreeData>
+                <NodeTemplate Context=node>
+                    <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
+                        <Icon IconName=@node.IconName Color=Color.Secondary />
+                        <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
+                            @node.NodeId
+                        </TextBlock>
+                    </StackPanel>
+                </NodeTemplate>
+                <ChildContent>
+                    <TableColumn Label="Node" HorizontalContentAlignment=Alignment.Start TItem=TestTreeRow Field=@(x => x.FirstName) ColumnDefinition="auto" />
+                    <TableColumn Label="First Name" TItem=TestTreeRow Field=@(x => x.FirstName) ColumnDefinition="70" />
+                    <TableColumn Label="Last Name" TItem=TestTreeRow Field=@(x => x.LastName) ColumnDefinition="90" />
+                    <TableColumn Label="Product" VerticalAlignment=Alignment.Center TItem=TestTreeRow Field=@(x => x.Product) ColumnDefinition="120" />
+                    <TableColumn Label="Available" TItem=TestTreeRow Field=@(x => x.Available) ColumnDefinition="60" />
+                    <TableColumn Label="Quantity" HorizontalContentAlignment=Alignment.Start TItem=TestTreeRow Field=@(x => x.Quantity) ColumnDefinition="60" />
+                    <TableColumn Label="UnitPrice" HorizontalContentAlignment=Alignment.Center TItem=TestTreeRow Field=@(x => x.UnitPrice) ColumnDefinition="80">
+                        <DataTemplate Context=item>
+                            <TextBlock VerticalAlignment=Alignment.Center
+                                       TextAlignment=Alignment.Center>$@(item.UnitPrice.ToString("0.00"))</TextBlock>
+                        </DataTemplate>
+                    </TableColumn>
+                    <TableColumn Label="Notes" TItem=TestTreeRow Field=@(x => x.Notes) ColumnDefinition="*" />
+                </ChildContent>
+            </TreeTableView>
+            <StackPanel Column=1>
+                <RadioGroup Margin=20 Label="Selection mode" @bind-Value=_selectionMode
+                            @bind-Value:after=@SelectionModeChanged>
+                    @foreach (SelectionMode mode in Enum.GetValues(typeof(SelectionMode)))
+                    {
+                        <Radio Label=@mode.ToString() Value="@mode" />
+                    }
+                </RadioGroup>
+                <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
+                <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
+                <TextBlock Margin=20>Selection=@_selectedItem?.FirstName</TextBlock>
+                <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.FirstName))</TextBlock>
+                <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start @onclick=@ClearSelections>Clear selections</Button>
+            </StackPanel>
+            <WrapPanel Row=1 ColumnSpan=2 ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+                <Button @onclick=@CollapseAll>Collapse all</Button>
+                <Button @onclick=@ExpandAll>Expand all</Button>
+                @*             <Button @onclick=@Up1>Scroll +1</Button>
             <Button @onclick=@Up5>Scroll +5</Button>
             <Button @onclick=@Up10>Scroll +10</Button>
             <Button @onclick=@Down1>Scroll -1</Button>
@@ -79,8 +82,9 @@
     <Button @onclick=@OnAddNewItemGotoEndIfAtEnd>Add new item and goto end if at end</Button>
  *@    
     </WrapPanel>
-    </Grid>
-</StackPanel>
+        </Grid>
+    </StackPanel>
+</CascadingValue>
 
 
 @code {

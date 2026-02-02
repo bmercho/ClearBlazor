@@ -1,5 +1,9 @@
 ﻿@namespace ClearBlazorTest
-<Button ButtonStyle=ButtonStyle.Outlined>Default</Button>
-<Button ButtonStyle=ButtonStyle.Outlined Color="@Color.Primary">Primary</Button>
-<Button ButtonStyle=ButtonStyle.Outlined Color="@Color.Error">Error</Button>
-<Button ButtonStyle=ButtonStyle.Outlined Disabled=true>Disabled</Button>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Button ButtonStyle=ButtonStyle.Outlined>Default</Button>
+    <Button ButtonStyle=ButtonStyle.Outlined Color="@Color.Primary">Primary</Button>
+    <Button ButtonStyle=ButtonStyle.Outlined Color="@Color.Error">Error</Button>
+    <Button ButtonStyle=ButtonStyle.Outlined Disabled=true>Disabled</Button>
+</CascadingValue>

@@ -1,4 +1,8 @@
 ﻿@namespace ClearBlazorTest
-<Grid >
-    <Video VerticalAlignment="Alignment.Center" HorizontalAlignment="Alignment.Center" Source="./sample-5s.mp4" />
-</Grid>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Grid>
+        <Video VerticalAlignment="Alignment.Center" HorizontalAlignment="Alignment.Center" Source="./sample-5s.mp4" />
+    </Grid>
+</CascadingValue>

@@ -1,12 +1,15 @@
 ﻿@page "/TreeView"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new TreeViewDocsInfo())>
-    <CodeSnippet Title="Basic example (with 100 items)" 
-                 Code=@(typeof(TreeViewExample).Name)>
-        <TreeViewExample />
-    </CodeSnippet>
-    <CodeSnippet Title="Virtualized example (with 5000 items)" 
-                 Code=@(typeof(TreeViewVirtualizeExample).Name)>
-        <TreeViewVirtualizeExample />
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new TreeViewDocsInfo())>
+        <CodeSnippet Title="Basic example (with 100 items)"
+                     Code=@(typeof(TreeViewExample).Name)>
+            <TreeViewExample />
+        </CodeSnippet>
+        <CodeSnippet Title="Virtualized example (with 5000 items)"
+                     Code=@(typeof(TreeViewVirtualizeExample).Name)>
+            <TreeViewVirtualizeExample />
+        </CodeSnippet>
+    </DocsExamplesPage>

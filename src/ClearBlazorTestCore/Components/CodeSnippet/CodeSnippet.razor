@@ -2,50 +2,51 @@
 @inherits ClearComponentBase
 @namespace ClearBlazorTest
 
-
-<div id="@Id" class="@Classes" style="@ComputeStyle()">
-    <StackPanel Orientation="Orientation.Portrait">
-        @if (CodeOnly)
-        {
-            @CodeComponent(Code)
-        }
-        else
-        {
-        @if (!string.IsNullOrEmpty(Title))
-        {
-            <TextBlock FontSize="22px" FontWeight=@((int)FontWeight.Bold) Margin="10,0,10,0">@Title</TextBlock>
-        }
-        @if (!string.IsNullOrEmpty(Description))
-        {
-            <TextBlock FontSize="16px" Margin="10,0,10,0">@Description</TextBlock>
-        }
-        <Grid Padding="5" BorderThickness=@GetBorderThickness() CornerRadius=@GetCornerRadius() BackgroundColor=@BackgroundColor>
-            <Grid Margin=25>
-                @ChildContent
-            </Grid>
-            @if (ShowCode)
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <StackPanel Orientation="Orientation.Portrait">
+            @if (CodeOnly)
             {
-                <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
-                                Icon=@Icons.Material.Filled.CodeOff @onclick=@HideTheCode ToolTip="Hide code" />
+                @CodeComponent(Code)
             }
             else
             {
-                <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
-                                Icon=@Icons.Material.Filled.Code @onclick=@ShowTheCode ToolTip="Show Code" />
+                @if (!string.IsNullOrEmpty(Title))
+                {
+                    <TextBlock FontSize="22px" FontWeight=@((int)FontWeight.Bold) Margin="10,0,10,0">@Title</TextBlock>
+                }
+                @if (!string.IsNullOrEmpty(Description))
+                {
+                    <TextBlock FontSize="16px" Margin="10,0,10,0">@Description</TextBlock>
+                }
+                <Grid Padding="5" BorderThickness=@GetBorderThickness() CornerRadius=@GetCornerRadius() BackgroundColor=@BackgroundColor>
+                    <Grid Margin=25>
+                        @ChildContent
+                    </Grid>
+                    @if (ShowCode)
+                    {
+                        <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
+                                    Icon=@Icons.Material.Filled.CodeOff @onclick=@HideTheCode ToolTip="Hide code" />
+                    }
+                    else
+                    {
+                        <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
+                                    Icon=@Icons.Material.Filled.Code @onclick=@ShowTheCode ToolTip="Show Code" />
 
+                    }
+                </Grid>
+                @if (ShowCode)
+                {
+                    <Grid CornerRadius="0,0,8,8" BorderThickness="1" Padding="20">
+                        <ScrollViewer HorizontalScrollMode="ScrollMode.Auto" VerticalScrollMode="ScrollMode.Disabled">
+                            @CodeComponent(Code)
+                        </ScrollViewer>
+                    </Grid>
+                }
             }
-        </Grid>
-        @if (ShowCode)
-        {
-            <Grid CornerRadius="0,0,8,8" BorderThickness="1" Padding="20">
-                <ScrollViewer HorizontalScrollMode="ScrollMode.Auto" VerticalScrollMode="ScrollMode.Disabled">
-                    @CodeComponent(Code)
-                </ScrollViewer>
-            </Grid>
-        }
-        }
-    </StackPanel>
-</div>
+        </StackPanel>
+    </div>
+</CascadingValue>
 
 
 

@@ -1,40 +1,44 @@
 ﻿@namespace ClearBlazorTest
-<StackPanel Orientation=Orientation.Portrait Margin="10">
-    <Select Label="MultiSelect-double" @bind-Values=DoubleValues MultiSelect=true>
-        <SelectItem Value=5.3 />
-        <SelectItem Value=2.45 />
-        <SelectItem Value=4.0 />
-        <SelectItem Value=5.6 />
-        <SelectItem Value=7.89 />
-        <SelectItem Value=9.23 />
-        <SelectItem Value=100.3 />
-    </Select>
-    <TextBlock>Double values = @string.Join(", ", DoubleValues)</TextBlock>
-</StackPanel>
+@inherits ClearComponentBase
 
-<StackPanel Orientation=Orientation.Portrait Margin="10">
-    <Select Label="MultiSelect-flags enum" @bind-Value=EnumValue MultiSelect=true>
-        @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
-        {
-            <SelectItem Text=@item.ToString() Value="@item" />
-        }
-    </Select>
-    <TextBlock>Enum value = @EnumValue</TextBlock>
-</StackPanel>
-<StackPanel Orientation=Orientation.Portrait Margin="10">
-    <Select Label="MultiSelect-string" MultiSelect=true @bind-Values=StringValues>
-        <SelectItem Value=@("Apple") />
-        <SelectItem Value=@("Apricot") />
-        <SelectItem Value=@("Banana") />
-        <SelectItem Value=@("Pear") />
-        <Divider />
-        <SelectItem Value=@("Pumpkin") />
-        <SelectItem Value=@("Potato") />
-        <SelectItem Value=@("Zucchini") />
-    </Select>
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation=Orientation.Portrait Margin="10">
+        <Select Label="MultiSelect-double" @bind-Values=DoubleValues MultiSelect=true>
+            <SelectItem Value=5.3 />
+            <SelectItem Value=2.45 />
+            <SelectItem Value=4.0 />
+            <SelectItem Value=5.6 />
+            <SelectItem Value=7.89 />
+            <SelectItem Value=9.23 />
+            <SelectItem Value=100.3 />
+        </Select>
+        <TextBlock>Double values = @string.Join(", ", DoubleValues)</TextBlock>
+    </StackPanel>
 
-    <TextBlock>String values=@string.Join(", ", StringValues)</TextBlock>
-</StackPanel>
+    <StackPanel Orientation=Orientation.Portrait Margin="10">
+        <Select Label="MultiSelect-flags enum" @bind-Value=EnumValue MultiSelect=true>
+            @foreach (DaysOfWeek item in Enum.GetValues(typeof(DaysOfWeek)))
+            {
+                <SelectItem Text=@item.ToString() Value="@item" />
+            }
+        </Select>
+        <TextBlock>Enum value = @EnumValue</TextBlock>
+    </StackPanel>
+    <StackPanel Orientation=Orientation.Portrait Margin="10">
+        <Select Label="MultiSelect-string" MultiSelect=true @bind-Values=StringValues>
+            <SelectItem Value=@("Apple") />
+            <SelectItem Value=@("Apricot") />
+            <SelectItem Value=@("Banana") />
+            <SelectItem Value=@("Pear") />
+            <Divider />
+            <SelectItem Value=@("Pumpkin") />
+            <SelectItem Value=@("Potato") />
+            <SelectItem Value=@("Zucchini") />
+        </Select>
+
+        <TextBlock>String values=@string.Join(", ", StringValues)</TextBlock>
+    </StackPanel>
+</CascadingValue>
 
 @code {
     [Flags]

@@ -1,11 +1,13 @@
 ﻿@using Excubo.Blazor.Canvas.Contexts
 @using System.Timers
 @namespace ClearBlazorTest
+@inherits ClearComponentBase
 
-
-<DrawingCanvas @ref="MyCanvas" Width="500" Height="500" BorderThickness=1
-             OnCanvasSizeChange=CanvasSizeChange OnPaint=PaintCanvas
-             OnCanvasClick=Clicked/>
+<CascadingValue Value="this" IsFixed="false">
+    <DrawingCanvas @ref="MyCanvas" Width="500" Height="500" BorderThickness=1
+                   OnCanvasSizeChange=CanvasSizeChange OnPaint=PaintCanvas
+                   OnCanvasClick=Clicked />
+</CascadingValue>
 
 
 @code {
@@ -17,11 +19,11 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        Timer.Elapsed += async (source, eventArgs) => 
+        Timer.Elapsed += async (source, eventArgs) =>
         {
             if (MyCanvas == null)
                 return;
-            await MyCanvas.RefreshCanvas(); 
+            await MyCanvas.RefreshCanvas();
         };
     }
 
@@ -37,7 +39,7 @@
 
         await context.ClearRectAsync(0, 0, CanvasSize.Width, CanvasSize.Height);
 
-        int tick = System.Environment.TickCount; 
+        int tick = System.Environment.TickCount;
         Random random = new Random(tick);
 
         for (int i = 0; i < 100; i++)
@@ -97,4 +99,3 @@
         await MyCanvas.RefreshCanvas();
     }
 }
- 

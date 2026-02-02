@@ -1,34 +1,38 @@
 ﻿@namespace ClearBlazorTest
 @using Data
-<StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20
-            Orientation=Orientation.Portrait>
-    <TreeView Height=300 Width=600 CornerRadius=4 BorderThickness=1
-              Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
-              HorizontalContentAlignment=Alignment.Start
-              VirtualizeMode=@VirtualizeMode.Virtualize
-              SelectionMode=SelectionMode.Single
-              @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_localTreeData>
-        <NodeTemplate Context=node>
-            <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
-                @if (node.IsExpanded)
-                {
-                    <Icon IconName=@node.OpenIconName Color=Color.Secondary />
-                }
-                else
-                {
-                    <Icon IconName=@node.IconName Color=Color.Secondary />
-                }
-                <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
-                    @node.NodeId
-                </TextBlock>
-            </StackPanel>
-        </NodeTemplate>
-    </TreeView>
-    <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
-        <Button @onclick=@CollapseAll>Collapse all</Button>
-        <Button @onclick=@ExpandAll>Expand all</Button>
-    </WrapPanel>
-</StackPanel>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel BackgroundColor=Color.Transparent HorizontalAlignment=Alignment.Start Spacing=20
+                Orientation=Orientation.Portrait>
+        <TreeView Height=300 Width=600 CornerRadius=4 BorderThickness=1
+                  Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+                  HorizontalContentAlignment=Alignment.Start
+                  VirtualizeMode=@VirtualizeMode.Virtualize
+                  SelectionMode=SelectionMode.Single
+                  @ref="List" InitialIndex=@((20, Alignment.Center)) Items=@_localTreeData>
+            <NodeTemplate Context=node>
+                <StackPanel Orientation=Orientation.Landscape BackgroundColor=Color.Transparent>
+                    @if (node.IsExpanded)
+                    {
+                        <Icon IconName=@node.OpenIconName Color=Color.Secondary />
+                    }
+                    else
+                    {
+                        <Icon IconName=@node.IconName Color=Color.Secondary />
+                    }
+                    <TextBlock TextWrapping=TextWrap.NoWrap Margin="5">
+                        @node.NodeId
+                    </TextBlock>
+                </StackPanel>
+            </NodeTemplate>
+        </TreeView>
+        <WrapPanel ColumnSpacing=10 RowSpacing=10 Direction=Direction.Row>
+            <Button @onclick=@CollapseAll>Collapse all</Button>
+            <Button @onclick=@ExpandAll>Expand all</Button>
+        </WrapPanel>
+    </StackPanel>
+
 
 @code {
     TreeView<TestTreeRow> List = null!;

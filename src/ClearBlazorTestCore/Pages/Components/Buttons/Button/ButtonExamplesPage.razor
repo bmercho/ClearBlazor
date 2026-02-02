@@ -1,44 +1,48 @@
 ﻿@page "/Button"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new ButtonDocsInfo())>
-    <CodeSnippet Title="Filled" Code=@(typeof(ButtonsFilledExample).Name)>
-        <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
-            <ButtonsFilledExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="Outlined" Code=@(typeof(ButtonsOutlineExample).Name)>
-        <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
-            <ButtonsOutlineExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="Labels only" Code=@(typeof(ButtonsTextExample).Name)>
-        <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
-            <ButtonsTextExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="Elevated" Code=@(typeof(ButtonsShadowExample).Name)>
-        <WrapPanel Padding=40 RowSpacing=20 ColumnSpacing=20>
-            <ButtonsShadowExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="Shape" Code=@(typeof(ButtonsShapeExample).Name)>
-        <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
-            <ButtonsShapeExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="Size" Code=@(typeof(ButtonsSizeExample).Name)>
-        <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
-            <ButtonsSizeExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="Icons" Code=@(typeof(ButtonsIconExample).Name)>
-        <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
-            <ButtonsIconExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Title="Toggle" Code=@(typeof(ButtonsToggleExample).Name)>
-        <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
-            <ButtonsToggleExample />
-        </WrapPanel>
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new ButtonDocsInfo())>
+        <CodeSnippet Title="Filled" Code=@(typeof(ButtonsFilledExample).Name)>
+            <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
+                <ButtonsFilledExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Outlined" Code=@(typeof(ButtonsOutlineExample).Name)>
+            <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
+                <ButtonsOutlineExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Labels only" Code=@(typeof(ButtonsTextExample).Name)>
+            <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
+                <ButtonsTextExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Elevated" Code=@(typeof(ButtonsShadowExample).Name)>
+            <WrapPanel Padding=40 RowSpacing=20 ColumnSpacing=20>
+                <ButtonsShadowExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Shape" Code=@(typeof(ButtonsShapeExample).Name)>
+            <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
+                <ButtonsShapeExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Size" Code=@(typeof(ButtonsSizeExample).Name)>
+            <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
+                <ButtonsSizeExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Icons" Code=@(typeof(ButtonsIconExample).Name)>
+            <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
+                <ButtonsIconExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Title="Toggle" Code=@(typeof(ButtonsToggleExample).Name)>
+            <WrapPanel Padding=20 RowSpacing=20 ColumnSpacing=20>
+                <ButtonsToggleExample />
+            </WrapPanel>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

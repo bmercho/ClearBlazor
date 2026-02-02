@@ -1,15 +1,19 @@
 ﻿@namespace ClearBlazorTest
-<TextInput Placeholder="None" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Size=@Size.VerySmall
-           Clearable="true" />
-<TextInput Placeholder="None" InputContainerStyle="InputContainerStyle.LabelOnly" @bind-Value="TextValue" Size=@Size.Small 
-           Clearable="true" />
-<TextInput Placeholder="Underlined" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size=@Size.Normal 
-           Clearable="true" />
-<TextInput Placeholder="Outlined" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Size=@Size.Large 
-           Clearable="true" />
-<TextInput Placeholder="Filled" InputContainerStyle="InputContainerStyle.Filled" @bind-Value="TextValue" Size=@Size.VeryLarge 
-           Clearable="true" />
-  
- @code {
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <TextInput Placeholder="None" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Size=@Size.VerySmall
+               Clearable="true" />
+    <TextInput Placeholder="None" InputContainerStyle="InputContainerStyle.LabelOnly" @bind-Value="TextValue" Size=@Size.Small
+               Clearable="true" />
+    <TextInput Placeholder="Underlined" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" Size=@Size.Normal
+               Clearable="true" />
+    <TextInput Placeholder="Outlined" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Size=@Size.Large
+               Clearable="true" />
+    <TextInput Placeholder="Filled" InputContainerStyle="InputContainerStyle.Filled" @bind-Value="TextValue" Size=@Size.VeryLarge
+               Clearable="true" />
+</CascadingValue>
+
+@code {
     public string TextValue { get; set; } = string.Empty;
 }

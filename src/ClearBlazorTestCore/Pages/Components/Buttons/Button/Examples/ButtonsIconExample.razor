@@ -1,27 +1,33 @@
 ﻿@namespace ClearBlazorTest
-<Button ButtonStyle=ButtonStyle.Filled Icon="@Icons.Material.Filled.AccessAlarm"
-        IconLocation=IconLocation.Start>
-</Button>
 
-<Button ButtonStyle=ButtonStyle.LabelOnly Icon="@Icons.Material.Filled.AccessAlarm"
-        IconLocation=IconLocation.Start IconColor="Color.Secondary">
-</Button>
+@inherits ClearComponentBase
 
-<Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Delete"
-        IconLocation=IconLocation.Start Color="Color.Error">
-    Delete
-</Button>
-<Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Send"
-        IconLocation=IconLocation.End Color ="Color.Primary">
-    Send
-</Button>
-<Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Ballot" Color="Color.Warning">
-    Warning
+<CascadingValue Value="this" IsFixed="false">
+    <Button ButtonStyle=ButtonStyle.Filled Icon="@Icons.Material.Filled.AccessAlarm"
+            IconLocation=IconLocation.Start>
     </Button>
-<Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Mic" Disabled="true">
-    Talk
+
+    <Button ButtonStyle=ButtonStyle.LabelOnly Icon="@Icons.Material.Filled.AccessAlarm"
+            IconLocation=IconLocation.Start IconColor="Color.Secondary">
     </Button>
-<Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Save"
-        Color="Color.Info" Size="Size.Small">
-    Save
-</Button>
+
+    <Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Delete"
+            IconLocation=IconLocation.Start Color="Color.Error">
+        Delete
+    </Button>
+    <Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Send"
+            IconLocation=IconLocation.End Color="Color.Primary">
+        Send
+    </Button>
+    <Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Ballot" Color="Color.Warning">
+        Warning
+    </Button>
+    <Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Mic" Disabled="true">
+        Talk
+    </Button>
+    <Button ButtonStyle="ButtonStyle.Filled" Icon="@Icons.Material.Filled.Save"
+            Color="Color.Info" Size="Size.Small">
+        Save
+    </Button>
+</CascadingValue>
+

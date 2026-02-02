@@ -1,12 +1,7 @@
 ﻿@namespace ClearBlazorTest
-<Grid Width="200" Height="200" BorderColor="Color.Primary" BorderThickness="5"/>
-<Grid Width="200" Height="200" BackgroundColor="Color.Secondary"/>
+@inherits ClearComponentBase
 
-
-@code {
-
-    private void OnGridClicked()
-    {
-        
-    }
-}
+<CascadingValue Value="this" IsFixed="false">
+    <Grid Width="200" Height="200" BorderColor="Color.Primary" BorderThickness="5" />
+    <Grid Width="200" Height="200" BackgroundColor="Color.Secondary" />
+</CascadingValue>

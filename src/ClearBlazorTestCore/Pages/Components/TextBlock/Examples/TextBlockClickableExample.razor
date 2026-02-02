@@ -1,12 +1,16 @@
 ﻿@namespace ClearBlazorTest
-<TextBlock Typo=Typo.H1 Clickable=true @onclick=OnClicked>This text is clickable</TextBlock>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <TextBlock Typo=Typo.H1 Clickable=true @onclick=OnClicked>This text is clickable</TextBlock>
+</CascadingValue>
 
 
 @code {
 
     private void OnClicked(MouseEventArgs e)
     {
-        
+
     }
 
 }

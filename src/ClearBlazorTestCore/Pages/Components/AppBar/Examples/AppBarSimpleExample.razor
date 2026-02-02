@@ -1,10 +1,14 @@
 ﻿@namespace ClearBlazorTest
-<Grid CornerRadius="4" BorderThickness="1" Margin=40>
-    <AppBar Name="AppBarTest">
-        <IconButton Dock="Dock.Left" Icon="@Icons.Material.Filled.Menu" LeadingIcon=true />
-        <IconButton Dock="Dock.Right" Icon="@Icons.Material.Filled.Favorite" LeadingIcon=false />
-        <IconButton Dock="Dock.Right" Icon="@Icons.Material.Filled.AddBox" LeadingIcon=false />
-        <TextBlock Typo="Typo.H6" HorizontalAlignment="Alignment.Center" 
-                   VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
-    </AppBar>
-</Grid>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Grid CornerRadius="4" BorderThickness="1" Margin=40>
+        <AppBar Name="AppBarTest">
+            <IconButton Dock=ClearBlazor.Dock.Left Icon="@Icons.Material.Filled.Menu" LeadingIcon=true />
+            <IconButton Dock=ClearBlazor.Dock.Right Icon="@Icons.Material.Filled.Favorite" LeadingIcon=false />
+            <IconButton Dock=ClearBlazor.Dock.Right Icon="@Icons.Material.Filled.AddBox" LeadingIcon=false />
+            <TextBlock Typo="Typo.H6" HorizontalAlignment="Alignment.Center"
+                       VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
+        </AppBar>
+    </Grid>
+</CascadingValue>

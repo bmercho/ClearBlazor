@@ -1,6 +1,9 @@
 ﻿@page "/CheckBox"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new CheckBoxDocsInfo())>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new CheckBoxDocsInfo())>
         <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">CheckBox</TextBlock>
         <StackPanel Padding="20" Spacing="30">
             <CodeSnippet Title="Basic" Code=@(typeof(CheckBoxSimpleExample).Name)>
@@ -34,4 +37,5 @@
                 </WrapPanel>
             </CodeSnippet>
         </StackPanel>
-</DocsExamplesPage>
+    </DocsExamplesPage>
+</CascadingValue>

@@ -1,2 +1,6 @@
 ﻿@namespace ClearBlazorTest
-<Grid Width=200 Height=200 BorderThickness=1 />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Grid Width=200 Height=200 BorderThickness=1 />
+</CascadingValue>

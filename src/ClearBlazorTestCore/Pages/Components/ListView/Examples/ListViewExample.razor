@@ -1,6 +1,9 @@
 ﻿@namespace ClearBlazorTest
 @using Data
 @inject NavigationManager NavManager
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
 <StackPanel Orientation=Orientation.Portrait Spacing=30>
     <TextBlock HorizontalAlignment=Alignment.Start Typo=Typo.H4>List View</TextBlock>
     <TextBlock HorizontalAlignment=Alignment.Start>@GetTitle()></TextBlock>
@@ -86,6 +89,7 @@
         }
     </Grid>
 </StackPanel>
+</CascadingValue>
 
 @code {
     List<TestListRow> _localListData = ClientData.LocalTestListRows100;

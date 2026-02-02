@@ -1,9 +1,18 @@
 ﻿@using System.ComponentModel.DataAnnotations
 @using System.Globalization
-
 @namespace ClearBlazorTest
-<DatePicker BorderThickness=2 CornerRadius=4 @bind-Date=Date1 Color=Color.Secondary />
-<TextBlock>@Date1</TextBlock>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DatePicker BorderThickness=2 CornerRadius=4 @bind-Date=Date1 Color=Color.Secondary @bind-Date:after=DateChanged />
+    <TextBlock>@Date1</TextBlock>
+</CascadingValue>
 @code {
     DateOnly? Date1 { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(3));
+
+    private async Task DateChanged()
+    {
+        await Refresh();
+    }
+
 }

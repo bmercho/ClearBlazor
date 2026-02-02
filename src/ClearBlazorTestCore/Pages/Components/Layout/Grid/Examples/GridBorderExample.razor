@@ -1,8 +1,11 @@
-﻿
-@namespace ClearBlazorTest
-<Grid Width="200" Height="200" BorderThickness=1 />
-<Grid Width="200" Height="200" BorderThickness="10,5,10,5" />
-<Grid CornerRadius="0,0,8,8" Width="200" Height="200" BorderThickness=1 />
-<Grid Width="200" Height="200" BorderThickness="10,5,10,5" BorderStyle=BorderStyle.Dotted />
-<Grid Width="200" Height="200" BorderThickness="10,5,10,5" BorderStyle=BorderStyle.Dashed/>
+﻿@namespace ClearBlazorTest
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Grid Width="200" Height="200" BorderThickness=1 />
+    <Grid Width="200" Height="200" BorderThickness="10,5,10,5" />
+    <Grid CornerRadius="0,0,8,8" Width="200" Height="200" BorderThickness=1 />
+    <Grid Width="200" Height="200" BorderThickness="10,5,10,5" BorderStyle=BorderStyle.Dotted />
+    <Grid Width="200" Height="200" BorderThickness="10,5,10,5" BorderStyle=BorderStyle.Dashed />
+</CascadingValue>
 

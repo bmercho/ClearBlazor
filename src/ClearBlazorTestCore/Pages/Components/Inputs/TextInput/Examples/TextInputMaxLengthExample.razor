@@ -1,5 +1,9 @@
 ﻿@namespace ClearBlazorTest
-<TextInput Placeholder="MaxLength of 10" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" MaxLength="10" />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <TextInput Placeholder="MaxLength of 10" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="TextValue" MaxLength="10" />
+</CascadingValue>
 
 @code {
     public string TextValue { get; set; } = string.Empty;

@@ -1,5 +1,9 @@
 ﻿@namespace ClearBlazorTest
-<Slider Label="Disabled" IsDisabled=true @bind-Value=Value />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Slider Label="Disabled" IsDisabled=true @bind-Value=Value />
+</CascadingValue>
 @code {
     public double Value { get; set; } = 50;
 }

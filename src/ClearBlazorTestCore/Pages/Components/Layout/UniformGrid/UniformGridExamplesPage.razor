@@ -1,19 +1,23 @@
 ﻿@page "/UniformGrid"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new UniformGridDocsInfo())>
-    <CodeSnippet Code="UniformGridSimpleExample">
-        <Grid Height="700">
-            <UniformGridSimpleExample />
-        </Grid>
-    </CodeSnippet>
-    <CodeSnippet Code="UniformGridSetRowsExample">
-        <Grid Height="700">
-            <UniformGridSetRowsExample />
-        </Grid>
-    </CodeSnippet>
-    <CodeSnippet Code="UniformGridSetRowsAndColumnsExample">
-        <Grid Height="700">
-            <UniformGridSetRowsAndColumnsExample />
-        </Grid>
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new UniformGridDocsInfo())>
+        <CodeSnippet Code="UniformGridSimpleExample">
+            <Grid Height="700">
+                <UniformGridSimpleExample />
+            </Grid>
+        </CodeSnippet>
+        <CodeSnippet Code="UniformGridSetRowsExample">
+            <Grid Height="700">
+                <UniformGridSetRowsExample />
+            </Grid>
+        </CodeSnippet>
+        <CodeSnippet Code="UniformGridSetRowsAndColumnsExample">
+            <Grid Height="700">
+                <UniformGridSetRowsAndColumnsExample />
+            </Grid>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

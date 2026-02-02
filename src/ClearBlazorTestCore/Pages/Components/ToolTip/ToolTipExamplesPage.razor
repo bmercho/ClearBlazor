@@ -2,12 +2,16 @@
 
 @using ClearBlazorTest
 
-<DocsExamplesPage DocsInfo=@(new ToolTipDocsInfo())>
-    <CodeSnippet Code="ToolTipSimpleExample">
-        <WrapPanel Direction=Direction.Row ColumnSpacing=20 Padding="0,0,10,0">
-            <ToolTipSimpleExample />
-        </WrapPanel>
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new ToolTipDocsInfo())>
+        <CodeSnippet Code="ToolTipSimpleExample">
+            <WrapPanel Direction=Direction.Row ColumnSpacing=20 Padding="0,0,10,0">
+                <ToolTipSimpleExample />
+            </WrapPanel>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>
 
 

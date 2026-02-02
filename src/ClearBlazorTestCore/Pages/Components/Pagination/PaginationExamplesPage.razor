@@ -2,8 +2,12 @@
 
 @using ClearBlazorTest
 
-<DocsExamplesPage DocsInfo=@(new PaginationDocsInfo())>
-    <CodeSnippet  Code=@(typeof(PaginationSimpleExample).Name)>
-        <PaginationSimpleExample />
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new PaginationDocsInfo())>
+        <CodeSnippet Code=@(typeof(PaginationSimpleExample).Name)>
+            <PaginationSimpleExample />
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

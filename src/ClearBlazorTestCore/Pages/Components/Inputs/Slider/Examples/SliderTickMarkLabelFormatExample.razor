@@ -1,7 +1,11 @@
 ﻿@namespace ClearBlazorTest
-<Slider Label="Step 10" Step=10 @bind-Value=Value1 ShowTickMarks=true ShowTickMarkLabels=true TickMarkLabelFormat="C" />
-<div>@Value1</div>
- 
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Slider Label="Step 10" Step=10 @bind-Value=Value1 ShowTickMarks=true ShowTickMarkLabels=true TickMarkLabelFormat="C" />
+    <div>@Value1</div>
+</CascadingValue>
+
 @code {
     private double Value1 { get; set; } = 50;
 }

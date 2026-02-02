@@ -1,7 +1,11 @@
 ﻿@namespace ClearBlazorTest
-<Button Icon=@Icon @onclick=@Clicked Color=@Color>
-    @Content
-</Button>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Button Icon=@Icon @onclick=@Clicked Color=@Color>
+        @Content
+    </Button>
+</CascadingValue>
 @code {
     public string Icon { get; set; } = Icons.Material.Filled.AlarmOff;
     public string Content { get; set; } = "Alarm off";

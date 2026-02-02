@@ -1,21 +1,24 @@
 ﻿@page "/Avatar"
 
 @using ClearBlazorTest
+@inherits ClearComponentBase
 
-<DocsExamplesPage DocsInfo=@(new AvatarDocsInfo())>
-    <CodeSnippet Code="AvatarTextExample">
-        <WrapPanel ColumnSpacing=20 RowSpacing=20>
-            <AvatarTextExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Code="AvatarIconExample">
-        <WrapPanel ColumnSpacing=20 RowSpacing=20>
-            <AvatarIconExample />
-        </WrapPanel>
-    </CodeSnippet>
-    <CodeSnippet Code="AvatarImageExample">
-        <WrapPanel ColumnSpacing=20 RowSpacing=20>
-            <AvatarImageExample />
-        </WrapPanel>
-    </CodeSnippet>
-</DocsExamplesPage>
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new AvatarDocsInfo())>
+        <CodeSnippet Code="AvatarTextExample">
+            <WrapPanel ColumnSpacing=20 RowSpacing=20>
+                <AvatarTextExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Code="AvatarIconExample">
+            <WrapPanel ColumnSpacing=20 RowSpacing=20>
+                <AvatarIconExample />
+            </WrapPanel>
+        </CodeSnippet>
+        <CodeSnippet Code="AvatarImageExample">
+            <WrapPanel ColumnSpacing=20 RowSpacing=20>
+                <AvatarImageExample />
+            </WrapPanel>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

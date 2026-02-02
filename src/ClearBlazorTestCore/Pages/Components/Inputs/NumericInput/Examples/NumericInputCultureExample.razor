@@ -1,13 +1,17 @@
 ﻿@using System.Globalization
 @namespace ClearBlazorTest
-<StackPanel Orientation="Orientation.Landscape">
-    <NumericInput Label="de-DE" Immediate=true @bind-Value="DoubleValue1" Culture="@_de" />
-    <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@DoubleValue1</TextBlock>
-</StackPanel>
-<StackPanel Orientation="Orientation.Landscape">
-    <NumericInput Label="de-US" Immediate=true @bind-Value="DoubleValue2" Culture="@_en" />
-    <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@DoubleValue2</TextBlock>
-</StackPanel>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation="Orientation.Landscape">
+        <NumericInput Label="de-DE" Immediate=true @bind-Value="DoubleValue1" Culture="@_de" />
+        <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@DoubleValue1</TextBlock>
+    </StackPanel>
+    <StackPanel Orientation="Orientation.Landscape">
+        <NumericInput Label="de-US" Immediate=true @bind-Value="DoubleValue2" Culture="@_en" />
+        <TextBlock Typo="Typo.Body1" VerticalAlignment="Alignment.Center" Margin="15,30,0,10">@DoubleValue2</TextBlock>
+    </StackPanel>
+</CascadingValue>
 
 @code {
     public double DoubleValue1 { get; set; } = 1234.5;

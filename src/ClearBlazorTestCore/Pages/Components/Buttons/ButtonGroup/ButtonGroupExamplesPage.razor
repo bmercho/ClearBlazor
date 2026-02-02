@@ -1,19 +1,23 @@
 ﻿@page "/ButtonGroup"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new ButtonGroupDocsInfo())>
-    <CodeSnippet Code="ButtonGroupHorizontalExample">
-        <StackPanel Spacing="40">
-            <ButtonGroupHorizontalExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Code="ButtonGroupVerticalExample">
-        <StackPanel Spacing="20" Orientation="Orientation.Landscape">
-            <ButtonGroupVerticalExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Code="ButtonGroupIconsExample">
-        <StackPanel Spacing="20">
-            <ButtonGroupIconsExample />
-        </StackPanel>
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new ButtonGroupDocsInfo())>
+        <CodeSnippet Code="ButtonGroupHorizontalExample">
+            <StackPanel Spacing="40">
+                <ButtonGroupHorizontalExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Code="ButtonGroupVerticalExample">
+            <StackPanel Spacing="20" Orientation="Orientation.Landscape">
+                <ButtonGroupVerticalExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Code="ButtonGroupIconsExample">
+            <StackPanel Spacing="20">
+                <ButtonGroupIconsExample />
+            </StackPanel>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

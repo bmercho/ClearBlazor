@@ -1,14 +1,17 @@
 ﻿@using ClearBlazorTest
 @namespace ClearBlazorTest
 @inherits ClearComponentBase
-<div id="@Id" class="@Classes" style="@ComputeStyle()">
-    <ScrollViewer>
-        <StackPanel Padding="20" Spacing="20">
-            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>Examples</TextBlock>
-            <DocsHeader DocsName=@DocsInfo?.Name DocsDescription=@DocsInfo?.Description ForApi=false />
-            <Link HRef=@GetHRef()>@GetLinkName()</Link>
-            @ChildContent
-        </StackPanel>
-    </ScrollViewer>
-</div>
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <ScrollViewer>
+            <StackPanel Padding="20" Spacing="20">
+                <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>Examples</TextBlock>
+                <DocsHeader DocsName=@DocsInfo?.Name DocsDescription=@DocsInfo?.Description ForApi=false />
+                <Link HRef=@GetHRef()>@GetLinkName()</Link>
+                @ChildContent
+            </StackPanel>
+        </ScrollViewer>
+    </div>
+</CascadingValue>
 

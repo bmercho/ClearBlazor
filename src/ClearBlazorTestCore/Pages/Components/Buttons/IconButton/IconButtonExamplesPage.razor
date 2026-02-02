@@ -1,19 +1,23 @@
 ﻿@page "/IconButton"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new IconButtonDocsInfo())>
-    <CodeSnippet Code="IconButtonsSimpleExample" Title="Basic">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-            <IconButtonsSimpleExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Code="IconButtonsVariantExample" Title="Size">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-            <IconButtonsVariantExample />
-        </StackPanel>
-    </CodeSnippet>
-    <CodeSnippet Code="IconButtonsShapeExample" Title="Shape">
-        <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
-            <IconButtonsShapeExample />
-        </StackPanel>
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new IconButtonDocsInfo())>
+        <CodeSnippet Code="IconButtonsSimpleExample" Title="Basic">
+            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+                <IconButtonsSimpleExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Code="IconButtonsVariantExample" Title="Size">
+            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+                <IconButtonsVariantExample />
+            </StackPanel>
+        </CodeSnippet>
+        <CodeSnippet Code="IconButtonsShapeExample" Title="Shape">
+            <StackPanel Orientation="Orientation.Landscape" Spacing="20" Padding="0,0,10,0">
+                <IconButtonsShapeExample />
+            </StackPanel>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

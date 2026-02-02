@@ -1,7 +1,11 @@
 ﻿@namespace ClearBlazorTest
-<TextInput Label="None" InputContainerStyle="InputContainerStyle.LabelOnly" @bind-Value="Value" Lines="5" TextWrapping="TextWrap.Wrap" />
-<TextInput Label="Underlined" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="Value" Lines="10" TextWrapping="TextWrap.Wrap" />
-<TextInput Label="Outlined" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="Value" Lines="2" TextWrapping="TextWrap.Wrap" />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <TextInput Label="None" InputContainerStyle="InputContainerStyle.LabelOnly" @bind-Value="Value" Lines="5" TextWrapping="TextWrap.Wrap" />
+    <TextInput Label="Underlined" InputContainerStyle="InputContainerStyle.Underlined" @bind-Value="Value" Lines="10" TextWrapping="TextWrap.Wrap" />
+    <TextInput Label="Outlined" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="Value" Lines="2" TextWrapping="TextWrap.Wrap" />
+</CascadingValue>
 
 @code {
     public string Value { get; set; } = string.Empty;

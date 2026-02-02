@@ -1,8 +1,12 @@
 ﻿@using ClearBlazor
 @namespace ClearBlazorTest
 
-<Pagination ShowFirstAndLastButtons=true
-            @bind-SelectedPage=selectedPage NumPages=10 NumPagesShown=3/>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Pagination ShowFirstAndLastButtons=true
+                @bind-SelectedPage=selectedPage NumPages=10 NumPagesShown=3 />
+</CascadingValue>
 
 @code {
     int selectedPage = 3;

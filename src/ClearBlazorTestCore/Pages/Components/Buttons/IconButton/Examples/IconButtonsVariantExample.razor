@@ -1,31 +1,35 @@
 ﻿@namespace ClearBlazorTest
-<IconButton Icon="@Icons.Material.Filled.Delete" 
-            ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary" 
-            Size="Size.Small" VerticalAlignment="Alignment.Center" />
-<IconButton Icon="@Icons.Material.Filled.Delete" 
-            ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary" 
-            Size="Size.Normal" VerticalAlignment="Alignment.Center" />
-<IconButton Icon="@Icons.Material.Filled.Delete" 
-            ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary" 
-            Size="Size.Large" VerticalAlignment="Alignment.Center" />
-<IconButton Icon="@Icons.Material.Filled.Delete" 
-            ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary" 
-            Size="Size.VeryLarge" VerticalAlignment="Alignment.Center" />
-<IconButton Icon="@Icons.Material.Filled.Delete" Disabled=true 
-            ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary" 
-            Size="Size.VeryLarge" VerticalAlignment="Alignment.Center" />
-<IconButton Icon="@Icons.Material.Filled.Delete" 
-            ButtonStyle="ButtonStyle.Filled" Color="Color.Primary" 
-            Size="Size.Small" VerticalAlignment="Alignment.Center" />
-<IconButton Icon="@Icons.Material.Filled.Delete" 
-            ButtonStyle="ButtonStyle.Filled" Color="Color.Primary" 
-            Size="Size.Normal" VerticalAlignment="Alignment.Center" />
-<IconButton Icon="@Icons.Material.Filled.Delete" 
-            ButtonStyle="ButtonStyle.Filled" Color="Color.Primary" 
-            Size="Size.Large" VerticalAlignment="Alignment.Center" />
-<IconButton Icon="@Icons.Material.Filled.Delete" 
-            ButtonStyle="ButtonStyle.Filled" Color="Color.Primary" 
-            Size="Size.VeryLarge" VerticalAlignment="Alignment.Center" />
-<IconButton Icon="@Icons.Material.Filled.Delete" Disabled=true 
-            ButtonStyle="ButtonStyle.Filled" Color="Color.Primary" 
-            Size="Size.VeryLarge" VerticalAlignment="Alignment.Center" />
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <IconButton Icon="@Icons.Material.Filled.Delete"
+                ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary"
+                Size="Size.Small" VerticalAlignment="Alignment.Center" />
+    <IconButton Icon="@Icons.Material.Filled.Delete"
+                ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary"
+                Size="Size.Normal" VerticalAlignment="Alignment.Center" />
+    <IconButton Icon="@Icons.Material.Filled.Delete"
+                ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary"
+                Size="Size.Large" VerticalAlignment="Alignment.Center" />
+    <IconButton Icon="@Icons.Material.Filled.Delete"
+                ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary"
+                Size="Size.VeryLarge" VerticalAlignment="Alignment.Center" />
+    <IconButton Icon="@Icons.Material.Filled.Delete" Disabled=true
+                ButtonStyle="ButtonStyle.Outlined" Color="Color.Primary"
+                Size="Size.VeryLarge" VerticalAlignment="Alignment.Center" />
+    <IconButton Icon="@Icons.Material.Filled.Delete"
+                ButtonStyle="ButtonStyle.Filled" Color="Color.Primary"
+                Size="Size.Small" VerticalAlignment="Alignment.Center" />
+    <IconButton Icon="@Icons.Material.Filled.Delete"
+                ButtonStyle="ButtonStyle.Filled" Color="Color.Primary"
+                Size="Size.Normal" VerticalAlignment="Alignment.Center" />
+    <IconButton Icon="@Icons.Material.Filled.Delete"
+                ButtonStyle="ButtonStyle.Filled" Color="Color.Primary"
+                Size="Size.Large" VerticalAlignment="Alignment.Center" />
+    <IconButton Icon="@Icons.Material.Filled.Delete"
+                ButtonStyle="ButtonStyle.Filled" Color="Color.Primary"
+                Size="Size.VeryLarge" VerticalAlignment="Alignment.Center" />
+    <IconButton Icon="@Icons.Material.Filled.Delete" Disabled=true
+                ButtonStyle="ButtonStyle.Filled" Color="Color.Primary"
+                Size="Size.VeryLarge" VerticalAlignment="Alignment.Center" />
+</CascadingValue>

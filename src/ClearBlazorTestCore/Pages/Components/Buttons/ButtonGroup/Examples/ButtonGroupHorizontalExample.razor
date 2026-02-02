@@ -1,25 +1,29 @@
 ﻿@namespace ClearBlazorTest
-<ButtonGroup Color="@Color.Primary" ButtonStyle=ButtonStyle.Outlined Size="Size.Small">
-    <Button>Default</Button>
-    <Button >Primary</Button>
-    <Button >Secondary</Button>
-    <Button Disabled=true>Disabled</Button>
- </ButtonGroup>
-<ButtonGroup Color="@Color.Primary" ButtonStyle=ButtonStyle.LabelOnly Size="Size.Normal">
-    <Button>Default</Button>
-    <Button>Primary</Button>
-    <Button>Secondary</Button>
-    <Button Disabled=true>Disabled</Button>
-</ButtonGroup>
-<ButtonGroup Padding=0,0,30,0 Color="@Color.Primary" ButtonStyle=ButtonStyle.Filled Size="Size.Large">
-    <Button>Default</Button>
-    <Button>Primary</Button>
-    <Button>Secondary</Button>
-    <Button Disabled=true>Disabled</Button>
-</ButtonGroup>
-<ButtonGroup Color="@Color.Primary" ButtonStyle=ButtonStyle.Outlined Size="Size.VeryLarge">
-    <Button>Default</Button>
-    <Button>Primary</Button>
-    <Button>Secondary</Button>
-    <Button Disabled=true>Disabled</Button>
-</ButtonGroup>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <ButtonGroup Color="@Color.Primary" ButtonStyle=ButtonStyle.Outlined Size="Size.Small">
+        <Button>Default</Button>
+        <Button>Primary</Button>
+        <Button>Secondary</Button>
+        <Button Disabled=true>Disabled</Button>
+    </ButtonGroup>
+    <ButtonGroup Color="@Color.Primary" ButtonStyle=ButtonStyle.LabelOnly Size="Size.Normal">
+        <Button>Default</Button>
+        <Button>Primary</Button>
+        <Button>Secondary</Button>
+        <Button Disabled=true>Disabled</Button>
+    </ButtonGroup>
+    <ButtonGroup Padding=0,0,30,0 Color="@Color.Primary" ButtonStyle=ButtonStyle.Filled Size="Size.Large">
+        <Button>Default</Button>
+        <Button>Primary</Button>
+        <Button>Secondary</Button>
+        <Button Disabled=true>Disabled</Button>
+    </ButtonGroup>
+    <ButtonGroup Color="@Color.Primary" ButtonStyle=ButtonStyle.Outlined Size="Size.VeryLarge">
+        <Button>Default</Button>
+        <Button>Primary</Button>
+        <Button>Secondary</Button>
+        <Button Disabled=true>Disabled</Button>
+    </ButtonGroup>
+</CascadingValue>

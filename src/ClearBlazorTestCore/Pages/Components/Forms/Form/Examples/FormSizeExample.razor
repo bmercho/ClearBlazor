@@ -2,27 +2,31 @@
 
 @namespace ClearBlazorTest
 
-<StackPanel Orientation=Orientation.Portrait Spacing="10">
-    <Grid Margin="10" Width=350 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
-        <Form ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
-            <StackPanel Orientation=Orientation.Portrait Spacing="10" Margin="10">
-                <TextInput Size=Size.Small Label="Name" @bind-Value="TextValue1" FieldName="TextValue1" Immediate="true" />
-                <NumericInput Size=Size.Small Label="Value" @bind-Value="IntValue1" FieldName="IntValue1" Immediate="true" />
-                <CheckBox Size=Size.Small Label="I agree" @bind-Checked=BoolValue1 FieldName="BoolValue1" />
-            </StackPanel>
-        </Form>
-    </Grid>
+@inherits ClearComponentBase
 
-    <Grid Margin="10" Width=350 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
-        <Form ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
-            <StackPanel Orientation=Orientation.Portrait Spacing="10" Margin="10">
-                <TextInput Size=Size.Large Label="Name" @bind-Value="TextValue2" FieldName="TextValue2" Immediate="true" />
-                <NumericInput Size=Size.Large Label="Value" @bind-Value="IntValue2" FieldName="IntValue2" Immediate="true" />
-                <CheckBox Size=Size.Large Label="I agree" @bind-Checked=BoolValue2 FieldName="BoolValue2" />
-            </StackPanel>
-        </Form>
-    </Grid>
-</StackPanel>
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation=Orientation.Portrait Spacing="10">
+        <Grid Margin="10" Width=350 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
+            <Form ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
+                <StackPanel Orientation=Orientation.Portrait Spacing="10" Margin="10">
+                    <TextInput Size=Size.Small Label="Name" @bind-Value="TextValue1" FieldName="TextValue1" Immediate="true" />
+                    <NumericInput Size=Size.Small Label="Value" @bind-Value="IntValue1" FieldName="IntValue1" Immediate="true" />
+                    <CheckBox Size=Size.Small Label="I agree" @bind-Checked=BoolValue1 FieldName="BoolValue1" />
+                </StackPanel>
+            </Form>
+        </Grid>
+
+        <Grid Margin="10" Width=350 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
+            <Form ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Model=@this>
+                <StackPanel Orientation=Orientation.Portrait Spacing="10" Margin="10">
+                    <TextInput Size=Size.Large Label="Name" @bind-Value="TextValue2" FieldName="TextValue2" Immediate="true" />
+                    <NumericInput Size=Size.Large Label="Value" @bind-Value="IntValue2" FieldName="IntValue2" Immediate="true" />
+                    <CheckBox Size=Size.Large Label="I agree" @bind-Checked=BoolValue2 FieldName="BoolValue2" />
+                </StackPanel>
+            </Form>
+        </Grid>
+    </StackPanel>
+</CascadingValue>
 
 @code {
     [Required(ErrorMessage = "A value is required.")]

@@ -1,9 +1,13 @@
 ﻿@page "/TableView"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new TableViewDocsInfo())>
-    <CodeSnippet Code=@(typeof(TableViewExample).Name)>
-        <StackPanel Spacing="20">
-            <TableViewExample />
-        </StackPanel>
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new TableViewDocsInfo())>
+        <CodeSnippet Code=@(typeof(TableViewExample).Name)>
+            <StackPanel Spacing="20">
+                <TableViewExample />
+            </StackPanel>
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

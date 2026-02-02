@@ -1,14 +1,18 @@
 ﻿@page "/TreeTableView"
 @using ClearBlazorTest
-<DocsExamplesPage DocsInfo=@(new TreeTableViewDocsInfo())>
-    <CodeSnippet Title="Basic example (with 100 items)" 
-                 Description="Note: The initial is delay is the test data being created"
-                 Code=@(typeof(TreeTableViewExample).Name)>
-        <TreeTableViewExample />
-    </CodeSnippet>
-    <CodeSnippet Title="Virtualized example (with 100000 items)" 
-                 Description="Note: The initial is delay is the test data being created"
-                 Code=@(typeof(TreeTableViewVirtualizeExample).Name)>
-        <TreeTableViewVirtualizeExample />
-    </CodeSnippet>
-</DocsExamplesPage>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new TreeTableViewDocsInfo())>
+        <CodeSnippet Title="Basic example (with 100 items)"
+                     Description="Note: The initial is delay is the test data being created"
+                     Code=@(typeof(TreeTableViewExample).Name)>
+            <TreeTableViewExample />
+        </CodeSnippet>
+        <CodeSnippet Title="Virtualized example (with 100000 items)"
+                     Description="Note: The initial is delay is the test data being created"
+                     Code=@(typeof(TreeTableViewVirtualizeExample).Name)>
+            <TreeTableViewVirtualizeExample />
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

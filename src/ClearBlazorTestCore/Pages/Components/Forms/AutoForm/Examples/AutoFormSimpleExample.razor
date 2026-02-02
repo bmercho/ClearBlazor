@@ -2,15 +2,19 @@
 @using System.ComponentModel.DataAnnotations
 @using System.ComponentModel
 
-<StackPanel Orientation=Orientation.Portrait Spacing="10">
-    <Grid Margin="10" Width=600 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
-        <AutoForm @ref="form" HasLabelColumn=true LabelValueCols="*,3*" Margin=20 ShowLabels=false
-                  ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Immediate=true
-                  InputContainerStyle=InputContainerStyle.Outlined Model=@TestModel />
-    </Grid>
-    <Button HorizontalAlignment=Alignment.Start @onclick=@(() => form.Validate())>Validate</Button>
-    <Button HorizontalAlignment=Alignment.Start @onclick=@Save>Save</Button>
-</StackPanel>
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <StackPanel Orientation=Orientation.Portrait Spacing="10">
+        <Grid Margin="10" Width=600 BorderThickness=1 CornerRadius=10 HorizontalAlignment=Alignment.Start>
+            <AutoForm @ref="form" HasLabelColumn=true LabelValueCols="*,3*" Margin=20 ShowLabels=false
+                      ValidationErrorLocation=ValidationErrorLocation.ErrorIcon Immediate=true
+                      InputContainerStyle=InputContainerStyle.Outlined Model=@TestModel />
+        </Grid>
+        <Button HorizontalAlignment=Alignment.Start @onclick=@(() => form.Validate())>Validate</Button>
+        <Button HorizontalAlignment=Alignment.Start @onclick=@Save>Save</Button>
+    </StackPanel>
+</CascadingValue>
 
 @code {
     Form form = null!;

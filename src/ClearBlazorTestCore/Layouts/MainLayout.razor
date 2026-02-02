@@ -7,105 +7,122 @@
 @inherits LayoutComponentBase
 @inject NavigationManager NavManager
 
+@* <Component1>
+    <Component2/>
+</Component1>
+ *@
+
+    @if (Show)
+    {
 <RootComponent>
-    <Grid Rows="auto,*">
-        <AppBar Row="0" Padding="10">
-            <IconButton Dock=Dock.Left Icon="@Icons.Material.Filled.Menu" @onclick=@MenuClicked />
-            <TextBlock Typo=Typo.H6 HorizontalAlignment="Alignment.Center"
-                       VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
-            <IconButton Dock=Dock.Right @onclick=@OnClicked Icon=@GetIcon() ToolTip="Toggle Light/Dark Mode" Margin="0,10,0,0" />
-        </AppBar>
-        <Drawer @ref=Drawer Row=1 @bind-Open=Open DrawerLocation=DrawerLocation.Left
-                DrawerMode="DrawerMode.Responsive">
-            <DrawerContent>
-                <ListBox TListBox="string" Padding="0,10,0,10">
-                    <ListBoxItem Text="Home" HRef="/" @onclick=Close />
-                    <ListBoxItem Text="Components" InitiallyExpanded=true>
-                        <ListBoxItem Text="Layout" InitiallyExpanded=false>
-                            <ListBoxItem Text="ScrollViewer" HRef="/ScrollViewer" @onclick=Close />
-                            <ListBoxItem Text="Grid" HRef="/Grid" @onclick=Close />
-                            <ListBoxItem Text="Stack Panel" HRef="/StackPanel" @onclick=Close />
-                            <ListBoxItem Text="Wrap Panel" HRef="/WrapPanel" @onclick=Close />
-                            <ListBoxItem Text="Dock Panel" HRef="/DockPanel" @onclick=Close />
-                            <ListBoxItem Text="Uniform Grid" HRef="/UniformGrid" @onclick=Close />
-                            <ListBoxItem Text="Tabs" HRef="/Tabs" @onclick=Close />
-                            <ListBoxItem Text="Drawer" HRef="/Drawer" @onclick=Close />
-                            <ListBoxItem Text="Drawing Canvas" HRef="/DrawingCanvas" @onclick=Close />
+        <Grid Rows="auto,*">
+            <AppBar Row="0" Padding="10">
+                <IconButton Dock=Dock.Left Icon="@Icons.Material.Filled.Menu" @onclick=@MenuClicked />
+                <TextBlock Typo=Typo.H6 HorizontalAlignment="Alignment.Center"
+                VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
+                <IconButton Dock=Dock.Right @onclick=@OnClicked Icon=@GetIcon() ToolTip="Toggle Light/Dark Mode" Margin="0,10,0,0" />
+            </AppBar>
+            <Drawer @ref=Drawer Row=1 @bind-Open=Open DrawerLocation=DrawerLocation.Left
+            DrawerMode="DrawerMode.Responsive">
+                <DrawerContent>
+                    <ListBox TListBox="string" Padding="0,10,0,10">
+                        <ListBoxItem Text="Home" HRef="/" @onclick=Close />
+                        <ListBoxItem Text="Components" InitiallyExpanded=true>
+                            <ListBoxItem Text="Layout" InitiallyExpanded=false>
+                                <ListBoxItem Text="ScrollViewer" HRef="/ScrollViewer" @onclick=Close />
+                                <ListBoxItem Text="Grid" HRef="/Grid" @onclick=Close />
+                                <ListBoxItem Text="Stack Panel" HRef="/StackPanel" @onclick=Close />
+                                <ListBoxItem Text="Wrap Panel" HRef="/WrapPanel" @onclick=Close />
+                                <ListBoxItem Text="Dock Panel" HRef="/DockPanel" @onclick=Close />
+                                <ListBoxItem Text="Uniform Grid" HRef="/UniformGrid" @onclick=Close />
+                                <ListBoxItem Text="Tabs" HRef="/Tabs" @onclick=Close />
+                                <ListBoxItem Text="Drawer" HRef="/Drawer" @onclick=Close />
+                                <ListBoxItem Text="Drawing Canvas" HRef="/DrawingCanvas" @onclick=Close />
+                            </ListBoxItem>
+                            <ListBoxItem Text="TextBlock" HRef="/TextBlock" @onclick=Close />
+                            <ListBoxItem Text="Icons" HRef="/Icon" @onclick=Close />
+                            <ListBoxItem Text="Avatars" HRef="/Avatar" @onclick=Close />
+                            <ListBoxItem Text="AppBar" HRef="/AppBar" @onclick=Close />
+                            <ListBoxItem Text="Images" HRef="/Image" @onclick=Close />
+                            <ListBoxItem Text="Buttons" InitiallyExpanded=false>
+                                <ListBoxItem Text="Button" HRef="/Button" @onclick=Close />
+                                <ListBoxItem Text="Icon Button" HRef="/IconButton" @onclick=Close />
+                                <ListBoxItem Text="Toggle Icon Button" HRef="/ToggleIconButton" @onclick=Close />
+                                <ListBoxItem Text="Button Group" HRef="/ButtonGroup" @onclick=Close />
+                            </ListBoxItem>
+                            <ListBoxItem Text="Pickers" InitiallyExpanded=false>
+                                <ListBoxItem Text="Color Picker" HRef="/ColorPicker" @onclick=Close />
+                                <ListBoxItem Text="Date Picker" HRef="/DatePicker" @onclick=Close />
+                                <ListBoxItem Text="Time Picker" HRef="/TimePicker" @onclick=Close />
+                                <ListBoxItem Text="Date Time Picker" HRef="/DateTimePicker" @onclick=Close />
+                            </ListBoxItem>
+                            <ListBoxItem Text="ToolTip" HRef="/ToolTip" @onclick=Close />
+                            <ListBoxItem Text="Toolbar" HRef="/Toolbar" @onclick=Close />
+                            <ListBoxItem Text="ToolbarTray" HRef="/ToolbarTray" @onclick=Close />
+                            <ListBoxItem Text="ListBox" HRef="/ListBox" @onclick=Close />
+                            <ListBoxItem Text="Popup" HRef="/Popup" @onclick=Close />
+                            <ListBoxItem Text="Pagination" HRef="/Pagination" @onclick=Close />
+                            <ListBoxItem Text="Inputs" InitiallyExpanded=false>
+                                <ListBoxItem Text="Check Box" HRef="/CheckBox" @onclick=Close />
+                                <ListBoxItem Text="Switch" HRef="/Switch" @onclick=Close />
+                                <ListBoxItem Text="Radio Button" HRef="/RadioGroup" @onclick=Close />
+                                <ListBoxItem Text="Text Input" HRef="/TextInput" @onclick=Close />
+                                <ListBoxItem Text="Numeric Input" HRef="/NumericInput" @onclick=Close />
+                                <ListBoxItem Text="Select" HRef="/Select" @onclick=Close />
+                                <ListBoxItem Text="Slider" HRef="/Slider" @onclick=Close />
+                                <ListBoxItem Text="Color Picker" HRef="/ColorPickerInput" @onclick=Close />
+                                <ListBoxItem Text="Date Picker" HRef="/DatePickerInput" @onclick=Close />
+                                <ListBoxItem Text="Time Picker" HRef="/TimePickerInput" @onclick=Close />
+                            </ListBoxItem>
+                            <ListBoxItem Text="List type controls" InitiallyExpanded=false>
+                                <ListBoxItem Text="ListView" HRef="/ListView" @onclick=Close />
+                                <ListBoxItem Text="Table View" HRef="/TableView" @onclick=Close />
+                                <ListBoxItem Text="TreeView" HRef="/TreeView" @onclick=Close />
+                                <ListBoxItem Text="TreeTableView" HRef="/TreeTableView" @onclick=Close />
+                            </ListBoxItem>
+                            <ListBoxItem Text="Forms" InitiallyExpanded=false>
+                                <ListBoxItem Text="Form" HRef="/Form" @onclick=Close />
+                                <ListBoxItem Text="Auto Form" HRef="/AutoForm" @onclick=Close />
+                            </ListBoxItem>
+                            <ListBoxItem Text="GridSplitter" HRef="/GridSplitter" @onclick=Close />
+                            <ListBoxItem Text="Spinner" HRef="/Spinner" @onclick=Close />
+                            @if (IsDebug())
+                            {
+                                <ListBoxItem Text="Logs" HRef="/Logs" @onclick=Close />
+                            }
                         </ListBoxItem>
-                        <ListBoxItem Text="TextBlock" HRef="/TextBlock" @onclick=Close />
-                        <ListBoxItem Text="Icons" HRef="/Icon" @onclick=Close />
-                        <ListBoxItem Text="Avatars" HRef="/Avatar" @onclick=Close />
-                        <ListBoxItem Text="AppBar" HRef="/AppBar" @onclick=Close />
-                        <ListBoxItem Text="Images" HRef="/Image" @onclick=Close />
-                        <ListBoxItem Text="Buttons" InitiallyExpanded=false>
-                            <ListBoxItem Text="Button" HRef="/Button" @onclick=Close />
-                            <ListBoxItem Text="Icon Button" HRef="/IconButton" @onclick=Close />
-                            <ListBoxItem Text="Toggle Icon Button" HRef="/ToggleIconButton" @onclick=Close />
-                            <ListBoxItem Text="Button Group" HRef="/ButtonGroup" @onclick=Close />
+                        <ListBoxItem Text="Customization" InitiallyExpanded=true>
+                            <ListBoxItem Text="Theming" InitiallyExpanded=true>
+                                <ListBoxItem Text="Themes" HRef="/Themes" @onclick=Close />
+                                <ListBoxItem Text="Colors" HRef="/Colors" @onclick=Close />
+                            </ListBoxItem>
                         </ListBoxItem>
-                        <ListBoxItem Text="Pickers" InitiallyExpanded=false>
-                            <ListBoxItem Text="Color Picker" HRef="/ColorPicker" @onclick=Close />
-                            <ListBoxItem Text="Date Picker" HRef="/DatePicker" @onclick=Close />
-                            <ListBoxItem Text="Time Picker" HRef="/TimePicker" @onclick=Close />
-                            <ListBoxItem Text="Date Time Picker" HRef="/DateTimePicker" @onclick=Close />
-                        </ListBoxItem>
-                        <ListBoxItem Text="ToolTip" HRef="/ToolTip" @onclick=Close />
-                        <ListBoxItem Text="Toolbar" HRef="/Toolbar" @onclick=Close />
-                        <ListBoxItem Text="ToolbarTray" HRef="/ToolbarTray" @onclick=Close />
-                        <ListBoxItem Text="ListBox" HRef="/ListBox" @onclick=Close />
-                        <ListBoxItem Text="Popup" HRef="/Popup" @onclick=Close />
-                        <ListBoxItem Text="Pagination" HRef="/Pagination" @onclick=Close />
-                        <ListBoxItem Text="Inputs" InitiallyExpanded=false>
-                            <ListBoxItem Text="Check Box" HRef="/CheckBox" @onclick=Close />
-                            <ListBoxItem Text="Switch" HRef="/Switch" @onclick=Close />
-                            <ListBoxItem Text="Radio Button" HRef="/RadioGroup" @onclick=Close />
-                            <ListBoxItem Text="Text Input" HRef="/TextInput" @onclick=Close />
-                            <ListBoxItem Text="Numeric Input" HRef="/NumericInput" @onclick=Close />
-                            <ListBoxItem Text="Select" HRef="/Select" @onclick=Close />
-                            <ListBoxItem Text="Slider" HRef="/Slider" @onclick=Close />
-                            <ListBoxItem Text="Color Picker" HRef="/ColorPickerInput" @onclick=Close />
-                            <ListBoxItem Text="Date Picker" HRef="/DatePickerInput" @onclick=Close />
-                            <ListBoxItem Text="Time Picker" HRef="/TimePickerInput" @onclick=Close />
-                        </ListBoxItem>
-                        <ListBoxItem Text="List type controls" InitiallyExpanded=false>
-                            <ListBoxItem Text="ListView" HRef="/ListView" @onclick=Close />
-                            <ListBoxItem Text="Table View" HRef="/TableView" @onclick=Close />
-                            <ListBoxItem Text="TreeView" HRef="/TreeView" @onclick=Close />
-                            <ListBoxItem Text="TreeTableView" HRef="/TreeTableView" @onclick=Close />
-                        </ListBoxItem>
-                        <ListBoxItem Text="Forms" InitiallyExpanded=false>
-                            <ListBoxItem Text="Form" HRef="/Form" @onclick=Close />
-                            <ListBoxItem Text="Auto Form" HRef="/AutoForm" @onclick=Close />
-                        </ListBoxItem>
-                        <ListBoxItem Text="GridSplitter" HRef="/GridSplitter" @onclick=Close />
-                        <ListBoxItem Text="Spinner" HRef="/Spinner" @onclick=Close />
-                        @if (IsDebug())
+                    </ListBox>
+                </DrawerContent>
+                <DrawerBody>
+                    <Grid Margin="10">
+                        @if (RouteManager.MainPageType == null)
                         {
-                            <ListBoxItem Text="Logs" HRef="/Logs" @onclick=Close />
+                            <Index/>
                         }
-                    </ListBoxItem>
-                    <ListBoxItem Text="Customization" InitiallyExpanded=true>
-                        <ListBoxItem Text="Theming" InitiallyExpanded=true>
-                            <ListBoxItem Text="Themes" HRef="/Themes" @onclick=Close />
-                            <ListBoxItem Text="Colors" HRef="/Colors" @onclick=Close />
-                        </ListBoxItem>
-                    </ListBoxItem>
-                </ListBox>
-            </DrawerContent>
-            <DrawerBody>
-                <Grid Margin="10">
-                    @Body
-                </Grid>
-            </DrawerBody>
-        </Drawer>
-    </Grid>
-</RootComponent>
+                        else
+                        {
+                            <DynamicComponent Type=@RouteManager.MainPageType />
+                        }
+                    </Grid>
+                </DrawerBody>
+            </Drawer>
+        </Grid>
+    </RootComponent>
+}
 
 
 @code {
     Drawer Drawer = null!;
 
     bool Open { get; set; } = false;
+
+    bool Show = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -114,10 +131,25 @@
         ClientData.LoadTestData();
     }
 
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        await base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+    }
 
     private void Toggle()
     {
         Open = !Open;
+        RootComponent.RootComponent?.Refresh();
     }
 
     private string GetIcon()
@@ -148,9 +180,11 @@
         StateHasChanged();
     }
 
-    private void GotoPage(string page)
+    private async Task GotoPage(string page)
     {
-        NavManager.NavigateTo($"/{page}");
+        await RouteManager.NavigateTo(page);
+
+        //NavManager.NavigateTo($"/{page}", true);
     }
 
     private bool IsDebug()

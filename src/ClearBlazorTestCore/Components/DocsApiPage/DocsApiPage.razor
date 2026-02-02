@@ -1,37 +1,40 @@
 ﻿@using ClearBlazorTest
 @namespace ClearBlazorTest
 @inherits ClearComponentBase
-<div id="@Id" class="@Classes" style="@ComputeStyle()">
-    <ScrollViewer>
-        <StackPanel Padding="20" Spacing="20">
-            <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>API</TextBlock>
-            <DocsHeader DocsName=@DocsInfo?.Name DocsDescription=@DocsInfo?.Description ForApi=true />
-            <Link HRef=@GetExamplesHRef()>@GetExamplesLinkName()</Link>
-            <ApiComponent ParameterApi=@DocsInfo?.ParameterApi
-            MethodApi=@DocsInfo?.MethodApi />
-            <StackPanel Orientation=Orientation.Landscape>
-                <TextBlock Text="Inherits from:&nbsp;&nbsp;" />
-                @if (ShowInheritsAsLink())
-                {
-                    <ClearBlazor.Link HRef=@GetInheritHRef()>@GetInheritLinkName()</ClearBlazor.Link>
-                }
-                else
-                {
-                    <TextBlock>@GetInheritLinkName()</TextBlock>
-                }
-            </StackPanel>
-            @if (HasImplementLink())
-            {
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id="@Id" class="@Classes" style="@ComputeStyle()">
+        <ScrollViewer>
+            <StackPanel Padding="20" Spacing="20">
+                <TextBlock HorizontalAlignment=Alignment.Center Typo=Typo.H4>API</TextBlock>
+                <DocsHeader DocsName=@DocsInfo?.Name DocsDescription=@DocsInfo?.Description ForApi=true />
+                <Link HRef=@GetExamplesHRef()>@GetExamplesLinkName()</Link>
+                <ApiComponent ParameterApi=@DocsInfo?.ParameterApi
+                              MethodApi=@DocsInfo?.MethodApi />
                 <StackPanel Orientation=Orientation.Landscape>
-                    <TextBlock Text="Implements:&nbsp;" />
-                    @foreach (var link in DocsInfo!.ImplementsLinks)
+                    <TextBlock Text="Inherits from:&nbsp;&nbsp;" />
+                    @if (ShowInheritsAsLink())
                     {
-                        <TextBlock Text="&nbsp;" />
-                        <ClearBlazor.Link HRef=@link.Item2>@($" {link.Item1}")</ClearBlazor.Link>
+                        <ClearBlazor.Link HRef=@GetInheritHRef()>@GetInheritLinkName()</ClearBlazor.Link>
+                    }
+                    else
+                    {
+                        <TextBlock>@GetInheritLinkName()</TextBlock>
                     }
                 </StackPanel>
-            }
-        </StackPanel>
-    </ScrollViewer>
-</div>
+                @if (HasImplementLink())
+                {
+                    <StackPanel Orientation=Orientation.Landscape>
+                        <TextBlock Text="Implements:&nbsp;" />
+                        @foreach (var link in DocsInfo!.ImplementsLinks)
+                        {
+                            <TextBlock Text="&nbsp;" />
+                            <ClearBlazor.Link HRef=@link.Item2>@($" {link.Item1}")</ClearBlazor.Link>
+                        }
+                    </StackPanel>
+                }
+            </StackPanel>
+        </ScrollViewer>
+    </div>
+</CascadingValue>
 
