@@ -54,11 +54,10 @@ namespace ClearBlazor
         public List<TableColumn<TItem>> Columns { get; set; } = new List<TableColumn<TItem>>();
 
         private TreeTableView<TItem>? _parent = null;
-        private bool _doRender = false;
 
         public void Refresh()
         {
-            _doRender = true;
+            DoRender = true;
             StateHasChanged();
         }
 
@@ -77,20 +76,10 @@ namespace ClearBlazor
                 case VirtualizeMode.InfiniteScroll:
                     break;
                 case VirtualizeMode.Virtualize:
-                    _doRender = true;
+                    DoRender = true;
                     break;
             }
             await base.SetParametersAsync(parameters);
-        }
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            base.OnAfterRender(firstRender);
-            _doRender = false;
-        }
-        protected override bool ShouldRender()
-        {
-            return _doRender;
         }
 
         private string GetFullHeaderStyle()

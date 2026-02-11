@@ -23,8 +23,7 @@ namespace ClearBlazor
 
 
         private bool MouseDown = false;
-        private bool MouseOver = false;
-
+        
         private Grid? ParentGrid = null;
         private double LeftColumnWidth = 0;
         private double RightColumnWidth = 0;
@@ -148,7 +147,6 @@ namespace ClearBlazor
 
         private async Task OnMouseEnter(MouseEventArgs e)
         {
-            MouseOver = true;
             
             if (Direction == SplitterDirection.Vertical)
                 await JSRuntime.InvokeVoidAsync("Cursor.setCursor", "col-resize");
@@ -158,7 +156,6 @@ namespace ClearBlazor
         }
         private async Task OnMouseLeave(MouseEventArgs e)
         {
-            MouseOver = false;
             await JSRuntime.InvokeVoidAsync("Cursor.resetCursor");
 
         }

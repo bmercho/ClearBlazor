@@ -2,12 +2,20 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <TextInput Label="Normal" Placeholder="Normal" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" />
-    <TextInput Label="Immediate" Placeholder="Immediate" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Immediate="true" DebounceInterval="0" />
-    <TextInput Label="Immediate and debounced" Placeholder="Debounced" InputContainerStyle="InputContainerStyle.Outlined" @bind-Value="TextValue" Immediate="true" DebounceInterval="500" />
-    <TextBlock VerticalAlignment="Alignment.Center">@TextValue</TextBlock>
+    <TextInput Label="Normal" Placeholder="Normal" InputContainerStyle="InputContainerStyle.Outlined" 
+               @bind-Value="TextValue" @bind-Value:after=Update />
+    <TextInput Label="Immediate" Placeholder="Immediate" InputContainerStyle="InputContainerStyle.Outlined" 
+               @bind-Value="TextValue" @bind-Value:after=Update Immediate ="true" DebounceInterval="0" />
+    <TextInput Label="Immediate and debounced" Placeholder="Debounced" InputContainerStyle="InputContainerStyle.Outlined" 
+               @bind-Value="TextValue" @bind-Value:after=Update Immediate ="true" DebounceInterval="500" />
+    <TextBlock Width="100" Height=40 VerticalAlignment="Alignment.Center">@TextValue</TextBlock>
 </CascadingValue>
 
 @code {
     public string TextValue { get; set; } = string.Empty;
+
+    public void Update()
+    {
+        StateHasChanged();
+    }   
 }

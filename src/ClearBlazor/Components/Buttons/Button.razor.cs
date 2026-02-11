@@ -97,10 +97,12 @@ namespace ClearBlazor
 
         private bool _mouseOver = false;
 
-        protected override void OnParametersSet()
+        protected override void OnAfterRender(bool firstRender)
         {
-            base.OnParametersSet();
+            base.OnAfterRender(firstRender);
+            DoRender = false;
         }
+
         private string GetClasses()
         {
             if (!Disabled)
@@ -229,8 +231,13 @@ namespace ClearBlazor
             LabelStyle += "align-self:center; ";
 
             LabelStyle += "user-select: none; -ms-user-select: none; " +
-                          "-webkit-user-select: none; -moz-user-select: none; " +
-                          "cursor: default; ";
+                          "-webkit-user-select: none; -moz-user-select: none; ";
+
+            if (Disabled)
+                LabelStyle += "cursor: default; pointer-events:none; ";
+            else
+                LabelStyle += "cursor: pointer; ";
+
 
             return css;
         }
@@ -325,15 +332,14 @@ namespace ClearBlazor
                 await Task.CompletedTask;
             else
                 ToolTipElement.ShowToolTip();
-            StateHasChanged();
+            await Refresh();
         }
 
         protected async Task OnMouseLeave(MouseEventArgs e)
         {
             _mouseOver = false;
             ToolTipElement?.HideToolTip();
-            await Task.CompletedTask;
-            StateHasChanged();
+            await Refresh();
         }
 
         private Color GetFilledBackgroundColor(Color? color)

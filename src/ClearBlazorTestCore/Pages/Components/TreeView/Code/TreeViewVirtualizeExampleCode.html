@@ -1,35 +1,39 @@
 <div>
 <div class="html"><pre>
 <span class="atSign">&#64;</span>using Data
-<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">Spacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span>
-            <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span><span class="htmlTagDelimiter">&gt;</span>
-    &lt;TreeView Height=300 Width=600 CornerRadius=4 BorderThickness=1
-              Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
-              HorizontalContentAlignment=Alignment.Start
-              VirtualizeMode=<span class="atSign">&#64;</span>VirtualizeMode.Virtualize
-              SelectionMode=SelectionMode.Single
-              <span class="atSign">&#64;</span>ref=&quot;List&quot; InitialIndex=<span class="atSign">&#64;</span>((20, Alignment.Center)) Items=<span class="atSign">&#64;</span>_localTreeData&gt;
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">NodeTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">node</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span><span class="htmlTagDelimiter">&gt;</span>
-                <span class="atSign">&#64;</span>if (node.IsExpanded)
-                {
-                    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Icon</span> <span class="htmlAttributeName">IconName</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>node.OpenIconName</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Secondary</span> <span class="htmlTagDelimiter">/&gt;</span>
-                }
-                else
-                {
-                    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Icon</span> <span class="htmlAttributeName">IconName</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>node.IconName</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Secondary</span> <span class="htmlTagDelimiter">/&gt;</span>
-                }
-                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">TextWrap.NoWrap</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">5</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
-                    <span class="atSign">&#64;</span>node.NodeId
-                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
-            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">NodeTemplate</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TreeView</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>onclick</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>CollapseAll</span><span class="htmlTagDelimiter">&gt;</span>Collapse all<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>onclick</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>ExpandAll</span><span class="htmlTagDelimiter">&gt;</span>Expand all<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
-    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
-<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="atSign">&#64;</span>inherits ClearComponentBase
+
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CascadingValue</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">this</span><span class="quot">&quot;</span> <span class="htmlAttributeName">IsFixed</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="keyword">false</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span> <span class="htmlAttributeName">HorizontalAlignment</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Alignment.Start</span> <span class="htmlAttributeName">Spacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">20</span>
+                <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Portrait</span><span class="htmlTagDelimiter">&gt;</span>
+        &lt;TreeView Height=300 Width=600 CornerRadius=4 BorderThickness=1
+                  Margin=10 Padding=10 HorizontalAlignment=Alignment.Start
+                  HorizontalContentAlignment=Alignment.Start
+                  VirtualizeMode=<span class="atSign">&#64;</span>VirtualizeMode.Virtualize
+                  SelectionMode=SelectionMode.Single
+                  <span class="atSign">&#64;</span>ref=&quot;List&quot; InitialIndex=<span class="atSign">&#64;</span>((20, Alignment.Center)) Items=<span class="atSign">&#64;</span>_localTreeData&gt;
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">NodeTemplate</span> <span class="htmlAttributeName">Context</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">node</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">StackPanel</span> <span class="htmlAttributeName">Orientation</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Orientation.Landscape</span> <span class="htmlAttributeName">BackgroundColor</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Transparent</span><span class="htmlTagDelimiter">&gt;</span>
+                    <span class="atSign">&#64;</span>if (node.IsExpanded)
+                    {
+                        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Icon</span> <span class="htmlAttributeName">IconName</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>node.OpenIconName</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Secondary</span> <span class="htmlTagDelimiter">/&gt;</span>
+                    }
+                    else
+                    {
+                        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Icon</span> <span class="htmlAttributeName">IconName</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>node.IconName</span> <span class="htmlAttributeName">Color</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Color.Secondary</span> <span class="htmlTagDelimiter">/&gt;</span>
+                    }
+                    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">TextWrapping</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">TextWrap.NoWrap</span> <span class="htmlAttributeName">Margin</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">5</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+                        <span class="atSign">&#64;</span>node.NodeId
+                    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+                <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">NodeTemplate</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TreeView</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">WrapPanel</span> <span class="htmlAttributeName">ColumnSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">RowSpacing</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">10</span> <span class="htmlAttributeName">Direction</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Direction.Row</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>onclick</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>CollapseAll</span><span class="htmlTagDelimiter">&gt;</span>Collapse all<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+            <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">Button</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>onclick</span><span class="htmlOperator">=</span><span class="htmlAttributeValue"><span class="atSign">&#64;</span>ExpandAll</span><span class="htmlTagDelimiter">&gt;</span>Expand all<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">Button</span><span class="htmlTagDelimiter">&gt;</span>
+        <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">WrapPanel</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">StackPanel</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">CascadingValue</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
 <div class="csharp"><pre>
 <span class="atSign">&#64;</span>code {

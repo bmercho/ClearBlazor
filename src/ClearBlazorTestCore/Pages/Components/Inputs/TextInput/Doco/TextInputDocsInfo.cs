@@ -22,6 +22,7 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> MethodApi {get; set; } =  new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("Focus()", "void", "", ""),
         };
     }
 }

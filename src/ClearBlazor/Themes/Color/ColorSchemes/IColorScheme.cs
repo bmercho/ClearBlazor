@@ -59,5 +59,6 @@
         Color OutlineVariant { get; }
         Color Scrim { get; }
         Color Shadow { get; }
+        Color Overlay { get; }
     }
 }

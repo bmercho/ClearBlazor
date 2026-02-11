@@ -86,18 +86,6 @@ namespace ClearBlazorInternal
 
         }
 
-        protected override void OnAfterRender(bool firstRender)
-        {
-            base.OnAfterRender(firstRender);
-            DoRender = false;
-
-
-        }
-        protected override bool ShouldRender()
-        {
-            return DoRender;
-        }
-
         internal override async Task OnPointerEnter(PointerEventArgs args)
         {
             await base.OnPointerEnter(args);

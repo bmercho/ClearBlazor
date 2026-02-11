@@ -3,8 +3,8 @@
 @inherits ClearComponentBase
 <CascadingValue Value="this" IsFixed="false">
     <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()"
-        @onmouseenter="OnMouseEnter"
-        @onmouseleave="OnMouseLeave">
+        @onmouseenter=OnMouseEnter
+        @onmouseleave=OnMouseLeave>
         @if (ToolTip != null && ToolTip != string.Empty)
         {
             <ToolTip @ref="ToolTipElement" Text=@ToolTip ToolTipPosition=@ToolTipPosition Delay=@ToolTipDelay />

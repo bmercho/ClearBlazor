@@ -10,8 +10,6 @@ namespace ClearBlazor
     /// </summary>
     public abstract class ClearComponentBase : ComponentBase, IAsyncDisposable, IHandleEvent
     {
-        private bool _preventFromRecursiveSetParameters;
-
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> AdditionalAttributes { get; set; } = [];
 
@@ -193,8 +191,6 @@ namespace ClearBlazor
 
         public string Id { get; set; }
 
-        private DotNetObjectReference<ClearComponentBase> _dotNetHelper;
-
         internal Alignment? HorizontalAlignmentDefaultOverride { get; set; } = null;
 
         internal Alignment? VerticalAlignmentDefaultOverride { get; set; } = null;
@@ -205,9 +201,7 @@ namespace ClearBlazor
 
         protected bool IsScroller { get; set; } = false;
 
-        private bool _doubleClickRaised = false;
-
-        public static bool RenderAll { get; internal set; } = false;
+        public virtual bool DoRender { get; set; } = true; 
 
         // Drag drop
         internal static bool Dragging { get; private set; } = false;
@@ -218,6 +212,7 @@ namespace ClearBlazor
 
         internal static string CursorIcon = @Icons.Material.Filled.AddAlarm;
         internal static bool PopupCursorOpen = false;
+        public static RootComponent? RootComponent { get; set; } = null;
 
         public ClearComponentBase()
         {
@@ -227,7 +222,18 @@ namespace ClearBlazor
             Classes = String.Empty;
 
             Id = GetType().Name + "-" + Guid.NewGuid().ToString();
-            _dotNetHelper = DotNetObjectReference.Create(this);
+        }
+
+        public static async Task ShowDialog(Type dialogType)
+        {
+            RootComponent?.ShowDialog(dialogType, []);
+        }
+
+        public static async Task HideDialog()
+        {
+            if (RootComponent == null)
+                return;
+            await RootComponent.HideTheDialog();
         }
 
         protected override async Task OnInitializedAsync()
@@ -241,44 +247,19 @@ namespace ClearBlazor
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
-            foreach (var parameter in parameters)
-            {
-                if (parameter.Name == "Data")
-                {
-                    var d = parameter.Value;
-                }
-
-            }
-
-            if (!HaveParametersChanged(parameters))
-                return;
-
-            // Make sure we won't SetParameters recursively (through the Parent.DockPanelChanged call).
-            if (_preventFromRecursiveSetParameters)
-            {
-                return;
-            }
-
-            parameters.TryGetValue<ClearComponentBase>(nameof(Parent), out var parent);
-
-            bool paramsChanged = parent != null && parent.HaveParametersChanged(this, parameters);
-
-            // first set parameters
-            await base.SetParametersAsync(parameters).ConfigureAwait(false);
-
-            if (Parent != null)
-            {
-                if (paramsChanged)
-                {
-                    _preventFromRecursiveSetParameters = true;
-                    Parent.StateHasChanged();
-                    _preventFromRecursiveSetParameters = false;
-                }
-            }
-
+            await base.SetParametersAsync(parameters);
             UpdateClasses();
         }
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+            DoRender = true;
+        }
+        protected override bool ShouldRender()
+        {
+            return DoRender;
+        }
 
         // Drag drop functionality
 
@@ -396,24 +377,22 @@ namespace ClearBlazor
         }
         // End of Drag drop functionality
 
+        public async Task Refresh()
+        {
+            DoRender = true;
+            //foreach (var child in Children)
+            //    await child.Refresh();
+            StateHasChanged();
+        }
+
         protected void Refresh(ClearComponentBase component)
         {
             component.StateHasChanged();
         }
 
-        //protected override bool ShouldRender()
-        //{
-        //    return RenderAll;
-        //}
-
         protected virtual bool HaveParametersChanged(ClearComponentBase child, ParameterView parameters)
         {
             return false;
-        }
-
-        protected virtual bool HaveParametersChanged(ParameterView parameters)
-        {
-            return true;
         }
 
         protected T? FindParent<T>(ClearComponentBase? Parent) where T : ClearComponentBase

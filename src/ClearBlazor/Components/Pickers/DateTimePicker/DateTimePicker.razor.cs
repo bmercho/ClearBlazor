@@ -145,10 +145,10 @@ namespace ClearBlazor
             SelectedDate = date;
         }
 
-        private void OnToggleChanged()
+        private async Task OnToggleChanged()
         {
             ShowDatePicker = !ShowDatePicker;
-            StateHasChanged();
+            await Refresh();
         }
 
         private int GetYearIndex()
@@ -267,7 +267,7 @@ namespace ClearBlazor
 
             DateTime = SelectedDate;
             await DateChanged.InvokeAsync(DateTime);
-            StateHasChanged();
+            await Refresh();
         }
 
         private string GetMonthStyle(int month)
@@ -291,7 +291,7 @@ namespace ClearBlazor
             Mode = DatePickerMode.Day;
             DateTime = SelectedDate;
             await DateChanged.InvokeAsync(DateTime);
-            StateHasChanged();
+            await Refresh();
         }
 
         private ButtonStyle GetMonthButtonStyle(int monthIndex)
@@ -359,7 +359,7 @@ namespace ClearBlazor
             DateTime = SelectedDate.AddDays(day - SelectedDate.Day);
             SelectedDate = (DateTime)DateTime;
             await DateChanged.InvokeAsync(DateTime);
-            StateHasChanged();
+            await Refresh();
             await DateTimeSelected.InvokeAsync();
         }
 
@@ -410,7 +410,7 @@ namespace ClearBlazor
             SelectedDate = SelectedDate.AddYears(1);
             DateTime = SelectedDate;
             await DateChanged.InvokeAsync(DateTime);
-            StateHasChanged();
+            await Refresh();
         }
 
         private async Task OnSubtractYear()
@@ -421,7 +421,7 @@ namespace ClearBlazor
             SelectedDate = SelectedDate.AddYears(-1);
             DateTime = SelectedDate;
             await DateChanged.InvokeAsync(DateTime);
-            StateHasChanged();
+            await Refresh();
         }
 
         private async Task OnSubtractMonth()
@@ -432,7 +432,7 @@ namespace ClearBlazor
             SelectedDate = SelectedDate.AddMonths(-1);
             DateTime = SelectedDate;
             await DateChanged.InvokeAsync(DateTime);
-            StateHasChanged();
+            await Refresh();
         }
 
         private async Task OnAddMonth()
@@ -443,18 +443,18 @@ namespace ClearBlazor
             SelectedDate = SelectedDate.AddMonths(1);
             DateTime = SelectedDate;
             await DateChanged.InvokeAsync(DateTime);
-            StateHasChanged();
+            await Refresh();
         }
 
-        private void OnGotoMonths()
+        private async Task GotoMonths()
         {
             if (IsReadOnly || IsDisabled)
                 return;
 
             Mode = DatePickerMode.Month;
-            StateHasChanged();
+            await Refresh();
         }
-        
+
         //private int GetBodyWidth()
         //{
         //    if (Orientation == Orientation.Landscape)
@@ -471,24 +471,24 @@ namespace ClearBlazor
         //        return BodyHeightPortrait;
         //}
 
-        private void OnDateClicked()
+        private async Task OnDateClicked()
         {
             if (IsReadOnly || IsDisabled)
                 return;
 
             Mode = DatePickerMode.Year;
-            StateHasChanged();
+            await Refresh();
         }
 
-        private void OnMouseEnterMonth(int month)
+        private async Task OnMouseEnterMonth(int month)
         {
             MouseOverMonth = month;
-            StateHasChanged();
+            await Refresh();
         }
-        private void OnMouseLeaveMonth()
+        private async Task OnMouseLeaveMonth()
         {
             MouseOverMonth = null;
-            StateHasChanged();
+            await Refresh();
         }
 
         private class YearItem:ListItem

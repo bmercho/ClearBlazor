@@ -7,10 +7,16 @@
 {
     <div style=@GetStyle()>
         <div style="height: 100%; width:100%; display: grid;">
-            <div @ref="Element" style="display:grid;overflow:hidden;"
-                 @onpointermove=OnPointerMove 
+            <div style="display:grid;overflow:hidden;"
+                 @onpointermove=OnPointerMove
                  @onpointerup=OnPointerUp>
-                @ChildContent
+                <Grid>
+                    @ChildContent
+                    @if (dialogType != null)
+                    {
+                        <DynamicComponent Type=@dialogType Parameters=@dialogParameters />
+                    }
+                </Grid>
             </div>
         </div>
     </div>

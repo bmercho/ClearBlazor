@@ -54,10 +54,5 @@ namespace ClearBlazor
             if (!Toolbars.Contains(toolbar))
                 Toolbars.Add(toolbar);
         }
-
-        private void OnDragOver()
-        {
-
-        }
     }
 }

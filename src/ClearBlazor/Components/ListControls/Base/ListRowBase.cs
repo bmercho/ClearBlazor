@@ -12,7 +12,6 @@ namespace ClearBlazorInternal
         [Parameter]
         public int RowIndex { get; set; }
 
-        internal bool DoRender { get; set; } = true;
         internal bool MouseOver { get; set; } = false;
 
         internal void SetRowData(TItem rowData)
@@ -20,16 +19,10 @@ namespace ClearBlazorInternal
             RowData = rowData;
         }
 
-        public void Refresh()
-        {
-            DoRender = true;
-            StateHasChanged();
-        }
-
-        internal void Unhighlight()
+        internal async Task Unhighlight()
         {
             MouseOver = false;
-            Refresh();
+            await Refresh();
         }
 
 

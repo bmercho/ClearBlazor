@@ -1,6 +1,10 @@
 <div>
 <div class="html"><pre>
-&lt;ColorPickerInput <span class="atSign">&#64;</span>bind-Value=Color <span class="atSign">&#64;</span>bind-Value:after=OnChange ShowHex=true /&gt;
+<span class="atSign">&#64;</span>inherits ClearComponentBase
+
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CascadingValue</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">this</span><span class="quot">&quot;</span> <span class="htmlAttributeName">IsFixed</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="keyword">false</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+    &lt;ColorPickerInput <span class="atSign">&#64;</span>bind-Value=Color <span class="atSign">&#64;</span>bind-Value:after=OnChange ShowHex=true /&gt;
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">CascadingValue</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
 <div class="csharp"><pre>
 <span class="atSign">&#64;</span>code {

@@ -114,9 +114,9 @@ namespace ClearBlazor
                 Time = new TimeOnly(0, 0);
         }
 
-        protected override void OnAfterRender(bool firstRender)
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnAfterRender(firstRender);
+            await base.OnAfterRenderAsync(firstRender);
 
             if (firstRender)
                 if (Hours24)
@@ -129,7 +129,7 @@ namespace ClearBlazor
             {
                 GetHourMinuteAmPmFromTime();
                 CurrentTime = Time;
-                StateHasChanged();
+                await Refresh();
             }
         }
 
@@ -367,21 +367,21 @@ namespace ClearBlazor
                 return Color.ContrastingColor(Color!);
         }
 
-        private void OnMinuteClicked()
+        private async Task OnMinuteClicked()
         {
             PickerMode = PickerMode.Minute;
             MyCanvas?.RefreshCanvas();
-            StateHasChanged();
+            await Refresh();
         }
 
-        private void OnHourClicked()
+        private async Task OnHourClicked()
         {
             if (Hours24)
                 PickerMode = PickerMode.Hour24;
             else
                 PickerMode = PickerMode.Hour12;
             MyCanvas?.RefreshCanvas();
-            StateHasChanged();
+            await Refresh();
         }
 
         private async Task OnAMClicked()
@@ -390,7 +390,7 @@ namespace ClearBlazor
                 return;
             IsAM = true;
             Hour = Hour % 12;
-            StateHasChanged();
+            await Refresh();
             await PublishTime();
         }
         private async Task OnPMClicked()
@@ -398,7 +398,7 @@ namespace ClearBlazor
             if (!IsAM)
                 return;
             IsAM = false;
-            StateHasChanged();
+            await Refresh();
             await PublishTime();
         }
 
@@ -416,7 +416,7 @@ namespace ClearBlazor
             else
                 await MinuteSelected.InvokeAsync();
             MyCanvas?.RefreshCanvas();
-            StateHasChanged();
+            await Refresh();
         }
 
         private void OnTouchMove(CanvasTouchEventArgs e)
@@ -447,7 +447,7 @@ namespace ClearBlazor
             else
                 await MinuteSelected.InvokeAsync();
             MyCanvas?.RefreshCanvas();
-            StateHasChanged();
+            await Refresh();
         }
 
         private void OnMouseMove(MouseEventArgs e)
@@ -492,7 +492,7 @@ namespace ClearBlazor
                 {
                     Minute = (closestNum * 60 / numSteps) % 60;
                     MyCanvas?.RefreshCanvas();
-                    StateHasChanged();
+                    await Refresh();
                     await PublishTime();
                 }
             }
@@ -502,7 +502,7 @@ namespace ClearBlazor
                 {
                     Hour = closestNum;
                     MyCanvas?.RefreshCanvas();
-                    StateHasChanged();
+                    await Refresh();
                     await PublishTime();
                 }
             }

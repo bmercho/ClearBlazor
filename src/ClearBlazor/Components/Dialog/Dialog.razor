@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<div id=@Id @attributes=AdditionalAttributes style=@ComputeStyle()>
+    <Grid HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center>
+        @ChildContent
+    </Grid>
+</div>
+

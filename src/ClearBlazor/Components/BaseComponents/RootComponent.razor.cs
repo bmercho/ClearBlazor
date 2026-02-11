@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Diagnostics;
 
 namespace ClearBlazor
 {
@@ -10,6 +11,12 @@ namespace ClearBlazor
         /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; } = null;
+
+        /// <summary>
+        /// Dialog control.
+        /// </summary>
+        [Parameter]
+        public RenderFragment? CurrentDialog { get; set; } = null;
 
         //[Inject]
         //IJSRuntime JSRuntime { get; set; } = null!;
@@ -31,26 +38,41 @@ namespace ClearBlazor
         NavigationManager NavManager { get; set; } = null!;
 
         ThemeManager ThemeManager { get; set; }
-        private ElementReference Element;
-        //private double? Height = null;
-        //private double? Width = null;
         private bool LoadingComplete = false;
         BrowserSizeService _browserSizeService = BrowserSizeService.GetInstance();
+
+        private Type? dialogType = null;
+        private Dictionary<string, object> dialogParameters = [];
 
         public RootComponent()
         {
             ThemeManager = new ThemeManager(this, false);
         }
 
-        bool? _backgroundIsNull = null;
+        public async Task ShowDialog(Type dialogType, Dictionary<string, object> parameters)
+        {
+            this.dialogType = dialogType;
+            this.dialogParameters = parameters;
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async Task HideTheDialog()
+        {
+            dialogType = null;
+            dialogParameters = [];
+            await InvokeAsync(StateHasChanged);
+        }
+
+        protected override void OnInitialized()
+        {
+            RootComponent = this;
+            base.OnInitialized();
+        }
+
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
-
-            if (_backgroundIsNull == null)
-                _backgroundIsNull = BackgroundColor == null;
-
-            if (_backgroundIsNull == true)
+            if (BackgroundColor == null)
                 BackgroundColor = ThemeManager.CurrentColorScheme.Surface;
         }
 
@@ -73,6 +95,8 @@ namespace ClearBlazor
                                  "./_content/ClearBlazor/ScrollManager.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/SizeInfo.js");
+                await JSRuntime.InvokeAsync<IJSObjectReference>("import",
+                                 "./_content/ClearBlazor/ImageSize.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
                                  "./_content/ClearBlazor/ElementSizeInfo.js");
                 await JSRuntime.InvokeAsync<IJSObjectReference>("import",
@@ -98,11 +122,10 @@ namespace ClearBlazor
                 await resizeObserverService.Init(JSRuntime);
 
                 LoadingComplete = true;
+                DoRender = true;
                 StateHasChanged();
                 await OnLoadingComplete.InvokeAsync();
             }
-
-            RenderAll = false;
         }
 
         private string GetStyle()
@@ -118,18 +141,6 @@ namespace ClearBlazor
             return css;
         }
 
-        public void Refresh()
-        {
-            try
-            {
-                ClearComponentBase.RenderAll = true;
-                StateHasChanged();
-            }
-            catch
-            {
-            }
-        }
-
         /// <summary>
         /// The theme has changed so re-navigate to the current uri to allow 
         /// new theme to take affect 
@@ -140,9 +151,7 @@ namespace ClearBlazor
             try
             {
                 await ThemeManager.UpdateTheme(JSRuntime);
-                var uri = NavManager.Uri;
-                NavManager.NavigateTo("/");
-                NavManager.NavigateTo(uri);
+                await Refresh();
             }
             catch
             {
@@ -156,8 +165,8 @@ namespace ClearBlazor
 
             Height = browserSizeInfo.BrowserHeight;
             Width = browserSizeInfo.BrowserWidth;
+            DoRender = true;
             StateHasChanged();
-            await Task.CompletedTask;
         }
 
         public void Dispose()

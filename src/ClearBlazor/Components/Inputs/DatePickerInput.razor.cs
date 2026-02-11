@@ -53,18 +53,6 @@ namespace ClearBlazor
 
         private bool PopupOpen = false;
 
-        private bool DoRender { get; set; } = true;
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            base.OnAfterRender(firstRender);
-            DoRender = false;
-        }
-        protected override bool ShouldRender()
-        {
-            return DoRender;
-        }
-
         private bool IsMouseNotOver()
         {
             return !MouseOver;

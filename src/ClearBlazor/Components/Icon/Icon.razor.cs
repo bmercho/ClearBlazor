@@ -59,13 +59,10 @@ namespace ClearBlazor
 
         internal ToolTip? ToolTipElement { get; set; } = null;
 
-        protected override void OnParametersSet()
+        protected override void OnAfterRender(bool firstRender)
         {
-            base.OnParametersSet();
-            if (Name == "Icon1")
-            {
-
-            }
+            base.OnAfterRender(firstRender);
+            DoRender = false;
         }
 
         protected string GetIconStyle()

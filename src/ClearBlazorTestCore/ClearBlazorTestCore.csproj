@@ -42,6 +42,7 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Dialog\Code\DialogSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DateTimePicker\Code\DateTimePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Video\Code\VideoSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\GridSplitter\Code\GridSplitterVerticalExampleCode.html" />

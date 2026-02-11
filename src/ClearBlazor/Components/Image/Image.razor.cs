@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System.Diagnostics;
 
 namespace ClearBlazor
@@ -39,7 +40,8 @@ namespace ClearBlazor
         private ImageStretch? _cachedStretch = null;
         private Color? _cachedBackgroundColor = null;
 
-        private bool DoRender = false;
+        private string ImageId = Guid.NewGuid().ToString();
+        private SizeInfo? _sizeInfo = null;
 
         protected override void OnParametersSet()
         {
@@ -61,18 +63,31 @@ namespace ClearBlazor
         {
             base.OnAfterRender(firstRender);
             DoRender = false;
-            Debug.WriteLine($"Image rendered");
         }
 
-        protected override bool ShouldRender()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            return DoRender;
+            await base.OnAfterRenderAsync(firstRender);
+            SizeInfo? prev = _sizeInfo;
+            _sizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("GetSizeInfo", Id);
+            if (prev == null || _sizeInfo == null || prev.ElementWidth != _sizeInfo.ElementWidth ||
+                prev.ElementHeight != _sizeInfo.ElementHeight)
+            {
+                DoRender = true;
+                StateHasChanged();
+            }
         }
 
         protected override string UpdateStyle(string css)
         {
             if (BackgroundColor != null)
                 css += $"background-color: {BackgroundColor.Value}; ";
+
+
+            //bool isLandscape = false;
+
+            //if (_imageSize != null && _imageSize.ImageWidth > _imageSize.ImageHeight)
+            //    isLandscape = true;
 
             var size =
                  Stretch == ImageStretch.Fill ? "100% 100%" :
@@ -81,15 +96,24 @@ namespace ClearBlazor
                  Stretch == ImageStretch.None ? "none" :
                  throw new NotImplementedException();
 
+            ImageStyle = "";
             if (!double.IsNaN(Width))
                 ImageStyle += $"width: {Width}px; ";
             else
-                ImageStyle += $"width: 100%; ";
+            {
+                if (_sizeInfo == null)
+                    ImageStyle += $"width: 0; ";
+                else
+                    ImageStyle += $"width: {_sizeInfo?.ElementWidth}px; ";
+            }
 
             if (!double.IsNaN(Height))
                 ImageStyle += $"height: {Height}px; ";
             else
-                ImageStyle += $"height: 100%; ";
+                if (_sizeInfo == null)
+                    ImageStyle += $"height: 0; ";
+                else
+                    ImageStyle += $"height: {_sizeInfo?.ElementHeight}px; ";
 
             if (MinWidth > 0)
                 ImageStyle += $"min-width: {MinWidth}px; ";

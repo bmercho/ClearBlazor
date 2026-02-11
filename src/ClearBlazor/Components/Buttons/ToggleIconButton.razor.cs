@@ -47,6 +47,12 @@ namespace ClearBlazor
                 ToggledIconColor = IconColor;
         }
 
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+            DoRender = false;
+        }
+
         protected override string UpdateStyle(string css)
         {
             css += $"display: grid; background-color:transparent; ";
@@ -61,6 +67,7 @@ namespace ClearBlazor
         {
             toggled = !toggled;
             await OnToggleChanged.InvokeAsync(toggled);
+            DoRender = true;
             StateHasChanged();
             return toggled;
         }

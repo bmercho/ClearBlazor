@@ -97,9 +97,11 @@ namespace ClearBlazor
             if (_selectedRadio != null)
                 _selectedRadio.Uncheck();
             _selectedRadio = radio;
+            _selectedRadio.Check();
             Value = value;
             await ValueChanged.InvokeAsync(value);
             await ValidateField();
+            DoRender = true;
             StateHasChanged();
         }
 
@@ -113,7 +115,6 @@ namespace ClearBlazor
                 if (RequiredErrorMessage != null)
                     ValidationErrorMessages.Add(RequiredErrorMessage);
             }
-            await Task.CompletedTask;
             return IsValid;
         }
     }

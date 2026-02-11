@@ -41,6 +41,11 @@ namespace ClearBlazor
         private int MaxAllowableLength = -1;
         private string? MaxLengthErrorMessage = null;
 
+        public void Focus()
+        {
+            TextInput.FocusAsync();
+        }
+
         protected override void OnInitialized()
         {
             base.OnInitialized();
@@ -65,7 +70,8 @@ namespace ClearBlazor
                 if (MaxLength != null)
                     await JSRuntime.InvokeVoidAsync("window.clearBlazor.textInput.initialize", id, MaxLength);
             }
-            Debug.WriteLine($"TextInput {Value} rendered");
+            //DoRender = false;
+            //Debug.WriteLine($"TextInput {Value} rendered");
         }
 
         protected (int, string?) GetMaxLength(int? defaultMaxLength)
@@ -89,7 +95,7 @@ namespace ClearBlazor
             if (Immediate)
                 await HandleValueChange();
             else if (Clearable)
-                StateHasChanged();
+                await Refresh();
         }
 
         protected async Task OnChange(ChangeEventArgs e)
@@ -128,7 +134,6 @@ namespace ClearBlazor
                 if (MaxLengthErrorMessage != null)
                     ValidationErrorMessages.Add(MaxLengthErrorMessage);
             }
-            await Task.CompletedTask;
             return IsValid;
         }
     }

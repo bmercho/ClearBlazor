@@ -124,7 +124,7 @@ namespace ClearBlazor
             {
                 await ValidateField();
                 await ValueChanged.InvokeAsync(Value);
-                //StateHasChanged();
+                await Refresh();
                 return;
             }
 
@@ -138,7 +138,7 @@ namespace ClearBlazor
                     _debouncing = false;
                     await ValidateField();
                     await ValueChanged.InvokeAsync(Value);
-                    StateHasChanged();
+                    await Refresh();
                 }
             }
             finally

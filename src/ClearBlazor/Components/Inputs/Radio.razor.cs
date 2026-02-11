@@ -74,12 +74,14 @@ namespace ClearBlazor
         internal void Check()
         {
             Checked = true;
+            DoRender = true;
             StateHasChanged();
         }
 
         internal void Uncheck()
         {
             Checked = false;
+            DoRender = true;
             StateHasChanged();
         }
 

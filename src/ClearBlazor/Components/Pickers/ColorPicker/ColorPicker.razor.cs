@@ -183,6 +183,7 @@ namespace ClearBlazor
                     BaseColor = GetBaseColor();
                     UpdateColorSelectorBasedOnRgb();
                 }
+                DoRender = true;
                 StateHasChanged();
             }
         }
@@ -289,6 +290,7 @@ namespace ClearBlazor
             CurrentColor = Color;
             await ColorChanged.InvokeAsync(Color);
 
+            DoRender = true;
             StateHasChanged();
         }
 
@@ -345,6 +347,7 @@ namespace ClearBlazor
         private void Clicked()
         {
             hlsMode = !hlsMode;
+            DoRender = true;
             StateHasChanged();
         }
 
@@ -402,6 +405,7 @@ namespace ClearBlazor
 
                 DragMarginLeft = x - DragDiameter / 2 - DragBorderWidth;
                 DragMarginTop = y - DragDiameter / 2 - DragBorderWidth;
+                DoRender = true;
                 StateHasChanged();
             }
         }
@@ -429,6 +433,7 @@ namespace ClearBlazor
 
             DragMarginLeft = x - DragDiameter / 2 - DragBorderWidth;
             DragMarginTop = y - DragDiameter / 2 - DragBorderWidth;
+            DoRender = true;
             StateHasChanged();
 
         }

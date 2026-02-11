@@ -1,0 +1,12 @@
+﻿@page "/Dialog"
+@using ClearBlazorTest
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DocsExamplesPage DocsInfo=@(new DialogDocsInfo())>
+        <TextBlock FontSize="50px" FontWeight=@((int)FontWeight.Normal) Margin="20">Dialog</TextBlock>
+        <CodeSnippet Title="Basic" Code=@(typeof(DialogSimpleExample).Name)>
+            <DialogSimpleExample />
+        </CodeSnippet>
+    </DocsExamplesPage>
+</CascadingValue>

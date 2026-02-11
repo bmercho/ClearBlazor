@@ -59,5 +59,7 @@
         public Color OutlineVariant => new Color("#C3C6D2FF");
         public Color Scrim => new Color("#000000FF");
         public Color Shadow => new Color("#000000FF");
+        public Color Overlay => Scrim.SetAlpha(0.3);
+
     }
 }

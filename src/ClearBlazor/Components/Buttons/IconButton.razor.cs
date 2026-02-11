@@ -23,12 +23,19 @@ namespace ClearBlazor
             Shape = ContainerShape.Circle;
             base.OnInitialized();
         }
+
         protected override void OnParametersSet()
         {
             base.OnParametersSet();
-            
+
             if (ButtonStyle == null)
                 StyleOverride = ClearBlazor.ButtonStyle.LabelOnly;
+        }
+
+        protected override void OnAfterRender(bool firstRender)
+        {
+            base.OnAfterRender(firstRender);
+            DoRender = false;
         }
 
         protected override string GetBorderRadius()

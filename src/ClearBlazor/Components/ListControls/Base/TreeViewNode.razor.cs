@@ -66,15 +66,6 @@ namespace ClearBlazor
             }
             await base.SetParametersAsync(parameters);
         }
-        protected override void OnAfterRender(bool firstRender)
-        {
-            base.OnAfterRender(firstRender);
-            DoRender = false;
-        }
-        protected override bool ShouldRender()
-        {
-            return DoRender;
-        }
 
         protected async Task OnMouseEnter()
         {
@@ -133,7 +124,7 @@ namespace ClearBlazor
                 var treeViewBase = _parent as TreeViewBase<TItem>;
                 treeViewBase?.Refresh();
             }
-            Refresh();
+            await Refresh();
             await Task.CompletedTask;
         }
 

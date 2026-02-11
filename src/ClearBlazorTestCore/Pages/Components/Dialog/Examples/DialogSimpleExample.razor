@@ -1,0 +1,22 @@
+﻿@namespace ClearBlazorTest
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <Grid Width="200" Height="200" BorderThickness="1">
+        <Button @onclick=OpenDialog HorizontalAlignment=Alignment.Center VerticalAlignment=Alignment.Center>Open</Button>
+    </Grid>
+</CascadingValue>
+
+@code {
+    private bool Open = false;
+
+    private async Task OpenDialog()
+    {
+        await ShowDialog(typeof(DialogSimple));
+    }
+
+    private static async Task CloseDialog()
+    {
+        await HideDialog();
+    }
+}

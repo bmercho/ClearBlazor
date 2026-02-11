@@ -2,11 +2,13 @@
 <div class="html"><pre>
 <span class="atSign">&#64;</span>using Excubo.Blazor.Canvas.Contexts
 <span class="atSign">&#64;</span>using System.Timers
+<span class="atSign">&#64;</span>inherits ClearComponentBase
 
-
-<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DrawingCanvas</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">MyCanvas</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">500</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">500</span><span class="quot">&quot;</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span>
-             <span class="htmlAttributeName">OnCanvasSizeChange</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">CanvasSizeChange</span> <span class="htmlAttributeName">OnPaint</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">PaintCanvas</span>
-             <span class="htmlAttributeName">OnCanvasClick</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Clicked</span><span class="htmlTagDelimiter">/&gt;</span>
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CascadingValue</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">this</span><span class="quot">&quot;</span> <span class="htmlAttributeName">IsFixed</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="keyword">false</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">DrawingCanvas</span> <span class="htmlAttributeName"><span class="atSign">&#64;</span>ref</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">MyCanvas</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Width</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">500</span><span class="quot">&quot;</span> <span class="htmlAttributeName">Height</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">500</span><span class="quot">&quot;</span> <span class="htmlAttributeName">BorderThickness</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">1</span>
+                   <span class="htmlAttributeName">OnCanvasSizeChange</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">CanvasSizeChange</span> <span class="htmlAttributeName">OnPaint</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">PaintCanvas</span>
+                   <span class="htmlAttributeName">OnCanvasClick</span><span class="htmlOperator">=</span><span class="htmlAttributeValue">Clicked</span> <span class="htmlTagDelimiter">/&gt;</span>
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">CascadingValue</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
 <div class="csharp"><pre>
 <span class="atSign">&#64;</span>code {
@@ -18,11 +20,11 @@
     <span class="keyword">protected</span> <span class="keyword">override</span> <span class="keyword">void</span> OnInitialized()
     {
         <span class="keyword">base</span>.OnInitialized();
-        Timer.Elapsed += <span class="keyword">async</span> (source, eventArgs) =&gt; 
+        Timer.Elapsed += <span class="keyword">async</span> (source, eventArgs) =&gt;
         {
             <span class="keyword">if</span> (MyCanvas == <span class="keyword">null</span>)
                 <span class="keyword">return</span>;
-            <span class="keyword">await</span> MyCanvas.RefreshCanvas(); 
+            <span class="keyword">await</span> MyCanvas.RefreshCanvas();
         };
     }
 
@@ -38,7 +40,7 @@
 
         <span class="keyword">await</span> context.ClearRectAsync(<span class="number">0</span>, <span class="number">0</span>, CanvasSize.Width, CanvasSize.Height);
 
-        <span class="keyword">int</span> tick = System.Environment.TickCount; 
+        <span class="keyword">int</span> tick = System.Environment.TickCount;
         Random random = <span class="keyword">new</span> Random(tick);
 
         <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++)

@@ -7,23 +7,18 @@
 @inherits LayoutComponentBase
 @inject NavigationManager NavManager
 
-@* <Component1>
-    <Component2/>
-</Component1>
- *@
-
-    @if (Show)
-    {
-<RootComponent>
+@if (Show)
+{
+    <RootComponent>
         <Grid Rows="auto,*">
             <AppBar Row="0" Padding="10">
                 <IconButton Dock=Dock.Left Icon="@Icons.Material.Filled.Menu" @onclick=@MenuClicked />
                 <TextBlock Typo=Typo.H6 HorizontalAlignment="Alignment.Center"
-                VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
+                           VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
                 <IconButton Dock=Dock.Right @onclick=@OnClicked Icon=@GetIcon() ToolTip="Toggle Light/Dark Mode" Margin="0,10,0,0" />
             </AppBar>
             <Drawer @ref=Drawer Row=1 @bind-Open=Open DrawerLocation=DrawerLocation.Left
-            DrawerMode="DrawerMode.Responsive">
+                    DrawerMode="DrawerMode.Responsive">
                 <DrawerContent>
                     <ListBox TListBox="string" Padding="0,10,0,10">
                         <ListBoxItem Text="Home" HRef="/" @onclick=Close />
@@ -61,6 +56,7 @@
                             <ListBoxItem Text="ToolbarTray" HRef="/ToolbarTray" @onclick=Close />
                             <ListBoxItem Text="ListBox" HRef="/ListBox" @onclick=Close />
                             <ListBoxItem Text="Popup" HRef="/Popup" @onclick=Close />
+                            <ListBoxItem Text="Dialog" HRef="/Dialog" @onclick=Close />
                             <ListBoxItem Text="Pagination" HRef="/Pagination" @onclick=Close />
                             <ListBoxItem Text="Inputs" InitiallyExpanded=false>
                                 <ListBoxItem Text="Check Box" HRef="/CheckBox" @onclick=Close />
@@ -101,14 +97,7 @@
                 </DrawerContent>
                 <DrawerBody>
                     <Grid Margin="10">
-                        @if (RouteManager.MainPageType == null)
-                        {
-                            <Index/>
-                        }
-                        else
-                        {
-                            <DynamicComponent Type=@RouteManager.MainPageType />
-                        }
+                        @Body
                     </Grid>
                 </DrawerBody>
             </Drawer>
@@ -149,7 +138,6 @@
     private void Toggle()
     {
         Open = !Open;
-        RootComponent.RootComponent?.Refresh();
     }
 
     private string GetIcon()
@@ -182,9 +170,7 @@
 
     private async Task GotoPage(string page)
     {
-        await RouteManager.NavigateTo(page);
-
-        //NavManager.NavigateTo($"/{page}", true);
+        NavManager.NavigateTo($"/{page}", true);
     }
 
     private bool IsDebug()

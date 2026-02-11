@@ -179,6 +179,7 @@ namespace ClearBlazor
                 HandleValueChange();
                 CalculateTickMarks();
                 Initialising = false;
+                DoRender = true;
                 StateHasChanged();
             }
         }
@@ -319,6 +320,8 @@ namespace ClearBlazor
             HandleValueChange();
 
             await ValueChanged.InvokeAsync((TItem)Value);
+            DoRender = true;
+
             StateHasChanged();
         }
 
@@ -331,6 +334,8 @@ namespace ClearBlazor
 
             MouseDown = true;
             DropdownOpen = true;
+            DoRender = true;
+
             StateHasChanged();
         }
         private async Task OnMouseUp(MouseEventArgs e)
@@ -338,6 +343,8 @@ namespace ClearBlazor
             MouseDown = false;
             await JSRuntime.InvokeVoidAsync("ReleaseMouseCapture", ThumbElementId, 1);
             DropdownOpen = false;
+            DoRender = true;
+
             StateHasChanged();
 
         }
@@ -363,6 +370,8 @@ namespace ClearBlazor
                 HandleValueChange();
 
                 await ValueChanged.InvokeAsync((TItem)Value);
+                DoRender = true;
+
                 StateHasChanged();
             }
         }

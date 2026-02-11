@@ -74,12 +74,6 @@ namespace ClearBlazor
                                                                        RowData.ListItemId.ToString());
                 }
             }
-            DoRender = false;
-        }
-
-        protected override bool ShouldRender()
-        {
-            return DoRender;
         }
 
         protected async Task OnMouseEnter()

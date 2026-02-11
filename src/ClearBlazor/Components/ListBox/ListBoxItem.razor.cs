@@ -93,7 +93,6 @@ namespace ClearBlazor
         private bool IsSelected = false;
         private bool Multiselect = false;
         private ListBox<TListBox>? _root;
-        internal bool DoRender { get; set; } = true;
 
         private List<ListBoxItem<TListBox>> _itemChildren = new();
         private ListBoxItem<TListBox>? _itemParent = null;
@@ -149,18 +148,6 @@ namespace ClearBlazor
             base.OnParametersSet();
             if (HorizontalAlignment == null)
                 HorizontalAlignment = Alignment.Stretch;
-        }
-
-        protected override void OnAfterRender(bool firstRender)
-        {
-            DoRender = false;
-            base.OnAfterRender(firstRender);
-
-
-        }
-        protected override bool ShouldRender()
-        {
-            return DoRender;
         }
 
         protected override void ComputeOwnClasses(StringBuilder sb)

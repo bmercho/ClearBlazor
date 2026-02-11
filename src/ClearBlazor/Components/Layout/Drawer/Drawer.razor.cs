@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System.Diagnostics;
 
 namespace ClearBlazor
 {
@@ -79,7 +80,6 @@ namespace ClearBlazor
             await BrowserResized(_browserSizeService.GetBrowserSizeInfo());
             _browserSizeService.OnBrowserResize += BrowserResized;
         }
-
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
@@ -101,6 +101,7 @@ namespace ClearBlazor
                         _elementSize = size;
                         _gotSize = true;
                         ProcessModeChange();
+                        DoRender = true;
                         StateHasChanged();
                     }
                 }
@@ -114,6 +115,12 @@ namespace ClearBlazor
             return css;
         }
 
+        private string GetDrawerMargin()
+        {
+            return _drawerMargin;
+
+        }
+
         private async Task OverlayClicked()
         {
             if (_drawerMode == DrawerMode.Temporary && Open)
@@ -121,6 +128,7 @@ namespace ClearBlazor
                 Open = false;
                 await OpenChanged.InvokeAsync(false);
                 ProcessModeChange();
+                DoRender = true;
                 StateHasChanged();
             }
         }
@@ -262,6 +270,7 @@ namespace ClearBlazor
                     }
                 }
                 ProcessModeChange();
+                DoRender = true;
                 StateHasChanged();
             }
         }

@@ -70,21 +70,13 @@ namespace ClearBlazor
         private SizeInfo? SizeInfo = null;
         private ElementReference PickerElement;
         private TimePicker? TimePicker = null;
-        private bool DoRender { get; set; } = true;
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
-            DoRender = false;
             SizeInfo? existing = null;
             if (SizeInfo != null)
                 existing = SizeInfo;
             SizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", PickerElement);
-        }
-
-        protected override bool ShouldRender()
-        {
-            return DoRender;
         }
 
         private bool IsMouseNotOver()

@@ -92,6 +92,7 @@ namespace ClearBlazor
             if (_pages.Count == 1)
                 _activePage = tabPage;
 
+            DoRender = true;
             StateHasChanged();
         }
 
@@ -125,6 +126,7 @@ namespace ClearBlazor
             {
                 _activePage = page;
                 OnTabChanged.InvokeAsync(page);
+                DoRender = true;
                 StateHasChanged();
             }
         }
