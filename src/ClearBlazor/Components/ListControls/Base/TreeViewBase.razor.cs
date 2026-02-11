@@ -89,7 +89,7 @@ namespace ClearBlazor
                 node.item.IsVisible = true;
                 node.item.IsExpanded = true;
             }
-            await Refresh();
+            await RefreshList();
         }
 
         public async Task CollapseAll()
@@ -103,10 +103,10 @@ namespace ClearBlazor
                 node.item.IsExpanded = false;
             }
 
-            await Refresh();
+            await RefreshList();
         }
 
-        public async Task Refresh()
+        public async Task RefreshList()
         {
             switch (VirtualizeMode)
             {
@@ -391,7 +391,7 @@ namespace ClearBlazor
                 if (prevIconWidth != _iconWidth)
                 {
                     StateHasChanged();
-                    RefreshAllRows();
+                    await RefreshAllRows();
                 }
                 if (VirtualizeMode == VirtualizeMode.Virtualize)
                 {

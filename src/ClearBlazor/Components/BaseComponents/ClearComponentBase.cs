@@ -380,8 +380,8 @@ namespace ClearBlazor
         public async Task Refresh()
         {
             DoRender = true;
-            //foreach (var child in Children)
-            //    await child.Refresh();
+            foreach (var child in Children)
+                await child.Refresh();
             StateHasChanged();
         }
 

@@ -122,7 +122,6 @@ namespace ClearBlazor
         const int ControlHeightLandscape = 320;
         const int ControlWidthLandscape = 360;
 
-        private DatePickerMode Mode = DatePickerMode.Day;
         private List<YearItem> YearList { get; set; } = new();
 
         private int? MouseOverMonth = null;
@@ -263,8 +262,6 @@ namespace ClearBlazor
                 return;
 
             SelectedDate = SelectedDate.AddYears(year.Year - SelectedDate.Year);
-            Mode = DatePickerMode.Month;
-
             DateTime = SelectedDate;
             await DateChanged.InvokeAsync(DateTime);
             await Refresh();
@@ -288,7 +285,6 @@ namespace ClearBlazor
                 return;
 
             SelectedDate = SelectedDate.AddMonths(month - SelectedDate.Month);
-            Mode = DatePickerMode.Day;
             DateTime = SelectedDate;
             await DateChanged.InvokeAsync(DateTime);
             await Refresh();
@@ -451,7 +447,6 @@ namespace ClearBlazor
             if (IsReadOnly || IsDisabled)
                 return;
 
-            Mode = DatePickerMode.Month;
             await Refresh();
         }
 
@@ -476,7 +471,6 @@ namespace ClearBlazor
             if (IsReadOnly || IsDisabled)
                 return;
 
-            Mode = DatePickerMode.Year;
             await Refresh();
         }
 

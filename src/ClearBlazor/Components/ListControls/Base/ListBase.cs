@@ -159,20 +159,20 @@ namespace ClearBlazorInternal
         /// Refresh an item in the list when it has been updated. (only re-renders the given item)
         /// </summary>
         /// <returns></returns>
-        public void Refresh(TItem item)
+        public async Task Refresh(TItem item)
         {
             if (ListRows.ContainsKey(item.ListItemId))
-                ListRows[item.ListItemId].Refresh();
+                await ListRows[item.ListItemId].Refresh();
         }
 
         /// <summary>
         /// Refresh whole list.
         /// </summary>
         /// <returns></returns>
-        internal void RefreshAllRows()
+        internal async Task RefreshAllRows()
         {
             foreach (var row in ListRows)
-                row.Value.Refresh();
+                await row.Value.Refresh();
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace ClearBlazorInternal
             if (SelectedItem != null)
             {
                 SelectedItem.IsSelected = false;
-                Refresh(SelectedItem);
+                await Refresh(SelectedItem);
                 SelectedItem = default;
                 await NotifySelection();
             }
@@ -192,7 +192,7 @@ namespace ClearBlazorInternal
             foreach (var selection in _selectedItems.Values)
             {
                 selection.IsSelected = false;
-                Refresh(selection);
+                await Refresh(selection);
             }
             _selectedItems.Clear();
             await NotifySelections();
@@ -230,11 +230,11 @@ namespace ClearBlazorInternal
                 case SelectionMode.None:
                     return;
                 case SelectionMode.Single:
-                    if (HandleSingleSelect(selectedItem, AllowSelectionToggle))
+                    if (await HandleSingleSelect(selectedItem, AllowSelectionToggle))
                         await NotifySelection();
                     break;
                 case SelectionMode.SimpleMulti:
-                    if (HandleSimpleMultiSelect(selectedItem))
+                    if (await HandleSimpleMultiSelect(selectedItem))
                         await NotifySelections();
                     break;
                 case SelectionMode.Multi:
@@ -246,14 +246,14 @@ namespace ClearBlazorInternal
 
         }
 
-        private bool HandleSingleSelect(TItem item, bool allowSelectionToggle)
+        private async Task<bool> HandleSingleSelect(TItem item, bool allowSelectionToggle)
         {
             if (SelectedItem != null && SelectedItem.Equals(item))
             {
                 if (allowSelectionToggle)
                 {
                     item.IsSelected = false;
-                    Refresh(item);
+                    await Refresh(item);
 
                     SelectedItem = default;
                     return true;
@@ -265,28 +265,28 @@ namespace ClearBlazorInternal
                 if (SelectedItem != null)
                 {
                     SelectedItem.IsSelected = false;
-                    Refresh(SelectedItem);
+                    await Refresh(SelectedItem);
                 }
                 SelectedItem = item;
                 SelectedItem.IsSelected = true;
-                Refresh(SelectedItem);
+                await Refresh(SelectedItem);
 
                 return true;
             }
         }
 
-        private bool HandleSimpleMultiSelect(TItem item)
+        private async Task<bool> HandleSimpleMultiSelect(TItem item)
         {
             if (AlreadySelected(item))
             {
                 item.IsSelected = false;
-                Refresh(item);
+                await Refresh(item);
                 _selectedItems.Remove(item.ListItemId);
             }
             else
             {
                 item.IsSelected = true;
-                Refresh(item);
+                await Refresh(item);
                 _selectedItems.Add(item.ListItemId, item);
             }
             return true;
@@ -307,11 +307,11 @@ namespace ClearBlazorInternal
                     foreach (var item1 in _selectedItems.Values)
                     {
                         item1.IsSelected = false;
-                        Refresh(item1);
+                        await Refresh(item1);
                     }
                     _selectedItems.Clear();
                     item.IsSelected = true;
-                    Refresh(item);
+                    await Refresh(item);
                     _selectedItems.Add(item.ListItemId, item);
                     return true;
                 }
@@ -323,13 +323,13 @@ namespace ClearBlazorInternal
                 if (alreadySelected)
                 {
                     item.IsSelected = false;
-                    Refresh(item);
+                    await Refresh(item);
                     _selectedItems.Remove(item.ListItemId);
                 }
                 else
                 {
                     item.IsSelected = true;
-                    Refresh(item);
+                    await Refresh(item);
                     _selectedItems.Add(item.ListItemId, item);
                 }
                 _lastSelectedRow = itemIndex;
@@ -342,7 +342,7 @@ namespace ClearBlazorInternal
                     foreach (var item1 in _selectedItems.Values)
                     {
                         item1.IsSelected = false;
-                        Refresh(item);
+                        await Refresh(item);
                     }
                     _selectedItems.Clear();
                 }
@@ -362,7 +362,7 @@ namespace ClearBlazorInternal
                                 _selectedItems.Add(item2.ListItemId, item2);
                                 if (ListRows.ContainsKey(item2.ListItemId))
                                     ListRows[item2.ListItemId].SetRowData(item2);
-                                Refresh(item2);
+                                await Refresh(item2);
                             }
                             else
                             {
@@ -370,7 +370,7 @@ namespace ClearBlazorInternal
                                 _selectedItems.Add(item1.ListItemId, item1);
                                 if (ListRows.ContainsKey(item1.ListItemId))
                                     ListRows[item1.ListItemId].SetRowData(item1);
-                                Refresh(item1);
+                                await Refresh(item1);
                             }
                         }
                     }
@@ -411,10 +411,10 @@ namespace ClearBlazorInternal
             StateHasChanged();
         }
 
-        internal void SetHighlightedItem(ListRowBase<TItem>? row)
+        internal async Task SetHighlightedItem(ListRowBase<TItem>? row)
         {
             if (_highlightedItem != null)
-                _highlightedItem.Unhighlight();
+                await _highlightedItem.Unhighlight();
             _highlightedItem = row;
         }
 

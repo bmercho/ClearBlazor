@@ -270,7 +270,7 @@ namespace ClearBlazor
         /// Other Virtualized modes re-render all items, which should not be expensive as they are virtualized.
         /// </summary>
         /// <returns></returns>
-        public async Task Refresh()
+        public async Task RefreshList()
         {
             switch (VirtualizeMode)
             {
@@ -336,7 +336,7 @@ namespace ClearBlazor
 
             RowIds[0] = listItemId.ToString();
             CalculateTops();
-            await Refresh();
+            await RefreshList();
         }
 
         /// <summary>

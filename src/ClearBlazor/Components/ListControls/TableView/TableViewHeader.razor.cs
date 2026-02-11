@@ -55,7 +55,7 @@ namespace ClearBlazor
 
         private TableView<TItem>? _parent = null;
 
-        public void Refresh()
+        public void RefreshTableHeader()
         {
             DoRender = true;
             StateHasChanged();

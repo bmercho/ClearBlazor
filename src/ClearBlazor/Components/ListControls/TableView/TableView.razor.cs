@@ -174,7 +174,7 @@ namespace ClearBlazor
                 case VirtualizeMode.Pagination:
                     _currentPageNum = (int)Math.Ceiling((double)(index + 1) / PageSize);
                     await GotoPage(_currentPageNum);
-                    await Refresh();
+                    await RefreshTable();
                     break;
             }
         }
@@ -335,17 +335,17 @@ namespace ClearBlazor
         /// Other Virtualized modes re-render all items, which should not be expensive as they are virtualized.
         /// </summary>
         /// <returns></returns>
-        public async Task Refresh()
+        public async Task RefreshTable()
         {
             switch (VirtualizeMode)
             {
                 case VirtualizeMode.None:
                     _items = await GetItems(0, int.MaxValue);
-                    RefreshAllRows();
+                    await RefreshAllRows();
                     break;
                 case VirtualizeMode.Virtualize:
                     if (await CheckForNewRows(_scrollTop, true))
-                        RefreshAllRows();
+                        await RefreshAllRows();
                     break;
                 case VirtualizeMode.InfiniteScroll:
                 case VirtualizeMode.InfiniteScrollReverse:
@@ -356,11 +356,11 @@ namespace ClearBlazor
                     }
                     else
                         await GetCurrentPageAsync();
-                    RefreshAllRows();
+                    await RefreshAllRows();
                     break;
                 case VirtualizeMode.Pagination:
                     await GotoPage(_currentPageNum);
-                    RefreshAllRows();
+                    await RefreshAllRows();
                     break;
             }
         }
@@ -376,9 +376,9 @@ namespace ClearBlazor
             RowSizes.Clear();
             RowIds.Clear();
             ListRows.Clear();
-            await Refresh();
-            RefreshAllRows();
-            _header?.Refresh();
+            await RefreshTable();
+            await RefreshAllRows();
+            _header?.RefreshTableHeader();
         }
 
         /// <summary>
@@ -625,7 +625,7 @@ namespace ClearBlazor
                         break;
                     case VirtualizeMode.Virtualize:
                         await CheckForNewRows(_scrollTop, false);
-                        _header?.Refresh();
+                        _header?.RefreshTableHeader();
                         break;
                     case VirtualizeMode.InfiniteScroll:
                     case VirtualizeMode.InfiniteScrollReverse:
@@ -648,7 +648,7 @@ namespace ClearBlazor
                         }
                         else
                             await CheckForNewRows(scrollState.ScrollTop);
-                        _header?.Refresh();
+                        _header?.RefreshTableHeader();
                         break;
                     case VirtualizeMode.Pagination:
                         break;
@@ -676,7 +676,7 @@ namespace ClearBlazor
                         break;
                     case VirtualizeMode.Virtualize:
                         await CheckForNewRows(_scrollTop, false);
-                        _header?.Refresh();
+                        _header?.RefreshTableHeader();
                         break;
                     case VirtualizeMode.InfiniteScroll:
                     case VirtualizeMode.InfiniteScrollReverse:
@@ -699,7 +699,7 @@ namespace ClearBlazor
                         }
                         else
                             await CheckForNewRows(scrollState.ScrollTop);
-                        _header?.Refresh();
+                        _header?.RefreshTableHeader();
                         break;
                     case VirtualizeMode.Pagination:
                         break;

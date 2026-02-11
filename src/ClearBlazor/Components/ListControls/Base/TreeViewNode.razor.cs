@@ -73,7 +73,7 @@ namespace ClearBlazor
                 return;
             if (_parent.HoverHighlight)
             {
-                _parent.SetHighlightedItem(this);
+                await _parent.SetHighlightedItem(this);
                 MouseOver = true;
                 await Task.CompletedTask;
                 DoRender = true;
@@ -87,7 +87,7 @@ namespace ClearBlazor
                 return;
             if (_parent.HoverHighlight)
             {
-                _parent.SetHighlightedItem(null);
+                await _parent.SetHighlightedItem(null);
                 MouseOver = false;
                 await Task.CompletedTask;
                 DoRender = true;
@@ -122,7 +122,7 @@ namespace ClearBlazor
             if (_parent != null)
             {
                 var treeViewBase = _parent as TreeViewBase<TItem>;
-                treeViewBase?.Refresh();
+                treeViewBase?.RefreshList();
             }
             await Refresh();
             await Task.CompletedTask;

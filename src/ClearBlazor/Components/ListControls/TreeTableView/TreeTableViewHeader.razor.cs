@@ -55,7 +55,7 @@ namespace ClearBlazor
 
         private TreeTableView<TItem>? _parent = null;
 
-        public void Refresh()
+        public void RefreshTreeTableHeader()
         {
             DoRender = true;
             StateHasChanged();

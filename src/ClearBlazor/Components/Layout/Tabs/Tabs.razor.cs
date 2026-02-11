@@ -120,14 +120,13 @@ namespace ClearBlazor
             }
         }
 
-        void ActivatePage(Tab page)
+        private async Task ActivatePage(Tab page)
         {
             if (!page.Disabled)
             {
                 _activePage = page;
-                OnTabChanged.InvokeAsync(page);
-                DoRender = true;
-                StateHasChanged();
+                await OnTabChanged.InvokeAsync(page);
+                await Refresh();
             }
         }
     }
