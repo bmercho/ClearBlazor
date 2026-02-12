@@ -17,6 +17,13 @@
                             <TextBlock VerticalAlignment=Alignment.Center  Color=@GetMinuteColor() Typo=Typo.H5 Clickable=true @onclick=@OnMinuteClicked>
                                 @Minute.ToString("D2")
                             </TextBlock>
+                            @if(ShowSeconds)
+                            {
+                                <TextBlock VerticalAlignment=Alignment.Center Color=@Color.ContrastingColor(Color!) Typo=Typo.H5>:</TextBlock>
+                                <TextBlock VerticalAlignment=Alignment.Center Color=@GetSecondColor() Typo=Typo.H5 Clickable=true @onclick=@OnSecondClicked>
+                                    @Second.ToString("D2")
+                                </TextBlock>
+                            }
                             @if (!Hours24 && Orientation == Orientation.Portrait)
                             {
                                 <StackPanel Margin="0,0,0,20" Orientation=@Orientation VerticalAlignment=Alignment.Center>
@@ -35,7 +42,7 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            <DrawingCanvas @ref="MyCanvas" Padding=10 style="overflow-y:hidden; " 
+            <DrawingCanvas @ref="MyCanvas" Margin=10 style="overflow-y:hidden; " 
                            Width=@GetPickerBodySize() Height=@GetPickerBodySize() 
                            OnCanvasSizeChange=@CanvasSizeChange
                            OnPaint=@PaintCanvas

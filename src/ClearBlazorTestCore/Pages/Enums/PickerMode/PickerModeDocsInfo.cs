@@ -12,6 +12,7 @@ namespace ClearBlazorTest
             new ApiFieldInfo("Hour12", "PickerMode", ""),
             new ApiFieldInfo("Hour24", "PickerMode", ""),
             new ApiFieldInfo("Minute", "PickerMode", ""),
+            new ApiFieldInfo("Second", "PickerMode", ""),
         };
     }
 }

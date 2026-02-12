@@ -1,0 +1,23 @@
+﻿@namespace ClearBlazorTest
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <DateTimePickerInput @bind-Value=DateTime @bind-Value:after=OnChange Size=Size.Small />
+    <TextBlock VerticalAlignment="Alignment.Center">@DateTimeString</TextBlock>
+    <DateTimePickerInput ShowSeconds=true @bind-Value=DateTime1 @bind-Value:after=OnChange Size=Size.Small />
+    <TextBlock VerticalAlignment="Alignment.Center">@DateTime1String</TextBlock>
+</CascadingValue>
+
+
+@code {
+    public DateTime? DateTime { get; set; } = new DateTime(2024, 11, 24, 09, 15, 0);
+    string DateTimeString => DateTime?.ToString("dd MMM yyyy HH:mm") ?? "";
+
+    public DateTime? DateTime1 { get; set; } = new DateTime(2024, 11, 24, 09, 15, 0);
+    string DateTime1String => DateTime1?.ToString("dd MMM yyyy HH:mm:ss") ?? "";
+
+    private void OnChange()
+    {
+        StateHasChanged();
+    }
+}

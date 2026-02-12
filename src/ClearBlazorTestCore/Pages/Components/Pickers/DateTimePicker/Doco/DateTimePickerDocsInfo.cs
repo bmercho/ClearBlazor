@@ -12,15 +12,17 @@ namespace ClearBlazorTest
         public (string, string) InheritsLink {get; set; } = ("InputBase", "InputBaseApi");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
-            ("IBorder", "IBorderApi"),
-            ("IBackground", "IBackgroundApi"),
+            (" IBorder", " IBorderApi"),
+            (" IBackground", " IBackgroundApi"),
             (" IBoxShadow", " IBoxShadowApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("DateTime", "DateTime?", "null", "The initially selected date \r"),
-            new ApiComponentInfo("DateChanged", "EventCallback<DateTime?>", "", "Event raised when the date selection has changed.Used for two way binding.\r"),
+            new ApiComponentInfo("DateTime", "DateTime?", "null", "The initial date \r"),
+            new ApiComponentInfo("DefaultDateTime", "DateTime?", "null", "The default date/time. This is used when the DateTime parameter is null. If this is also null, \rthe default date/time will be DateTime.Now. \r"),
+            new ApiComponentInfo("DateTimeChanged", "EventCallback<DateTime?>", "", "Event raised when the date selection has changed.Used for two way binding.\r"),
             new ApiComponentInfo("DateTimeSelected", "EventCallback", "", "Event raised when the date/time selection has changed.\r"),
+            new ApiComponentInfo("ShowSeconds", "bool", "false", "Gets or sets a value indicating whether seconds are displayed in the time representation.\r"),
             new ApiComponentInfo("FirstDayOfTheWeek", "<a href=FirstDayOfTheWeekApi>FirstDayOfTheWeek?</a>", "null", "Customizes what the first day of the week is. Normally either Sun or Mon.\rDefault is Sun.\r"),
             new ApiComponentInfo("FirstYear", "int?", "null", "First year available for selection\r"),
             new ApiComponentInfo("LastYear", "int?", "null", "Last year available for selection\r"),

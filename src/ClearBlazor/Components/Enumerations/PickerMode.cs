@@ -4,7 +4,8 @@
     {
         Hour12, 
         Hour24, 
-        Minute
+        Minute,
+        Second
     }
 
 }

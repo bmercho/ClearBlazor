@@ -18,9 +18,12 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("Time", "TimeOnly?", "null", "The initially selected time \r"),
+            new ApiComponentInfo("Time", "TimeOnly?", "null", "The initial time \r"),
+            new ApiComponentInfo("DefaultTime", "TimeOnly?", "null", "The default time. This is used when the Time parameter is null. If this is also null, \rthe default time will be 00:00. \r"),
             new ApiComponentInfo("TimeChanged", "EventCallback<TimeOnly?>", "", "Event raised when the time selection has changed\r"),
-            new ApiComponentInfo("MinuteSelected", "EventCallback", "", "Event raised when the minute value has been selected indicating that \rthe time selection has been completed\r"),
+            new ApiComponentInfo("ShowSeconds", "bool", "false", "Gets or sets a value indicating whether seconds are displayed in the time representation.\r"),
+            new ApiComponentInfo("MinuteSelected", "EventCallback", "", "Event raised when the minute value has been selected indicating that \rthe time selection has been completed. Will only be raised if ShowSeconds is false.\r"),
+            new ApiComponentInfo("SecondSelected", "EventCallback", "", "Event raised when the second value has been selected indicating that \rthe time selection has been completed. Will only be raised if ShowSeconds is true.\r"),
             new ApiComponentInfo("Hours24", "bool", "false", "Indicates if the selection mode is 24 hours.\r"),
             new ApiComponentInfo("MinuteStep", "<a href=MinuteStepApi>MinuteStep</a>", "MinuteStep.One", "Indicates the step value as the minute handle is dragged or minute clicked  \r"),
             new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Portrait", "The orientation of the control\r"),

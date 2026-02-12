@@ -1,8 +1,9 @@
 ﻿@namespace ClearBlazor
-@inherits ContainerInputBase<TimeOnly?>
+@inherits ContainerInputBase<DateTime?>
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle() @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle() 
+         @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
         <StackPanel Orientation="Orientation.Portrait">
             @if (!string.IsNullOrEmpty(Label))
             {
@@ -10,26 +11,25 @@
             }
             <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
                   BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
-                <div @ref="PickerElement" style="display:grid; ">
+                <div style="display:grid; ">
                     <Grid MinWidth=110 Columns="*,auto" Margin="0,0,0,5">
                         <Grid Columns="*,auto" Column=0 @onclick=@TogglePopup>
-                            <TextBlock VerticalAlignment=Alignment.Center>@TimeString</TextBlock>
-                            <IconButton Column=1 Size=Size.Small Icon=@Icons.Material.Outlined.Schedule />
+                            <TextBlock VerticalAlignment=Alignment.Center>@DateTimeString</TextBlock>
+                            <IconButton Column=1 Size=Size.Small Icon=@Icons.Material.Outlined.CalendarMonth/>
                         </Grid>
                         @if (Clearable && Value.HasValue)
                         {
-                            <IconButton Size=Size.VerySmall Column=1 VerticalAlignment=Alignment.Center
+                            <IconButton Size=Size.VerySmall Column=1 VerticalAlignment=Alignment.Center 
                                         Icon=@Icons.Material.Filled.Close @onclick=ClearEntry />
                         }
                     </Grid>
                      <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="1,-20,-20,0"
-                           Position=Position Transform=Transform @bind-Open:after=@OpenChanged
+                           Position=Position Transform=Transform
                            AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
-                           
                            @bind-Open=PopupOpen>
-                        <TimePicker @ref="TimePicker" ShowSeconds=@ShowSeconds Hours24=@Hours24 MinuteStep=@MinuteStep Orientation=@Orientation
-                                    BorderThickness=1 CornerRadius=4 @bind-Time=Value @bind-Time:after=TimeChanged
-                                    MinuteSelected=@TimeSelected SecondSelected=@TimeSelected />
+                        <DateTimePicker ShowSeconds=@ShowSeconds Orientation=@Orientation BorderThickness=1 CornerRadius=4 
+                                    @bind-DateTime=Value @bind-DateTime:after=DateTimeChanged 
+                                    DateTimeSelected=@DateTimeSelected />
                     </Popup>
                      @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                     {

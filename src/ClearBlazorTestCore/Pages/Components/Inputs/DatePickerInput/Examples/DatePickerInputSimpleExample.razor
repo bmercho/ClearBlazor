@@ -3,13 +3,16 @@
 
 <CascadingValue Value="this" IsFixed="false">
     <DatePickerInput @bind-Value=Date @bind-Value:after=OnChange Size=Size.Small />
+    <TextBlock VerticalAlignment="Alignment.Center">@DateString</TextBlock>
 </CascadingValue>
 
 
 @code {
     public DateOnly? Date { get; set; } = new DateOnly(2024, 11, 24);
+    string DateString => Date?.ToString("dd MMM yyyy") ?? "";
 
     private void OnChange()
     {
+        StateHasChanged();
     }
 }

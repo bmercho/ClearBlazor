@@ -5,13 +5,25 @@
 <CascadingValue Value="this" IsFixed="false">
     <TimePickerInput Hours24=true MinuteStep=MinuteStep.Five
                      TimeFormat="HH:mm" @bind-Value=Time @bind-Value:after=OnChange />
+    <TextBlock VerticalAlignment="Alignment.Center">@TimeString</TextBlock>
+
+    <TimePickerInput MinuteStep=MinuteStep.Five ShowSeconds="true"
+                     TimeFormat="HH:mm:ss" @bind-Value=Time1 @bind-Value:after=OnChange />
+    <TextBlock VerticalAlignment="Alignment.Center">@Time1String</TextBlock>
+
+
 </CascadingValue>
 
 
 @code {
     public TimeOnly? Time { get; set; } = new TimeOnly(11, 25);
+    string TimeString => Time?.ToString("HH:mm") ?? "";
+
+    public TimeOnly? Time1 { get; set; } = new TimeOnly(11, 25);
+    string Time1String => Time1?.ToString("HH:mm:ss") ?? "";
 
     private void OnChange()
     {
+        StateHasChanged();
     }
 }

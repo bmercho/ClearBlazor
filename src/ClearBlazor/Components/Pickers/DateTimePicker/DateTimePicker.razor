@@ -8,12 +8,13 @@
               BackgroundColor=@Color>
             @if (ShowDatePicker)
             {
-                <DatePicker Column=0 ColumnSpan=2 Row=0 RowSpan=2 Orientation=@Orientation BorderThickness=1 CornerRadius=4
-                            DateSelected=@DateTimeSelected />
+                <DatePicker Column=0 ColumnSpan=2 Row=0 RowSpan=2 Orientation=@Orientation BorderThickness=1 
+                            CornerRadius=4 @bind-Date=SelectedDateOnly @bind-Date:after=OnChanged />
             }
             else
             {
-                <TimePicker Column=0 ColumnSpan=2 Row=0 RowSpan=2 Orientation=@Orientation BorderThickness=1 CornerRadius=4 />
+                <TimePicker ShowSeconds=@ShowSeconds Column=0 ColumnSpan=2 Row=0 RowSpan=2 Orientation=@Orientation 
+                            BorderThickness=1 CornerRadius=4 @bind-Time=SelectedTimeOnly @bind-Time:after=OnChanged />
             }
 
             <ToggleIconButton Column=1 Row=0 Margin=5 Size=Size.Small

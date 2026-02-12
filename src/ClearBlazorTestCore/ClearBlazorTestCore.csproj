@@ -42,6 +42,9 @@
     <Folder Include="Pages\Interfaces\IBackground\" />
   </ItemGroup>
   <ItemGroup>
+	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerShowSecondsExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Pickers\TimePicker\Code\TimePickerDefaultTimeExampleCode.html" />
+	<EmbeddedResource Include="Pages\Components\Inputs\DateTimePickerInput\Code\DateTimePickerInputSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Dialog\Code\DialogSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Pickers\DateTimePicker\Code\DateTimePickerSimpleExampleCode.html" />
 	<EmbeddedResource Include="Pages\Components\Video\Code\VideoSimpleExampleCode.html" />

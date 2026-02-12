@@ -4,10 +4,17 @@
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
-    <DateTimePicker Margin="0,0,10,0" BorderThickness=1 CornerRadius=4 @bind-Time=DateTime1 />
-    <TextBlock>@DateTime1</TextBlock>
+    <DateTimePicker Margin="0,0,10,0" BorderThickness=1 CornerRadius=4 @bind-DateTime=DateTime1 @bind-DateTime:after=DateTimeChanged />
+    <TextBlock>@DateTime1String</TextBlock>
 </CascadingValue>
 
 @code {
-    DateTime? DateTime1 { get; set; } = DateTime.Now;
+    DateTime? DateTime1 { get; set; } = new DateTime(2007, 5, 28, 22, 45, 0);
+
+    string DateTime1String => DateTime1?.ToString("dd MMM yyyy HH:mm") ?? "";   
+
+    private async Task DateTimeChanged()
+    {
+        StateHasChanged();
+    }
 }

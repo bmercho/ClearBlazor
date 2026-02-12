@@ -10,10 +10,23 @@ namespace ClearBlazor
     public partial class TimePickerInput : ContainerInputBase<TimeOnly?>, IBackground
     {
         /// <summary>
+        /// The default time. This is used when the Value parameter is null. If this is also null, 
+        /// the default time will be 00:00. 
+        /// </summary>
+        [Parameter]
+        public TimeOnly? DefaultTime { get; set; } = null;
+
+        /// <summary>
         /// Specifies the format of the time. The default format is 'hh:mm tt'.
         /// </summary>
         [Parameter]
         public string TimeFormat { get; set; } = "hh:mm tt";
+
+        /// <summary>
+        /// Gets or sets a value indicating whether seconds are displayed in the time representation.
+        /// </summary>
+        [Parameter]
+        public bool ShowSeconds { get; set; } = false;
 
         /// <summary>
         /// Indicates whether the time format is 24-hour. Defaults to false, meaning a 12-hour format is used.
@@ -70,6 +83,17 @@ namespace ClearBlazor
         private SizeInfo? SizeInfo = null;
         private ElementReference PickerElement;
         private TimePicker? TimePicker = null;
+
+        protected override async Task OnParametersSetAsync()
+        {
+            await base.OnParametersSetAsync();
+            if (Value == null)
+                if (DefaultTime == null)
+                    Value = TimeOnly.FromDateTime(DateTime.Now);
+                else
+                    Value = DefaultTime;
+        }
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -113,7 +137,7 @@ namespace ClearBlazor
             }
         }
 
-        private async Task MinuteSelected()
+        private async Task TimeSelected()
         {
             PopupOpen = false;
             await TimeChanged();

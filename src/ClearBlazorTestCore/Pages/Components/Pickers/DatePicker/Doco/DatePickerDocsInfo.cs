@@ -18,7 +18,8 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("Date", "DateOnly?", "null", "The initially selected date \r"),
+            new ApiComponentInfo("Date", "DateOnly?", "null", "The initial date \r"),
+            new ApiComponentInfo("DefaultDate", "DateOnly?", "null", "The defaultdate. This is used when the Date parameter is null. If this is also null, the default date will be DateTime.Now. \r"),
             new ApiComponentInfo("DateChanged", "EventCallback<DateOnly?>", "", "Event raised when the date selection has changed.Used for two way binding.\r"),
             new ApiComponentInfo("DateSelected", "EventCallback", "", "Event raised when the date selection has changed.\r"),
             new ApiComponentInfo("FirstDayOfTheWeek", "<a href=FirstDayOfTheWeekApi>FirstDayOfTheWeek?</a>", "null", "Customizes what the first day of the week is. Normally either Sun or Mon.\rDefault is Sun.\r"),

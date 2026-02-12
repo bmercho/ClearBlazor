@@ -3,21 +3,22 @@
 using ClearBlazor.Common;
 namespace ClearBlazorTest
 {
-    public record DatePickerInputDocsInfo:IComponentDocsInfo
+    public record DateTimePickerInputDocsInfo:IComponentDocsInfo
     {
-        public string Name { get; set; } = "DatePickerInput";
+        public string Name { get; set; } = "DateTimePickerInput";
         public string Description {get; set; } = "A date picker input component\r";
-        public (string, string) ApiLink  {get; set; } = ("API", "DatePickerInputApi");
-        public (string, string) ExamplesLink {get; set; } = ("Examples", "DatePickerInput");
-        public (string, string) InheritsLink {get; set; } = ("ContainerInputBase<DateOnly?>", "ContainerInputBase<DateOnly?>Api");
+        public (string, string) ApiLink  {get; set; } = ("API", "DateTimePickerInputApi");
+        public (string, string) ExamplesLink {get; set; } = ("Examples", "DateTimePickerInput");
+        public (string, string) InheritsLink {get; set; } = ("ContainerInputBase<DateTime?>", "ContainerInputBase<DateTime?>Api");
         public List<(string, string)> ImplementsLinks {get; set; } = new()
         {
             (" IBackground", " IBackgroundApi"),
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
-            new ApiComponentInfo("DefaultDate", "DateOnly?", "null", "The default date. This is used when the Value parameter is null. If this is also null, the default date will be DateTime.Now. \r"),
-            new ApiComponentInfo("DateFormat", "string", "dd MMM yyyy", "Specifies the format for the date. The default format is 'dd MMM yyyy'.\r"),
+            new ApiComponentInfo("DefaultDateTime", "DateTime?", "null", "The default date/time. This is used when the Value parameter is null. If this is also null, \rthe default date/time will be DateTime.Now. \r"),
+            new ApiComponentInfo("DateTimeFormat", "string", "dd MMM yyyy HH:mm", "Specifies the format for the date and time. The default format is 'dd MMM yyyy HH:mm'.\r"),
+            new ApiComponentInfo("ShowSeconds", "bool", "false", "Gets or sets a value indicating whether seconds are displayed in the time representation.\r"),
             new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Portrait", "Orientation of the component. Defaults to portrait.\r"),
             new ApiComponentInfo("BackgroundColor", "Color?", "null", "See <a href=\"IBackgroundApi\">IBackground</a>\r"),
             new ApiComponentInfo("Position", "<a href=PopupPositionApi>PopupPosition</a>", "PopupPosition.BottomLeft", "Defines the position of a popup, defaulting to the bottom left corner.\r"),

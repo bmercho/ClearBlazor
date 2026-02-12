@@ -5,14 +5,26 @@
 <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CascadingValue</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">this</span><span class="quot">&quot;</span> <span class="htmlAttributeName">IsFixed</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="keyword">false</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
     &lt;TimePickerInput Hours24=true MinuteStep=MinuteStep.Five
                      TimeFormat=&quot;HH:mm&quot; <span class="atSign">&#64;</span>bind-Value=Time <span class="atSign">&#64;</span>bind-Value:after=OnChange /&gt;
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="enum">Alignment</span><span class="enumValue">.Center</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>TimeString<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+
+    &lt;TimePickerInput MinuteStep=MinuteStep.Five ShowSeconds=&quot;true&quot;
+                     TimeFormat=&quot;HH:mm:ss&quot; <span class="atSign">&#64;</span>bind-Value=Time1 <span class="atSign">&#64;</span>bind-Value:after=OnChange /&gt;
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span> <span class="htmlAttributeName">VerticalAlignment</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="enum">Alignment</span><span class="enumValue">.Center</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>Time1String<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+
+
 <span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">CascadingValue</span><span class="htmlTagDelimiter">&gt;</span>
 </pre></div>
 <div class="csharp"><pre>
 <span class="atSign">&#64;</span>code {
     <span class="keyword">public</span> TimeOnly? Time { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="keyword">new</span> TimeOnly(<span class="number">11</span>, <span class="number">25</span>);
+    <span class="keyword">string</span> TimeString =&gt; Time?.ToString(<span class="string">&quot;HH:mm&quot;</span>) ?? <span class="string">&quot;&quot;</span>;
+
+    <span class="keyword">public</span> TimeOnly? Time1 { <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="keyword">new</span> TimeOnly(<span class="number">11</span>, <span class="number">25</span>);
+    <span class="keyword">string</span> Time1String =&gt; Time1?.ToString(<span class="string">&quot;HH:mm:ss&quot;</span>) ?? <span class="string">&quot;&quot;</span>;
 
     <span class="keyword">private</span> <span class="keyword">void</span> OnChange()
     {
+        StateHasChanged();
     }
 }
 </pre></div>

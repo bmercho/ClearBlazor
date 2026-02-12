@@ -14,10 +14,16 @@ namespace ClearBlazor
         }
 
         /// <summary>
-        /// The initially selected date 
+        /// The initial date 
         /// </summary>
         [Parameter]
         public DateOnly? Date { get; set; }
+
+        /// <summary>
+        /// The defaultdate. This is used when the Date parameter is null. If this is also null, the default date will be DateTime.Now. 
+        /// </summary>
+        [Parameter]
+        public DateOnly? DefaultDate { get; set; }
 
         /// <summary>
         /// Event raised when the date selection has changed.Used for two way binding.
@@ -117,8 +123,11 @@ namespace ClearBlazor
             await base.OnParametersSetAsync();
             if (Color == null)
                 Color = Color.Primary;
-            if (Date == null)   
-                Date = DateOnly.FromDateTime(DateTime.Now);
+            if (Date == null)
+                if (DefaultDate == null)
+                    Date = DateOnly.FromDateTime(DateTime.Now);
+                else
+                    Date = DefaultDate;
             AddYearRange(FirstYear, LastYear);
 
             FirstDayOfWeek = GetFirstDayOfWeek();

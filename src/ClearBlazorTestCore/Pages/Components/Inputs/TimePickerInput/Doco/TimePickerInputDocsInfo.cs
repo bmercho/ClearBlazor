@@ -16,7 +16,9 @@ namespace ClearBlazorTest
         };
         public List<ApiComponentInfo> ParameterApi {get; set; } = new List<ApiComponentInfo>
         {
+            new ApiComponentInfo("DefaultTime", "TimeOnly?", "null", "The default time. This is used when the Value parameter is null. If this is also null, \rthe default time will be 00:00. \r"),
             new ApiComponentInfo("TimeFormat", "string", "hh:mm tt", "Specifies the format of the time. The default format is 'hh:mm tt'.\r"),
+            new ApiComponentInfo("ShowSeconds", "bool", "false", "Gets or sets a value indicating whether seconds are displayed in the time representation.\r"),
             new ApiComponentInfo("Hours24", "bool", "false", "Indicates whether the time format is 24-hour. Defaults to false, meaning a 12-hour format is used.\r"),
             new ApiComponentInfo("MinuteStep", "<a href=MinuteStepApi>MinuteStep</a>", "MinuteStep.One", "Defines the step interval for minutes, allowing customization of minute increments. Defaults to a one-minute\rstep.\r"),
             new ApiComponentInfo("Orientation", "<a href=OrientationApi>Orientation</a>", "Orientation.Portrait", "The orientation of the component. Defaults to portrait.    \r"),

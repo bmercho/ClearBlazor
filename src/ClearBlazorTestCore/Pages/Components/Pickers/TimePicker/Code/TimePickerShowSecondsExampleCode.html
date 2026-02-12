@@ -1,0 +1,26 @@
+<div>
+<div class="html"><pre>
+<span class="atSign">&#64;</span>using System.ComponentModel.DataAnnotations
+<span class="atSign">&#64;</span>using System.Globalization
+<span class="atSign">&#64;</span>inherits ClearComponentBase
+
+<span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">CascadingValue</span> <span class="htmlAttributeName">Value</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="htmlAttributeValue">this</span><span class="quot">&quot;</span> <span class="htmlAttributeName">IsFixed</span><span class="htmlOperator">=</span><span class="quot">&quot;</span><span class="keyword">false</span><span class="quot">&quot;</span><span class="htmlTagDelimiter">&gt;</span>
+    &lt;TimePicker Margin=&quot;0,0,10,0&quot; BorderThickness=1 CornerRadius=4 
+                ShowSeconds=true
+                <span class="atSign">&#64;</span>bind-Time=Time
+                <span class="atSign">&#64;</span>bind-Time:after=TimeChanged /&gt;
+    <span class="htmlTagDelimiter">&lt;</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span><span class="atSign">&#64;</span>TimeString<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">TextBlock</span><span class="htmlTagDelimiter">&gt;</span>
+<span class="htmlTagDelimiter">&lt;/</span><span class="htmlElementName">CascadingValue</span><span class="htmlTagDelimiter">&gt;</span>
+</pre></div>
+<div class="csharp"><pre>
+<span class="atSign">&#64;</span>code {
+    TimeOnly? Time = <span class="keyword">new</span> TimeOnly(<span class="number">9</span>, <span class="number">15</span>, <span class="number">30</span>);
+    <span class="keyword">string</span> TimeString =&gt; Time?.ToString(<span class="string">&quot;HH:mm:ss&quot;</span>, CultureInfo.InvariantCulture) ?? <span class="string">&quot;null&quot;</span>;    
+
+    <span class="keyword">private</span> <span class="keyword">async</span> Task TimeChanged()
+    {
+       <span class="keyword">await</span> Refresh();
+    }
+}
+</pre></div>
+</div>

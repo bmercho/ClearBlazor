@@ -1,0 +1,22 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using System.Globalization
+@namespace ClearBlazorTest
+@inherits ClearComponentBase
+
+<CascadingValue Value="this" IsFixed="false">
+    <TimePicker Margin="0,0,10,0" BorderThickness=1 CornerRadius=4 
+                ShowSeconds=true
+                @bind-Time=Time
+                @bind-Time:after=TimeChanged />
+    <TextBlock>@TimeString</TextBlock>
+</CascadingValue>
+
+@code {
+    TimeOnly? Time = new TimeOnly(9, 15, 30);
+    string TimeString => Time?.ToString("HH:mm:ss", CultureInfo.InvariantCulture) ?? "null";    
+
+    private async Task TimeChanged()
+    {
+       await Refresh();
+    }
+}

@@ -12,10 +12,17 @@ namespace ClearBlazor
     public partial class TimePicker : InputBase, IBorder,IBackground, IBoxShadow
     {
         /// <summary>
-        /// The initially selected time 
+        /// The initial time 
         /// </summary>
         [Parameter]
         public TimeOnly? Time { get; set; } = null;
+
+        /// <summary>
+        /// The default time. This is used when the Time parameter is null. If this is also null, 
+        /// the default time will be 00:00. 
+        /// </summary>
+        [Parameter]
+        public TimeOnly? DefaultTime { get; set; } = null;
 
         /// <summary>
         /// Event raised when the time selection has changed
@@ -24,11 +31,25 @@ namespace ClearBlazor
         public EventCallback<TimeOnly?> TimeChanged { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether seconds are displayed in the time representation.
+        /// </summary>
+        [Parameter]
+        public bool ShowSeconds { get; set; } = false;
+
+        /// <summary>
         /// Event raised when the minute value has been selected indicating that 
-        /// the time selection has been completed
+        /// the time selection has been completed. Will only be raised if ShowSeconds is false.
         /// </summary>
         [Parameter]
         public EventCallback MinuteSelected { get; set; }
+
+        /// <summary>
+        /// Event raised when the second value has been selected indicating that 
+        /// the time selection has been completed. Will only be raised if ShowSeconds is true.
+        /// </summary>
+        [Parameter]
+        public EventCallback SecondSelected { get; set; }
+
 
         /// <summary>
         /// Indicates if the selection mode is 24 hours.
@@ -96,6 +117,7 @@ namespace ClearBlazor
         DrawingCanvas? MyCanvas;
         private int Hour = 0;
         private int Minute = 0;
+        private int Second = 0;
         private bool IsAM = false;
         private bool Moving = false;
         private PickerMode PickerMode = PickerMode.Hour12;
@@ -111,7 +133,10 @@ namespace ClearBlazor
             if (Color == null)
                 Color = Color.Primary;
             if (Time == null)
-                Time = new TimeOnly(0, 0);
+                if (DefaultTime == null)
+                    Time = new TimeOnly(0, 0);
+                else
+                    Time = DefaultTime; 
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -127,7 +152,7 @@ namespace ClearBlazor
 
             if (Time == null || CurrentTime != Time)
             {
-                GetHourMinuteAmPmFromTime();
+                GetHourMinuteSecondAmPmFromTime();
                 CurrentTime = Time;
                 await Refresh();
             }
@@ -190,6 +215,7 @@ namespace ClearBlazor
             double radius = PickerRadius;
             double hour = Hour;
             double minute = Minute;
+            double second = Second;
             switch (PickerMode)
             {
                 case PickerMode.Hour12:
@@ -211,6 +237,15 @@ namespace ClearBlazor
                     minute = minute % 60;
                     angle = minute * Math.PI / 30;
                     if (minute % 5 == 0)
+                        endCircleSize = 13;
+                    else
+                        endCircleSize = 4;
+                    radius = PickerOuterTextRadius;
+                    break;
+                case PickerMode.Second:
+                    second = second % 60;
+                    angle = second * Math.PI / 30;
+                    if (second % 5 == 0)
                         endCircleSize = 13;
                     else
                         endCircleSize = 4;
@@ -258,7 +293,12 @@ namespace ClearBlazor
             {
                 await context.FontAsync($"1rem {fontFamily}");
                 await context.FillStyleAsync(ThemeManager.CurrentColorScheme.OnSurface.Value);
-                if (PickerMode == PickerMode.Minute)
+                if (PickerMode == PickerMode.Second)
+                {
+                    if (Second % 60 == num * 5 % 60)
+                        await context.FillStyleAsync(Color.ContrastingColor(ThemeManager.CurrentColorScheme.OnSurface).Value);
+                }
+                else if (PickerMode == PickerMode.Minute)
                 {
                     if (Minute % 60 == num * 5 % 60)
                         await context.FillStyleAsync(Color.ContrastingColor(ThemeManager.CurrentColorScheme.OnSurface).Value);
@@ -273,7 +313,7 @@ namespace ClearBlazor
                 await context.RotateAsync(ang);
                 await context.TranslateAsync(0, -PickerOuterTextRadius);
                 await context.RotateAsync(-ang);
-                if (PickerMode == PickerMode.Minute)
+                if (PickerMode == PickerMode.Second || PickerMode == PickerMode.Minute)
                     await context.FillTextAsync((num * 5 % 60).ToString("D2"), 0, 2);
                 else
                     await context.FillTextAsync(num.ToString(), 0, 2);
@@ -305,14 +345,16 @@ namespace ClearBlazor
             return PickerBodySize;
         }
 
-        private void GetHourMinuteAmPmFromTime()
+        private void GetHourMinuteSecondAmPmFromTime()
         {
             int prevHour = Hour;
             int prevMinute = Minute;
+            int prevSecond = Second;
             if (Time == null)
             {
                 Hour = 0;
                 Minute = 0;
+                Second = 0;
                 IsAM = true;
             }
             else
@@ -332,6 +374,7 @@ namespace ClearBlazor
                         Hour += 12;
                     Minute = time.Minute;
                 }
+                Second = time.Second;
             }
         }
 
@@ -346,6 +389,14 @@ namespace ClearBlazor
         private Color GetMinuteColor()
         {
             if (PickerMode == PickerMode.Minute)
+                return Color.ContrastingColor(Color!);
+            else
+                return Color.ContrastingColor(Color!).Darken(0.3);
+        }
+
+        private Color GetSecondColor()
+        {
+            if (PickerMode == PickerMode.Second)
                 return Color.ContrastingColor(Color!);
             else
                 return Color.ContrastingColor(Color!).Darken(0.3);
@@ -370,6 +421,13 @@ namespace ClearBlazor
         private async Task OnMinuteClicked()
         {
             PickerMode = PickerMode.Minute;
+            MyCanvas?.RefreshCanvas();
+            await Refresh();
+        }
+
+        private async Task OnSecondClicked()
+        {
+            PickerMode = PickerMode.Second;
             MyCanvas?.RefreshCanvas();
             await Refresh();
         }
@@ -444,8 +502,15 @@ namespace ClearBlazor
             HandleNewPointerPosition(e.OffsetX - PickerRadius, e.OffsetY - PickerRadius);
             if (PickerMode == PickerMode.Hour12 || PickerMode == PickerMode.Hour24)
                 PickerMode = PickerMode.Minute;
+            else if (PickerMode == PickerMode.Minute)
+            {
+                if (ShowSeconds)
+                    PickerMode = PickerMode.Second;
+                else
+                    await MinuteSelected.InvokeAsync();
+            }
             else
-                await MinuteSelected.InvokeAsync();
+                await SecondSelected.InvokeAsync();
             MyCanvas?.RefreshCanvas();
             await Refresh();
         }
@@ -474,6 +539,9 @@ namespace ClearBlazor
                 var ang1 = num * 360 / numSteps * Math.PI / 180;
                 var ang1d = ang1 * 180 / Math.PI;
 
+                var d1 = Math.Abs(ang1 - ang);
+                var d2 = Math.Abs(ang1 - ang - 360 * Math.PI / 180);
+
                 if (closestNum == 0 || Math.Abs(ang1 - ang) < closestDiff || Math.Abs(ang1 - ang - 360 * Math.PI / 180) < closestDiff)
                 {
                     closestDiff = Math.Abs(ang1 - ang);
@@ -486,7 +554,17 @@ namespace ClearBlazor
                         closestNum = num;
                 }
             }
-            if (PickerMode == PickerMode.Minute)
+            if (PickerMode == PickerMode.Second)
+            {
+                if (Second != closestNum)
+                {
+                    Second = closestNum;
+                    MyCanvas?.RefreshCanvas();
+                    await Refresh();
+                    await PublishTime();
+                }
+            }
+            else if (PickerMode == PickerMode.Minute)
             {
                 if (Minute != closestNum)
                 {
@@ -525,6 +603,8 @@ namespace ClearBlazor
                 }
                 return 60;
             }
+            else if (PickerMode == PickerMode.Second)
+                return 60;
             else
                 return 12;
         }
@@ -534,18 +614,18 @@ namespace ClearBlazor
             try
             {
                 if (Hours24)
-                    Time = new TimeOnly(Hour, Minute);
+                    Time = new TimeOnly(Hour, Minute, Second);
                 else if (IsAM)
                 {
                     if (Hour >= 12)
-                        Time = new TimeOnly(Hour - 12, Minute);
+                        Time = new TimeOnly(Hour - 12, Minute, Second);
                     else
-                        Time = new TimeOnly(Hour, Minute);
+                        Time = new TimeOnly(Hour, Minute, Second);
                 }
                 else
                 {
                     if (Hour < 12)
-                        Time = new TimeOnly(Hour + 12, Minute);
+                        Time = new TimeOnly(Hour + 12, Minute, Second);
                     else
                         Time = new TimeOnly(Hour, Minute);
                 }

@@ -188,9 +188,15 @@ namespace ClearBlazor
                     else if (HasFocus)
                         return Color.Primary;
                     else if (MouseOver)
-                        return ThemeManager.CurrentColorScheme.Outline.Darken(0.1);
+                        if (Color == null)
+                            return ThemeManager.CurrentColorScheme.Outline.Darken(0.1);
+                        else
+                            return Color.Darken(0.1);
                     else
-                        return ThemeManager.CurrentColorScheme.Outline;
+                        if (Color == null)
+                            return ThemeManager.CurrentColorScheme.Outline;
+                        else
+                            return Color;
                 case InputContainerStyle.Filled:
                     return null;
             }
@@ -222,11 +228,16 @@ namespace ClearBlazor
                 css += $"color: {Color.Error.Value}; ";
             else
             {
-                var color = GetBackgroundColor();
-                if (color == null)
-                    css += $"color: {ThemeManager.CurrentColorScheme.OnSurfaceVariant.Value}; ";
+                if (Color != null)
+                    css += $"color: {Color.Value}; ";
                 else
-                    css += $"color: {Color.GetAssocTextColor(color).Value}; ";
+                {
+                    var color = GetBackgroundColor();
+                    if (color == null)
+                        css += $"color: {ThemeManager.CurrentColorScheme.OnSurfaceVariant.Value}; ";
+                    else
+                        css += $"color: {Color.GetAssocTextColor(color).Value}; ";
+                }
             }
 
             TypographyBase typo = ThemeManager.CurrentTheme.Typography.InputNormal;

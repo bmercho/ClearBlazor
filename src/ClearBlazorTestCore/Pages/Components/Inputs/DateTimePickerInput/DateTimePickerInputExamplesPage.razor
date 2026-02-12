@@ -1,0 +1,11 @@
+﻿@page "/DateTimePickerInput"
+@using ClearBlazorTest
+<DocsExamplesPage DocsInfo=@(new DateTimePickerInputDocsInfo())>
+    <StackPanel Padding="20" Spacing="30">
+        <CodeSnippet Title="Basic" Code=@(typeof(DateTimePickerInputSimpleExample).Name)>
+            <WrapPanel Margin="10" ColumnSpacing="20">
+                <DateTimePickerInputSimpleExample />
+            </WrapPanel>
+        </CodeSnippet>
+    </StackPanel>
+</DocsExamplesPage>

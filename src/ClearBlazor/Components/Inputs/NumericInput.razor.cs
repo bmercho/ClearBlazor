@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System.Globalization;
-using System.Numerics;
 
 namespace ClearBlazor
 {

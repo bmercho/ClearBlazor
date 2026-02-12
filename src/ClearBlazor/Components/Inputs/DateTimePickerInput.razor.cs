@@ -5,19 +5,26 @@ namespace ClearBlazor
     /// <summary>
     /// A date picker input component
     /// </summary>
-    public partial class DatePickerInput : ContainerInputBase<DateOnly?>, IBackground
+    public partial class DateTimePickerInput : ContainerInputBase<DateTime?>, IBackground
     {
         /// <summary>
-        /// The default date. This is used when the Value parameter is null. If this is also null, the default date will be DateTime.Now. 
+        /// The default date/time. This is used when the Value parameter is null. If this is also null, 
+        /// the default date/time will be DateTime.Now. 
         /// </summary>
         [Parameter]
-        public DateOnly? DefaultDate { get; set; }
+        public DateTime? DefaultDateTime { get; set; } = null;
 
         /// <summary>
-        /// Specifies the format for the date. The default format is 'dd MMM yyyy'.
+        /// Specifies the format for the date and time. The default format is 'dd MMM yyyy HH:mm'.
         /// </summary>
         [Parameter]
-        public string DateFormat { get; set; } = "dd MMM yyyy";
+        public string DateTimeFormat { get; set; } = "dd MMM yyyy HH:mm";
+
+        /// <summary>
+        /// Gets or sets a value indicating whether seconds are displayed in the time representation.
+        /// </summary>
+        [Parameter]
+        public bool ShowSeconds { get; set; } = false;
 
         /// <summary>
         /// Orientation of the component. Defaults to portrait.
@@ -55,18 +62,19 @@ namespace ClearBlazor
         [Parameter]
         public bool AllowHorizontalFlip { get; set; } = true;
 
-        private string? DateString => Value == null ? string.Empty : ((DateOnly)Value).ToString(DateFormat);
+        private string? DateTimeString => Value == null ? string.Empty : ((DateTime)Value).ToString(DateTimeFormat);
 
         private bool PopupOpen = false;
+
 
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
             if (Value == null)
-                if (DefaultDate == null)
-                    Value = DateOnly.FromDateTime(DateTime.Now);
+                if (DefaultDateTime == null)
+                    Value = DateTime.Now;
                 else
-                    Value = DefaultDate;
+                    Value = DefaultDateTime;
         }
 
         private bool IsMouseNotOver()
@@ -77,13 +85,13 @@ namespace ClearBlazor
         private async Task TogglePopup()
         {
             PopupOpen = !PopupOpen;
-            await DateChanged();
+            await DateTimeChanged();
         }
 
         protected override async Task ClearEntry()
         {
             Value = null;
-            await DateChanged();
+            await DateTimeChanged();
         }
 
         protected override string GetInputType()
@@ -91,16 +99,15 @@ namespace ClearBlazor
             return string.Empty;
         }
 
-        private async Task DateSelected()
+        private async Task DateTimeSelected()
         {
             PopupOpen = false;
-            await DateChanged();
+            await DateTimeChanged();
         }
-        private async Task DateChanged()
+        private async Task DateTimeChanged()
         {
             await ValueChanged.InvokeAsync(Value);
-            DoRender = true;
-            StateHasChanged();
+            await Refresh();
         }
     }
 }
