@@ -91,9 +91,12 @@ namespace ClearBlazor
 
         private async Task BrowserResized(BrowserSizeInfo browserSizeInfo)
         {
-            Open = false;
-            await OpenChanged.InvokeAsync(Open);
-            StateHasChanged();
+            if (Open)
+            {
+                Open = false;
+                await OpenChanged.InvokeAsync(Open);
+                StateHasChanged();
+            }
         }
 
         public virtual void OnCompleted()
@@ -106,9 +109,12 @@ namespace ClearBlazor
 
         public virtual void OnNext(bool hasScrolled)
         {
-            Open = false;
-            OpenChanged.InvokeAsync(Open);
-            StateHasChanged();
+            if (Open)
+            {
+                Open = false;
+                OpenChanged.InvokeAsync(Open);
+                StateHasChanged();
+            }
         }
 
         public virtual void Subscribe(IObservable<bool> provider)

@@ -7,10 +7,12 @@
                      TimeFormat="HH:mm" @bind-Value=Time @bind-Value:after=OnChange />
     <TextBlock VerticalAlignment="Alignment.Center">@TimeString</TextBlock>
 
-    <TimePickerInput MinuteStep=MinuteStep.Five ShowSeconds="true"
+    <TimePickerInput ShowSeconds="true"
                      TimeFormat="HH:mm:ss" @bind-Value=Time1 @bind-Value:after=OnChange />
     <TextBlock VerticalAlignment="Alignment.Center">@Time1String</TextBlock>
 
+    <TimePickerInput  TimeFormat="HH:mm:ss" @bind-Value=Time2 @bind-Value:after=OnChange />
+    <TextBlock VerticalAlignment="Alignment.Center">@Time2String</TextBlock>
 
 </CascadingValue>
 
@@ -21,6 +23,9 @@
 
     public TimeOnly? Time1 { get; set; } = new TimeOnly(11, 25);
     string Time1String => Time1?.ToString("HH:mm:ss") ?? "";
+
+    public TimeOnly? Time2 { get; set; } = null;
+    string Time2String => Time2?.ToString("HH:mm:ss") ?? "";
 
     private void OnChange()
     {

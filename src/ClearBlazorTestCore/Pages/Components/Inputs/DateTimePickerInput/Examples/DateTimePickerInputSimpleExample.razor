@@ -4,8 +4,12 @@
 <CascadingValue Value="this" IsFixed="false">
     <DateTimePickerInput @bind-Value=DateTime @bind-Value:after=OnChange Size=Size.Small />
     <TextBlock VerticalAlignment="Alignment.Center">@DateTimeString</TextBlock>
+
     <DateTimePickerInput ShowSeconds=true @bind-Value=DateTime1 @bind-Value:after=OnChange Size=Size.Small />
     <TextBlock VerticalAlignment="Alignment.Center">@DateTime1String</TextBlock>
+
+    <DateTimePickerInput @bind-Value=DateTime2 @bind-Value:after=OnChange Size=Size.Small />
+    <TextBlock VerticalAlignment="Alignment.Center">@DateTime2String</TextBlock>
 </CascadingValue>
 
 
@@ -15,6 +19,9 @@
 
     public DateTime? DateTime1 { get; set; } = new DateTime(2024, 11, 24, 09, 15, 0);
     string DateTime1String => DateTime1?.ToString("dd MMM yyyy HH:mm:ss") ?? "";
+
+    public DateTime? DateTime2 { get; set; } = null;
+    string DateTime2String => DateTime2?.ToString("dd MMM yyyy HH:mm:ss") ?? "";
 
     private void OnChange()
     {

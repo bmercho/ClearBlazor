@@ -4,12 +4,18 @@
 <CascadingValue Value="this" IsFixed="false">
     <DatePickerInput @bind-Value=Date @bind-Value:after=OnChange Size=Size.Small />
     <TextBlock VerticalAlignment="Alignment.Center">@DateString</TextBlock>
+
+    <DatePickerInput @bind-Value=Date1 @bind-Value:after=OnChange Size=Size.Small Clearable="true" />
+    <TextBlock VerticalAlignment="Alignment.Center">@Date1String</TextBlock>
 </CascadingValue>
 
 
 @code {
     public DateOnly? Date { get; set; } = new DateOnly(2024, 11, 24);
     string DateString => Date?.ToString("dd MMM yyyy") ?? "";
+
+    public DateOnly? Date1 { get; set; } = null;
+    string Date1String => Date1?.ToString("dd MMM yyyy") ?? "";
 
     private void OnChange()
     {

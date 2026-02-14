@@ -66,12 +66,6 @@ namespace ClearBlazor
 
         }
 
-        protected override void OnParametersSet()
-        {
-            base.OnParametersSet();
-
-        }
-
         internal void HandleChild(Radio<TItem> radio)
         {
             radio.Size = Size;
@@ -101,8 +95,7 @@ namespace ClearBlazor
             Value = value;
             await ValueChanged.InvokeAsync(value);
             await ValidateField();
-            DoRender = true;
-            StateHasChanged();
+            await Refresh();
         }
 
         internal override async Task<bool> ValidateField()

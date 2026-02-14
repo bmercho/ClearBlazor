@@ -19,6 +19,13 @@ namespace ClearBlazor
         [Parameter]
         public string DateFormat { get; set; } = "dd MMM yyyy";
 
+
+        /// <summary>
+        /// Event raised when the date selection is complete.
+        /// </summary>
+        [Parameter]
+        public EventCallback DateSelected { get; set; }
+
         /// <summary>
         /// Orientation of the component. Defaults to portrait.
         /// </summary>
@@ -59,16 +66,6 @@ namespace ClearBlazor
 
         private bool PopupOpen = false;
 
-        protected override async Task OnParametersSetAsync()
-        {
-            await base.OnParametersSetAsync();
-            if (Value == null)
-                if (DefaultDate == null)
-                    Value = DateOnly.FromDateTime(DateTime.Now);
-                else
-                    Value = DefaultDate;
-        }
-
         private bool IsMouseNotOver()
         {
             return !MouseOver;
@@ -91,10 +88,10 @@ namespace ClearBlazor
             return string.Empty;
         }
 
-        private async Task DateSelected()
+        private async Task DateSelection()
         {
             PopupOpen = false;
-            await DateChanged();
+            await DateSelected.InvokeAsync();
         }
         private async Task DateChanged()
         {

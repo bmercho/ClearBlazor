@@ -29,7 +29,7 @@
                            @bind-Open=PopupOpen>
                         <DatePicker Orientation=@Orientation BorderThickness=1 CornerRadius=4 
                                     @bind-Date=Value @bind-Date:after=DateChanged 
-                                    DateSelected=@DateSelected />
+                                    DateSelected=@DateSelection DefaultDate=@DefaultDate />
                     </Popup>
                      @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                     {

@@ -26,10 +26,9 @@
                      <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="1,-20,-20,0"
                            Position=Position Transform=Transform
                            AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
-                           @bind-Open=PopupOpen>
+                           @bind-Open=PopupOpen @bind-Open:after=PopupOpenChanged>
                         <DateTimePicker ShowSeconds=@ShowSeconds Orientation=@Orientation BorderThickness=1 CornerRadius=4 
-                                    @bind-DateTime=Value @bind-DateTime:after=DateTimeChanged 
-                                    DateTimeSelected=@DateTimeSelected />
+                                    @bind-DateTime=Value @bind-DateTime:after=DateTimeChanged DefaultDateTime=@DefaultDateTime />
                     </Popup>
                      @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                     {

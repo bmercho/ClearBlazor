@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace ClearBlazor
@@ -134,6 +135,7 @@ namespace ClearBlazor
             DateOnly date = (DateOnly)Date;
             SelectedDate = date;
         }
+
 
         private int GetYearIndex()
         {

@@ -384,10 +384,10 @@ namespace ClearBlazor
                 await child.Refresh();
             StateHasChanged();
         }
-
-        protected void Refresh(ClearComponentBase component)
+                
+        protected async Task Refresh(ClearComponentBase component)
         {
-            component.StateHasChanged();
+            await component.Refresh();
         }
 
         protected virtual bool HaveParametersChanged(ClearComponentBase child, ParameterView parameters)

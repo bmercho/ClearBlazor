@@ -150,7 +150,7 @@ namespace ClearBlazor
         /// <param name="index">Index to goto. The index is zero based.</param>
         /// <param name="verticalAlignment">Where the index should be aligned in the scroll viewer.</param>
         /// <returns></returns>
-        public async Task GotoIndex(int index, Alignment verticalAlignment)
+        public async Task GotoIndex(int index, Alignment verticalAlignment, bool onlyIfNotVisible = false)
         {
             switch (VirtualizeMode)
             {
@@ -166,7 +166,7 @@ namespace ClearBlazor
                                                     id, headerHeight, (int)verticalAlignment);
                     break;
                 case VirtualizeMode.Virtualize:
-                    await GotoVirtualIndex(index, verticalAlignment);
+                    await GotoVirtualIndex(index, verticalAlignment, onlyIfNotVisible);
                     break;
                 case VirtualizeMode.InfiniteScroll:
                 case VirtualizeMode.InfiniteScrollReverse:
@@ -178,6 +178,32 @@ namespace ClearBlazor
                     break;
             }
         }
+
+        public async Task SelectRowIndex(int index)
+        {
+            if (Items == null || SelectedItem == null)
+                return;
+
+            switch (VirtualizeMode)
+            {
+                case VirtualizeMode.None:
+                    await HandleRowSelection(Items.ToList()[index], index, false, false);
+                    await GotoIndex(index, Alignment.End, true);
+                    break;
+                case VirtualizeMode.InfiniteScroll:
+                    break;
+                case VirtualizeMode.InfiniteScrollReverse:
+                    break;
+                case VirtualizeMode.Pagination:
+                    break;
+                case VirtualizeMode.Virtualize:
+                    await GotoIndex(index, Alignment.End, true);
+                    await HandleRowSelection(Items.ToList()[index], index, false, false);
+                    break;
+            }
+
+        }
+
 
         /// <summary>
         /// Goto the start of the list
@@ -879,13 +905,36 @@ namespace ClearBlazor
                 _maxScrollHeight = scrollHeight + _scrollViewerHeight;
         }
 
-        private async Task GotoVirtualIndex(int index, Alignment verticalAlignment)
+        private async Task GotoVirtualIndex(int index, Alignment verticalAlignment, bool onlyIfNotVisible)
         {
             double scrollTop = 0;
             int headerHeight = 0;
             if (ShowHeader && (StickyHeader || index == 0))
                 headerHeight = ShowHeader ? (int)_headerHeight : 0;
             var maxItemsInContainer = _scrollViewerHeight / (_rowHeight + RowSpacing);
+
+            if (onlyIfNotVisible)
+            {
+                // Calculate the position of the target row
+                double rowTop = index * (_rowHeight + RowSpacing);
+                double rowBottom = (index + 1) * (_rowHeight + RowSpacing);
+
+                // Calculate the visible viewport boundaries
+                double viewportTop = _scrollTop;
+                double viewportBottom = _scrollTop + _scrollViewerHeight;
+
+                // Account for sticky header if present
+                if (ShowHeader && StickyHeader)
+                {
+                    viewportTop += _headerHeight;
+                }
+
+                // Check if the row is already fully visible
+                if (rowTop >= viewportTop && rowBottom <= viewportBottom)
+                {
+                    return; // Row is already visible, no need to scroll
+                }
+            }   
 
             switch (verticalAlignment)
             {
@@ -985,7 +1034,7 @@ namespace ClearBlazor
              $"grid-area: 1 / 1 /span {_items.Count + header} / span {Columns.Count};";
 
             if (VirtualizeMode == VirtualizeMode.Virtualize)
-                css += $"display:grid; position: relative;height: {_height}px";
+                css += $"display:grid; ;height: {_height}px";
 
             return css;
         }

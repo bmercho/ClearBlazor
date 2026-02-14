@@ -176,7 +176,7 @@ namespace ClearBlazor
                     LeftColumnWidth += e.MovementX;
                     RightColumnWidth -= e.MovementX;
                     ParentGrid.AdjustColumns(LeftColumnWidth, RightColumnWidth);
-                    Refresh(ParentGrid);
+                    await Refresh(ParentGrid);
                 }
                 else
                 {
@@ -187,7 +187,7 @@ namespace ClearBlazor
                     TopRowWidth += e.MovementY;
                     BottomRowWidth -= e.MovementY;
                     ParentGrid.AdjustRows(TopRowWidth, BottomRowWidth);
-                    Refresh(ParentGrid);
+                    await Refresh(ParentGrid);
                 }
             }
         }

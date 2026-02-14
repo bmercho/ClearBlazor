@@ -23,6 +23,12 @@ namespace ClearBlazor
         public string TimeFormat { get; set; } = "hh:mm tt";
 
         /// <summary>
+        /// Event raised when the time selection is complete.
+        /// </summary>
+        [Parameter]
+        public EventCallback TimeSelected { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether seconds are displayed in the time representation.
         /// </summary>
         [Parameter]
@@ -84,16 +90,6 @@ namespace ClearBlazor
         private ElementReference PickerElement;
         private TimePicker? TimePicker = null;
 
-        protected override async Task OnParametersSetAsync()
-        {
-            await base.OnParametersSetAsync();
-            if (Value == null)
-                if (DefaultTime == null)
-                    Value = TimeOnly.FromDateTime(DateTime.Now);
-                else
-                    Value = DefaultTime;
-        }
-
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await base.OnAfterRenderAsync(firstRender);
@@ -137,10 +133,10 @@ namespace ClearBlazor
             }
         }
 
-        private async Task TimeSelected()
+        private async Task TimeSelection()
         {
             PopupOpen = false;
-            await TimeChanged();
+            await TimeSelected.InvokeAsync();
             if (TimePicker != null)
                 if (Hours24)
                     TimePicker.SetMode(PickerMode.Hour24);

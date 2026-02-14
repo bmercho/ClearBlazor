@@ -21,6 +21,12 @@ namespace ClearBlazor
         public string DateTimeFormat { get; set; } = "dd MMM yyyy HH:mm";
 
         /// <summary>
+        /// Event raised when the date/time selection is complete.
+        /// </summary>
+        [Parameter]
+        public EventCallback DateTimeSelected { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether seconds are displayed in the time representation.
         /// </summary>
         [Parameter]
@@ -66,17 +72,6 @@ namespace ClearBlazor
 
         private bool PopupOpen = false;
 
-
-        protected override async Task OnParametersSetAsync()
-        {
-            await base.OnParametersSetAsync();
-            if (Value == null)
-                if (DefaultDateTime == null)
-                    Value = DateTime.Now;
-                else
-                    Value = DefaultDateTime;
-        }
-
         private bool IsMouseNotOver()
         {
             return !MouseOver;
@@ -85,7 +80,20 @@ namespace ClearBlazor
         private async Task TogglePopup()
         {
             PopupOpen = !PopupOpen;
-            await DateTimeChanged();
+            if (!PopupOpen)
+                await DateTimeSelected.InvokeAsync();
+            await Refresh();
+        }
+
+        private  async Task PopupOpenChanged()
+        {
+            if (!PopupOpen)
+                await DateTimeSelected.InvokeAsync();
+            else
+                if (Value == null)
+                    if (DefaultDateTime != null)
+                        Value = DefaultDateTime;
+
         }
 
         protected override async Task ClearEntry()
@@ -99,10 +107,10 @@ namespace ClearBlazor
             return string.Empty;
         }
 
-        private async Task DateTimeSelected()
+        private async Task DateTimeSelection()
         {
             PopupOpen = false;
-            await DateTimeChanged();
+            await DateTimeSelected.InvokeAsync();
         }
         private async Task DateTimeChanged()
         {
