@@ -1,0 +1,23 @@
+﻿@namespace ClearBlazorTest
+@inherits ClearComponentBase
+
+<Popup Position=PopupPosition.TopLeft Transform=PopupTransform.BottomRight 
+       AllowHorizontalFlip="false" AllowVerticalFlip="false">
+    <StackPanel Orientation=@Orientation.Portrait BorderThickness="1" CornerRadius="4" BackgroundColor=Color.Surface>
+        <TextBlock Margin="20">Popup content can contain anything</TextBlock>
+        <Button Margin=20 @onclick=@ClosePopup HorizontalAlignment=Alignment.Center>Close</Button>
+    </StackPanel>
+</Popup>
+
+@code {
+
+    private async Task ClosePopup()
+    {
+        await HidePopup();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+    }
+}

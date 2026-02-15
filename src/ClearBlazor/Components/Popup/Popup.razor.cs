@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Web;
+using System.Diagnostics;
 
 namespace ClearBlazor
 {
@@ -22,12 +23,6 @@ namespace ClearBlazor
         public bool UseTransition { get; set; } = true;
 
         /// <summary>
-        /// Indicates whether the popup is open or closed.
-        /// </summary>
-        [Parameter]
-        public bool Open { get; set; } = false;
-
-        /// <summary>
         /// Indicates whether the popup should close when the user clicks outside of it.
         /// </summary>
         [Parameter]
@@ -44,12 +39,6 @@ namespace ClearBlazor
         /// </summary>
         [Parameter]
         public bool AllowHorizontalFlip { get; set; } = true;
-
-        /// <summary>
-        /// Event that is raised when the popup is opened or closed.
-        /// </summary>
-        [Parameter]
-        public EventCallback<bool> OpenChanged { get; set; }
 
         /// <summary>
         /// The size of the popup.
@@ -77,26 +66,24 @@ namespace ClearBlazor
 
         private ElementReference PopupElement;
 
-        private SizeInfo? SizeInfo = null;
+        private SizeInfo? PopupSizeInfo = null;
+        private SizeInfo? ParentSizeInfo = null;
         private bool _mouseOver = false;
         private IDisposable ScrollViewUnsubscriber = null!;
         BrowserSizeService _browserSizeService = BrowserSizeService.GetInstance();
+        private bool _sizedFound = false; 
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
             _browserSizeService.OnBrowserResize += BrowserResized;
             ScrollViewer.Subscribe(this);
+            _sizedFound = false;    
         }
 
         private async Task BrowserResized(BrowserSizeInfo browserSizeInfo)
         {
-            if (Open)
-            {
-                Open = false;
-                await OpenChanged.InvokeAsync(Open);
-                StateHasChanged();
-            }
+            await HidePopup();
         }
 
         public virtual void OnCompleted()
@@ -109,12 +96,7 @@ namespace ClearBlazor
 
         public virtual void OnNext(bool hasScrolled)
         {
-            if (Open)
-            {
-                Open = false;
-                OpenChanged.InvokeAsync(Open);
-                StateHasChanged();
-            }
+            Task task = HidePopup();
         }
 
         public virtual void Subscribe(IObservable<bool> provider)
@@ -127,13 +109,23 @@ namespace ClearBlazor
             if (firstRender)
                 await JSRuntime.InvokeVoidAsync("window.clearBlazor.popup.initialize",
                                                 DotNetObjectReference.Create(this));
-            SizeInfo? existing = null;
-            if (SizeInfo != null)
-                existing = SizeInfo;
-            SizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", PopupElement);
-            if (existing == null ||
-                !existing.Equals(SizeInfo))
+            SizeInfo? existingPopup = null;
+            if (PopupSizeInfo != null)
+                existingPopup = PopupSizeInfo;
+            PopupSizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", PopupElement);
+
+            SizeInfo? existingParent = null;
+            if (ParentSizeInfo != null)
+                existingParent = ParentSizeInfo;
+            if (PopupParent != null)
+                ParentSizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("GetSizeInfo", PopupParent.Id);
+
+            if (existingPopup == null || !existingPopup.Equals(PopupSizeInfo) ||
+                existingParent == null || !existingParent.Equals(ParentSizeInfo))
+            {
+                _sizedFound = true;
                 StateHasChanged();
+            }
         }
 
         protected override string UpdateStyle(string css)
@@ -144,9 +136,11 @@ namespace ClearBlazor
             css += "display: grid; ";
             css += GetLocationCss(Position, Transform);
             css += GetFontSize();
-            if (SizeInfo != null)
-                css += $"clip-path: rect({0}px {SizeInfo.WindowWidth - 10}px {SizeInfo.WindowHeight - 10}px {0}px); ";
+            if (PopupSizeInfo != null)
+                css += $"clip-path: rect({0}px {PopupSizeInfo.WindowWidth - 10}px {PopupSizeInfo.WindowHeight - 10}px {0}px); ";
             css += "white-space:pre; text-align:justify; ";
+            if (!_sizedFound)
+                css += $"visibility: hidden; ";
             return css;
         }
 
@@ -185,7 +179,7 @@ namespace ClearBlazor
         {
             PopupPosition newPosition = position;
             PopupTransform newTransform = transform;
-            if (SizeInfo != null)
+            if (PopupSizeInfo != null && ParentSizeInfo != null)
             {
                 switch (position)
                 {
@@ -278,6 +272,9 @@ namespace ClearBlazor
 
         private bool IsTopOverflow(PopupTransform transform, bool top, double y)
         {
+            var elementHeight = PopupSizeInfo!.ElementHeight;
+            var parentHeight = ParentSizeInfo!.ElementHeight;
+
             switch (transform)
             {
                 case PopupTransform.TopLeft:
@@ -285,7 +282,7 @@ namespace ClearBlazor
                 case PopupTransform.TopRight:
                     if (top && y < 0)
                         return true;
-                    if (!top && y - SizeInfo!.ElementHeight - SizeInfo.ParentHeight < 0)
+                    if (!top && y - elementHeight - parentHeight < 0)
                         return true;
                     break;
                 case PopupTransform.CentreLeft:
@@ -293,7 +290,7 @@ namespace ClearBlazor
                 case PopupTransform.CentreRight:
                     if (top && y < 0)
                         return true;
-                    if (!top && y - SizeInfo!.ElementHeight / 2 + SizeInfo.ParentHeight < 0)
+                    if (!top && y - elementHeight / 2 + parentHeight < 0)
                         return true;
                     break;
                 case PopupTransform.BottomLeft:
@@ -301,7 +298,7 @@ namespace ClearBlazor
                 case PopupTransform.BottomRight:
                     if (top && y < 0)
                         return true;
-                    if (!top && y - SizeInfo!.ParentHeight < 0)
+                    if (!top && y - parentHeight < 0)
                         return true;
                     break;
             }
@@ -310,30 +307,35 @@ namespace ClearBlazor
 
         private bool IsBottomOverflow(PopupTransform transform, bool top, double y)
         {
+            var elementHeight = PopupSizeInfo!.ElementHeight;
+            var parentHeight = ParentSizeInfo!.ElementHeight;
+
+            var windowHeight = PopupSizeInfo!.WindowHeight;
+
             switch (transform)
             {
                 case PopupTransform.TopLeft:
                 case PopupTransform.TopCentre:
                 case PopupTransform.TopRight:
-                    if (top && y + 2 * SizeInfo!.ElementHeight + SizeInfo.ParentHeight > SizeInfo.WindowHeight)
+                    if (top && y + 2 * elementHeight + parentHeight > windowHeight)
                         return true;
-                    if (!top && y + SizeInfo!.ElementHeight > SizeInfo.WindowHeight)
+                    if (!top && y + elementHeight > windowHeight)
                         return true;
                     break;
                 case PopupTransform.CentreLeft:
                 case PopupTransform.CentreCentre:
                 case PopupTransform.CentreRight:
-                    if (top && y + SizeInfo!.ElementHeight + SizeInfo.ParentHeight > SizeInfo.WindowHeight)
+                    if (top && y + elementHeight + parentHeight > windowHeight)
                         return true;
-                    if (!top && y + SizeInfo!.ElementHeight / 2 > SizeInfo.WindowHeight)
+                    if (!top && y + elementHeight / 2 > windowHeight)
                         return true;
                     break;
                 case PopupTransform.BottomLeft:
                 case PopupTransform.BottomCentre:
                 case PopupTransform.BottomRight:
-                    if (top && y + SizeInfo!.ParentHeight > SizeInfo.WindowHeight)
+                    if (top && y + parentHeight > windowHeight)
                         return true;
-                    if (!top && y > SizeInfo!.WindowHeight)
+                    if (!top && y > windowHeight)
                         return true;
                     break;
             }
@@ -342,6 +344,9 @@ namespace ClearBlazor
 
         private bool IsLeftOverflow(PopupTransform transform, bool left, double x)
         {
+            var elementWidth = PopupSizeInfo!.ElementWidth;
+            var parentWidth = ParentSizeInfo!.ElementWidth;
+
             switch (transform)
             {
                 case PopupTransform.TopLeft:
@@ -349,7 +354,7 @@ namespace ClearBlazor
                 case PopupTransform.BottomLeft:
                     if (left && x < 0)
                         return true;
-                    if (!left && x - SizeInfo!.ElementWidth - SizeInfo.ParentWidth < 0)
+                    if (!left && x - elementWidth - parentWidth < 0)
                         return true;
                     break;
                 case PopupTransform.TopCentre:
@@ -357,7 +362,7 @@ namespace ClearBlazor
                 case PopupTransform.BottomCentre:
                     if (left && x < 0)
                         return true;
-                    if (!left && x - SizeInfo!.ElementWidth / 2 + SizeInfo.ParentWidth < 0)
+                    if (!left && x - elementWidth / 2 + parentWidth < 0)
                         return true;
                     break;
                 case PopupTransform.TopRight:
@@ -365,7 +370,7 @@ namespace ClearBlazor
                 case PopupTransform.BottomRight:
                     if (left && x < 0)
                         return true;
-                    if (!left && x - SizeInfo!.ParentWidth < 0)
+                    if (!left && x - parentWidth < 0)
                         return true;
                     break;
             }
@@ -374,30 +379,34 @@ namespace ClearBlazor
 
         private bool IsRightOverflow(PopupTransform transform, bool left, double x)
         {
+            var elementWidth = PopupSizeInfo!.ElementWidth;
+            var parentWidth = ParentSizeInfo!.ElementWidth;
+            var windowWidth = PopupSizeInfo!.WindowWidth;   
+
             switch (transform)
             {
                 case PopupTransform.TopLeft:
                 case PopupTransform.CentreLeft:
                 case PopupTransform.BottomLeft:
-                    if (left && x + 2 * SizeInfo!.ElementWidth + SizeInfo.ParentWidth > SizeInfo.WindowWidth)
+                    if (left && x + 2 * elementWidth + parentWidth > windowWidth)
                         return true;
-                    if (!left && x + SizeInfo!.ElementWidth > SizeInfo.WindowWidth)
+                    if (!left && x + elementWidth > windowWidth)
                         return true;
                     break;
                 case PopupTransform.TopCentre:
                 case PopupTransform.CentreCentre:
                 case PopupTransform.BottomCentre:
-                    if (left && x + SizeInfo!.ElementWidth + SizeInfo.ParentWidth > SizeInfo.WindowWidth)
+                    if (left && x + elementWidth + parentWidth > windowWidth)
                         return true;
-                    if (!left && x + SizeInfo!.ElementWidth / 2 > SizeInfo.WindowWidth)
+                    if (!left && x + elementWidth / 2 > windowWidth)
                         return true;
                     break;
                 case PopupTransform.TopRight:
                 case PopupTransform.CentreRight:
                 case PopupTransform.BottomRight:
-                    if (left && x + SizeInfo!.ParentWidth > SizeInfo.WindowWidth)
+                    if (left && x + parentWidth > windowWidth)
                         return true;
-                    if (!left && x > SizeInfo!.WindowWidth)
+                    if (!left && x > windowWidth)
                         return true;
                     break;
             }
@@ -458,8 +467,16 @@ namespace ClearBlazor
 
         private (double x, double y) GetXYPosition(PopupPosition? position, PopupTransform transform)
         {
-            if (SizeInfo == null || position == null)
+            if (PopupSizeInfo == null || ParentSizeInfo == null || position == null)
                 return (0, 0);
+
+            var elementWidth = PopupSizeInfo!.ElementWidth;
+            var parentWidth = ParentSizeInfo!.ElementWidth;
+            var elementHeight = PopupSizeInfo!.ElementHeight;
+            var parentHeight = ParentSizeInfo!.ElementHeight;
+            var parentX = ParentSizeInfo!.ElementX;
+            var parentY = ParentSizeInfo!.ElementY;
+
 
             double x = 0;
             double y = 0;
@@ -467,58 +484,58 @@ namespace ClearBlazor
             {
                 case PopupPosition.TopLeft:
                     {
-                        x = SizeInfo.ParentX;
-                        y = SizeInfo.ParentY;
+                        x = parentX;
+                        y = parentY;
                         break;
                     }
                 case PopupPosition.TopCentre:
                     {
-                        x = SizeInfo.ParentX + SizeInfo.ParentWidth / 2;
-                        y = SizeInfo.ParentY;
+                        x = parentX + parentWidth / 2;
+                        y = parentY;
                         break;
                     }
                 case PopupPosition.TopRight:
                     {
-                        x = SizeInfo.ParentX + SizeInfo.ParentWidth;
-                        y = SizeInfo.ParentY;
+                        x = parentX + parentWidth;
+                        y = parentY;
                         break;
                     }
 
                 case PopupPosition.CentreLeft:
                     {
-                        x = SizeInfo.ParentX;
-                        y = SizeInfo.ParentY + SizeInfo.ParentHeight / 2;
+                        x = parentX;
+                        y = parentY + parentHeight / 2;
                         break;
                     }
                 case PopupPosition.CentreCentre:
                     {
-                        x = SizeInfo.ParentX + SizeInfo.ParentWidth / 2;
-                        y = SizeInfo.ParentY + SizeInfo.ParentHeight / 2;
+                        x = parentX + parentWidth / 2;
+                        y = parentY + parentHeight / 2;
                         break;
                     }
                 case PopupPosition.CentreRight:
                     {
-                        x = SizeInfo.ParentX + SizeInfo.ParentWidth;
-                        y = SizeInfo.ParentY + SizeInfo.ParentHeight / 2;
+                        x = parentX + parentWidth;
+                        y = parentY + parentHeight / 2;
                         break;
                     }
 
                 case PopupPosition.BottomLeft:
                     {
-                        x = SizeInfo.ParentX;
-                        y = SizeInfo.ParentY + SizeInfo.ParentHeight;
+                        x = parentX;
+                        y = parentY + parentHeight;
                         break;
                     }
                 case PopupPosition.BottomCentre:
                     {
-                        x = SizeInfo.ParentX + SizeInfo.ParentWidth / 2;
-                        y = SizeInfo.ParentY + SizeInfo.ParentHeight;
+                        x = parentX + parentWidth / 2;
+                        y = parentY + parentHeight;
                         break;
                     }
                 case PopupPosition.BottomRight:
                     {
-                        x = SizeInfo.ParentX + SizeInfo.ParentWidth;
-                        y = SizeInfo.ParentY + SizeInfo.ParentHeight;
+                        x = parentX + parentWidth;
+                        y = parentY + parentHeight;
                         break;
                     }
             }
@@ -528,48 +545,48 @@ namespace ClearBlazor
                     break;
                 case PopupTransform.TopCentre:
                     {
-                        x += -SizeInfo.ElementWidth / 2;
+                        x += -elementWidth / 2;
                         break;
                     }
                 case PopupTransform.TopRight:
                     {
-                        x += -SizeInfo.ElementWidth;
+                        x += -elementWidth;
                         break;
                     }
 
                 case PopupTransform.CentreLeft:
                     {
-                        y += -SizeInfo.ElementHeight / 2;
+                        y += -elementHeight / 2;
                         break;
                     }
                 case PopupTransform.CentreCentre:
                     {
-                        x += -SizeInfo.ElementWidth / 2;
-                        y += -SizeInfo.ElementHeight / 2;
+                        x += -elementWidth / 2;
+                        y += -elementHeight / 2;
                         break;
                     }
                 case PopupTransform.CentreRight:
                     {
-                        x += -SizeInfo.ElementWidth;
-                        y += -SizeInfo.ElementHeight / 2;
+                        x += -elementWidth;
+                        y += -elementHeight / 2;
                         break;
                     }
 
                 case PopupTransform.BottomLeft:
                     {
-                        y += -SizeInfo.ElementHeight;
+                        y += -elementHeight;
                         break;
                     }
                 case PopupTransform.BottomCentre:
                     {
-                        x += -SizeInfo.ElementWidth / 2;
-                        y += -SizeInfo.ElementHeight;
+                        x += -elementWidth / 2;
+                        y += -elementHeight;
                         break;
                     }
                 case PopupTransform.BottomRight:
                     {
-                        x += -SizeInfo.ElementWidth;
-                        y += -SizeInfo.ElementHeight;
+                        x += -elementWidth;
+                        y += -elementHeight;
                         break;
                     }
             }
@@ -593,11 +610,9 @@ namespace ClearBlazor
             if (!CloseOnOutsideClick)
                 return;
 
-            if (!_mouseOver && Open)
+            if (!_mouseOver)
             {
-                Open = false;
-                await OpenChanged.InvokeAsync(Open);
-                StateHasChanged();
+                await HidePopup();
             }
         }
         public override async ValueTask DisposeAsync()
@@ -606,6 +621,5 @@ namespace ClearBlazor
             _browserSizeService.OnBrowserResize -= BrowserResized;
             ScrollViewUnsubscriber?.Dispose();
         }
-
     }
 }

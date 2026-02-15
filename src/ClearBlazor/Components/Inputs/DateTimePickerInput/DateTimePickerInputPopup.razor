@@ -1,0 +1,11 @@
+﻿@namespace ClearBlazor
+@inherits ClearComponentBase
+
+<Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="1,-20,-20,0"
+       Position=Position Transform=Transform
+       AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
+       @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
+    <DateTimePicker ShowSeconds=@ShowSeconds Orientation=@Orientation BorderThickness=1 CornerRadius=4
+                    @bind-DateTime=DateTime @bind-DateTime:after=DateTimeChanged DefaultDateTime=@DefaultDateTime />
+</Popup>
+

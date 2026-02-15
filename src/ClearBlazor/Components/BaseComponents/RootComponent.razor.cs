@@ -41,25 +41,28 @@ namespace ClearBlazor
         private bool LoadingComplete = false;
         BrowserSizeService _browserSizeService = BrowserSizeService.GetInstance();
 
-        private Type? dialogType = null;
-        private Dictionary<string, object> dialogParameters = [];
+        private Type? popupType = null;
+        private Dictionary<string, object> popupParameters = [];
 
         public RootComponent()
         {
             ThemeManager = new ThemeManager(this, false);
         }
 
-        public async Task ShowDialog(Type dialogType, Dictionary<string, object> parameters)
+        public async Task ShowPopup(Type type, Dictionary<string, object> parameters)
         {
-            this.dialogType = dialogType;
-            this.dialogParameters = parameters;
+            popupType = null;
+            popupParameters = [];
+            await InvokeAsync(StateHasChanged);
+            popupType = type;
+            popupParameters = parameters;
             await InvokeAsync(StateHasChanged);
         }
 
-        public async Task HideTheDialog()
+        public async Task HideThePopup()
         {
-            dialogType = null;
-            dialogParameters = [];
+            popupType = null;
+            popupParameters = [];
             await InvokeAsync(StateHasChanged);
         }
 

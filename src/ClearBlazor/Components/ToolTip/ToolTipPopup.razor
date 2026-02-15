@@ -1,0 +1,12 @@
+﻿@using Microsoft.AspNetCore.Components
+@namespace ClearBlazor.Internal
+@inherits ClearComponentBase
+
+<Popup Position=@GetPopupPosition() Transform=@GetPopupTransform()
+       AllowHorizontalFlip=false AllowVerticalFlip=false Size=@Size>
+    <Grid BackgroundColor=@ThemeManager.CurrentColorScheme.InverseSurface
+          CornerRadius=8 Margin=5>
+        <TextBlock Margin=5 Color=@ThemeManager.CurrentColorScheme.OnInverseSurface>@Text</TextBlock>
+    </Grid>
+</Popup>
+

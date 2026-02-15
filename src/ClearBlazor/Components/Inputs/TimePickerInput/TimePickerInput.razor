@@ -1,0 +1,38 @@
+﻿@namespace ClearBlazor
+@inherits ContainerInputBase<TimeOnly?>
+
+<CascadingValue Value="this" IsFixed="false">
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle() @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
+        <StackPanel Orientation="Orientation.Portrait">
+            @if (!string.IsNullOrEmpty(Label))
+            {
+                <div style=@GetLabelStyle()>@Label</div>
+            }
+            <Grid @ref="Grid" BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
+                  BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
+                <Grid MinWidth=110 Columns="*,auto" Margin="0,0,0,5">
+                    <Grid Columns="*,auto" Column=0 @onclick=@TogglePopup>
+                        <TextBlock VerticalAlignment=Alignment.Center>@TimeString</TextBlock>
+                        <IconButton Column=1 Size=Size.Small Icon=@Icons.Material.Outlined.Schedule />
+                    </Grid>
+                    @if (Clearable && Value.HasValue)
+                    {
+                        <IconButton Size=Size.VerySmall Column=1 VerticalAlignment=Alignment.Center
+                                    Icon=@Icons.Material.Filled.Close @onclick=ClearEntry />
+                    }
+                </Grid>
+                @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
+                {
+                    <Icon Column=2 IconName="@Icons.Material.Filled.FmdBad"
+                          Size=@Size ToolTip=@ValidationMessage Color=@Color.Error />
+                }
+            </Grid>
+            @if (ValidationErrorLocation == ValidationErrorLocation.Inline && !IsValid)
+            {
+                <TextBlock TextWrapping="TextWrap.WrapOnNewLines"
+                           Color=@Color.Error>@ValidationMessage</TextBlock>
+            }
+        </StackPanel>
+    </div>
+</CascadingValue>
+

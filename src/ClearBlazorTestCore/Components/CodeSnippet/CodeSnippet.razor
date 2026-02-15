@@ -25,13 +25,17 @@
                     </Grid>
                     @if (ShowCode)
                     {
+                        //<IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
+                        //            Icon=@Icons.Material.Filled.CodeOff @onclick=@HideTheCode ToolTip="Hide code" />
                         <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
-                                    Icon=@Icons.Material.Filled.CodeOff @onclick=@HideTheCode ToolTip="Hide code" />
+                                    Icon=@Icons.Material.Filled.CodeOff @onclick=@HideTheCode" />
                     }
                     else
                     {
+//                        <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
+//                                    Icon=@Icons.Material.Filled.Code @onclick=@ShowTheCode ToolTip="Show Code" />
                         <IconButton HorizontalAlignment=Alignment.End VerticalAlignment=Alignment.Start
-                                    Icon=@Icons.Material.Filled.Code @onclick=@ShowTheCode ToolTip="Show Code" />
+                                    Icon=@Icons.Material.Filled.Code @onclick=@ShowTheCode/>
 
                     }
                 </Grid>

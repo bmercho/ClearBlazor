@@ -1,4 +1,5 @@
 ﻿@namespace ClearBlazorTest
+@using System.Diagnostics
 @inherits ClearComponentBase
 
 <CascadingValue Value="this" IsFixed="false">
@@ -13,10 +14,5 @@
     private async Task OpenDialog()
     {
         await ShowDialog(typeof(DialogSimple));
-    }
-
-    private static async Task CloseDialog()
-    {
-        await HideDialog();
     }
 }

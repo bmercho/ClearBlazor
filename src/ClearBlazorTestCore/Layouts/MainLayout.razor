@@ -15,7 +15,8 @@
                 <IconButton Dock=Dock.Left Icon="@Icons.Material.Filled.Menu" @onclick=@MenuClicked />
                 <TextBlock Typo=Typo.H6 HorizontalAlignment="Alignment.Center"
                            VerticalAlignment="Alignment.Center">Clear Blazor</TextBlock>
-                <IconButton Dock=Dock.Right @onclick=@OnClicked Icon=@GetIcon() ToolTip="Toggle Light/Dark Mode" Margin="0,10,0,0" />
+                <IconButton Dock=Dock.Right @onclick=@OnClicked Icon=@GetIcon() Margin="0,10,0,0"
+                            ToolTip="Toggle Light/Dark Mode" ToolTipPosition=ToolTipPosition.Left/>
             </AppBar>
             <Drawer @ref=Drawer Row=1 @bind-Open=Open DrawerLocation=DrawerLocation.Left
                     DrawerMode="DrawerMode.Responsive">
