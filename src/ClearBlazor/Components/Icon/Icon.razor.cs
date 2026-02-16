@@ -106,7 +106,7 @@ namespace ClearBlazor
         {
             if (ToolTipElement == null)
                 return;
-            await ToolTipElement.ShowToolTip();
+            ToolTipElement.ShowToolTip();
             StateHasChanged();
         }
 
@@ -114,7 +114,7 @@ namespace ClearBlazor
         {
             if (ToolTipElement == null)
                 return;
-            await ToolTipElement.HideToolTip();
+            ToolTipElement?.HideToolTip();
             StateHasChanged();
         }
     }

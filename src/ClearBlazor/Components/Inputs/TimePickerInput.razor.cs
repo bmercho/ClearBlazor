@@ -1,4 +1,3 @@
-using ClearBlazor.Internal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -86,37 +85,35 @@ namespace ClearBlazor
 
         private string? TimeString => Value == null ? string.Empty : ((TimeOnly)Value).ToString(TimeFormat);
 
-        private bool _popupOpen = false;
+        private bool PopupOpen = false;
+        private SizeInfo? SizeInfo = null;
+        private ElementReference PickerElement;
         private TimePicker? TimePicker = null;
-        private Grid Grid = null!;
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            SizeInfo? existing = null;
+            if (SizeInfo != null)
+                existing = SizeInfo;
+            SizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", PickerElement);
+        }
+
+        private bool IsMouseNotOver()
+        {
+            return !MouseOver;
+        }
 
         private async Task TogglePopup()
         {
-            _popupOpen = !_popupOpen;
-            if (_popupOpen)
-            {
-                TimePickerInputPopup.TimeOnly = Value;
-                TimePickerInputPopup.DefaultTime = DefaultTime;
-                TimePickerInputPopup.TimeFormat = TimeFormat;
-                TimePickerInputPopup.ShowSeconds = ShowSeconds;
-                TimePickerInputPopup.Hours24 = Hours24;
-                TimePickerInputPopup.MinuteStep = MinuteStep;
-                TimePickerInputPopup.Orientation = Orientation;
-                TimePickerInputPopup.Position = Position;
-                TimePickerInputPopup.Transform = Transform;
-                TimePickerInputPopup.AllowVerticalFlip = AllowVerticalFlip;
-                TimePickerInputPopup.AllowHorizontalFlip = AllowHorizontalFlip;
-
-                await ShowPopup(typeof(TimePickerInputPopup), Grid, this);
-            }
-            else
-                await HidePopup();
+            PopupOpen = !PopupOpen;
+            await TimeChanged();
         }
 
         protected override async Task ClearEntry()
         {
             Value = null;
-            await TimeChanged(Value);
+            await TimeChanged();
         }
 
         protected override string GetInputType()
@@ -124,18 +121,34 @@ namespace ClearBlazor
             return string.Empty;
         }
 
-        internal async Task TimeSelection()
+        private async Task OpenChanged()
         {
-            _popupOpen = false;
-            await HidePopup();
-            await TimeSelected.InvokeAsync();
+            if (TimePicker != null && PopupOpen == false)
+            {
+                if (Hours24)
+                    TimePicker.SetMode(PickerMode.Hour24);
+                else
+                    TimePicker.SetMode(PickerMode.Hour12);
+                await TimeChanged();
+            }
         }
 
-        internal async Task TimeChanged(TimeOnly? newTimeOnly)
+        private async Task TimeSelection()
         {
-            Value = newTimeOnly;
+            PopupOpen = false;
+            await TimeSelected.InvokeAsync();
+            if (TimePicker != null)
+                if (Hours24)
+                    TimePicker.SetMode(PickerMode.Hour24);
+                else
+                    TimePicker.SetMode(PickerMode.Hour12);
+        }
+
+        private async Task TimeChanged()
+        {
             await ValueChanged.InvokeAsync(Value);
-            await Refresh();
+            DoRender = true;    
+            StateHasChanged();
         }
     }
 }

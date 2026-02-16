@@ -1,4 +1,3 @@
-using ClearBlazor.Internal;
 using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
@@ -65,33 +64,23 @@ namespace ClearBlazor
 
         private string? DateString => Value == null ? string.Empty : ((DateOnly)Value).ToString(DateFormat);
 
-        private bool _popupOpen = false;
+        private bool PopupOpen = false;
 
-        private Grid Grid = null!;
-
+        private bool IsMouseNotOver()
+        {
+            return !MouseOver;
+        }
 
         private async Task TogglePopup()
         {
-            _popupOpen = !_popupOpen;
-            if (_popupOpen)
-            {
-                DatePickerInputPopup.DateOnly = Value;
-                DatePickerInputPopup.DefaultDate = DefaultDate;
-                DatePickerInputPopup.Orientation = Orientation;
-                DatePickerInputPopup.Position = Position;
-                DatePickerInputPopup.Transform = Transform;
-                DatePickerInputPopup.AllowVerticalFlip = AllowVerticalFlip;
-                DatePickerInputPopup.AllowHorizontalFlip = AllowHorizontalFlip;
-                await ShowPopup(typeof(DatePickerInputPopup), Grid, this);
-            }
-            else
-                await HidePopup();  
+            PopupOpen = !PopupOpen;
+            await DateChanged();
         }
 
         protected override async Task ClearEntry()
         {
             Value = null;
-            await DateChanged(Value);
+            await DateChanged();
         }
 
         protected override string GetInputType()
@@ -99,17 +88,16 @@ namespace ClearBlazor
             return string.Empty;
         }
 
-        internal async Task DateSelection()
+        private async Task DateSelection()
         {
-            _popupOpen = false;
-            await HidePopup();
+            PopupOpen = false;
             await DateSelected.InvokeAsync();
         }
-        internal async Task DateChanged(DateOnly? newDateOnly)
+        private async Task DateChanged()
         {
-            Value = newDateOnly;
             await ValueChanged.InvokeAsync(Value);
-            await Refresh();
+            DoRender = true;
+            StateHasChanged();
         }
     }
 }

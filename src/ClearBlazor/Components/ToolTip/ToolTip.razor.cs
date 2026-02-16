@@ -1,4 +1,3 @@
-using ClearBlazor.Internal;
 using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
@@ -27,24 +26,62 @@ namespace ClearBlazor
         public ToolTipPosition? ToolTipPosition { get; set; } = null;
 
         /// <summary>
+        /// The delay in milliseconds before the tooltip is shown
+        /// </summary>
+        [Parameter]
+        public int? Delay { get; set; } = null; 
+
+        private bool Open = true;
+
+        private PopupPosition GetPopupPosition()
+        {
+            switch (ToolTipPosition)
+            {
+                case ClearBlazor.ToolTipPosition.Bottom:
+                    return PopupPosition.BottomCentre;
+                case ClearBlazor.ToolTipPosition.Top:
+                    return PopupPosition.TopCentre;
+                case ClearBlazor.ToolTipPosition.Left:
+                    return PopupPosition.CentreLeft;
+                case ClearBlazor.ToolTipPosition.Right:
+                    return PopupPosition.CentreRight;
+            }
+            return PopupPosition.TopCentre;
+        }
+
+        private PopupTransform GetPopupTransform()
+        {
+            switch(ToolTipPosition)
+            {
+                case ClearBlazor.ToolTipPosition.Bottom:
+                    return PopupTransform.TopCentre;
+                case ClearBlazor.ToolTipPosition.Top:
+                    return PopupTransform.BottomCentre;
+                case ClearBlazor.ToolTipPosition.Left:
+                    return PopupTransform.CentreRight;
+                case ClearBlazor.ToolTipPosition.Right:
+                    return PopupTransform.CentreLeft;
+            }
+            return PopupTransform.BottomCentre;
+
+        }
+
+        /// <summary>
         /// Shows the tooltip
         /// </summary>
-        public async Task ShowToolTip()
+        public void ShowToolTip()
         {
-            if (Parent == null)
-                return;
-            ToolTipPopup.Text = Text;
-            ToolTipPopup.Size = Size;
-            ToolTipPopup.ToolTipPosition = ToolTipPosition;
-            await ShowPopup(typeof(ToolTipPopup), Parent);
+            Open = true;
+            StateHasChanged();
         }
 
         /// <summary>
         /// Hides the tooltip
         /// </summary>
-        public async Task HideToolTip()
+        public void HideToolTip()
         {
-            await HidePopup();
+            Open = false;
+            StateHasChanged();
         }
     }
 }

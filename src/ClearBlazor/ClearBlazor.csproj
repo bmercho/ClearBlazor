@@ -9,10 +9,6 @@
 		<Version>0.1.6</Version>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <None Include="Components\ToolTip\ToolTipPopup.razor" />
-	</ItemGroup>
-
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />

@@ -12,9 +12,9 @@
                  @onpointerup=OnPointerUp>
                 <Grid>
                     @ChildContent
-                    @if (popupType != null)
+                    @if (dialogType != null)
                     {
-                        <DynamicComponent Type=@popupType Parameters=@popupParameters />
+                        <DynamicComponent Type=@dialogType Parameters=@dialogParameters />
                     }
                 </Grid>
             </div>

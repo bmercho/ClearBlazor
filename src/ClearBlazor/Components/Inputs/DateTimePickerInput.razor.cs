@@ -1,4 +1,3 @@
-using ClearBlazor.Internal;
 using Microsoft.AspNetCore.Components;
 
 namespace ClearBlazor
@@ -71,35 +70,36 @@ namespace ClearBlazor
 
         private string? DateTimeString => Value == null ? string.Empty : ((DateTime)Value).ToString(DateTimeFormat);
 
-        private Grid Grid = null!;
+        private bool PopupOpen = false;
 
-        private bool _popupOpen = false;
+        private bool IsMouseNotOver()
+        {
+            return !MouseOver;
+        }
 
         private async Task TogglePopup()
         {
-            _popupOpen = !_popupOpen;
-            if (_popupOpen)
-            {
-                DateTimePickerInputPopup.DateTime = Value;
-                DateTimePickerInputPopup.DefaultDateTime = DefaultDateTime;
-                DateTimePickerInputPopup.ShowSeconds = ShowSeconds;
-                DateTimePickerInputPopup.DateTimeFormat = DateTimeFormat;
-                DateTimePickerInputPopup.Orientation = Orientation;
-                DateTimePickerInputPopup.Position = Position;
-                DateTimePickerInputPopup.Transform = Transform;
-                DateTimePickerInputPopup.AllowVerticalFlip = AllowVerticalFlip;
-                DateTimePickerInputPopup.AllowHorizontalFlip = AllowHorizontalFlip;
+            PopupOpen = !PopupOpen;
+            if (!PopupOpen)
+                await DateTimeSelected.InvokeAsync();
+            await Refresh();
+        }
 
-                await ShowPopup(typeof(DateTimePickerInputPopup), Grid, this);
-            }
+        private  async Task PopupOpenChanged()
+        {
+            if (!PopupOpen)
+                await DateTimeSelected.InvokeAsync();
             else
-                await HidePopup();
+                if (Value == null)
+                    if (DefaultDateTime != null)
+                        Value = DefaultDateTime;
+
         }
 
         protected override async Task ClearEntry()
         {
             Value = null;
-            await DateTimeChanged(Value);
+            await DateTimeChanged();
         }
 
         protected override string GetInputType()
@@ -107,15 +107,13 @@ namespace ClearBlazor
             return string.Empty;
         }
 
-        internal async Task DateTimeSelection()
+        private async Task DateTimeSelection()
         {
-            _popupOpen = false;
-            await HidePopup();
+            PopupOpen = false;
             await DateTimeSelected.InvokeAsync();
         }
-        internal async Task DateTimeChanged(DateTime? newDateTime)
+        private async Task DateTimeChanged()
         {
-            Value = newDateTime;
             await ValueChanged.InvokeAsync(Value);
             await Refresh();
         }

@@ -466,6 +466,18 @@ namespace ClearBlazor
             Mode = DatePickerMode.Year;
             await Refresh();
         }
+
+        private async Task OnMouseEnterMonth(int month)
+        {
+            MouseOverMonth = month;
+            await Refresh();
+        }
+        private async Task OnMouseLeaveMonth()
+        {
+            MouseOverMonth = null;
+            await Refresh();
+        }
+
         private class YearItem:ListItem
         {
             public int Year { get; set; }

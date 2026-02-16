@@ -213,7 +213,6 @@ namespace ClearBlazor
         internal static string CursorIcon = @Icons.Material.Filled.AddAlarm;
         internal static bool PopupCursorOpen = false;
         public static RootComponent? RootComponent { get; set; } = null;
-        public static ClearComponentBase? PopupParent { get; set; } = null;
 
         public ClearComponentBase()
         {
@@ -227,32 +226,14 @@ namespace ClearBlazor
 
         public static async Task ShowDialog(Type dialogType)
         {
-            RootComponent?.ShowPopup(dialogType, []);
+            RootComponent?.ShowDialog(dialogType, []);
         }
 
         public static async Task HideDialog()
         {
             if (RootComponent == null)
                 return;
-            await RootComponent.HideThePopup();
-        }
-
-        public static async Task ShowPopup(Type popupType, ClearComponentBase popupParent, 
-                                           ClearComponentBase? associatedComponent = null)
-        {
-            Dictionary<string, object> parameters = [];
-            PopupParent = popupParent;
-            if (associatedComponent != null)
-                parameters.Add("AssociatedComponent", associatedComponent);
-
-            RootComponent?.ShowPopup(popupType, parameters);
-        }
-
-        public static async Task HidePopup()
-        {
-            if (RootComponent == null)
-                return;
-            await RootComponent.HideThePopup();
+            await RootComponent.HideTheDialog();
         }
 
         protected override async Task OnInitializedAsync()

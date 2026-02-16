@@ -5,18 +5,16 @@
 @if (!string.IsNullOrEmpty(IconName))
 {
     <div id="@Id" @attributes=AdditionalAttributes class="@Classes" style="@ComputeStyle()">
-        <Grid>
-            <svg style=@GetIconStyle() transform="@GetTransform()" focusable="false" viewBox="@ViewBox" aria-hidden="true"
-                 @onmouseenter="OnMouseEnter"
-                 @onmouseleave="OnMouseLeave">
-                @((MarkupString)IconName)
-            </svg>
-            @if (ToolTip != null && ToolTip != string.Empty)
-            {
-                <ToolTip @ref="ToolTipElement" Size=@Size Text=@ToolTip
-                         ToolTipPosition=@ToolTipPosition Delay=@ToolTipDelay />
-            }
-        </Grid>
+        <svg style=@GetIconStyle() transform="@GetTransform()" focusable="false" viewBox="@ViewBox" aria-hidden="true"
+             @onmouseenter="OnMouseEnter"
+             @onmouseleave="OnMouseLeave">
+            @((MarkupString)IconName)
+        </svg>
+        @if (ToolTip != null && ToolTip != string.Empty)
+        {
+            <ToolTip @ref="ToolTipElement" Size=@Size Text=@ToolTip 
+                     ToolTipPosition=@ToolTipPosition Delay=@ToolTipDelay />
+        }
     </div>
 }
 
