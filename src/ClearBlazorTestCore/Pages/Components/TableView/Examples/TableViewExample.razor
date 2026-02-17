@@ -67,7 +67,7 @@
             {
                 <StackPanel Column=1 Margin=5 Spacing=5>
                     <RadioGroup Label="Virtualization mode" @bind-Value=_virtualizeMode
-                                @bind-Value:after=@Refresh>
+                                @bind-Value:after=@RefreshTable>
                         @foreach (VirtualizeMode mode in Enum.GetValues(typeof(VirtualizeMode)))
                         {
                             <Radio Label=@mode.ToString() Value="@mode" />
@@ -82,21 +82,21 @@
                     </RadioGroup>
                     <CheckBox @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
                     <CheckBox @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-                    <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=Refresh Label="Horizontal scrollbar" />
-                    <CheckBox @bind-Checked=_showHeader @bind-Checked:after=Refresh Label="Show header" />
-                    <CheckBox @bind-Checked=_stickyHeader @bind-Checked:after=Refresh Label="Sticky header" />
-                    <NumericInput Label="Row spacing" @bind-Value=_rowSpacing @bind-Value:after=Refresh Immediate=false />
-                    <NumericInput Label="Column spacing" @bind-Value=_columnSpacing @bind-Value:after=Refresh Immediate=false />
+                    <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=RefreshTable Label="Horizontal scrollbar" />
+                    <CheckBox @bind-Checked=_showHeader @bind-Checked:after=RefreshTable Label="Show header" />
+                    <CheckBox @bind-Checked=_stickyHeader @bind-Checked:after=RefreshTable Label="Sticky header" />
+                    <NumericInput Label="Row spacing" @bind-Value=_rowSpacing @bind-Value:after=RefreshTable Immediate=false />
+                    <NumericInput Label="Column spacing" @bind-Value=_columnSpacing @bind-Value:after=RefreshTable Immediate=false />
 
                     <RadioGroup Label="Horizontal grid lines" @bind-Value=_horizontalGridLines
-                                @bind-Value:after=@Refresh>
+                                @bind-Value:after=@RefreshTable>
                         @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
                         {
                             <Radio Label=@gridLines.ToString() Value="@gridLines" />
                         }
                     </RadioGroup>
                     <RadioGroup Label="Vertical grid lines" @bind-Value=_verticalGridLines
-                                @bind-Value:after=@Refresh>
+                                @bind-Value:after=@RefreshTable>
                         @foreach (GridLines gridLines in Enum.GetValues(typeof(GridLines)))
                         {
                             <Radio Label=@gridLines.ToString() Value="@gridLines" />
@@ -246,10 +246,10 @@
             await _table.GotoEnd();
     }
 
-    void ChangeItem()
+    async Task ChangeItem()
     {
         _localListData[0].LastName = "Bla bla bla";
-        _table.Refresh(_localListData[0]);
+        await _table.Refresh(_localListData[0]);
     }
 
     async Task CheckAtEnd()
@@ -275,7 +275,7 @@
         await _table.RemoveAllSelections();
         StateHasChanged();
     }
-    async Task Refresh()
+    async Task RefreshTable()
     {
         _totalNumItems = _localListData.Count;
         _numPages = (int)Math.Ceiling(_totalNumItems / (Double)GetPageSize());

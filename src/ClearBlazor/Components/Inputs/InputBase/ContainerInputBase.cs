@@ -341,19 +341,21 @@ namespace ClearBlazor
         protected async Task OnMouseEnter(MouseEventArgs e)
         {
             MouseOver = true;
-            if (ToolTipElement == null)
-                await Task.CompletedTask;
-            else
-                ToolTipElement.ShowToolTip();
-            StateHasChanged();
+            if (ToolTipElement != null)
+            {
+                await ToolTipElement.ShowToolTip();
+                await Refresh();
+            }
         }
 
         protected async Task OnMouseLeave(MouseEventArgs e)
         {
             MouseOver = false;
-            ToolTipElement?.HideToolTip();
-            await Task.CompletedTask;
-            StateHasChanged();
+            if (ToolTipElement != null)
+            {
+                await ToolTipElement.HideToolTip();
+                await Refresh();
+            }
         }
 
         protected async Task OnFocusIn(FocusEventArgs e)

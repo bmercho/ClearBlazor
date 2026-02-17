@@ -23,10 +23,10 @@
                                         Icon=@Icons.Material.Filled.Close @onclick=ClearEntry />
                         }
                     </Grid>
-                     <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="1,-20,-20,0"
+                     <Popup CloseOnOutsideClick=false Margin="1,-20,-20,0"
                            Position=Position Transform=Transform
                            AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
-                           @bind-Open=PopupOpen>
+                           @bind-Open=PopupOpen OnOutsideClick=@OutsideClick OnPopupClosed=@PopupClosed>
                         <DatePicker Orientation=@Orientation BorderThickness=1 CornerRadius=4 
                                     @bind-Date=Value @bind-Date:after=DateChanged 
                                     DateSelected=@DateSelection DefaultDate=@DefaultDate />

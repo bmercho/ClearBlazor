@@ -71,32 +71,23 @@ namespace ClearBlazor
         private string? DateTimeString => Value == null ? string.Empty : ((DateTime)Value).ToString(DateTimeFormat);
 
         private bool PopupOpen = false;
-
-        private bool IsMouseNotOver()
-        {
-            return !MouseOver;
-        }
+        private bool _modified = false;
 
         private async Task TogglePopup()
         {
             PopupOpen = !PopupOpen;
             if (!PopupOpen)
-                await DateTimeSelected.InvokeAsync();
+            {
+                if (_modified)
+                {
+                    _modified = false;
+                    await DateTimeSelected.InvokeAsync();
+                }
+            }
             await Refresh();
         }
 
-        private  async Task PopupOpenChanged()
-        {
-            if (!PopupOpen)
-                await DateTimeSelected.InvokeAsync();
-            else
-                if (Value == null)
-                    if (DefaultDateTime != null)
-                        Value = DefaultDateTime;
-
-        }
-
-        protected override async Task ClearEntry()
+       protected override async Task ClearEntry()
         {
             Value = null;
             await DateTimeChanged();
@@ -110,12 +101,48 @@ namespace ClearBlazor
         private async Task DateTimeSelection()
         {
             PopupOpen = false;
-            await DateTimeSelected.InvokeAsync();
+            if (_modified)
+            {
+                _modified = false;
+                await DateTimeSelected.InvokeAsync();
+            }
+            await Refresh();
         }
+
         private async Task DateTimeChanged()
         {
+            _modified = true;
             await ValueChanged.InvokeAsync(Value);
             await Refresh();
         }
+
+        private async Task PopupClosed()
+        {
+            PopupOpen = false;
+            if (_modified)
+            {
+                _modified = false;
+                await DateTimeSelected.InvokeAsync();
+            }
+            await Refresh();
+        }
+
+        internal async Task OutsideClick()
+        {
+            if (!PopupOpen)
+                return;
+
+            if (!MouseOver)
+            {
+                PopupOpen = false;
+                if (_modified)
+                {
+                    _modified = false;
+                    await DateTimeSelected.InvokeAsync();
+                }
+                await Refresh();
+            }
+        }
+
     }
 }

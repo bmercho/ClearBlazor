@@ -21,7 +21,7 @@ window.clearBlazor = {
         initialize: (elementId, isFloat, allowNegativeNumbers, numberDecimalSeparator) => {
             let numberEl = document.getElementById(elementId);
 
-            numberEl?.addEventListener('keydown', function (event) {
+            numberEl?.addEventListener('keydown', function(event) {
                 let validChars = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
                     "Backspace", "Enter", "ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
                 let num = document.getElementById(elementId);
@@ -42,7 +42,7 @@ window.clearBlazor = {
                     event.preventDefault();
                 }
             });
-            numberEl?.addEventListener('beforeinput', function (event) {
+            numberEl?.addEventListener('beforeinput', function(event) {
                 if (event.inputType === 'insertFromPaste' || event.inputType === 'insertFromDrop') {
 
                     let num = document.getElementById(elementId);
@@ -86,7 +86,7 @@ window.clearBlazor = {
         initialize: (elementId, maxLength) => {
             let textEl = document.getElementById(elementId);
 
-            textEl?.addEventListener('keydown', function (event) {
+            textEl?.addEventListener('keydown', function(event) {
                 let num = document.getElementById(elementId);
                 if (maxLength != 0 && num.value.length >= maxLength)
                     event.preventDefault();
@@ -97,12 +97,16 @@ window.clearBlazor = {
         }
     },
     popup: {
-        initialize: (dotNetInstance) => {
-            document.addEventListener('mousedown', function (event) {
+        initialize: function(dotNetInstance) {
+            this.popupMouseDownHandler = (e) => {
                 if (dotNetInstance != null) {
                     dotNetInstance.invokeMethodAsync('MouseDown');
                 }
-            });
+            }
+            document.addEventListener('mousedown', this.popupMouseDownHandler)
+        },
+        cleanup: function() {
+            document.removeEventListener("mousedown", this.popupMouseDownHandler);
         }
     }
 }

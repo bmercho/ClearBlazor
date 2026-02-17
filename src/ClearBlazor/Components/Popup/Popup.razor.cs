@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Microsoft.AspNetCore.Components.Web;
+using System.Diagnostics;
 
 namespace ClearBlazor
 {
@@ -46,12 +47,6 @@ namespace ClearBlazor
         public bool AllowHorizontalFlip { get; set; } = true;
 
         /// <summary>
-        /// Event that is raised when the popup is opened or closed.
-        /// </summary>
-        [Parameter]
-        public EventCallback<bool> OpenChanged { get; set; }
-
-        /// <summary>
         /// The size of the popup.
         /// </summary>
         [Parameter]
@@ -75,6 +70,17 @@ namespace ClearBlazor
         [Parameter]
         public int? Delay { get; set; } = null;
 
+        /// <summary>
+        /// Event raised when the date/time selection is complete.
+        /// </summary>
+        [Parameter]
+        public EventCallback OnPopupClosed { get; set; }
+
+        /// <summary>
+        /// Event raised when the the mouse is clicked outside the popup component.
+        /// </summary>
+        [Parameter]
+        public EventCallback OnOutsideClick { get; set; }
         private ElementReference PopupElement;
 
         private SizeInfo? SizeInfo = null;
@@ -94,8 +100,8 @@ namespace ClearBlazor
             if (Open)
             {
                 Open = false;
-                await OpenChanged.InvokeAsync(Open);
-                StateHasChanged();
+                await OnPopupClosed.InvokeAsync();
+                await Refresh();
             }
         }
 
@@ -112,7 +118,7 @@ namespace ClearBlazor
             if (Open)
             {
                 Open = false;
-                OpenChanged.InvokeAsync(Open);
+                OnPopupClosed.InvokeAsync();
                 StateHasChanged();
             }
         }
@@ -127,6 +133,7 @@ namespace ClearBlazor
             if (firstRender)
                 await JSRuntime.InvokeVoidAsync("window.clearBlazor.popup.initialize",
                                                 DotNetObjectReference.Create(this));
+
             SizeInfo? existing = null;
             if (SizeInfo != null)
                 existing = SizeInfo;
@@ -590,14 +597,14 @@ namespace ClearBlazor
         [JSInvokable]
         public async Task MouseDown()
         {
-            if (!CloseOnOutsideClick)
-                return;
-
-            if (!_mouseOver && Open)
+            if (!_mouseOver)
             {
+                await OnOutsideClick.InvokeAsync();
+                if (!CloseOnOutsideClick)
+                    return;
+
                 Open = false;
-                await OpenChanged.InvokeAsync(Open);
-                StateHasChanged();
+                await OnPopupClosed.InvokeAsync();
             }
         }
         public override async ValueTask DisposeAsync()

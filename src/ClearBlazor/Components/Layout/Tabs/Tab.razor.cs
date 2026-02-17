@@ -36,20 +36,20 @@ namespace ClearBlazor
 
         private Tabs? _parent = null;
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             if (Parent == null)
                 throw new ArgumentNullException(nameof(Parent),
                     "TabPage must exist within a TabControl");
 
-            base.OnInitialized();
+            await base.OnInitializedAsync();
 
             _parent = Parent?.Parent?.Parent as Tabs;
 
             if (_parent == null)
                 return;
 
-            _parent.AddPage(this);
+            await _parent.AddPage(this);
         }
 
         protected override string UpdateStyle(string css)

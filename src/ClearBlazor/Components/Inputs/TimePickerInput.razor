@@ -2,7 +2,8 @@
 @inherits ContainerInputBase<TimeOnly?>
 
 <CascadingValue Value="this" IsFixed="false">
-    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle() @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
+    <div id=@Id @attributes=AdditionalAttributes class=@Classes style=@ComputeStyle() 
+         @onmouseenter=OnMouseEnter @onmouseleave=OnMouseLeave>
         <StackPanel Orientation="Orientation.Portrait">
             @if (!string.IsNullOrEmpty(Label))
             {
@@ -10,7 +11,7 @@
             }
             <Grid BackgroundColor=@GetBackgroundColor() BorderThickness=@GetBorderThickness()
                   BorderColor=@GetBorderColor() CornerRadius=@GetCornerRadius() Columns="*,auto,auto">
-                <div @ref="PickerElement" style="display:grid; ">
+                <div style="display:grid; ">
                     <Grid MinWidth=110 Columns="*,auto" Margin="0,0,0,5">
                         <Grid Columns="*,auto" Column=0 @onclick=@TogglePopup>
                             <TextBlock VerticalAlignment=Alignment.Center>@TimeString</TextBlock>
@@ -22,14 +23,14 @@
                                         Icon=@Icons.Material.Filled.Close @onclick=ClearEntry />
                         }
                     </Grid>
-                     <Popup CloseOnOutsideClick=@IsMouseNotOver() Margin="1,-20,-20,0"
-                           Position=Position Transform=Transform @bind-Open:after=@OpenChanged
+                     <Popup CloseOnOutsideClick=false Margin="1,-20,-20,0"
+                           Position=Position Transform=Transform
                            AllowVerticalFlip=AllowVerticalFlip AllowHorizontalFlip=AllowHorizontalFlip
-                           
-                           @bind-Open=PopupOpen>
-                        <TimePicker @ref="TimePicker" ShowSeconds=@ShowSeconds Hours24=@Hours24 MinuteStep=@MinuteStep Orientation=@Orientation
+                           @bind-Open=PopupOpen OnOutsideClick=@OutsideClick OnPopupClosed=@PopupClosed>
+                        <TimePicker ShowSeconds=@ShowSeconds 
+                                    Hours24=@Hours24 MinuteStep=@MinuteStep Orientation=@Orientation
                                     BorderThickness=1 CornerRadius=4 @bind-Time=Value @bind-Time:after=TimeChanged
-                                    MinuteSelected=@TimeSelected SecondSelected=@TimeSelection DefaultTime=@DefaultTime />
+                                    MinuteSelected=@TimeSelection SecondSelected=@TimeSelection DefaultTime=@DefaultTime />
                     </Popup>
                      @if (ValidationErrorLocation == ValidationErrorLocation.ErrorIcon && !IsValid)
                     {

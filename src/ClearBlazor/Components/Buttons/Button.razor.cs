@@ -328,18 +328,21 @@ namespace ClearBlazor
         protected async Task OnMouseEnter(MouseEventArgs e)
         {
             _mouseOver = true;
-            if (ToolTipElement == null)
-                await Task.CompletedTask;
-            else
-                ToolTipElement.ShowToolTip();
-            await Refresh();
+            if (ToolTipElement != null)
+            {
+                await ToolTipElement.ShowToolTip();
+                await Refresh();
+            }
         }
 
         protected async Task OnMouseLeave(MouseEventArgs e)
         {
             _mouseOver = false;
-            ToolTipElement?.HideToolTip();
-            await Refresh();
+            if (ToolTipElement != null)
+            {
+                await ToolTipElement.HideToolTip();
+                await Refresh();
+            }
         }
 
         private Color GetFilledBackgroundColor(Color? color)

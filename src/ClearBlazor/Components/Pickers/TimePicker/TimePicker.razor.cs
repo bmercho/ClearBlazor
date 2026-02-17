@@ -3,6 +3,7 @@ using Excubo.Blazor.Canvas.Contexts;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
+using System.Diagnostics;
 
 namespace ClearBlazor
 {
@@ -180,6 +181,8 @@ namespace ClearBlazor
 
         private async Task PaintCanvas(Batch2D context)
         {
+            Debug.WriteLine($"PaintCanvas {PickerMode}");
+
             if (CanvasSize == null)
                 return;
 

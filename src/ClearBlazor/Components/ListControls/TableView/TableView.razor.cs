@@ -1034,7 +1034,7 @@ namespace ClearBlazor
              $"grid-area: 1 / 1 /span {_items.Count + header} / span {Columns.Count};";
 
             if (VirtualizeMode == VirtualizeMode.Virtualize)
-                css += $"display:grid; ;height: {_height}px";
+                css += $"display:grid; height: {_height}px";
 
             return css;
         }

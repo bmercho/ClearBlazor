@@ -69,19 +69,19 @@ namespace ClearBlazor
         /// <summary>
         /// Shows the tooltip
         /// </summary>
-        public void ShowToolTip()
+        public async Task ShowToolTip()
         {
             Open = true;
-            StateHasChanged();
+            await Refresh();
         }
 
         /// <summary>
         /// Hides the tooltip
         /// </summary>
-        public void HideToolTip()
+        public async Task HideToolTip()
         {
             Open = false;
-            StateHasChanged();
+            await Refresh();
         }
     }
 }

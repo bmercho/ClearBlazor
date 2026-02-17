@@ -219,7 +219,7 @@
         await _tree.RemoveAllSelections();
         StateHasChanged();
     }
-    public async ValueTask DisposeAsync()
+    public override async ValueTask DisposeAsync()
     {
         await _tree.RemoveAllSelections();
     }

@@ -66,21 +66,24 @@ namespace ClearBlazor
 
         private bool PopupOpen = false;
 
-        private bool IsMouseNotOver()
-        {
-            return !MouseOver;
-        }
+        private bool _modified = false;
 
         private async Task TogglePopup()
         {
             PopupOpen = !PopupOpen;
-            await DateChanged();
+            if (!PopupOpen && _modified)
+            {
+                _modified = false;
+                await DateSelected.InvokeAsync();
+            }
+            await Refresh();
         }
 
         protected override async Task ClearEntry()
         {
             Value = null;
             await DateChanged();
+            _modified = true;
         }
 
         protected override string GetInputType()
@@ -91,13 +94,45 @@ namespace ClearBlazor
         private async Task DateSelection()
         {
             PopupOpen = false;
-            await DateSelected.InvokeAsync();
+            if (_modified)
+            {
+                _modified = false;
+                await DateSelected.InvokeAsync();
+            }
         }
         private async Task DateChanged()
         {
+            _modified = true;
             await ValueChanged.InvokeAsync(Value);
-            DoRender = true;
-            StateHasChanged();
+            await Refresh();
+        }
+
+        private async Task PopupClosed()
+        {
+            PopupOpen = false;
+            if (_modified)
+            {
+                _modified = false;
+                await DateSelected.InvokeAsync();
+            }
+            await Refresh();
+        }
+
+        internal async Task OutsideClick()
+        {
+            if (!PopupOpen)
+                return;
+
+            if (!MouseOver)
+            {
+                PopupOpen = false;
+                if (_modified)
+                {
+                    _modified = false;
+                    await DateSelected.InvokeAsync();
+                }
+                await Refresh();
+            }
         }
     }
 }

@@ -192,7 +192,7 @@
         await _tree.Scroll(-10);
     }
 
-    public async ValueTask DisposeAsync()
+    public override async ValueTask DisposeAsync()
     {
         await _tree.RemoveAllSelections();
     }

@@ -50,7 +50,7 @@
         {
             <StackPanel Column=1>
                 <RadioGroup Label="Virtualization mode" @bind-Value=_virtualizeMode
-                            @bind-Value:after=@Refresh>
+                            @bind-Value:after=@RefreshList>
                     @foreach (VirtualizeMode mode in Enum.GetValues(typeof(VirtualizeMode)))
                     {
                         <Radio Label=@mode.ToString() Value="@mode" />
@@ -65,7 +65,7 @@
                 </RadioGroup>
                 <CheckBox Margin=20 @bind-Checked=_allowSelectionToggle Label="Allow selection toggle (single selection only)" />
                 <CheckBox Margin=20 @bind-Checked=_hoverHighlight Label="Highlight on hover" />
-                <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=Refresh Label="Horizontal scrollbar" />
+                <CheckBox @bind-Checked=_horizontalScrollbar @bind-Checked:after=RefreshList Label="Horizontal scrollbar" />
                 <TextBlock Margin=20>Selection=@_selectedItem?.ToString()</TextBlock>
                 <TextBlock Margin=20>Selections=@string.Join(",", _selectedItems.Select(s => s.ToString()))</TextBlock>
                 <Button Margin=10 Width=150 HorizontalAlignment=Alignment.Start @onclick=@ClearSelections>Clear selections</Button>
@@ -199,7 +199,7 @@
         return false;
     }
 
-    async Task Refresh()
+    async Task RefreshList()
     {
         _numPages = (int)Math.Ceiling(_localListData.Count / (Double)GetPageSize());
         if (_virtualizeMode == VirtualizeMode.None)

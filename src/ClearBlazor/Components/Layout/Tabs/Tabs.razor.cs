@@ -86,11 +86,14 @@ namespace ClearBlazor
                 BackgroundColor = ThemeManager.CurrentColorScheme.Surface;
         }
 
-        internal void AddPage(Tab tabPage)
+        internal async Task AddPage(Tab tabPage)
         {
             _pages.Add(tabPage);
             if (_pages.Count == 1)
+            {
                 _activePage = tabPage;
+                await OnTabChanged.InvokeAsync(tabPage);
+            }
 
             DoRender = true;
             StateHasChanged();

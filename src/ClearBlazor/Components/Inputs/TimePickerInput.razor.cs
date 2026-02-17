@@ -86,28 +86,20 @@ namespace ClearBlazor
         private string? TimeString => Value == null ? string.Empty : ((TimeOnly)Value).ToString(TimeFormat);
 
         private bool PopupOpen = false;
-        private SizeInfo? SizeInfo = null;
-        private ElementReference PickerElement;
-        private TimePicker? TimePicker = null;
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-            SizeInfo? existing = null;
-            if (SizeInfo != null)
-                existing = SizeInfo;
-            SizeInfo = await JSRuntime.InvokeAsync<SizeInfo>("getSizeInfo", PickerElement);
-        }
-
-        private bool IsMouseNotOver()
-        {
-            return !MouseOver;
-        }
+        private bool _modified = false;
 
         private async Task TogglePopup()
         {
             PopupOpen = !PopupOpen;
-            await TimeChanged();
+            if (!PopupOpen)
+            {
+                if (_modified)
+                {
+                    _modified = false;
+                    await TimeSelected.InvokeAsync();
+                }
+            }  
+            await Refresh();
         }
 
         protected override async Task ClearEntry()
@@ -121,34 +113,50 @@ namespace ClearBlazor
             return string.Empty;
         }
 
-        private async Task OpenChanged()
-        {
-            if (TimePicker != null && PopupOpen == false)
-            {
-                if (Hours24)
-                    TimePicker.SetMode(PickerMode.Hour24);
-                else
-                    TimePicker.SetMode(PickerMode.Hour12);
-                await TimeChanged();
-            }
-        }
-
         private async Task TimeSelection()
         {
             PopupOpen = false;
-            await TimeSelected.InvokeAsync();
-            if (TimePicker != null)
-                if (Hours24)
-                    TimePicker.SetMode(PickerMode.Hour24);
-                else
-                    TimePicker.SetMode(PickerMode.Hour12);
+            if (_modified)
+            {
+                _modified = false;
+                await TimeSelected.InvokeAsync();
+            }
+            await Refresh();
         }
 
         private async Task TimeChanged()
         {
+            _modified = true;
             await ValueChanged.InvokeAsync(Value);
-            DoRender = true;    
-            StateHasChanged();
+            await Refresh();
+        }
+
+        private async Task PopupClosed()
+        {
+            PopupOpen = false;
+            if (_modified)
+            {
+                _modified = false;
+                await TimeSelected.InvokeAsync();
+            }
+            await Refresh();
+        }
+
+        internal async Task OutsideClick()
+        {
+            if (!PopupOpen)
+                return;
+
+            if (!MouseOver)
+            {
+                PopupOpen = false;
+                if (_modified)
+                {
+                    _modified = false;
+                    await TimeSelected.InvokeAsync();
+                }
+                await Refresh();
+            }
         }
     }
 }
